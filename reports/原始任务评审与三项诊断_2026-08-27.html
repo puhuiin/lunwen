@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>原始任务完成度评审与三项问题诊断</title>
+<style>
+  :root{
+    --bg:#0f1420; --panel:#161d2e; --panel2:#1c2538; --ink:#e6ecf5; --mut:#94a3b8;
+    --line:#2a3550; --pos:#4ade80; --neg:#f87171; --warn:#fbbf24; --acc:#60a5fa; --vio:#a78bfa;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,"Microsoft YaHei",sans-serif;line-height:1.65;padding:32px 20px}
+  .wrap{max-width:1080px;margin:0 auto}
+  h1{font-size:24px;margin:0 0 4px;letter-spacing:.5px}
+  .sub{color:var(--mut);font-size:13px;margin-bottom:24px}
+  h2{font-size:18px;border-left:4px solid var(--acc);padding-left:10px;margin:30px 0 14px}
+  h3{font-size:15px;color:var(--acc);margin:20px 0 8px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+  th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--ink);font-weight:600}
+  .ok{color:var(--pos)} .bad{color:var(--neg)} .mid{color:var(--warn)}
+  .tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:600}
+  .t-ok{background:rgba(74,222,128,.15);color:var(--pos)}
+  .t-bad{background:rgba(248,113,113,.15);color:var(--neg)}
+  .t-mid{background:rgba(251,191,36,.15);color:var(--warn)}
+  .t-acc{background:rgba(96,165,250,.15);color:var(--acc)}
+  code{background:var(--panel2);padding:1px 6px;border-radius:4px;font-size:12px;color:var(--vio)}
+  .note{color:var(--mut);font-size:12px;margin-top:6px}
+  ol,ul{margin:8px 0 8px 22px;padding:0}
+  li{margin:5px 0}
+  .pill{font-weight:600}
+  .foot{color:var(--mut);font-size:12px;margin-top:28px;border-top:1px solid var(--line);padding-top:12px}
+  .hl{background:rgba(167,139,250,.12);border-left:3px solid var(--vio);padding:10px 14px;border-radius:6px;margin:12px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>原始任务完成度评审与三项问题诊断</h1>
+<div class="sub">对照：<code>投资经理画像分析大纲.docx</code> ＋ 三份产物（方法详解 / 投资经理行为画像 / 论文初稿 2026-08-26）　|　评审日期：2026-08-27</div>
+
+<div class="hl">
+<b>一句话结论：</b>论文初稿已严格对齐大纲结构，主线（行为可观测 → 等权复合 → 画像可筛选）连贯；<b>等权复合方法论已落地</b>（与您的要求一致）。三项问题中，<b>问题2（改进主动份额显著性矛盾）已基本解决</b>，<b>问题1（L2 认知层指标偏少）与问题3（L4b 风险转化指标需替换为行为型）是真实待办</b>。
+</div>
+
+<h2>一、完成度评审（对照大纲）</h2>
+<table>
+<thead><tr><th>大纲要求</th><th>论文初稿对应</th><th>状态</th></tr></thead>
+<tbody>
+<tr><td>标题＋引言（意义／可操作性／做法／结论＋5%群体＋典型案例）</td><td>标题＋中英文摘要＋§1 引言（含 5% 群体、6 名典型案例）</td><td><span class="tag t-ok">✓ 已覆盖</span></td></tr>
+<tr><td>理论研究：五层汇总表（层级／影响渠道／来源／指标／计算／说明）</td><td>§2 表1（六列齐全）</td><td><span class="tag t-ok">✓ 已覆盖</span></td></tr>
+<tr><td>实证检验·数据来源说明</td><td>§3.1</td><td><span class="tag t-ok">✓</span></td></tr>
+<tr><td>实证检验·统计性描述表</td><td>§3.2 表2（覆盖率分层披露）</td><td><span class="tag t-ok">✓</span></td></tr>
+<tr><td>实证检验·主要回归方程（表格）</td><td>§3.3 表3（方程1–7）</td><td><span class="tag t-ok">✓</span></td></tr>
+<tr><td>实证检验·指标汇总表（层级／指标／计算／显著性／代表意义）</td><td>§3.4 表4（15 成分）</td><td><span class="tag t-ok">✓</span></td></tr>
+<tr><td>投资经理画像·群体画像</td><td>§4.1 表8/9/10</td><td><span class="tag t-ok">✓</span></td></tr>
+<tr><td>投资经理画像·典型画像</td><td>§4.2 表11（6 名）</td><td><span class="tag t-ok">✓</span></td></tr>
+<tr><td>结论</td><td>§5（四结论＋五局限）</td><td><span class="tag t-ok">✓</span></td></tr>
+<tr><td>等权复合方法论（多指标→z→维度内等权→六维等权→画像）</td><td>§3.3 方程6/7、表6、方法详解 §4.7</td><td><span class="tag t-ok">✓ 已落地</span></td></tr>
+</tbody>
+</table>
+<div class="note">结构层面无需返工。问题集中在<b>指标构成</b>（L2、L4b），而非文章框架。</div>
+
+<h2>二、三项问题诊断</h2>
+
+<h3>问题1　L2 认知层指标偏少　<span class="tag t-mid">真实缺口</span></h3>
+<div class="card">
+<p><b>现状：</b>L2 ＝ <code>risk_asym</code>（风险偏好不对称）＋<code>de</code>（处置效应）＋<code>oc_conf</code>（过度自信），仅 3 项，且<b>全部是"偏差型"</b>，缺少"信息处理/注意力/外推"类认知维度。</p>
+<p><b>建议新增候选（按可计算性＋文献出处排序）：</b></p>
+<ol>
+<li><span class="pill">有限关注度（attention-driven holding）</span> — Barber &amp; Odean (2008)：持仓中前期涨幅／成交量居前个股的权重占比。衡量经理是否被"显眼"股票牵引。</li>
+<li><span class="pill">趋势外推偏差（extrapolation / representativeness）</span> — Greenwood &amp; Shleifer (2014)：持股市值加权过去 12 月收益（持仓动量暴露）。高＝把近期走势外推为持续。</li>
+<li><span class="pill">自我归因偏差（self-attribution）</span> — Gervais &amp; Odean (2001)：将现有 <code>oc_conf</code> 拆为"盈利后加仓"与"亏损后惜售"的非对称性，细化过度自信结构。</li>
+<li><span class="pill">保守主义／反应不足（conservatism）</span> — 盈余公告后漂移（PEAD）捕获度：是否超配刚超预期个股。</li>
+</ol>
+<p><b>推荐落地：</b>先加 <b>①②</b>（最易从持仓＋收益序列计算），<code>oc_conf</code> 保留并可选加 <b>③</b> 作为第 4 项。重算 L2 复合后复验方向与显著性。</p>
+</div>
+
+<h3>问题2　改进主动份额（AS_improved）显著性矛盾　<span class="tag t-ok">已基本解决，锁死即可</span></h3>
+<div class="card">
+<p><b>裁决现状：</b>论文初稿 §3.4 + 表5 已用<b>六道检验</b>统一结论：</p>
+<table>
+<thead><tr><th>口径</th><th>N</th><th>系数</th><th>t</th></tr></thead>
+<tbody>
+<tr><td>基金层横截面·单变量</td><td>362</td><td>−0.0045</td><td>−0.26</td></tr>
+<tr><td>基金层横截面·加控制</td><td>362</td><td>−0.0108</td><td>−0.65</td></tr>
+<tr><td>基金层横截面·全模型</td><td>359</td><td>−0.0531</td><td><span class="bad">−3.06***</span></td></tr>
+<tr><td>季度面板·单变量</td><td>8615</td><td>+0.0511</td><td><span class="bad">+5.33***</span></td></tr>
+<tr><td>季度面板·全模型</td><td>2262</td><td>−0.0258</td><td>−1.41</td></tr>
+<tr><td>群体画像 Top5%−Bottom5%</td><td>19+19</td><td>+0.0233</td><td>+1.91*</td></tr>
+</tbody>
+</table>
+<p><b>判定：</b>符号在口径间<b>翻转</b>（横截面全模型负、面板单变量正），群体差异仅 +0.0233（p=0.065），结论为<b>"剔除、仅作对照"（X1）</b>。方法详解／画像报告的结论编号 X1 与此一致——<b>当前三份产物内部已统一，无残留矛盾</b>。</p>
+<p><b>唯一待办：</b>做一次全文一致性扫描，确认无任何段落仍写"AS 显著"，并锁定 X1 表述。</p>
+</div>
+
+<h3>问题3　L4b 风险转化能力指标需替换为"行为型"　<span class="tag t-bad">最大方法论漏洞</span></h3>
+<div class="card">
+<p><b>现状：</b>L4b ＝ <code>mppm8_lag</code>＋<code>sortino8_lag</code>＋<code>sharpe8_lag</b></code>，三项<b>均为风险调整后业绩测度</b>，与因变量 FF5 alpha 共享"风险调整后收益"概念内核。论文自己已在 D2／D3／Q2 承认这一弱点（"用业绩解释业绩"风险）。</p>
+<p><b>替换为行为型风险转化指标</b>（衡量"是否把风险转化成了收益"，而非"转化结果"）：</p>
+<ol>
+<li><span class="pill">上行/下行捕获比差（Capture differential）</span>：上行捕获率 − 下行捕获率（相对基准）。正值＝风险在上涨段兑现、下跌段规避——真正的转化<b>质量</b>。</li>
+<li><span class="pill">波动率择时技能（Volatility timing）</span>：基金暴露度与市场波动状态（VIX／市场方差）的负向协同——下跌前主动收缩暴露的<b>行为</b>，非实现收益。</li>
+<li><span class="pill">风险预算纪律（Risk-budget discipline）</span>：实现波动率的"波动率-of-波动率"或相对平滑目标的偏离度（越低越纪律）。是行为，不是业绩。</li>
+<li><span class="pill">尾部保护（Tail protection）</span>：极端下跌日基金损失相对其 beta 预测的节约度。</li>
+</ol>
+<p><b>推荐落地：</b>以 <b>①②③</b> 三选二或三，替换现有 mppm/sortino/sharpe，重算等权复合，并复核 D2／D3／Q2——届时 L4b 不再是"用业绩解释业绩"，是框架的<b>核心升级</b>。</p>
+<div class="note">数据约束：捕获比／波动率择时需要基金日频 NAV 与基准。现有 sharpe8 等已由 400 只 NAV 序列算出（表2：sharpe8_lag N=394），故 NAV 源可达，新指标可在 400 只尺度构造；需先定位 400 只 NAV 原始文件。</div>
+</div>
+
+<h2>三、方法口径确认</h2>
+<table>
+<tbody>
+<tr><td>等权复合（多指标→z→维度内等权→六维等权）</td><td><span class="tag t-ok">✓ 已落地</span> 与您要求一致</td></tr>
+<tr><td>层（L1–L5）与计分维度（6）分离设计</td><td><span class="tag t-ok">✓ 已制度化</span>（F1：层回答环节、维度是同质测量单元）</td></tr>
+<tr><td>"某一能力可由多个指标等权复合→一个指标→画像"</td><td><span class="tag t-ok">✓ 已采用</span></td></tr>
+</tbody>
+</table>
+
+<h2>四、建议的下一步（分阶段）</h2>
+<div class="card">
+<ol>
+<li><b>Phase 0（约 0.5 天）·锁死一致性：</b>全文扫描 AS_improved，确认无"显著"残留；更新《指标总表》。</li>
+<li><b>Phase 1（L2 扩充）：</b>构造 有限关注度、趋势外推偏差（＋可选自我归因），并入 L2 重算复合，复验方向与显著性，更新表1/表4/表6。</li>
+<li><b>Phase 2（L4b 替换，核心）：</b>构造行为型风险转化指标（捕获比差／波动率择时／风险预算纪律），替换 mppm/sortino/sharpe，重算复合，复核 D2/D3/Q2——彻底消除"用业绩解释业绩"质疑。</li>
+<li><b>Phase 3：</b>将新指标与复核结论写回 论文初稿＋方法详解＋画像报告 的表1/表4/表6，重出三份产物。</li>
+<li><b>Phase 4：</b>刷新典型画像与雷达图。</li>
+</ol>
+</div>
+
+<div class="foot">
+评审依据：大纲 docx、论文初稿 docx、方法详解/投资经理行为画像 HTML（均 2026-08-26 版）。下一步需您确认：<b>(a) L2 新增哪些指标；(b) L4b 用哪些行为型指标替换；(c) 是否现在启动 Phase 1/2 的数据构造</b>。
+</div>
+
+</div>
+</body>
+</html>

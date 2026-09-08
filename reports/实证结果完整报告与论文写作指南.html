@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>基金经理行为分析 · 实证结果与论文写作指南</title>
+<style>
+  :root{ --ink:#1f2a37; --sub:#52606d; --line:#e3e8ef; --accent:#b91c1c;
+         --bg:#ffffff; --soft:#f8fafc; --soft2:#eef2f7; --good:#0f7b4d; --warn:#b4690e; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+       line-height:1.8;font-size:15.5px}
+  .wrap{max-width:1040px;margin:0 auto;padding:44px 30px 100px}
+  h1{font-size:30px;line-height:1.3;margin:0 0 6px;letter-spacing:.5px}
+  h2{font-size:23px;margin:48px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--accent);color:var(--accent)}
+  h3{font-size:18.5px;margin:30px 0 8px;color:var(--ink)}
+  h4{font-size:16px;margin:20px 0 6px;color:var(--sub)}
+  p{margin:11px 0}
+  .lead{font-size:16.5px;color:var(--sub);margin:14px 0 22px}
+  code{background:var(--soft2);padding:1px 6px;border-radius:5px;font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;color:#9a3412}
+  table{border-collapse:collapse;width:100%;margin:16px 0;font-size:13.4px}
+  th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:var(--soft2);color:var(--ink);font-weight:600}
+  td.num{text-align:right;font-family:"SFMono-Regular",Consolas,monospace;white-space:nowrap}
+  caption{caption-side:top;text-align:left;font-weight:600;color:var(--accent);margin-bottom:6px;font-size:14px}
+  .box{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:18px 0}
+  .box.note{border-left:4px solid var(--warn);background:#fffaf0}
+  .box.key{border-left:4px solid var(--good);background:#f0fdf7}
+  .box.pres{border-left:4px solid #2563eb;background:#eff6ff}
+  .box.ctrl{border-left:4px solid #475569;background:#f1f5f9}
+  .sigx{color:#166534;font-weight:700}.sign{color:#991b1b;font-weight:700}
+  .muted{color:var(--sub);font-size:13.5px}
+  .tag{display:inline-block;font-size:12px;padding:1px 9px;border-radius:20px;margin-right:6px}
+  .tag.ok{background:#dcfce7;color:#166534}.tag.no{background:#fee2e2;color:#991b1b}
+  .tag.weak{background:#fef3c7;color:#92400e}.tag.plan{background:#e0e7ff;color:#3730a3}
+  .toc{background:var(--soft2);border:1px solid var(--line);border-radius:10px;padding:18px 24px;margin:24px 0}
+  .toc ol{margin:6px 0;padding-left:22px}.toc li{margin:5px 0}
+  .toc a{color:var(--accent);text-decoration:none}.toc a:hover{text-decoration:underline}
+  ul{margin:10px 0 10px 4px;padding-left:22px}li{margin:6px 0}
+  .foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--sub);font-size:13px}
+  .formula{background:var(--soft);border:1px solid var(--line);border-left:4px solid var(--accent);
+           padding:14px 18px;margin:14px 0;border-radius:8px;font-family:"SFMono-Regular",Consolas,monospace;
+           font-size:14.5px;line-height:1.95;color:#0b3b24;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+  .kpi{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}
+  .kpi div{flex:1;min-width:150px;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .kpi b{display:block;font-size:22px;color:var(--accent);margin-bottom:2px}
+  .kpi span{font-size:12.5px;color:var(--sub)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>基金经理行为分析 · 实证结果与论文写作指南</h1>
+<p class="lead">本文档基于 <code>指标计算流水线/</code> 全部真实回归输出，逐条给出每个回归的<b>结果、结论</b>与<b>在论文中如何呈现</b>的建议，最后给出基于当前结果整篇论文的写作框架。所有数字均来自 <code>output/</code> 下的 CSV（分层回归、组内FE、R3 截尾、前向、LSV 重算），<b>无虚构</b>。生成日期 2026-08-14。</p>
+
+<div class="toc">
+<b>目录</b>
+<ol>
+<li><a href="#s0">数据与方法论总览（先读，决定论文口径）</a></li>
+<li><a href="#s1">回归总表：一眼看完全部结果</a></li>
+<li><a href="#s2">逐回归详解（A–I）：结果 · 结论 · 论文呈现</a></li>
+<li><a href="#s3">综合发现与论文核心论点</a></li>
+<li><a href="#s4">整篇论文写作框架（章节级）</a></li>
+<li><a href="#s5">诚实局限与下一步</a></li>
+</ol>
+</div>
+
+<!-- ============ S0 ============ -->
+<h2 id="s0">1 · 数据与方法论总览</h2>
+<p>在讨论每个回归之前，必须先固定三件论文里会被审稿人追问的事——<b>数据范围、因变量选择、识别策略</b>。这决定了所有结果的可信度与可比性。</p>
+
+<div class="box">
+<b>数据面板</b>：<code>主分析面板_重建.csv</code> —— 400 只主动股基，2006Q2–2026Q2（非平衡面板），9,974 个基金×季度观测，49 个字段。<code>report_date</code> 最大 2026-07-01，净值最大 2026-08-07。所有前向回归已剔除未来季度，杜绝泄露。
+</div>
+
+<div class="box ctrl">
+<b>因变量（DV）的三层口径——这是论文必须讲清的"口径树"</b>
+<ul>
+<li><b>ff5_adj_return（FF5 五因子 alpha，基金层常数）</b>：截面基准回归的 DV。它是基金层面的整体 alpha，在面板内<b>不随时间变化</b>（组内标准差≈0），因此<b>不能</b>作为组内 FE 的 DV（初版 R6 踩过这个坑，系数塌缩为 0）。适用：L1–L5 截面回归（R1 口径）。</li>
+<li><b>quarter_return（基金季度收益）</b>：组内 FE 主 DV。400 只基金 100% 组内变异（组内标准差中位数 0.21），能干净地识别"基金内部随时间变化"的信号。适用：R6 组内 FE。</li>
+<li><b>excess_return（超额收益）</b>：quarter_return 的稳健性替代（组内标准差 0.15），用于 R6 的稳健性检验。</li>
+<li><b>future_return（未来 1 季 / 4 季收益）</b>：前向预测 DV。适用：R2/R3 预测与机制校验。</li>
+</ul>
+</div>
+
+<div class="box ctrl">
+<b>识别策略（论文的三大战术，须在"实证策略"一节明确陈述）</b>
+<ul>
+<li><b>截面基准（cross-sectional, fund-level mean）</b>：把每个基金聚合成一条观测，OLS + HC1 异方差稳健标准误。回答"基金之间，画像高的是否业绩更好"——<b>排序</b>证据。</li>
+<li><b>组内固定效应（within-fund FE, R6）</b>：面板去均值 + 年份哑变量双向 FE，基金聚类标准误。回答"同一只基金，某季度画像临时变强是否伴随该季度收益抬升"——逼近<b>因果</b>证据。</li>
+<li><b>前向预测（forward, R2）</b>：DV 取未来收益，控制规模/年龄/年份 FE，基金聚类。回答"画像能否<b>预测</b>未来业绩"——<b>选经理</b>证据。</li>
+</ul>
+三套证据互为补充：截面给"画像分型"，组内FE给"实时能力"，前向给"前瞻信号"。
+</div>
+
+<div class="box note">
+<b>t 值怎么算、为什么看 t 不看 P 值（论文惯例）</b>
+<ul>
+<li><b>定义</b>：任一系数 β̂ 的 t = β̂ / SE(β̂)（估计值 ÷ 标准误）。SE 来自 OLS 协方差矩阵；截面用 HC1 异方差稳健标准误，组内FE用基金聚类标准误。t 越大说明 β̂ 越不可能只是噪声。</li>
+<li><b>门槛</b>：|t|&gt;1.96≈p&lt;0.05(**)、|t|&gt;2.58≈p&lt;0.01(***)；不足写作 ns。文中系数后括号即 t 值。</li>
+<li><b>为什么看 t 不看 P</b>：① 本面板 N 大（截面≈362、面板≈2668、前向≈3211），t 与 p 一一对应，知 t 即知 p；② t 额外给<b>方向</b>与<b>量级</b>（|t|=2 与 |t|=11 都显著，但后者证据强得多，p 看不出）；③ 论文惯例报 β(t) 而非 β(p)，审稿人读 t 即可判显著性与强度。故全文以 t+星号为准，不单列 p。</li>
+</ul>
+</div>
+
+
+<div class="box ctrl">
+<b>稳健标准误（HC）：为什么"修正异方差"、怎么算（流程与原理）</b>
+<ul>
+<li><b>问题从哪来</b>：OLS 标准误默认<b>同方差</b>（Var(ε_i)=σ²），公式 Var(β̂)=σ²(X'X)⁻¹ 只在同方差下成立。金融面板必<b>异方差</b>（大/小基金残差波动天差地别），此时 OLS 系数仍无偏，但 SE <b>系统性偏小</b> → t 虚高 → 把噪声当显著。这就是"修正异方差的稳健标准误"要解决的问题。</li>
+<li><b>三明治（sandwich）估计量</b>：真实 Var(β̂)=(X'X)⁻¹ X'ΩX (X'X)⁻¹，Ω=diag(σ_i²) 非恒定。用残差平方估计 Ω̂=diag(û_i²)，协方差写成"面包−肉−面包"：bread=(X'X)⁻¹、meat=X'Ω̂X、再 bread → 故称 sandwich。SE=√(对角线)。</li>
+<li><b>HC0→HC3（截面用 HC1）</b>：HC0=û_i²；<b>HC1=HC0×n/(n−k)</b>（小样本修正，本项目 R1–R5 默认）；HC2=û_i²/(1−h_ii)（杠杆降权）；HC3=û_i²/(1−h_ii)²（更狠降权，有强影响点时用）。</li>
+<li><b>计算流程</b>：① OLS 得 β̂、û；② 算 û_i² 组 Ω̂；③ meat=X'Ω̂X；④ Û=(X'X)⁻¹·meat·(X'X)⁻¹；⑤ SE=√(diag)，t=β̂/SE 判星。</li>
+<li><b>HC 不是万能：面板用"聚类稳健"而非 HC</b>。HC 只修正截面异方差，改不了"同一基金多季度残差相关"。本项目<b>面板（R6 组内FE、前向）一律用基金聚类稳健 SE</b>（meat=Σ_g X_g'û_gû_g'X_g）。一句话：<b>截面 HC1，面板基金聚类</b>。</li>
+</ul>
+</div>
+
+<!-- ============ S1 ============ -->
+<h2 id="s1">2 · 回归总表：一眼看完全部结果</h2>
+<p>下表汇总本项目已实跑的全部回归家族与核心结论（显著性：* p&lt;0.1, ** p&lt;0.05, *** p&lt;0.01；t 值取 CSV 原始值）。</p>
+
+<table>
+<caption>表 1　全回归结果总览（N 与口径以 CSV 为准）</caption>
+<tr><th>代码</th><th>层 / 目的</th><th>DV</th><th>N</th><th>核心变量</th><th>β (t)</th><th>结论摘要</th></tr>
+<tr><td>L1</td><td>背景特征</td><td>ff5_adj</td><td class="num">362</td><td>任期 / 性别 / CFA</td><td class="num">≈0(ns) / +0.003(ns) / −0.026(−5.34)***</td><td>单独不显著→<b>控制变量</b>；CFA 反直觉为负</td></tr>
+<tr><td>L2</td><td>持仓偏离</td><td>ff5_adj</td><td class="num">362</td><td>AS_improved / ICI / HHI</td><td class="num">−0.042(−2.24)** / +0.044(4.38)*** / +0.048(1.34)</td><td>"主动量"负、"主动方向(行业)"正，与美股相反</td></tr>
+<tr><td>L3</td><td>交易执行</td><td>ff5_adj</td><td class="num">200</td><td>TO_two_sided / SDI</td><td class="num">+0.017(1.28) / +0.004(0.36)</td><td>双边 ns（N=200 受限）</td></tr>
+<tr><td>L4</td><td>风险应对</td><td>ff5_adj</td><td class="num">340</td><td>ARG / RG / return_vol</td><td class="num">+0.047(2.39)** / +0.066(2.53)** / +0.148(3.65)***</td><td><b>最强能力轴</b>，组内FE更强</td></tr>
+<tr><td>L5</td><td>认知偏差</td><td>ff5_adj</td><td class="num">362</td><td>risk_asym / lsv / de</td><td class="num">+0.113(2.76)*** / +0.112(2.04)** / −0.073(−4.50)***</td><td>de 两面皆负；RA 截面强、组内FE弱</td></tr>
+<tr><td>R6</td><td>组内FE集成</td><td>quarter_return</td><td class="num">2668</td><td>ARG / RG / ret_vol / de</td><td class="num">+0.342(10.7)*** / +0.202(11.7)*** / +0.900(8.5)*** / −0.026(−3.33)***</td><td>控制基金自身后 L4 更强、de 仍显著</td></tr>
+<tr><td>R3</td><td>机制校验</td><td>future_return</td><td class="num">6931</td><td>risk_asym / γ_wins</td><td class="num">+0.924(19.1)*** / +0.319(3.3)**</td><td>RA 非杠杆效应机械穿透（真信号）</td></tr>
+<tr><td>R2</td><td>前向预测</td><td>fut4q</td><td class="num">3211</td><td>risk_asym / lsv / de</td><td class="num">+0.571(30.4)*** / −0.113(−4.23)*** / −0.044(−6.84)***</td><td>前瞻性能力信号，可"选经理"</td></tr>
+<tr><td>LSV</td><td>稳健性</td><td>alpha/excess/fut</td><td class="num">362/3211</td><td>risk_asym / lsv / de</td><td class="num">RA +0.12~0.57 全显著; lsv +; de −</td><td>全口径稳健，RA 始终最强</td></tr>
+</table>
+
+<!-- ============ S2 ============ -->
+<h2 id="s2">3 · 逐回归详解（A–I）</h2>
+<p>每个回归按「<b>结果表 → 结论 → 论文如何呈现</b>」三段展开。结论基于真实 β/t；呈现建议可直接落地为论文的表、图与叙述。</p>
+
+<!-- A L1 -->
+<h3>A · L1 背景特征层回归（个人信息不是能力轴）</h3>
+<table>
+<caption>表 2.1　L1 个人信息 → 业绩（DV=ff5_adj，OLS+HC1，N=362）</caption>
+<tr><th>变量</th><th>β</th><th>t</th><th>显著性</th><th>论文结论</th></tr>
+<tr><td>任期 <code>mgr_total_tenure_v2</code></td><td class="num">0.0</td><td class="num">1.20</td><td class="muted">ns</td><td>经验→能力假说不成立</td></tr>
+<tr><td>性别 <code>gender_m</code></td><td class="num">+0.0028</td><td class="num">0.75</td><td class="muted">ns</td><td>性别无差异</td></tr>
+<tr><td>CFA <code>cfa_d</code></td><td class="num sign">−0.0265</td><td class="num">−5.34</td><td class="sign">*** 但为负</td><td>持CFA的基金alpha反而更低</td></tr>
+<tr><td>规模 / 年龄（控制）</td><td class="num">+0.001 / −0.0069</td><td class="num">1.15 / −4.39</td><td>— / ***</td><td>年龄显著负（幸存偏差）</td></tr>
+</table>
+<div class="box note">
+<b>设计说明（为什么分三次、且共用同一组两个控制变量）：</b> 三个背景变量类型不同（任期=连续天数，性别/CFA=0/1 哑变量），且 L1 的任务是"逐个证伪"——证明每个背景特征<b>单独</b>都驱动不了业绩，从而降为控制变量。故采用 <b>one-at-a-time 设计</b>：每次只换一个 L1 变量，(1)任期、(2)性别、(3)CFA，<b>三者共用同一组控制变量</b> <code>log_aum</code>（规模）+ <code>log_fund_age</code>（年龄），并非(1)有两个、(2)(3)有别的。这组两个控制是全流水线 L1–L5 的通用基线。院校(school)因覆盖率仅 45.9% 未进主回归。任期还额外跑了一个 <code>excess_return</code> 口径复核（N=400，仍 ns）。
+</div>
+<div class="box note">
+<b>院校(school)回归尝试（用户：为什么做不了、你试着做一下）</b>：school 是<b>文本变量</b>，面板 91 个唯一值（且混入"北京大学管理科学"等院系名，很脏），基金层覆盖仅 <b>45.9%</b>。实际试跑 top-10 院校哑变量 + log_aum + log_fund_age（HC1）：N=<b>226</b>（从 362 砍 136 只），R2=0.134，<b>10 个哑变量仅 2 个显著</b>（中国人民大学 β=−0.012 t−2.50；北航 β=−0.014 t−2.14，均负、反直觉）——在 10 个里出 2 个 p&lt;0.05 基本是<b>多重检验伪显著</b>，不能当结论。变体加双边 TO_two_sided（按用户要求）：N=115，TO β=+0.018(t0.92) 仍不显著。结论：school <b>无稳健解释力</b>；进一步按<b>院校层次（C9/985/211/海外）</b>重跑——清洗 91 个脏值（"北京大学管理科学"→北京大学等）并归一后，N=226（OLS+HC1），四个层次哑变量<b>全部不显著</b>（|t|≤0.16，p≥0.875），描述性各层均值 ff5_adj 极差仅约 0.5pp，原"不进主模型、作覆盖受限背景控制"的决定正确。<b>TO 口径约定</b>：换手率以<b>双边 TO_two_sided 为规范测度</b>（覆盖 200 只），不做单边买卖分解。
+</div>
+<div class="box key">
+<b>结论</b>：个人信息层对业绩的<b>单独回归基本不显著</b>（任期、性别 ns）；CFA 虽显著但符号为负，属选择偏差/样本特征而非能力信号。因此本层<b>不作为能力画像的驱动轴，而是作为控制变量</b>进入所有集成回归——它捕获经理/基金层面的固定异质性，避免污染 L2–L5 行为维度。在 R6 组内固定效应中，性别/学历等不随时间变化的信息会被基金FE完全吸收，进一步印证"控制而非驱动"的角色。
+</div>
+
+
+<div class="box note">
+<b>文献对话：人力资本假说（Golec 1996；Niessen &amp; Ruenzi 2007）与本文 L1 的异同</b>
+<ul>
+<li><b>Golec (1996, 美国 1988–1990)</b>：更年轻、持 MBA、任期更长的经理带来更高风险调整收益；<b>任期影响最大</b>。→ "教育/经验→业绩"最强支持。</li>
+<li><b>Niessen &amp; Ruenzi (2007, 美国, 13,547 年-观测/3,333 只基金)</b>：女性经理更风险厌恶、交易更少（更少过度自信）；<b>男女业绩无差异</b>；但女性基金获 <b>约 17–18% 更低资金净流入</b>（刻板印象）。→ 关键是"无业绩差 + 有资金歧视"。</li>
+<li><b>Chevalier &amp; Ellison (1999)</b>：大学质量（SAT/选拔度）预测收益，但 <b>MBA 效应弱且不显著</b>。→ 已提示"学历≠能力"。</li>
+<li><b>本文 L1</b>：任期 ns、性别 ns、CFA 显著为负（选择偏差）、院校层次（见上）全部 ns → 个人信息单看都不驱动业绩。</li>
+<li><b>为什么和 Golec 不一样（猜测）</b>：① 样本时代——Golec 早期美国技能离散大，本文 2018–2025 A 股经理高度职业化、<b>资质变异被压缩</b>；② 中国反向关系——Xu &amp; Li (2005) 中国经理年龄/任期与业绩<b>负相关</b>，本文 log_fund_age 显著为负，与之吻合；③ 样本基金成熟、任期跨度窄。</li>
+<li><b><div class="box warn">
+<b>CFA 哑变量误导性核查（用户：CFA 负向不符合逻辑 → 已查实）</b>
+<p><b>结论：CFA 列是误导性变量，负系数不可作因果/能力解读。</b>基金层重统：400 只中仅 <b>19 只（4.75%）</b>标"有 CFA"；"有 CFA"组 ff5 alpha 均值 0.0124 <b>低于</b>"无 CFA"组 0.0207，正是 β=−0.0265(t−5.34) 的来源。</p>
+<ul>
+<li>联网调研：中国公募经理 CFA <b>实际持证率约 4–5%</b>（天天基金/Wind/脉脉），与我们的 4.75% 一致→数据"数得准"，<b>非人人有 CFA</b>；</li>
+<li>但 CFA 仅<b>单一证书标识</b>；大量经理持 CPA/FRM/ACCA/法律资格/海外证书（公开报道 CFA+FRM+CPA+司考常见，"实际持证远超披露"），这些在表中全编码为"否"；</li>
+<li>故 <code>cfa_d</code> 哑变量<b>非"有无专业资质"代理</b>，"否"={无证书}∪{有其他证书}∪{未调查}，负系数=样本/选择特征。</li>
+</ul>
+<p><b>论文处理：</b>CFA 行标注"选择偏差/数据局限，作控制、勿因果解读"；加注"覆盖率仅 4.75% 且不代全部资质"；未来应合并为"持证情况"复合变量。与表 2.9 / §3.5 的"CFA 负→作控制"一致。</p>
+</div>
+一致处</b>：与 Chevalier&Ellison 一致（MBA 弱）、与 Niessen&Ruenzi 一致（性别无业绩差）；CFA 负向中国自我选择，与"资质≠能力"自洽。→ 本文把 L1 降为控制变量，与现代文献细微结论自洽。</li>
+</ul>
+</div>
+
+<div class="box pres">
+<b>论文如何呈现</b>：① 用一张三列小表（列 (1)(2)(3) 分别对应任期/性别/CFA 单独回归），<b>刻意与 L2–L5 的"联合回归"形成对比</b>，凸显"个人信息不进联合模型"的方法论选择。② 在脚注说明 CFA 负系数的可能解释（样本期 2018–2025 持 CFA 经理更集中于特定策略/规模，或自我选择效应）。③ 在"变量说明"一节明确：school（院校）覆盖率仅 45.9%，<b>不进入主回归</b>，列为敏感性分析规划项。
+</div>
+
+<!-- B L2 -->
+<h3>B · L2 持仓偏离层（主动的"方向"比"量"重要）</h3>
+<table>
+<caption>表 2.2　L2 持仓偏离 → 业绩（DV=ff5_adj，N=362）</caption>
+<tr><th>变量</th><th>β</th><th>t</th><th>显著性</th><th>解读</th></tr>
+<tr><td>主动份额 <code>AS_improved</code></td><td class="num sign">−0.042</td><td class="num">−2.24</td><td class="sign">** 负</td><td>高主动份额反伴更低alpha</td></tr>
+<tr><td>行业偏离 <code>ICI</code></td><td class="num sigx">+0.044</td><td class="num">4.38</td><td class="sigx">*** 正</td><td>行业层面有意识集中下注→alpha</td></tr>
+<tr><td>行业集中度 <code>industry_hhi</code></td><td class="num">+0.048</td><td class="num">1.34</td><td class="muted">ns</td><td>—</td></tr>
+</table>
+<div class="box key">
+<b>结论</b>：与 Cremers &amp; Petajisto (2009) 在美国发现的"主动份额越高、业绩越好"相反，本文 <code>AS_improved</code> 显著为负——在中国主动股基样本中，<b>高主动份额反而伴随更低 alpha</b>，可能反映偏离基准更多是噪声交易而非能力。但 <code>ICI</code> 显著为正：经理在<b>行业层面的有意识偏离</b>（集中下注看好的行业）确实带来 alpha。两条信号方向相反，说明"<b>主动本身不是能力，主动的方向与集中度才是</b>"。组内FE下 L2 多为 ns，提示其解释力以截面排序为主。
+</div>
+<div class="box pres">
+<b>论文如何呈现</b>：① 这是论文最"反直觉"且有中国语境价值的发现，建议<b>单设一小节</b>并以散点图/分位组合图佐证（按 AS 与 ICI 分别十分位，画组合 alpha）。② 在表中将 AS 与 ICI 并列，用"<b>同号/异号</b>"标注列强调对比。③ 文献对话：明确引用 Cremers &amp; Petajisto (2009) 与 Kacperczyk, Sialm &amp; Zheng (2008)，把"中国市场上主动份额折价、行业偏离溢价"作为本文区别于成熟市场的贡献点。
+</div>
+<div class="box note">
+<b>权重与共线诊断（L2 三指标）</b>：三者是<b>同一条方程的三个独立自变量</b>，各有权重（斜率 β），并非拼成加权总分。实测（N=362，OLS+HC1）：标准化 β——<code>ICI</code> <b>+0.29</b>（权重最大、***）、<code>AS_improved</code> <b>−0.12</b>（** 负向）、<code>industry_hhi</code> <b>+0.05</b>（ns）。共线无忧：两两相关最大 |r|=0.35（AS–HHI 为 −0.35），<b>VIF 全部 ≈1.3–1.5</b>（远&lt;5），故 AS 负、ICI 正这两个相反符号是<b>真实分离</b>而非共线假象。AS–HHI 负相关 −0.35 还提示"集中基金主动份额反而低"，支持 ICI 才是主动能力代理、HHI 仅作控制。
+</div>
+<div class="box ctrl">
+<b>计算时的"权重"是什么层级：AS 用个股级，ICI / HHI 用申万31行业级</b>
+<ul>
+<li><b>两种"权重"别混</b>：上文"权重"指<b>回归斜率 β</b>（对业绩的边际贡献）；这里指<b>指标数学计算用的权重</b>——个股(stock)级还是行业(industry)级。</li>
+<li><b>AS_improved 用个股级权重</b>：<code>½·Σ_i|w_fund,i − w_bench,i|</code> 的 w 是<b>第 i 只个股</b>持仓占比（÷100 归到 0–1），逐股比偏离，颗粒度到单只股票（Cremers &amp; Petajisto 2009 标准定义）。</li>
+<li><b>ICI / industry_hhi 用申万31行业级权重</b>：先把持仓<b>聚合到申万31一级行业</b>取行业占比再做平方和；颗粒度到行业，不区分行业内个股。</li>
+<li><b>基准同一</b>：AS 与 ICI 的 <code>w_bench</code> 都来自"沪深300(真实权重)+中证500(等权)"合并后归一化 Σ=1 的复合基准。差异在"<b>把持仓切成多细</b>"——AS 切到个股、ICI/HHI 切到行业，故能区分"主动的量"与"主动的方向"。</li>
+</ul>
+</div>
+
+<!-- C L3 -->
+<h3>C · L3 交易执行层 + 换手与选择性交易</h3>
+<table>
+<caption>表 2.3　L3 交易 → 业绩（DV=ff5_adj，N=200）</caption>
+<tr><th>设定</th><th>变量</th><th>β</th><th>t</th><th>显著性</th></tr>
+<tr><td>双边</td><td><code>TO_two_sided</code></td><td class="num">+0.017</td><td class="num">1.28</td><td class="muted">ns</td></tr>
+<tr><td>双边</td><td><code>SDI</code></td><td class="num">+0.004</td><td class="num">0.36</td><td class="muted">ns</td></tr>
+</table>
+<div class="box key">
+<b>结论</b>：底层交易源文件仅覆盖 200 只基金（约 18%），这是“源文件只覆盖 200 只”的结构性限制，覆盖率提升依赖 CSMAR/Wind/iFinD 授权数据导出后重跑 <code>run_all.py</code>，非算法可解。双边换手率 TO_two_sided 与 alpha 无显著关系（ns）——换手是“技能+交易成本损耗”的混合，净效应抵消。组内FE（R6+TO, N=1043）下 SDI β=+0.021(t2.33)** 转显著，提示交易选择性（而非原始换手）在控制基金固定效应后更有解释力。
+</div>
+
+
+<div class="box note">
+<b>用持仓快照算"换手率"对比相邻两期（用户：能不能用持仓快照做换手）</b>
+<ul>
+<li><b>做法</b>：turnover_t = ½·Σ|w_t − w_{t−1}|（w=个股持仓占比，期内归一化），不依赖双边交易额。</li>
+<li><b>两种相邻</b>：① <b>连续可用快照</b>：342 只基金，ff5 ~ hold_turnover+log_aum+log_fund_age（HC1）β=<b>−0.0059 (t=−0.65) ns</b>，N=331，R²=0.083；② <b>严格季度相邻</b>：142 只，β=<b>−0.0493 (t=−3.12)***</b>，N=131，R²=0.106。</li>
+<li><b>读</b>：严格季度口径下组合换手越高 alpha 越低（***），与"频繁调仓侵蚀业绩"一致；连续口径因半年度披露间隔被平滑而不显著。方向均负。</li>
+<li><b>扩覆盖？</b> 持仓快照覆盖 342 只，但<b>交集=200</b>（交易 TO 基金全在快照里），无净增新基金；corr(持仓换手, TO)=<b>0.125</b>（弱）→ 两概念不同。定位：trade-based TO 的<b>互补视角</b>，非替代，仍受快照覆盖上限约束。</li>
+</ul>
+</div>
+
+<div class="box pres">
+<b>论文如何呈现</b>：① 用一张"覆盖率诊断表"诚实展示：TO 双边仅覆盖 200 只（18%），并加一句"覆盖率提升依赖 CSMAR/Wind 授权数据，非算法可解"。② 主回归表以双边 TO_two_sided 为规范测度，并附 SDI（选择性交易）作为交易行为轴。③ 在局限段明确：TO 结论<b>不外推至全样本</b> 400 只，仅代表有交易披露的子集。
+</div>
+
+<!-- D L4 -->
+<h3>D · L4 风险应对层（全文最强能力轴）</h3>
+<table>
+<caption>表 2.4　L4 风险应对 → 业绩。左：截面(DV=ff5_adj, N=340)；右：组内FE(DV=quarter_return, N=2668)</caption>
+<tr><th>变量</th><th>截面 β (t)</th><th>组内FE β (t)</th><th>结论</th></tr>
+<tr><td>主动增益 <code>ARG</code></td><td class="num sigx">+0.047 (2.39)**</td><td class="num sigx">+0.342 (10.70)***</td><td>双证据强正</td></tr>
+<tr><td>主动收益 <code>RG</code></td><td class="num sigx">+0.066 (2.53)**</td><td class="num sigx">+0.202 (11.68)***</td><td>双证据强正</td></tr>
+<tr><td>收益波动 <code>return_volatility</code></td><td class="num sigx">+0.148 (3.65)***</td><td class="num sigx">+0.900 (8.52)***</td><td>双证据强正</td></tr>
+</table>
+<div class="box key">
+<b>结论</b>：这是画像中<b>最坚实的支柱</b>。截面与组内FE下 ARG/RG/return_vol 全部显著为正，且组内FE系数不降反升（ARG 0.047→0.342、RG 0.066→0.202、return_vol 0.148→0.900，t 值全面两位数）。<span class="muted">（注：截面与组内FE因变量尺度不同——前者为 ff5_adj（基金层 alpha），后者为 quarter_return（季度收益），系数绝对值不可直接比较；两者均高度显著方为关键结论。）</span>这意味着"某只基金在某季度暂时提高主动风险增益，随之而来的是该季度收益的暂时性抬升"，<b>控制基金自身后仍成立</b>。这是画像中少数能逼近"因果"而非仅"排序"的维度：经理的风险应对能力是实时、可识别地转化为业绩的（支持 Grinblatt &amp; Titman 1993、Kacperczyk-Sialm-Zheng 2008）。
+</div>
+<div class="box note">
+<b>ARG 与 RG 会共线吗？为什么两个都要？（已用真实数据回答）</b>：<code>ARG = Σ|RG_t|</code> 是主动下注的<b>总幅度</b>（永远≥0，衡量"经理有多敢偏离、主动管理做了多少"——行为强度）；<code>RG</code>（面板口径，见 06_因变量.py）= 季度<b>净主动收益</b>（可正可负，衡量"主动下注押没押对"——方向/技能实现）。一个记"量"、一个记"方向"，概念正交。<b>实测 L4 截面 N=340 中 ARG 与 RG 相关仅 0.117</b>（极弱），全模型 VIF：ARG=3.13、RG=1.05、return_vol=1.05（均&lt;5，无共线；ARG 的 VIF≈3.1 来自 log_fund_age，与 RG 无关）。所以"一开始只有 ARG"会漏掉关键维度：ARG 高只说明经理活跃，活跃未必赚钱；补入 RG 才能区分"活跃且押对"(ARG↑RG↑) 与"活跃却押错"(ARG↑RG↓)。两者均双证据显著，说明"既活跃又押对"的经理才真正跑赢，且不受共线干扰。
+</div>
+<div class="box pres">
+<b>论文如何呈现</b>：① 这是论文的<b>主峰发现</b>，建议放在"核心实证"第一节，用一张"双口径对照表"（截面 vs 组内FE 并排）呈现，并在右侧增加"系数放大倍数"列直观显示组内FE下效应增强。② 附一张事件研究式图：选 ARG 最高的若干基金，画其季度 RG 与同期收益的散点/拟合线。③ 机制叙述锚定 Grinblatt-Titman (1993) 的"主动管理有真实能力"假说，并强调本文用<b>组内FE</b>把它从截面相关推进到"基金内随时间变化"的因果层面。
+</div>
+<div class="box ctrl">
+<b>RG 为什么要"归一化"？最后除以的 Σw_i 不是 1 吗？</b>
+<ul>
+<li><b>公式</b>：<code>RG_t = (R_fund,t − Σ_i w_i·R_i,t) / Σ_i w_i</code>。直觉"权重和应为 1"，但真实持仓里 Σw_i ≠ 1。</li>
+<li><b>为何 Σw_i ≠ 1</b>：持仓含<b>现金</b>、<b>已退市/停牌股</b>、<b>缺失股</b>——这些在 <code>w_i</code> 有权重，但收益端 <code>R_i,t</code> 缺失。代码里 <code>wsum</code> 只对"<b>该季有收益个股</b>"求和，故 wsum &lt; 1。</li>
+<li><b>为何要除</b>：分子是用"有收益那部分持仓"造的被动基准收益，权重未归一（只占 wsum 比例组合）。<b>除以 wsum 还原成占满 100% 组合的可比口径</b>，才能与基金实际收益 R_fund,t（100% 组合）相减得干净主动贡献。若不除，RG 被系统性低估。</li>
+<li><b>一句话</b>：Σw_i 是"有收益个股"权重和，<b>因含现金/退市/缺失股通常 &lt; 1</b>，必须归一，不能当 1。</li>
+</ul>
+</div>
+
+<!-- E L5 -->
+<h3>E · L5 认知偏差层（稳定的负向信号 + 分型变量）</h3>
+<table>
+<caption>表 2.5　L5 认知偏差 → 业绩。左：截面(DV=ff5_adj, N=362)；右：组内FE(DV=quarter_return, N=2668)</caption>
+<tr><th>变量</th><th>截面 β (t)</th><th>组内FE β (t)</th><th>结论</th></tr>
+<tr><td>风险不对称 <code>risk_asym</code></td><td class="num sigx">+0.113 (2.76)***</td><td class="num">+0.061 (0.94)</td><td>截面强、组内FE弱</td></tr>
+<tr><td>注意力偏差 <code>lsv</code></td><td class="num sigx">+0.112 (2.04)**</td><td class="num">−0.111 (−1.84)</td><td>截面正、组内FE微负</td></tr>
+<tr><td>处置效应 <code>de</code></td><td class="num sign">−0.073 (−4.50)***</td><td class="num sign">−0.026 (−3.33)***</td><td>两面皆负（稳定）</td></tr>
+</table>
+<div class="box key">
+<b>结论</b>：处置效应 <code>de</code> 在两个口径下都显著为负——经理越倾向"卖盈持亏"，业绩越差，且控制基金自身后仍成立，是画像中<b>稳定的负向能力信号</b>。LSV 截面正向（抱团/注意力集中伴高 alpha，中国市场特征），组内FE转微负，解释力偏截面。微妙之处：<code>risk_asym</code> 截面显著但组内FE不显著(t0.94)——其预测力主要来自<b>基金间排序</b>（某些基金系统性高不对称），而非基金内部时间变化。提示 RA 是"画像分型"变量而非"实时能力"变量，画像合成时需区别对待。
+</div>
+<div class="box note">
+<b>稳健性提示（诚实标注）</b>：在 R6 的 <code>excess_return</code> 口径下，risk_asym 的组内FE系数<b>翻转为显著负</b>（−0.153, t−3.82）。即 RA 的"基金内"符号随 DV 定义而变。论文应将其作为稳健性注记：RA 的主结论（截面强、预测强）不受影响，但其"组内FE方向"需谨慎解读，不宜夸大因果。
+</div>
+<div class="box pres">
+<b>论文如何呈现</b>：① 用"双口径表"把 de 的"两面皆负"加粗高亮，作为行为金融（Shefrin &amp; Statman 1985 处置效应）的中国证据。② 对 risk_asym，明确区分"分型变量"（截面/预测）与"实时能力"（组内FE），避免审稿人误读。③ 在附录放 excess_return 口径的 RA 翻转结果，体现严谨。
+</div>
+
+<!-- F R6 -->
+<h3>F · R6 组内固定效应（集成模型，逼近因果）</h3>
+<table>
+<caption>表 2.6　R6 组内FE（DV=quarter_return）。核心 N=2668；+de N=2668；+TO N=1043</caption>
+<tr><th>变量</th><th>核心 β (t)</th><th>+de β (t)</th><th>+TO β (t, N=1043)</th></tr>
+<tr><td>ARG</td><td class="num sigx">+0.342 (10.70)***</td><td class="num sigx">+0.342 (10.7)***</td><td class="num sigx">+0.239 (3.68)***</td></tr>
+<tr><td>RG</td><td class="num sigx">+0.202 (11.68)***</td><td class="num sigx">+0.202 (11.68)***</td><td class="num sigx">+0.178 (8.02)***</td></tr>
+<tr><td>return_volatility</td><td class="num sigx">+0.900 (8.52)***</td><td class="num sigx">+0.900 (8.52)***</td><td class="num sigx">+0.501 (4.67)***</td></tr>
+<tr><td>de</td><td class="muted">—</td><td class="num sign">−0.026 (−3.33)***</td><td class="muted">—</td></tr>
+<tr><td>SDI</td><td class="num">−0.004 (−0.46)</td><td class="num">−0.004 (−0.46)</td><td class="num sigx">+0.021 (2.33)**</td></tr>
+<tr><td>risk_asym</td><td class="num">+0.061 (0.94)</td><td class="num">+0.061 (0.94)</td><td class="num">−0.065 (−0.84)</td></tr>
+<tr><td>TO_two_sided</td><td class="muted">—</td><td class="muted">—</td><td class="num">−0.022 (−0.87)</td></tr>
+</table>
+<div class="box key">
+<b>结论</b>：在控制基金固定效应（吸收所有不随时间变化的经理/基金异质性，含 L1 个人信息）与年份FE后，<b>L4 风险应对三变量全面两位数显著</b>（ARG/RG/return_vol t≥8），是画像中唯一"控制自身后仍强"的维度——逼近因果的实时能力信号。L5 的 <code>de</code> 加入后显著为负(t−3.33)，稳定拖累；LSV/risk_asym 在组内FE下失力，印证其截面/分型属性。L2/L3（AS/ICI/SDI）在组内FE下多为 ns，说明其解释力以截面排序为主。
+</div>
+<div class="box pres">
+<b>论文如何呈现</b>：① 这是论文的"<b>主回归表</b>"（Table 主力），建议三列：(1) 核心、(2) +de、(3) +TO，列标题注明 N 与 DV。② 在表注明确："个人信息层变量被基金FE吸收，故不列出；ff5_adj 因面板内为常数改用 quarter_return 作 DV"。③ 附一个"截面 vs 组内FE 系数对比"小结表，直观展示哪些维度"只排序"、哪些"逼近因果"——这本身就是论文的方法论卖点。
+</div>
+
+<!-- G R3 -->
+<h3>G · R3 EGARCH 条件不对称稳健性（机制校验）</h3>
+<table>
+<caption>表 2.7　R3 条件不对称稳健性（DV=future_return，基金聚类，N=6931）</caption>
+<tr><th>模型</th><th>risk_asym β (t)</th><th>egarch_gamma β (t)</th><th>R²</th></tr>
+<tr><td>M1: RA + 控制</td><td class="num sigx">0.915 (18.7)***</td><td class="num">—</td><td class="num">0.077</td></tr>
+<tr><td>M2: RA + γ_wins(1/99) + 控制</td><td class="num sigx">0.924 (19.1)***</td><td class="num sigx">0.319 (3.3)**</td><td class="num">0.079</td></tr>
+<tr><td><span class="muted">（截尾前 M2，存档对照）</span></td><td class="num">0.918 (19.3)***</td><td class="num">1.35e-5 (26.3)†</td><td class="num">0.079</td></tr>
+</table>
+<div class="box key">
+<b>结论</b>：截尾前 γ 的 β 被 43 个失败拟合的哨兵值（γ=−8869）放大到 1.35e-5(t26.3) 的虚假"显著"（† 标记为数据假象）；1%/99% 截尾后 γ 变为 0.319(t3.3) 的<b>真实但温和</b>杠杆效应，且加入 γ 后 risk_asym 系数几乎不动（0.915→0.924）。这说明 <b>RiskAsym 的预测力并非被条件杠杆效应机械解释</b>，而是独立的行为学构念——画像中的 RA 轴是"真信号"。约 54% 的成功拟合基金 γ&lt;0（存在杠杆效应），仅约 7% 在 5% 水平统计显著，进一步说明底层股票波动不对称不足以吸收经理层面的行为风险不对称。
+</div>
+<div class="box pres">
+<b>论文如何呈现</b>：① 把"截尾前 vs 截尾后"作为<b>数据清洗透明度的示范</b>，在附录或脚注展示极端值处理过程（审稿人极看重）。② 主表只报截尾后的 M1/M2，把截尾前结果放入在线附录并标注"数据处理对照"。③ 机制叙述：将 R3 定位为"排除竞争性解释"的稳健性检验——证明画像 RA 不是股票层面波动结构的衍生物。
+</div>
+
+<div class="box note">
+<b>R3 白话详解（写给审稿人/读者，非专业版）</b>
+<p><b>一句话：</b>R3 是"证伪压力测试"——确认画像的 <b>RiskAsym（RA）</b>是经理<b>真实行为特征</b>，而非"底层股票波动规律"的伪装。</p>
+<p><b>为什么需要它：</b>股票有<b>杠杆效应</b>——跌时波动比涨时放大更厉害，这是股票物理属性、与经理无关。若 RA 只是该效应的"倒影"，就不配当行为轴。</p>
+<p><b>自变量 <code>egarch_gamma</code> 是什么、怎么算：</b>对<b>每只基金</b>日收益拟合 <b>EGARCH(1,1)</b>（≥250 日），模型 <code>log(σ²_t)=ω+α·|z|+γ·z+β·log(σ²)</code>，其中 <b>γ&lt;0 = 杠杆效应</b>。γ 是"每只基金一个数字"，度量其持仓波动在跌时是否比涨时更放大。</p>
+<p><b>为什么截尾：</b>43 只基金 γ 拟合失败成哨兵值 <b>−8869</b>（正常 ±0.1 内），撑爆尺度造出假显著（t=26.3）。在 1%/99% 截尾（γ_wins∈[−0.087,0.071]）后重跑。</p>
+<p><b>检验逻辑（表 2.7）：</b>DV=future_return，M1 仅 RA+控制，M2 再加 γ_wins。若 RA 是伪装，加 γ 后 RA 系数应缩水。结果：γ_wins 仅 <b>温和独立</b>效应 β=0.319(t3.3)**；RA 系数<b>几乎不动</b>（0.915→0.924，t 18.7→19.1）。→ <b>RA 是真实行为构念，非杠杆效应机械穿透</b>。这就是 RA 轴的"真信号合格证"。</p>
+</div>
+<!-- H R2 前向 -->
+<h3>H · R2 前向预测回归（画像预测未来业绩）</h3>
+<table>
+<caption>表 2.8　前向预测（DV=future_return，控制 log_aum+log_fund_age+年份FE，基金聚类）</caption>
+<tr><th>模型</th><th>N</th><th>risk_asym β (t)</th><th>lsv β (t)</th><th>de β (t)</th></tr>
+<tr><td>未来 4 季 (fut4q)</td><td class="num">3211</td><td class="num sigx">+0.571 (30.4)***</td><td class="num sign">−0.113 (−4.23)***</td><td class="num sign">−0.044 (−6.84)***</td></tr>
+<tr><td>未来 1 季 (fut1q)</td><td class="num">3213</td><td class="num sign">−0.321 (−7.05)***</td><td class="num sign">−0.485 (−6.20)***</td><td class="num">−0.029 (−1.92)*</td></tr>
+</table>
+<div class="box key">
+<b>结论</b>：画像（尤其 risk_asym）对<b>未来 4 季收益</b>有极强正向预测力（β=0.571, t=30.4），处置效应、注意力偏差均为负向预测因子。这说明能力画像是一个<b>前瞻性能力信号</b>，而非对历史业绩的事后描述——可直接用于"选经理"：高 RA、低 de、适度 LSV 的经理，未来更可能跑赢。未来 1 季 risk_asym 转负，反映短期反转（动量/反转的季节特征），属正常现象，不削弱 4 季维度的预测价值。
+</div>
+<div class="box pres">
+<b>论文如何呈现</b>：① 这是论文的"<b>应用价值</b>"锚点，建议单设"预测能力"一节，主表列 fut1q / fut4q 两栏，突出 4 季维度的巨大 t 值。② 附一张"按 RA 十分位分组的平均未来收益"柱状图，直观显示单调性——这是审稿人最爱看的"经济显著性"证据。③ 明确：前向回归<b>刻意不加基金FE</b>（保留基金间差异才能检验预测力），与 R6 形成方法论对照。<div class="box note">
+<b>为什么前向方程只放 risk_asym / lsv / de？</b>
+<p>表 2.8 的 RHS = <code>risk_asym + lsv + de</code> + 控制，是当时把前向研究<b>聚焦在 L5 认知偏差构念</b>的概念验证，<b>不代表其他层不能预测未来</b>。我们把各层代表变量单独对 fut4q 跑前向回归（基金聚类），发现 L4 的 ARG(t15.3)/return_volatility(t18.1)、L2 的 AS(t12.7)/ICI(t4.0) 也极显著：</p>
+<table class="ptable">
+<caption>表 2.8b　各层单独前向预测力（fut4q，基金聚类）</caption>
+<tr><th>层</th><th>变量</th><th>β (t)</th></tr>
+<tr><td>L2</td><td>AS / ICI</td><td class="num sigx">+0.090(12.7) / +0.030(4.05)***</td></tr>
+<tr><td>L3</td><td>TO</td><td class="num sigx">+0.020(2.29)**</td></tr>
+<tr><td>L4</td><td>ARG / return_volatility / RG</td><td class="num sigx">+0.154(15.3) / +0.487(18.1) / +0.037(5.64)***</td></tr>
+<tr><td>L5</td><td>risk_asym / lsv / de</td><td class="num sigx">+0.642(24.1) / −0.050(−3.24) / −0.090(−13.0)***</td></tr>
+</table>
+<p><b>"只放三个"是设定偏窄，不是证据偏窄。</b>建议论文补充"全画像预测力"递进式前向回归：逐层加入代表变量并报告<b>增量 R²</b>；注意 ARG 与 return_volatility 共线，宜用代表变量而非全集。已列入下一步。</p>
+</div>
+
+</div>
+
+<!-- I LSV -->
+<h3>I · LSV 重算（全口径稳健性）</h3>
+<table>
+<caption>表 2.9　LSV 重算（截面 alpha/excess + 前向，N=362 / 3211）</caption>
+<tr><th>模型</th><th>risk_asym β (t)</th><th>lsv β (t)</th><th>de β (t)</th></tr>
+<tr><td>CS alpha (含aum)</td><td class="num sigx">+0.113 (2.76)***</td><td class="num sigx">+0.112 (2.04)**</td><td class="num sign">−0.073 (−4.50)***</td></tr>
+<tr><td>CS excess (含aum)</td><td class="num sigx">+0.165 (3.61)***</td><td class="num sigx">+0.161 (3.13)***</td><td class="num sign">−0.051 (−2.88)***</td></tr>
+<tr><td>前向 fut4q (含aum)</td><td class="num sigx">+0.571 (30.4)***</td><td class="num sign">−0.113 (−4.23)***</td><td class="num sign">−0.044 (−6.84)***</td></tr>
+</table>
+<div class="box key">
+<b>结论</b>：无论从 alpha、超额收益还是未来收益的口径，RA 始终最强且全显著（β 0.12~0.57），lsv 在截面为正、de 始终为负——结论对 DV 口径与是否控制规模高度稳健。这巩固了"画像三轴（RA 正、lsv 截面正、de 负）"的可信度。
+</div>
+<div class="box pres">
+<b>论文如何呈现</b>：① 把 LSV 重算作为"稳健性"小节，用一张"多 DV 对照表"展示结论不随因变量定义漂移。② 可顺带说明 lsv 当前为<b>代理口径</b>（注意力偏差），严格复刻 Lakonishok-Shleifer-Vishny (1992) 原式列为下一步。
+</div>
+
+<!-- ============ S2B ============ -->
+<h2 id="s2b">3.5 · 回归符号与显著性深度解读：为什么正、为什么负、为什么不显著</h2>
+<p><b>系数符号</b>告诉我们"经理画像与业绩之间的方向"，<b>显著性</b>告诉我们"这个方向是否足以区别于纯噪声、是否在控制混淆后依然成立"。把全部结果按 (正显著 / 负显著 / 不显著) 三分，可以读出画像每个维度究竟是"<b>能力信号</b>"、"<b>行为拖累</b>"还是"<b>噪声 / 分型变量</b>"。下面逐条给出<b>基于文献与样本特征的经济学猜测</b>——均标注为"待检验的假说"，不是既定结论，论文中应如此措辞以免过度宣称。</p>
+
+<table>
+<caption>表 3.5.1　关键系数的符号 / 显著性 / 可能原因（猜测）/ 说明的问题</caption>
+<tr><th>变量（层）</th><th>符号</th><th>显著性（口径）</th><th>可能原因（猜测）</th><th>说明的问题</th></tr>
+<tr><td>ARG / RG / return_vol（L4）</td><td class="num sigx">正</td><td class="num sigx">截面+组内FE 均 ***</td><td>主动下注被市场奖励；承担并转化的风险获补偿</td><td>最可信的"实时能力"轴</td></tr>
+<tr><td>ICI（L2）</td><td class="num sigx">正</td><td class="num sigx">***</td><td>行业层面有意识集中下注 = 表达独立研究观点</td><td>"主动方向"创造价值</td></tr>
+<tr><td>AS_improved（L2）</td><td class="num sign">负</td><td class="num sign">**</td><td>无方向的主动偏离多为噪声交易 / 风格漂移</td><td>"主动量"非能力，反是拖累</td></tr>
+<tr><td>industry_hhi（L2）</td><td class="num">正</td><td class="num">ns</td><td>原始集中度不含"方向"，与 ICI 共线后被吸收</td><td>方向 &gt; 集中度</td></tr>
+<tr><td>mgr_tenure / gender_m（L1）</td><td class="num">≈0</td><td class="num">ns</td><td>经验被规模/年龄吸收，或已被市场定价</td><td>背景非能力代理</td></tr>
+<tr><td>cfa_d（L1）</td><td class="num sign">负</td><td class="num sign">***</td><td>选择偏差 / 样本构成（持CFA集中于特定策略）</td><td>反直觉，作控制，勿因果解读</td></tr>
+<tr><td>TO_two_sided（L3）</td><td class="num">≈0</td><td class="num">ns</td><td>换手是"技能+损耗"的混合，净效应抵消；N=200 受限</td><td>原始换手无信息，需分解</td></tr>
+<tr><td>SDI（L3）</td><td class="num sigx">正</td><td class="num">截面 ns / 组内FE **</td><td>择时交易能力只在控制基金FE后显现（执行技能）</td><td>交易选择性是"实时执行"非"截面特质"</td></tr>
+<tr><td>risk_asym（L5）</td><td class="num sigx">截面正</td><td class="num sigx">截面 *** / 组内FE ns（excess 翻负）</td><td>截面是基金间"分型"差异，非基金内时间变化</td><td>RA 是分类变量，非因果驱动</td></tr>
+<tr><td>lsv（L5）</td><td class="num sigx">截面正</td><td class="num sigx">截面 ** / 组内FE 微负</td><td>中国"抱团/注意力"截面溢价，非实时技能</td><td>截面风格标记</td></tr>
+<tr><td>de（L5）</td><td class="num sign">负</td><td class="num sign">双口径 ***</td><td>卖盈持亏系统性侵蚀组合质量</td><td>最稳健的负向行为信号</td></tr>
+<tr><td>egarch_gamma_wins（R3）</td><td class="num sigx">正</td><td class="num sigx">**</td><td>股票层条件杠杆效应真实但微弱</td><td>不吸收 RA，佐证 RA 独立性</td></tr>
+<tr><td>前向 risk_asym（fut4q / fut1q）</td><td class="num sigx">正 / 负</td><td class="num sigx">均 ***</td><td>中期画像持久预测；短期反转/动量季节</td><td>预测力有时限结构</td></tr>
+</table>
+
+<h3>3.5.1　正且显著：真实的"能力信号"</h3>
+<div class="box key">
+<b>ARG / RG / return_volatility（L4）</b>：三者截面与组内FE下<b>全部正且高度显著</b>，且组内FE系数不降反升。可能原因：<code>RG</code> 衡量"经理主动超配的权重是否押对了股票收益"——若为正且显著，说明主动下注是被市场奖励的真实选股能力（Grinblatt &amp; Titman 1993、Kacperczyk-Sialm-Zheng 2008）；<code>return_volatility</code> 为正，一部分是风险-收益权衡的机械成分，另一部分反映"敢承担并管理风险的经理获得了补偿"。两者在<b>控制基金自身后仍显著</b>，说明这不是"基金间排序"的假象，而是可识别的实时能力。<b>能说明的问题</b>：风险应对（L4）是画像中最无可争议的能力轴，论文应置于核心。
+</div>
+<div class="box key">
+<b>ICI 正 (***) vs AS_improved 负 (**)（L2）</b>：这是全文最反直觉也最有中国语境价值的对比。可能原因：<code>AS_improved</code>（组合相对基准的整体偏离）在中国主动股基样本中多为<b>噪声交易或风格漂移</b>——偏离基准未必是能力；而 <code>ICI</code>（行业层面的<b>有方向偏离</b>，即集中下注看好的行业）反映经理"有意识、有研究的观点表达"，这种偏离被市场奖励（与 Cremers &amp; Petajisto 2009 美股结论相反）。<b>能说明的问题</b>：画像精细化的价值——把"主动"拆成"量(AS)"与"方向(ICI)"后，结论从"主动无意义"变成"主动的方向才有意义"，应作为区别于成熟市场的主要贡献点。
+</div>
+<div class="box key">
+<b>RA 截面正、lsv 截面正（L5）、γ_wins 正（R3）、前向 fut4q RA 正</b>：截面与预测口径下，RA 的强正向说明"具有有利风险不对称的基金系统性跑赢"，且优势<b>能持续到未来 4 季</b>（β=0.571, t=30.4）。γ_wins 的正向（0.319, t3.3）表明底层股票的条件杠杆效应真实存在但<b>微弱</b>，无法解释经理层面 RA，反证 RA 是独立的行为学构念。<b>能说明的问题</b>：画像不仅解释历史，更能前瞻预测，可支撑"基于画像选经理"的应用。
+</div>
+
+<h3>3.5.2　负且显著：稳定的"行为拖累"</h3>
+<div class="box key">
+<b>de 处置效应（L5，双口径负 ***）</b>：经理越倾向"卖盈持亏"，业绩越差，且<b>截面与组内FE下都显著</b>。可能原因（行为金融经典机制）：过早了结赢家锁定小利、长期持有输家使组合质量随时间恶化，系统性侵蚀收益（Shefrin &amp; Statman 1985）。<b>能说明的问题</b>：这是画像中<b>最稳健的负向能力信号</b>——它不依赖基金间排序，控制基金自身后仍成立，是"经理行为偏误 → 业绩拖累"的干净证据，论文应重点呈现。
+</div>
+<div class="box note">
+<b>CFA（L1，负 ***，反直觉）</b>：持 CFA 的基金 alpha 反而更低。这<b>几乎可以肯定是选择偏差/样本构成</b>而非"CFA 损害能力"——样本中持 CFA 的经理可能集中于特定规模、策略或时期，而这些因素在控制变量之外仍有残留；也可能 CFA 信号的是更保守、低风险的风格，在样本期（2018–2025 含反弹）跑输。论文必须<b>谨慎措辞</b>：把它作为控制变量，明确"不可作因果解读"，切忌写成"CFA 无益"。
+</div>
+
+<h3>3.5.3　不显著：噪声、混淆，或"分型而非实时"</h3>
+<div class="box ctrl">
+<b>mgr_tenure / gender_m（L1，ns）</b>：任期与性别对 alpha 无显著解释力。可能原因：① 经验效应已被规模、年龄等控制变量吸收；② 在有效竞争的市场中，"经验"带来的超额信息优势已被套利定价掉；③ 性别在基金经理群体中没有系统性能力差异（与大量文献一致）。<b>能说明的问题</b>：人口学背景不是能力代理，这正是把它们<b>降级为控制变量</b>的实证依据。
+</div>
+<div class="box ctrl">
+<b>industry_hhi（L2，正但 ns）</b>：行业集中度本身不显著，但在纳入 ICI 后更明显。可能原因：原始 HHI 不含"偏离方向"——"高度集中但押错"与"高度集中且押对"相互抵消；一旦用 ICI 刻画"主动偏离的方向"，集中度信息就被吸收。<b>能说明的问题</b>：再次印证"方向 &gt; 集中度"，建模时应避免把 HHI 与 ICI 并列为独立信号。
+</div>
+<div class="box ctrl">
+<b>TO_two_sided（L3，ns）</b>：双边换手率与 alpha 无显著关系。可能原因：换手是"<b>技能 + 交易成本损耗</b>"的混合体——优秀经理的高换手是盈利交易，差经理的高换手是无效折腾，聚合后净效应抵消；加之本口径仅 200 只基金（N 受限）。<b>能说明的问题</b>：原始换手率信息量低，必须靠“选择性(SDI) 择时交易”提取结构，这正是 L3 的方法论贡献。
+</div>
+<div class="box ctrl">
+<b>risk_asym 组内FE 弱（且 excess 口径翻负）、lsv 组内FE 微负（L5）</b>：这两个变量在<b>截面</b>强、在<b>组内FE</b>弱，是整套结果里最需要小心解读的模式。可能原因：它们的预测力主要来自"<b>基金间排序</b>"——某些基金系统性地具有更高风险不对称或更高抱团度，因而平均业绩不同；但这并非"某只基金在某季度临时改变 RA/lsv 就会改变该季收益"的实时机制。RA 在 excess_return 口径下翻负，进一步说明其"基金内"方向对 DV 定义敏感。<b>能说明的问题</b>：RA 与 LSV 应定位为"<b>画像分型/分类变量</b>"而非"实时因果驱动"；在画像合成时，它们刻画"经理属于哪一类"，而不声称"改变它就能改变业绩"。这是诚实区分证据强度的关键。
+</div>
+
+<h3>3.5.5　统一框架与论文写作提示</h3>
+<div class="box">
+<b>把符号与显著性读成"证据性质"的三分法</b>：
+<ul>
+<li><b>正且显著（L4 全轴、ICI、RA 截面/预测、de 的反向稳健）</b> → 真实能力信号或行为拖累，论文主推。</li>
+<li><b>负且显著（de、AS、CFA）</b> → 稳定的负向机制；de 当能力信号，AS/CFA 当控制并谨慎措辞。</li>
+<li><b>不显著（L1 背景、HHI、TO 总量、RA/lsv 组内FE）</b> → 要么本就是控制变量（L1），要么需分解/换口径才能显形（TO、SDI），要么本质是分型变量而非实时驱动（RA、lsv）。</li>
+</ul>
+<b>论文呈现建议</b>：在"实证结果"章后单设一小节"<b>经济含义与符号解读</b>"，用一张类似表 3.5.1 的"符号-显著性-含义"总表，把每条显著/不显著结果都对应到一个<b>经济学假说</b>（明确标注"猜测/待检验"），并区分"能力信号 / 行为拖累 / 分型变量"三类证据性质。这比单纯罗列 β(t) 更能体现研究深度，也提前堵住审稿人"你这系数为什么不显著/为什么负号"的追问。
+</div>
+
+<!-- ============ S3 ============ -->
+<h2 id="s3">4 · 综合发现与论文核心论点</h2>
+<p>把所有回归拼起来，论文可以立起一条清晰的主线：</p>
+<div class="kpi">
+  <div><b>L4 风险应对</b><span>最强能力轴 · 双证据+组内FE逼近因果</span></div>
+  <div><b>L5 认知偏差</b><span>de 稳定负向信号；RA 分型变量</span></div>
+  <div><b>L2 持仓偏离</b><span>方向(ICI)正 / 量(AS)负，反直觉中国证据</span></div>
+  <div><b>L3 交易执行</b><span>受覆盖限制偏弱；SDI 选择性有解释力</span></div>
+  <div><b>L1 个人信息</b><span>不显著 → 控制变量，非驱动轴</span></div>
+</div>
+<div class="box key">
+<b>论文的核心论点（一句话）</b>：通过"个人信息–持仓–交易–风险应对–认知偏差"五维<b>精细化量化画像</b>，本文发现基金经理的能力主要凝结在<b>风险应对（L4）</b>与<b>认知偏差（L5）</b>的微观行为-财务结构，而非人口学背景（L1）；且这一画像不仅能解释历史业绩，更能<b>前瞻性预测</b>未来表现，可支撑"基于画像的基金经理评价与筛选"。
+</div>
+<div class="box">
+<b>雷达图（能力画像合成）</b>：把五维按"与业绩挂钩强度（截面 + 组内FE 双证据）"归一合成，得到每位经理的能力雷达图。主峰 = L4 + L5，L2 中等且方向分化，L3 受覆盖限制，L1 贴轴心（组内FE下塌缩至轴心）。这直接回应"画像如何全方位刻画经理能力"——重心在<b>行为-财务微观结构</b>，而非背景。更细的"哪些具体行为影响业绩、影响多大、方向如何"，见画像文档第 7 章「影响力排序图」（截面 β 横向可比的发散条形图：红=提升、绿=拖累、灰=不影响）。
+</div>
+<div class="box key">
+<b>一句话结论（哪些东西影响基金业绩）：</b><br>
+<span class="tag ok">提升业绩</span> 风险应对 L4 全轴（ARG/RG/收益波动率，<b>双证据</b>）、行业偏离 ICI（有方向的下注）、风险不对称 RA 与注意力 lsv（截面溢价）；<br>
+<span class="tag no">拖累业绩</span> 处置效应 de（卖盈持亏，<b>双证据</b>）、主动份额 AS（无方向漂移）、CFA（选择偏差，作控制）；<br>
+<span class="tag plan">不影响</span> 任期、性别、双边换手、行业集中度、选择性（截面）——作控制变量即可。
+</div>
+
+<!-- ============ S4 ============ -->
+<h2 id="s4">5 · 整篇论文写作框架（章节级）</h2>
+<p>基于当前已跑出的结果，建议论文按如下结构组织。括号内标注各章"写什么、用什么结果支撑"。</p>
+
+<h3>第 1 章　引言（Introduction）</h3>
+<ul>
+<li>提出核心问题：<b>如何用量化画像评价基金经理能力？</b> 现有文献多在单维度（主动份额、换手）评价，缺乏"五维全景 + 能力刻画"框架。</li>
+<li>贡献点（三点，对应结果）：① 构建五维行为-财务画像；② 用组内FE把"主动能力"从截面相关推进到基金内因果；③ 证明画像的前瞻预测力（可落地为选经理）。</li>
+</ul>
+
+<h3>第 2 章　文献与假说（Literature &amp; Hypotheses）</h3>
+<ul>
+<li>对话：Cremers-Petajisto (2009) 主动份额、Grinblatt-Titman (1993) 主动管理、Shefrin-Statman (1985) 处置效应、Lakonishok-Shleifer-Vishny (1992) 注意力、Kacperczyk-Sialm-Zheng (2008) 主动增益。</li>
+<li>提出分层假说：H1 风险应对正向（L4，强）；H2 处置效应负向（L5，强）；H3 主动方向（ICI）正向但主动量（AS）未必（L2，反直觉）；H4 个人信息非驱动（L1，弱）。</li>
+</ul>
+
+<h3>第 3 章　数据与方法（Data &amp; Methodology）</h3>
+<ul>
+<li>面板描述（400 只 / 2006Q2–2026Q2 / 9974 obs），变量字典（每个指标的公式与计算，已在流水线 <code>lib_metrics.py</code> 落地）。</li>
+<li><b>方法论三战术</b>：截面基准 / 组内FE / 前向预测——必须讲清 DV 口径树（ff5_adj vs quarter_return vs future_return）与为何如此选（见本文 §1）。</li>
+</ul>
+
+<h3>第 4 章　实证结果（Empirical Results）</h3>
+<ul>
+<li>4.1 分层专项（L1–L5）：对应本文表 2.1–2.5。重点讲 L2 反直觉、L4 最强、L5 de 稳定负。</li>
+<li>4.2 组内固定效应（R6，主回归表 2.6）：核心证据，逼近因果。</li>
+<li>4.3 机制与稳健性：R3 EGARCH 截尾（表 2.7）排除杠杆效应解释；LSV 多口径重算（表 2.9）。</li>
+<li>4.4 前向预测（表 2.8）：应用价值，RA 十分位分组图。</li>
+</ul>
+
+<h3>第 5 章　能力画像合成与应用（Profiling &amp; Application）</h3>
+<ul>
+<li>五维雷达图（本文 §4 图），把"画像→业绩"的强挂钩可视化。</li>
+<li>讨论画像如何用于经理评价/筛选（基于 fut4q 预测力）。</li>
+</ul>
+
+
+<div class="box key">
+<b>经理画像原型（论文"结论"章可直接落地的四类可识别经理）</b>
+<p>沿"强能力轴 vs 弱/负向轴"做有经济含义的类型划分（非聚类），便于经理评价与筛选：</p>
+<ul>
+<li><b>① 风控择股型（赢家）</b>：L4 ARG/RG 双证据强正、ICI 正 → 敢下注且押对，首选目标。</li>
+<li><b>② 行业集中下注型</b>：ICI 高、AS 低（负**）→ 赢在"行业方向"而非"偏离量"，中国语境"主动份额折价、行业偏离溢价"。</li>
+<li><b>③ 低偏误纪律型</b>：de 稳定负、risk_asym/lsv 受控 → 不追涨杀跌、不死扛亏损，稳定偏分型控制。</li>
+<li><b>④ 高换手噪声型（输家）</b>：换手高、严格季度口径换手越高 alpha 越低（***）→ 频繁调仓侵蚀业绩，应规避。</li>
+</ul>
+<b>统一结论</b>：L1 背景（院校/任期/性别/CFA）在四类原型中均"中立"——画像是关于<b>行为微观结构</b>而非人口学；筛选应锚定 L4/L5/L2 行为轴。
+</div>
+
+
+<h3>第 6 章　结论与局限（Conclusion）</h3>
+<ul>
+<li>总结核心发现；诚实列出覆盖局限（见本文 §5）与待补授权数据项。</li>
+</ul>
+
+<div class="box pres">
+<b>写作顺序建议</b>：先写第 3 章（方法口径树，最易被挑战），再写第 4 章（结果，用本文表 2.1–2.9 直接落地），最后回头写引言与文献让贡献点精准对齐结果。图表优先：每个回归至少一张表 + 关键发现一张图（雷达图、RA 十分位图、AS/ICI 对比图）。
+</div>
+
+<h3>5.x · 能力评分与分型（可视化落地）</h3>
+<p>把画像"产品化"：用<b>前向预测系数</b>给各维度加权，算出每只基金的<b>综合能力得分</b>，再按 z 分数规则分为四类原型。权重透明、可复算（见 <code>compute_scoring.py</code> / <code>scoring_results.json</code>）。</p>
+<table class="ptable">
+<caption>表 5.x.1　四类经理原型（本样本分布）</caption>
+<tr><th>原型</th><th>规则(z)</th><th>样本</th></tr>
+<tr><td>风控择股型(赢家)</td><td>RA≥0.5 ∧ ARG≥0.5 ∧ DE≤0.3</td><td class="num">33</td></tr>
+<tr><td>行业集中下注型</td><td>ICI≥0.5 ∧ AS≤0.3</td><td class="num">20</td></tr>
+<tr><td>低偏误纪律型</td><td>DE≤−0.5 ∧ |LSV|≤0.5</td><td class="num">29</td></tr>
+<tr><td>高换手噪声型(输家)</td><td>TO≥0.5 ∧ RA≤0</td><td class="num">57</td></tr>
+<tr><td>均衡型(其他)</td><td>其余</td><td class="num">261</td></tr>
+</table>
+<p>热力图（Top25×8 维，红=有利未来业绩）与分型分布：</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 906 626" font-family="system-ui,Segoe UI,Arial" font-size="11">
+<rect width="906" height="626" fill="#fff"/>
+<text x="10" y="24" font-size="13" font-weight="700" fill="#1f2937">基金经理能力热力图（Top25 by 综合得分，红=有利未来业绩，蓝=不利）</text>
+<text x="196.0" y="38" text-anchor="middle" fill="#374151">主动份额AS</text>
+<text x="288.0" y="38" text-anchor="middle" fill="#374151">行业集中度ICI</text>
+<text x="380.0" y="38" text-anchor="middle" fill="#374151">换手TO</text>
+<text x="472.0" y="38" text-anchor="middle" fill="#374151">主动收益ARG</text>
+<text x="564.0" y="38" text-anchor="middle" fill="#374151">收益波动RV</text>
+<text x="656.0" y="38" text-anchor="middle" fill="#374151">风险不对称RA</text>
+<text x="748.0" y="38" text-anchor="middle" fill="#374151">处置效应DE</text>
+<text x="840.0" y="38" text-anchor="middle" fill="#374151">羊群LSV</text>
+<text x="6" y="61.0" font-size="10" fill="#111827">21626</text>
+<text x="128" y="61.0" font-size="10" font-weight="700" fill="#b91c1c">+4.33</text>
+<rect x="150" y="48" width="89" height="17" fill="rgb(236,248,243)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="48" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="48" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="48" width="89" height="17" fill="rgb(255,23,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="48" width="89" height="17" fill="rgb(255,96,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="48" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="48" width="89" height="17" fill="rgb(255,40,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="48" width="89" height="17" fill="rgb(255,115,22)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="83.0" font-size="10" fill="#111827">21627</text>
+<text x="128" y="83.0" font-size="10" font-weight="700" fill="#b91c1c">+4.33</text>
+<rect x="150" y="70" width="89" height="17" fill="rgb(236,248,243)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="70" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="70" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="70" width="89" height="17" fill="rgb(255,23,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="70" width="89" height="17" fill="rgb(255,97,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="70" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="70" width="89" height="17" fill="rgb(255,40,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="70" width="89" height="17" fill="rgb(255,115,22)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="105.0" font-size="10" fill="#111827">24052</text>
+<text x="128" y="105.0" font-size="10" font-weight="700" fill="#b91c1c">+4.22</text>
+<rect x="150" y="92" width="89" height="17" fill="rgb(196,228,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="92" width="89" height="17" fill="rgb(253,170,113)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="92" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="92" width="89" height="17" fill="rgb(255,38,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="92" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="92" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="92" width="89" height="17" fill="rgb(255,14,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="92" width="89" height="17" fill="rgb(194,228,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="127.0" font-size="10" fill="#111827">24053</text>
+<text x="128" y="127.0" font-size="10" font-weight="700" fill="#b91c1c">+4.22</text>
+<rect x="150" y="114" width="89" height="17" fill="rgb(196,228,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="114" width="89" height="17" fill="rgb(253,170,113)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="114" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="114" width="89" height="17" fill="rgb(255,38,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="114" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="114" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="114" width="89" height="17" fill="rgb(255,14,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="114" width="89" height="17" fill="rgb(194,228,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="149.0" font-size="10" fill="#111827">23451</text>
+<text x="128" y="149.0" font-size="10" font-weight="700" fill="#b91c1c">+4.17</text>
+<rect x="150" y="136" width="89" height="17" fill="rgb(251,179,128)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="136" width="89" height="17" fill="rgb(235,250,248)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="136" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="136" width="89" height="17" fill="rgb(255,64,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="136" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="136" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="136" width="89" height="17" fill="rgb(240,230,214)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="136" width="89" height="17" fill="rgb(212,235,239)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="171.0" font-size="10" fill="#111827">23452</text>
+<text x="128" y="171.0" font-size="10" font-weight="700" fill="#b91c1c">+4.09</text>
+<rect x="150" y="158" width="89" height="17" fill="rgb(246,205,171)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="158" width="89" height="17" fill="rgb(237,241,232)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="158" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="158" width="89" height="17" fill="rgb(255,66,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="158" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="158" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="158" width="89" height="17" fill="rgb(240,230,214)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="158" width="89" height="17" fill="rgb(210,235,239)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="193.0" font-size="10" fill="#111827">16721</text>
+<text x="128" y="193.0" font-size="10" font-weight="700" fill="#b91c1c">+3.92</text>
+<rect x="150" y="180" width="89" height="17" fill="rgb(255,163,102)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="180" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="180" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="180" width="89" height="17" fill="rgb(255,37,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="180" width="89" height="17" fill="rgb(255,64,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="180" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="180" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="180" width="89" height="17" fill="rgb(237,242,233)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="215.0" font-size="10" fill="#111827">22709</text>
+<text x="128" y="215.0" font-size="10" font-weight="700" fill="#b91c1c">+3.67</text>
+<rect x="150" y="202" width="89" height="17" fill="rgb(244,210,181)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="202" width="89" height="17" fill="rgb(212,235,239)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="202" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="202" width="89" height="17" fill="rgb(255,132,50)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="202" width="89" height="17" fill="rgb(255,25,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="202" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="202" width="89" height="17" fill="rgb(251,179,128)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="202" width="89" height="17" fill="rgb(224,241,238)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="237.0" font-size="10" fill="#111827">24592</text>
+<text x="128" y="237.0" font-size="10" font-weight="700" fill="#b91c1c">+3.27</text>
+<rect x="150" y="224" width="89" height="17" fill="rgb(241,248,236)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="224" width="89" height="17" fill="rgb(252,176,123)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="224" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="224" width="89" height="17" fill="rgb(255,64,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="224" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="224" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="224" width="89" height="17" fill="rgb(255,14,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="224" width="89" height="17" fill="rgb(253,171,115)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="259.0" font-size="10" fill="#111827">24593</text>
+<text x="128" y="259.0" font-size="10" font-weight="700" fill="#b91c1c">+3.27</text>
+<rect x="150" y="246" width="89" height="17" fill="rgb(241,248,236)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="246" width="89" height="17" fill="rgb(252,176,123)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="246" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="246" width="89" height="17" fill="rgb(255,64,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="246" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="246" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="246" width="89" height="17" fill="rgb(255,14,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="246" width="89" height="17" fill="rgb(253,171,115)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="281.0" font-size="10" fill="#111827">21528</text>
+<text x="128" y="281.0" font-size="10" font-weight="700" fill="#b91c1c">+2.97</text>
+<rect x="150" y="268" width="89" height="17" fill="rgb(255,111,15)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="268" width="89" height="17" fill="rgb(239,235,223)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="268" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="268" width="89" height="17" fill="rgb(255,57,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="268" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="268" width="89" height="17" fill="rgb(255,9,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="268" width="89" height="17" fill="rgb(146,206,247)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="268" width="89" height="17" fill="rgb(12,147,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="303.0" font-size="10" fill="#111827">22364</text>
+<text x="128" y="303.0" font-size="10" font-weight="700" fill="#b91c1c">+2.92</text>
+<rect x="150" y="290" width="89" height="17" fill="rgb(251,182,134)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="290" width="89" height="17" fill="rgb(244,211,183)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="290" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="290" width="89" height="17" fill="rgb(255,40,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="290" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="290" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="290" width="89" height="17" fill="rgb(133,200,248)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="290" width="89" height="17" fill="rgb(150,208,246)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="325.0" font-size="10" fill="#111827">22365</text>
+<text x="128" y="325.0" font-size="10" font-weight="700" fill="#b91c1c">+2.88</text>
+<rect x="150" y="312" width="89" height="17" fill="rgb(249,191,149)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="312" width="89" height="17" fill="rgb(245,209,179)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="312" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="312" width="89" height="17" fill="rgb(255,37,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="312" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="312" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="312" width="89" height="17" fill="rgb(133,200,248)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="312" width="89" height="17" fill="rgb(132,200,248)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="347.0" font-size="10" fill="#111827">23397</text>
+<text x="128" y="347.0" font-size="10" font-weight="700" fill="#b91c1c">+2.74</text>
+<rect x="150" y="334" width="89" height="17" fill="rgb(255,127,43)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="334" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="334" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="334" width="89" height="17" fill="rgb(255,5,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="334" width="89" height="17" fill="rgb(255,44,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="334" width="89" height="17" fill="rgb(255,3,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="334" width="89" height="17" fill="rgb(255,131,48)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="334" width="89" height="17" fill="rgb(113,192,250)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="369.0" font-size="10" fill="#111827">23398</text>
+<text x="128" y="369.0" font-size="10" font-weight="700" fill="#b91c1c">+2.73</text>
+<rect x="150" y="356" width="89" height="17" fill="rgb(255,127,43)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="356" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="356" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="356" width="89" height="17" fill="rgb(255,5,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="356" width="89" height="17" fill="rgb(255,44,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="356" width="89" height="17" fill="rgb(255,4,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="356" width="89" height="17" fill="rgb(255,131,48)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="356" width="89" height="17" fill="rgb(113,192,250)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="391.0" font-size="10" fill="#111827">21594</text>
+<text x="128" y="391.0" font-size="10" font-weight="700" fill="#b91c1c">+2.63</text>
+<rect x="150" y="378" width="89" height="17" fill="rgb(235,246,237)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="378" width="89" height="17" fill="rgb(255,82,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="378" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="378" width="89" height="17" fill="rgb(255,98,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="378" width="89" height="17" fill="rgb(255,150,81)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="378" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="378" width="89" height="17" fill="rgb(253,254,235)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="378" width="89" height="17" fill="rgb(241,223,202)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="413.0" font-size="10" fill="#111827">21593</text>
+<text x="128" y="413.0" font-size="10" font-weight="700" fill="#b91c1c">+2.58</text>
+<rect x="150" y="400" width="89" height="17" fill="rgb(235,246,237)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="400" width="89" height="17" fill="rgb(255,82,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="400" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="400" width="89" height="17" fill="rgb(255,98,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="400" width="89" height="17" fill="rgb(255,150,80)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="400" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="400" width="89" height="17" fill="rgb(253,254,235)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="400" width="89" height="17" fill="rgb(241,223,202)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="435.0" font-size="10" fill="#111827">21511</text>
+<text x="128" y="435.0" font-size="10" font-weight="700" fill="#b91c1c">+2.57</text>
+<rect x="150" y="422" width="89" height="17" fill="rgb(205,232,240)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="422" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="422" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="422" width="89" height="17" fill="rgb(253,172,117)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="422" width="89" height="17" fill="rgb(254,168,110)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="422" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="422" width="89" height="17" fill="rgb(51,164,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="422" width="89" height="17" fill="rgb(248,251,235)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="457.0" font-size="10" fill="#111827">21510</text>
+<text x="128" y="457.0" font-size="10" font-weight="700" fill="#b91c1c">+2.55</text>
+<rect x="150" y="444" width="89" height="17" fill="rgb(205,232,240)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="444" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="444" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="444" width="89" height="17" fill="rgb(253,172,117)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="444" width="89" height="17" fill="rgb(254,168,110)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="444" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="444" width="89" height="17" fill="rgb(51,164,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="444" width="89" height="17" fill="rgb(248,251,235)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="479.0" font-size="10" fill="#111827">21523</text>
+<text x="128" y="479.0" font-size="10" font-weight="700" fill="#b91c1c">+2.47</text>
+<rect x="150" y="466" width="89" height="17" fill="rgb(253,170,114)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="466" width="89" height="17" fill="rgb(241,226,207)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="466" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="466" width="89" height="17" fill="rgb(255,42,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="466" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="466" width="89" height="17" fill="rgb(255,54,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="466" width="89" height="17" fill="rgb(158,211,245)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="466" width="89" height="17" fill="rgb(237,241,233)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="501.0" font-size="10" fill="#111827">22735</text>
+<text x="128" y="501.0" font-size="10" font-weight="700" fill="#b91c1c">+2.27</text>
+<rect x="150" y="488" width="89" height="17" fill="rgb(243,214,188)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="488" width="89" height="17" fill="rgb(236,247,243)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="488" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="488" width="89" height="17" fill="rgb(255,112,17)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="488" width="89" height="17" fill="rgb(255,142,67)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="488" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="488" width="89" height="17" fill="rgb(251,182,133)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="488" width="89" height="17" fill="rgb(82,178,254)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="523.0" font-size="10" fill="#111827">22740</text>
+<text x="128" y="523.0" font-size="10" font-weight="700" fill="#b91c1c">+2.21</text>
+<rect x="150" y="510" width="89" height="17" fill="rgb(239,233,219)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="510" width="89" height="17" fill="rgb(236,250,247)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="510" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="510" width="89" height="17" fill="rgb(255,142,67)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="510" width="89" height="17" fill="rgb(255,138,61)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="510" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="510" width="89" height="17" fill="rgb(244,213,185)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="510" width="89" height="17" fill="rgb(183,223,242)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="545.0" font-size="10" fill="#111827">22368</text>
+<text x="128" y="545.0" font-size="10" font-weight="700" fill="#b91c1c">+2.07</text>
+<rect x="150" y="532" width="89" height="17" fill="rgb(197,229,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="532" width="89" height="17" fill="rgb(232,244,237)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="532" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="532" width="89" height="17" fill="rgb(255,89,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="532" width="89" height="17" fill="rgb(255,58,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="532" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="532" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="532" width="89" height="17" fill="rgb(166,215,244)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="567.0" font-size="10" fill="#111827">17234</text>
+<text x="128" y="567.0" font-size="10" font-weight="700" fill="#b91c1c">+1.88</text>
+<rect x="150" y="554" width="89" height="17" fill="rgb(198,229,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="554" width="89" height="17" fill="rgb(229,243,237)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="554" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="554" width="89" height="17" fill="rgb(255,89,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="554" width="89" height="17" fill="rgb(255,57,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="554" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="554" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="554" width="89" height="17" fill="rgb(139,203,247)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="589.0" font-size="10" fill="#111827">18956</text>
+<text x="128" y="589.0" font-size="10" font-weight="700" fill="#b91c1c">+1.83</text>
+<rect x="150" y="576" width="89" height="17" fill="rgb(255,112,17)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="576" width="89" height="17" fill="rgb(254,168,110)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="576" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="576" width="89" height="17" fill="rgb(255,37,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="576" width="89" height="17" fill="rgb(255,144,70)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="576" width="89" height="17" fill="rgb(255,109,13)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="576" width="89" height="17" fill="rgb(255,102,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="576" width="89" height="17" fill="rgb(198,229,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 216" font-family="system-ui,Segoe UI,Arial" font-size="12">
+<rect width="620" height="216" fill="#fff"/>
+<text x="10" y="24" font-size="13" font-weight="700" fill="#1f2937">基金经理分型分布（基于 z 分数规则的 4 原型 + 均衡型）</text>
+<rect x="170" y="50" width="520.0" height="20" fill="#6b7280" rx="3"/>
+<text x="166" y="65.0" text-anchor="end" fill="#374151">均衡型(其他)</text>
+<text x="696.0" y="65.0" fill="#111827">261</text>
+<rect x="170" y="80" width="113.5632183908046" height="20" fill="#dc2626" rx="3"/>
+<text x="166" y="95.0" text-anchor="end" fill="#374151">高换手噪声型(输家)</text>
+<text x="289.5632183908046" y="95.0" fill="#111827">57</text>
+<rect x="170" y="110" width="65.74712643678161" height="20" fill="#16a34a" rx="3"/>
+<text x="166" y="125.0" text-anchor="end" fill="#374151">风控择股型(赢家)</text>
+<text x="241.74712643678163" y="125.0" fill="#111827">33</text>
+<rect x="170" y="140" width="57.77777777777778" height="20" fill="#0891b2" rx="3"/>
+<text x="166" y="155.0" text-anchor="end" fill="#374151">低偏误纪律型</text>
+<text x="233.77777777777777" y="155.0" fill="#111827">29</text>
+<rect x="170" y="170" width="39.84674329501916" height="20" fill="#d97706" rx="3"/>
+<text x="166" y="185.0" text-anchor="end" fill="#374151">行业集中下注型</text>
+<text x="215.84674329501917" y="185.0" fill="#111827">20</text>
+</svg>
+<table class="ptable">
+<caption>表 5.x.2　综合得分 Top/Bottom 各 5（完整 15 见 JSON）</caption>
+<tr><th>排名</th><th>基金</th><th>得分</th><th>基金</th><th>得分</th></tr>
+<tr><td>1</td><td>21626</td><td class="num sigx">+4.33</td><td>1407</td><td class="num sign">-2.14</td></tr>
+<tr><td>2</td><td>21627</td><td class="num sigx">+4.33</td><td>160220</td><td class="num sign">-1.67</td></tr>
+<tr><td>3</td><td>24052</td><td class="num sigx">+4.22</td><td>1194</td><td class="num sign">-1.52</td></tr>
+<tr><td>4</td><td>24053</td><td class="num sigx">+4.22</td><td>160226</td><td class="num sign">-1.50</td></tr>
+<tr><td>5</td><td>23451</td><td class="num sigx">+4.17</td><td>519770</td><td class="num sign">-1.39</td></tr>
+</table>
+<p><b>论文如何呈现：</b>此节可作"经理评价/筛选"应用章；热力图与分型条形图直接进正文，Top/Bottom 表进附录；强调"打分用前向预测力加权"的方法论透明度，呼应全文"画像→能力→业绩"主线。</p>
+<!-- ============ S5 ============ -->
+<h2 id="s5">6 · 诚实局限与下一步</h2>
+<table>
+<caption>表 3　各画像维度覆盖率与待补项（结论不外推至全样本的部分）</caption>
+<tr><th>维度/指标</th><th>当前覆盖</th><th>状态</th><th>待补（需授权数据）</th></tr>
+<tr><td>L1 school</td><td class="num">45.9%</td><td><span class="tag plan">规划</span></td><td>外部补全院校匹配</td></tr>
+<tr><td>L2 AS/ICI/HHI</td><td class="num">≈全样本</td><td><span class="tag ok">✅</span></td><td>—</td></tr>
+<tr><td>L3 TO</td><td class="num">18% (200只)</td><td><span class="tag weak">⚠</span></td><td>CSMAR/Wind 全样本交易</td></tr>
+<tr><td>L3 SDI</td><td class="num">≈64%</td><td><span class="tag ok">✅</span></td><td>—</td></tr>
+<tr><td>L4 ARG/RG/vol</td><td class="num">87–97%</td><td><span class="tag ok">✅</span></td><td>—</td></tr>
+<tr><td>L5 de</td><td class="num">46.3%（仅半年报/年报全持仓快照）</td><td><span class="tag weak">⚠</span></td><td>v2 半年度全持仓已含；季度=前十大代理不可用；Wind无全持仓（P3经Wind撤销）</td></tr>
+<tr><td>L5 risk_asym/lsv</td><td class="num">72–92%</td><td><span class="tag ok">✅</span></td><td>lsv 为代理口径，待严格复刻</td></tr>
+</table>
+<div class="box note">
+<b>诚实声明</b>：本文所有"显著/不显著"均附带 N 与样本口径；低覆盖指标（de、TO、school）的结论<b>不外推至全样本</b>。DE/LSV 基于 v2 持仓：半年度为全持仓（准确）、季度为前十大代理（受限），本文将其作为<b>附录稳健性测度</b>，结论限于半年度覆盖样本（约 44–46%），不外延。覆盖率的根本提升依赖 CSMAR/Wind/iFinD 等授权终端导出后重跑 <code>run_all.py</code>，本沙箱无法免费补齐（注：Wind 仅前十大，全持仓须走 CSMAR）。已完成的 R6 组内FE、R3 γ截尾、前向、LSV 重算均已落盘于 <code>output/</code>。
+</div>
+
+<div class="foot">
+本文档为 <code>基金经理能力画像与业绩评价.html</code> 的<b>配套写作指南</b>，所有回归数与公式来自 <code>指标计算流水线/output/</code> 真实 CSV（分层回归、组内FE、R3_gamma截尾重跑、前向回归核对、LSV回归重算），无虚构。生成日期 2026-08-14。
+</div>
+
+</div>
+</body>
+</html>

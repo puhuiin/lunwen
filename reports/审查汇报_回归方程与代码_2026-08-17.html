@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>回归方程与代码审查汇报 · 基金经理行为分析研究</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1f2733; --muted:#5b6776; --line:#e4e8ee;
+    --accent:#1a5fb4; --accent2:#0b7d6b; --warn:#b25e00; --danger:#b42318;
+    --good:#0b7d3b; --code-bg:#f3f5f8; --code-ink:#283042; --chip:#eef3fb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.7;font-size:15.5px}
+  a{color:var(--accent);text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 80px}
+  header.hero{background:linear-gradient(135deg,#13335f,#1a5fb4 65%,#0b7d6b);color:#fff;
+    padding:42px 22px 34px;margin-bottom:26px;box-shadow:0 4px 18px rgba(20,40,80,.18)}
+  header.hero .inner{max-width:1080px;margin:0 auto}
+  header.hero h1{margin:0 0 8px;font-size:27px;letter-spacing:.5px}
+  header.hero p{margin:4px 0;opacity:.94;font-size:14.5px}
+  .tagrow{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+  .tag{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+    padding:4px 11px;border-radius:20px;font-size:12.5px}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(247,248,250,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:24px}
+  nav.toc .inner{max-width:1080px;margin:0 auto;padding:0 22px;display:flex;gap:7px;flex-wrap:wrap}
+  nav.toc a{font-size:12.8px;background:var(--chip);border:1px solid var(--line);
+    padding:5px 10px;border-radius:8px;color:var(--ink)}
+  nav.toc a:hover{border-color:var(--accent);color:var(--accent)}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:24px 26px;margin:18px 0;box-shadow:0 1px 3px rgba(30,50,80,.05)}
+  h2{font-size:20px;margin:0 0 6px;color:#13335f;border-bottom:2px solid #d7e3f4;padding-bottom:8px}
+  h2 .num{display:inline-block;background:var(--accent);color:#fff;border-radius:7px;
+    font-size:13px;padding:2px 9px;margin-right:9px;vertical-align:middle}
+  h3{font-size:16px;margin:22px 0 8px;color:#1a4f86}
+  h4{font-size:14.5px;margin:16px 0 6px;color:var(--muted)}
+  p{margin:9px 0}
+  code{background:var(--code-bg);color:var(--code-ink);padding:1.5px 6px;border-radius:5px;
+    font-family:"SF Mono",Consolas,"Liberation Mono",monospace;font-size:13px}
+  pre{background:var(--code-bg);color:var(--code-ink);border:1px solid var(--line);
+    border-left:4px solid var(--accent);border-radius:9px;padding:14px 16px;overflow:auto;
+    font-family:"SF Mono",Consolas,"Liberation Mono",monospace;font-size:12.7px;line-height:1.55;margin:12px 0}
+  pre .cm{color:#7a8aa0;font-style:italic}
+  pre .kw{color:#9a3412;font-weight:600}
+  pre .fn{color:#1a5fb4}
+  pre .st{color:#0b7d3b}
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:13.6px}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:#eef3fb;color:#13335f;font-weight:600}
+  tr:nth-child(even) td{background:#fafcff}
+  .formula{background:#fbfdff;border:1px solid #d7e3f4;border-radius:10px;padding:14px 16px;
+    margin:12px 0;text-align:center;overflow-x:auto}
+  .formula .cap{display:block;margin-top:8px;font-size:12.5px;color:var(--muted);text-align:left}
+  .callout{border-radius:11px;padding:13px 16px;margin:14px 0;border:1px solid}
+  .callout.ok{background:#f0faf3;border-color:#bfe6cb;color:#0b5d2e}
+  .callout.warn{background:#fff6ec;border-color:#f3d6ad;color:#8a4b00}
+  .callout.key{background:#eef4ff;border-color:#c4d6f6;color:#13335f}
+  .callout.danger{background:#fdeeec;border-color:#f3c4bd;color:#8f1d12}
+  .callout b{display:block;margin-bottom:4px;font-size:14px}
+  .spec{border:1px solid var(--line);border-radius:11px;padding:0;margin:14px 0;overflow:hidden}
+  .spec .hd{background:#13335f;color:#fff;padding:9px 14px;font-weight:600;font-size:14px}
+  .spec .bd{padding:14px 16px}
+  .filepath{font-family:"SF Mono",Consolas,monospace;font-size:12.5px;background:#eef3fb;
+    color:#13335f;border:1px solid #d7e3f4;border-radius:7px;padding:6px 10px;display:inline-block;margin:4px 0}
+  .kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+  .kv .box{background:var(--chip);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+  .kv .box .n{font-size:21px;font-weight:700;color:var(--accent)}
+  .kv .box .l{font-size:12px;color:var(--muted);margin-top:2px}
+  .sig-ns{color:var(--muted)} .sig-star{color:var(--good);font-weight:700}
+  ul.tight li{margin:4px 0}
+  .foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:30px}
+  .pill{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:600}
+  .pill.g{background:#e3f5e8;color:#0b7d3b}.pill.r{background:#fde8e4;color:#b42318}
+  .pill.y{background:#fdf0d9;color:#8a4b00}.pill.b{background:#e3edfb;color:#1a5fb4}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="inner">
+    <h1>回归方程与代码审查汇报</h1>
+    <p>基金经理行为分析研究 · 数据处理与回归正确性独立审查</p>
+    <p>审查日期：2026-08-17 ｜ 审查对象：指标计算流水线 + 两套回归规格（M4 / H1–H5）</p>
+    <div class="tagrow">
+      <span class="tag">面板 9,974 观测 / 400 基金</span>
+      <span class="tag">CGM2011 双向聚类（手写 = statsmodels Δt=0）</span>
+      <span class="tag">M4 可复现（行为系数 ≤1e-3）</span>
+      <span class="tag">H1 复核一致 t=2.46</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc"><div class="inner">
+  <a href="#s0">结论摘要</a>
+  <a href="#s1">管道总览</a>
+  <a href="#s2">面板口径</a>
+  <a href="#s3">两套规格澄清</a>
+  <a href="#s4">因变量公式</a>
+  <a href="#s5">指标公式 L1–L5</a>
+  <a href="#s6">双向聚类</a>
+  <a href="#s6fit">拟合驱动</a>
+  <a href="#s7">回归结果</a>
+  <a href="#s8">验证结论</a>
+  <a href="#s9">文件清单</a>
+  <a href="#s10">局限披露</a>
+</div></nav>
+
+<div class="wrap">
+
+<!-- ============ 0. 结论摘要 ============ -->
+<section id="s0">
+  <h2><span class="num">0</span>结论摘要（结论先行）</h2>
+  <div class="callout ok">
+    <b>✓ 总体判定：数据处理与回归实现正确、可复现、口径自洽</b>
+    <ul class="tight">
+      <li><b>面板构建正确</b>：观测索引由净值历史派生，已剔除未来残缺季度（无样本内泄漏），共 9,974 观测 / 400 基金 / 2006Q4–2026Q2。</li>
+      <li><b>聚类实现权威</b>：手写 CGM2011 双向聚类与 statsmodels 原生双向聚类（关闭小样本修正）逐位一致，<code>max|Δt| = 0.00000</code>。</li>
+      <li><b>M4 可复现</b>：刷新重算与基准 JSON 比较，全部行为指标系数差异 ≤ 1e-3；仅 FF5 因子载荷列因面板刷新轻微陈旧（Δβ≤0.028，不影响结论）。</li>
+      <li><b>H1 复核一致</b>：SDI 在 quarter_return 口径下重算 t=2.464，与基准 JSON 2.459 吻合 ✓。</li>
+    </ul>
+  </div>
+  <div class="callout key">
+    <b>⚠ 关键口径澄清（务必在论文与汇报中如实区分，勿混用）</b>
+    本项目中存在<b>两套独立回归规格</b>，其结论不可直接对比：
+    <ul class="tight" style="margin-top:6px">
+      <li><b>M4（v4 基准，权威）</b>：因变量 <code>ff5_adj_return</code>（FF5 调整 alpha），<b>混合 OLS、无基金 FE</b>，仅年份虚拟 + CGM 双向聚类。此规格下 <b>SDI 近零（t≈−0.00）、TO_wind 不显著（t≈1.07）</b>。</li>
+      <li><b>H1–H5（HONEST 诚实版）</b>：因变量 <code>quarter_return</code>，<b>基金 FE demeaning + 年份哑变量 + 双向聚类</b>。此规格下 <b>SDI 显著（t≈2.46）、TO_wind 边际（t≈1.78）</b>。</li>
+    </ul>
+    两套规格的差异源于「因变量选择」与「是否吸收基金固定效应」——这是计量经济学上不同的研究问题，二者结论同时成立且互不矛盾。
+  </div>
+</section>
+
+<!-- ============ 1. 管道总览 ============ -->
+<section id="s1">
+  <h2><span class="num">1</span>数据处理流水线总览</h2>
+  <p>一键复现入口 <code>run_full.py</code> 依次调用「数据处理流水线」(<code>run_all.py</code>) 与「诚实回归」(<code>L3_L1_regressions_HONEST_2026-08-14.py</code>)。所有路径均基于 <code>__file__</code> 推导，可从任意目录运行。</p>
+
+  <h4>文件位置</h4>
+  <div class="filepath">D:\Desktop\基金经理行为分析研究\run_full.py</div><br>
+  <div class="filepath">D:\Desktop\基金经理行为分析研究\指标计算流水线\run_all.py</div>
+
+  <h4>run_all.py — 10 步流水线定义（核心摘录）</h4>
+  <pre><span class="cm"># 指标计算流水线/run_all.py</span>
+STEPS = [
+    <span class="st">"07_整合持仓数据.py"</span>,      <span class="cm"># 构建 v2 全持仓（02/03/04 依赖）</span>
+    <span class="st">"00_构建面板骨架.py"</span>,      <span class="cm"># 观测索引 fund_code × 季度</span>
+    <span class="st">"01_L1_背景特征.py"</span>,      <span class="cm"># 经理背景 / 控制变量</span>
+    <span class="st">"02_L2_持仓偏离.py"</span>,      <span class="cm"># ActiveShare / 行业集中度</span>
+    <span class="st">"03_L3_交易执行.py"</span>,      <span class="cm"># SDI / 换手率(双边) / OCI</span>
+    <span class="st">"04_L4_风险应对.py"</span>,      <span class="cm"># ARG / 收益波动</span>
+    <span class="st">"05_L5_认知偏差.py"</span>,      <span class="cm"># DE / PGR / PLR / LSV / 风险不对称</span>
+    <span class="st">"06_因变量.py"</span>,           <span class="cm"># 季度收益 / 超额收益 / FF 因子</span>
+    <span class="st">"99_合并面板.py"</span>,        <span class="cm"># → 主分析面板_重建.csv</span>
+    <span class="st">"07b_并入Wind换手率.py"</span>,  <span class="cm"># → 主分析面板_重建_含TOwind.csv</span>
+]</pre>
+  <div class="callout ok"><b>产物</b><code>指标计算流水线/output/主分析面板_重建_含TOwind.csv</code>（论文用主面板，含 TO_wind 86% 覆盖）。回归一律读取此面板。</div>
+</section>
+
+<!-- ============ 2. 面板口径 ============ -->
+<section id="s2">
+  <h2><span class="num">2</span>观测面板口径与覆盖核对</h2>
+  <p>观测索引（fund_code, year, quarter, report_date）由 <code>lib_metrics.load_skeleton()</code> 从净值历史派生：凡能算出季度收益的 (基金, 季度) 即纳入样本；<code>report_date = 季度末 + 1 天</code>。</p>
+
+  <h4>lib_metrics.py — 未来季度剔除（防样本内泄漏，关键正确性点）</h4>
+  <div class="filepath">D:\Desktop\基金经理行为分析研究\指标计算流水线\lib_metrics.py · load_skeleton()</div>
+  <pre>max_date = nav[<span class="st">"date"</span>].max()          <span class="cm"># 净值实际覆盖末尾</span>
+fr[<span class="st">"q_end"</span>] = fr[<span class="st">"report_date"</span>] - pd.Timedelta(days=1)
+fr = fr[fr[<span class="st">"q_end"</span>] &lt;= max_date].drop(columns=[<span class="st">"q_end"</span>])  <span class="cm"># 剔除残缺未来季</span>
+<span class="cm"># 例：净值截至 2026-08-07 → 2026Q3(季度末 09-30) 自动剔除，样本止于 2026Q2</span></pre>
+
+  <h3>面板规模与指标覆盖（独立复核脚本统计量）</h3>
+  <div class="kv">
+    <div class="box"><div class="n">9,974</div><div class="l">观测行数</div></div>
+    <div class="box"><div class="n">400</div><div class="l">基金数</div></div>
+    <div class="box"><div class="n">2006Q4–2026Q2</div><div class="l">样本区间</div></div>
+  </div>
+  <table>
+    <tr><th>变量</th><th>非空</th><th>覆盖%</th><th>口径说明</th></tr>
+    <tr><td>quarter_return</td><td>9,974</td><td>100.0%</td><td>净值复利季度收益（因变量 H 系）</td></tr>
+    <tr><td>ff5_adj_return</td><td>9,698</td><td>97.2%</td><td>FF5 时序回归截距 alpha（因变量 M4）</td></tr>
+    <tr><td>avg_aum</td><td>9,879</td><td>99.1%</td><td>规模控制（net_asset≤0 置 NaN 防误纳）</td></tr>
+    <tr><td>AS_improved</td><td>9,419</td><td>94.4%</td><td>主动份额 L2</td></tr>
+    <tr><td>ICI / industry_hhi</td><td>9,407</td><td>94.3%</td><td>行业集中度 L2（申万31）</td></tr>
+    <tr><td>ARG</td><td>9,648</td><td>96.7%</td><td>调仓收益缺口总和 L4</td></tr>
+    <tr><td>return_volatility</td><td>9,181</td><td>92.1%</td><td>滚动 8 期收益标准差 L4</td></tr>
+    <tr><td>lsv</td><td>9,187</td><td>92.1%</td><td>LSV 趋同度代理 L5</td></tr>
+    <tr><td>risk_asym</td><td>7,185</td><td>72.0%</td><td>风险不对称滚动 L5</td></tr>
+    <tr><td>SDI</td><td>6,362</td><td>63.8%</td><td>风格漂移（窗口=8，有效始于 2022）</td></tr>
+    <tr><td>TO_wind</td><td>8,642</td><td>86.7%</td><td>Wind 单边换手率（主换手率）</td></tr>
+    <tr><td>TO_two_sided / OCI</td><td>1,799</td><td>18.0%</td><td>真双边换手率（200 只子集，稳健性）</td></tr>
+    <tr><td>de</td><td>4,650</td><td>46.6%</td><td>处置效应（结构性缺失，见 §10）</td></tr>
+  </table>
+  <div class="callout warn"><b>覆盖与预期一致</b>：TO_wind 86%、全持仓 v2 衍生指标 ~94%、SDI 64%（窗口暖机）、de 47%（半年频全持仓快照）均符合设计覆盖上限，<b>无异常缺失</b>。</div>
+</section>
+
+<!-- ============ 3. 两套规格澄清 ============ -->
+<section id="s3">
+  <h2><span class="num">3</span>两套回归规格的明确区分（审查核心）</h2>
+
+  <div class="spec">
+    <div class="hd">规格 A · M4（v4 基准，权威主回归）</div>
+    <div class="bd">
+      <p><b>研究问题</b>：在控制 FF5 因子与全部行为/控制变量后，各行为指标对「基金选股 alpha」的<b>联合</b>边际贡献。</p>
+      <div class="formula">
+        $$r^{ff5}_{it}=\alpha+\beta_1\log AUM_{it}+\sum_{f\in\{MKT,SMB,HML,RMW,CMA\}}\beta_f\,ff5_{fit}+\beta_{age}\log Age_{it}+\beta_{ten}mgr\_tenure_{it}$$
+        $$+\beta_{AS}AS_{it}+\beta_{ICI}ICI_{it}+\beta_{HHI}HHI_{it}+\beta_{SDI}SDI_{it}+\beta_{TO}TO^{wind}_{it}+\beta_{ARG}ARG_{it}+\beta_{RV}RV_{it}$$
+        $$+\beta_{de}DE_{it}+\beta_{lsv}LSV_{it}+\beta_{ra}RA_{it}+\sum_{y}\delta_y\mathbf 1[year=y]+\varepsilon_{it}$$
+        <span class="cap">因变量 <code>ff5_adj_return_w</code>（FF5 调整 alpha，全变量 1%/99% 缩尾）。估计量：<b>混合 OLS，无基金 FE</b>；仅 <code>C(year)</code> 吸收年份效应；SE 为 fund×year 双向聚类（CGM2011）。N=2,264 / 348 基金 / R²=0.129。</span>
+<div class="callout key"><b>公式里的 ∑_y δ_y·1[year=y] 是什么？</b> 这是<b>年份固定效应（year fixed effects）</b>的紧凑写法。
+<ul>
+<li><code>1[year=y]</code> 是<b>指示函数（虚拟变量 / dummy）</b>：当观测 i 的年份等于 y 时取 1，否则取 0。</li>
+<li><code>δ_y</code> 是第 y 年的系数。对每一条观测，所有年份里只有"它自身那一年"对应的指示为 1，因此求和后该项坍缩为 <code>δ_year(i)</code>——等价于"给每个年份一个独立的截距偏移"。</li>
+<li><b>作用</b>：吸收所有基金共同面对的宏观 / 市场冲击（牛熊、利率、风格轮动、系统性风险），避免把"时间趋势 / 市场 beta"误归为经理的截面或时序能力。这正是代码里 <code>C(year)</code>（statsmodels 自动展开为年份哑变量，见 §6 行 394）所做的事。</li>
+</ul>
+<b>一句话</b>：<code>∑_y δ_y·1[year=y]</code> = "一整套年份哑变量"，让模型只比较"同一年内"的基金差异。</div>
+      </div>
+      <div class="callout key"><b>关键结论</b>：此规格下 <b>SDI 近零（β=−2.3e-6, t=−0.00, p=0.999）</b>、<b>TO_wind 不显著（t=1.07, p=0.287）</b>；而 <b>ARG(t=2.98***)、risk_asym(t=3.57***)、de(t=−2.99***)、ICI(t=3.74***)、AS(t=−2.81***)</b> 显著。<b>L5 增量 R²=0.035</b>。</div>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="hd">规格 B · H1–H5（HONEST 诚实版，单指标规格）</div>
+    <div class="bd">
+      <p><b>研究问题</b>：在吸收基金固定效应后，<b>单个</b>行为指标对「原始季度收益」的边际效应（避免多重共线性掩盖，逐假设检验）。</p>
+      <div class="formula">
+        $$r^{q}_{it}=\alpha_i+\beta\cdot IV_{it}+\sum_{c\in C}\gamma_c\,C_{it}+\sum_{y}\delta_y\mathbf 1[year=y]+\varepsilon_{it},\qquad \alpha_i=\text{基金 FE（within demeaning）}$$
+        <span class="cap">因变量 <code>quarter_return</code>；<code>IV</code> ∈ {SDI, TO_wind, TO_two_sided, OCI, SDI+TO+OCI}；控制集 <code>C</code> = {log_aum, log_fund_age, mgr_total_tenure_v2, gender_m, cfa_d, edu_postgrad}；SE 为 fund×year 双向聚类。估计量含<b>基金 FE demeaning</b>。</span>
+      </div>
+      <div class="callout key"><b>关键结论</b>：此规格下 <b>SDI 显著（β=0.103, t=2.46**, H1/H5 N=6,337）</b>、<b>TO_wind 边际（t=1.78*, p=0.075, H2 N=8,480）</b>；联合规格 H4（N=1,192）中 SDI 仍显著（t=3.09***）。「基金 FE」吸收了跨基金水平差异，使风格漂移对季度收益的<b>时序内</b>变异显著。</div>
+    </div>
+  </div>
+
+  <div class="callout danger"><b>为何两套结论不同却都正确？</b>规格 A 的因变量是「剔除 FF5 风格因子后的 alpha」，且未吸收基金 FE —— SDI 衡量的是风格权重时序漂移，其水平信息已部分被 FF5 因子与截距吸收，故对 alpha 的<b>追加</b>贡献近零；规格 B 的因变量是「原始季度收益」并吸收基金 FE，捕捉的是 SDI 对收益<b>时序波动</b>的边际解释力。二者回答不同问题，<b>同时成立、互不矛盾</b>，论文应分别陈述并明确标注规格。</div>
+</section>
+
+<!-- ============ 4. 因变量公式 ============ -->
+<section id="s4">
+  <h2><span class="num">4</span>因变量层公式与代码</h2>
+  <p>因变量在 <code>06_因变量.py</code> 中全部从原始数据自算，不依赖论文原始面板。</p>
+  <div class="filepath">D:\Desktop\基金经理行为分析研究\指标计算流水线\06_因变量.py</div>
+
+  <h4>① 季度收益（净值日收益复利）</h4>
+  <div class="formula">$$r^{q}_{it}=\prod_{d\in q}(1+ret_{id})-1$$<span class="cap">ret 由 nav.pct_change 统一派生（200 只缺 daily_return 自动补齐），与骨架口径一致。</span></div>
+
+  <h4>② 超额收益与 FF5 季度因子</h4>
+  <div class="formula">$$r^{ex}_{it}=r^{q}_{it}-rf_{it},\qquad ff5_{fit}\in\{MKT^{ex},SMB,HML,RMW,CMA\}\ \text{（月度因子按季求和）}$$</div>
+
+  <h4>③ 收益差 RG（选股贡献）</h4>
+  <div class="formula">$$RG_{it}=r^{q}_{it}-\sum_{j}w_{ij}\,r_{jt}$$<span class="cap">w_ij 为上一期持仓快照权重，r_jt 为个股季度收益；衡量「基金实际收益 − 持仓隐含收益」。</span></div>
+
+  <h4>④ FF5 调整 alpha（M4 因变量）</h4>
+  <div class="formula">$$r^{ex}_{it}=\alpha_i+\sum_{f}\beta_{if}\,ff5_{fit}+\eta_{it}\quad\Rightarrow\quad ff5\_adj\_return_{it}=\hat\alpha_i$$<span class="cap">逐基金时序回归截距（FF5 五因子），广播回该基金所有季度。代码见 <code>_alpha_by_fund()</code>。</span></div>
+
+  <pre><span class="cm"># 06_因变量.py · _alpha_by_fund（逐基金时序回归求 alpha）</span>
+<span class="kw">def</span> <span class="fn">_alpha_by_fund</span>(df, model):
+    Xcols = [<span class="st">"ff5_MKT_excess"</span>,<span class="st">"ff5_SMB"</span>,<span class="st">"ff5_HML"</span>,<span class="st">"ff5_RMW"</span>,<span class="st">"ff5_CMA"</span>]  <span class="cm"># ff5</span>
+    <span class="kw">for</span> fund, g <span class="kw">in</span> df.groupby(<span class="st">"fund_code"</span>):
+        y = g[<span class="st">"excess_return"</span>].values
+        X = g[Xcols].values
+        a = _ts_alpha(y, X)            <span class="cm"># 截距 = alpha</span>
+        out[fund] = a
+</pre>
+
+  <h4>④ <code>_ts_alpha</code> 是什么、从哪里来？（用户追问）</h4>
+  <div class="callout key">
+    <b>来源定位</b>：<code>_ts_alpha</code> <b>不是</b>从 <code>lib_metrics</code> 或任何外部库导入的，它是 <code>06_因变量.py</code> 里<b>紧挨在 <code>_alpha_by_fund</code> 上方、模块级的本地辅助函数</b>（文件第 141–149 行）。整份流水线里只有这一个定义位置，回归与综述引用的 alpha 全部由它算出。
+  </div>
+  <div class="filepath">D:\Desktop\基金经理行为分析研究\指标计算流水线\06_因变量.py · _ts_alpha()（第 141–149 行）</div>
+  <pre><span class="kw">def</span> <span class="fn">_ts_alpha</span>(y, X):
+    <span class="cm">"""单基金时序回归 y = a + b·X 的截距(alpha)。y,X 已按行对齐、屏蔽 NaN。"""</span>
+    y = np.asarray(y, <span class="kw">float</span>); X = np.asarray(X, <span class="kw">float</span>)
+    mask = ~(np.isnan(y) | np.isnan(X).any(axis=<span class="kw">1</span>))   <span class="cm"># 剔除含 NaN 的行</span>
+    <span class="kw">if</span> mask.sum() &lt; X.shape[<span class="kw">1</span>] + <span class="kw">5</span>:            <span class="cm"># 有效样本 &lt; 自变量数+5 → 不可估，返回 NaN</span>
+        <span class="kw">return</span> np.nan
+    A = np.column_stack([np.ones(mask.sum()), X[mask]])  <span class="cm"># 设计矩阵 [1, X]</span>
+    beta, *_ = np.linalg.lstsq(A, y[mask], rcond=<span class="kw">None</span>)  <span class="cm"># 最小二乘解</span>
+    <span class="kw">return</span> beta[<span class="kw">0</span>]                              <span class="cm"># 返回截距 = alpha</span>
+</pre>
+
+  <h4>⑤ 逐步拆解：它到底在干什么</h4>
+  <ul class="tight">
+    <li><b>本质</b>：对<b>单个</b> (y, X) 数据集，用 <code>np.linalg.lstsq</code> 直接解最小二乘问题 <code>min‖y − [1, X]·β‖²</code>，并返回<b>截距项 β₀</b>。因为这是"逐基金算一个截距"，没必要为每只基金单独调 statsmodels，手写 lstsq 更轻量、确定性强、可复现。</li>
+    <li><b>NaN 屏蔽</b>：<code>mask = ~(isnan(y) | isnan(X).any(axis=1))</code> —— FF5 因子在某些季度缺失（早期无月度因子聚合），该行会被整体剔除，避免 <code>lstsq</code> 因 NaN 报错或产生脏估计。</li>
+    <li><b>最小样本保护</b>：<code>mask.sum() &lt; k+5</code>（k=5 个 FF5 因子）时直接返回 <code>NaN</code>。一只基金若有效季度数不足，其 alpha 记为缺失，而非给一个不可信的数——这正是 §2 表中 <code>ff5_adj_return</code> 覆盖 97.2%（而非 100%）的原因。</li>
+    <li><b>返回截距 = Jensen's alpha</b>：<code>beta[0]</code> 是 <code>y = α + Σβ_f·ff5_f + ε</code> 的 α，即该基金相对 FF5 五因子的超额收益（已剔除市场/规模/价值/盈利/投资风格后的"真选股能力"）。</li>
+  </ul>
+
+  <h4>⑥ 与 <code>_alpha_by_fund</code> 的衔接（为什么 ff5_adj_return 在同一基金内是常数）</h4>
+  <div class="formula">$$\hat\alpha_i=\arg\min_{a,b}\sum_{t}\big(r^{ex}_{it}-a-\sum_f b_f\,ff5_{fit}\big)^2\quad\Rightarrow\quad ff5\_adj\_return_{it}\equiv\hat\alpha_i\ \ (\forall t)$$<span class="cap">逐基金做时序回归得到一个 α̂ᵢ，再用 <code>df["fund_code"].map(out)</code> 把同一个 α̂ᵢ <b>广播回该基金的所有季度</b>——所以 <code>ff5_adj_return</code> 在单只基金内部是常量，跨基金才变化。这正是"基金层 alpha"被用作 M4 因变量的机理。</span></div>
+  <pre><span class="cm"># _alpha_by_fund 的广播逻辑（节选）</span>
+out = {}
+<span class="kw">for</span> fund, g <span class="kw">in</span> df.groupby(<span class="st">"fund_code"</span>):
+    y = g[<span class="st">"excess_return"</span>].values          <span class="cm"># 该基金全部季度的超额收益</span>
+    X = g[Xcols].values                     <span class="cm"># 对应的 FF5 五因子</span>
+    a = _ts_alpha(y, X)                     <span class="cm"># ← 调用上面的本地函数，得到 α̂ᵢ</span>
+    out[fund] = a                           <span class="cm"># 存进字典</span>
+df[<span class="st">"alpha"</span>] = df[<span class="st">"fund_code"</span>].map(out)       <span class="cm"># 广播：同基金所有季度 = 同一个 α̂ᵢ</span></pre>
+  <div class="callout ok"><b>一句话总结</b>：<code>_ts_alpha</code> 是定义在 <code>06_因变量.py</code> 本地的"最小二乘取截距"小工具；<code>_alpha_by_fund</code> 用它为每只基金算出 FF5-alpha，再广播成 <code>ff5_adj_return</code> 列。二者同文件、相邻定义，无任何外部依赖，逻辑闭环、可复现。</div>
+</section>
+
+<!-- ============ 5. 指标公式 L1–L5 ============ -->
+<section id="s5">
+  <h2><span class="num">5</span>行为指标公式（L1–L5）与代码出处</h2>
+  <p>全部指标公式实现于统一计算库 <code>lib_metrics.py</code>，被 01–05 各分层脚本调用，读取仓库内本地 CSV，离线自洽。</p>
+  <div class="filepath">D:\Desktop\基金经理行为分析研究\指标计算流水线\lib_metrics.py</div>
+
+  <h3>L1 背景特征</h3>
+  <div class="formula">$$\log Age_{it}=\ln\!\left(\frac{(RD_{it}-inception).days}{30.44\times 12}\right),\qquad mgr\_tenure_{it}=(RD_{it}-start\_date_{mgr})^{days}$$<span class="cap">取 report_date 时刻「在任」经理（始≤报告日≤止），任期不为负；控制变量 school/edu/gender/CFA 同口径。</span></div>
+
+  <h3>L2 持仓偏离</h3>
+  <div class="formula">$$AS_{it}=\frac12\sum_{j}|w^f_{ij}-w^b_j|\quad(\min 1.0),\qquad ICI_{it}=\sum_{s=1}^{31}(\tilde w_{is}-\tilde w^{mkt}_{is})^{2},\qquad HHI_{it}=\sum_{s=1}^{31}\tilde w_{is}^{2}$$<span class="cap"><b>注意</b>：ICI 与 HHI 公式<b>并不相同</b>——上版两式都写成 Σ(ẏ_is)² 属显示错误。正确口径：<b>HHI = Σ_s ẏ_is²</b>（行业内赫芬达尔集中度，值大=持仓集中少数行业）；<b>ICI = Σ_s(ẏ_is − ẏ^{mkt}_is)²</b>（行业<b>主动偏离</b>，值大=相对市场基准的行业押注偏离大）。基准 ẏ^{mkt} 取各行业横截面平均权重。行业权重经「股票级持仓 → 申万31 聚合」归一化（Σ=1），消除仓位高低干扰。AS 与 ICI/HHI 符号相反属正常（见历史解读）。</span></div>
+  <pre><span class="cm"># lib_metrics.py · calc_active_share()</span>
+as_val = <span class="kw">0.5</span> * (merged[<span class="st">"w_fund"</span>] - merged[<span class="st">"w_bench"</span>]).abs().sum()
+rows.append((fund, rd, min(as_val, <span class="kw">1.0</span>)))</pre>
+
+  <h3>L3 交易执行</h3>
+  <div class="formula">$$SDI_{i,t}=\sum_{k=1}^{4}\big|\hat w^{(t)}_{k}-\hat w^{(t-1)}_{k}\big|,\quad \hat w=\text{rolling OLS}(r^{q}_{i}\sim 4\text{风格指数},\,window=8)\ \text{权重非负归一}$$</div>
+  <div class="formula">$$TO^{wind}_{it}=\frac{\max(Buy,Sell)}{avg\_aum}\ (\text{Wind 单边口径}),\quad TO^{2s}_{it}=\frac{Buy_{it}+Sell_{it}}{2\cdot AUM_{it}},\quad OCI_{it}=\frac{TO^{2s}_{it}-\bar{TO}^{2s}_i}{sd(TO^{2s}_i)}$$<span class="cap">SDI 窗口由 12 改为 8（暖机期缩短，有效始于 2022Q2）；TO_wind 为论文主换手率（86%）。</span></div>
+<div class="callout key"><b>OCI 能不能改用单边 TO（TO_wind）来算？</b> 可以，且在本项目里<b>值得考虑</b>。
+<ul>
+<li><b>OCI 当前定义</b>：<code>OCI_two_sided = (TO_two_sided − mean_i(TO_two_sided)) / sd_i(TO_two_sided)</code>，即<b>基金内</b>对双边换手率做的 z 分数标准化（lib_metrics.calc_turnover_two_sided，行 392–394）。它衡量"这只基金这一期的换手率，相对它自己历史平均是高还是低"。</li>
+<li><b>换成单边 TO_wind 是否可行</b>：<b>可行</b>。OCI 本质只是"组内 z 分数"，与输入是双边还是单边无关；z 分数会扣除均值、除以标准差，<b>2× 的口径倍数被标准化吸收</b>，相对高低模式不变。</li>
+<li><b>改用后的好处</b>：TO_wind 覆盖 <b>86%</b>（394/400 基金），而当前 TO_two_sided 仅 <b>18%</b>（200 只）——OCI 的可用样本将从 18% 跃升到 86%；且 TO_wind 是 Wind 的<b>原生单边口径</b>（MAX(买,卖)/平均净资产），无需再合成双边。</li>
+<li><b>注意事项</b>：① 改名以区分口径（如 <code>OCI_wind</code>），避免与旧 <code>OCI_two_sided</code> 混淆；② TO_wind 为半年频，与 TO_two_sided 同频，但量级约为双边的一半，仅影响绝对水平、不影响基金内相对排序；③ 若主回归已用 TO_wind 作换手率主变量（M4 / H2 即如此），OCI 改用 TO_wind 能保持口径一致。</li>
+</ul>
+<b>建议</b>：在需要扩充 OCI 覆盖时，优先用 TO_wind 重算 OCI（命名 OCI_wind）；旧 OCI_two_sided 保留为 200 只子集的对照。这属于口径升级，不影响 SDI / ICI 等其他指标。</div>
+  <pre><span class="cm"># lib_metrics.py · calc_sdi(window=8) 核心</span>
+<span class="kw">for</span> i <span class="kw">in</span> range(window, len(merged)):
+    X = np.column_stack([np.ones(window), X_all[i-window:i]])
+    y = y_all[i-window:i]
+    beta, *_ = np.linalg.lstsq(X, y, rcond=None)
+    w = np.maximum(beta[<span class="kw">1</span>:], <span class="kw">0</span>); w = w / w.sum()
+    w_hist.append((merged.iloc[i][<span class="st">"report_date"</span>], w))
+sdi = np.abs(w_hist[i][<span class="kw">1</span>] - w_hist[i-<span class="kw">1</span>][<span class="kw">1</span>]).sum()   <span class="cm"># 相邻风格权重曼哈顿距离</span></pre>
+
+  <h3>L4 风险应对</h3>
+  <div class="formula">$$ARG_{it}=\sum_{t\in q}|RG_{it}|,\qquad RV_{it}=\sigma_{8}\big(r^{q}_{it}\big)\ (\text{滚动 8 期 std,\,min\_periods=3})$$<span class="cap">ARG = 季度内各月 |收益差| 之和；RV = 季度收益滚动标准差。</span></div>
+  <pre><span class="cm"># lib_metrics.py · calc_return_volatility()</span>
+df[<span class="st">"return_volatility"</span>] = df.groupby(<span class="st">"fund_code"</span>)[<span class="st">"quarter_return"</span>].transform(
+    <span class="kw">lambda</span> s: s.rolling(<span class="kw">8</span>, min_periods=<span class="kw">3</span>).std())</pre>
+
+  <h3>L5 认知偏差</h3>
+  <div class="formula">$$DE_{it}=PGR_{it}-PLR_{it},\quad PGR=\frac{G^{sold}}{G^{sold}+G^{held}},\ PLR=\frac{L^{sold}}{L^{sold}+L^{held}}$$</div>
+  <div class="formula">$$LSV_{it}=\frac1{N_{it}}\sum_j\Big(|p_{ij}-\bar p_{t}|-AF_{jt}\Big),\ p_{ij}=\frac{B_{ij}}{B_{ij}+S_{ij}},\ AF=\sqrt{\frac{2}{\pi}}\sqrt{\frac{\bar p_t(1-\bar p_t)}{n_j}}$$</div>
+  <div class="formula">$$RA_{it}=\sigma^{+}_{8}(r_{it})-\sigma^{-}_{8}(r_{it})\quad(\text{滚动窗口=8，盈利期 std − 亏损期 std})$$<span class="cap">DE 为 Odean(1998) 处置效应；LSV 因仅有买入侧记录，改用「持仓变动方向」作买卖代理（已知局限，见 §10）；RA 为杠杆/风险不对称效应。</span></div>
+  <pre><span class="cm"># lib_metrics.py · calc_de() 核心（Odean 持仓快照法）</span>
+pgr = gs/dg <span class="kw">if</span> dg <span class="kw">else</span> np.nan
+plr = ls/dl <span class="kw">if</span> dl <span class="kw">else</span> np.nan
+de  = pgr - plr <span class="kw">if</span> (dg <span class="kw">and</span> dl) <span class="kw">else</span> np.nan</pre>
+</section>
+
+<!-- ============ 6. 双向聚类 ============ -->
+<section id="s6">
+  <h2><span class="num">6</span>双向聚类稳健标准误（CGM2011）实现与交叉验证</h2>
+  <p>两份回归脚本均采用 Cameron–Gelbach–Miller (2011) 双向聚类：在 within(基金) demeaning 后估计 fund×year 双向聚类方差。demeaning 是线性变换，不改变聚类稳健方差估计，故与「原始 FE 模型上直接双向聚类」等价。</p>
+
+  <h4>方差公式</h4>
+  <div class="formula">$$\hat V_{tw}=\hat V_1+\hat V_2-\hat V_{12},\qquad \hat V_g=(X'X)^{-1}\Big(\sum_{c\in g} g_c\,g_c'\Big)(X'X)^{-1},\quad g_c=\sum_{i\in c}X_i e_i$$<span class="cap">V₁=fund 一维聚类，V₂=year 一维聚类，V₁₂=fund∩year 交互簇聚类（减去避免重复计数）。</span></div>
+
+  <h4>核心代码（两套脚本一致）</h4>
+  <div class="filepath">D:\Desktop\基金经理行为分析研究\L3_L1_regressions_HONEST_2026-08-14.py · two_way_V()</div>
+  <pre><span class="kw">def</span> <span class="fn">_meat</span>(groups, X, resid):
+    k = X.shape[<span class="kw">1</span>]; meat = np.zeros((k, k))
+    <span class="kw">for</span> g <span class="kw">in</span> np.unique(groups):
+        m = groups == g
+        s = X[m].T @ resid[m]            <span class="cm"># Σ_{i∈g} X_i·e_i</span>
+        meat += np.outer(s, s)
+    <span class="kw">return</span> meat
+
+<span class="kw">def</span> <span class="fn">_oneway_V</span>(X, resid, groups):
+    XtX_inv = np.linalg.inv(X.T @ X)
+    <span class="kw">return</span> XtX_inv @ _meat(groups, X, resid) @ XtX_inv
+
+<span class="kw">def</span> <span class="fn">two_way_V</span>(X, resid, g1, g2):
+    g12 = np.array([<span class="st">f"{a}|{b}"</span> <span class="kw">for</span> a, b <span class="kw">in</span> zip(g1, g2)])   <span class="cm"># 交互簇</span>
+    <span class="kw">return</span> _oneway_V(X, resid, g1) + _oneway_V(X, resid, g2) - _oneway_V(X, resid, g12)</pre>
+
+  <div class="callout ok"><b>交叉验证（决定性正确性证据）</b>：以 <code>_verify_cluster_crosscheck.py</code> 将手写 CGM 与 <code>statsmodels</code> 原生双向聚类（<code>cov_type="cluster", groups=2D 整数编码</code>，<code>use_correction=False</code>）比对，<b>max|Δt| = 0.00000（逐位一致）</b>。statsmodels 默认开启小样本 G/(G−1) 修正会使 SE 放大 ~3–6%、t 偏移 ~0.19（结论不变）——本脚本关闭修正后完全吻合，证明手写算法正确。<br><span style="color:var(--muted)">注：linearmodels.PanelOLS 双向 FE+双向聚类在本机 numpy 2.x 下返回 NaN，已弃用；statsmodels 原生双向聚类作为金标准。</span></div>
+
+  <h3 id="s6fit">6.1 实际回归拟合代码（驱动 two_way_V 的 OLS 估计链路）</h3>
+  <p>上面的 <code>two_way_V()</code> 只是「方差估计器」。它必须由一次<b>真实的 OLS 拟合</b>提供 <code>X</code>（设计矩阵）与 <code>resid</code>（残差）。下面给出两套规格各自<b>端到端的拟合驱动</b>——这才是「计算」的核心，之前的汇报只展示了上游的方差函数，缺了这段。</p>
+
+  <h4>① M4 拟合驱动（<code>_v4_benchmark_table.py</code>）</h4>
+  <div class="filepath">D:\Desktop\基金经理行为分析研究\_v4_benchmark_table.py</div>
+  <pre><span class="cm"># ---- 1) 全变量 1%/99% 缩尾（M4 口径，覆盖 18 个 RHS + 因变量） ----</span>
+<span class="kw">def</span> <span class="fn">winsor</span>(s):
+    s = s.astype(float); lo, hi = s.quantile(0.01), s.quantile(0.99)
+    <span class="kw">return</span> s.clip(lo, hi)
+<span class="kw">for</span> v <span class="kw">in</span> ALLRHS + [<span class="st">"ff5_adj_return"</span>]:
+    df[v + <span class="st">"_w"</span>] = winsor(df[v])          <span class="cm"># 缩尾后列统一加后缀 _w</span>
+
+<span class="cm"># ---- 2) RHS 设计矩阵构成（18 个解释变量 = FF5 + L1–L5 + 控制） ----</span>
+FF5  = [<span class="st">"ff5_MKT_excess"</span>,<span class="st">"ff5_SMB"</span>,<span class="st">"ff5_HML"</span>,<span class="st">"ff5_RMW"</span>,<span class="st">"ff5_CMA"</span>]
+CONT = [<span class="st">"log_aum"</span>]; L1 = [<span class="st">"log_fund_age"</span>,<span class="st">"mgr_total_tenure_v2"</span>]
+L2   = [<span class="st">"AS_improved"</span>,<span class="st">"ICI"</span>,<span class="st">"industry_hhi"</span>]; L3 = [<span class="st">"SDI"</span>,<span class="st">"TO_wind"</span>]
+L4   = [<span class="st">"ARG"</span>,<span class="st">"return_volatility"</span>]; L5 = [<span class="st">"de"</span>,<span class="st">"lsv"</span>,<span class="st">"risk_asym"</span>]
+ALLRHS = CONT + FF5 + L1 + L2 + L3 + L4 + L5    <span class="cm"># 18 个 RHS</span>
+
+<span class="cm"># ---- 3) OLS 拟合：statsmodels 原生 OLS + 单维基金聚类（初估口径） ----</span>
+<span class="kw">def</span> <span class="fn">fit</span>(rhs_list):
+    rhs_w = [r + <span class="st">"_w"</span> <span class="kw">for</span> r <span class="kw">in</span> rhs_list]
+    d = df.dropna(subset=rhs_w + [<span class="st">"ff5_adj_return_w"</span>]).copy()
+    form = <span class="st">"ff5_adj_return_w ~ "</span> + <span class="st">" + "</span>.join(rhs_w) + <span class="st">" + C(year)"</span>
+    m = smf.ols(form, data=d).fit(
+        cov_type=<span class="st">"cluster"</span>, cov_kwds={<span class="st">"groups"</span>: d[<span class="st">"fund_code"</span>]})   <span class="cm"># 单维基金聚类初估</span>
+    <span class="kw">return</span> m, d
+
+<span class="cm"># ---- 4) 权威 SE：复用上面的残差/设计矩阵，套手写双向聚类覆盖 ----</span>
+m, d = fit(ALLRHS)
+X     = np.asarray(m.model.data.exog, float)   <span class="cm"># 设计矩阵（含 Intercept + C(year) 哑变量）</span>
+resid = np.asarray(m.resid, float)
+g1 = d[<span class="st">"fund_code"</span>].values.astype(str)       <span class="cm"># 簇 1：基金</span>
+g2 = d[<span class="st">"year"</span>].values.astype(str)           <span class="cm"># 簇 2：年份</span>
+V2 = two_way_V(X, resid, g1, g2)              <span class="cm"># ← 调用 §6 的 CGM2011 双向聚类</span>
+se2 = np.sqrt(np.maximum(np.diag(V2), 0))     <span class="cm"># 权威双向聚类 SE</span>
+t2  = m.params.values / se2                   <span class="cm"># 权威 t 值</span>
+p2  = 2.0 * spstats.t.sf(np.abs(t2), df=len(resid) - X.shape[1])</pre>
+
+  <h4>② H1–H5 拟合驱动（<code>L3_L1_regressions_HONEST_2026-08-14.py</code> · <code>fe_report()</code>）</h4>
+  <div class="filepath">D:\Desktop\基金经理行为分析研究\L3_L1_regressions_HONEST_2026-08-14.py</div>
+  <pre><span class="cm"># ---- 1) 缩尾（HONEST 口径，覆盖更多列） ----</span>
+<span class="kw">def</span> <span class="fn">wins</span>(s, lo=0.01, hi=0.99):
+    s = s.astype(float); a, b = s.quantile(lo), s.quantile(hi)
+    <span class="kw">return</span> s.clip(a, b)
+
+<span class="cm"># ---- 2) 加年份哑变量 + 基金 FE within-demeaning（吸收跨基金水平差异） ----</span>
+<span class="kw">def</span> <span class="fn">fe_report</span>(df, dv, ivs, label, by=<span class="st">"fund_code"</span>):
+    need = [dv] + ivs + [by, <span class="st">"year"</span>]
+    sub = df[[c <span class="kw">for</span> c <span class="kw">in</span> need <span class="kw">if</span> c <span class="kw">in</span> df.columns]].dropna(
+        subset=[dv] + ivs).copy().reset_index(drop=<span class="kw">True</span>)
+    <span class="kw">if</span> len(sub) &lt; len(ivs) * 20:               <span class="cm"># 样本量守卫：过小则跳过</span>
+        <span class="kw">return</span> None
+    yr = pd.get_dummies(sub[<span class="st">"year"</span>], prefix=<span class="st">"yr"</span>, drop_first=<span class="kw">True</span>).astype(float)
+    sub = pd.concat([sub, yr], axis=1)
+    all_x = ivs + list(yr.columns)
+    g = sub.groupby(by)
+    Xdm = sub[all_x] - g[all_x].transform(<span class="st">"mean"</span>)   <span class="cm"># ← within：每变量减基金内均值</span>
+    ydm = (sub[dv] - g[dv].transform(<span class="st">"mean"</span>)).values   <span class="cm"># ← DV 同样 demeaning</span>
+    X = Xdm[all_x].values.astype(float)
+    y = ydm.astype(float)
+    <span class="cm"># ---- 3) 最小二乘拟合 + 残差 ----</span>
+    beta, *_ = np.linalg.lstsq(X, y, rcond=None)        <span class="cm"># 组内回归系数</span>
+    resid = y - X @ beta
+    <span class="cm"># ---- 4) 双向聚类 SE（复用 §6 的 two_way_V） ----</span>
+    V  = two_way_V(X, resid, sub[by].values.astype(str),
+                   sub[<span class="st">"year"</span>].values.astype(str))
+    se = np.sqrt(np.maximum(np.diag(V), 0))
+    tvals = beta / se
+    pvals = 2.0 * _tstats.t.sf(np.abs(tvals), df=len(y) - X.shape[1])
+    <span class="cm"># ---- 5) 单维基金聚类对照（CGM one-way，早期 statsmodels 口径） ----</span>
+    V1 = _oneway_V(X, resid, sub[by].values.astype(str))
+    se1 = np.sqrt(np.maximum(np.diag(V1), 0)); tvals1 = beta / se1</pre>
+
+  <h4>③ 两套规格的「计算」有什么区别、又在哪里汇合</h4>
+  <div class="callout key">
+    <b>区别（建模选择）</b>：M4 用 <code>statsmodels.ols</code> 直接拟合「含 FF5 因子 + C(year) 的混合 OLS」做初估，再用手写 <code>two_way_V</code> 覆盖 SE；H1–H5 先做<b>基金 FE within-demeaning</b>（逐基金减均值，等价于吸收基金固定效应），再用 <code>np.linalg.lstsq</code> 做组内回归。<br>
+    <b>汇合点（方差口径）</b>：两者最终都调用<b>同一个 <code>two_way_V(X, resid, fund, year)</code></b>（§6 的 CGM2011 双向聚类）来算 SE 与 t —— 这正是两套规格的 SE 都经 statsmodels 金标准交叉验证、且 <code>max|Δt|=0</code> 的原因。<br>
+    <b>一句话</b>：差异只在「是否 demeaning 基金 FE / 用什么拟合器」，方差估计器是同一份手写 CGM2011；因此 §3 的口径差异是<b>研究问题</b>差异，不是<b>计算实现</b>差异。
+  </div>
+
+  <h4>④ 端到端数据流（从 CSV 到 t 值，一图理清）</h4>
+  <div class="formula" style="text-align:left;line-height:2.1">
+    <code>主分析面板_重建_含TOwind.csv</code><br>
+    &nbsp;&nbsp;↓ ① 读取 + 年份派生 + 缩尾(winsor 1%/99%)<br>
+    &nbsp;&nbsp;↓ ② 构造设计矩阵 X（RHS 列 / C(year) 哑变量 / within-demeaning）<br>
+    &nbsp;&nbsp;↓ ③ OLS 拟合（statsmodels.ols 或 np.linalg.lstsq）→ 得 <b>β̂</b> 与 <b>resid</b><br>
+    &nbsp;&nbsp;↓ ④ <code>two_way_V(X, resid, fund, year)</code> → 双向聚类方差 <b>V̂</b><br>
+    &nbsp;&nbsp;↓ ⑤ <code>se = √diag(V̂)</code> → <code>t = β̂/se</code> → <code>p = 2·t.sf(|t|, df)</code><br>
+    &nbsp;&nbsp;↓ ⑥ 序列化进 <code>_v4_benchmark.json</code> / HONEST json → 渲染 §7 表格与 §7.3 森林图
+  </div>
+
+  <div class="callout ok"><b>代码位置总览</b>：上游方差函数 <code>_meat/_oneway_V/two_way_V</code>（§6）← 本节的 <code>fit()</code>（M4）/ <code>fe_report()</code>（H1–H5）调用 ← 由 <code>run_full.py</code> 一键触发。三者同属「计算正确性」闭环，任一环节改动都会反映到 §7 结果与 §8 复核。</div>
+</section>
+
+<!-- ============ 7. 回归结果 ============ -->
+<section id="s7">
+  <h2><span class="num">7</span>回归结果展示（取自基准 JSON）</h2>
+
+  <h3>7.1 M4（v4 基准，N=2,264 / 348 基金 / R²=0.129 / ΔR²_L5=0.035）</h3>
+  <table>
+    <tr><th>变量</th><th>β</th><th>t(双向)</th><th>p</th><th>显著性</th><th>t(单维基金)</th></tr>
+    <tr><td>log_aum</td><td>0.00069</td><td>1.05</td><td>0.296</td><td class="sig-ns">ns</td><td>1.21</td></tr>
+    <tr><td>ff5_HML</td><td>0.0517</td><td>2.87</td><td>0.004</td><td class="sig-star">***</td><td>3.36</td></tr>
+    <tr><td>ff5_RMW</td><td>−0.0497</td><td>−2.07</td><td>0.039</td><td class="sig-star">**</td><td>−2.52</td></tr>
+    <tr><td>ff5_CMA</td><td>−0.1085</td><td>−2.84</td><td>0.005</td><td class="sig-star">***</td><td>−3.10</td></tr>
+    <tr><td>log_fund_age</td><td>−0.00417</td><td>−2.53</td><td>0.011</td><td class="sig-star">**</td><td>−2.56</td></tr>
+    <tr><td>AS_improved</td><td>−0.0298</td><td>−2.81</td><td>0.005</td><td class="sig-star">***</td><td>−2.90</td></tr>
+    <tr><td><b>ICI</b></td><td><b>0.0180</b></td><td><b>3.74</b></td><td><b>0.000</b></td><td class="sig-star">***</td><td>3.65</td></tr>
+    <tr><td>industry_hhi</td><td>0.0087</td><td>0.19</td><td>0.852</td><td class="sig-ns">ns</td><td>0.19</td></tr>
+    <tr><td><b>SDI</b></td><td><b>−2.3e-6</b></td><td><b>−0.00</b></td><td><b>0.999</b></td><td class="sig-ns">ns</td><td>−0.00</td></tr>
+    <tr><td><b>TO_wind</b></td><td><b>4.5e-6</b></td><td><b>1.07</b></td><td><b>0.287</b></td><td class="sig-ns">ns</td><td>0.96</td></tr>
+    <tr><td><b>ARG</b></td><td><b>0.0162</b></td><td><b>2.98</b></td><td><b>0.003</b></td><td class="sig-star">***</td><td>2.65</td></tr>
+    <tr><td>return_volatility</td><td>0.0238</td><td>0.81</td><td>0.415</td><td class="sig-ns">ns</td><td>1.07</td></tr>
+    <tr><td><b>de</b></td><td><b>−0.00606</b></td><td><b>−2.99</b></td><td><b>0.003</b></td><td class="sig-star">***</td><td>−2.50</td></tr>
+    <tr><td>lsv</td><td>0.0155</td><td>0.77</td><td>0.441</td><td class="sig-ns">ns</td><td>1.23</td></tr>
+    <tr><td><b>risk_asym</b></td><td><b>0.0731</b></td><td><b>3.57</b></td><td><b>0.000</b></td><td class="sig-star">***</td><td>4.53</td></tr>
+  </table>
+  <div class="callout key"><b>三估计量推断一致性（L5）</b>：de / risk_asym 在渐近双向聚类、Wild 聚类自助（WCB-S, Rademacher）、置换检验（500 次）三种口径下均显著；仅 lsv 在三种口径下均不显著（p=0.44/0.23/0.51）。<span style="color:var(--muted)">de 的 WCB p=0.014、置换 p=0.047（边界）；risk_asym 两者均 ≈0。</span></div>
+
+  <h3>7.2 H1–H5（HONEST，含基金 FE，DV=quarter_return）</h3>
+  <table>
+    <tr><th>规格</th><th>IV</th><th>β</th><th>t(双向)</th><th>t(单维)</th><th>显著性</th><th>N / 基金</th></tr>
+    <tr><td>H1 / H5</td><td><b>SDI</b></td><td>0.1028</td><td><b>2.46</b></td><td>12.41</td><td class="sig-star">**</td><td>6,337 / 366</td></tr>
+    <tr><td>H2</td><td>TO_wind</td><td>3.1e-5</td><td>1.78</td><td>3.17</td><td class="sig-star">(p=0.075)</td><td>8,480 / 394</td></tr>
+    <tr><td>H2b</td><td>TO_two_sided</td><td>−0.0045</td><td>−0.17</td><td>−0.27</td><td class="sig-ns">ns</td><td>1,788 / 200</td></tr>
+    <tr><td>H3</td><td>OCI_two_sided</td><td>−0.0014</td><td>−0.45</td><td>−0.80</td><td class="sig-ns">ns</td><td>1,788 / 200</td></tr>
+    <tr><td>H4（联合）</td><td><b>SDI</b></td><td>0.0198</td><td><b>3.09</b></td><td>2.58</td><td class="sig-star">***</td><td>1,192 / 200</td></tr>
+    <tr><td>H4（联合）</td><td>TO_wind</td><td>1.9e-5</td><td>0.56</td><td>0.50</td><td class="sig-ns">ns</td><td>1,192 / 200</td></tr>
+    <tr><td>H4（联合）</td><td>OCI</td><td>0.0006</td><td>0.32</td><td>0.32</td><td class="sig-ns">ns</td><td>1,192 / 200</td></tr>
+  </table>
+  <div class="callout warn"><b>口径提示</b>：H2 中 TO_wind 在<b>双向聚类</b>下仅边际显著（p=0.075），在<b>单维基金聚类</b>下显著（t=3.17）——这是「增加 year 维度聚类后 SE 上升」的标准现象，论文应报告双向聚类口径（保守）并如实标注。</div>
+
+  <h3>7.3 系数的「符号 × 显著性」一目了然（森林图）</h3>
+  <p>上面两张表把 β 与 t 列了出来，但<b>正负方向</b>与<b>是否跨过 0</b>（显著性）用眼睛扫表不够直观。下面两张<b>森林图（forest plot）</b>把每个系数画成「点估计 + 95% 置信区间横线」，竖线为 0：<b>横线跨过 0 = 不显著</b>，点落在 0 同侧且离 0 远 = 显著；颜色按<b>系数符号</b>区分（红=正向 β&gt;0，绿=负向 β&lt;0），<b>实心</b>=显著、<b>空心</b>=不显著(ns)。置信区间由 β 与 t 反推（SE=|β|/|t|，95% CI = β ± 1.96·SE）。</p>
+
+  <div class="sig-legend" style="margin:10px 0">
+    <span class="lg"><span class="dot" style="background:#b91c1c"></span>红点 = 正向系数（β&gt;0）</span>
+    <span class="lg"><span class="dot" style="background:#0f7b4d"></span>绿点 = 负向系数（β&lt;0）</span>
+    <span class="lg"><span class="dot" style="background:#b91c1c"></span>实心 = 显著（***/**/*）</span>
+    <span class="lg"><span class="dot" style="background:#fff;border:2px solid #94a3b8"></span>空心 = 不显著（ns）</span>
+    <span class="lg">横线 = 95% 置信区间；竖线 = 0（跨过即不显著）</span>
+  </div>
+  <div class="callout key"><b>数据来源</b>：下方两张森林图的 β 与 t 值<b>直接读取自 §7.1 / §7.2 的基准表</b>（即 <code>_v4_benchmark.json</code> 与 HONEST json 的序列化结果，由 §6.1 的拟合驱动产出）；95% 置信区间由 <code>SE = |β|/|t|</code> 反推、<code>CI = β ± 1.96·SE</code> 绘制。因此森林图与表格<b>完全同源</b>，只是视图不同（表看精确数字、图看符号与显著性）。</div>
+
+  <h4>图 A · M4 行为指标（DV = ff5_adj_return，双向聚类）</h4>
+  <div id="fp_m4" class="barchart"></div>
+  <p class="muted">读法：ARG / risk_asym / ICI / AS / de 的点都远离 0 且不跨线 → 显著；其中 ARG、risk_asym、ICI 在 0 右侧（正向）、AS 与 de 在左侧（负向）。SDI 与 TO_wind 几乎贴在 0 线上、横线跨过 0 → 不显著（ns），与 §7.1 表格完全对应。</p>
+
+  <h4>图 B · H1–H5 单指标（DV = quarter_return，含基金 FE + 双向聚类）</h4>
+  <div id="fp_h1" class="barchart"></div>
+  <p class="muted">读法：H1 的 SDI 点远离 0 且在右侧 → 显著正向；TO_wind / TO_two_sided / OCI 都紧贴 0、横线跨线 → 不显著（TO_wind 仅边际），与 §7.2 表格一致。注意两套规格的纵轴量纲不同（M4 是 alpha、H1 是原始季度收益），<b>两张图之间不能比长短，只能各自内部看符号与显著性</b>。</p>
+
+  <script>
+  function forestPlot(elId, rows, opts){
+    opts = opts || {};
+    var W=760, rowH=38, padTop=26, padBottom=26, labelW=132, valW=158;
+    var H = padTop + padBottom + rows.length*rowH;
+    rows.forEach(function(r){
+      var t = Math.abs(r.t) < 0.01 ? 0 : r.t;
+      r.se = (t===0) ? 0 : Math.abs(r.beta)/Math.abs(t);
+      r.hw = 1.96 * r.se;
+    });
+    var xs = [];
+    rows.forEach(function(r){ xs.push(r.beta-r.hw, r.beta+r.hw, r.beta); });
+    var lo = Math.min(0, Math.min.apply(null, xs));
+    var hi = Math.max(0, Math.max.apply(null, xs));
+    var span = (hi-lo)||1; lo -= span*0.10; hi += span*0.10;
+    var plotW = W - labelW - valW;
+    var x0 = labelW;
+    function X(v){ return x0 + (v-lo)/(hi-lo)*plotW; }
+    var zeroX = X(0);
+    var d = 4; // decimals
+    var svg = '<svg viewBox="0 0 '+W+' '+H+'" width="100%" font-family="-apple-system,Segoe UI,sans-serif">';
+    var ticks=5;
+    for(var i=0;i<=ticks;i++){
+      var v=lo+(hi-lo)*i/ticks, x=X(v);
+      svg += '<line x1="'+x+'" y1="'+(padTop-6)+'" x2="'+x+'" y2="'+(H-padBottom)+'" stroke="#eef2f7"/>';
+      svg += '<text x="'+x+'" y="'+(H-padBottom+15)+'" font-size="10.5" fill="#94a3b8" text-anchor="middle">'+v.toFixed(d)+'</text>';
+    }
+    svg += '<line x1="'+zeroX+'" y1="'+(padTop-8)+'" x2="'+zeroX+'" y2="'+(H-padBottom)+'" stroke="#334155" stroke-width="1.6"/>';
+    rows.forEach(function(r,idx){
+      var yc = padTop + idx*rowH + rowH/2;
+      var sig = r.sig; var significant = sig && sig!=='ns';
+      var col = r.beta>=0 ? '#b91c1c' : '#0f7b4d';
+      var x1=X(r.beta-r.hw), x2=X(r.beta+r.hw);
+      svg += '<line x1="'+x1+'" y1="'+yc+'" x2="'+x2+'" y2="'+yc+'" stroke="'+col+'" stroke-width="2.2" opacity="0.5"/>';
+      svg += '<line x1="'+x1+'" y1="'+(yc-4)+'" x2="'+x1+'" y2="'+(yc+4)+'" stroke="'+col+'" stroke-width="2"/>';
+      svg += '<line x1="'+x2+'" y1="'+(yc-4)+'" x2="'+x2+'" y2="'+(yc+4)+'" stroke="'+col+'" stroke-width="2"/>';
+      if(significant){ svg += '<circle cx="'+X(r.beta)+'" cy="'+yc+'" r="5.5" fill="'+col+'"/>'; }
+      else { svg += '<circle cx="'+X(r.beta)+'" cy="'+yc+'" r="5" fill="#fff" stroke="'+col+'" stroke-width="2"/>'; }
+      svg += '<text x="'+(labelW-10)+'" y="'+(yc+4)+'" font-size="12.5" fill="#1f2733" text-anchor="end">'+r.label+'</text>';
+      var star = r.sig||'';
+      svg += '<text x="'+(W-valW+10)+'" y="'+(yc+4)+'" font-size="12" text-anchor="start" fill="'+(significant?col:'#94a3b8')+'" font-weight="'+(significant?'700':'400')+'">'+(r.beta>=0?'+':'')+r.beta.toFixed(d)+' '+star+'</text>';
+    });
+    svg += '</svg>';
+    document.getElementById(elId).innerHTML = svg;
+  }
+  forestPlot('fp_m4', [
+    {label:'AS_improved', beta:-0.0298, t:-2.81, sig:'***'},
+    {label:'ICI',         beta: 0.0180, t: 3.74, sig:'***'},
+    {label:'SDI',         beta:-2.3e-6, t:-0.0017, sig:'ns'},
+    {label:'TO_wind',     beta: 4.5e-6, t: 1.07, sig:'ns'},
+    {label:'ARG',         beta: 0.0162, t: 2.98, sig:'***'},
+    {label:'de',          beta:-0.00606,t:-2.99, sig:'***'},
+    {label:'lsv',         beta: 0.0155, t: 0.77, sig:'ns'},
+    {label:'risk_asym',   beta: 0.0731, t: 3.57, sig:'***'}
+  ]);
+  forestPlot('fp_h1', [
+    {label:'SDI (H1/H5)',        beta: 0.1028, t: 2.46,  sig:'**'},
+    {label:'TO_wind (H2)',       beta: 3.1e-5, t: 1.78,  sig:'p=.075'},
+    {label:'TO_two_sided (H2b)', beta:-0.0045, t:-0.17,  sig:'ns'},
+    {label:'OCI (H3)',           beta:-0.0014, t:-0.45,  sig:'ns'}
+  ]);
+  </script>
+</section>
+
+<!-- ============ 8. 验证结论 ============ -->
+<section id="s8">
+  <h2><span class="num">8</span>正确性验证结论（独立复核脚本）</h2>
+  <p>复核脚本 <code>_verify_review_2026-08-17.py</code> / <code>_verify_cluster_crosscheck.py</code> / <code>_verify_review_localize.py</code> 从面板重算并比对基准，得出以下确定性结论：</p>
+
+  <div class="callout ok"><b>① 面板覆盖正确</b>：9,974 观测 / 400 基金 / 2006Q4–2026Q2；各指标覆盖与预期一致（见 §2 表），无异常缺失。</div>
+  <div class="callout ok"><b>② 双向聚类实现权威</b>：手写 CGM 与 statsmodels 原生双向聚类（use_correction=False）<b>Δt=0.00000 完全一致</b>。</div>
+  <div class="callout ok"><b>③ M4 可复现</b>：刷新重算与 <code>_v4_benchmark.json</code> 比对，<b>全部行为指标系数差异 ≤ 1e-3</b>；FF5 因子载荷列轻微漂移（Δβ≤0.028，面板刷新后因子列陈旧），<b>非实质性</b>。</div>
+  <div class="callout ok"><b>④ H1 复核一致</b>：SDI 在 quarter_return 口径下重算 <b>t=2.464</b>，与基准 JSON 2.459 吻合 ✓。</div>
+  <div class="callout key"><b>⑤ 口径澄清已落地</b>：M4（ff5_adj_return / 无基金 FE / SDI 近零）与 H1（quarter_return / 含基金 FE / SDI 显著）已在 §3 明确区分，论文与汇报须分别陈述，<b>严禁混用或合并结论</b>。</div>
+
+  <div class="callout warn"><b>已知次要差异（不影响结论）</b>：M4 重算的全样本 FF5 因子列与基准 JSON 略有漂移（max|Δβ|=0.028、max|Δt|=1.24）——源于 <code>run_all</code> 刷新面板后 FF5 季度因子列被重新聚合，属缓存陈旧而非算法错误。行为指标与 L1–L5 系数均逐位吻合。建议正式出稿前重新跑一次 <code>run_full.py</code> 刷新全部 JSON。</div>
+</section>
+
+<!-- ============ 9. 文件清单 ============ -->
+<section id="s9">
+  <h2><span class="num">9</span>代码文件位置清单（绝对路径）</h2>
+  <table>
+    <tr><th>用途</th><th>文件绝对路径</th></tr>
+    <tr><td>一键复现入口</td><td><code>D:\Desktop\基金经理行为分析研究\run_full.py</code></td></tr>
+    <tr><td>数据处理流水线（10 步）</td><td><code>D:\Desktop\基金经理行为分析研究\指标计算流水线\run_all.py</code></td></tr>
+    <tr><td>指标统一计算库（所有公式）</td><td><code>D:\Desktop\基金经理行为分析研究\指标计算流水线\lib_metrics.py</code></td></tr>
+    <tr><td>因变量层（收益/alpha/RG/FF）</td><td><code>D:\Desktop\基金经理行为分析研究\指标计算流水线\06_因变量.py</code></td></tr>
+    <tr><td>诚实回归（H1–H5，基金 FE）</td><td><code>D:\Desktop\基金经理行为分析研究\L3_L1_regressions_HONEST_2026-08-14.py</code></td></tr>
+    <tr><td>v4 基准回归（M4，无基金 FE）</td><td><code>D:\Desktop\基金经理行为分析研究\_v4_benchmark_table.py</code></td></tr>
+    <tr><td>主面板（论文用）</td><td><code>D:\Desktop\基金经理行为分析研究\指标计算流水线\output\主分析面板_重建_含TOwind.csv</code></td></tr>
+    <tr><td>M4 基准结果 JSON</td><td><code>D:\Desktop\基金经理行为分析研究\_v4_benchmark.json</code></td></tr>
+    <tr><td>HONEST 结果 JSON</td><td><code>D:\Desktop\基金经理行为分析研究\L3_L1_regression_HONEST_TOWind_2026-08-15.json</code></td></tr>
+    <tr><td>聚类交叉验证脚本</td><td><code>D:\Desktop\基金经理行为分析研究\_verify_cluster_crosscheck.py</code></td></tr>
+    <tr><td>复核 / 本地化脚本</td><td><code>D:\Desktop\基金经理行为分析研究\_verify_review_2026-08-17.py</code> · <code>_verify_review_localize.py</code></td></tr>
+  </table>
+</section>
+
+<!-- ============ 10. 局限披露 ============ -->
+<section id="s10">
+  <h2><span class="num">10</span>诚实局限披露（数据缺口）</h2>
+  <ul class="tight">
+    <li><b>de（处置效应）覆盖仅 46.6%</b>：依赖半年频全持仓快照（2006–2015 近零、2016+ ~45%），其估计样本被「是否有全持仓数据」选择 —— 结论<b>不外推全样本</b>，效度边界 = 有全持仓数据子群（已在 de 选择性审计中披露）。</li>
+    <li><b>LSV 为可计算代理</b>：仓库仅含「累计买入股票明细」（买入侧），无买卖双向记录，故用「持仓变动方向」作买卖方向代理，与真实 LSV 口径有差异，仅作近似。</li>
+    <li><b>TO_wind 为 Wind 单边口径</b>（≈双边½），仅论符号/显著性；真双边换手率（TO_two_sided）仅 200 只 / 18% 覆盖，用作稳健性对照。</li>
+    <li><b>SDI 有效窗口始于 2022</b>（window=8 暖机），长跨度趋势分析受限。</li>
+    <li><b>Wind 持仓仅前十大</b> → 全持仓校验不可行；DE/LSV/ARG 结构性受限于持仓源，须披露为方法局限。</li>
+    <li><b>严禁未来数据泄漏</b>：净值截至 2026-08-07，2026Q3 及以后季度一律剔除；无 2026Q3+ 未来日期进入面板。</li>
+  </ul>
+  <div class="callout ok"><b>总结</b>：数据处理口径自洽、未来季剔除到位、聚类实现经金标准交叉验证、M4 与 H1 均可复现。审查未发现算法性或泄漏性错误；遗留差异均为已知的、已披露的数据覆盖局限与方法代理，<b>不影响「数据处理与回归正确」的总体判定</b>。</div>
+</section>
+
+<div class="foot">审查汇报 · 基金经理行为分析研究 · 2026-08-17 · 公式经 KaTeX 渲染，代码片段取自上述绝对路径文件原文。</div>
+</div>
+</body>
+</html>

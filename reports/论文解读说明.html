@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《投资经理行为画像》论文全方位解读（体系 B 六维 · 2026-08-31 定稿版）</title>
+<style>
+:root{--primary:#1f4e79;--accent:#2c7a7b;--gold:#c9a227;--bg:#fefefe;--card:#f7fafc;--border:#cbd5e0;--text:#2d3748;--muted:#718096;--good:#2f855a;--warn:#b7791f;--bad:#c0392b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC','Microsoft YaHei','SimSun',serif;line-height:1.85;color:var(--text);background:var(--bg);max-width:980px;margin:0 auto;padding:40px 30px;font-size:16px}
+h1{color:var(--primary);font-size:1.7em;text-align:center;margin-bottom:8px;letter-spacing:1px}
+.subtitle{text-align:center;color:var(--muted);font-size:.9em;margin-bottom:34px;border-bottom:2px solid var(--accent);padding-bottom:14px}
+h2{color:var(--primary);font-size:1.3em;margin-top:42px;margin-bottom:14px;padding-left:12px;border-left:4px solid var(--accent)}
+h3{color:var(--primary);font-size:1.08em;margin-top:24px;margin-bottom:8px}
+p{margin-bottom:12px;text-align:justify}
+.q{color:var(--accent);font-weight:700}
+.num{color:var(--primary);font-weight:700}
+table{border-collapse:collapse;width:100%;font-size:.9em;margin:14px 0}
+th{background:var(--primary);color:#fff;padding:8px 10px;text-align:center;font-weight:600}
+td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:nth-child(even) td{background:var(--card)}
+.formula{background:var(--card);border:1px solid var(--border);padding:10px 18px;margin:10px 0;font-family:'Cambria Math','Times New Roman',serif;font-size:.95em;text-align:center;border-radius:4px;overflow-x:auto}
+.callout{background:#e6fffa;border-left:4px solid var(--accent);padding:13px 18px;margin:15px 0;border-radius:0 4px 4px 0;font-size:.94em}
+.warnbox{background:#fffaf0;border-left:4px solid var(--warn);padding:13px 18px;margin:15px 0;border-radius:0 4px 4px 0;font-size:.94em}
+.goodbox{background:#f0fff4;border-left:4px solid var(--good);padding:13px 18px;margin:15px 0;border-radius:0 4px 4px 0;font-size:.94em}
+.badbox{background:#fff5f5;border-left:4px solid var(--bad);padding:13px 18px;margin:15px 0;border-radius:0 4px 4px 0;font-size:.94em}
+.keybox{background:#ebf8ff;border-left:4px solid var(--primary);padding:13px 18px;margin:15px 0;border-radius:0 4px 4px 0;font-size:.94em}
+.flow{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.flow div{flex:1;min-width:130px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:.85em;text-align:center}
+.flow b{display:block;color:var(--accent);margin-bottom:4px}
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.8em;font-weight:600}
+.bB{background:#dbeafe;color:#1e40af}.bG{background:#dcfce7;color:#166534}.bR{background:#fee2e2;color:#991b1b}.bY{background:#fef3c7;color:#92400e}
+ul,ol{margin:0 0 12px 26px}
+li{margin-bottom:5px}
+code{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:1px 6px;font-size:.88em;font-family:Consolas,monospace}
+footer{color:var(--muted);font-size:.82em;text-align:center;margin-top:36px}
+</style>
+</head>
+<body>
+<h1>投资经理行为画像：五层框架 · 六维计分</h1>
+<p class="subtitle">论文全方位解读 · 与《论文初稿_2026-08-26.docx》完全同源 · 2026-08-31 定稿版</p>
+
+<div class="goodbox" style="border:2px solid #16a34a">
+<strong>版本对齐声明：</strong>本解读与论文定稿（<code>reports/论文初稿_2026-08-26.docx</code>，107 段 / 12 表 / 3 图，正文约 1.5 万字）逐数字同源，
+所有数字均来自 <code>output/</code> 下定稿 JSON（经 192 项跨产物一致性核验全部通过）。
+旧版解读中的 v20 五层认知偏差口径（N=297、RA t=5.63、PS 得分、样本外 4.1%—5.6% 等）<b>已全部作废</b>，如需查阅见 <code>论文解读说明.html.bak_v20full_20260831</code>。
+</div>
+
+<!-- ============================================================ -->
+<h2>〇、这篇论文研究什么、发现了什么（一页速览）</h2>
+<!-- ============================================================ -->
+<p class="callout">核心问题：<span class="q">基金经理的"行为"能不能预测业绩？</span>本文把行为金融与主动管理文献归纳为 <b>L1–L5 五层理论框架</b>，
+从 15 个有文献出处的成分指标中筛得 <b>六个计分维度</b>，等权复合刻画投资经理画像。答案：<b>能</b>——按综合能力五等分，
+FF5 超额收益从 Q1 的 <span class="num">0.64%</span> 严格单调升至 Q5 的 <span class="num">3.77%</span>
+（Q5−Q1 = <span class="num">3.13 个百分点／季</span>，t=<span class="num">10.28</span>），
+且这一区分度经 Bootstrap、α 分解、外部样本、异质性四重验证后<b>依然成立</b>。</p>
+
+<div class="flow">
+<div><b>样本</b>400 只基金<br>9,974 基金-季<br>2006Q3–2026Q2</div>
+<div><b>框架</b>5 层理论<br>→ 6 维计分</div>
+<div><b>核心结果</b>Q5−Q1=3.13pp<br>t=10.28</div>
+<div><b>稳健性</b>Bootstrap / α 分解<br>外部效度 / 异质性</div>
+<div><b>定位</b>预测关联<br>非因果声称</div>
+</div>
+
+<h3>0.1 六个计分维度与主结果</h3>
+<table>
+<tr><th>计分维度（层）</th><th>成分指标</th><th>单维 t</th><th>联立 t</th><th>一句话结论</th></tr>
+<tr><td><b>L1 基本面优势</b></td><td>−任职年限、−基金年龄、−规模</td><td>+2.86</td><td>−0.17</td><td>业绩的<b>边界条件</b>而非能力本身；样本外联立转正（t=+2.71）</td></tr>
+<tr><td><b>L2 认知能力</b></td><td>risk_asym、de、oc_conf</td><td>+7.69</td><td>+4.00</td><td>最稳定的行为来源；样本外联立 t=+2.20</td></tr>
+<tr><td><b>L3 配置选择能力</b></td><td>ICI、ISDI</td><td>+4.22</td><td>+2.44</td><td>敢集中押注行业、不频繁漂移的经理更好；样本外 t=+3.47</td></tr>
+<tr><td><b>L4a 风险应对能力</b></td><td>ARG、timing</td><td>+7.03</td><td>+3.83</td><td>面对冲击的主动应对；样本外联立系数六维最高（+7.05）</td></tr>
+<tr><td><b>L4b 风险转化能力</b></td><td>sharpe8、sortino8、mppm8（滞后）</td><td>+6.87</td><td>+5.50</td><td>联立系数最大，但与因变量同源 → 定性"风险使用效率的持续性"</td></tr>
+<tr><td><b>L5 交易执行能力</b></td><td>SDI、lsv</td><td>+3.20</td><td>+1.23</td><td>单维有效但信号被 L4a 吸收（维度相关 0.524）</td></tr>
+</table>
+<p class="num" style="text-align:center">六维联立 R² = 0.4557（N=362）｜综合能力单维 t = +11.40，R² = 0.3838</p>
+
+<!-- ============================================================ -->
+<h2>一、引言在讲什么</h2>
+<!-- ============================================================ -->
+<p>引言四段对应大纲要求的四个动作：</p>
+<table>
+<tr><th>段落功能</th><th>内容</th></tr>
+<tr><td>意义</td><td>投资经理行为直接决定组合业绩；对自身行为特征的充分认识是改善投资、提升业绩的起点</td></tr>
+<tr><td>可操作性</td><td>行为指标均有文献出处、可由公开持仓与净值复算（仅换手率需 Wind 授权）</td></tr>
+<tr><td>本文做法</td><td>400 只基金 × 80 季面板；15 个成分指标定向检验 → 六维等权复合 → 横截面与样本外双重验证 → 群体与典型画像</td></tr>
+<tr><td>结论预告</td><td>认知、配置选择、风险应对（两职能）四个行为维度显著解释 alpha；5 名正向典型画像 + 1 名反例的案例分析</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>二、理论框架：五层 × 六维</h2>
+<!-- ============================================================ -->
+<div class="keybox">
+<strong>关键口径（结论 F1）：</strong>本文是<b>五层理论框架、六个计分维度</b>。层次回答"行为发生在哪个环节"，
+计分维度是要求内部指标同质、可等权平均的测量单元，二者不必一一对应。
+L4 风险应对层内含两种不同质的测度，故拆为 <b>L4a 过程应对</b>与 <b>L4b 风险转化</b>两维——
+这就是"五层为什么对应六维"的全部原因。
+</div>
+
+<h3>2.1 五层各自回答什么问题</h3>
+<table>
+<tr><th>层</th><th>回答的问题</th><th>理论依据（例）</th><th>在本框架中的角色</th></tr>
+<tr><td>L1 基本面层</td><td>"谁在管理"</td><td>人力资本理论；规模不经济（Berk &amp; Green 2004）</td><td>边界条件维度</td></tr>
+<tr><td>L2 认知层</td><td>"为何如此决策"</td><td>前景理论、处置效应（Odean 1998）、过度自信</td><td>核心行为维度</td></tr>
+<tr><td>L3 选择层</td><td>"如何配置"</td><td>主动管理理论（Cremers &amp; Petajisto 2009）</td><td>核心行为维度</td></tr>
+<tr><td>L4 风险应对层</td><td>"如何控险与转化"</td><td>锦标赛理论；主动管理真实能力（Kacperczyk et al. 2008）</td><td>拆为 L4a / L4b 两维</td></tr>
+<tr><td>L5 交易执行层</td><td>"执行是否稳定"</td><td>风格漂移与羊群文献（LSV 1992）</td><td>核心行为维度</td></tr>
+</table>
+
+<h3>2.2 为什么等权复合（结论 F3）</h3>
+<p>维度内与维度间均等权，不用回归赋权：回归权重会被样本期行情牵动，换窗口即变；等权可复现、不过拟合。
+复合公式：<b>维度得分 = Σ z(成分) / 有效成分个数</b>（缺失成分按剩余成分取均值，不填 0）。
+稳健性：PCA 权重口径与等权口径的综合分 Spearman ρ=0.895。</p>
+
+<h3>2.3 为什么 L4 不合并（结论 F2）</h3>
+<p>两职能 Spearman 秩相关仅 0.122；42% 的基金分位差 &gt;0.30；两者互控时各自强显著（t=+6.56 / +6.10）；
+合并后 Q5−Q1 由 3.13pp 降至 2.82pp 且五分组不再严格单调。典型个案：攻守转换型经理过程应对分位 99.2%、风险转化分位 0.6%，合并后该信息消失。</p>
+
+<!-- ============================================================ -->
+<h2>三、数据从哪里来</h2>
+<!-- ============================================================ -->
+<table>
+<tr><th>数据</th><th>来源</th><th>用途</th></tr>
+<tr><td>基金日度复权净值</td><td>AKShare / 东方财富</td><td>季度收益、滚动绩效指标（Sharpe/Sortino/MPPM）、FF5 alpha</td></tr>
+<tr><td>定期报告全量持仓</td><td>基金定期报告（AKShare 采集）</td><td>de、lsv、ICI、ISDI、AS_improved、ARG 的持仓权重</td></tr>
+<tr><td>FF5 日度因子</td><td>本地因子库</td><td>因变量构造</td></tr>
+<tr><td>Wind 集成换手率</td><td>Wind（商业授权）</td><td>TO_wind（基金层覆盖 98.5%）；严格双边换手率仅 200 只，仅作对照</td></tr>
+<tr><td>风格指数 / 行业指数</td><td>AKShare（399372/399373/399376/399377；申万一级）</td><td>SDI 回归自变量；ISDI 行业分组</td></tr>
+</table>
+<p><b>样本结构（结论 Q3）：</b>2006Q3–2026Q2 共 80 季；基金数从 2019 年末 61 只跃升至 2020 年末 286 只，
+2021–2026 年保持 320–400 只。样本在 2020 年存在结构性扩张，主表使用全样本，
+并已用附录 A 的队列对照（老/新基金队列分别回归）核对分期后符号不变。</p>
+<div class="warnbox"><strong>覆盖率口径须区分两层：</strong>观测层（基金—季度，如 de 46.6%，依赖半年持仓快照）与
+基金层（时序均值，画像与横截面回归口径，除 timing 88.8% 与 SDI 91.5% 外均不低于 92.8%）。论文表 2 报告基金层口径。</div>
+
+<!-- ============================================================ -->
+<h2>四、指标怎么算（15 个成分一览）</h2>
+<!-- ============================================================ -->
+<table>
+<tr><th>层</th><th>指标</th><th>计算</th><th>预期方向</th><th>检验结果（规格 I）</th></tr>
+<tr><td rowspan="3">L2 认知</td><td>risk_asym 风险承担不对称</td><td>σ(盈利季) − σ(亏损季)，8 季滚动</td><td>论文按下行风险定价定正</td><td class="num">+2.72**</td></tr>
+<tr><td>de 处置效应</td><td>PGR − PLR（Odean 1998）</td><td>负（果断止损好）</td><td class="num">−4.51***</td></tr>
+<tr><td>oc_conf 过度自信</td><td>换手对自身 past-alpha 的敏感</td><td>负</td><td class="num">−4.19***</td></tr>
+<tr><td rowspan="2">L3 选择</td><td>ICI 行业集中度</td><td>Σ(w_j − w̄_j)²（申万 31 行业）</td><td>正（集中押注体现信息优势）</td><td class="num">+4.34***</td></tr>
+<tr><td>ISDI 行业风格漂移</td><td>行业按 Beta 分三组，组权重向量相邻期曼哈顿距离</td><td>负（频繁轮动差）</td><td class="num">−3.30***</td></tr>
+<tr><td rowspan="2">L4a 过程应对</td><td>ARG 调仓幅度</td><td>Σ|R|，R=实际净值−上期持仓模拟</td><td>正（未观测主动行动）</td><td class="num">+3.34***</td></tr>
+<tr><td>timing 下行保护</td><td>HM 分段回归 γ，timing=−γ</td><td>正（跌时收缩好）</td><td class="num">+5.19***</td></tr>
+<tr><td rowspan="3">L4b 风险转化</td><td>sharpe8_lag</td><td>8 季滚动 Sharpe（滞后一期）</td><td>正</td><td class="num">+7.88***</td></tr>
+<tr><td>sortino8_lag</td><td>8 季滚动 Sortino（滞后一期）</td><td>正</td><td class="num">+3.71***</td></tr>
+<tr><td>mppm8_lag</td><td>操纵稳健业绩测度（滞后一期）</td><td>正</td><td class="num">+10.47***</td></tr>
+<tr><td rowspan="2">L5 交易执行</td><td>SDI 策略偏离</td><td>净值对四宫格风格指数 8 季滚动回归，相邻期权重曼哈顿距离</td><td>负（风格漂移差）</td><td class="num">−2.15**</td></tr>
+<tr><td>lsv 交易趋同</td><td>|p_i − p̄_t| − AF（LSV 1992 代理）</td><td>文献预期负</td><td class="num">+2.11**（反号，定性"时期依存+被同层掩盖"）</td></tr>
+<tr><td rowspan="3">L1 基本面</td><td>任职年限</td><td>观测日 − 首次任职日</td><td>负（新经理更努力）</td><td class="num">边际</td></tr>
+<tr><td>基金年龄</td><td>ln(存续月数)</td><td>负（新基金效应）</td><td class="num">***</td></tr>
+<tr><td>规模</td><td>ln(平均规模)</td><td>负（规模不经济）</td><td class="num">方向一致 n.s.（t=−1.16）</td></tr>
+</table>
+<p class="num">15 个成分方向全部与文献预期一致；以规格 I 为主口径，L2–L5 十二个成分全部达到 5% 水平。</p>
+
+<!-- ============================================================ -->
+<h2>五、检验设计（回归方程）</h2>
+<!-- ============================================================ -->
+<h3>5.1 两条主线</h3>
+<div class="formula">规格 I（基金层横截面）：ff5_alpha_i = a + Σ_k β_k · Dim_k,i + Controls_i + ε_i　（N=362）</div>
+<div class="formula">规格 II（季度面板）：ff5_adj_return_i,t = a + Σ_k β_k · Dim_k,i,t−1 + Controls + FF5 + C(year) + ε　（缩尾 + 双向聚类）</div>
+<h3>5.2 样本外检验（关键设计）</h3>
+<p>以 <b>2023-04-01</b> 为切分点：前半段算指标、后半段算 alpha，直接检验"前期行为能否预测后期业绩"。
+样本外联立结果：L4a <b>+7.05</b>（六维最高）、L4b 单维 t=+5.38／联立 +5.58、L3 +3.47、L2 +2.20、L1 +2.71、L5 +0.67（n.s.）。</p>
+
+<!-- ============================================================ -->
+<h2>六、核心实证发现</h2>
+<!-- ============================================================ -->
+<h3>6.1 六维总体有效（结论 D1）</h3>
+<p>六个计分维度单独进入回归全部显著为正（单维 t 区间 +2.86 至 +7.69）；
+综合能力单维 t=+11.40（R²=0.3838）；按综合能力五等分，alpha 从 Q1 的 0.64% 严格单调升至 Q5 的 3.77%，
+Q5−Q1=3.13pp（t=10.28）。</p>
+
+<h3>6.2 分维度定性（结论 D2–D7、D9）</h3>
+<ul>
+<li><b>L4b 风险转化（D2）</b>：联立系数最大（0.01325, t=+5.50），但三个测度本身即风险调整后业绩，与因变量共享概念内核——
+增量 R²=0.1796 中有一部分来自定义同源，有效性主要靠样本外单维检验（t=+5.38）支撑，故定性为<b>"风险使用效率具有持续性"</b>而非"最重要的能力"。
+行为佐证（D8）：上行/下行捕获率显示该维度对应真实的市场状态响应差异，非单纯收益摘要。</li>
+<li><b>L1 基本面优势（D3）</b>：单维显著（t=+2.86）、同期联立不显著（t=−0.17）、样本外联立转正（t=+2.71）——
+是业绩的<b>边界条件</b>（决定可能性上限）而非能力本身。典型反例：L1 分位 99.7% 的基金 alpha 为负。</li>
+<li><b>L5 交易执行（D4）</b>：单维 t=+3.20 但联立不显著（+1.23）——与 L4a 维度相关 0.524、成分级 SDI×ARG 相关达 −0.84，信号被吸收，不是无效。</li>
+<li><b>L2 认知（D5）</b>：三成分方向均显著且稳定，联立 t=+4.00、样本外 +2.20；群体画像差值 t=+5.55 为六维最高。
+risk_asym 度量思路源自下行风险定价（Ang, Chen &amp; Xing 2006），严格意义的认知偏差是 de 与 oc_conf。</li>
+<li><b>L3 配置选择（D6 + D9）</b>：联立 t=+2.44、样本外 +3.47；Brinson 分解验证显示配置收益 β=+0.0785（t=+3.52***）&gt; 选股收益（t=+1.68*），
+且与 de（t=−3.14）、risk_asym（t=+3.50）在子样内独立成立——配置能力是独立于认知层的行为来源。</li>
+<li><b>L4a 过程应对（D7）</b>：样本外联立系数六维最高（+7.05）；但 timing 同样由收益序列估计，与因变量概念同源程度与 L4b 相当（相关 0.446/0.448，已同等披露），
+定性为"对市场冲击的应对能力具有持续性"。</li>
+</ul>
+
+<h3>6.3 哪些指标被剔除、为什么（结论 X1、X2）</h3>
+<table>
+<tr><th>指标</th><th>剔除原因</th></tr>
+<tr><td>改进主动份额 AS_improved</td><td>六道检验中符号翻转、显著性依赖控制变量、群体画像不显著（p=0.0646）——仅作对照保留</td></tr>
+<tr><td>换手率 TO</td><td>双口径（双边 / Wind 集成）不显著</td></tr>
+<tr><td>追涨杀跌 RG</td><td>覆盖率不足且两源对业绩均 n.s.（已仲裁为零结果）</td></tr>
+<tr><td>风险稳定性</td><td>与既有指标严重重合</td></tr>
+<tr><td>收益波动率 RV</td><td>本质是风险暴露而非能力</td></tr>
+</table>
+<p>扩展候选同样有记录（X3、X4）：趋势外推偏差、有限关注度（L2 候选）方向均与假设相反未通过准入；
+TM 择时二次项与特质波动率（L3/L4 候选）含固定效应后不显著。<b>所有剔除均留有检验记录，非静默删除。</b></p>
+
+<h3>6.4 群体画像（结论 P1–P3）</h3>
+<p>按 FF5 alpha（业绩，而非能力得分）取头尾各 5%（各 19 只）对比六维：<b>六个维度全部显著拉开差距</b>——
+L2 t=+5.55（六维最高）、L4a +5.16、L4b +3.93、L3 +3.19、L5 +3.28、L1 +2.14。
+三个反直觉事实：①规模与能力反向（最低能力组平均 17.33 亿 vs 最高组 4.45 亿）；
+②学历与 CFA 持证占比随能力上升而下降；③单指标区分度最高的不是选股类，而是下行保护系数（t=+5.40）。
+——识别好经理要<b>看行为，而不是看简历和规模</b>。</p>
+
+<h3>6.5 典型画像（结论 P4）</h3>
+<p>选取 <b>5 名正向典型投资经理 + 1 名反例</b>做案例分析（按经理姓名去重），覆盖：
+全能型（中航机遇领航，α=+5.41%，六维 89–99% 分位近满圆）、风险定价型（易方达信息产业，α=+3.31%）、
+认知纪律型（东方惠新，L2 分位 100% 而 L4a 仅 1%，α=+3.34%）、攻守转换型（信澳业绩驱动，L4a 99.4% / L4b 0.8%，α=+6.67%）、
+基本面优势型（诺德兴新趋势，L1 分位 99.7% 但 α=−0.83%）与反例（华安策略优选，全面低分位，α=−0.36%）。</p>
+<div class="warnbox"><strong>诚实边界（逻辑审查后修正）：</strong>六个案例是按各维度极值刻意选取的典型切面，不宜外推总体。
+全样本检验显示：六维分位离散度与 alpha 相关仅 <b>−0.043</b>（控综合能力后 −0.059），按离散度五等分的 alpha 非单调；
+相反最强单点分位与 alpha 相关 <b>+0.471</b>。"单点突出伴随综合业绩平平"应理解为<b>挑选机制的产物</b>，而非均衡性带来溢价。</div>
+
+<h3>6.6 三层补强证据（写进结论的三个新段）</h3>
+<table>
+<tr><th>检验</th><th>设计</th><th>结果</th><th>含义</th></tr>
+<tr><td><b>运气 vs 实力</b><br>（Bootstrap）</td><td>362 只基金整簇有放回重抽 × 1,000 次，每次重算五等分 Q5−Q1</td><td class="num">95% CI = [+2.53pp, +3.83pp]<br>1,000 次全部为正（p=0.0000）</td><td>区分度<b>不可被截面运气解释</b>——是实力不是少数明星基金驱动</td></tr>
+<tr><td><b>α 分解</b><br>（选股 vs 择时）</td><td>把 alpha 拆为选股α与择时贡献，四个回归设定（截面/组内FE/前向t→t+1）</td><td class="num">RA/DE 对选股α：截面 t=+5.12/−3.03<br>前向 RA t=+3.30；择时全 n.s.</td><td>认知层预测力<b>来自选股能力，非择时</b>；RA 具前瞻性</td></tr>
+<tr><td><b>类型异质性</b><br>（规模/牛熊）</td><td>规模 3 等分（小/中/大各 ~121 只）+ 牛熊分组（沪深300 季收益正负）</td><td class="num">小 +4.12pp(t=7.43)<br>中 +2.72pp(t=5.95)<br>大 +3.19pp(t=8.28)</td><td>三组均显著为正，<b>小基金区分度最大</b>（与 L1 边界条件论断一致）；牛/熊数值相同（alpha 已剥离市场，佐证定义清洁）</td></tr>
+</table>
+
+<h3>6.7 外部效度：33 只论文样本外基金（论文口径复核）</h3>
+<p>按近 3 年收益分组（绩优 18 / 绩差 15）做已知群体效度检验（窗口 2019Q1–2026Q2），
+所有指标均按<b>论文原始口径</b>复算（不含简化版）：</p>
+<table>
+<tr><th>维度</th><th>指标</th><th>绩优</th><th>绩差</th><th>t</th><th>ρ</th><th>判定</th></tr>
+<tr><td>L3 选择</td><td><b>ISDI</b></td><td class="num">0.255</td><td class="num">0.429</td><td class="num"><b>−4.51***</b></td><td class="num"><b>−0.614</b></td><td><b>✅✅ 强支持</b>（4 套窗口下方向均正确）</td></tr>
+<tr><td>L2 认知</td><td>risk_asym</td><td class="num">+0.034</td><td class="num">−0.005</td><td class="num">+4.73***</td><td class="num">+0.606</td><td>✅ 稳健支持（控波动后 +0.558，非波动代理）</td></tr>
+<tr><td>L2 认知</td><td>de</td><td class="num">−0.122</td><td class="num">−0.076</td><td class="num">−1.82*</td><td class="num">−0.205</td><td>✅ 弱支持（方向对）</td></tr>
+<tr><td>L3 选择</td><td>ICI</td><td class="num">910</td><td class="num">865</td><td class="num">+0.25 n.s.</td><td>—</td><td>⚠️ 方向对、不显著</td></tr>
+<tr><td>L5 执行</td><td>SDI</td><td class="num">0.423</td><td class="num">0.441</td><td class="num">−0.49 n.s.</td><td class="num">−0.149</td><td>⚠️ 方向对、不显著（论文口径）</td></tr>
+<tr><td>L4a 应对</td><td>timing</td><td class="num">0.397</td><td class="num">0.450</td><td class="num">−0.27 n.s.</td><td class="num">+0.130</td><td>❌ <b>不支持</b>（控波动后 −0.009）</td></tr>
+</table>
+<div class="badbox"><strong>必须如实披露的负面外部证据：</strong>L4a timing 在外部样本上无区分力——
+论文"单指标中区分度最高的是下行保护系数"的论断<b>在外部样本上不成立</b>，其样本内强度可能依赖特定回归设定或控制变量组合。
+另外，所有指标控制年化波动后偏相关均大幅衰减（ISDI −0.230 / SDI +0.240 / de +0.060），
+说明样本内高 R² 一部分由风险暴露差异驱动——论文已通过结论四的分层披露处理。</div>
+
+<!-- ============================================================ -->
+<h2>七、投资经理画像章节在做什么</h2>
+<!-- ============================================================ -->
+<h3>7.1 群体画像：好业绩背后确有维度差异</h3>
+<p>方向与回归相反：先按<b>业绩</b>取头尾 5%，再回头看维度差——是对"维度是否真有信息"的独立确认。
+背景对照表揭示规模不经济与"行为优于标签"。</p>
+<h3>7.2 典型画像：五种形态 + 反例</h3>
+<p>对应图 3 的六张雷达图。两条读法：①单一维度极端不必然带来高综合业绩（认知纪律型、攻守转换型、基本面优势型三例）；
+②全能型与风险定价型至少三维同处高分位，反例全面低分位。案例是极值切面，配合全样本反证一起阅读（见 6.5 诚实边界）。</p>
+
+<!-- ============================================================ -->
+<h2>八、能说明什么，不能说明什么</h2>
+<!-- ============================================================ -->
+<div class="goodbox">
+<strong>能说明：</strong>
+① 六个计分维度全部与业绩显著正相关，综合得分五等分严格单调（3.13pp, t=10.28），且经 1,000 次 Bootstrap 排除截面运气；
+② 纯行为三维（认知/配置/执行）不借助业绩类指标仍有 2.60pp 区分度（t=8.43）＝全六维的 83.1%；
+③ 认知层的预测力经 α 分解确认来自选股能力而非择时，RA 具有前向预测性（t→t+1 t=+3.30）；
+④ L3 ISDI 在外部 33 只样本上获强支持（ρ=−0.614），行为框架在样本外方向成立；
+⑤ 对实践的用处：基于六维的经理筛选与自检工具（等权、可复算、不依赖商业数据）。
+</div>
+<div class="warnbox">
+<strong>不能说明：</strong>
+① 因果——全文是预测关联证据，不含因果识别设计；
+② L4b"最重要能力"——它与因变量同源，只宜定性为风险使用效率的持续性（单独即达全六维 93.4% 区分度，须分层阅读）；
+③ timing 的样本内强度可外推——外部样本不支持，结论已加注；
+④ "均衡性溢价"——已被全样本检验推翻（离散度与 alpha 相关 −0.043），案例仅是极值切面；
+⑤ ICI / SDI 的外部显著性——方向对但 33 只样本上不显著。
+</div>
+
+<!-- ============================================================ -->
+<h2>九、局限（论文如实披露的五项）</h2>
+<!-- ============================================================ -->
+<ol>
+<li><b>处置效应依赖半年度持仓快照</b>（观测层覆盖 46.6%、基金层 99.8%）；</li>
+<li><b>严格双边换手率仅覆盖 200 只</b>，主口径改用 Wind 集成换手率（基金层 98.5%）；</li>
+<li><b>交易趋同度以持仓变动方向代理真实买卖方向</b>；策略偏离指数（SDI）基金层有 45.4% 时序均值为 0，对这部分基金不具区分度；样本仅含存续基金（幸存者偏差）；</li>
+<li><b>方法层面</b>：L4a 与 L4b 均与因变量存在概念同源（复合维度与 alpha 相关 0.446 / 0.448，timing 亦由收益序列估计），性质弱于纯行为维度；</li>
+<li><b>六维等权使 L4 层实得 2/6 权重</b>而其余四层各 1/6——按层加权的稳健性检验不改变排序（Spearman 0.9917），但读者须知晓。</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>十、论文三张配图怎么读</h2>
+<!-- ============================================================ -->
+<table>
+<tr><th>图</th><th>内容</th><th>读法</th></tr>
+<tr><td><b>图 1</b></td><td>综合能力五等分的 FF5 alpha 柱状图</td><td>Q1→Q5 单色渐变严格递增；金色顶边强调 Q5；统计条给 Q5−Q1=3.13pp（t=10.28）</td></tr>
+<tr><td><b>图 2</b></td><td>六维两两相关热力图</td><td>白描边格=对角线；加粗白字=高相关对：L1×L5=0.574（信息部分重叠）、L4a×L4b=0.418（两职能分开计分的直接依据）</td></tr>
+<tr><td><b>图 3</b></td><td>5 名正向典型 + 反例的六维雷达</td><td>金色虚线环=50% 中位参考；▲=最强维度、▽=最弱维度；α 行正蓝负红；反例（灰）六维全部缩在中位环内</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>十一、关键数字速查表（与论文正文逐字对齐）</h2>
+<!-- ============================================================ -->
+<table>
+<tr><th>数字</th><th>含义</th></tr>
+<tr><td>400 / 9,974 / 80</td><td>基金数 / 基金-季度观测 / 季度数（2006Q3–2026Q2）</td></tr>
+<tr><td>362</td><td>六维横截面回归 N（基金层）</td></tr>
+<tr><td>0.4557 / 0.3838</td><td>六维联立 R² / 综合能力单维 R²</td></tr>
+<tr><td>+4.00 / +2.44 / +3.83 / +5.50 / +1.23 / −0.17</td><td>六维联立 t：L2 / L3 / L4a / L4b / L5 / L1</td></tr>
+<tr><td>0.64% → 3.77%（3.13pp, t=10.28）</td><td>五等分 alpha 单调递增</td></tr>
+<tr><td>2.60pp（t=8.43）= 83.1%</td><td>纯行为三维（L2+L3+L5）的区分度及占全六维比例</td></tr>
+<tr><td>2.92pp（t=9.24）= 93.4%</td><td>L4b 单独的区分度（同源披露用）</td></tr>
+<tr><td>[+2.53pp, +3.83pp]</td><td>1,000 次 Bootstrap 的 Q5−Q1 95% CI（p=0.0000）</td></tr>
+<tr><td>+5.12 / −3.03 / +3.30</td><td>α 分解：RA 截面 / DE 截面 / RA 前向 t（择时全 n.s.）</td></tr>
+<tr><td>+4.12 / +2.72 / +3.19 pp</td><td>规模异质性：小 / 中 / 大基金组 Q5−Q1</td></tr>
+<tr><td>−0.614（t=−4.51***）</td><td>外部效度最强证据：ISDI 与近 3 年收益的 Spearman ρ</td></tr>
+<tr><td>+0.606（控波动 +0.558）</td><td>外部效度：risk_asym 的 ρ（非波动代理）</td></tr>
+<tr><td>+0.130 n.s.（控波动 −0.009）</td><td>外部效度负面证据：timing（论文已加注披露）</td></tr>
+<tr><td>+7.05 / +5.38</td><td>样本外（2023-04-01 切分）：L4a 联立 / L4b 单维 t</td></tr>
+<tr><td>−0.043 / +0.471</td><td>均衡性检验：离散度 vs 最强单点分位与 alpha 的相关</td></tr>
+<tr><td>23 条</td><td>结论源条数（F1–F3、D1–D9、X1–X4、P1–P4、Q1–Q3），见 output/核心结论_定稿_2026-08-26.json</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>十二、配套产物与复现入口</h2>
+<!-- ============================================================ -->
+<table>
+<tr><th>产物</th><th>路径</th><th>说明</th></tr>
+<tr><td>论文正文</td><td><code>reports/论文初稿_2026-08-26.docx</code></td><td>107 段 / 12 表 / 3 图 / 正文约 1.5 万字；摘要+Abstract+附录 A 队列对照</td></tr>
+<tr><td>方法详解</td><td><code>reports/方法详解_2026-08-26.html</code></td><td>九节 34 表：15 指标卡、全部回归公式、S1–S4 复合验证、外部效度与 BCD 补强节</td></tr>
+<tr><td>画像报告</td><td><code>reports/投资经理行为画像_2026-08-26.html</code></td><td>群体/典型画像 + 结论速查 + 外部效度与 BCD 补强节</td></tr>
+<tr><td>结论源</td><td><code>output/核心结论_定稿_2026-08-26.json</code></td><td>23 条结论（定性—证据—限定—出处），三产物共用同源</td></tr>
+<tr><td>一致性核验</td><td><code>output/跨产物一致性核验_2026-08-26.json</code></td><td>192 项检查全部通过（正文/方法详解/画像三产物数字对齐）</td></tr>
+<tr><td>外部效度</td><td><code>reports/外部效度检验_论文口径复核_2026-08-30.html</code></td><td>33 只样本外基金的论文口径复核全记录</td></tr>
+<tr><td>配图脚本</td><td><code>scripts/_figures_20260826.py</code></td><td>三张图学术风格版（可一键重生成；备份链 .bak_20260830 / .bak_round2 / .bak_round3）</td></tr>
+</table>
+
+<footer>本解读与论文定稿逐数字同源 · 体系 B 六维口径 · 2026-08-31 · 仅供理解论文逻辑之用<br>
+旧版（v20 五层认知偏差口径）备份：论文解读说明.html.bak_v20full_20260831</footer>
+</body>
+</html>

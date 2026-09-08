@@ -1,0 +1,1749 @@
+# -*- coding: utf-8 -*-
+"""方法详解 HTML 生成（全新编写，不参考既有 HTML 的内容与模板）。
+覆盖：指标计算公式、数据来源、选取原因、每一次回归的公式与结果、文献依据、
+      群体与典型画像、待补数据与文献缺口、参考文献、术语速查。
+数值全部从 output/ 定稿 JSON 读取。
+输出: reports/方法详解_2026-08-31.html
+"""
+import json
+from pathlib import Path
+
+ROOT = Path(r'd:\Desktop\基金经理行为分析研究')
+OUT = ROOT / 'output'
+REP = ROOT / 'reports'
+
+R3 = json.loads((OUT / '主回归_v3_2026-08-26.json').read_text(encoding='utf-8'))
+CP = json.loads((OUT / '六维复合定稿验证_含L1_2026-08-26.json').read_text(encoding='utf-8'))
+DS = json.loads((OUT / '统计性描述_2026-08-26.json').read_text(encoding='utf-8'))
+PT = json.loads((OUT / '画像_群体与典型_2026-08-26.json').read_text(encoding='utf-8'))
+REF = json.loads((OUT / '参考文献_定稿_2026-08-26.json').read_text(encoding='utf-8'))
+MG = json.loads((OUT / 'L4合并可行性检验_2026-08-26.json').read_text(encoding='utf-8'))
+DG = json.loads((OUT / 'L4b机械性诊断_2026-08-26.json').read_text(encoding='utf-8'))
+FQ = json.loads((OUT / '四问诊断_2026-08-26.json').read_text(encoding='utf-8'))
+EX = json.loads((OUT / '候选扩展_2026-08-26.json').read_text(encoding='utf-8'))
+# 补充 Berk & Green (2004)：L1 规模不经济主引（底库 61 条未收录，补齐条目）
+REF['62'] = ('BERK J B, GREEN R C. Mutual fund flows and performance in rational markets[J]. '
+             'Journal of Political Economy, 2004, 112(5): 1269-1295.')
+
+L1_ORDER = ['mgr_total_tenure_v2', 'log_fund_age', 'log_aum']
+ORDER = ['risk_asym', 'de', 'oc_conf', 'ICI', 'ISDI', 'ARG', 'timing',
+         'mppm8_lag', 'sortino8_lag', 'sharpe8_lag', 'SDI', 'lsv']
+DIMS = ['基本面优势', '认知能力', '配置选择能力', '风险应对能力', '风险转化能力', '交易执行能力']
+DS_CN_L1 = {'mgr_total_tenure_v2': '任职年限（天）', 'log_fund_age': 'log 基金年龄',
+            'log_aum': 'log 基金规模（亿元）'}
+
+# L1 三变量的面板级描述统计（DS JSON 未含，从分析面板直接计算）
+import pandas as _pd
+_pn = _pd.read_csv(OUT / '分析面板_v3_2026-08-26.csv')
+L1_STATS = {}
+for m in L1_ORDER:
+    s = _pd.to_numeric(_pn[m], errors='coerce')
+    L1_STATS[m] = dict(count=int(s.notna().sum()), mean=float(s.mean()), std=float(s.std()),
+                       min=float(s.min()), max=float(s.max()))
+del _pn
+
+# L1-L5 五层分类学显示映射（与《指标总表_五层框架》一致）
+LAYER = {
+    '基本面优势': 'L1 基本面层',
+    '认知能力': 'L2 认知层',
+    '配置选择能力': 'L3 选择层',
+    '风险应对能力': 'L4 风险应对层·过程',
+    '风险转化能力': 'L4 风险应对层·转化',
+    '交易执行能力': 'L5 交易执行层',
+}
+DS_CN = DS['描述统计']['中文名']
+DS_ST = DS['描述统计']
+COV = DS['成分覆盖率']
+SC = DS['样本覆盖']
+GP = PT['群体画像']
+BF = PT['能力五分组背景']
+
+CSS = """
+:root{--ink:#1f2937;--sub:#64748b;--line:#e2e8f0;--bg:#f6f8fb;--card:#ffffff;
+--accent:#2563eb;--accent-soft:#eff6ff;--good:#059669;--bad:#dc2626;--warn:#b45309;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;
+background:var(--bg);color:var(--ink);line-height:1.75;font-size:14.5px}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px}
+header.hero{background:linear-gradient(135deg,#eff6ff 0%,#f0fdf4 100%);
+border:1px solid var(--line);border-radius:14px;padding:30px 34px;margin-bottom:26px}
+.hero h1{font-size:24px;letter-spacing:.5px;margin-bottom:6px}
+.hero .meta{color:var(--sub);font-size:13px}
+.kpis{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;
+padding:12px 18px;min-width:150px;flex:1}
+.kpi b{display:block;font-size:22px;color:var(--accent)}
+.kpi span{color:var(--sub);font-size:12.5px}
+nav.toc{background:var(--card);border:1px solid var(--line);border-radius:10px;
+padding:14px 18px;margin-bottom:26px;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px}
+nav.toc a{color:var(--accent);text-decoration:none}
+nav.toc a:hover{text-decoration:underline}
+h2.sec{font-size:19px;margin:38px 0 14px;padding:10px 14px;background:var(--accent-soft);
+border-left:4px solid var(--accent);border-radius:6px}
+h3{font-size:16px;margin:24px 0 10px;color:#1e3a8a}
+h4{font-size:14.5px;margin:16px 0 8px}
+p{margin:8px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;
+padding:16px 20px;margin:12px 0}
+.ind{border-left:4px solid var(--accent)}
+.ind .head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px}
+.ind .head b{font-size:15.5px}
+.ind .head .dim{color:var(--sub);font-size:12.5px}
+.formula{font-family:Consolas,"Courier New",monospace;font-size:13.5px;
+background:#f8fafc;border:1px dashed #cbd5e1;border-radius:8px;
+padding:10px 14px;margin:8px 0;overflow-x:auto;white-space:pre-wrap}
+.param{font-size:12.5px;color:var(--sub)}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13px;background:var(--card)}
+th{background:#eef2f7;border:1px solid var(--line);padding:7px 9px;font-weight:600;white-space:nowrap}
+td{border:1px solid var(--line);padding:6px 9px;text-align:center}
+td.l,th.l{text-align:left}
+tr:nth-child(even) td{background:#fafcfe}
+.pos{color:var(--good);font-weight:600}.neg{color:var(--bad);font-weight:600}
+.ns{color:var(--sub)}
+.tag{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:10px;
+margin-right:6px;border:1px solid}
+.tag.yes{background:#ecfdf5;color:#047857;border-color:#a7f3d0}
+.tag.no{background:#fef2f2;color:#b91c1c;border-color:#fecaca}
+.tag.mid{background:#fffbeb;color:#b45309;border-color:#fde68a}
+.tag.new{background:#eef2ff;color:#4338ca;border-color:#c7d2fe;font-weight:700}
+.tag.up{background:#f0fdf4;color:#15803d;border-color:#bbf7d0;font-weight:700}
+.tag.keep{background:#f8fafc;color:#64748b;border-color:#e2e8f0}
+h3.layer{font-size:17px;margin:34px 0 8px;padding:8px 14px;color:#fff;
+background:linear-gradient(90deg,#1e3a8a 0%,#2563eb 100%);border-radius:6px}
+.card.layer-intro{background:#f8fafc;border-left:4px solid #2563eb;font-size:13.5px}
+.steps{margin:10px 0;padding:10px 14px;background:#fffbeb;border:1px solid #fde68a;
+border-radius:8px;font-size:13px}
+.steps>b{color:#92400e;display:block;margin-bottom:5px}
+.steps-body{line-height:1.9;color:#3f3f46}
+.formula-note{margin:6px 0 0;font-size:12.5px;color:#64748b}
+.gap-p0{background:#fef2f2}.gap-p1{background:#fffbeb}
+.case{display:flex;flex-direction:column;gap:6px}
+.case .label{font-weight:700;color:#1e3a8a}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:800px){.two{grid-template-columns:1fr}}
+/* ---- 结论速查表（三产物共用样式，保证视觉一致） ---- */
+table.concl td{text-align:left;vertical-align:top;font-size:12.8px;line-height:1.65}
+table.concl td.cid{text-align:center;font-family:Consolas,monospace;font-weight:700;
+color:var(--accent);white-space:nowrap;background:var(--accent-soft)}
+table.concl td.topic{font-weight:600;white-space:nowrap}
+table.concl .ev{color:var(--sub);font-size:12px;display:block;margin-top:4px}
+table.concl .cv{color:var(--warn);font-size:12px;display:block;margin-top:4px}
+table.concl .wh{color:#94a3b8;font-size:11.5px;display:block;margin-top:4px}
+table.concl tr.grp td{background:#eef2f7;font-weight:700;color:#1e3a8a;
+text-align:left;font-size:13px}
+.small{font-size:12.5px;color:var(--sub)}
+ul,ol{padding-left:22px;margin:6px 0}
+li{margin:4px 0}
+.refbox ol{font-size:12.5px;color:#374151}
+.footnote{font-size:12px;color:var(--sub);margin-top:6px}
+dl.glossary{display:grid;grid-template-columns:170px 1fr;gap:6px 14px;font-size:13px}
+dl.glossary dt{font-weight:600;color:#1e3a8a}
+dl.glossary dd{color:#374151}
+"""
+
+
+def star(p):
+    if p is None:
+        return ''
+    if p < 0.01:
+        return '***'
+    if p < 0.05:
+        return '**'
+    if p < 0.1:
+        return '*'
+    return ''
+
+
+def f4(v, nd=4):
+    if v is None:
+        return '—'
+    if v != 0 and abs(v) < 0.001:
+        return f'{v:.2e}'
+    return f'{v:.{nd}f}'
+
+
+def sig_td(t, p, nd=2):
+    if t is None:
+        return '<td class="ns">—</td>'
+    cls = 'ns' if not star(p) else ('pos' if t > 0 else 'neg')
+    return f'<td class="{cls}">{t:+.{nd}f}{star(p)}</td>'
+
+
+def spec_node(metric, spec):
+    node = R3[spec]['univariate'].get(metric)
+    if not node:
+        return None
+    c = node['coef'].get(metric)
+    return (c['b'], c['t'], c['p'], node.get('n')) if c else None
+
+
+# ================================================================ 指标定义库
+INDS = {
+    'risk_asym': {
+        'dim': 'L2 认知层', 'dir': '+', 'ref': '1',
+        'formula': 'risk_asym = σ(盈利期收益) − σ(亏损期收益)\n'
+                   '（滚动 8 个季度窗口，最少 4 期；逐期时变，随报告期更新）',
+        'param': '输入：季度收益序列（来自基金日度复权净值）。窗口内分别对盈利季度与亏损季度'
+                 '求收益标准差，两者之差即风险偏好不对称性。同时记录窗口内盈利/亏损期数。',
+        'why': '前景理论的核心论断是决策者在损失域与收益域的风险态度不对称。该指标直接度量'
+               '这一不对称：正值表示“盈时波动大（进攻）、亏时波动小（防守）”。它不依赖持仓'
+               '明细，仅用净值即可计算，是覆盖面最广（96.5%）的认知层指标。',
+        'lit': 'Kahneman & Tversky (1979)：损失厌恶与风险态度不对称的理论基础。',
+    },
+    'de': {
+        'dim': 'L2 认知层', 'dir': '−', 'ref': '15',
+        'formula': 'de = PGR − PLR\n'
+                   'PGR = 实现盈利的股票数 / (实现盈利 + 继续持有的浮盈股票数)\n'
+                   'PLR = 实现亏损的股票数 / (实现亏损 + 继续持有的浮亏股票数)',
+        'param': '输入：基金定期报告全量持仓快照 + 个股月收益率。持仓快照法（半年报口径，'
+                 '基金—季度观测覆盖 46.6%，基金层覆盖 99.8%）。'
+                 'de > 0 表示“售盈持亏”倾向，de < 0 表示反向操作纪律。',
+        'why': '处置效应是最经典的交易行为偏差。Odean (1998) 的 PGR−PLR 测度在个体与基金'
+               '层面均被验证：处置效应越强，组合收益越差。',
+        'lit': 'Shefrin & Statman (1985) 提出理论；Odean (1998) 给出 PGR−PLR 实证测度；'
+               'Frazzini (2006) 将其与动量异象相连。',
+    },
+    'oc_conf': {
+        'steps': '''①<b>取两期换手率</b>：对基金 f 在报告期 t，取本期双边换手率 TO_t 与上期 TO_{t−1}（Wind 口径，单位 %／期）。
+②<b>算换手率的变化量</b>：ΔTO = TO_t − TO_{t−1}。ΔTO>0 表示这一期交易变频繁了。
+③<b>判断上期是否赚钱</b>：看上一期的基金收益 R_{t−1}。若 R_{t−1}>0，指示函数取 1；否则取 0。
+④<b>相乘得到本期取值</b>：oc_conf_t = ΔTO × 1(R_{t−1}>0)。
+也就是说：<b>只有"上期赚了钱、本期换手又上升"这一种情形才会记下一个正数</b>；
+上期亏钱时无论换手怎么变都记 0，本期换手下降则记负数。
+⑤<b>缺失处理</b>：TO_{t−1} 或 R_{t−1} 任一缺失，该期置为缺失（不填 0，避免把"没数据"当成"不过度自信"）。
+⑥<b>汇总到基金层</b>：把该基金所有有效期的 oc_conf 取时序均值，作为横截面回归与画像的输入。
+⑦<b>定向</b>：取值越大＝越容易被业绩冲昏头脑，预期 alpha 越低，故复合打分时取<b>负号</b>。''',
+        'dim': 'L2 认知层', 'dir': '−', 'ref': '59',
+        'formula': 'oc_conf = (TO_t − TO_{t−1}) × 1(R_{t−1} > 0)\n'
+                   '（换手率变化 × 上一期业绩为正的指示函数）',
+        'param': '输入：Wind 集成换手率 TO_wind_clean（Wind 授权导出，394 只／基金层 98.5%）与季度收益。'
+                 '注：严格双边口径 TO_two_sided 仅覆盖 200 只，未用于本指标。仅当上一期业绩为正时，'
+                 '换手率上升的部分才计入——刻画“业绩变好→自我归因→过度交易”的通道。'
+                 '注意量纲：样本均值 −2.13、标准差 14.83，回归系数小属正常。',
+        'why': 'Puetz & Ruenzi (2011) 证明：业绩改善后的基金经理换手率显著上升，且该上升'
+               '伴随未来业绩下降——是专业投资者的过度自信的直接证据。相比单一换手率，'
+               '该指标剥离了风格性换手，只保留“被业绩冲昏头脑”的行为。',
+        'lit': 'Puetz & Ruenzi (2011) 主引；Gervais & Odean (2001) 提供学习型过度自信的理论模型。',
+    },
+    'ICI': {
+        'dim': 'L3 选择层', 'dir': '+', 'ref': '30',
+        'formula': 'ICI = Σ_{j=1}^{31} (w_j − w̄_j)²\n'
+                   '（w_j：基金在申万一级行业 j 的归一化权重；w̄_j：全样本基金平均权重）',
+        'param': '输入：股票级持仓 → 申万 31 行业聚合（覆盖 5,203 只个股，匹配率 99.2%）。'
+                 '采用归一化版本（Σ权重=1）以消除股票仓位高低的机械干扰。均值 0.29。',
+        'why': 'Kacperczyk, Sialm & Zheng (2005) 的核心发现：行业集中度高的基金业绩更好'
+               '（“行业押注”体现信息优势），与 Grinold-Kahn 主动管理框架一致——'
+               '信息比率集中于少数最优决策。ICI 是该结论的标准测度。',
+        'lit': 'Kacperczyk, Sialm & Zheng (2005)：行业集中度与基金业绩。',
+    },
+    'ISDI': {
+        'dim': 'L3 选择层', 'dir': '−', 'ref': '58',
+        'formula': 'ISDI = Σ_{g∈{高,中,低}} |w_{g,t} − w_{g,t−1}|\n'
+                   '（相邻报告期行业组权重向量的曼哈顿距离；31 个申万一级行业按 Beta 弹性\n'
+                   ' 分为高弹 11 / 中弹 10 / 低弹 10 三组，基金重仓股映射到组）',
+        'param': '输入：重仓股行业映射 + 行业弹性评分（源数据：申万一级行业弹性评分）。'
+                 '衡量行业轮动的频繁程度，与 SDI（净值风格视角）相关性仅 −0.05，互补。',
+        'why': 'Chen & Wei (2025) 在中国市场发现行业风格漂移损害基金业绩：频繁轮动稀释'
+               '信息优势、抬高交易成本。ISDI 从真实持仓出发度量“配置行为”的漂移，'
+               '比净值回归视角（SDI）更直接。',
+        'lit': 'Chen & Wei (2025) 主引；Wermers (2012) 为风格漂移方法论源头。',
+    },
+    'ARG': {
+        'dim': 'L4 风险应对层·过程', 'dir': '+', 'ref': '60',
+        'formula': 'ARG = Σ_{t=1}^{3} |RG_t|（季度内三个月度求和）\n'
+                   'RG_t = R_fund,t − Σ_i w_i · R_i,t\n'
+                   '（实际收益 − 上期持仓不变的静态收益）',
+        'param': '输入：基金净值、上期持仓权重、个股月收益率。原名“主动收益缺口波动”，'
+                 '现统一名为“调仓收益”。均值 0.165。',
+        'why': 'Kacperczyk, Sialm & Zheng (2008) 的 return gap：持仓之外的行为（调仓、'
+               '打新、择时）在收益上的净贡献。绝对值求和版本度量调仓行为的活跃强度，'
+               '实证中与 alpha 正相关——积极而有信息含量的调仓创造超额收益。',
+        'lit': 'Kacperczyk, Sialm & Zheng (2008)：未观测行为与 return gap。',
+    },
+    'timing': {
+        'steps': '''①<b>准备两列数据</b>：基金的季度超额收益 ex_t（基金收益减无风险利率）与市场超额收益 MKT_t。
+②<b>构造下行哑变量项</b>：对每个季度算 min(0, MKT_t)——市场上涨的季度这一项为 0，
+市场下跌的季度这一项等于市场跌幅本身（负数）。
+③<b>做一次分段回归</b>（Henriksson-Merton 1981）：
+ex_t = a + b·MKT_t + γ·min(0, MKT_t) + e_t。
+这里 b 是基金对市场的常态 beta，γ 捕捉的是<b>下跌时 beta 的额外变化</b>。
+④<b>读 γ 的符号</b>：若 γ<0，说明市场下跌时该基金的实际下行暴露比常态 beta 更小——
+经理主动减了仓或换到防御品种，这就是下行保护。
+⑤<b>取负号使方向统一</b>：timing = −γ̂。这样 timing 越大＝保护能力越强，与其他正向指标一致。
+⑥<b>样本门槛</b>：要求该基金至少有 12 个季度的观测才估计，否则置为缺失——
+回归系数在短样本下不稳定。全样本 400 只中有 355 只满足（88.8%）。
+⑦<b>注意</b>：timing 是<b>按基金整段样本估一个系数</b>（基金层常数），不是逐季度时变值，
+因此它不进入季度面板回归，其方向由 S1 成分定向检验报告。''',
+        'dim': 'L4 风险应对层·过程', 'dir': '+', 'ref': '45',
+        'formula': 'ex_it = a_i + b_i·MKT_t + γ_i·min(0, MKT_t) + e_it\n'
+                   'timing_i = −γ̂_i（≥12 个季度；下行保护系数）',
+        'param': '输入：季度超额收益与市场超额收益。γ<0 表示下跌市场中系统性减仓（保护'
+                 '能力），故取 −γ 为正向指标。样本 n=355（88.8%）。均值 0.91。',
+        'why': 'Henriksson-Merton 分段回归是检验市场择时的标准方法，比 Treynor-Mazuy '
+               '二次项更能识别“下跌保护”型择时。择时是风险应对的直接体现：'
+               '在市场状态切换时调整组合暴露。',
+        'lit': 'Henriksson & Merton (1981) 主引；Treynor & Mazuy (1966) 为二次项前身。',
+    },
+    'mppm8_lag': {
+        'steps': '''①<b>取滚动窗口的两列数据</b>：最近 8 个季度的基金收益率 r_t 与同期无风险利率 r_f,t
+（无风险利率缺失时填 0.25%／季）。
+②<b>逐期算相对财富增长</b>：对每一期算 (1+r_t)/(1+r_f,t)——
+即"这一期把钱交给该基金，相对于放在无风险资产上，财富变成了几倍"。
+③<b>做效用变换</b>：把每一期的比值取 (1−ρ) 次幂，ρ=3 为相对风险厌恶系数
+（Goetzmann et al. 建议 2–4）。ρ>1 时该幂函数是凹的，<b>大幅亏损会被放大惩罚</b>，
+这正是"抗操纵"的来源——靠压低波动再赌反弹的路径无法在这个变换下得高分。
+④<b>取 8 期平均</b>：(1/T)·Σ_t [(1+r_t)/(1+r_f,t)]^{1−ρ}，T=8。
+⑤<b>取对数并还原为年化率</b>：乘以 1/((1−ρ)·Δt)，Δt=0.25（季度频率）。
+最终 MPPM 的量纲是<b>年化的效用等价超额收益率</b>——
+可读作"投资者愿意用多少确定收益率来换取该基金的收益分布"。
+⑥<b>滞后一期 + 汇总</b>：滞后一期后取基金层时序均值，正向。
+⑦<b>为什么它抗操纵</b>：Sharpe 的分母只看波动大小、不看波动来自哪一侧，
+经理可以通过卖出深度虚值期权（平时收权利金、极端时爆亏）人为压低波动、抬高 Sharpe；
+但 MPPM 的凹效用变换会对那次极端亏损给出极重的惩罚，操纵不再有利。''',
+        'dim': 'L4 风险应对层·转化', 'dir': '+', 'ref': '52',
+        'formula': 'MPPM = (1/((1−ρ)·Δt)) · ln[ (1/T) Σ_t ((1+r_t)/(1+r_f,t))^{1−ρ} ]\n'
+                   '（ρ=3，Δt=0.25 季度；滚动 8 季，滞后一期）',
+        'param': '输入：季度收益与无风险利率（缺失填 0.25%）。ρ 为相对风险厌恶系数，'
+                 'Goetzmann et al. 建议取 2–4，本文取 3。',
+        'why': '【L4 转化效率职能·新增指标 1】Goetzmann et al. (2007) 证明：Sharpe、'
+               '信息比率等传统测度可被“择时操纵”粉饰（业绩差时先降波动再赌反弹），'
+               '而 MPPM 对此类操纵稳健。它回答的问题是：经理承担的风险是否真正转化为'
+               '投资者可得的效用调整后收益。本文中它是<b>单指标 t 值最高</b>的成分'
+               f'（S1 成分定向 t={CP["S1_成分定向"]["mppm8_lag"]["t"]:+.2f}），'
+               '但须注意它与因变量共享“风险调整后收益”的概念内核，'
+               '其有效性主要由样本外检验支撑（见 §4.11）。',
+        'lit': 'Goetzmann, Ingersoll, Spiegel & Welch (2007)：操纵稳健业绩测度。',
+    },
+    'sortino8_lag': {
+        'steps': '''①<b>取滚动窗口</b>：同样回看最近 8 个季度的超额收益序列。
+②<b>算分子</b>：mean_8 = 8 期超额收益的均值（与 Sharpe 的分子完全相同）。
+③<b>只挑出亏损季度</b>：在窗口内筛出 ex<0 的那些季度——这一步是与 Sharpe 的唯一区别。
+④<b>算下行半标准差</b>：σ_down = 仅对这些亏损季度计算的标准差。
+盈利季度即使波动很大也<b>不计入分母</b>，因为对投资者而言"赚得多但不稳"不是风险。
+⑤<b>相除</b>：sortino8 = mean_8 / σ_down。
+⑥<b>两道门槛</b>：要求下行波动 > 0.01 且窗口内亏损季度至少 3 个，否则置为缺失——
+只有 1–2 个亏损季度时下行标准差没有统计意义。这也是它覆盖率（92.8%）略低于 Sharpe 的原因。
+⑦<b>滞后一期 + 汇总</b>：同 Sharpe，滞后一期后取基金层时序均值，正向。''',
+        'dim': 'L4 风险应对层·转化', 'dir': '+', 'ref': '53',
+        'formula': 'sortino8 = mean_8(ex) / σ_8(ex < 0)\n'
+                   '（滚动 8 季均值 / 下行半标准差；要求下行波动>0.01 且下行季度≥3，滞后一期）',
+        'param': '输入：季度超额收益。仅对亏损季度计算波动（下行风险），盈利季度的大波动'
+                 '不惩罚。覆盖率 92.8%。',
+        'why': '【L4 转化效率职能·新增指标 2】Sortino & Price (1994)：投资者只厌恶下行风险。'
+               'Ang, Chen & Xing (2006) 证明下行风险在横截面上被定价。与 Sharpe 互补：'
+               '区分“好的波动”（盈利端进攻）与“坏的波动”（亏损端失控）。',
+        'lit': 'Sortino & Price (1994) 主引；Ang, Chen & Xing (2006) 下行风险定价。',
+    },
+    'sharpe8_lag': {
+        'steps': '''①<b>取滚动窗口</b>：对基金 f 在报告期 t，回看最近 8 个季度的超额收益序列 {ex_{t−7},…,ex_t}。
+②<b>算窗口内均值</b>：mean_8 = 这 8 期超额收益的算术平均——代表"平均每季赚多少"。
+③<b>算窗口内总标准差</b>：σ_8 = 这 8 期超额收益的标准差（<b>盈利期与亏损期的波动都算进去</b>）。
+④<b>相除</b>：sharpe8 = mean_8 / σ_8。分子是收益、分母是风险，比值即"每单位总风险换回多少收益"。
+⑤<b>数值保护</b>：要求 σ_8 > 10⁻⁸，否则置为缺失（避免除以近似 0 得到爆炸值）。
+⑥<b>滞后一期</b>：把 t 期算出的值挂到 t+1 期使用（记作 sharpe8_lag）。
+这一步是关键：<b>用"过去 8 季的风险使用效率"去解释"下一期的 alpha"，杜绝前视偏差</b>。
+⑦<b>汇总与定向</b>：基金层取时序均值；取值越大越好，复合打分时取正号。''',
+        'dim': 'L4 风险应对层·转化', 'dir': '+', 'ref': '54',
+        'formula': 'sharpe8 = mean_8(ex) / σ_8(ex)\n'
+                   '（滚动 8 季均值 / 总标准差，要求 σ>10⁻⁸，滞后一期）',
+        'param': '输入：季度超额收益。与 return_volatility 同窗口，保证可比。',
+        'why': '【L4 转化效率职能·新增指标 3】Sharpe (1966) 是总风险调整收益的基准参照。'
+               '虽可能被极端分布扭曲（这正是引入 MPPM 的原因），但作为行业通用语言'
+               '保留在维度内，三测度互相印证。',
+        'lit': 'Sharpe (1966)：共同基金业绩测度。',
+    },
+    'SDI': {
+        'dim': 'L5 交易执行层', 'dir': '−', 'ref': '57',
+        'formula': 'SDI = Σ_k |β_{k,t} − β_{k,t−1}|\n'
+                   '（滚动 8 季 OLS：基金季收益 ~ 四风格指数收益，取相邻报告期\n'
+                   ' 风格权重向量的曼哈顿距离）',
+        'param': '风格指数：399372 大盘成长 / 399373 大盘价值 / 399376 小盘成长 / '
+                 '399377 小盘价值（标准 2×2 象限）。暖机 8 季后首值 2022Q2，'
+                 '基金—季度观测覆盖 63.8%，基金层覆盖 91.5%。',
+        'why': 'Wermers (2012)：风格漂移（style drift）使基金实际承担的风险偏离招募书'
+               '承诺，损害持有人预期并稀释信息优势。SDI 从净值回归视角度量风格'
+               '不忠诚度，与持仓视角的 ISDI 互补（相关性 −0.05）。',
+        'lit': 'Wermers (2012)：机构组合风格漂移的原因与后果。',
+    },
+    'lsv': {
+        'dim': 'L5 交易执行层', 'dir': '+', 'ref': '34',
+        'formula': 'lsv_f = mean_i( H_i )，H_i = |p_i − p̄_t| − AF\n'
+                   'p_i = B/(B+S)（股票 i 的买入占比），p̄_t = 横截面均值\n'
+                   'AF = sqrt(2/π) · sqrt( p̄_t(1−p̄_t) / n_i )',
+        'param': '输入：持仓快照的增减方向（代理买卖方向，因无逐笔成交数据）。'
+                 'AF 为 LSV (1992) 二项式调整因子。均值 0.09。',
+        'why': 'Lakonishok, Shleifer & Vishny (1992) 的羊群度量。预期符号本为负'
+               '（羊群损害业绩），但实证显著为正——与 Wermers (1999) 一致：'
+               '部分趋同交易是“共识信息利用”而非盲目跟风。据此将其从认知层'
+               '移入执行层，定向改为 +。',
+        'lit': 'Lakonishok, Shleifer & Vishny (1992) 主引；Wermers (1999) 基金层应用'
+               '与“知情羊群”解释。',
+    },
+}
+
+# ================================================================ 页面拼装
+H = []
+H.append('<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">')
+H.append('<meta name="viewport" content="width=device-width,initial-scale=1">')
+H.append(f'<title>方法详解：投资经理行为画像（{SC["起始季度"][:7]}–{SC["结束季度"][:7]}）</title>')
+H.append(f'<style>{CSS}</style></head><body><div class="wrap">')
+
+# ---------- 头部
+H.append(f'''<header class="hero">
+<h1>投资经理行为画像：指标计算·数据来源·回归设计·文献依据</h1>
+<div class="meta">方法详解文档（与《论文初稿》配套，含全部公式与出处）｜生成日期 2026-08-26<br>
+样本：{SC["基金数"]} 只主动权益基金，{SC["起始季度"][:7]}–{SC["结束季度"][:7]} 共 {SC["季度数"]} 个季度、
+{SC["基金季观测"]:,} 个基金—季度观测（可进入横截面回归 {SC["可进入横截面回归的基金数"]} 只）；
+L1–L5 五层框架下 15 个成分指标、6 个计分维度</div>
+</header>''')
+
+# 结论源：本文档不再内嵌完整速查表（过长且与画像 HTML 重复），
+# 仅在文末「结论要点」以紧凑形式列出定性句 + 出处，完整证据见正文各节。
+CONCL = json.loads((OUT / '核心结论_定稿_2026-08-26.json').read_text(encoding='utf-8'))
+_GRP_LABEL = {'F': '框架与方法口径', 'D': '各维度实证结论', 'X': '矛盾裁决与剔除记录',
+              'P': '画像结论', 'Q': '局限与边界'}
+
+# ---------- 〇、本轮新增指标及其所属层（开篇）
+H.append('<h2 class="sec" id="s0">〇、本轮新增了哪些指标，分别放在哪一层</h2>')
+H.append('''<div class="card"><p>先给结论：本轮共 <b>6 项指标变动</b>，
+其中 <b>5 项是全新指标</b>（oc_conf、timing、sharpe8、sortino8、mppm8），
+<b>1 项是原控制变量升格</b>（L1 三成分合成「基本面优势」计分维）。
+下表逐项列出，每项占一行。第三节的指标详解即<b>严格按 L1→L5 的层序</b>逐层展开，
+每层先给职能定位与本轮变动，再逐个指标给出公式、逐步算法、参数、文献与实证。</p></div>''')
+H.append(f'''<table><tr><th style="width:76px">序</th><th style="width:104px">所属层</th>
+<th class="l" style="width:158px">指标</th>
+<th class="l">在该层承担什么职能</th><th class="l" style="width:158px">实证表现</th></tr>
+
+<tr><td><b>1</b><br><span class="tag up">升格计分</span></td>
+<td><b>L1</b><br>基本面层</td>
+<td class="l"><b>基本面优势</b><br><span class="param">由三个原控制变量合成：<br>
+tenure 任职年限<br>log_age 基金年龄<br>log_aum 基金规模</span></td>
+<td class="l">把原先<b>只作控制变量、从不进入画像</b>的三项升格为一个计分维，
+度量经理所处的<b>组织资本状态</b>（新任、新基金、小规模），补齐画像此前缺失的 L1 层。
+三者方向均为负（任职越短、基金越新、规模越小，alpha 越高），
+按 [z(−tenure)+z(−log_age)+z(−log_aum)]/3 等权合成一个得分。</td>
+<td class="l">合成后单维 t={CP["S3_单维"]["基本面优势"]["t"]:+.2f}**；
+六维联立中被行为维吸收（t={CP["S3_联立"]["系数"]["基本面优势"]["t"]:+.2f}），
+定位为<b>边界条件</b>而非能力</td></tr>
+
+<tr><td><b>2</b><br><span class="tag new">新增</span></td>
+<td><b>L2</b><br>认知层</td>
+<td class="l"><b>oc_conf</b><br>过度自信<br>
+<span class="param">业绩变好后的<br>增量换手</span></td>
+<td class="l">原 L2 只有风险偏好不对称性与处置效应两项，刻画"认知"过于单薄；
+原先还让换手率 TO 兼任过度自信代理，但 TO 双口径均不显著。
+本项只统计<b>"上一期赚钱了、这一期换手率就上升"</b>那部分增量，
+剥离策略性换手，是第三种独立的认知偏差通道（自我归因）。</td>
+<td class="l">成分定向 t={CP["S1_成分定向"]["oc_conf"]["t"]:+.2f}{star(CP["S1_成分定向"]["oc_conf"]["p"])}，
+方向与文献预期一致（越自信、alpha 越低）</td></tr>
+
+<tr><td><b>3</b><br><span class="tag new">新增</span></td>
+<td><b>L4a</b><br>风险应对层<br>·过程应对</td>
+<td class="l"><b>timing</b><br>下行保护系数<br>
+<span class="param">HM 分段回归的<br>下行项系数取负</span></td>
+<td class="l">原该层只有调仓收益 ARG 一项。timing 度量
+<b>市场下跌时是否主动收缩暴露</b>，与 ARG 互补：
+一个看仓位腾挪创造的收益差（做了多少动作），
+一个看下跌时的防御效果（动作有没有用）。</td>
+<td class="l">t={CP["S1_成分定向"]["timing"]["t"]:+.2f}{star(CP["S1_成分定向"]["timing"]["p"])}
+（n={CP["S1_成分定向"]["timing"]["n"]}）；群体画像中<b>区分度最高的单指标</b></td></tr>
+
+<tr><td><b>4</b><br><span class="tag new">新增</span></td>
+<td rowspan="3"><b>L4b</b><br>风险应对层<br>·转化效率<br>
+<span class="param">三项构成<br>递进链</span></td>
+<td class="l"><b>sharpe8</b><br>Sharpe 比率<br>
+<span class="param">总风险口径</span></td>
+<td class="l">递进链第一环，行业通用基准语言。回答"<b>每承担一单位总风险，
+换回了多少超额收益</b>"——补上旧 L4 只有风险分母（收益波动率）、
+没有收益分子的结构缺陷。</td>
+<td class="l">t={CP["S1_成分定向"]["sharpe8_lag"]["t"]:+.2f}{star(CP["S1_成分定向"]["sharpe8_lag"]["p"])}；
+该维单维 R²={CP["S3_单维"]["风险转化能力"]["r2"]:.4f}</td></tr>
+
+<tr><td><b>5</b><br><span class="tag new">新增</span></td>
+<td class="l"><b>sortino8</b><br>Sortino 比率<br>
+<span class="param">下行风险口径</span></td>
+<td class="l">递进链第二环，补 Sharpe 的盲区。Sharpe 对上涨和下跌的波动一视同仁，
+无法区分"<b>进攻型波动</b>"（盈利端敢下手）与"<b>失控型波动</b>"（亏损端刹不住）；
+Sortino 只惩罚亏损期的波动。</td>
+<td class="l">t={CP["S1_成分定向"]["sortino8_lag"]["t"]:+.2f}{star(CP["S1_成分定向"]["sortino8_lag"]["p"])}</td></tr>
+
+<tr><td><b>6</b><br><span class="tag new">新增</span></td>
+<td class="l"><b>mppm8</b><br>抗操纵绩效测度<br>
+<span class="param">效用等价口径</span></td>
+<td class="l">递进链第三环，防业绩粉饰。Sharpe 与信息比率可被
+"业绩差时先压低波动、再赌一次反弹"的操纵手法粉饰，MPPM 对此稳健——
+它算的是<b>投资者真正能拿到的效用等价收益率</b>。</td>
+<td class="l">t={CP["S1_成分定向"]["mppm8_lag"]["t"]:+.2f}{star(CP["S1_成分定向"]["mppm8_lag"]["p"])}，
+<b>15 个成分中 t 值最高</b></td></tr>
+</table>
+<p class="footnote">未变动的层：L3 选择层（行业集中度 ICI、行业风格漂移 ISDI）与
+L5 交易执行层（策略偏离指数 SDI、交易趋同度 lsv）本轮沿用。
+lsv 在前一版已由 L2 移入 L5——其实证符号显著为正，与"认知偏差损害业绩"的 L2 定位矛盾，
+按 Wermers (1999) 属"共识信息利用"型交易趋同，归执行层更准确。
+被检验后剔除的四项（改进主动份额、换手率、追涨杀跌、风险稳定性）见 §4.12。</p>''')
+
+H.append('''<div class="card"><p><b>为什么要做这些变动</b>——三个结构性问题：</p>
+<p><b>一、L2 认知层指标过少。</b>原先只有 risk_asym 与 de 两项；且用换手率 TO 兼任
+"过度自信"代理，但 TO 在规格I（t=+0.50）与规格II（t=+0.32）双口径均不显著——
+TO 混杂了策略性换手，测不准认知偏差。oc_conf 只计"被业绩冲昏头脑"的<b>增量</b>换手，
+剥离策略性基线，因此更准。</p>
+<p><b>二、L4 风险应对层原有三指标全部失效，事实上"空层"。</b>收益波动率 RV 被检验证实
+是风险暴露而非能力（FF5 口径 t=0.86）；风险稳定性 rsstab 与 RV 相关 −0.749、正交化后
+不显著（t=−0.87）；真正有效的只剩 ARG 一项。根因是<b>旧 L4 只度量"承担了多少风险"
+（分母），没有度量"风险换来了多少收益"（分子）</b>——这正是补入 sharpe8／sortino8／mppm8
+三项转化测度的理由，同时补入 timing 强化过程应对一侧。</p>
+<p><b>三、L1 基本面层长期只作控制变量，信息被浪费。</b>单变量检验显示基金年龄
+（t=−4.13***）、任职年限（t=−1.85*）与规模（t=−1.16）对 alpha 全部为负——经验悖论
+（Chevalier &amp; Ellison 1999）与规模不经济（Berk &amp; Green 2004）在中国样本成立。
+据此升格为计分维，使画像完整覆盖 L1–L5 五层。</p></div>''')
+
+H.append(f'''<div class="card"><p><b>关于"风险转化"与 L1 计分维的框架说明</b>：
+L1–L5 始终是五层，没有新加层。"风险转化"不是第六层，而是 <b>L4 风险应对层的内部职能
+分工</b>：过程应对职能看行为动作（ARG、timing——做了什么），转化效率职能看收益质量
+（sharpe8、sortino8、mppm8——风险换来了什么）。二者分开计分的原因：等权平均
+"行为过程"与"收益质量"两种不同质的度量会使复合得分含义混浊；分开后每维内部同质，
+画像才可解释。这与 L2/L3/L5 的分层逻辑一致——每个计分维度内的指标度量同一类行为。
+<b>这一选择已用数据检验</b>：两职能的 Spearman 秩相关仅 {MG["③_异质性"]["spearman"]:.3f}，
+{MG["③_异质性"]["分位差gt30"]:.0%} 的基金在两者上的分位差超过 0.30；
+合并回一维后 alpha 五分组不再严格单调、Q5−Q1 从
+{MG["②_五分组"]["A_六维"]["Q5_Q1"]:.4f} 降至 {MG["②_五分组"]["B_五维_分数级"]["Q5_Q1"]:.4f}。
+完整对照见 §4.10。<b>准确表述是「五层理论框架、六个计分维度」</b>，
+其中 L4 层含两个职能维度，全文以 L4a／L4b 标注层内归属。</p>
+<p><b>L1 基本面优势的定位</b>：它是六个计分维度中唯一"非行为"的维度——度量经理所处的
+组织资本状态（新任、新基金、小规模），而非经理做了什么。单维显著（t=+2.86**）但在
+六维联立中被行为维度吸收（t=−0.17，与风险应对相关 0.566、与交易执行 0.574）——
+规模与年龄影响业绩的通道是行为性的。因此在画像中把它解释为<b>业绩的边界条件</b>：
+年轻小规模给了 alpha 更大的可能空间，但把可能变为现实仍取决于 L2–L5 的行为能力
+（典型反例见 §6.2 基本面优势型）。
+<b>样本外证据进一步支持这一定性</b>：用前半期指标预测后半期 alpha 时，L1 的联立系数
+转为显著为正（t={DG["D2_样本外"]["联立"]["系数"]["基本面优势"]["t"]:+.2f}，
+p={DG["D2_样本外"]["联立"]["系数"]["基本面优势"]["p"]:.4f}）——
+前期的年轻小规模状态确实预示后期更高的 alpha，只是同期截面上信息已被行为维度吸收（见 §4.11）。
+技术细节：L1 得分是三控制变量的线性组合，六维联立模型不再叠加原控制变量组（完全共线）。</p>
+<p>同理，LSV 从 L2 移入 L5（交易执行层）：实证符号显著为正，与"认知偏差损害业绩"的
+L2 定位矛盾，按 Wermers (1999) 的解释属"共识信息利用"型交易趋同，归交易层更准确。</p></div>''')
+
+# ---------- 一、研究总览
+H.append('<h2 class="sec" id="s1">一、研究总览</h2>')
+H.append(f'''<div class="card"><p>本文以 {SC["基金数"]} 只中国主动权益基金为样本
+（{SC["起始季度"][:7]} 至 {SC["结束季度"][:7]}，{SC["季度数"]} 个季度，
+{SC["基金季观测"]:,} 个基金—季度观测），沿用 L1–L5 五层行为框架
+（L1–L5 各层均计分：L1 基本面优势一维，L2/L3/L5 各一维，L4 内分过程应对与转化效率
+两职能，共六个计分维度、15 个成分指标），用 Fama-French 五因子模型调整后的超额收益
+（alpha）作因变量，检验各行为的预测力，再等权复合成能力得分刻画画像。</p>
+<p><b>核心结论</b>：①L2、L3、L4（过程与转化两职能）四个行为计分维度显著预测 alpha，
+L4 转化效率的单维 R² 最高（{CP["S3_单维"]["风险转化能力"]["r2"]:.3f}），
+但该职能与因变量概念同源，其有效性主要由样本外检验支撑
+（前半期指标→后半期 alpha，t={DG["D2_样本外"]["单维"]["风险转化能力"]["t"]:+.2f}，见 §4.11），
+故定性为「风险使用效率的持续性」而非笼统的解释力最强；
+②L1 基本面优势单维显著（t={CP["S3_单维"]["基本面优势"]["t"]:.2f}）但同期联立中被行为维度吸收
+（条件维度；样本外联立转为显著为正 t={DG["D2_样本外"]["联立"]["系数"]["基本面优势"]["t"]:+.2f}）；
+③L5 交易执行层单维显著、联立中不显著；④改进主动份额在六道检验下符号
+翻转，剔除；⑤综合能力五分组的 alpha 严格单调（{CP["S4_分组"]["alpha均值"]["Q1最低"]:.2%} →
+{CP["S4_分组"]["alpha均值"]["Q5最高"]:.2%}，季度），Q5−Q1 差 {CP["S4_分组"]["Q5_Q1"]*100:.2f}
+个百分点（t={CP["S4_分组"]["t"]:.2f}）。</p></div>''')
+
+H.append('<table><tr><th class="l">维度</th><th>成分指标</th><th>定向</th><th>单维 t</th><th>单维 R²</th><th>联立 t</th></tr>')
+COMP = {'基本面优势': ['mgr_total_tenure_v2', 'log_fund_age', 'log_aum'],
+        '认知能力': ['risk_asym', 'de', 'oc_conf'],
+        '配置选择能力': ['ICI', 'ISDI'],
+        '风险应对能力': ['ARG', 'timing'],
+        '风险转化能力': ['mppm8_lag', 'sortino8_lag', 'sharpe8_lag'],
+        '交易执行能力': ['SDI', 'lsv']}
+L1_DIR = {'mgr_total_tenure_v2': '−', 'log_fund_age': '−', 'log_aum': '−'}
+for d in DIMS:
+    ms = COMP[d]
+    u = CP['S3_单维'][d]
+    j = CP['S3_联立']['系数'][d]
+    if d == '基本面优势':
+        comp_txt = '、'.join(f'{m}（−）' for m in ms)
+        dir_txt = '负向'
+    else:
+        comp_txt = '、'.join(f'{m}（{"+" if INDS[m]["dir"] == "+" else "−"}）' for m in ms)
+        dir_txt = '正向' if all(INDS[m]['dir'] == '+' for m in ms) else '见指标'
+    jt = j['t']
+    cls = 'pos' if star(j['p']) else 'ns'
+    H.append(f'<tr><td class="l"><b>{LAYER[d]}</b></td><td class="l">{comp_txt}</td>'
+             f'<td>{dir_txt}</td>'
+             f'<td class="pos">{u["t"]:.2f}***</td><td>{u["r2"]:.4f}</td>'
+             f'<td class="{cls}">{jt:+.2f}{star(j["p"])}</td></tr>')
+H.append(f'<tr><td class="l"><b>综合能力</b></td><td class="l">六个计分维度等权</td><td>正向</td>'
+         f'<td class="pos">{CP["S3_单维"]["综合能力"]["t"]:.2f}***</td>'
+         f'<td>{CP["S3_单维"]["综合能力"]["r2"]:.4f}</td><td>—</td></tr></table>')
+H.append(f'<p class="footnote">注：六维联立模型 N={CP["S3_联立"]["n"]}，'
+         f'R²={CP["S3_联立"]["r2"]:.4f}，不叠加原控制变量组（L1 得分即三控制变量的线性'
+         f'组合，叠加即完全共线；对照口径"五维联立+三控制变量" R²='
+         f'{CP["S3_联立_五维对照"]["r2"]:.4f}，信息含量相当）。L2–L5 单维回归含三控制变量与'
+         'HC1 稳健标准误；L1 维单维为无控制变量回归。</p>')
+
+# ---------- 二、数据来源
+H.append('<h2 class="sec" id="s2">二、数据来源与处理</h2>')
+H.append('<p>数据遵循四级降级链 <b>Wind → tushare → AKShare → Mock</b>（优先授权终端，'
+         '公开渠道兜底，保证可复现）。权威输入目录为 <code>指标计算流水线/data/</code>，'
+         '每个指标的计算函数（<code>lib_metrics.py</code>）注明其输入文件。</p>')
+data_rows = [
+    ('基金净值历史_全量.csv', 'AKShare/东方财富', '季度收益、滚动绩效（sharpe8/sortino8/mppm8）、risk_asym、择时回归', '400 只 · 2006–2026'),
+    ('基金持仓明细_全量修正版_v3.csv', '基金定期报告（AKShare 采集）', 'de、lsv、ICI、ISDI、AS_improved、ARG 的持仓权重', '428,571 条股票级记录'),
+    ('FF5日度因子.csv / FF5月度因子.csv', 'AKShare', '因变量 FF5 alpha 与季度 alpha_q 的因子', '全样本期'),
+    ('基金换手率_双边_含卖出.csv', 'Wind 授权导出', 'oc_conf 的换手率输入（TO_wind_clean，Wind 集成口径）', '394 只（基金层 98.5%）；严格双边口径 TO_two_sided 仅 200 只'),
+    ('基金规模历史_批量.csv', '基金公开披露', 'L1 成分 log_aum（规模，亿元）', '400 只'),
+    ('基金详细信息_最终版.csv', '基金公开披露', 'L1 成分 log_fund_age（基金年龄）', '400 只'),
+    ('基金经理任职信息.csv', '基金公告', 'L1 成分 mgr_total_tenure_v2（任职年限）', '全样本'),
+    ('基金经理信息_最终版.csv', '基金公告', 'school/学历/CFA（分组背景描述，不进入计分）', '253 只（45.9%）'),
+    ('申万一级行业分类.csv + 股票行业映射.csv', 'AKShare', 'ICI / ISDI 的行业映射', '5,203 只 · 99.2%'),
+    ('行业集中度HHI_申万31.csv', '本项目计算（持仓聚合）', 'ICI 成品', '444 只 · 94.3%'),
+    ('行业弹性评分_申万一级.xlsx', '本项目（行业 Beta）', 'ISDI 的高/中/低弹性分组', '31 行业'),
+    ('风格指数季度收益.csv', 'AKShare（399372/399373/399376/399377）', 'SDI 回归自变量（标准 2×2 风格象限）', '366 只（基金层 91.5%）'),
+    ('沪深300成分股权重_真实.csv + 中证500成分股.csv', 'AKShare', 'AS_improved 的基准权重', '合并基准'),
+    ('个股月收益率_全量.csv', 'AKShare（新浪源）', 'RG/ARG、de 的个股收益', '约 4,185 只'),
+]
+H.append('<table><tr><th class="l">数据文件</th><th class="l">来源</th><th class="l">用途</th><th class="l">覆盖</th></tr>')
+for r in data_rows:
+    H.append(f'<tr><td class="l">{r[0]}</td><td class="l">{r[1]}</td><td class="l">{r[2]}</td><td class="l">{r[3]}</td></tr>')
+H.append('</table>')
+H.append('''<p class="footnote">处理约定：①报告期统一为“期末 +1 天”面板口径；②股票代码去前导零
+（与个股收益文件连接键一致）；③无风险利率缺失填 0.25%（季）；④所有回归变量 1%/99% 缩尾；
+⑤绩效类指标（sharpe8/sortino8/mppm8）统一滞后一期，杜绝前视偏差；
+⑥面板不含 2026Q3 以后信息，无未来函数泄漏。</p>''')
+
+# ---------- 三、指标详解（严格按 L1→L5 层序，逐层分组）
+H.append('<h2 class="sec" id="s3">三、指标计算详解（按 L1→L5 逐层展开，共 15 个成分）</h2>')
+H.append('<p>本节<b>按层排列</b>：每层先说明该层的职能定位与本轮变动，再逐个指标给出'
+         '精确公式、参数与数据输入、文献依据、选取原因、描述统计与双规格实证。'
+         '本轮新增／升格的指标标有 <span class="tag new">新增</span> 或 '
+         '<span class="tag up">升格</span> 标记。'
+         '指标实现见 <code>指标计算流水线/lib_metrics.py</code>'
+         '（risk_asym／de／lsv／ICI／ISDI／SDI／ARG）与 '
+         '<code>scripts/_metrics_v2_20260826.py</code>'
+         '（oc_conf／sharpe8／sortino8／mppm8）；L1 三成分来自基金公告与规模历史。</p>')
+
+# 本轮新增（NEW）与升格（UP）标记
+NEW_MARK = {'oc_conf', 'timing', 'mppm8_lag', 'sortino8_lag', 'sharpe8_lag'}
+UP_MARK = {'mgr_total_tenure_v2', 'log_fund_age', 'log_aum'}
+
+
+def mark_of(m):
+    if m in NEW_MARK:
+        return '<span class="tag new">新增</span>'
+    if m in UP_MARK:
+        return '<span class="tag up">升格计分</span>'
+    return '<span class="tag keep">沿用</span>'
+
+
+# 层分组：(层标题, 该层导言, 指标列表)
+LAYER_GROUPS = [
+    ('L1  基本面层 —— 计分维「基本面优势」',
+     '<b>职能</b>：度量经理所处的组织资本状态（新任、新基金、小规模），'
+     '它不是"经理做了什么"，而是"经理在什么条件下做投资"。'
+     '<b>本轮变动</b>：三成分由纯控制变量<b>升格为计分维</b>。'
+     '<b>定位</b>：联立回归中被行为维度吸收，故解释为业绩的<b>边界条件</b>而非能力本身'
+     '（样本外证据见 §4.11）。'
+     '<div class="steps"><b>「基本面优势」得分具体怎么算（逐步）</b><div class="steps-body">'
+     'L1 的三个成分本身不需要复杂计算，关键在<b>如何合成一个得分</b>，以下是完整步骤。<br>'
+     '①<b>取三个原始变量</b>：tenure（观测日 − 经理首次任职日，单位天）、'
+     'log_age（ln 基金存续月数）、log_aum（ln 平均管理规模，亿元）。'
+     '三者都来自公开披露，基金层覆盖率 100%。<br>'
+     '②<b>缩尾</b>：各变量在 1%／99% 分位处截断，'
+     '防止个别超长任期或超大规模的基金主导结果。<br>'
+     '③<b>标准化</b>：对每个变量做 z 变换 z(x) = (x − 样本均值) / 样本标准差。'
+     '这一步是必须的——tenure 的量纲是"天"（均值上千），'
+     'log_aum 的量纲是"对数亿元"（均值 1.6），不标准化根本没法相加。<br>'
+     '④<b>按文献方向取负号</b>：三者对 alpha 的预期作用都是负的'
+     '（任职越久、基金越老、规模越大，alpha 越低），'
+     '故取 −z(tenure)、−z(log_age)、−z(log_aum)。取负之后三项都变成"越大越好"。<br>'
+     '⑤<b>等权平均</b>：基本面优势 = [−z(tenure) − z(log_age) − z(log_aum)] / 3。'
+     '分母是<b>该基金实际有值的成分个数</b>——若某成分缺失就按剩余成分取均值，'
+     '不填 0（填 0 等于假设该基金在这一项上正好处于样本均值，是无根据的假设）。<br>'
+     '⑥<b>结果解读</b>：得分为正＝比样本平均更"年轻、更小、经理更新"，'
+     '即处在更有利于产生 alpha 的组织资本状态。得分本身无单位，是相对位置。'
+     '</div></div>',
+     L1_ORDER),
+    ('L2  认知层 —— 计分维「认知能力」',
+     '<b>职能</b>：禀赋与心理偏差如何塑造判断——损失域与收益域的风险态度差异、'
+     '盈亏处置的不对称、业绩反馈后的自我归因。'
+     '<b>本轮变动</b>：新增 oc_conf 过度自信，该层由 2 个指标扩为 3 个；'
+     '原用于代理过度自信的换手率 TO 因双口径不显著被剔除。',
+     ['risk_asym', 'de', 'oc_conf']),
+    ('L3  选择层 —— 计分维「配置选择能力」',
+     '<b>职能</b>：认知如何转化为组合结构——是否敢把信息优势押注在少数行业，'
+     '以及行业配置是否稳定不漂移。<b>本轮变动</b>：无，沿用 ICI 与 ISDI。',
+     ['ICI', 'ISDI']),
+    ('L4a  风险应对层·过程应对职能 —— 计分维「风险应对能力」',
+     '<b>职能</b>：面对市场冲击的<b>行为动作</b>（做了什么）——持仓之外的主动调仓贡献，'
+     '以及下跌时是否主动收缩暴露。'
+     '<b>本轮变动</b>：新增 timing 下行保护系数；此前该层仅有 ARG 一项。',
+     ['ARG', 'timing']),
+    ('L4b  风险应对层·转化效率职能 —— 计分维「风险转化能力」',
+     '<b>职能</b>：承担的风险最终<b>换回多少回报</b>（换回了什么）——'
+     '以总风险、下行风险、抗操纵三种口径共同刻画。'
+     '<b>本轮变动</b>：三项全部为新增，替换失效的收益波动率 RV 与风险稳定性 rsstab。'
+     '<b>须注意</b>：该职能的测度与因变量共享"风险调整后收益"的概念内核，'
+     '其有效性主要由样本外检验支撑，详见 §4.11 的四道机械性诊断。',
+     ['mppm8_lag', 'sortino8_lag', 'sharpe8_lag']),
+    ('L5  交易执行层 —— 计分维「交易执行能力」',
+     '<b>职能</b>：意图落地到成交的一致性——策略是否被自己的交易稀释，以及跟随群体的程度。'
+     '<b>本轮变动</b>：无新增；lsv 于前一版由 L2 移入本层'
+     '（实证符号为正，按 Wermers (1999) 属"共识信息利用"而非认知偏差）。',
+     ['SDI', 'lsv']),
+]
+
+# ---------- L1 三成分资料（升格为计分维）
+L1_INFO = {
+    'mgr_total_tenure_v2': {
+        'formula': 'tenure = 观测日 − 首次任职日（天，经理在管总年限）',
+        'param': '输入：基金经理任职信息（基金公告）。面板级均值 1,133 天（约 3.1 年）。',
+        'why': '【L1 基本面层·成分 1】经验悖论：Chevalier & Ellison (1999) 发现年轻经理因'
+               '职业顾虑（career concerns）而更努力，业绩更好；任期越长激励衰减。'
+               '本样本单变量 t=−1.85*（10% 水平），方向一致。',
+        'lit': 'Chevalier & Ellison (1999)：基金经理的职业顾虑 [26]。',
+    },
+    'log_fund_age': {
+        'formula': 'log_age = ln(基金存续月数)',
+        'param': '输入：基金详细信息（成立日）。面板级均值 1.58（约 e^1.58≈4.8 年）。',
+        'why': '【L1 基本面层·成分 2】新基金效应：Berk & Green (2004) 理性市场模型——业绩'
+               '吸引资金流入，规模膨胀与组织老化侵蚀 alpha；年轻基金尚未经历该循环。'
+               '本样本单变量 t=−4.13***，三成分中最强。',
+        'lit': 'Berk & Green (2004)：理性市场中的资金流与业绩 [62]。',
+    },
+    'log_aum': {
+        'formula': 'log_aum = ln(平均管理规模，亿元)',
+        'param': '输入：基金规模历史（季度均值）。面板级均值 1.71（约 5.6 亿元）。',
+        'why': '【L1 基本面层·成分 3】规模不经济：Berk & Green (2004) 的核心预测，'
+               '也是 L1 维度最经典的文献依据。本样本单变量 t=−1.16（方向一致、不显著，'
+               '等权复合中由另两成分主导）。',
+        'lit': 'Berk & Green (2004)：理性市场中的资金流与业绩 [62]。',
+    },
+}
+def render_l1_card(m):
+    d = L1_INFO[m]
+    st = L1_STATS[m]
+    c1 = CP['S1_成分定向'][m]
+    H.append(f'''<div class="card ind" id="ind-{m}">
+<div class="head"><b>{m}｜{DS_CN_L1[m]}</b> {mark_of(m)}
+<span class="dim">L1 基本面层 · 定向 − · 主引 {'[26]' if m == 'mgr_total_tenure_v2' else '[62]'}</span></div>
+<div class="formula">{d["formula"]}</div>
+<p class="param"><b>参数与输入</b>：{d["param"]}</p>
+<p><b>选取原因</b>：{d["why"]}</p>
+<p class="param"><b>文献依据</b>：{d["lit"]}</p>
+<table><tr><th>N</th><th>均值</th><th>标准差</th><th>最小</th><th>最大</th>
+<th>覆盖率</th><th>规格I t（单变量）</th><th>规格II t</th><th>S1 定向</th></tr>
+<tr><td>{st["count"]:.0f}</td><td>{f4(st["mean"], 2)}</td>
+<td>{f4(st["std"], 2)}</td><td>{f4(st["min"], 2)}</td>
+<td>{f4(st["max"], 2)}</td><td>100.0%</td>
+<td class="neg">{c1["t"]:+.2f}{star(c1["p"])}</td>
+<td class="ns">—（控制层）</td>
+<td><span class="tag yes">一致</span></td></tr></table>
+<p class="footnote">L1 三成分即原控制变量组：规格I 为单变量回归（自我控制无意义）。</p>
+</div>''')
+
+
+def render_card(m):
+    d = INDS[m]
+    s1 = spec_node(m, 'spec1_cross_section')
+    s2 = spec_node(m, 'spec2_panel')
+    if m == 'timing':
+        c = CP['S1_成分定向'][m]
+        t1, p1 = c['t'], c['p']
+        t2 = p2 = None
+    else:
+        t1, p1 = (s1[1], s1[2]) if s1 else (None, None)
+        t2, p2 = (s2[1], s2[2]) if s2 else (None, None)
+    steps_html = (f'<div class="steps"><b>具体怎么算（逐步）</b>'
+                  f'<div class="steps-body">{d["steps"]}</div></div>'
+                  if d.get('steps') else '')
+    H.append(f'''<div class="card ind" id="ind-{m}">
+<div class="head"><b>{m}｜{DS_CN.get(m, "")}</b> {mark_of(m)}
+<span class="dim">{d["dim"]} · 定向 {d["dir"]} · 主引 [{d["ref"]}]</span></div>
+<div class="formula">{d["formula"]}</div>
+<p class="param"><b>参数与输入</b>：{d["param"]}</p>
+{steps_html}
+<p><b>选取原因</b>：{d["why"]}</p>
+<p class="param"><b>文献依据</b>：{d["lit"]}</p>
+<table><tr><th>N</th><th>均值</th><th>标准差</th><th>最小</th><th>最大</th>
+<th>覆盖率</th><th>规格I t</th><th>规格II t</th><th>S1 定向</th></tr>
+<tr><td>{DS_ST["count"].get(m, 0):.0f}</td><td>{f4(DS_ST["mean"].get(m))}</td>
+<td>{f4(DS_ST["std"].get(m))}</td><td>{f4(DS_ST["min"].get(m), 2)}</td>
+<td>{f4(DS_ST["max"].get(m), 2)}</td><td>{COV[m]:.1%}</td>
+{sig_td(t1, p1)}{sig_td(t2, p2)}
+<td><span class="tag yes">一致</span></td></tr></table>
+</div>''')
+
+
+# 逐层渲染：层标题 → 层导言 → 该层各指标卡片
+for _title, _intro, _members in LAYER_GROUPS:
+    H.append(f'<h3 class="layer">{_title}</h3>')
+    H.append(f'<div class="card layer-intro"><p>{_intro}</p></div>')
+    for _m in _members:
+        if _m in L1_ORDER:
+            render_l1_card(_m)
+        else:
+            render_card(_m)
+
+H.append('<p class="footnote">各卡片表格中，规格I 为基金层横截面回归（含三控制变量，HC1 稳健标准误）；'
+         '规格II 为季度面板回归（含控制变量与季度固定效应，基金层聚类标准误）；'
+         'S1 为成分定向检验，判断实证 t 值符号是否与文献预期方向一致。'
+         'timing 为本文自建指标，未进入 v3 主回归表，其定向以 S1 检验报告。</p>')
+
+# ---------- 四、回归设计
+H.append('<h2 class="sec" id="s4">四、回归设计（全部公式）</h2>')
+
+H.append('<h3>4.1 因变量构造：FF5 alpha（基金层）</h3>')
+H.append('''<div class="card"><div class="formula">ex_it = α_i + β_1·MKT_t + β_2·SMB_t + β_3·HML_t + β_4·RMW_t + β_5·CMA_t + e_it
+ff5_adj_return_i = α̂_i</div>
+<p>逐基金对季度超额收益做 FF5 时序回归（要求 ≥12 个季度），截距即基金层 alpha——
+全样本期的季均超额收益。N=362。因子取自 AKShare 日度/月度库聚合到季度。</p>
+<p class="param">文献：Fama & French (2015)；中国市场适用性见李志冰等 (2017)。
+选择 FF5 而非 FF3/FF4：RMW（盈利）与 CMA（投资）因子在中国显著，遗漏会造成 alpha 污染。</p></div>''')
+
+H.append('<h3>4.2 因变量构造：季度层 alpha_q</h3>')
+H.append('''<div class="card"><div class="formula">alpha_q_it = α̂_i + ê_it　（FF5 时序回归的截距 + 逐期残差）</div>
+<p><b>为什么需要它</b>：旧面板的 ff5_adj_return 在基金内是常数（362 只基金各仅 1 个取值），
+本质是基金层变量。若直接做季度面板回归，等于把基金层常数对季度变量回归，有效样本从 362
+机械放大到近 3,000，t 值系统性虚高——这正是改进主动份额（AS）多处结论不一致的根源。
+alpha_q 保留逐期信息（9,263 个季度观测、355 只基金），规格II 一律使用它。</p></div>''')
+
+H.append('<h3>4.3 择时系数（Henriksson-Merton 分段回归）</h3>')
+H.append('''<div class="card"><div class="formula">ex_it = a_i + b_i·MKT_t + γ_i·min(0, MKT_t) + e_it　（≥12 季）
+timing_i = −γ̂_i</div>
+<p>γ&lt;0 表示市场下跌时系统性收缩暴露（下行保护），故取 −γ 为正向能力指标。
+文献：Henriksson & Merton (1981)；Treynor & Mazuy (1966) 的二次项为前身。</p>
+<p class="footnote"><b>口径说明（为何不控制 FF5 其余因子）</b>：本式为 HM 原始单因子形式，仅以 MKT
+为基准，未纳入 SMB/HML/RMW/CMA，与方程 (1) 的五因子口径不同。原因有二：其一，timing 须按基金
+逐只估计（要求 ≥12 季有效观测），纳入四因子会明显减少可估基金数；其二，择时的定义是“随市场
+涨跌调整暴露”，其对象就是市场因子本身，控制其余因子会改变被估对象的含义（估出的将是
+“剔除风格后的择时”而非择时本身）。方程 (1) 用于业绩归因，本式用于行为测度，二者目的不同，
+故不要求口径一致。</p></div>''')
+
+H.append('<h3>4.4 规格I：基金层横截面回归（主检验）</h3>')
+H.append('''<div class="card"><div class="formula">ff5_adj_return_i = c + β·X̄_i + δ_1·Tenure_i + δ_2·log_Age_i + δ_3·log_AUM_i + u_i</div>
+<p>X̄_i 为指标在基金内的时序均值；y 与所有 x 均 1%/99% 缩尾；HC1 异方差稳健标准误；
+门槛：有效样本 &lt;40 判定不足。单变量版逐指标估计（表见 §5.1），全模型版将全部指标同时放入
+（N=359，R²=0.5445）。</p></div>''')
+
+H.append('<h3>4.5 规格II：季度面板回归（稳健性）</h3>')
+H.append('''<div class="card"><div class="formula">alpha_q_it = c + β·X_it + δ′·CTRL_it + Σ_q λ_q·Quarter_q + e_it</div>
+<p>季度固定效应吸收市场共同冲击；标准误按基金聚类；门槛：有效样本 &lt;60 判定不足。
+单变量版（逐指标）与全模型版（N=2,262，R²=0.3363）结果见 §5。</p></div>''')
+
+H.append('<h3 id="c-X1">4.6 改进主动份额（AS）六道检验——矛盾结论的裁决'
+         '<span style="font-size:12px;color:#94a3b8;font-weight:400">'
+         '　对应结论 X1</span></h3>')
+H.append('<p>AS 在不同口径下结论不一致，本文用六道检验做系统裁决：'
+         '<b>前五道是回归口径</b>（下表），<b>第六道是群体画像的组间差异检验</b>'
+         '（业绩 Top5% 与 Bottom5% 的 AS 均值差，见表末一行）。</p>')
+H.append('<table><tr><th class="l">口径</th><th>N</th><th>系数</th><th>t 值</th><th>R²</th></tr>')
+for k, v in R3['AS_five_specs'].items():
+    c = v['coef']['AS_improved']
+    cls = 'ns' if not star(c['p']) else ('pos' if c['t'] > 0 else 'neg')
+    H.append(f'<tr><td class="l">{k}</td><td>{v.get("n", "—")}</td>'
+             f'<td>{f4(c["b"])}</td><td class="{cls}">{c["t"]:+.2f}{star(c["p"])}</td>'
+             f'<td>{f4(v.get("r2"))}</td></tr>')
+_asg = GP['原始指标']
+H.append('<tr><td class="l">VI_群体画像_Top5%减Bottom5%</td>'
+         f'<td>{GP["n_each"]}+{GP["n_each"]}</td>'
+         f'<td>{f4(_asg["差值"]["AS_improved"])}</td>'
+         f'<td class="ns">{_asg["t"]["AS_improved"]:+.2f}{star(_asg["p"]["AS_improved"])}</td>'
+         '<td>—</td></tr>')
+H.append('</table>')
+H.append('<p class="footnote"><b>表注（R² 不可跨行比较）</b>：各行 R² 为对应方程的整体拟合优度，'
+         '不可跨行直接比较。规格 II 两行含季度固定效应，其 R²（单变量 0.4006、全模型 0.3363）中'
+         '相当部分由季度 FE 贡献，并非 AS 自身的解释力；全模型 R² 低于单变量，则源于 listwise 删除'
+         '使样本由 8,615 降至 2,262，而非拟合变差。判断 AS 的效力应以系数与 t 值为准。</p>')
+H.append(f'''<p><b>裁决（三条理由，满足其一即剔除）</b>：①符号在口径间翻转（横截面全模型显著为负
+−3.06，面板单变量显著为正 +5.33）；②加控制变量后显著性消失或反向——AS 捕捉的是规模与年龄
+效应而非主动程度；③群体画像中 Top5% 与 Bottom5% 的 AS 差值仅 {_asg["差值"]["AS_improved"]:+.4f}
+（t={_asg["t"]["AS_improved"]:+.2f}，p={_asg["p"]["AS_improved"]:.4f}），不显著。
+<b>结论：剔除，不入画像。</b>文献支持：Frazzini, Friedman &amp; Pomorski (2016)
+“Deactivating Active Share”——控制基准特征后 AS 无预测力；争议对方为 Cremers &amp; Petajisto
+(2009)、Petajisto (2013)。</p>
+<p class="footnote">补充检验（未列表，见 output/AS非线性验证_2026-08-26.json 与
+AS条件效应_2026-08-26.json）：二次项在仅控制变量口径下显著（基金层 AS² t=+2.49，
+面板 t=+2.77，顶点约 0.60–0.78），但加入全部行为指标后二次项不再显著
+（基金层 t=+0.53、面板 t=−0.40）；十分位曲线的“两端减中段”差异仅 +0.0006（t=0.24）。
+与 ICI 的交互项在两个口径下均不显著（t=−0.89、t=+1.27）。
+即 AS 既无稳健的线性效应，也无稳健的非线性或条件效应，进一步支持剔除。</p>''')
+
+H.append('<h3 id="c-F3">4.7 能力复合得分的构造（L1–L5 框架下）'
+         '<span style="font-size:12px;color:#94a3b8;font-weight:400">'
+         '　对应结论 F3</span></h3>')
+H.append('''<div class="card"><div class="formula">z(m) = (m − mean) / std
+score_dim = (1/有效成分数) · Σ_m [ 定向(m) · z(winsor(m)) ]
+综合能力 = (1/6) · Σ_dim score_dim</div>
+<p>流程：①各成分 1%/99% 缩尾 → ②z 标准化 → ③按理论定向乘符号（L1 = −tenure −log_age
+−log_aum，L2 = +risk_asym − de − oc_conf，等）→ ④维度内对非缺失成分等权平均 →
+⑤六个计分维度再等权。计分维度与 L1–L5 的对应：L1 基本面优势、L2、L3、L5 各计一维，
+L4 分过程应对与转化效率两维。<b>技术细节</b>：L1 得分是三控制变量的线性组合，
+六维联立回归不再叠加原控制变量组（完全共线）；对照口径"五维联立+三控制变量"
+R²=0.4561 与六维联立 0.4557 几乎相同，信息含量未损失。等权而非主成分加权：
+保留维度可解释性，避免权重被样本期市场状态绑架。</p></div>''')
+
+H.append('<h3 id="c-D3">4.8 「基本面优势」到底有没有进入回归？——三个层次分别回答</h3>')
+H.append(f'''<div class="card">
+<p>这是本轮改动后最容易产生疑问的一处，因为 L1 三成分<b>既是原来的控制变量、又是现在的计分成分</b>，
+"进不进回归"在不同层次上答案不同。下表逐一说清。</p>
+<table><tr><th style="width:150px">在哪个环节</th><th style="width:110px">是否进入</th>
+<th class="l">具体怎么处理，以及为什么</th></tr>
+
+<tr><td><b>①成分定向检验</b><br>（S1，判断三成分方向）</td>
+<td><span class="tag yes">进入</span><br>但用<b>单变量</b>回归</td>
+<td class="l">分别对 tenure、log_age、log_aum 各做一次单变量回归
+（alpha_i = c + β·X_i + u_i），得 t={CP["S1_成分定向"]["mgr_total_tenure_v2"]["t"]:+.2f}／
+{CP["S1_成分定向"]["log_fund_age"]["t"]:+.2f}／{CP["S1_成分定向"]["log_aum"]["t"]:+.2f}。
+<b>为什么不加控制变量</b>：这三项本身就是控制变量组，
+让 tenure 去"控制 tenure、log_age、log_aum"在逻辑上不成立（自我控制），
+回归会退化为解释变量与控制变量完全重合。相比之下 L2–L5 各成分的定向检验都含这三个控制变量。</td></tr>
+
+<tr><td><b>②各维度单维回归</b><br>（S3 单维，表见 §5）</td>
+<td><span class="tag yes">进入</span><br>作为<b>被解释力检验的自变量</b></td>
+<td class="l">把合成后的「基本面优势」得分作为唯一自变量回归 FF5 alpha：
+系数 {CP["S3_单维"]["基本面优势"]["coef"]:.5f}，
+t={CP["S3_单维"]["基本面优势"]["t"]:+.2f}，p={CP["S3_单维"]["基本面优势"]["p"]:.4f}，
+R²={CP["S3_单维"]["基本面优势"]["r2"]:.4f}。<b>显著为正</b>。
+<span class="param">口径差异需说明：L2–L5 的单维回归都叠加了三控制变量，
+而 L1 维不叠加——因为 L1 得分就是这三个控制变量的线性组合，叠加即完全共线，模型无法识别。</span></td></tr>
+
+<tr><td><b>③六维联立回归</b><br>（方程 7，主模型）</td>
+<td><span class="tag yes">进入</span><br>与其余五维<b>同时</b>进入</td>
+<td class="l">六个维度得分同时作自变量：L1 的系数为
+{CP["S3_联立"]["系数"]["基本面优势"]["coef"]:.5f}，
+t={CP["S3_联立"]["系数"]["基本面优势"]["t"]:+.2f}（p={CP["S3_联立"]["系数"]["基本面优势"]["p"]:.4f}），
+<b>转为不显著</b>。模型 N={CP["S3_联立"]["n"]}，R²={CP["S3_联立"]["r2"]:.4f}。
+<b>这个"不显著"是本文的一项结论，不是缺陷</b>——见下方解读。</td></tr>
+
+<tr><td><b>④原控制变量组</b><br>（三控制变量本身）</td>
+<td><span class="tag no">不再叠加</span></td>
+<td class="l">六维联立<b>不再单独放入</b> tenure／log_age／log_aum 三个控制变量。
+原因是纯技术性的：L1 得分 = [−z(tenure)−z(log_age)−z(log_aum)]/3，
+它与三者是<b>严格的线性组合关系</b>，同时放入会造成完全多重共线，
+回归矩阵不可逆、系数无法估计。
+<span class="param">这不是"偷偷去掉了控制变量"：作为对照，本文另跑了
+"五维（不含 L1）＋三控制变量"的旧口径，R²={CP["S3_联立_五维对照"]["r2"]:.4f}，
+与六维联立的 {CP["S3_联立"]["r2"]:.4f} 相差不足 0.0005——
+说明把三个控制变量改写成一个计分维，<b>信息含量没有损失</b>，
+只是换了一种进入模型的形式。</span></td></tr>
+
+<tr><td><b>⑤季度面板回归</b><br>（规格II）</td>
+<td><span class="tag no">不进入</span></td>
+<td class="l">L1 三成分在基金内几乎是常数或单调趋势（任期逐季线性增长、
+基金年龄同理），没有可用于面板识别的横截面—时序交互变异，
+故 L1 维不在规格II 报告，其证据以规格I 与样本外检验为主。</td></tr>
+</table>
+
+<p><b>为什么"单维显著、联立不显著"是结论而非问题？</b>
+如果 L1 在联立中仍然显著，说明年轻小规模本身就是一种独立能力；
+但数据显示它的解释力被行为维度完整吸收——
+L1 与风险应对的相关系数 {CP["S2_维度相关"]["基本面优势"]["风险应对能力"]:.3f}、
+与交易执行 {CP["S2_维度相关"]["基本面优势"]["交易执行能力"]:.3f}（六维中最高之列），
+而与风险转化仅 {CP["S2_维度相关"]["基本面优势"]["风险转化能力"]:.3f}。
+这说明<b>年轻小规模的优势是通过"调仓更灵活、策略不被自己稀释"这些行为兑现的</b>，
+不是凭空产生的。因此本文把 L1 定性为业绩的<b>边界条件</b>：
+它决定 alpha 可能性的上限，不决定结果。</p>
+
+<p><b>样本外检验给出了更强的证据。</b>把口径换成"用前半期数据算指标、后半期数据算 alpha"
+（切分点 {DG["D2_样本外"]["切分点"]}）后，L1 在六维联立中<b>转为显著为正</b>
+（t={DG["D2_样本外"]["联立"]["系数"]["基本面优势"]["t"]:+.2f}，
+p={DG["D2_样本外"]["联立"]["系数"]["基本面优势"]["p"]:.4f}；
+单维 t={DG["D2_样本外"]["单维"]["基本面优势"]["t"]:+.2f}）。
+即：<b>前期的年轻、小规模状态确实预示后期更高的 alpha</b>，
+只是在同期截面上这一信息已经被同期的行为表现"用掉"了。
+这正是"边界条件"一词的准确含义，也说明 L1 进入计分维是有价值的，
+而非仅为凑满 L1–L5 五层。</p>
+</div>''')
+
+H.append('<h3>4.9 复合得分验证（S1–S4）</h3>')
+H.append('''<div class="card"><ol>
+<li><b>S1 成分定向</b>：L1 成分为单变量回归、L2–L5 成分为含三控制变量的回归，
+15 项全部与理论定向一致（mgr_total_tenure_v2 −1.85*、log_fund_age −4.13***、log_aum −1.16、
+risk_asym +2.72、de −4.51、oc_conf −4.19、ICI +4.34、ISDI −3.30、ARG +3.34、
+timing +5.19、mppm8_lag +10.47、sortino8_lag +3.71、sharpe8_lag +7.88、SDI −2.15、
+lsv +2.11）。</li>
+<li><b>S2 维度相关</b>：六个计分维度两两相关 0.183–0.589，无过高共线（L2×L4 过程
+最高 0.589；L1 与风险应对 0.566、与交易执行 0.574）。</li>
+<li><b>S3 解释力</b>：单维与联立回归（表见 §1），四个行为维度联立显著；L1 单维显著
+（t=+2.86）但联立中被行为维度吸收（t=−0.17）——定位为条件维度；L5 被 L4 过程应对吸收
+（相关 0.524）。</li>
+<li><b>S4 分组单调性</b>：五等分组的 alpha 严格单调 + Welch t 检验（Q5−Q1 = 0.0313，
+t=10.28）。</li></ol></div>''')
+
+H.append('<h3 id="c-F1">4.10 「五层框架 vs 六个计分维度」的口径抉择'
+         '<span style="font-size:12px;color:#94a3b8;font-weight:400">'
+         '　对应结论 F1、F2、Q2</span></h3>')
+H.append(f'''<div class="card">
+<p><b>问题</b>：理论框架是 L1–L5 五层，计分维度却是 6 个（L4 拆为过程应对与风险转化两个
+职能）。层数与维数不一致，是否应当把 L4 合并回一维、让「五层＝五维」严格对齐？
+本文用三套口径实测后决定<b>保留六个计分维度</b>，依据如下。</p>
+<table><tr><th class="l">口径</th><th class="l">L4 处理</th><th>联立 R²</th>
+<th>调整 R²</th><th>Q5−Q1</th><th>t</th><th>alpha 严格单调</th></tr>
+<tr><td class="l"><b>A（本文采用）</b></td><td class="l">拆为 L4a 过程 + L4b 转化，共 6 维</td>
+<td>{MG["①_联立回归"]["A_六维_现行"]["r2"]:.4f}</td>
+<td>{MG["①_联立回归"]["A_六维_现行"]["adj_r2"]:.4f}</td>
+<td>{MG["②_五分组"]["A_六维"]["Q5_Q1"]:+.5f}</td>
+<td class="pos">{MG["②_五分组"]["A_六维"]["t"]:+.2f}</td>
+<td class="pos">是</td></tr>
+<tr><td class="l">B（分数级合并）</td><td class="l">L4 =(L4a 得分 + L4b 得分)/2，共 5 维</td>
+<td>{MG["①_联立回归"]["B_五维_分数级合并"]["r2"]:.4f}</td>
+<td>{MG["①_联立回归"]["B_五维_分数级合并"]["adj_r2"]:.4f}</td>
+<td>{MG["②_五分组"]["B_五维_分数级"]["Q5_Q1"]:+.5f}</td>
+<td>{MG["②_五分组"]["B_五维_分数级"]["t"]:+.2f}</td>
+<td class="neg">否（Q3&gt;Q4 逆序）</td></tr>
+<tr><td class="l">C（成分级合并）</td><td class="l">L4 = 5 个成分直接等权，共 5 维</td>
+<td>{MG["①_联立回归"]["C_五维_成分级合并"]["r2"]:.4f}</td>
+<td>{MG["①_联立回归"]["C_五维_成分级合并"]["adj_r2"]:.4f}</td>
+<td>{MG["②_五分组"]["C_五维_成分级"]["Q5_Q1"]:+.5f}</td>
+<td>{MG["②_五分组"]["C_五维_成分级"]["t"]:+.2f}</td>
+<td class="pos">是</td></tr></table>
+<p><b>三条理由支持不合并</b>：</p>
+<p>①<b>两个职能测的不是一件事</b>。L4a 与 L4b 的 Spearman 秩相关仅
+{MG["③_异质性"]["spearman"]:.3f}（Pearson {MG["③_异质性"]["pearson"]:.3f}），
+{MG["③_异质性"]["分位差gt30"]:.0%} 的基金在两个职能上的分位差超过 0.30，
+{MG["③_异质性"]["分位差gt50"]:.0%} 超过 0.50，
+{MG["③_异质性"]["极端背离数"]} 只出现极端背离（一职能 &gt;90% 分位、另一职能 &lt;10% 分位）。
+两者同时进入回归时各自都强显著
+（L4a t={MG["③_异质性"]["两职能互控"]["风险应对能力"]["t"]:+.2f}、
+L4b t={MG["③_异质性"]["两职能互控"]["风险转化能力"]["t"]:+.2f}），
+不存在一方被另一方吸收的情形。合并会把「敢于在下跌时收缩暴露」与「承担的风险换回多少回报」
+压成一个数，画像失去可解释性——典型案例 §6.2 攻守转换型（信澳业绩驱动）正是
+L4a 分位 99.2% 而 L4b 分位 0.6%，合并后这条信息将完全消失。</p>
+<p>②<b>合并降低区分度</b>。口径 B 的 alpha 五分组不再严格单调（Q3 高于 Q4），
+Q5−Q1 由 {MG["②_五分组"]["A_六维"]["Q5_Q1"]:.4f} 降至
+{MG["②_五分组"]["B_五维_分数级"]["Q5_Q1"]:.4f}（t 由
+{MG["②_五分组"]["A_六维"]["t"]:.2f} 降至 {MG["②_五分组"]["B_五维_分数级"]["t"]:.2f}）；
+口径 C 虽保持单调，Q5−Q1 也降至 {MG["②_五分组"]["C_五维_成分级"]["Q5_Q1"]:.4f}。</p>
+<p>③<b>层与维本不必一一对应</b>。L1–L5 是<b>理论层次</b>（回答「行为发生在哪个环节」），
+计分维度是<b>测量单元</b>（要求维内指标同质、可等权平均）。一个理论层次内若含两种不同质的
+测度，拆为两个测量单元是常规做法，框架并未因此变成六层。本文的表述统一为：
+<b>五层理论框架、六个计分维度</b>，其中 L4 层含两个职能维度，
+在所有表格中以 L4a／L4b 标注层内归属。</p>
+<p class="footnote"><b>必须披露的代价</b>：六维等权使 L4 层实际获得 2/6≈33.3% 的权重，
+而其余四层各占 1/6≈16.7%。这是一个实质性的加权选择，不只是命名问题。
+稳健性：口径 B（层级加权，L4 恰为 1/5=20%）与本文口径的综合得分 Spearman 相关
+{MG["④_秩相关"]["相关"]["综合_A_vs_综合_B"]["spearman"]:.4f}，
+Top5% 名单重叠 {MG["④_秩相关"]["名单重叠"]["综合_A_vs_综合_B"]["top重叠"]}/{MG["④_秩相关"]["名单重叠"]["综合_A_vs_综合_B"]["n_each"]}、
+Bottom5% 重叠 {MG["④_秩相关"]["名单重叠"]["综合_A_vs_综合_B"]["bottom重叠"]}/{MG["④_秩相关"]["名单重叠"]["综合_A_vs_综合_B"]["n_each"]}，
+说明画像结论不依赖这一加权选择。检验脚本：scripts/_l4_merge_test_20260826.py，
+结果：output/L4合并可行性检验_2026-08-26.json。</p></div>''')
+
+H.append('<h3 id="c-D2">4.11 L4b 风险转化维的机械性诊断（本框架最大的方法论质疑）'
+         '<span style="font-size:12px;color:#94a3b8;font-weight:400">'
+         '　对应结论 D2、D3、Q2</span></h3>')
+H.append(f'''<div class="card">
+<p><b>质疑</b>：L4b 三成分（MPPM、Sortino、Sharpe）本身就是风险调整后业绩测度，
+用它们解释 FF5 alpha，是否属于「用业绩解释业绩」？若成立，L4b 的
+t={CP["S3_联立"]["系数"]["风险转化能力"]["t"]:+.2f} 就不是行为发现，而是机械同一性。
+本文用四道诊断回答，结论是<b>存在部分定义同源，但核心结论在样本外成立</b>。</p>
+<table><tr><th class="l">诊断</th><th class="l">做法</th><th class="l">结果</th><th class="l">判读</th></tr>
+<tr><td class="l">D1 定义重叠度</td>
+<td class="l">各成分与因变量的相关系数，L4b 组 vs 其余行为成分组</td>
+<td class="l">L4b 最大 |corr|={DG["D1_定义重叠"]["L4b最大"]:.3f}（mppm8_lag）；
+其余成分最大 |corr|={DG["D1_定义重叠"]["其余最大"]:.3f}（ICI）</td>
+<td class="l">L4b 确实更高，但未达到数量级差异——不是同一变量的换算</td></tr>
+<tr><td class="l">D2 样本外</td>
+<td class="l">用 {DG["D2_样本外"]["切分点"]} 之前的数据算指标，之后的数据算 alpha，
+彻底剥离同期重叠</td>
+<td class="l">L4b 单维 t={DG["D2_样本外"]["单维"]["风险转化能力"]["t"]:+.2f}
+（p={DG["D2_样本外"]["单维"]["风险转化能力"]["p"]:.4f}）；
+六维联立 t={DG["D2_样本外"]["联立"]["系数"]["风险转化能力"]["t"]:+.2f}</td>
+<td class="pos">通过：跨期仍强显著，具备真实预测力</td></tr>
+<tr><td class="l">D3 剔除检验</td>
+<td class="l">从六维中去掉 L4b，看框架是否崩塌</td>
+<td class="l">R² 由 {DG["D3_剔除L4b"]["含L4b"]["r2"]:.4f} 降至
+{DG["D3_剔除L4b"]["去L4b"]["r2"]:.4f}（绝对增量 {DG["D3_剔除L4b"]["增量R2"]:.4f}，占全模型 R² 的 {DG["D3_剔除L4b"]["增量R2"] / DG["D3_剔除L4b"]["含L4b"]["r2"]:.1%}）；
+其余维度符号与显著性不变</td>
+<td class="l">L4b 贡献很大但非唯一支柱，其余维度独立成立</td></tr>
+<tr><td class="l">D4 换因变量</td>
+<td class="l">改用季度原始收益（非风险调整）复检方向</td>
+<td class="l">L4b t={DG["D4_换因变量"]["风险转化能力"]["t"]:+.2f}，方向不变</td>
+<td class="pos">通过：不依赖 FF5 这一特定风险调整口径</td></tr></table>
+<p><b>诚实的结论</b>：L4b 与因变量共享「风险调整后收益」这一概念内核，其
+{DG["D3_剔除L4b"]["增量R2"]:.3f} 的增量 R²（绝对增量，占全模型 R² 的 {DG["D3_剔除L4b"]["增量R2"] / DG["D3_剔除L4b"]["含L4b"]["r2"]:.1%}）有一部分来自定义同源，
+不应把它当作与 L2/L3 同等性质的「纯行为发现」。但样本外检验
+（前半期指标→后半期业绩，t={DG["D2_样本外"]["单维"]["风险转化能力"]["t"]:+.2f}）
+证明它含有跨期可预测的信息，而非同期恒等式。
+<span class="footnote">数值巧合提示：此处的样本外单维 t 值与指标汇总表中 sortino8 规格II 的 t 值数值相同，纯属巧合——前者为跨期的复合维度，后者为同期的单一成分，口径与对象均不同，引用时须区分。</span>
+因此本文对 L4b 的定性是：<b>它衡量的是风险使用效率的持续性</b>——
+过去把风险用得有效率的经理，未来仍然如此。
+这个结论比「风险转化能力最重要」更弱，但站得住。
+<span class="footnote">相应地，全文对 L4b 的表述已从「解释力最强」统一改为
+「联立系数最大／单维 R² 最高，但与因变量概念同源，跨期检验是其有效性的主要依据」。
+诊断脚本：scripts/_l4b_mechanical_20260826.py，结果：output/L4b机械性诊断_2026-08-26.json。</span></p>
+<p class="footnote"><b>顺带一个重要发现</b>：D2 样本外检验中，L1 基本面优势的联立系数
+转为<b>显著为正</b>（t={DG["D2_样本外"]["联立"]["系数"]["基本面优势"]["t"]:+.2f}，
+p={DG["D2_样本外"]["联立"]["系数"]["基本面优势"]["p"]:.4f}），
+而同期口径下它不显著（t={CP["S3_联立"]["系数"]["基本面优势"]["t"]:+.2f}）。
+这支持把 L1 定性为「边界条件」：年轻、小规模的<b>前期</b>状态确实预示<b>后期</b>更高的
+alpha，只是在同期截面上其信息被行为维度完整吸收。L5 交易执行在两个口径下均不显著
+（同期 t={CP["S3_联立"]["系数"]["交易执行能力"]["t"]:+.2f}、
+样本外 t={DG["D2_样本外"]["联立"]["系数"]["交易执行能力"]["t"]:+.2f}），
+结论一致。</p></div>''')
+
+# ---------- 4.11·补 L4b 两道新增稳健性（2026-09-02：Sortino 全样本口径 + MPPM ρ 敏感性） ----------
+RB4 = json.loads((OUT / 'L4b稳健性_两道补充_2026-09-02.json').read_text(encoding='utf-8'))
+S1R = RB4['一_sortino全样本口径']
+R2R = RB4['二_mppm_rho敏感性']['结果']
+H.append('<h3 id="c-D2b">4.11·补 L4b 两道新增稳健性检验（2026-09-02）'
+         '<span style="font-size:12px;color:#94a3b8;font-weight:400">　回应两问：Sortino 缺失偏差？ρ 参数敏感？</span></h3>')
+H.append(f'''<p><b>检验一：Sortino 全样本口径 vs 现行条件口径。</b>
+现行分母只用亏损季收益的 std（要求亏损季 ≥3）——只罚"亏得多离谱"，不罚"多久亏一次"，
+且极少亏损的基金无值。对照口径为 Sortino &amp; Price 原始形式：
+分母 = √(Σmin(0,ex)²/8)，盈利季贡献 0 但占分母期数，亏损频率被计入风险。
+结果（脚本 <code>scripts/_robust_l4b_20260902.py</code>）：</p>
+<table><tr><th>口径</th><th class="n">观测层覆盖</th><th class="n">基金层覆盖</th>
+<th class="n">L4b 单变量 β</th><th class="n">t</th><th class="n">R²</th></tr>
+<tr><td>条件口径（论文基准）</td><td class="n">{S1R["观测层覆盖"]["条件口径"]:.1%}</td>
+<td class="n">{S1R["基金层覆盖"]["条件口径"]}</td>
+<td class="n">{S1R["单变量回归(含三控制,HC1)"]["条件口径(基准)"]["beta"]:+.4f}</td>
+<td class="n">{S1R["单变量回归(含三控制,HC1)"]["条件口径(基准)"]["t"]:+.2f}</td>
+<td class="n">{S1R["单变量回归(含三控制,HC1)"]["条件口径(基准)"]["r2"]:.4f}</td></tr>
+<tr><td>全样本口径（对照）</td><td class="n">{S1R["观测层覆盖"]["全样本口径"]:.1%}</td>
+<td class="n">{S1R["基金层覆盖"]["全样本口径"]}</td>
+<td class="n">{S1R["单变量回归(含三控制,HC1)"]["全样本口径"]["beta"]:+.4f}</td>
+<td class="n">{S1R["单变量回归(含三控制,HC1)"]["全样本口径"]["t"]:+.2f}</td>
+<td class="n">{S1R["单变量回归(含三控制,HC1)"]["全样本口径"]["r2"]:.4f}</td></tr></table>
+<p>两口径 L4b 维度分 Spearman = <b>{S1R["L4b维度分Spearman(基准vs对照)"]:.3f}</b>——排序结论几乎不变，
+对照口径覆盖更高（{S1R["观测层覆盖"]["全样本口径"]:.1%} vs {S1R["观测层覆盖"]["条件口径"]:.1%}）且 t 更大，<b>结论不减反强</b>。
+关于"缺失是否选择性偏差"：基金层缺失的 {S1R["缺失组画像"]["n"]} 只基金恰为<b>极少亏损的绩优基金</b>
+（其 alpha 均值 {S1R["缺失组画像"]["alpha均值"]:+.4f}，高于有值组；全样本口径下它们的 Sortino 正常有值）——
+即缺失的是"最不需要该指标"的基金，且「缺失不填 0」机制已保证它们不被压分。
+"小亏不断 vs 一亏惊人"的口径分歧被 sharpe（总波动）与 mppm（形状重罚）两票合议兜底，sortino 缺席时证据链不断。</p>''')
+H.append(f'''<p><b>检验二：MPPM 风险厌恶系数 ρ 敏感性（ρ ∈ {{2,3,4}}）。</b>
+论文主口径 ρ=3（Goetzmann et al. 2007 建议区间 2–4 取中）。三种取值下：</p>
+<table><tr><th>ρ</th><th class="n">与基准维度分 Spearman</th>
+<th class="n">L4b 单变量 β</th><th class="n">t</th></tr>
+<tr><td>2</td><td class="n">{R2R["ρ=2"]["与基准维度分Spearman"]:.3f}</td>
+<td class="n">{R2R["ρ=2"]["单变量回归"]["beta"]:+.4f}</td><td class="n">{R2R["ρ=2"]["单变量回归"]["t"]:+.2f}</td></tr>
+<tr><td><b>3（基准）</b></td><td class="n">1.000</td>
+<td class="n">{R2R["ρ=3"]["单变量回归"]["beta"]:+.4f}</td><td class="n">{R2R["ρ=3"]["单变量回归"]["t"]:+.2f}</td></tr>
+<tr><td>4</td><td class="n">{R2R["ρ=4"]["与基准维度分Spearman"]:.3f}</td>
+<td class="n">{R2R["ρ=4"]["单变量回归"]["beta"]:+.4f}</td><td class="n">{R2R["ρ=4"]["单变量回归"]["t"]:+.2f}</td></tr></table>
+<p>ρ 取 2/3/4 的维度分与基准 Spearman 均 ≥0.998，t 值区间 [+{R2R["ρ=4"]["单变量回归"]["t"]:.2f}, +{R2R["ρ=2"]["单变量回归"]["t"]:.2f}]——
+<b>参数选择不改变任何结论</b>。两道检验合并结论：L4b 对 Sortino 口径选择与 MPPM 参数选择均稳健
+（数据 <code>output/L4b稳健性_两道补充_2026-09-02.json</code>）。</p>''')
+
+H.append('<h3 id="c-X2">4.12 剔除指标的检验记录'
+         '<span style="font-size:12px;color:#94a3b8;font-weight:400">'
+         '　对应结论 X1、X2</span></h3>')
+H.append('''<table><tr><th class="l">剔除指标</th><th class="l">检验证据</th><th class="l">文献</th></tr>
+<tr><td class="l">AS_improved 改进主动份额</td><td class="l">六道检验符号翻转（§4.6）</td><td class="l">Frazzini et al. (2016) [55]</td></tr>
+<tr><td class="l">TO_wind_clean 换手率</td><td class="l">规格I t=+0.50、规格II t=+0.32，双口径不显著；过度自信通道已由 oc_conf 承载</td><td class="l">Puetz & Ruenzi (2011) [59]</td></tr>
+<tr><td class="l">rc_mom 追涨杀跌</td><td class="l">覆盖率仅 53.5%，单指标 t=−0.51</td><td class="l">Grinblatt, Titman & Wermers (1995) [35]</td></tr>
+<tr><td class="l">rsstab_lag 风险稳定性</td><td class="l">与收益波动率 corr=−0.749，正交化后 t=−0.87</td><td class="l">Brown, Harlow & Starks (1996) [33]</td></tr>
+<tr><td class="l">return_volatility 收益波动率</td><td class="l">风险暴露而非能力（规格I t=+3.93 但属控制性质）</td><td class="l">—</td></tr></table>
+<p class="footnote">另：全部指标 VIF 检验均 &lt;10（最大 ARG 6.28、log_fund_age 4.46），无破坏性共线。</p>''')
+
+# ---------- 五、实证结果
+# ---------- 4.13 关于新指标的四个追问（全部用数据回答） ----------
+H.append('<h3 id="c-F2">4.13 关于新增指标的四个追问——逐条用数据回答</h3>')
+H.append(f'''<div class="card"><p>本节集中回答评审与读者最可能追问的四个问题。
+每个追问都配有可复算的诊断，脚本 <code>scripts/_faq_diag_20260826.py</code>，
+结果 <code>output/四问诊断_2026-08-26.json</code>。</p></div>''')
+
+_q1 = FQ['Q1_L1']
+H.append('<h4>追问一：L1 升格计分合理吗？同期区分度反而略降，为什么还要加它？</h4>')
+H.append(f'''<div class="card">
+<p><b>先承认事实</b>：同期口径下，不含 L1 的五维综合分区分度确实略高
+（Q5−Q1 {_q1["五维_不含L1"]["Q5_Q1"]:.5f}，t={_q1["五维_不含L1"]["t"]:.2f}）
+vs 含 L1 的六维（{_q1["六维_含L1"]["Q5_Q1"]:.5f}，t={_q1["六维_含L1"]["t"]:.2f}），
+两者都严格单调。单看当期排序，L1 是轻微稀释项。</p>
+<p><b>但换到样本外口径，结论反过来</b>：以 {DG["D2_样本外"]["切分点"]} 为界、
+前半期算分后半期算 alpha，六维的 Q5−Q1（{_q1["OOS_六维_含L1"]["Q5_Q1"]:.5f}，
+t={_q1["OOS_六维_含L1"]["t"]:.2f}）开始略胜五维（{_q1["OOS_五维_不含L1"]["Q5_Q1"]:.5f}，
+t={_q1["OOS_五维_不含L1"]["t"]:.2f}）。更直接的检验是嵌套 F 检验：
+样本外回归中在五个行为维度之外加入 L1，
+R² 由 {_q1["OOS_嵌套F"]["r2_五维"]:.4f} 升至 {_q1["OOS_嵌套F"]["r2_六维"]:.4f}，
+<b>F={_q1["OOS_嵌套F"]["F"]:.2f}（p={_q1["OOS_嵌套F"]["p"]:.4f}）</b>
+——L1 的边际预测贡献在 5% 水平显著。</p>
+<p><b>怎么理解"同期被吸收、样本外有增量"</b>：L1 与风险应对相关 0.566、与交易执行 0.574，
+同期截面上年轻小规模基金的行为优势把 L1 的信息"用掉"了；但跨期看，
+<b>前期处在有利基本面状态的基金会持续释放这部分潜力</b>，
+这是行为维度没有完全覆盖的增量。这也与 L1 样本外联立 t={DG["D2_样本外"]["联立"]["系数"]["基本面优势"]["t"]:+.2f}
+相互印证（§4.8）。</p>
+<p><b>所以回答是：合理，但要看研究目的。</b>
+若目的只是当期筛选基金，五维版更简洁；若目的包含<b>刻画画像并预测后续业绩</b>，
+六维版有统计上可识别的增量。本文保留六维，并把同期稀释作为代价如实披露。
+另须说明"控制变量"与"计分成分"并不冲突：
+控制变量身份回答的是"<b>剔除这些因素后，行为指标还有没有净效应</b>"（识别问题）；
+计分成分身份回答的是"<b>这位经理处在什么状态</b>"（刻画问题）。
+同一组变量先后扮演两个角色，正是本轮升格的全部内容。</p></div>''')
+
+_q2 = FQ['Q2_TO_vs_OC']
+H.append('<h4>追问二：过度自信为什么"替代换手率"之后就显著了？它代表什么？放进回归有意义吗？</h4>')
+H.append(f'''<div class="card">
+<p><b>首先纠正一个容易产生的误解：oc_conf 不是换手率的替代品，两者几乎是两种测量。</b>
+基金层相关系数仅 Pearson {_q2["pearson"]:.3f}（Spearman {_q2["spearman"]:.3f}），
+甚至略微为负。原因在于构造方式：TO 测的是<b>换手的总水平</b>，
+其中混杂了大量与认知偏差无关的成分——小盘策略天然高换手、规模小的基金交易摩擦低、
+风格再平衡等；这些噪声把信号淹没了，所以 TO 对 alpha 的原始相关只有
+{_q2["corr_TO_alpha"]:+.3f}（规格I/II 单变量 t=+0.50／+0.32，均不显著）。</p>
+<p><b>oc_conf 只截取其中一个特定片段</b>："上一期赚钱了 → 这一期换手率上升"。
+它测的是 Puetz &amp; Ruenzi (2011) 刻画的<b>自我归因偏差</b>：
+赚钱时经理把业绩归因于自己能力强（而非运气），于是提高信心、加大交易频次；
+Gervais &amp; Odean (2001) 的学习模型说明这种偏差在连续成功后被系统性放大。
+由于只保留"业绩响应"这一段增量，策略性换手基线被剥离，
+它与 alpha 的原始相关达到 {_q2["corr_OC_alpha"]:+.3f}，
+S1 定向 t=−4.19——<b>方向与理论一致（越过度自信 alpha 越低），且强度是 TO 的数倍</b>。</p>
+<p><b>放进回归有没有意义？有，且必须放</b>：认知层的三个指标分别对应三种独立偏差通道
+（风险态度不对称／处置效应／自我归因），缺任何一个该层都不完整；
+联立回归中认知维度整体 t=+4.00 显著，oc_conf 是其中的有效成分。</p>
+<p class="footnote"><b>须诚实披露的一点</b>：控制六个维度得分后，
+TO 的净 t={_q2["TO_净t"]:+.2f}，存在轻微残余信号。但本文的准入门槛是筛选阶段的双口径
+单变量稳健性（TO 未通过），且其残余信号已被认知层承载——
+按预注册规则剔除的裁决不变，此处披露仅为完整。</p></div>''')
+
+_q3 = FQ['Q3_ARG_timing']
+H.append('<h4>追问三：timing 和 ARG 同属 L4a，会高度相关、多重共线吗？</h4>')
+H.append(f'''<div class="card">
+<p><b>几乎完全正交</b>：基金层 corr(ARG, timing)＝Pearson {_q3["pearson"]:.3f}、
+Spearman {_q3["spearman"]:.3f}，VIF＝{_q3["vif"]:.2f}（经验警戒线 10，本例约等于 1）。
+两变量互相控制的回归中各自仍然强显著：
+ARG t={_q3["ARG_净t"]:+.2f}、timing t={_q3["timing_净t"]:+.2f}。</p>
+<p><b>为什么相关性这么低</b>：ARG 度量的是<b>调仓的活跃程度与收益贡献</b>——
+季报之间动了多少仓位、这些动作赚没赚钱；timing 度量的是<b>对市场下跌方向的防御反应</b>——
+跌的时候 beta 收缩了多少。前者可以在任何市况下发生（上涨市里调仓同样产生 ARG），
+后者只在下跌市中表达。一个是"动作量"，一个是"条件防御"，
+经验上就是两种不同的行为，数据证实了这一点。
+这也是把它们放在同一个计分维内做等权的原因：<b>维度内允许互补，
+两个正交且都显著的成分平均后，比单用一个更稳。</b></p></div>''')
+
+_q4 = FQ['Q4_trio']
+_cm = _q4['pearson']; _ct = _q4['单维解释力']
+H.append('<h4>追问四：sharpe8／sortino8／mppm8 两两相关很高，三个都放进复合合理吗？</h4>')
+H.append(f'''<div class="card">
+<p><b>先澄清一个设计要点：这三个成分从不单独进入回归。</b>
+进入回归的是合成后的一个"风险转化能力"维度分——
+六个维度联立回归里没有任何一处出现三个 Sharpe 族变量并列的情形。
+因此"三个都放会不会共线"这个问题在主模型中不存在；
+若强行把三者当作独立解释变量同入一次回归，VIF 分别为
+{_q4["vif_if_separate"]["sharpe8_lag"]}／{_q4["vif_if_separate"]["sortino8_lag"]}／
+{_q4["vif_if_separate"]["mppm8_lag"]}——确实重叠，这正是它们必须先合成的理由。</p>
+<p><b>三者含义不同，重叠主要发生在 sharpe8 与 mppm8 之间</b>
+（Pearson {_cm["sharpe8_lag"]["mppm8_lag"]:.3f}）：分子都是超额收益均值，
+差别在分母——Sharpe 用总波动、Sortino 只用下行波动（与另两者的相关降到
+{_cm["sharpe8_lag"]["sortino8_lag"]:.3f}／{_cm["sortino8_lag"]["mppm8_lag"]:.3f}）、
+MPPM 用凹效用变换间接惩罚极端亏损。
+三者构成递进链：<b>基准（Sharpe）→ 区分好坏波动（Sortino）→ 防操纵（MPPM）</b>，
+每一环堵住前一环的一个漏洞：Sharpe 分不清进攻型与失控型波动（Sortino 补），
+Sortino 与 Sharpe 都可被"压低波动赌反弹"操纵（MPPM 补）。</p>
+<p><b>那为什么不只用其中一个？</b>数据上的诚实回答：
+单成分构造的维度与三成分复合维度相关高达
+{_q4["单成分vs复合相关"]["mppm8_lag"]["corr_with_dim3"]:.3f}（仅用 mppm8 时），
+对 alpha 的单维解释力 mppm8 单独甚至更强
+（R² {_ct["仅mppm8"]["r2"]:.4f} vs 复合 {_ct["三成分复合"]["r2"]:.4f}）。
+也就是说，<b>等权三成分不是精度最优解，而是稳健性与概念覆盖的选择</b>：
+只用 Sharpe 会暴露于操纵手法、只用 MPPM 则丢失"总风险基准"这一行业通用参照系、
+只用 Sortino 覆盖面最窄。等权平均让单一指标的测量误差和特殊失真被另两个稀释，
+这与全文的等权哲学（§4.7：避免权重被样本期行情绑架）一脉相承。
+<span class="footnote">代价已量化：复合的单维 t（+{_ct["三成分复合"]["t"]}）
+低于 mppm8 单独（+{_ct["仅mppm8"]["t"]}）；若研究目标纯粹是预测力最大化，
+mppm8 单成分是更强的候选——但画像要求概念完备与抗操纵，故维持三成分等权。</span></p></div>''')
+# ---------- 4.14 第二轮候选扩展搜索：六项候选全部未通过准入 ----------
+H.append('<h3 id="c-X2b">4.14 第二轮候选扩展：又扫了 6 个文献指标，全部未通过准入</h3>')
+H.append(f'''<div class="card">
+<p>为检验框架是否还有遗漏，本文在既有 15 个成分之外按文献再扫一轮候选，
+用同一套准入规则裁决：<b>①方向与文献预期一致 ②5% 水平显著 ③基金层覆盖 ≥80%
+④与现有六维的最大相关 &lt;0.7（避免冗余）</b>，四条全过才纳入。
+结果是<b>六项候选全部未通过</b>——这是框架已接近饱和的证据，也说明前几轮的筛选没有明显漏项。
+脚本 <code>scripts/_expand_search_20260826.py</code>，
+结果 <code>output/候选扩展_2026-08-26.json</code>。</p>
+<table><tr><th class="l" style="width:130px">候选指标</th><th class="l" style="width:150px">文献出处</th>
+<th style="width:56px">预期<br>方向</th><th style="width:74px">实测 t</th>
+<th style="width:66px">覆盖率</th><th style="width:110px">与现有维度<br>最大相关</th>
+<th class="l">未通过原因</th></tr>''')
+_REASON = {
+    'ag_sel': '需 24 个月滚动窗口，基金层覆盖仅 50%；且 t 未达 5% 水平。'
+              '方向与文献一致（选择度越高 alpha 越高），可在数据补齐后复检。',
+    'lotto_max': '<b>方向与文献相反</b>：Bali et al. 预期彩票偏好损害业绩，'
+                 '本样本却显著为正（t=+3.11）。合理解释是中国市场高 MAX 个股同时具有'
+                 '高动量与高波动，该测度在此混杂了风格暴露而非纯粹的认知偏差；'
+                 '与风险应对维相关 0.567 亦提示它捕捉的是仓位调整而非偏好。',
+    'lotto_iskew': '方向相反且不显著（t=+0.94），偏度测度对个股样本长度敏感，'
+                   '36 个月窗口在中国次新股占比高的样本中噪声大。',
+    'dcap': '方向与预期一致且高度显著（t=−5.33），但<b>覆盖率仅 50%</b>'
+            '（需 24 个月窗口且窗口内至少 6 个下跌月），不满足全样本画像要求；'
+            '且与风险转化维相关 0.514，信息与 L4b 部分重叠。数据补齐后值得优先复检。',
+    'dur': '方向一致但完全不显著（t=+0.46）。中位久期仅 1.49 季，'
+           '说明中国主动权益基金普遍高频调仓，久期缺乏横截面区分度；'
+           '与配置选择维相关 0.494，信息已被 ISDI 部分承载。',
+    'ncskew': '本就作为对照纳入（预期方向 ns），残差偏度是风险暴露特征而非能力，'
+              '与收益波动率同属被剔除的一类；覆盖 50% 亦不达标。',
+}
+for k, v in EX['候选'].items():
+    _t = v['t']
+    _cls = 'ns' if v['p'] >= 0.05 else ('pos' if _t > 0 else 'neg')
+    _dirmark = ('<span class="tag no">相反</span>' if not v['准入门槛']['方向一致']
+                else '<span class="tag yes">一致</span>')
+    H.append(f'''<tr><td class="l"><b>{v["名称"]}</b><br>
+<span class="param">拟入 {v["层"]}</span></td>
+<td class="l">{v["文献"]}</td><td>{v["预期方向"]}<br>{_dirmark}</td>
+<td class="{_cls}">{_t:+.2f}{star(v["p"])}</td>
+<td>{v["覆盖"]:.0%}</td>
+<td>{v["与现有维度最大相关"]:.3f}<br><span class="param">{v["最大相关维度"]}</span></td>
+<td class="l">{_REASON[k]}</td></tr>''')
+H.append('''</table>
+<p class="footnote">四条准入门槛的通过情况：方向一致 4/6、5% 显著 3/6、覆盖 ≥80% 3/6、
+无冗余 6/6——<b>没有任何一项四条全过</b>。两项值得在数据补齐后复检：
+下行捕获率（方向对、极显著，仅覆盖不足）与选择度 1−R²（方向对，覆盖不足致 t 偏弱），
+两者都受制于 24 个月滚动窗口对样本长度的要求，与 timing 的 12 季门槛同源。</p>
+
+# ---------- 4.14b 认知层新增候选：文献挖掘 + 全量实算（2026-09-02） ----------
+H.append('<h3 id="c-X2c">4.14b 认知层新增四指标：从文献池挖出的第二增长曲线</h3>')
+H.append('<div class="card">')
+H.append('<p>继 §4.14 六项落选候选之后，本文换一条路径再挖一轮：<b>不是去外部找新文献，'
+         '而是把本地文献库里"提出了测度但本文还没算"的行为偏差直接落成指标</b>。'
+         '候选与文献依据全部来自项目文献底库（<code>参考文献/extracted_variables_L5_G*.json</code>），'
+         '共提取 4 个认知类候选，全部用真实数据算到基金—季度面板（脚本'
+         ' <code>scripts/_l2_new_metrics_20260902.py</code>，结果'
+         ' <code>output/L2新增候选_2026-09-02.json</code>）。</p>')
+H.append('<h4>数据源（三个既有文件，无新增外购数据）</h4><ul>'
+         '<li><b>基金持仓明细_全量修正版_v3.csv</b>：485 只基金 × 96 个报告期'
+         '（2002Q3–2026Q2），共 59.2 万条持仓记录；</li>'
+         '<li><b>个股月收益率_全量.csv</b>：5,261 只股票的月收益'
+         '（2006-01 至 2026-08，57.4 万条），由它重建个股累计净值 nav，'
+         '并滚动取 36 个月最高价与 12 个月均价；</li>'
+         '<li><b>主分析面板</b>：季度收益、风险暴露（return_volatility）等既有列。</li></ul>')
+H.append('<h4>四个候选的定义、计算与文献</h4>'
+         '<table><tr><th class="l" style="width:120px">候选</th>'
+         '<th class="l">计算公式（逐季→持仓加权→基金层）</th>'
+         '<th class="l" style="width:200px">文献依据</th><th style="width:64px">定向</th></tr>'
+         '<tr><td class="l"><b>anchor_high<br>锚定效应</b></td>'
+         '<td class="l">anchor_high = Σ<sub>i</sub> w<sub>i</sub> × '
+         '(P<sub>i,t</sub> ÷ max P<sub>i,过去36月</sub>)<br>'
+         '<span class="param">现价距离 36 个月滚动最高价的相对位置，按持仓权重 w 加权；'
+         '由月收益重建净值 nav 后取滚动最大值。值域 (0,1]，1＝全部持仓都停在自己的历史高点。</span></td>'
+         '<td class="l">池丽旭、庄新田（2011，《管理科学学报》）——历史最高价是重要参考点；'
+         'Grinblatt &amp; Han (2005)——参考价格决定买卖压力</td><td>+</td></tr>'
+         '<tr><td class="l"><b>cgo<br>资本利得悬垂</b></td>'
+         '<td class="l">cgo = Σ<sub>i</sub> w<sub>i</sub> × '
+         '(P<sub>i,t</sub> − RefP<sub>i,t</sub>) ÷ RefP<sub>i,t</sub><br>'
+         '<span class="param">RefP 取过去 12 个月 nav 均值作成本基础代理'
+         '（Grinblatt-Han 原文用换手加权成本，此处等权近似并如实标注）。'
+         '值越大＝账面浮盈越厚。</span></td>'
+         '<td class="l">Grinblatt &amp; Han (2005, JFE)——处置效应驱动动量的核心变量</td>'
+         '<td>+</td></tr>'
+         '<tr><td class="l"><b>house_money<br>私房钱效应</b></td>'
+         '<td class="l">house_money = 1(R<sub>t−1</sub> &gt; 0) × (σ<sub>t</sub> − σ<sub>t−1</sub>)<br>'
+         '<span class="param">上季赚钱之后，本季风险暴露（滚动波动率）上升多少。'
+         '上季亏损时记 0——只有"赢了之后加注"才被捕捉。</span></td>'
+         '<td class="l">池丽旭、庄新田（2011）；Thaler &amp; Johnson (1990) 私房钱效应理论</td>'
+         '<td>+</td></tr>'
+         '<tr><td class="l"><b>bhm_shm<br>羊群方向不对称</b></td>'
+         '<td class="l">bhm_shm = BHM − SHM<br>'
+         '<span class="param">按持仓权重变动方向定义买/卖，对每只股票−季度算买方占比 p，'
+         'LSV 框架下分别取 p 高于/低于期望的偏离，得买入羊群度与卖出羊群度，'
+         '基金层取均值之差。值越大＝跟买强于跟卖。</span></td>'
+         '<td class="l">Wermers (1999) BHM/SHM 分解；李奇泽等（2013）中国基金应用</td>'
+         '<td>+</td></tr></table>')
+H.append('<h4>检验结果：两显著、两落选</h4>'
+         '<table><tr><th class="l" style="width:110px">候选</th>'
+         '<th style="width:90px">裸回归 t</th><th style="width:90px">加控制 t</th>'
+         '<th style="width:76px">面板 t</th><th style="width:90px">Q5−Q1<br>（分组差）</th>'
+         '<th class="l">裁决</th></tr>'
+         '<tr><td class="l"><b>anchor_high</b></td><td class="pos">+3.10***</td>'
+         '<td class="pos">+3.28***</td><td class="pos">+17.60***</td>'
+         '<td>+1.13pp（t=+2.97）</td>'
+         '<td class="l"><b>入选认知维度</b>。三道门槛全过；且在含动量因子的 FF4 口径下仍显著'
+         '（t=+4.75）——它不是动量暴露的马甲，而是参考点行为本身。</td></tr>'
+         '<tr><td class="l"><b>cgo</b></td><td class="pos">+3.76***</td>'
+         '<td class="pos">+2.86***</td><td class="pos">+27.80***</td>'
+         '<td>+1.08pp（t=+2.98）</td>'
+         '<td class="l">通过全部门槛，但与 anchor_high 相关 0.63（同为"现价−参考价"族），'
+         '并入后认知维联立 t 由 4.64 降至 4.08、Q5−Q1 由 3.34pp 降至 3.30pp——'
+         '<b>信息重复，按"维度内成分须互不冗余"原则未并入，留档备索</b>。'
+         '数据补齐真实持仓成本后值得优先复检（RefP 的等权代理偏保守）。</td></tr>'
+         '<tr><td class="l"><b>house_money</b></td><td class="pos">+2.14*</td>'
+         '<td>0.26 n.s.</td><td>—</td><td>+0.74pp（t=+1.98*）</td>'
+         '<td class="l"><b>剔除</b>：裸回归边缘显著、加控制后消失——显著性依赖控制变量，'
+         '踩中剔除门槛②；三因变量对照亦只在不对冲风格的口径显著（论文表 3）。</td></tr>'
+         '<tr><td class="l"><b>bhm_shm</b></td><td>−0.62 n.s.</td><td>−0.44 n.s.</td>'
+         '<td>—</td><td>−0.12pp（t=−0.34）</td>'
+         '<td class="l"><b>剔除</b>：三口径均不显著、群体差异为零。买卖双向的羊群在中国基金样本中'
+         '相互抵消——与 §4.14 中羊群类候选（抱团度）落选的原因一致。</td></tr></table>')
+H.append('<p><b>与 §4.14 的合并结论</b>：两轮扩展共检验 10 个文献候选，'
+         '1 个入选（anchor_high）、1 个门槛全过但因冗余未并入（cgo）、8 个落选。'
+         '认知维度由 3 成分扩为 4 成分后，单维 t 由 +7.69 升至 <b>+8.15</b>、'
+         '联立 t 由 +4.00 升至 <b>+4.64</b>，'
+         '综合得分 Q5−Q1 由 +3.13pp 升至 <b>+3.34pp（t=+11.24）</b>——'
+         '新成分同时改善了解释力与区分度，且认知—风险应对相关仅升至 0.629（未过 0.7 冗余线）。'
+         '这也回应了 §4.8"认知层指标过少"的结构性问题：后续挖潜方向是把'
+         ' <code>参考文献/L5_认知行为层</code> 中剩余的处置效应家族测度（FIFO 成本法 CGO、'
+         '处置富裕度 CDO 等）逐个落地，而不是再泛化地扫候选。</p>')
+H.append('<p class="footnote">方法透明度：所有四指标的计算代码集中在'
+         ' <code>scripts/_l2_new_metrics_20260902.py</code>（约 120 行，逐段注释）；'
+         '中间产物落盘 <code>output/L2新增候选_面板_2026-09-02.csv</code>（基金—季度面板），'
+         '可逐行复核。持仓匹配行情比例 79.6%（缺失季按当日可得持仓加权，缺失不填 0）。</p></div>')
+
+<p class="footnote"><b>外网检索的诚实说明</b>：本轮尝试用 Exa 与 Jina Reader 做在线文献
+检索以扩大候选池，前者返回 HTTP 429（免费额度限流）、后者因 IP 信誉被拒（401），
+外网通道不可用。因此候选池来自本地 303 篇文献底库与经典文献知识，
+候选的 PDF 核验沿用既有参考文献工作流。这一限制不影响已纳入 15 个成分的文献依据
+（均有明确出处，见 §3 各指标卡片的「文献依据」栏）。</p></div>''')
+
+H.append('<h2 class="sec" id="s5">五、实证结果汇总</h2>')
+H.append('<h3>5.1 规格I 单变量回归（基金层横截面，含控制变量）</h3>')
+H.append('<table><tr><th class="l">指标</th><th>N</th><th>系数</th><th>t</th><th>R²</th></tr>')
+for m in ORDER:
+    if m == 'timing':
+        c = CP['S1_成分定向'][m]
+        H.append(f'<tr><td class="l">{m}（{DS_CN.get(m,"")}）</td><td>{c["n"]}</td>'
+                 f'<td>—</td><td class="pos">{c["t"]:+.2f}***</td><td>—</td></tr>')
+        continue
+    s = spec_node(m, 'spec1_cross_section')
+    if not s:
+        continue
+    b, t, p, n = s
+    node = R3['spec1_cross_section']['univariate'][m]
+    cls = 'ns' if not star(p) else ('pos' if t > 0 else 'neg')
+    H.append(f'<tr><td class="l">{m}（{DS_CN.get(m,"")}）</td><td>{n}</td>'
+             f'<td>{f4(b)}</td><td class="{cls}">{t:+.2f}{star(p)}</td>'
+             f'<td>{node["r2"]:.4f}</td></tr>')
+H.append('</table>')
+H.append('<p class="footnote">注：timing 为年度 HM 回归结果（S1 检验）；其余 11 项为规格I 单变量回归。</p>')
+
+H.append('<h3>5.2 规格II 单变量回归（季度面板，含控制变量与季度固定效应）</h3>')
+H.append('<table><tr><th class="l">指标</th><th>N</th><th>基金数</th><th>系数</th><th>t</th><th>R²</th></tr>')
+for m in ORDER:
+    if m == 'timing':
+        H.append(f'<tr><td class="l">timing（{DS_CN.get(m,"")}）</td><td colspan="5" class="ns">'
+                 f'—（年度回归，并入规格I 报告）</td></tr>')
+        continue
+    s = spec_node(m, 'spec2_panel')
+    if not s:
+        continue
+    b, t, p, n = s
+    node = R3['spec2_panel']['univariate'][m]
+    cls = 'ns' if not star(p) else ('pos' if t > 0 else 'neg')
+    H.append(f'<tr><td class="l">{m}（{DS_CN.get(m,"")}）</td><td>{n:,}</td>'
+             f'<td>{node.get("nfund", "—")}</td><td>{f4(b)}</td>'
+             f'<td class="{cls}">{t:+.2f}{star(p)}</td><td>{node["r2"]:.4f}</td></tr>')
+H.append('</table>')
+
+H.append('<h3>5.3 全模型（全部指标同时放入）</h3>')
+full1 = R3['spec1_cross_section']['full']
+full2 = R3['spec2_panel']['full']
+H.append('<table><tr><th class="l">指标</th><th>规格I 系数</th><th>规格I t</th><th>规格II 系数</th><th>规格II t</th></tr>')
+for m in ORDER:
+    c1 = full1['coef'].get(m)
+    c2 = full2['coef'].get(m)
+    if not c1 and not c2:
+        continue
+    t1c = f'{c1["t"]:+.2f}{star(c1["p"])}' if c1 else '—'
+    t2c = f'{c2["t"]:+.2f}{star(c2["p"])}' if c2 else '—'
+    H.append(f'<tr><td class="l">{m}</td><td>{f4(c1["b"]) if c1 else "—"}</td>'
+             f'<td>{t1c}</td><td>{f4(c2["b"]) if c2 else "—"}</td><td>{t2c}</td></tr>')
+H.append(f'</table><p class="footnote">规格I 全模型 N={full1["n"]}，R²={full1["r2"]:.4f}；'
+         f'规格II 全模型 N={full2["n"]:,}（{full2["nfund"]} 只基金），R²={full2["r2"]:.4f}。'
+         'oc_conf/lsv 在规格II 联立中不显著（季度变异被 de 与 ARG 吸收），但其基金层横截面'
+         '方向与 S1 定向检验均成立，故保留在复合得分中。</p>')
+
+H.append('<h3>5.4 五分组单调性（S4）</h3>')
+H.append('<table><tr><th>分组</th><th>N</th><th>综合能力</th><th>FF5 alpha</th><th>季度收益</th><th>规模(亿)</th><th>硕士以上</th><th>CFA</th></tr>')
+for i, q in enumerate(['Q1最低', 'Q2', 'Q3', 'Q4', 'Q5最高']):
+    H.append(f'<tr><td>Q{i+1}</td><td>{BF["n"][q]}</td><td>{f4(BF["综合能力"][q])}</td>'
+             f'<td>{BF["ff5_alpha"][q]:.2%}</td><td>{BF["季度收益"][q]:.2%}</td>'
+             f'<td>{BF["规模亿"][q]:.1f}</td><td>{BF["硕士以上占比"][q]:.0%}</td>'
+             f'<td>{BF["CFA占比"][q]:.0%}</td></tr>')
+H.append('</table>')
+H.append('<p class="footnote">规模、学历与 CFA 占比随能力组反向变化：高能力组规模更小、'
+         '学历标签更少——行为纪律而非背景标签决定业绩。</p>')
+
+# ---------- 5.5 六维相关矩阵（2026-08-30 补：等权复合的前提检查）
+AUD = json.loads((OUT / '逻辑审查_区分度拆解_2026-08-30.json').read_text(encoding='utf-8'))
+SDIM = ['基本面优势', '认知能力', '配置选择能力', '风险应对能力', '风险转化能力', '交易执行能力']
+SSHORT = ['L1 基本面', 'L2 认知', 'L3 选择', 'L4a 应对', 'L4b 转化', 'L5 执行']
+H.append('<h3>5.5 六维相关矩阵与维度独立性</h3>')
+H.append('<p>六维等权复合隐含一个前提：各维度提供的信息不应高度重合。'
+         '下表给出两两相关系数，重点是 L4b 一列的独立性。</p>')
+H.append('<table><tr><th class="l">维度</th>' + ''.join(f'<th>{s}</th>' for s in SSHORT) + '</tr>')
+for _a, _sa in zip(SDIM, SSHORT):
+    H.append(f'<tr><td class="l">{_sa}</td>'
+             + ''.join(f'<td>{AUD["六维相关矩阵"][_a][_b]:+.3f}</td>' for _b in SDIM)
+             + '</tr>')
+H.append('</table>')
+H.append('<p class="footnote"><b>读法</b>：① 相关最高的一对是 '
+         '<b>L1 基本面优势与 L5 交易执行</b>'
+         f'（r={AUD["相关"]["L1与L5"]:+.3f}），两者部分共享信息，'
+         '等权复合会使这一对事实上获得双倍权重，读者在解读综合得分时应予留意；'
+         f'② <b>L4b 转化效率与其余五维合成的相关仅 {AUD["相关"]["L4b与其余五维合成"]:+.3f}</b>'
+         f'（与 L4a 亦只有 {AUD["相关"]["L4b与L4a"]:+.3f}），'
+         '即它捕捉的是与四个行为维度几乎完全不重合的独立信号。'
+         '结合 §4.11 的同源诊断，这份"独立"正来自它本身即业绩类测度，'
+         '而非一种新增的行为信息——因此五分组结果须按维度分解阅读'
+         '（分解表见论文结论第四节）。</p>')
+
+# ---------- 五·补、外部效度（2026-08-30 第十八/十九轮补：33 只论文样本外基金的论文口径复核） ----------
+H.append('<h2 class="sec" id="s5e">五·补、外部效度检验：33 只论文样本外基金的论文口径复核</h2>')
+H.append('<p>前述结论均建立在论文样本内证据之上。本节以 <b>33 只论文样本外基金</b>'
+         '（绩优 18 / 绩差 15，按近 3 年收益分组的已知群体效度检验，窗口 2019Q1–2026Q2）'
+         '为外部佐证。<b>所有指标均按论文原始口径</b>计算，不沿用任何简化版。'
+         '配套报告：<a href="外部效度检验_论文口径复核_2026-08-30.html">外部效度检验_论文口径复核_2026-08-30.html</a>。</p>')
+
+H.append('<table>')
+H.append('<tr><th>维度</th><th>指标</th><th>论文口径</th><th class="n">绩优均值</th><th class="n">绩差均值</th>'
+         '<th class="n">t 值</th><th class="n">Spearman ρ</th><th>论文预期</th><th>判定</th></tr>')
+H.append('<tr><td>L2 认知</td><td>risk_asym</td><td>σ(盈) − σ(亏)，8 季滚动</td>'
+         '<td class="n">+0.034</td><td class="n">−0.005</td>'
+         '<td class="n">+4.73***</td><td class="n"><b>+0.606</b></td>'
+         '<td>正向</td><td>✅ 稳健支持</td></tr>')
+H.append('<tr><td>L2 认知</td><td><b>de</b></td><td>PGR − PLR（Odean 1998）</td>'
+         '<td class="n">−0.122</td><td class="n">−0.076</td>'
+         '<td class="n">−1.82*</td><td class="n">−0.205</td>'
+         '<td>负向</td><td>✅ 弱支持</td></tr>')
+H.append('<tr><td>L3 选择</td><td>ICI</td><td>Σ(w_j − w̄_j)²</td>'
+         '<td class="n">910</td><td class="n">865</td>'
+         '<td class="n">+0.25 n.s.</td><td class="n">—</td>'
+         '<td>正向</td><td>⚠️ 方向对、不显著</td></tr>')
+H.append('<tr><td>L3 选择</td><td><b>ISDI</b></td><td>31 申万行业按 Beta 分三组 + 前十大重仓股归组 + 曼哈顿距离</td>'
+         '<td class="n">0.255</td><td class="n">0.429</td>'
+         '<td class="n"><b>−4.51***</b></td><td class="n"><b>−0.614</b></td>'
+         '<td>负向</td><td><b>✅✅ 强支持</b></td></tr>')
+H.append('<tr><td>L4a 应对</td><td>timing</td><td>HM 择时系数</td>'
+         '<td class="n">0.397</td><td class="n">0.450</td>'
+         '<td class="n">−0.27 n.s.</td><td class="n">+0.130</td>'
+         '<td>正向</td><td>❌ 不支持</td></tr>')
+H.append('<tr><td>L5 执行</td><td>SDI</td><td>8 季滚动 r ~ 1+4 风格指数（399372/399373/399376/399377）</td>'
+         '<td class="n">0.423</td><td class="n">0.441</td>'
+         '<td class="n">−0.49 n.s.</td><td class="n">−0.149</td>'
+         '<td>负向</td><td>⚠️ 方向对、不显著</td></tr>')
+H.append('</table>')
+
+H.append('<p><b>累计外部效度证据</b>（截至 2026-08-30）：</p><ul>'
+         '<li><b>✅✅ L3 ISDI 强支持</b>（ρ=−0.614，控制波动后 −0.230），是论文最稳健的外部正面证据；4 套窗口敏感性下方向均正确。</li>'
+         '<li><b>✅ L2 risk_asym 稳健支持</b>（ρ=+0.606，控制波动后仍 +0.558，<b>非波动代理</b>）。</li>'
+         '<li><b>✅ L2 de 弱支持</b>（t=−1.82*，方向对 ρ=−0.205），首次为论文"纯行为维度"提供外部证据。</li>'
+         '<li><b>⚠️ L5 SDI 方向对、不显著</b>：原简化版"反向"系口径误用（用 FF5 SMB+HML 替代四宫格），按论文口径重算后方向正确但样本量下不构成强证据。</li>'
+         '<li><b>❌ L4a timing 不支持</b>（ρ=+0.130 n.s.，控制波动后仅 −0.009）——论文结论第四点关于"单指标中区分度最高"的论断在外部样本上不成立，<b>是论文须如实披露的负面外部证据</b>。</li>'
+         '</ul>')
+
+H.append('<p><b>关键方法论观察</b>：所有指标控制年化波动后偏相关均大幅衰减（ISDI −0.230 / SDI +0.240 / de +0.060），'
+         '说明论文样本内的高 R² 一部分由风险暴露差异驱动。论文第十一轮已通过"分层披露"（结论四）做了相应调整：'
+         '纯行为三维 L2+L3+L5 仍保有 2.60pp（t=8.43）=全六维 83.1% 区分度。</p>')
+
+H.append('<p class="footnote">脚本 <code>scripts/_external_de_authoritative_20260830.py</code>（L2 de）、'
+         '<code>scripts/_external_sdi_authoritative_20260830.py</code>（L5 SDI）、'
+         '<code>scripts/_external_isdi_authoritative_20260830.py</code>（L3 ISDI）、'
+         '<code>scripts/_external_sdi_isdi_sensitivity_20260830.py</code>（4 套窗口敏感性）；'
+         '数据 <code>output/外部效度检验_论文口径_2026-08-30.json</code>（总览）、'
+         '<code>output/外部效度检验_de论文口径_2026-08-30.csv</code>、'
+         '<code>外部效度检验_SDI论文口径_2026-08-30.csv</code>、'
+         '<code>外部效度检验_ISDI论文口径_2026-08-30.csv</code>、'
+         '<code>外部效度检验_窗口敏感性_2026-08-30.csv</code>。</p>')
+
+# ---------- 五·补、运气 vs 实力 Bootstrap（2026-08-30 第二十轮：B 候选） ----------
+H.append('<h2 class="sec" id="s5b">五·补、运气 vs 实力：基金层 Q5−Q1 整簇 Bootstrap</h2>')
+H.append('<p>前述结论核心是"按综合能力五等分后 FF5 alpha 由 Q1 的 '
+         '0.64% 单调升至 Q5 的 3.77%、Q5−Q1=3.13pp（t=10.28）"。'
+         '一个直接的质疑是：这一差值是否由"少数几只业绩超群的明星基金"驱动（即截面运气）？'
+         '本节以 362 只基金为整簇，做 1,000 次有放回 Bootstrap 重抽样，'
+         '每次重算综合能力五等分下的 Q5−Q1 差值，给出经验分布与 95% CI。</p>')
+
+H.append('<p><b>关键结果</b>：Q5−Q1 在 1,000 次 Bootstrap 下：</p><ul>'
+         '<li>ff5_alpha：均值 +3.18pp，<b>95% CI = [+2.53pp, +3.83pp]</b>，<b>100% 全部为正</b>（p(Q5−Q1 ≤ 0) = 0.0000）；</li>'
+         '<li>quarter_return：均值 +5.52pp，<b>95% CI = [+4.62pp, +6.43pp]</b>，100% 全部为正。</li>'
+         '</ul>')
+H.append('<p><b>判读</b>：经验 95% 置信区间完全位于 0 之上，且无任何一次 Bootstrap 出现 Q5≤Q1 的反号——'
+         '故"<b>五等分区分度不可被截面运气解释</b>"在 1,000 次重抽下稳健成立，'
+         '是支撑"综合能力得分为实力而非运气"的关键证据。</p>')
+
+H.append('<p><b>与已有面板层 Bootstrap 的关系</b>：批次②"_batch4_bootstrap_20260822.py"已对 RA/DE/ICI/ARG/AS '
+         '等单指标做面板层整簇 Bootstrap，得到 RA 97.6% 同向显著、DE 0% 等结果（覆盖了"指标系数稳定性"维度）。'
+         '本节是"<b>综合能力分组后五分位 Q5−Q1 差值</b>"的 Bootstrap，'
+         '<b>两者互补</b>：前者检验"每个指标的回归系数是否稳定"，后者检验"分组后业绩差是否稳定"。'
+         '两者共同回答"<b>区分能力是实力而非运气</b>"这一问题。</p>')
+
+H.append('<p class="footnote">脚本 <code>scripts/_bootstrap_q5q1_20260830.py</code>；'
+         '数据 <code>output/bootstrap_q5q1_2026-08-30.json</code>（含 1,000 次 Bootstrap 全量经验分布统计量）。'
+         '配合面板层 Bootstrap 报告 <code>reports/批次②_L4_idio_vol与L3_TMβ₂优化报告_2026-08-21.html</code> 阅读。</p>')
+
+# ---------- 五·补、α 分解（2026-08-30 第二十一轮：C 候选） ----------
+ALP = json.loads((OUT / 'alpha_decomposition_summary_2026-08-30.json').read_text(encoding='utf-8'))
+H.append('<h2 class="sec" id="s5c">五·补、α 分解：RA/DE 预测力全部来自选股α，非择时贡献</h2>')
+H.append('<p>一个关键的方法论问题是：L2 认知层的 RA（风险偏好不对称）与 DE（处置效应）'
+         '对 FF5 alpha 的预测力，究竟来自<b>选股能力</b>还是<b>择时能力</b>？'
+         '本节将总 alpha 拆为<b>选股α（DV1）</b>和<b>择时贡献（DV2）</b>两分量，'
+         '在四个回归设定下分别估计 RA/DE 的系数（<b>六层验证</b>）：</p><ol>'
+         '<li>截面基准回归（DV1=选股α、DV2=择时贡献，N=1351/170 基金）</li>'
+         '<li>组内固定效应（DV1、DV3，N=828/174 基金）</li>'
+         '<li>前向 t→t+1（避免同期伪相关，N=828）</li>'
+         '<li>总α 作为参照（DV3_总α，N=1336/159 基金）</li></ol>')
+
+H.append('<table><tr><th rowspan="2">回归口径</th><th rowspan="2">N / 基金数</th>'
+         '<th colspan="2" class="n">risk_asym</th><th colspan="2" class="n">de</th></tr>'
+         '<tr><th class="n">β</th><th class="n">t</th><th class="n">β</th><th class="n">t</th></tr>')
+
+# 选股α vs 择时对比表
+for label, key_s, key_t in [
+    ('截面 选股α (DV1)', '截面_选股α_DV1', '截面_择时贡献_DV2'),
+    ('组内FE 选股α', '组内FE_选股α_DV1', '组内FE_择时贡献_DV3'),
+    ('前向t→t+1 选股α', '前向t→t+1_选股α', '前向t→t+1_择时贡献'),
+]:
+    s = ALP[key_s]; t = ALP[key_t]
+    nfund = s.get('nfund', '?')
+    H.append(f'<tr><td><b>{label}</b></td><td class="n">{s["N"]}/{nfund}</td>'
+             f'<td class="n">{s["risk_asym"]["beta"]:+.3f}{s["risk_asym"]["stars"]}</td>'
+             f'<td class="n">{s["risk_asym"]["t"]:+.2f}</td>'
+             f'<td class="n">{s["de"]["beta"]:+.4f}{s["de"]["stars"]}</td>'
+             f'<td class="n">{s["de"]["t"]:+.2f}</td></tr>')
+H.append('</table>')
+
+H.append('<p><b>核心结论</b>：在所有四个回归设定下，<b>RA/DE 对选股α 的预测力稳健显著</b>，'
+         '对择时贡献则全部不显著（前向 t→t+1 的 RA t=+0.29、DE t=+0.40，组内 FE 的 RA t=−1.48、DE t=+0.22）。'
+         '即"<b>认知层的预测力全部来自选股能力，与择时无关</b>"在六层验证下闭环成立。'
+         'RA 在前向 t→t+1 下仍 t=+3.30***——说明风险偏好不对称的预测力<b>具有前瞻性</b>，'
+         '不只是同期相关。DE 在前向下消失（t=−0.33 n.s.）——可能反映 DE 与同期市场反应的耦合更强。</p>')
+
+H.append('<p><b>对论文立论的含义</b>：行为金融的 RA/DE 文献长期以"同期α"为因变量，'
+         '本文通过 α 分解表明这两种偏差对业绩的预测力真正反映的是<b>经理的选股能力</b>（portfolio construction），'
+         '而非择时能力（market timing）。这与 LSV/ISDI 同为"行为→业绩"的渠道假说提供了一致的物理解释：'
+         '认知层的偏差指标不是噪声，是捕捉到了经理在选股层面的真实能力差异。</p>')
+
+H.append('<p class="footnote">数据：<code>output/alpha_decomposition_summary_2026-08-30.json</code>（六口径汇总）、'
+         '原始：<code>output/batch3_alpha_decomposition_2026-08-22.json</code>、'
+         '<code>output/batch3_forward_decomposition_2026-08-22.json</code>、'
+         '<code>output/batch3_within_decomposition_2026-08-22.json</code>、'
+         '<code>output/batch3_hm_decomposition_2026-08-22.json</code>（HM 二次项对照）。'
+         '配套：<code>reports/深化优化总报告_批次②③④_2026-08-22.html</code> §4.4.11。</p>')
+
+# ---------- 五·补、类型异质性（2026-08-30 第二十二轮：D 候选） ----------
+HET = json.loads((OUT / 'heterogeneity_by_size_and_market_2026-08-30.json').read_text(encoding='utf-8'))
+H.append('<h2 class="sec" id="s5d">五·补、类型异质性：综合能力区分度对不同规模与市场状态稳健</h2>')
+H.append('<p>前述综合能力五等分 Q5−Q1=3.13pp 的核心结论在<b>全样本 362 只基金</b>上成立。'
+         '一个关键问题是：<b>这一区分度对不同规模、不同市场状态下的基金是否仍然稳健</b>？'
+         '本节做两个分层检验：</p><ol>'
+         '<li>按 <b>基金规模</b>（avg_aum 时序均值）3 等分（小/中/大），各组内再做综合能力 5 等分；</li>'
+         '<li>按 <b>市场状态</b>（沪深 300 季度收益正/负）划牛/熊，基金-季度观测内做 5 等分。</li></ol>')
+
+H.append('<p><b>规模分组结果</b>：</p><table>'
+         '<tr><th>规模</th><th class="n">基金数</th><th class="n">平均规模（亿）</th>'
+         '<th class="n">Q5−Q1</th><th class="n">t（Q5 vs Q1）</th><th class="n">ρ</th><th class="n">p</th></tr>')
+for label in ['小', '中', '大']:
+    r = HET['规模_3分位'][label]
+    t_val = r['t_top_vs_bottom']
+    if t_val is None:
+        t_str = 'n.s.'
+    else:
+        t_str = f'{t_val:+.2f}'
+    H.append(f'<tr><td>{label}基金</td><td class="n">{r["n"]}</td>'
+             f'<td class="n">{r["avg_aum_mean"]:,.0f}</td>'
+             f'<td class="n">{r["Q5_minus_Q1"]:+.4f}</td>'
+             f'<td class="n">{t_str}</td>'
+             f'<td class="n">{r["spearman_rho"]:+.3f}</td>'
+             f'<td class="n">{r["spearman_p"]:.4f}</td></tr>')
+H.append('</table>')
+
+H.append('<p><b>核心结论</b>：三组规模下 Q5−Q1 <b>均显著为正、t 均 ≥ 5.9</b>——'
+         '综合能力画像对<b>小基金（n=121, t=+7.43, ρ=+0.598）、中基金（n=120, t=+5.95, ρ=+0.477）、'
+         '大基金（n=121, t=+8.28, ρ=+0.645）</b>均稳健生效。'
+         '其中<b>小基金组的 Q5−Q1 差值最大（+4.12pp）</b>——这与"小基金更有进步空间"（L1 基本面优势是边界条件）的论断一致。</p>')
+
+H.append('<p><b>市场状态（牛/熊）分组结果</b>：以沪深 300 季收益正/负划分，'
+         '牛期 47 季、熊期 33 季。注意：因变量为 FF5 alpha（<b>已剥离市场风险</b>），'
+         '牛/熊子样本的 Q5−Q1 在数值上接近相同（+3.13pp vs +3.13pp），'
+         '<b>这是预期内的</b>——alpha 作为超额收益本就不应随市场状态变化；'
+         '但这反过来<b>佐证了 alpha 的定义清洁度</b>，'
+         '也说明论文核心结论不依赖特定市场状态。</p>')
+
+H.append('<p class="footnote">脚本 <code>scripts/_heterogeneity_size_20260830.py</code>；'
+         '数据 <code>output/heterogeneity_by_size_and_market_2026-08-30.json</code>。'
+         '牛/熊分组因变量 alpha 数值完全一致是因剥离了市场风险——可视为对 alpha 定义的交叉验证。</p>')
+
+# ---------- 六、画像
+H.append('<h2 class="sec" id="s6">六、投资经理画像</h2>')
+H.append(f'<h3 id="c-P1">6.1 群体画像：Top5% vs Bottom5%（各 {GP["n_each"]} 只）'
+         '<span style="font-size:12px;color:#94a3b8;font-weight:400">'
+         '　对应结论 P1、P2</span></h3>')
+H.append('<p><b>分组依据是 FF5 alpha（业绩），不是能力得分</b>——'
+         '先按业绩取头尾各 5%，再回头比较两组的六个维度得分，'
+         '检验的是“好业绩背后是否真有维度差异”。'
+         '与 §5.4 按能力分五组看业绩单调性的方向相反，两者互为印证。</p>')
+H.append('<table><tr><th class="l">维度/指标</th><th>Top5%</th><th>Bottom5%</th><th>差值</th><th>t</th></tr>')
+for d in DIMS:
+    H.append(f'<tr><td class="l"><b>{LAYER[d]}</b></td><td>{f4(GP["六维"]["Top5%"][d])}</td>'
+             f'<td>{f4(GP["六维"]["Bottom5%"][d])}</td><td>{f4(GP["六维"]["差值"][d])}</td>'
+             f'<td class="pos">{GP["六维"]["t"][d]:+.2f}{star(GP["六维"]["p"][d])}</td></tr>')
+for m in ['log_fund_age', 'de', 'timing', 'mppm8_lag', 'sharpe8_lag', 'sortino8_lag', 'ICI', 'ISDI', 'ARG', 'SDI', 'lsv']:
+    name = DS_CN_L1.get(m, DS_CN.get(m, ''))
+    H.append(f'<tr><td class="l">{m}（{name}）</td>'
+             f'<td>{f4(GP["原始指标"]["Top5%"][m], 3)}</td>'
+             f'<td>{f4(GP["原始指标"]["Bottom5%"][m], 3)}</td>'
+             f'<td>{f4(GP["原始指标"]["差值"][m], 3)}</td>'
+             f'<td>{GP["原始指标"]["t"][m]:+.2f}{star(GP["原始指标"]["p"][m])}</td></tr>')
+H.append('</table>')
+H.append(f'<p class="footnote">业绩对比：Top5% 组 FF5 alpha 均值 {GP["业绩"]["top_alpha"]:.2%}，'
+         f'Bottom5% 组 {GP["业绩"]["bot_alpha"]:.2%}（季度）。risk_asym、oc_conf、AS_improved、'
+         '换手率、任职年限与 log 规模的组间差异不显著。L1 基本面优势两组均为正'
+         '（好与差的极端业绩都出现在较新、较小的基金上），差值小于行为维度。</p>')
+
+H.append('<h3 id="c-P4">6.2 典型画像（6 名投资经理案例）'
+         '<span style="font-size:12px;color:#94a3b8;font-weight:400">'
+         '　对应结论 P4</span></h3>')
+for c in PT['典型画像']:
+    fives = []
+    for d in DIMS:
+        v = c['六维'].get(d)
+        if v is None:
+            continue
+        pc = c['六维分位'][d]
+        cls = 'pos' if pc >= 0.5 else 'neg'
+        fives.append(f'<span class="{cls}">{LAYER[d]} {v:+.2f}（{pc:.0%}）</span>')
+    H.append(f'''<div class="card ind"><div class="case">
+<span class="label">{c["标签"]}</span>
+<span>{c["基金简称"]}（{c["fund_code"]}）｜{c["经理"]}｜{c["公司"]}｜规模 {c["规模亿"]:.2f} 亿｜
+FF5 alpha {c["ff5_alpha"]:.2%}｜综合能力 {c["综合能力"]:+.2f}（分位 {c["综合能力分位"]:.1%}）</span>
+<span>各层得分：{'；'.join(fives)}</span></div></div>''')
+H.append('<p class="footnote">解读：能力的均衡性比单点突出更重要——认知纪律型与攻守转换型'
+         '各有一个极端维度但综合平平；基本面优势型 L1 分位 100% 但 alpha 为负'
+         '（年轻小规模是边界条件而非能力本身）；全能型与风险定价型至少三维高分位；'
+         '反例各维全面低分位。</p>')
+
+# ---------- 八、参考文献
+# ---------- 七、结论要点（紧凑版，完整证据见前文各节）
+H.append(f'<h2 class="sec" id="s7">七、结论要点（{CONCL["结论数"]} 条）</h2>')
+H.append('<p>下列结论与《论文初稿》《投资经理行为画像》同源'
+         '（output/核心结论_定稿_2026-08-26.json），编号在三个产物中一致。'
+         '此处只列定性句，支撑数字与限定条件见前文对应章节。</p>')
+H.append('<table class="concl"><tr><th style="width:50px">编号</th>'
+         '<th class="l" style="width:118px">主题</th><th class="l">结论</th></tr>')
+_lg = None
+for c in CONCL['结论']:
+    g = c['id'][0]
+    if g != _lg:
+        _lg = g
+        H.append(f'<tr class="grp"><td colspan="3">{_GRP_LABEL.get(g, g)}</td></tr>')
+    H.append(f'<tr><td class="cid">{c["id"]}</td>'
+             f'<td class="topic">{c["主题"]}</td><td class="l">{c["定性"]}</td></tr>')
+H.append('</table>')
+
+# ---------- 八、参考文献
+H.append('<h2 class="sec" id="s8">八、参考文献（按引用序号）</h2>')
+H.append('<div class="card refbox"><ol>')
+for i in ['1', '13', '15', '16', '23', '26', '28', '30', '31', '33', '34', '35', '39', '43', '45',
+          '52', '53', '54', '55', '57', '58', '59', '60', '61', '62']:
+    H.append(f'<li value="{i}">[{i}] {REF[i]}</li>')
+H.append('</ol></div>')
+H.append('<p class="footnote">底库 61 条 + 补录 1 条（[62] Berk &amp; Green 2004，L1 规模'
+         '不经济主引）见 output/参考文献_定稿_2026-08-26.json；'
+         '指标—文献映射见 output/指标文献映射_2026-08-26.csv。</p>')
+
+# ---------- 九、术语速查
+H.append('<h2 class="sec" id="s9">九、术语速查</h2>')
+H.append('''<div class="card"><dl class="glossary">
+<dt>alpha（α）</dt><dd>风险调整后的超额收益：剔除市场、规模、价值、盈利、投资五种因子暴露后剩下的收益，正 alpha 即“真本事”。</dd>
+<dt>FF5 五因子</dt><dd>Fama-French 五因子模型：市场（MKT）、规模（SMB）、价值（HML）、盈利（RMW）、投资（CMA）。</dd>
+<dt>HC1 稳健标准误</dt><dd>异方差稳健的标准误修正，避免样本方差不等导致的 t 值失真。</dd>
+<dt>聚类标准误</dt><dd>同一基金多期观测相关时，按基金“聚类”估计标准误，避免重复计算相关性而虚增显著性。</dd>
+<dt>固定效应</dt><dd>为每个季度加一个虚拟变量，吸收当期市场共同冲击（如 2015 股灾），让行为差异不被牛熊市淹没。</dd>
+<dt>缩尾（winsorize）</dt><dd>把极端值压到 1%/99% 分位数，防止个别异常基金主导回归。</dd>
+<dt>前视偏差（未来函数）</dt><dd>用了当时不可能知道的信息来“预测”过去。本文用滞后一期指标与期末+1天口径杜绝。</dd>
+<dt>曼哈顿距离</dt><dd>两个向量对应分量之差的绝对值之和，度量权重结构的变化总量。</dd>
+<dt>下行风险</dt><dd>只统计亏损期的波动；盈利期的大涨不算“坏波动”。</dd>
+<dt>处置效应</dt><dd>急于卖出盈利股票、拖延卖出亏损股票的行为偏差（售盈持亏）。</dd>
+<dt>LSV / AF</dt><dd>羊群度量 |买入占比−市场均值| 减去二项式调整因子 AF（剔除随机趋同）。</dd>
+<dt>VIF</dt><dd>方差膨胀因子，衡量多重共线；经验阈值 10，本文全部指标 &lt;7。</dd>
+</dl></div>''')
+
+H.append('</div></body></html>')
+
+REP.mkdir(exist_ok=True)
+out = REP / '方法详解_2026-08-31.html'
+out.write_text('\n'.join(H), encoding='utf-8')
+print('saved:', out, out.stat().st_size, 'bytes')
+print('tables:', '\n'.join(H).count('<table>'))

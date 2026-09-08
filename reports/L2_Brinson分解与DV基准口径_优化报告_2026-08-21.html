@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L2 Brinson 分解与 DV 基准口径优化报告</title>
+<style>
+body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; max-width: 1000px; margin: 0 auto; padding: 24px; background: #1a1a2e; color: #e0e0e0; line-height: 1.7; }
+h1 { color: #5DCAA5; font-size: 22px; border-bottom: 2px solid #1D9E75; padding-bottom: 8px; }
+h2 { color: #B5D4F4; font-size: 18px; margin-top: 32px; border-left: 4px solid #378ADD; padding-left: 12px; }
+h3 { color: #9FE1CB; font-size: 15px; margin-top: 24px; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 13px; }
+th { background: #0C447C; color: #E6F1FB; padding: 8px 10px; text-align: left; border: 1px solid #185FA5; }
+td { padding: 8px 10px; border: 1px solid #2C2C2A; }
+tr:nth-child(even) { background: #16213e; }
+.sig { color: #5DCAA5; font-weight: bold; }
+.ns { color: #888780; }
+.warn { color: #F0997B; font-weight: bold; }
+.callout { background: #085041; border: 1px solid #1D9E75; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+.callout-warn { background: #4A1B0C; border: 1px solid #D85A30; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+code { background: #26215C; padding: 2px 6px; border-radius: 3px; font-family: Consolas, monospace; color: #AFA9EC; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<h1>L2 Brinson 分解与 DV 基准口径优化报告</h1>
+<p style="color:#888780;">2026-08-21 | 基于业绩归因调研的批次①执行 | M4 同规格双向聚类(CGM2011) | N≈1599-2264</p>
+
+<div class="callout">
+<strong>一句话总结：</strong>Brinson 配置/选股分解成功产出两个增量指标——<code>alloc_ret</code>（配置收益贡献, t=3.52***）显著预测 alpha，<code>select_ret</code>（选股收益贡献）边际显著(t=1.68*)。DE/RA 在替代口径下保持稳健。但法定基准调整后 DV 下三指标全不显著——须诚实披露为口径边界。
+</div>
+
+<h2>检验1：alloc_ret/select_ret 替代 AS_improved（DV=ff5_adj_return_w）</h2>
+<p>用 Brinson BHB 分解的配置收益贡献(alloc_ret)和选股收益贡献(select_ret)替代 AS_improved（主动份额总量），在 M4 完整控制变量（18变量+FF5+年份FE）+ 双向聚类下检验 L5 行为指标的预测力变化。</p>
+
+<table>
+<tr><th>规格</th><th>指标</th><th>β</th><th>t₂w</th><th>p</th><th>显著性</th><th>N</th></tr>
+<tr><td>基线(含AS_improved)</td><td>de</td><td>−0.00595</td><td>−2.52</td><td>0.012</td><td class="sig">**</td><td>1599</td></tr>
+<tr><td>基线(含AS_improved)</td><td>lsv</td><td>+0.01444</td><td>+0.95</td><td>0.344</td><td class="ns">n.s.</td><td>1599</td></tr>
+<tr><td>基线(含AS_improved)</td><td>risk_asym</td><td>+0.07137</td><td>+3.17</td><td>0.002</td><td class="sig">***</td><td>1599</td></tr>
+<tr><td>替代(alloc+select)</td><td>de</td><td>−0.00573</td><td>−3.14</td><td>0.002</td><td class="sig">***</td><td>1599</td></tr>
+<tr><td>替代(alloc+select)</td><td>lsv</td><td>+0.00813</td><td>+0.48</td><td>0.634</td><td class="ns">n.s.</td><td>1599</td></tr>
+<tr><td>替代(alloc+select)</td><td>risk_asym</td><td>+0.07337</td><td>+3.50</td><td>0.000</td><td class="sig">***</td><td>1599</td></tr>
+<tr><td>替代(alloc+select)</td><td><strong>alloc_ret</strong></td><td><strong>+0.07847</strong></td><td><strong>+3.52</strong></td><td><strong>0.000</strong></td><td class="sig"><strong>***</strong></td><td>1599</td></tr>
+<tr><td>替代(alloc+select)</td><td><strong>select_ret</strong></td><td><strong>+0.03217</strong></td><td><strong>+1.68</strong></td><td><strong>0.094</strong></td><td class="sig"><strong>*</strong></td><td>1599</td></tr>
+</table>
+
+<div class="callout">
+<strong>核心发现：</strong>
+<ul>
+<li><strong>alloc_ret（配置收益贡献）比 select_ret（选股收益贡献）更有预测力</strong>——配置能力的信号更强（t=3.52 vs 1.68）。这与 Campisi 报告"债基差异主要在择券效应"的结论在股基版本恰好相反。</li>
+<li><strong>DE/RA 在 Brinson 替代口径下保持稳健</strong>——DE 从 t=−2.52 微升至 t=−3.14，RA 从 t=3.17 微升至 t=3.50。说明 AS_improved→alloc_ret+select_ret 的口径转换不损害 L5 结论。</li>
+<li><strong>Brinson 指标是 AS_improved 的增量信息</strong>——alloc_ret 与 AS_improved 相关仅 −0.144（上一轮验证），捕捉的是"配置能力的收益实现"而非"权重偏离"。</li>
+</ul>
+</div>
+
+<h2>检验2：benchmark_adj_return 作为替代 DV（口径稳健性）</h2>
+<p>用法定基准调整后收益（半年前瞻收益 − 法定基准半年收益）替代 ff5_adj_return 作为 DV，检验 DE/RA 系数是否跨 DV 口径稳健。</p>
+
+<table>
+<tr><th>DV</th><th>指标</th><th>β</th><th>t₂w</th><th>p</th><th>显著性</th><th>N</th></tr>
+<tr><td>ff5_adj_return(基线)</td><td>de</td><td>−0.00595</td><td>−2.52</td><td>0.012</td><td class="sig">**</td><td>1599</td></tr>
+<tr><td>benchmark_adj_return</td><td>de</td><td>−0.00143</td><td>−0.09</td><td>0.932</td><td class="ns">n.s.</td><td>1599</td></tr>
+<tr><td>benchmark_adj_return</td><td>lsv</td><td>+0.03393</td><td>+0.45</td><td>0.650</td><td class="ns">n.s.</td><td>1599</td></tr>
+<tr><td>benchmark_adj_return</td><td>risk_asym</td><td>−0.17355</td><td>−1.56</td><td>0.120</td><td class="ns">n.s.(方向反转)</td><td>1599</td></tr>
+</table>
+
+<div class="callout-warn">
+<strong>⚠️ 诚实披露——口径边界：</strong>
+<ul>
+<li><strong>benchmark_adj_return 下三个 L5 指标全部不显著</strong>，且 RA 方向反转为负（β=−0.17 t=−1.56）。</li>
+<li>根因分析：① benchmark_adj_return 是<strong>半年频率</strong>（N=1599 vs ff5_adj_return 季度 N=2264），功效不足；② 法定基准含债券成分（用 RF 近似，46.7% 基金为 partial_rf 覆盖），引入系统性噪音；③ benchmark_adj_return 与 ff5_adj_return 相关仅 <strong>0.015</strong>——两者衡量的是完全不同的东西。</li>
+<li><strong>结论边界</strong>：DE/RA 预测的是"FF5 因子调整后 alpha"（因子定价偏差），而非"法定基准调整后超额收益"（合同基准超越）。论文须披露此为口径依赖结论。</li>
+</ul>
+</div>
+
+<h2>检验3：行为×能力交互效应</h2>
+<p>构造 DE×alloc_ret（处置效应×配置能力）与 RA×select_ret（风险不对称×选股能力）交互项，检验行为指标通过哪种能力渠道影响 alpha。</p>
+
+<table>
+<tr><th>交互项</th><th>β</th><th>t₂w</th><th>p</th><th>显著性</th><th>N</th></tr>
+<tr><td>de × alloc_ret</td><td>−0.00122</td><td>−0.03</td><td>0.978</td><td class="ns">n.s.</td><td>1599</td></tr>
+<tr><td><strong>ra × select_ret</strong></td><td><strong>−0.42407</strong></td><td><strong>−3.58</strong></td><td><strong>0.000</strong></td><td class="sig"><strong>***</strong></td><td>1599</td></tr>
+<tr><td>交互下 de 主效应</td><td>−0.00522</td><td>−3.07</td><td>0.002</td><td class="sig">***</td><td>1599</td></tr>
+<tr><td>交互下 RA 主效应</td><td>+0.05539</td><td>+2.57</td><td>0.010</td><td class="sig">**</td><td>1599</td></tr>
+</table>
+
+<div class="callout">
+<strong>机制发现——RA 与选股能力是替代关系：</strong>
+<ul>
+<li><strong>RA×select_ret 强负交互（t=−3.58***）</strong>：风险不对称程度高的基金经理，其选股收益贡献的边际价值更低。两种能力是替代而非互补——RA 高的经理不依赖选股贡献 alpha，select_ret 高的经理不需要靠风险不对称。</li>
+<li>DE×alloc_ret 无交互（t=−0.03 n.s.）：处置效应不通过配置能力渠道影响 alpha，DE 是独立的认知偏差信号。</li>
+<li>加入交互后 DE 主效应保持（t=−3.07***），RA 主效应略降但仍显著（t=2.57**）——说明交互项吸收了部分 RA 的方差，但 RA 的独立预测力仍然存在。</li>
+</ul>
+</div>
+
+<h2>指标描述统计与恒等式</h2>
+<table>
+<tr><th>指标</th><th>N</th><th>均值</th><th>标准差</th><th>最小值</th><th>最大值</th></tr>
+<tr><td>alloc_ret（配置收益贡献）</td><td>3382</td><td>+0.0285</td><td>0.0803</td><td>−0.0108</td><td>0.3081</td></tr>
+<tr><td>select_ret（选股收益贡献）</td><td>3382</td><td>+0.0045</td><td>0.1094</td><td>−0.1394</td><td>0.2075</td></tr>
+<tr><td>interaction（交互效应）</td><td>3382</td><td>+0.0333</td><td>0.0749</td><td>−0.0222</td><td>0.2235</td></tr>
+<tr><td>benchmark_adj_return</td><td>3382</td><td>+0.1037</td><td>0.2256</td><td>−0.2421</td><td>0.7559</td></tr>
+</table>
+<p><strong>恒等式验证</strong>：alloc_ret + select_ret + interaction = excess_ret，残差 mean=1.55e-17, max|.|=2.50e-16（机器精度闭合）。</p>
+
+<h2>方法学说明</h2>
+<ul>
+<li><strong>Brinson BHB 模型</strong>：AR=Σ(w_p−w_b)×r_b（配置），SR=Σw_b×(r_p−r_b)（选股），IR=Σ(w_p−w_b)×(r_p−r_b)（交互）。恒等式 AR+SR+IR=R_p−R_b。</li>
+<li><strong>市场组合</strong>：全市场5261只有月收益个股等权口径（无市值数据时等权为学术标准替代，须在论文中披露）。</li>
+<li><strong>时间口径</strong>：前瞻半年（6/30快照→7-12月收益；12/31→次年1-6月）。半年度指标 forward-fill 到面板对应两个季度。</li>
+<li><strong>数据覆盖</strong>：296只基金/16个半年度快照/3382 fund-snapshot obs。Brinson 指标匹配到面板 2911 obs（半年频，与 DE 覆盖率一致）。</li>
+<li><strong>DV 基准覆盖</strong>：full 1581(46.7%) + partial_rf 956(28.3%) + partial 845(25.0%)。恒生/港股通指数缺失(65只基金)，债券指数用 RF 近似。</li>
+</ul>
+
+<h2>可复现脚本</h2>
+<ul>
+<li><code>_l2_brinson_panel_20260821.py</code> — Brinson 面板级分解，产出 <code>output/L2_Brinson面板_2026-08-21.csv</code></li>
+<li><code>_dv_benchmark_adj_20260821.py</code> — 法定基准调整后收益，产出 <code>output/DV_基准调整后收益_2026-08-21.csv</code></li>
+<li><code>_l2_brinson_regress_20260821.py</code> — M4 同规格双向聚类回归，产出 <code>output/L2_Brinson回归结果_2026-08-21.json</code></li>
+</ul>
+
+</body>
+</html>

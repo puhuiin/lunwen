@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M4 基准回归表（v4 双向聚类）· 2026-08-16</title>
+<style>
+* {{ box-sizing: border-box; }}
+body {{ font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; margin: 0; padding: 32px; color: #1a1a1a; background: #fafafa; line-height: 1.65; }}
+h1 {{ font-size: 22px; margin: 0 0 6px; }}
+.sub {{ color: #666; font-size: 13px; margin-bottom: 18px; }}
+.callout {{ background: #eef6ff; border-left: 4px solid #2b7de9; padding: 12px 16px; border-radius: 6px; margin: 16px 0; font-size: 13.5px; }}
+.callout.warn {{ background: #fff7e6; border-color: #fa8c16; }}
+.callout.danger {{ background: #fff1f0; border-color: #cf1322; }}
+table {{ border-collapse: collapse; width: 100%; background: #fff; font-size: 13px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }}
+th, td {{ border: 1px solid #e4e4e4; padding: 7px 9px; text-align: right; }}
+th:first-child, td:first-child {{ text-align: left; }}
+thead th {{ background: #2b3a4a; color: #fff; position: sticky; top: 0; }}
+.group-row td {{ background: #f0f3f7; font-weight: 600; text-align: left; color: #2b3a4a; }}
+tr.signif td {{ background: #f6fff8; }}
+.stars {{ color: #cf1322; font-weight: 700; }}
+.footnote {{ color: #777; font-size: 12px; margin-top: 12px; }}
+.bad {{ color: #cf1322; }}
+code {{ background: #f0f0f0; padding: 1px 5px; border-radius: 4px; font-size: 12px; }}
+</style></head><body>
+<h1>M4 基准回归表 · v4 双向聚类（CGM 2011）权威值</h1>
+<div class="sub">单一真相源 · 生成于 2026-08-16 · 与 <code>merged_manuscript.html</code> / <code>5层架构完整研究方案.html</code> 口径完全一致</div>
+
+<div class="callout">
+<strong>模型规格</strong>：因变量 <code>ff5_adj_return_w</code>（FF5 五因子模型残差，已缩尾）；
+RHS = 18 个解释变量（规模控制 + FF5 五因子 + L1 经理层 + L2 持仓偏离层 + L3 交易行为层 + L4 收益特征层 + L5 行为指标层）；
+全部变量经 <strong>1%/99% 双向缩尾</strong>；含年份固定效应 <code>C(year)</code>。
+样本 N = <strong>2264</strong> 观测 / <strong>348</strong> 只基金；R² = 0.1290，Adj.R² = 0.1189。
+标准误采用 <strong>基金×年份双向聚类（Cameron–Gelbach–Miller 2011）</strong>为主口径，单维基金聚类为对照列（两口径均与 linearmodels 金标准交叉验证一致）。
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>变量</th><th>β</th><th>SE(双向)</th><th>t(双向)</th><th>p(双向)</th><th>显著性</th><th>SE(单维)</th><th>t(单维)</th><th>p(单维)</th><th>置换 p</th><th>WCB p</th></tr></thead>
+<tbody>
+<tr class="group-row"><td colspan="9">控制变量</td></tr>
+<tr><td>规模对数 (log AUM)</td><td>+0.00069</td><td>0.00066</td><td>+1.05</td><td>0.296</td><td></td><td>0.00057</td><td>+1.21</td><td>0.227</td><td>—</td><td>—</td></tr>
+<tr class="group-row"><td colspan="9">FF5 因子</td></tr>
+<tr><td>FF5 市场超额 (MKT)</td><td>-0.03396</td><td>0.01799</td><td>-1.89</td><td>0.059</td><td>*</td><td>0.01310</td><td>-2.59</td><td>0.010</td><td>—</td><td>—</td></tr>
+<tr><td>FF5 规模 (SMB)</td><td>+0.01123</td><td>0.00661</td><td>+1.70</td><td>0.089</td><td>*</td><td>0.00831</td><td>+1.35</td><td>0.176</td><td>—</td><td>—</td></tr>
+<tr><td>FF5 价值 (HML)</td><td>+0.05166</td><td>0.01802</td><td>+2.87</td><td>0.004</td><td>***</td><td>0.01537</td><td>+3.36</td><td>&lt;0.001</td><td>—</td><td>—</td></tr>
+<tr><td>FF5 盈利 (RMW)</td><td>-0.04971</td><td>0.02407</td><td>-2.07</td><td>0.039</td><td>**</td><td>0.01970</td><td>-2.52</td><td>0.012</td><td>—</td><td>—</td></tr>
+<tr><td>FF5 投资 (CMA)</td><td>-0.10853</td><td>0.03818</td><td>-2.84</td><td>0.005</td><td>***</td><td>0.03502</td><td>-3.10</td><td>0.002</td><td>—</td><td>—</td></tr>
+<tr class="group-row"><td colspan="9">L1 基金经理层</td></tr>
+<tr><td>基金年龄对数</td><td>-0.00417</td><td>0.00165</td><td>-2.53</td><td>0.011</td><td>**</td><td>0.00163</td><td>-2.56</td><td>0.011</td><td>—</td><td>—</td></tr>
+<tr><td>经理累计任期</td><td>+0.00000</td><td>0.00000</td><td>+1.02</td><td>0.309</td><td></td><td>0.00000</td><td>+1.00</td><td>0.317</td><td>—</td><td>—</td></tr>
+<tr class="group-row"><td colspan="9">L2 持仓偏离层</td></tr>
+<tr><td>主动持股比 (AS)</td><td>-0.02982</td><td>0.01059</td><td>-2.81</td><td>0.005</td><td>***</td><td>0.01027</td><td>-2.90</td><td>0.004</td><td>—</td><td>—</td></tr>
+<tr><td>行业集中度 (ICI)</td><td>+0.01804</td><td>0.00482</td><td>+3.74</td><td>&lt;0.001</td><td>***</td><td>0.00495</td><td>+3.65</td><td>&lt;0.001</td><td>—</td><td>—</td></tr>
+<tr><td>行业 HHI</td><td>+0.00865</td><td>0.04650</td><td>+0.19</td><td>0.852</td><td></td><td>0.04442</td><td>+0.19</td><td>0.846</td><td>—</td><td>—</td></tr>
+<tr class="group-row"><td colspan="9">L3 交易行为层</td></tr>
+<tr><td>风格漂移 (SDI)</td><td>-0.00000</td><td>0.00135</td><td>-0.00</td><td>0.999</td><td></td><td>0.00163</td><td>-0.00</td><td>0.999</td><td>—</td><td>—</td></tr>
+<tr><td>换手率 (TO_wind)</td><td>+0.00000</td><td>0.00000</td><td>+1.07</td><td>0.287</td><td></td><td>0.00000</td><td>+0.96</td><td>0.336</td><td>—</td><td>—</td></tr>
+<tr class="group-row"><td colspan="9">L4 收益特征层</td></tr>
+<tr><td>调仓收益缺口 (ARG)</td><td>+0.01625</td><td>0.00545</td><td>+2.98</td><td>0.003</td><td>***</td><td>0.00614</td><td>+2.65</td><td>0.008</td><td>—</td><td>—</td></tr>
+<tr><td>收益波动率</td><td>+0.02379</td><td>0.02919</td><td>+0.81</td><td>0.415</td><td></td><td>0.02223</td><td>+1.07</td><td>0.285</td><td>—</td><td>—</td></tr>
+<tr class="group-row"><td colspan="9">L5 行为指标层（核心）</td></tr>
+<tr class="signif"><td>处置效应 (DE)</td><td>-0.00606</td><td>0.00203</td><td>-2.99</td><td>0.003</td><td>***</td><td>0.00243</td><td>-2.50</td><td>0.013</td><td>0.047</td><td>0.014</td></tr>
+<tr><td>羊群效应 (LSV)</td><td>+0.01548</td><td>0.02010</td><td>+0.77</td><td>0.441</td><td></td><td>0.01260</td><td>+1.23</td><td>0.219</td><td>0.507</td><td>0.229</td></tr>
+<tr class="signif"><td>风险不对称 (RiskAsym)</td><td>+0.07311</td><td>0.02049</td><td>+3.57</td><td>&lt;0.001</td><td>***</td><td>0.01613</td><td>+4.53</td><td>&lt;0.001</td><td>0.020</td><td>0.000</td></tr>
+</tbody></table></div>
+
+<div class="callout warn">
+<strong>L5 行为指标层（核心结论）</strong>：在双向聚类口径下，
+<strong>RiskAsym β=+0.07311（t=+3.57, p&lt;0.001***）</strong> 与
+<strong>DE β=−0.00606（t=−2.99, p=0.003***）</strong> 均稳健显著；
+<strong>LSV β=+0.01548（t=+0.77, p=0.441, n.s.）</strong> 不显著。
+三指标推断结论在 <strong>渐近（双向聚类）/ Wild Cluster Bootstrap / 置换检验</strong> 三种口径下高度一致：
+RiskAsym 与 DE 均显著（置换 p：RA 0.02 / DE 0.047；WCB p：RA 0.000 / DE 0.014**），仅 LSV 不显著（置换 p 0.51 / WCB p 0.229）。
+</div>
+
+<div class="callout">
+<strong>L5 增量 R²（全样本口径）</strong> = 完整 M4 R² (0.1290) − 剔除 (de, lsv, risk_asym) 三列后 R² (0.0938) = <strong>0.0352</strong>。
+（口径：同一 M4 样本 N=2,264，仅移除 L5 三列；原稿误报的 0.0728 已作废。）
+另有<strong>同样本口径</strong>（主文稿 §4.3，M3 与 M4 在可比子集上比较）ΔR²=0.0224（≈2.2%），与全样本口径定义不同、两者并存；均远小于原稿误报的 0.0728（34.9%）。
+</div>
+
+<p class="footnote">
+脚注：(1) <strong>缩尾</strong>：依稿件声明"所有变量经 1%/99% 缩尾处理"，FF5 因子与控制变量同样缩尾（全面板缩尾），这是 v4 相对早期未缩尾 FF5 规格的关键修正。(2)
+<strong>双向聚类</strong>：V = V_fund + V_year − V_fund∩year（CGM 2011）；t 与 p 基于双向聚类 SE。(3)
+<strong>FF5 组内退化</strong>：ff5_adj_return 为 FF5 模型残差，故组内固定效应下 α 截距退化为 0，组内 FE 须改用 quarter_return / excess_return，本表为面板混合 OLS + 双向聚类口径。(4)
+<strong>数据缺口披露</strong>：TO_wind 覆盖 86.6%、全持仓 v2 覆盖 446 只、2016+ 个股月收益已齐；P1 学历(school)仅 45.9% 有值（需 Wind 经理档案补）；DE/LSV 为半年频全持仓快照（结构性覆盖约 46%），其关联推断受持仓源限制，须视为方法局限而非缺陷。(5)
+<strong>SDI 有效窗口</strong>：SDI（风格漂移）的有效识别窗口为 2022 年之后（window=8 滚动），此前窗口信号不足，相关结论须在此窗口内解读。(6)
+<strong>缺失值过滤</strong>：任一 RHS 或 DV 缺失即整行删除，最终 N=2,264；无未来季度泄漏（面板终点 2026Q2）。
+</p>
+<p class="footnote">数据来源：<code>指标计算流水线/output/主分析面板_重建_含TOwind.csv</code>（MD5 f79b4900，可复现）。
+重算脚本：<code>_v4_benchmark_table.py</code>（双向聚类代数与 <code>_verify_two_way_cluster.py</code> 金标准一致）；置换/WCB p 来自 <code>_v4_robust.json</code>（<code>_recompute_robustness_v4_2026-08-16.py</code>）。
+</p>
+</body></html>

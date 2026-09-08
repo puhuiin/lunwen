@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>逻辑严密性审查 · 基金经理投资行为画像研究 · 2026-08-30</title>
+<style>
+  body{font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.75;
+       color:#1e293b;max-width:960px;margin:0 auto;padding:32px 26px;background:#fff}
+  h1{font-size:21px;font-weight:600;margin:0 0 6px}
+  h2{font-size:17px;font-weight:600;margin:34px 0 12px;padding-bottom:7px;border-bottom:2px solid #e2e8f0}
+  h3{font-size:15px;font-weight:600;margin:22px 0 8px}
+  .meta{color:#64748b;font-size:13px;margin-bottom:22px}
+  .verdict{background:#f8fafc;border-left:4px solid #334155;padding:14px 18px;border-radius:6px;margin:18px 0}
+  .crit{background:#fef2f2;border-left:4px solid #dc2626;padding:14px 18px;border-radius:6px;margin:18px 0}
+  .mid{background:#fffbeb;border-left:4px solid #d97706;padding:14px 18px;border-radius:6px;margin:18px 0}
+  .ok{background:#f0fdf4;border-left:4px solid #16a34a;padding:14px 18px;border-radius:6px;margin:18px 0}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+  th,td{border:1px solid #e2e8f0;padding:7px 10px;text-align:left}
+  th{background:#f8fafc;font-weight:600}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .quote{background:#f1f5f9;padding:10px 14px;border-radius:5px;font-size:13.5px;
+         margin:10px 0;color:#334155;border-left:3px solid #94a3b8}
+  code{background:#f1f5f9;padding:1px 5px;border-radius:3px;font-size:12.5px}
+  .tag{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:10px;margin-right:6px}
+  .t-crit{background:#fee2e2;color:#991b1b}
+  .t-mid{background:#fef3c7;color:#92400e}
+  .t-ok{background:#dcfce7;color:#166534}
+  ul{margin:8px 0;padding-left:22px}li{margin:5px 0}
+  .foot{margin-top:40px;padding-top:14px;border-top:1px solid #e2e8f0;color:#94a3b8;font-size:12.5px}
+</style>
+</head>
+<body>
+
+<h1>逻辑严密性审查：从指标构建到画像</h1>
+<div class="meta">
+  审查对象：《基金经理投资行为画像研究_学术论文.docx》（2026-08-30 版，正文 14,288 字）<br>
+  审查方式：通读全文梳理故事线 ＋ 用 <code>画像_全样本能力表_2026-08-26.csv</code>（N=362）对关键论断做独立复算<br>
+  审查日期：2026-08-30
+</div>
+
+<div style="background:#f0fdf4;border-left:4px solid #16a34a;padding:14px 18px;border-radius:6px;margin:18px 0">
+<p style="margin:0 0 6px"><b>修复状态（2026-08-30 当日已全部执行完毕）</b></p>
+<p style="margin:0">下列 <b>6 项</b>已按建议改入正文，重跑三产物后核验 <b>192/192 全绿</b>，
+正文 14,840 字（余量 160）。方法详解另增 §5.5 六维相关矩阵（表数 30→31）。
+改法见 <code>scripts/_patch_logic_20260830.py</code>，
+备份 <code>_draft_docx_20260826.py.bak_logic_20260830</code>。
+下方各节<b>保留修改前的原文描述</b>，便于对照审查依据。</p>
+</div>
+
+<h2>总体判定</h2>
+<div class="verdict">
+<p><b>故事主线成立</b>，但有两处需要修正，其中一处是硬伤。</p>
+<p>论文的论证链条是：<b>行为可观测 → 行为维度预测 alpha → 复合为能力得分 → 得分可筛选经理</b>。
+我用全样本独立复算了这条链上最关键的几个环节，结果是：</p>
+<ul>
+<li><b>最核心的论点站得住</b>：即使剔除所有业绩类维度（L4 整层），仅用纯行为三维 L2+L3+L5 复合，
+五等分 Q5−Q1 仍有 <b>2.60pp（t=8.43）</b>，达全六维区分度的 83.1%。这说明"行为预测业绩"不是同义反复。</li>
+<li><b>但论文没把这个分解讲出来</b>，反而用含业绩指标的口径作为主证据，给了审稿人一击即中的靶子。</li>
+<li><b>有一处结论被全样本数据直接推翻</b>：§4.2 的"均衡性比单点突出更重要"（见问题 1）。</li>
+</ul>
+</div>
+
+<h2>问题 1 <span class="tag t-crit">严重</span>「均衡性」结论被全样本推翻</h2>
+
+<div class="quote">
+<b>论文 §4.2 原文</b>：「其二，全能型与风险定价型的共同点是至少三维同处高分位，反例（华安策略优选）则各维度全面低分位。
+<b>能力的均衡性而非单点突出，才是持续超额收益的行为特征。</b>」
+</div>
+
+<p>这个结论的依据是六个案例。但案例是<b>刻意挑选的极值</b>——§4.2 自己写明「在能力得分分布上各取一个典型切面」，
+六个案例分别是各维度的最高/最低者。用极值样本归纳总体规律，是典型的选择偏差。</p>
+
+<h3>全样本检验（N=362）</h3>
+<p>以六维分位的标准差衡量"不均衡度"（越大越不均衡），直接检验它与 alpha 的关系：</p>
+<table>
+<tr><th>检验</th><th>数值</th><th>判读</th></tr>
+<tr><td>corr(不均衡度, alpha)</td><td class="num">−0.043</td><td>几乎为零，无预测力</td></tr>
+<tr><td>偏相关（控制综合能力后）</td><td class="num">−0.059</td><td>仍然接近零</td></tr>
+<tr><td>corr(最强单点分位, alpha)</td><td class="num">+0.471</td><td><b>强正相关</b>，方向与论文结论相反</td></tr>
+<tr><td>按不均衡度五等分的 alpha</td><td class="num">Q1 1.94% → Q2 2.12% → Q3 2.20% → Q4 2.02% → Q5 1.89%</td><td>非单调，极差仅 0.31pp</td></tr>
+</table>
+
+<p><b>均衡性与业绩无关，而"单点突出"与高 alpha 强正相关（+0.471）</b>——这跟论文说的正好反过来。</p>
+
+<h3>为什么会错</h3>
+<p>各维度之间近乎正交（L4b 与其余五维合成的相关仅 −0.005，与 L4a 也只有 −0.008）。
+在这种结构下，<b>按单维极值挑出来的案例，必然伴随其他维度偏低</b>——这是挑选机制造成的，不是真实规律。
+于是六个案例呈现出"单点突出 → 综合业绩平平"的假象，而这个假象被写成了一般性结论。</p>
+
+<p><b>建议</b>：删除"均衡性而非单点突出"这一论断，或降级为"在本文挑选的极值案例中可观察到的形态对比"，
+并明确写入上表的全样本检验结果。若要保留该命题，须另做全样本回归（不均衡度对 alpha，控制综合能力）。</p>
+
+<h2>问题 2 <span class="tag t-crit">严重</span>循环论证成分未量化（但修复后反而加强论点）</h2>
+
+<div class="quote">
+<b>论文 §5 结论第四点</b>：「按综合能力五等分，FF5 alpha 从 Q1 的 0.64% 严格单调升至 Q5 的 3.77%，
+Q5−Q1 每季度 3.13 个百分点（t=10.28）。」
+</div>
+
+<p>综合得分六个维度里的 <b>L4b 转化效率 = sharpe8 / sortino8 / mppm8，本身即风险调整后业绩指标</b>；
+L4a 过程应对中的 timing 也由同一段收益序列估计。论文在局限里承认了这点（"有一部分来自定义同源"），
+但<b>没有量化</b>，结论第四点仍用全六维数字作为"可用于筛选"的主证据。</p>
+
+<h3>区分度拆解（N=362）</h3>
+<table>
+<tr><th>维度组合</th><th>Q1</th><th>Q5</th><th>Q5−Q1</th><th>t 值</th><th>占全六维</th></tr>
+<tr><td><b>全六维（论文口径）</b></td><td class="num">0.64%</td><td class="num">3.77%</td><td class="num">3.13pp</td><td class="num">10.28</td><td class="num">100%</td></tr>
+<tr><td>剔除 L4b 转化效率</td><td class="num">0.90%</td><td class="num">3.43%</td><td class="num">2.53pp</td><td class="num">7.53</td><td class="num">80.7%</td></tr>
+<tr><td>剔除 L4 整层</td><td class="num">1.05%</td><td class="num">3.31%</td><td class="num">2.25pp</td><td class="num">6.68</td><td class="num">71.9%</td></tr>
+<tr><td><b>仅纯行为 L2+L3+L5</b></td><td class="num">0.85%</td><td class="num">3.45%</td><td class="num">2.60pp</td><td class="num">8.43</td><td class="num">83.1%</td></tr>
+<tr><td>仅 L4b 转化效率</td><td class="num">0.59%</td><td class="num">3.51%</td><td class="num">2.92pp</td><td class="num">9.24</td><td class="num">93.4%</td></tr>
+<tr><td>仅 L4a 过程应对</td><td class="num">0.99%</td><td class="num">3.23%</td><td class="num">2.24pp</td><td class="num">6.20</td><td class="num">71.6%</td></tr>
+</table>
+
+<p><b>三个关键事实</b>：</p>
+<ul>
+<li>L4b <b>单独</b>就达到全六维区分度的 93.4%——一个维度几乎解释了全部。</li>
+<li>L4b 与其余五维近乎正交（corr = −0.005），与 L4a 也正交（−0.008）。<b>它测的是与"行为"无关的独立业绩信号</b>，
+严格说不该和四个行为维度并列等权。</li>
+<li>但反过来，<b>纯行为三维仍有 83.1% 的区分度（t=8.43）</b>——这恰恰是论文最有力的证据，却没被写出来。</li>
+</ul>
+
+<div class="ok">
+<p><b>这条修复后是加分项</b>。建议结论第四点改为分层披露：</p>
+<p>「按综合能力五等分，alpha 由 Q1 的 0.64% 单调升至 Q5 的 3.77%（Q5−Q1 3.13pp，t=10.28）。
+须分解的是：剔除与因变量同源的转化效率维度后，Q5−Q1 为 2.53pp（t=7.53）；
+仅用三个纯行为维度（认知、选择、交易执行）复合，仍有 2.60pp（t=8.43）。
+<b>即剔除业绩类指标后行为维度仍保有八成以上的区分力</b>——这是"行为可预测业绩"更干净的证据。」</p>
+</div>
+
+<h2>问题 3–6 <span class="tag t-mid">中等</span></h2>
+
+<h3>3. L1 与 L5 高度相关（0.593）未披露</h3>
+<div class="mid">
+<p>六维相关矩阵中最高的一对是 <b>基本面优势 ↔ 交易执行能力 = 0.593</b>（其余多在 0.0–0.5）。
+两者高相关意味着六维等权复合时这一对<b>被重复计权</b>，"六个独立维度"的说法打了折扣。
+论文未披露六维相关矩阵，建议补入（方法详解或附表）。</p>
+</div>
+
+<h3>4. 两处"理论与实证反向"被事后解释圆回</h3>
+<div class="mid">
+<ul>
+<li><b>risk_asym</b>：前景理论预期方向为负，实证显著为正。表 1 解释为"属下行风险定价特征（方向与前景理论相反）"。</li>
+<li><b>lsv</b>：羊群行为理论预期损害业绩（负），实证为正。表 1 解释为"共识信息利用"。</li>
+</ul>
+<p>这种做法叫事后解释（post-hoc rationalization），审稿人会追问。更稳妥的写法是：先说明理论预期与实证结果的冲突，
+再给出<b>竞争解释</b>并标明"该解释未经独立检验"。注意 lsv 在 §3.4 已被定性为"时期依存＋被同层掩盖"，
+而表 1 写"解释为共识信息利用"——<b>两处口径不一致</b>，需要统一。</p>
+</div>
+
+<h3>5. 用结果筛选变量：学历与 CFA 的排除理由</h3>
+<div class="mid">
+<p>表 1 注：「学历与 CFA 不进入计分（覆盖 45.9% 且<b>高能力组占比反而更低</b>）」。
+以"结果与预期相反"作为剔除理由，有 data snooping 之嫌。
+规范做法是报告该反向发现并讨论，而不是据此排除变量。</p>
+</div>
+
+<h3>6. L1 的定位自相矛盾</h3>
+<div class="mid">
+<p>论文明确说 L1 基本面优势「是业绩的<b>边界条件而非能力</b>本身」，
+但它仍占六维之一、1/6 权重，并被纳入"综合能力"用于经理筛选。
+既然是边界条件而非能力，逻辑上更适合作为控制变量。
+建议在 §2 或 §5 补一句说明为何仍将其计入综合得分（例如：因其样本外显著为正，具增量信息）。</p>
+</div>
+
+<h2>其他观察</h2>
+<ul>
+<li><b>六维等权使 L4 层实得 1/3 权重</b>，而 L4a、L4b 恰恰是同源程度最高的两层。论文已披露并做了按层加权的稳健性检验
+（Spearman 0.9917），处理得当；但结合问题 2 看，这个权重安排值得在正文中更明确地提示。</li>
+<li><b>"滞后一期"没有解决同源问题</b>。L4b 三个测度滞后一期只避免了时序上的前视；聚合到基金层后，
+L4b（全期 Sharpe 均值）与 ff5_alpha（全期 alpha）仍共享同一段收益序列。真正缓解同源的是样本外检验，
+论文这一点说对了（"支撑其有效性的主要证据是样本外单维检验"）。</li>
+<li><b>样本外检验的结果其实更有意思</b>：L4a +7.05 明显高于 L4b +5.38，而 L4a 的 timing 同样由收益序列估计。
+若按同源程度排序，L4a 也该被同等质疑——论文在 B1 项已做同等披露（相关 0.446 / 0.448），处理是对的。</li>
+</ul>
+
+<h2>修复优先级</h2>
+<table>
+<tr><th>优先级</th><th>问题</th><th>性质</th><th>影响</th></tr>
+<tr><td>1</td><td>修正「均衡性」结论（问题 1）</td><td class="t-crit">必改</td><td>否则被一击即中，且属可证伪的错误</td></tr>
+<tr><td>2</td><td>结论第四点分解披露（问题 2）</td><td class="t-crit">必改</td><td>改后反而加强论点</td></tr>
+<tr><td>3</td><td>统一 lsv 口径（问题 4）</td><td class="t-mid">建议</td><td>表 1 与 §3.4 表述冲突</td></tr>
+<tr><td>4</td><td>披露 L1–L5 相关 0.593（问题 3）</td><td class="t-mid">建议</td><td>补六维相关矩阵即可</td></tr>
+<tr><td>5</td><td>学历/CFA 排除理由、L1 定位（问题 5、6）</td><td class="t-mid">建议</td><td>表述层面，改法见上</td></tr>
+</table>
+
+<div class="foot">
+复算脚本：<code>scripts/_audit_storyline_20260830.py</code>（区分度拆解）、
+<code>scripts/_audit_balance_20260830.py</code>（均衡性命题检验）。<br>
+数据来源：<code>output/画像_全样本能力表_2026-08-26.csv</code>（N=362）。所有数字可由上述脚本一键复现。
+</div>
+
+</body>
+</html>

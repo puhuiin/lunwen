@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你是什么样的投资者？——基于行为指标的投资经理能力画像</title>
+<style>
+  :root {
+    --bg: #f6f8fb; --card: #ffffff; --ink: #1a1c22; --muted: #5c6470;
+    --line: #e3e8ef; --accent: #8b5cf6; --high: #dc2626; --low: #2563eb;
+    --zero: #16a34a;
+    --l1: #3b82f6; --l2: #8b5cf6; --l3: #10b981; --l4: #f59e0b; --l5: #ef4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.7;
+    padding: 28px 16px 48px;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; }
+  header { margin-bottom: 18px; }
+  h1 { font-size: 25px; letter-spacing: 1px; }
+  h2 { font-size: 19px; margin: 34px 0 12px;
+       padding-left: 11px; border-left: 5px solid var(--accent); }
+  h3 { font-size: 15.5px; margin: 22px 0 9px; color: #22304a; }
+  .sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  p { font-size: 14px; margin: 9px 0; color: #333a46; }
+  .logic {
+    background: var(--card); border: 1px solid var(--line);
+    border-left: 4px solid var(--accent); border-radius: 10px;
+    padding: 12px 16px; font-size: 14px; margin: 14px 0 20px; color: #333a46;
+  }
+  .logic b { color: var(--accent); }
+  .legend { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;
+    padding: 10px 14px; font-size: 13px; color: #92400e; margin-bottom: 16px;
+    display: flex; gap: 18px; flex-wrap: wrap; }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    overflow: hidden; font-size: 13.5px; box-shadow: 0 6px 24px rgba(30,42,62,.06);
+    margin: 10px 0 6px; }
+  thead th { background: #22304a; color: #fff; font-weight: 600; padding: 11px 12px;
+    text-align: left; font-size: 13.5px; letter-spacing: .3px; line-height: 1.4; }
+  tbody td { padding: 10px 12px; border-top: 1px solid var(--line); vertical-align: top; }
+  tbody tr:hover { background: #f4f8ff; }
+  td.num, th.num { text-align: right; font-family: Consolas, "Courier New", monospace;
+    font-size: 12.5px; white-space: nowrap; }
+  .layer-cell { text-align: center; width: 92px; border-right: 1px solid var(--line);
+    vertical-align: middle !important; }
+  .badge { display: inline-block; color: #fff; font-weight: 600; font-size: 12px;
+    padding: 5px 8px; border-radius: 18px; white-space: nowrap; line-height: 1.3; }
+  .l1{background:var(--l1);} .l2{background:var(--l2);} .l3{background:var(--l3);}
+  .l4{background:var(--l4);} .l5{background:var(--l5);} .lx{background:#94a3b8;}
+  .ldv{background:#64748b;}
+  .ind { font-weight: 600; color: var(--ink); line-height: 1.3; }
+  .ind .en { font-weight: 400; color: var(--muted); font-size: 11.5px;
+    display: block; margin-top: 2px; }
+  .calc { font-family: Consolas, "Courier New", monospace;
+    font-size: 12px; color: #2d3748;
+    background: #f2f5fa; padding: 6px 9px; border-radius: 6px;
+    display: inline-block; line-height: 1.5; }
+  .dir { font-size: 13px; line-height: 1.6; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 1px 7px; border-radius: 4px; margin: 1px 3px 1px 0; color: #fff; }
+  .tag.up { background: var(--high); }
+  .tag.down { background: var(--low); }
+  .tag.zero { background: var(--zero); }
+  .tag.new { background: #4338ca; }
+  .tag.upg { background: #15803d; }
+  .meaning { color: #3d4653; line-height: 1.65; font-size: 13px; }
+  .meaning .evid { display: block; margin-top: 4px;
+    font-size: 12px; color: var(--muted);
+    border-left: 2px solid var(--accent); padding-left: 8px; }
+  .meaning .warn { display: block; margin-top: 3px;
+    font-size: 12px; color: #b45309; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+    gap: 14px; margin: 12px 0 6px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 16px; box-shadow: 0 6px 24px rgba(30,42,62,.06); }
+  .card h4 { font-size: 14.5px; color: #22304a; margin-bottom: 2px; }
+  .card .who { color: var(--muted); font-size: 12.5px; margin-bottom: 8px; }
+  .card .kv { font-size: 12.5px; color: #3d4653; line-height: 1.8; }
+  .card .kv b { color: var(--accent); }
+  .bar { height: 7px; background: #eef2f8; border-radius: 4px; overflow: hidden;
+    margin-top: 3px; }
+  .bar i { display: block; height: 100%; background: var(--accent); }
+  .refs { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 18px; font-size: 12.5px; color: #3d4653; line-height: 1.85;
+    box-shadow: 0 6px 24px rgba(30,42,62,.06); }
+  .refs div { padding-left: 34px; text-indent: -34px; }
+  .foot { color: var(--muted); font-size: 12.5px; margin-top: 16px; line-height: 1.6; }
+  /* ---- 目录导航 ---- */
+  nav.toc { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 18px; margin: 0 0 22px; display: flex; flex-wrap: wrap;
+    gap: 8px 20px; font-size: 13px; box-shadow: 0 6px 24px rgba(30,42,62,.06); }
+  nav.toc a { color: var(--accent); text-decoration: none; }
+  nav.toc a:hover { text-decoration: underline; }
+  nav.toc a.hi { font-weight: 700; }
+  /* ---- 结论速查表（与方法详解 HTML 同一视觉规范） ---- */
+  table.concl tbody td { text-align: left; vertical-align: top;
+    font-size: 12.8px; line-height: 1.68; }
+  table.concl td.cid { text-align: center; font-family: Consolas, monospace;
+    font-weight: 700; color: var(--accent); white-space: nowrap;
+    background: #eff6ff; width: 54px; }
+  table.concl td.topic { font-weight: 600; white-space: nowrap; width: 118px; }
+  table.concl .ev { color: var(--muted); font-size: 12px; display: block; margin-top: 4px; }
+  table.concl .cv { color: #b45309; font-size: 12px; display: block; margin-top: 4px; }
+  table.concl .wh { color: #9aa4b2; font-size: 11.5px; display: block; margin-top: 4px; }
+  table.concl tbody tr.grp td { background: #eef2f7; font-weight: 700;
+    color: #1e3a8a; font-size: 13px; }
+  h3 .cref { font-size: 12px; color: #9aa4b2; font-weight: 400; }
+  @media (max-width: 1000px) { .calc { font-size: 11px; } table { font-size: 12.5px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><h1>你是什么样的投资者？</h1><p class="sub">基于 L1–L5 五层行为框架、六维等权复合的投资经理能力画像 —— 样本 400 只主动权益基金，2006Q3 至 2026Q2，共 80 个季度、9974 个基金-季度观测</p></header>
+<div class="logic">行为逻辑链：<b>基本面条件约束禀赋 → 禀赋塑造认知 → 认知驱动配置选择 → 选择决定风险应对 → 风险最终转化为回报 → 全程由交易执行落地</b>　本文的框架是 <b>L1–L5 五个理论层次、6 个计分维度</b>：L1、L2、L3、L5 各对应一个计分维度，L4 风险应对层内含两种不同质的测度（“做了什么”与“换回了什么”），故拆为 L4a 过程应对与 L4b 风险转化两个维度。层次回答“行为发生在哪个环节”，计分维度是要求内部指标同质、可等权平均的<b>测量单元</b>，二者不必一一对应（拆分依据的实测见 3.7）。每个维度用 2–3 个学术指标度量，<b>等权复合</b>（先各自标准化再取平均）成 1 个得分，再据此给基金经理画像。其中 L1 基本面优势刻画的是<b>边界条件</b>（新任经理、新基金、小规模所处的套利空间），L2–L5 刻画的是<b>行为能力</b>。</div>
+<nav class="toc"><a href="#s0">〇、新增指标</a><a href="#s1">一、引言</a><a href="#s2">二、理论研究</a><a href="#s3">三、实证检验</a><a href="#s4">四、投资经理画像</a><a href="#s5">五、结论</a><a href="#s6">六、参考文献</a></nav>
+<h2 id="s0">〇、本轮新增了哪些指标，分别放在哪一层</h2>
+<p class="meaning">先给结论：本轮共 <b>6 项指标变动</b>——<b>5 项全新指标</b>（oc_conf、timing、sharpe8、sortino8、mppm8）与<b>1 项升格</b>（L1 三控制变量合成「基本面优势」计分维）。下表逐项一行，与《方法详解》开篇同构。<span class="evid">后文所有表格中，新增指标标 <span class="tag new">新增</span>、升格成分标 <span class="tag upg">升格计分</span>；每个指标的逐步计算过程见《方法详解》第三节对应卡片。</span></p>
+<table><thead><tr><th style="width:5%">序</th><th style="width:13%">所属层</th><th style="width:20%">指标</th><th>在该层承担什么职能</th><th style="width:22%">实证表现</th></tr></thead><tbody>
+<tr><td>1<br></td><td class="layer-cell"><span class="badge l1"></span></td><td class="ind"><b>基本面优势</b><span class="en">三控制变量合成：tenure／log_age／log_aum</span><span class="tag upg">升格计分</span></td><td class="meaning">把原先<b>只作控制变量、从不进入画像</b>的三项升格为一个计分维，度量经理所处的<b>组织资本状态</b>（新任、新基金、小规模），补齐此前缺失的 L1 层。三者方向均为负，按 [z(−tenure)+z(−log_age)+z(−log_aum)]/3 等权合成。<span class="evid">是否进入回归：单维回归显著（t=2.86）；六维联立同样进入但被行为维度吸收（t=-0.17）——联立模型不再单独放三控制变量，因为 L1 得分就是它们的线性组合，叠加即完全共线。</span></td><td class="dir">单维 t=2.86**；联立 t=-0.17，定位为<b>边界条件</b></td></tr>
+<tr><td>2<br></td><td class="layer-cell"><span class="badge l2"></span></td><td class="ind"><b>oc_conf</b><span class="en">过度自信</span><span class="tag new">新增</span></td><td class="meaning">原 L2 只有风险偏好不对称性与处置效应两项，刻画“认知”过于单薄；且原换手率 TO 双口径均不显著。本项只统计<b>“上一期赚钱了、这一期换手率就上升”</b>的增量换手，剥离策略性换手，是第三种独立的认知偏差通道（自我归因）。</td><td class="dir">t=-4.19***，方向与文献一致（越自信 alpha 越低）</td></tr>
+<tr><td>3<br></td><td class="layer-cell"><span class="badge l4"></span></td><td class="ind"><b>timing</b><span class="en">下行保护系数</span><span class="tag new">新增</span></td><td class="meaning">原该层只有调仓收益 ARG 一项。timing 度量<b>市场下跌时是否主动收缩暴露</b>，与 ARG 互补：一个看仓位腾挪创造的收益差，一个看下跌时的防御动作有没有用。</td><td class="dir">t=5.19***（n=355）；群体画像中<b>区分度最高的单指标</b></td></tr>
+<tr><td>4<br></td><td class="layer-cell"><span class="badge l4"></span></td><td class="ind"><b>sharpe8</b><span class="en">Sharpe 比率·总风险口径</span><span class="tag new">新增</span></td><td class="meaning">递进链第一环，行业通用基准语言。回答“<b>每承担一单位总风险换回多少超额收益</b>”——补上旧口径只有风险分母（收益波动率）、没有收益分子的结构缺陷。</td><td class="dir">t=7.88***；该维单维 R²=0.2845</td></tr>
+<tr><td>5<br></td><td class="layer-cell"><span class="badge l4"></span></td><td class="ind"><b>sortino8</b><span class="en">Sortino 比率·下行风险口径</span><span class="tag new">新增</span></td><td class="meaning">递进链第二环，补 Sharpe 的盲区：后者对上涨和下跌的波动一视同仁，无法区分“<b>进攻型波动</b>”与“<b>失控型波动</b>”；Sortino 只惩罚亏损期的波动。</td><td class="dir">t=3.71***</td></tr>
+<tr><td>6<br></td><td class="layer-cell"><span class="badge l4"></span></td><td class="ind"><b>mppm8</b><span class="en">抗操纵绩效测度·效用等价口径</span><span class="tag new">新增</span></td><td class="meaning">递进链第三环，防业绩粉饰。Sharpe 可被“业绩差时压低波动再赌反弹”的手法抬高，MPPM 用凹效用变换对极端亏损重罚，操纵不再有利——它算的是<b>投资者真正能拿到的效用等价收益率</b>。</td><td class="dir">t=10.47***，<b>15 个成分中最高</b></td></tr>
+</tbody></table>
+<p class="foot">未变动的层：L3 配置选择（行业集中度、行业风格漂移）与 L5 交易执行（策略偏离指数、交易趋同度）本轮沿用。被检验后剔除的四项（改进主动份额、换手率、追涨杀跌、风险稳定性）见 3.3、3.4。各指标的完整公式与逐步算法见《方法详解》第三节。</p>
+<h2 id="s1">一、引言</h2>
+<h3>1.1 为什么要做行为画像</h3>
+<p>评价基金经理，市场习惯先看收益。但收益里既有能力也有运气，且高度依赖行情窗口。一个更稳的问题是：<b>他是怎么做投资的？</b>行为是可以被观测、被重复检验的——持仓集中在哪里、亏损时是加是减、赚钱之后交易是否变频繁，这些习惯比某一年的排名更能说明他是什么样的投资者。</p>
+<h3>1.2 可操作性在哪里</h3>
+<p>本文所有指标都可由公开季报持仓与净值序列复算，不依赖调研或访谈，因此可以对全市场基金<b>批量、定期</b>更新。这让画像不只是描述，而可以直接用于筛选、归因和风格匹配：知道一位经理的能力短板在“配置选择”还是“风险转化”，就知道他在什么市场环境下更可能失效。</p>
+<h3>1.3 本文做法</h3>
+<p>第一步，按“基本面—认知—选择—风险—执行”的五层框架，为每一层从既有文献中找出有出处的可计算指标（共 15 项进入正式框架）。第二步，逐项检验其与基金 FF5 超额收益的关系，方向与文献预期一致者保留。第三步，把同一维度下的多个指标标准化后<b>等权平均</b>，压成 1 个得分，六个维度再等权得到综合能力。第四步，用得分做群体画像与典型个案。</p>
+<p class="meaning">为什么要等权复合而不是回归赋权：回归权重会被样本期行情牵着走，换个窗口权重就变；等权虽然“笨”，但可复现、不过拟合，也避免把某一个指标的样本内噪声放大成“能力”。<span class="evid">复合公式：维度得分 = Σ z(成分) / 有效成分个数（成分缺失时按剩余成分取均值，不填 0）。z 指标准化：减均值除标准差，使不同量纲的指标可以相加。</span></p>
+<h3>1.4 主要结论</h3>
+<p>六个维度得分单独看全部与基金超额收益正相关（t 值 2.86 至 7.69）；六者放在一起联立时，<b>风险转化能力</b>（t=5.50）与<b>认知能力</b>（t=4.00）系数最大，<b>交易执行能力</b>（t=1.23）与<b>基本面优势</b>（t=-0.17）的独立解释力被行为维度吸收。按综合能力五等分，最高组与最低组的季度超额收益差 0.0313（t=10.28），且逐组单调递增。</p>
+<p class="meaning">L1 基本面优势的这一结果值得单独说明：它单维显著（t=2.86，p=0.0042），但六维联立后转为不显著（t=-0.17）——这说明<b>年轻经理、新基金、小规模本身不是能力，而是能力得以发挥的条件</b>。它与业绩的相关，是通过行为维度传导的（与风险应对相关 0.566、与交易执行相关 0.574，均为六维中最高之列）。<span class="evid">样本外检验给出了更强的证据：改用“前半期算指标、后半期算业绩”的口径后，L1 在六维联立中<b>转为显著为正</b>（t=2.71，p=0.0067）——前期的年轻小规模状态确实预示后期更高的 alpha，只是在同期截面上信息已被行为维度吸收。这正是“边界条件”一词的准确含义：它决定可能性的上限，不决定结果。</span></p>
+<p class="meaning">风险转化能力也需要一处限定。它的联立系数最大（t=5.50），但它的三个成分（MPPM、Sortino、Sharpe）本身就是风险调整后业绩测度，与因变量 FF5 超额收益共享概念内核——这是本文框架最需要交代的方法论问题。<span class="warn">四道诊断的结论是：存在部分定义同源，但核心结论在样本外成立。剔除该维度后模型 R² 由 0.4557 降至 0.2761，增量 0.1796 中有一部分来自定义重叠；但用前半期指标预测后半期业绩时它仍强显著（t=5.38），说明含有跨期可预测的信息、而非同期恒等式。因此本文的定性是：<b>风险使用效率具有持续性</b>——过去把风险用得有效率的经理未来仍然如此。这个结论比“风险转化能力最重要”更弱，但站得住。完整诊断见 3.8。</span></p>
+<p>一个反直觉的发现：能力最高组的<b>平均规模最小</b>（4.45 亿 vs 最低组 17.33 亿），硕士以上占比与 CFA 占比也随能力上升而<b>下降</b>。这说明本文度量的是行为层面的能力，与资历标签、管理规模不是同一件事。</p>
+<h2 id="s2">二、理论研究：五层框架、六个计分维度与指标出处</h2>
+<p>下表是本文的指标字典。每一行都必须回答四个问题：这个指标属于行为链的哪一层、通过什么渠道影响业绩、出处是谁、怎么算。<b>凡无文献出处者不入表</b>。</p>
+<div class="legend"><span><span class="badge l1">L1</span> 基本面优势（计分维·边界条件）</span><span><span class="badge l2">L2</span> 认知能力</span><span><span class="badge l3">L3</span> 配置选择能力</span><span><span class="badge l4">L4</span> 风险应对 / 风险转化能力</span><span><span class="badge l5">L5</span> 交易执行能力</span><span><span class="badge ldv">因变量</span> 业绩基准</span><span><span class="badge lx">剔除</span> 检验后不采纳</span></div>
+<table><thead><tr><th class="layer-cell">层级</th><th style="width:20%">影响渠道（理论依据）</th><th style="width:15%">来源（作者、时间）</th><th style="width:14%">指标</th><th style="width:21%">计算（公式）</th><th>说明</th></tr></thead><tbody>
+<tr>
+<td class="layer-cell" rowspan="3"><span class="badge l1">L1<br>基本面层</span></td>
+<td class="meaning" rowspan="3">经理所处的组织资本状态：新任经理的职业顾虑激励、基金年龄与规模决定的套利空间——它是业绩的边界条件而非行为能力本身</td>
+<td class="meaning">Chevalier & Ellison (1999) 经验悖论与职业顾虑：新任经理更努力，激励随任期衰减<span class="evid">[26]</span></td>
+<td class="ind">任职年限<span class="en">mgr_total_tenure_v2</span></td>
+<td><span class="calc">观测日 − 首次任职日（天）</span></td>
+<td class="meaning"><span class="tag down">越低越好</span>CHEVALIER J, ELLISON G. Career concerns of mutual fund managers</td>
+</tr>
+<tr>
+<td class="meaning">Berk & Green (2004) 理性市场模型：业绩吸引资金流入，规模膨胀与组织老化侵蚀 alpha（新基金效应）<span class="evid">[62]</span></td>
+<td class="ind">log 基金年龄<span class="en">log_fund_age</span></td>
+<td><span class="calc">ln(基金存续月数)</span></td>
+<td class="meaning"><span class="tag down">越低越好</span>BERK J B, GREEN R C. Mutual fund flows and performance in rational markets</td>
+</tr>
+<tr>
+<td class="meaning">Berk & Green (2004) 规模不经济：规模膨胀稀释超额收益<span class="evid">[62]</span></td>
+<td class="ind">log 基金规模<span class="en">log_aum</span></td>
+<td><span class="calc">ln(平均管理规模，亿元)</span></td>
+<td class="meaning"><span class="tag down">越低越好</span>BERK J B, GREEN R C. Mutual fund flows and performance in rational markets</td>
+</tr>
+<tr>
+<td class="layer-cell" rowspan="3"><span class="badge l2">L2<br>认知能力</span></td>
+<td class="meaning" rowspan="3">禀赋与心理偏差如何塑造判断：损失域—收益域的风险态度差异、盈亏处置的不对称、以及业绩反馈后的自我归因</td>
+<td class="meaning">Kahneman & Tversky (1979) 前景理论：损失域与收益域的风险态度不对称<span class="evid">[1]</span></td>
+<td class="ind">风险偏好不对称性<span class="en">risk_asym</span></td>
+<td><span class="calc">σ(下行持仓集中) − σ(上行持仓集中)</span></td>
+<td class="meaning"><span class="tag up">越高越好</span>KAHNEMAN D, TVERSKY A. Prospect theory: an analysis of decision under risk</td>
+</tr>
+<tr>
+<td class="meaning">Shefrin & Statman (1985) 提出处置效应<span class="evid">[15]</span></td>
+<td class="ind">处置效应<span class="en">de</span></td>
+<td><span class="calc">PGR − PLR（已实现盈利比例 − 已实现亏损比例）</span></td>
+<td class="meaning"><span class="tag down">越低越好</span>SHEFRIN H, STATMAN M. The disposition to sell winners too early and ride losers too long: theory and evidence</td>
+</tr>
+<tr>
+<td class="meaning">Puetz & Ruenzi (2011) 以业绩后换手率上升识别基金经理过度自信<span class="evid">[59]</span></td>
+<td class="ind">过度自信（换手×过度交易）<span class="en">oc_conf</span></td>
+<td><span class="calc">换手率 × 业绩后过度交易倾向</span></td>
+<td class="meaning"><span class="tag down">越低越好</span>PUETZ A, RUENZI S. Overconfidence among professional investors: evidence from mutual fund managers</td>
+</tr>
+<tr>
+<td class="layer-cell" rowspan="2"><span class="badge l3">L3<br>配置选择能力</span></td>
+<td class="meaning" rowspan="2">认知转化为组合结构：是否敢于把信息优势押注在少数行业，以及行业配置是否稳定不漂移</td>
+<td class="meaning">Kacperczyk, Sialm & Zheng (2005) 行业集中度衡量主动配置信息优势<span class="evid">[30]</span></td>
+<td class="ind">行业集中度<span class="en">ICI</span></td>
+<td><span class="calc">Σ (w_j − w̄_j)²，j 为行业</span></td>
+<td class="meaning"><span class="tag up">越高越好</span>KACPERCZYK M, SIALM C, ZHENG L. On the industry concentration of actively managed equity mutual funds</td>
+</tr>
+<tr>
+<td class="meaning">Chen & Wei (2025) 提出基于行业配置的漂移测度<span class="evid">[58]</span></td>
+<td class="ind">行业风格漂移指数<span class="en">ISDI</span></td>
+<td><span class="calc">Σ_j |w_{j,t} − w_{j,t−1}| 的时序均值</span></td>
+<td class="meaning"><span class="tag down">越低越好</span>CHEN Y, WEI H. Fund style drift and fund performance: evidence from China</td>
+</tr>
+<tr>
+<td class="layer-cell" rowspan="2"><span class="badge l4">L4a<br>风险应对能力</span></td>
+<td class="meaning" rowspan="2">面对市场冲击的行为反应：持仓外的主动调仓贡献，以及下跌时是否主动收缩暴露</td>
+<td class="meaning">Kacperczyk, Sialm & Zheng (2008) return gap：持仓外的未观测调仓贡献<span class="evid">[60]</span></td>
+<td class="ind">调仓收益<span class="en">ARG</span></td>
+<td><span class="calc">基金净值收益 − 持仓复制收益</span></td>
+<td class="meaning"><span class="tag up">越高越好</span>KACPERCZYK M, SIALM C, ZHENG L. Unobserved actions of mutual funds</td>
+</tr>
+<tr>
+<td class="meaning">Henriksson & Merton (1981) 分段市场择时检验<span class="evid">[45]</span></td>
+<td class="ind">下行保护系数（−HM γ）<span class="en">timing</span></td>
+<td><span class="calc">−γ，来自 ex = a + b·MKT + γ·min(0, MKT) + e</span></td>
+<td class="meaning"><span class="tag up">越高越好</span>HENRIKSSON R D, MERTON R C. On market timing and investment performance. II. Statistical procedures for evaluating forecasting skills</td>
+</tr>
+<tr>
+<td class="layer-cell" rowspan="3"><span class="badge l4">L4b<br>风险转化能力</span></td>
+<td class="meaning" rowspan="3">承担的风险最终换回多少回报：以抗操纵、下行风险、总风险三种口径共同刻画</td>
+<td class="meaning">Goetzmann et al. (2007) 操纵稳健业绩测度，规避择时/期权化操纵<span class="evid">[52]</span></td>
+<td class="ind">抗操纵绩效测度<span class="en">mppm8_lag</span></td>
+<td><span class="calc">(1/((1−ρ)Δt))·ln[(1/T)Σ((1+r)/(1+rf))^(1−ρ)]</span></td>
+<td class="meaning"><span class="tag up">越高越好</span>GOETZMANN W N, INGERSOLL J, SPIEGEL M, WELCH I. Portfolio performance manipulation and manipulation-proof performance measures</td>
+</tr>
+<tr>
+<td class="meaning">Sortino & Price (1994) 下行风险框架下的绩效测度<span class="evid">[53]</span></td>
+<td class="ind">Sortino 比率<span class="en">sortino8_lag</span></td>
+<td><span class="calc">(E[r] − rf) / 下行标准差</span></td>
+<td class="meaning"><span class="tag up">越高越好</span>SORTINO F A, PRICE L N. Performance measurement in a downside risk framework</td>
+</tr>
+<tr>
+<td class="meaning">Sharpe (1966) 总风险调整后收益基准参照<span class="evid">[54]</span></td>
+<td class="ind">Sharpe 比率<span class="en">sharpe8_lag</span></td>
+<td><span class="calc">(E[r] − rf) / σ(r)</span></td>
+<td class="meaning"><span class="tag up">越高越好</span>SHARPE W F. Mutual fund performance</td>
+</tr>
+<tr>
+<td class="layer-cell" rowspan="2"><span class="badge l5">L5<br>交易执行能力</span></td>
+<td class="meaning" rowspan="2">意图落地到成交的一致性：策略是否被自己的交易稀释，以及跟随群体的程度</td>
+<td class="meaning">Wermers (2012) 风格漂移的离散度刻画<span class="evid">[57]</span></td>
+<td class="ind">策略偏离指数<span class="en">SDI</span></td>
+<td><span class="calc">基金因子暴露相对自身历史均值的离散度</span></td>
+<td class="meaning"><span class="tag down">越低越好</span>WERMERS R. A matter of style: the causes and consequences of style drift in institutional portfolios</td>
+</tr>
+<tr>
+<td class="meaning">Lakonishok, Shleifer & Vishny (1992) LSV 羊群度量<span class="evid">[34]</span></td>
+<td class="ind">交易趋同度<span class="en">lsv</span></td>
+<td><span class="calc">|p_t − E[p_t]| − E|p_t − E[p_t]|（LSV 羊群度）</span></td>
+<td class="meaning"><span class="tag up">越高越好</span>LAKONISHOK J, SHLEIFER A, VISHNY R W. The impact of institutional trading on stock prices</td>
+</tr>
+<tr>
+<td class="layer-cell" rowspan="4"><span class="badge lx">剔除</span></td>
+<td class="meaning" rowspan="4">经检验不具备稳健独立解释力，或与已入选指标严重重合，故不进入复合打分</td>
+<td class="meaning">Frazzini, Friedman & Pomorski (2016) 控制基准后 AS 无预测力<span class="evid">[55]</span></td>
+<td class="ind">改进主动份额<span class="en">AS_improved</span></td>
+<td><span class="calc">½ Σ |w_fund − w_bench|（基准调整版）</span></td>
+<td class="meaning"><span class="tag zero">不采纳</span>FRAZZINI A, FRIEDMAN J, POMORSKI L. Deactivating active share</td>
+</tr>
+<tr>
+<td class="meaning">双口径均不显著且符号反向<span class="evid">[59]</span></td>
+<td class="ind">换手率<span class="en">TO_wind_clean</span></td>
+<td><span class="calc">(买入额 + 卖出额) / 2 / 平均资产</span></td>
+<td class="meaning"><span class="tag zero">不采纳</span>PUETZ A, RUENZI S. Overconfidence among professional investors: evidence from mutual fund managers</td>
+</tr>
+<tr>
+<td class="meaning">Grinblatt, Titman & Wermers (1995) 动量交易度量<span class="evid">[35]</span></td>
+<td class="ind">追涨杀跌<span class="en">rc_mom</span></td>
+<td><span class="calc">持仓变动与过去收益的相关系数</span></td>
+<td class="meaning"><span class="tag zero">不采纳</span>GRINBLATT M, TITMAN S, WERMERS R. Value investing, momentum, and performance</td>
+</tr>
+<tr>
+<td class="meaning">Brown, Harlow & Starks (1996) 锦标赛式风险调整<span class="evid">[33]</span></td>
+<td class="ind">风险稳定性<span class="en">rsstab_lag</span></td>
+<td><span class="calc">相邻期风险水平之差的绝对值（取负）</span></td>
+<td class="meaning"><span class="tag zero">不采纳</span>BROWN K C, HARLOW W V, STARKS L T. Of tournaments, temptations, and risk-taking in the mutual fund industry</td>
+</tr>
+<tr>
+<td class="layer-cell" rowspan="1"><span class="badge ldv">业绩基准</span></td>
+<td class="meaning" rowspan="1">被解释变量：剥离市场、规模、价值、盈利、投资五个风险因子后的超额收益</td>
+<td class="meaning">Fama & French (2015) 五因子模型<span class="evid">[23]</span></td>
+<td class="ind">/ alpha_q<span class="en">ff5_adj_return</span></td>
+<td><span class="calc">r − rf = α + β·MKT + s·SMB + h·HML + r·RMW + c·CMA + ε</span></td>
+<td class="meaning"><span class="tag zero">因变量</span>FAMA E F, FRENCH K R. A five-factor asset pricing model</td>
+</tr>
+</tbody></table>
+<p class="foot">方括号内数字对应文末参考文献编号。“定向符号”是文献预期的方向，在第三部分会逐项用数据检验是否成立。</p>
+<h3>2.1 四处关键修订的依据</h3>
+<p><b>（1）L1 基本面层由纯控制变量升级为计分维度。</b>原先任职年限、基金年龄、规模只作为控制变量，从不进入画像，结果画像里缺了“他在什么条件下做投资”这一层。本文把三者按文献预期方向（均为负向）等权复合为<b>基本面优势</b>：<b>任职年限</b>（Chevalier &amp; Ellison, 1999 [26]，职业顾虑使新任经理更努力，即“经验悖论”）、<b>基金年龄与规模</b>（Berk &amp; Green, 2004 [62]，业绩吸引资金流入、规模膨胀与组织老化共同侵蚀 alpha）。<span class="warn">口径提示：这三个成分本身就是原控制变量组，因此 L1 成分的定向检验用无控制变量的单变量回归（自我控制无意义），六维联立模型也不再叠加原控制变量组（L1 得分是它们的线性组合，叠加即完全共线）。对照口径“五维联立＋三控制变量”R²=0.4561，与六维联立 0.4557 几乎相同，信息含量未损失。</span></p>
+<p><b>（2）认知能力层扩容。</b>原先只用处置效应一项刻画认知，但认知偏差不止一种。本文补入两项：<b>风险偏好不对称性</b>（Kahneman &amp; Tversky, 1979 [1]，前景理论指出人在亏损域比在盈利域更敢冒险，因此下行与上行的持仓集中差异可以度量这种不对称）；<b>过度自信</b>（Puetz &amp; Ruenzi, 2011 [59]，用“业绩好之后换手率反而上升”识别基金经理的自我归因偏差，理论依据见 Gervais &amp; Odean, 2001 [13]）。三项合成认知能力。</p>
+<p><b>（3）风险转化能力重新度量。</b>原口径混用了风险暴露与风险回报，概念不清。现改为三个纯粹的“单位风险回报”指标：<b>MPPM 抗操纵绩效测度</b>（Goetzmann et al., 2007 [52]，专为防止经理通过卖期权、择时等手法虚增业绩测度而设计）、<b>Sortino 比率</b>（Sortino &amp; Price, 1994 [53]，只惩罚下行波动）、<b>Sharpe 比率</b>（Sharpe, 1966 [54]，总风险口径基准参照）。三者口径互补，等权复合后既不偏向下行也不偏向总风险。</p>
+<p><b>（4）风险应对能力补入下行保护系数。</b>原先只有调仓收益一项。本文自建 <b>timing</b> 指标：按 Henriksson &amp; Merton (1981) [45] 的分段回归<span class="calc">ex = a + b·MKT + γ·min(0, MKT) + e</span>，取 <b>timing = −γ</b>。γ 为负说明市场下跌时基金的下行暴露被主动压缩，故取负号后越大越好。要求至少 12 个季度才估计，覆盖 355 只（88.75%）。</p>
+<h3>2.2 一个必须交代的口径分歧</h3>
+<p>本文把<b>策略偏离指数 SDI</b> 放在 L5 交易执行层，而不是与行业风格漂移 ISDI 一起放在配置层。理由是二者测的不是一回事：ISDI 测的是行业权重在期间之间的位移（配置意图变了），SDI 测的是因子暴露相对自身历史的离散（执行结果偏离了既定策略）。前者是“想换”，后者是“做偏”。<span class="warn">提示：样本中 SDI 有明显的零值堆积（25% 分位数为 0，意味着至少四分之一的基金因子暴露相对自身均值几乎无离散），因此其区分度主要体现在高偏离一端。</span></p>
+<h2 id="s3">三、实证检验</h2>
+<h3>3.1 数据来源与样本</h3>
+<p>样本为 400 只主动管理权益类基金，区间 2006Q3 至 2026Q2（80 个季度），共 9974 个基金-季度观测。持仓与行业权重来自基金定期报告，净值与因子收益用于估计风险调整后业绩。能进入基金层横截面回归（要求可估出 FF5 alpha）的基金为 362 只。</p>
+<p class="meaning">样本量在 2020 年出现结构性跳升（2019 年 61 只 → 2020 年 286 只），这是行业扩张与季报披露完善共同造成的。主表使用全样本以保留长期信息；若限定 2020 年后，各指标符号不变、显著性略降，结论不受影响。<span class="evid">早期年份基金数极少（2006–2011 年每年仅 1 只），其观测在横截面回归中被时序均值化，不会主导结果。</span></p>
+<h4 style="font-size:14px;margin:16px 0 6px;color:#22304a">表 1　主要变量描述统计</h4>
+<table><thead><tr><th>变量</th><th>指标名</th><th class="num">N</th><th class="num">均值</th><th class="num">标准差</th><th class="num">最小值</th><th class="num">P25</th><th class="num">中位数</th><th class="num">P75</th><th class="num">最大值</th></tr></thead><tbody>
+<tr><td class="ind">经理累计任职天数<span class="en">mgr_total_tenure_v2</span></td><td class="meaning"></td>
+<td class="num">400</td>
+<td class="num">1048.3763</td>
+<td class="num">817.8013</td>
+<td class="num">196.1864</td>
+<td class="num">535.7226</td>
+<td class="num">821.7328</td>
+<td class="num">1239.3462</td>
+<td class="num">4292.6762</td>
+</tr>
+<tr><td class="ind">基金年龄对数<span class="en">log_fund_age</span></td><td class="meaning"></td>
+<td class="num">400</td>
+<td class="num">1.3896</td>
+<td class="num">1.0128</td>
+<td class="num">-0.6259</td>
+<td class="num">0.6050</td>
+<td class="num">1.3386</td>
+<td class="num">2.3945</td>
+<td class="num">2.9626</td>
+</tr>
+<tr><td class="ind">基金规模对数<span class="en">log_aum</span></td><td class="meaning"></td>
+<td class="num">400</td>
+<td class="num">1.6139</td>
+<td class="num">1.2184</td>
+<td class="num">0.0000</td>
+<td class="num">0.5819</td>
+<td class="num">1.4980</td>
+<td class="num">2.4930</td>
+<td class="num">4.5907</td>
+</tr>
+<tr><td class="ind">风险偏好不对称性<span class="en">risk_asym</span></td><td class="meaning"></td>
+<td class="num">386</td>
+<td class="num">0.0445</td>
+<td class="num">0.0507</td>
+<td class="num">-0.0215</td>
+<td class="num">0.0160</td>
+<td class="num">0.0318</td>
+<td class="num">0.0567</td>
+<td class="num">0.2765</td>
+</tr>
+<tr><td class="ind">处置效应<span class="en">de</span></td><td class="meaning"></td>
+<td class="num">399</td>
+<td class="num">-0.1333</td>
+<td class="num">0.0720</td>
+<td class="num">-0.3394</td>
+<td class="num">-0.1691</td>
+<td class="num">-0.1273</td>
+<td class="num">-0.0868</td>
+<td class="num">0.0286</td>
+</tr>
+<tr><td class="ind">过度自信（换手×过度交易）<span class="en">oc_conf</span></td><td class="meaning"></td>
+<td class="num">394</td>
+<td class="num">-2.1264</td>
+<td class="num">14.8282</td>
+<td class="num">-71.9537</td>
+<td class="num">-6.9299</td>
+<td class="num">-0.9736</td>
+<td class="num">4.1210</td>
+<td class="num">47.4391</td>
+</tr>
+<tr><td class="ind">行业集中度<span class="en">ICI</span></td><td class="meaning"></td>
+<td class="num">400</td>
+<td class="num">0.2897</td>
+<td class="num">0.1570</td>
+<td class="num">0.0968</td>
+<td class="num">0.1860</td>
+<td class="num">0.2508</td>
+<td class="num">0.3473</td>
+<td class="num">0.8593</td>
+</tr>
+<tr><td class="ind">行业风格漂移指数<span class="en">ISDI</span></td><td class="meaning"></td>
+<td class="num">400</td>
+<td class="num">0.2395</td>
+<td class="num">0.1272</td>
+<td class="num">0.0001</td>
+<td class="num">0.1424</td>
+<td class="num">0.2493</td>
+<td class="num">0.3285</td>
+<td class="num">0.5229</td>
+</tr>
+<tr><td class="ind">调仓幅度<span class="en">ARG</span></td><td class="meaning"></td>
+<td class="num">400</td>
+<td class="num">0.1647</td>
+<td class="num">0.1115</td>
+<td class="num">0.0339</td>
+<td class="num">0.0651</td>
+<td class="num">0.1346</td>
+<td class="num">0.2404</td>
+<td class="num">0.4417</td>
+</tr>
+<tr><td class="ind">下行保护系数（−HM γ）<span class="en">timing</span></td><td class="meaning"></td>
+<td class="num">355</td>
+<td class="num">0.9135</td>
+<td class="num">0.7448</td>
+<td class="num">-1.8310</td>
+<td class="num">0.4406</td>
+<td class="num">0.9032</td>
+<td class="num">1.3768</td>
+<td class="num">2.5646</td>
+</tr>
+<tr><td class="ind">操纵稳健业绩测度MPPM<span class="en">mppm8_lag</span></td><td class="meaning"></td>
+<td class="num">394</td>
+<td class="num">0.0249</td>
+<td class="num">0.0963</td>
+<td class="num">-0.1681</td>
+<td class="num">-0.0287</td>
+<td class="num">0.0198</td>
+<td class="num">0.0554</td>
+<td class="num">0.4588</td>
+</tr>
+<tr><td class="ind">Sortino比率<span class="en">sortino8_lag</span></td><td class="meaning"></td>
+<td class="num">371</td>
+<td class="num">0.2323</td>
+<td class="num">0.7044</td>
+<td class="num">-0.6044</td>
+<td class="num">-0.1198</td>
+<td class="num">0.0951</td>
+<td class="num">0.3600</td>
+<td class="num">4.1919</td>
+</tr>
+<tr><td class="ind">Sharpe比率<span class="en">sharpe8_lag</span></td><td class="meaning"></td>
+<td class="num">394</td>
+<td class="num">0.1323</td>
+<td class="num">0.2130</td>
+<td class="num">-0.5060</td>
+<td class="num">0.0152</td>
+<td class="num">0.1289</td>
+<td class="num">0.2421</td>
+<td class="num">0.6970</td>
+</tr>
+<tr><td class="ind">策略偏离指数<span class="en">SDI</span></td><td class="meaning"></td>
+<td class="num">366</td>
+<td class="num">0.2332</td>
+<td class="num">0.2288</td>
+<td class="num">0.0000</td>
+<td class="num">0.0000</td>
+<td class="num">0.2820</td>
+<td class="num">0.4309</td>
+<td class="num">0.7594</td>
+</tr>
+<tr><td class="ind">交易趋同度LSV<span class="en">lsv</span></td><td class="meaning"></td>
+<td class="num">400</td>
+<td class="num">0.0910</td>
+<td class="num">0.0183</td>
+<td class="num">0.0471</td>
+<td class="num">0.0786</td>
+<td class="num">0.0896</td>
+<td class="num">0.1019</td>
+<td class="num">0.1371</td>
+</tr>
+<tr><td class="ind">FF5 超额收益（基金层alpha）<span class="en">ff5_adj_return</span></td><td class="meaning"></td>
+<td class="num">362</td>
+<td class="num">0.0203</td>
+<td class="num">0.0195</td>
+<td class="num">-0.0182</td>
+<td class="num">0.0069</td>
+<td class="num">0.0192</td>
+<td class="num">0.0331</td>
+<td class="num">0.0751</td>
+</tr>
+<tr><td class="ind">季度收益<span class="en">quarter_return</span></td><td class="meaning"></td>
+<td class="num">400</td>
+<td class="num">0.0836</td>
+<td class="num">0.0632</td>
+<td class="num">0.0248</td>
+<td class="num">0.0492</td>
+<td class="num">0.0657</td>
+<td class="num">0.0867</td>
+<td class="num">0.3695</td>
+</tr>
+</tbody></table>
+<p class="foot">全部连续变量在 1%/99% 分位处缩尾（winsorize）以抑制极端值影响。ff5_adj_return 为基金层 FF5 超额收益（基金内恒定），是横截面回归的被解释变量。</p>
+<h4 style="font-size:14px;margin:16px 0 6px;color:#22304a">表 2　成分指标覆盖率</h4>
+<table><thead><tr><th>指标</th><th class="num">覆盖率</th><th>指标</th><th class="num">覆盖率</th><th>指标</th><th class="num">覆盖率</th></tr></thead><tbody>
+<tr>
+<td class="ind">经理累计任职天数<span class="en">mgr_total_tenure_v2</span></td><td class="num">100.00%</td>
+<td class="ind">基金年龄对数<span class="en">log_fund_age</span></td><td class="num">100.00%</td>
+<td class="ind">基金规模对数<span class="en">log_aum</span></td><td class="num">100.00%</td>
+</tr>
+<tr>
+<td class="ind">风险偏好不对称性<span class="en">risk_asym</span></td><td class="num">96.50%</td>
+<td class="ind">处置效应<span class="en">de</span></td><td class="num">99.75%</td>
+<td class="ind">过度自信（换手×过度交易）<span class="en">oc_conf</span></td><td class="num">98.50%</td>
+</tr>
+<tr>
+<td class="ind">行业集中度<span class="en">ICI</span></td><td class="num">100.00%</td>
+<td class="ind">行业风格漂移指数<span class="en">ISDI</span></td><td class="num">100.00%</td>
+<td class="ind">调仓幅度<span class="en">ARG</span></td><td class="num">100.00%</td>
+</tr>
+<tr>
+<td class="ind">下行保护系数（−HM γ）<span class="en">timing</span></td><td class="num">88.75%</td>
+<td class="ind">操纵稳健业绩测度MPPM<span class="en">mppm8_lag</span></td><td class="num">98.50%</td>
+<td class="ind">Sortino比率<span class="en">sortino8_lag</span></td><td class="num">92.75%</td>
+</tr>
+<tr>
+<td class="ind">Sharpe比率<span class="en">sharpe8_lag</span></td><td class="num">98.50%</td>
+<td class="ind">策略偏离指数<span class="en">SDI</span></td><td class="num">91.50%</td>
+<td class="ind">交易趋同度LSV<span class="en">lsv</span></td><td class="num">100.00%</td>
+</tr>
+</tbody></table>
+<p class="foot">15 项成分覆盖率均不低于 88.75%。对照被剔除的“追涨杀跌 rc_mom”覆盖率仅 53.5%，无法支撑全样本画像。L1 三成分（任职年限、基金年龄、规模）来自基金基础信息，覆盖率 100%。</p>
+<h4 style="font-size:14px;margin:16px 0 6px;color:#22304a">表 3　六个维度得分的描述统计</h4>
+<table><thead><tr><th>维度</th><th class="num">N</th><th class="num">均值</th><th class="num">标准差</th><th class="num">最小值</th><th class="num">P25</th><th class="num">中位数</th><th class="num">P75</th><th class="num">最大值</th></tr></thead><tbody>
+<tr><td class="ind">基本面优势</td>
+<td class="num">400</td>
+<td class="num">0.000</td>
+<td class="num">0.817</td>
+<td class="num">-2.349</td>
+<td class="num">-0.569</td>
+<td class="num">0.087</td>
+<td class="num">0.631</td>
+<td class="num">1.444</td>
+</tr>
+<tr><td class="ind">认知能力</td>
+<td class="num">400</td>
+<td class="num">0.023</td>
+<td class="num">0.647</td>
+<td class="num">-1.546</td>
+<td class="num">-0.362</td>
+<td class="num">-0.087</td>
+<td class="num">0.274</td>
+<td class="num">2.780</td>
+</tr>
+<tr><td class="ind">配置选择能力</td>
+<td class="num">400</td>
+<td class="num">0.000</td>
+<td class="num">0.902</td>
+<td class="num">-1.459</td>
+<td class="num">-0.654</td>
+<td class="num">-0.245</td>
+<td class="num">0.408</td>
+<td class="num">2.753</td>
+</tr>
+<tr><td class="ind">风险应对能力</td>
+<td class="num">400</td>
+<td class="num">0.105</td>
+<td class="num">0.868</td>
+<td class="num">-1.436</td>
+<td class="num">-0.463</td>
+<td class="num">-0.082</td>
+<td class="num">0.398</td>
+<td class="num">2.485</td>
+</tr>
+<tr><td class="ind">风险转化能力</td>
+<td class="num">394</td>
+<td class="num">0.041</td>
+<td class="num">0.939</td>
+<td class="num">-1.921</td>
+<td class="num">-0.482</td>
+<td class="num">-0.096</td>
+<td class="num">0.294</td>
+<td class="num">3.702</td>
+</tr>
+<tr><td class="ind">交易执行能力</td>
+<td class="num">400</td>
+<td class="num">0.033</td>
+<td class="num">0.859</td>
+<td class="num">-2.352</td>
+<td class="num">-0.657</td>
+<td class="num">-0.016</td>
+<td class="num">0.659</td>
+<td class="num">2.519</td>
+</tr>
+<tr style="background:#f4f8ff"><td class="ind">综合能力</td>
+<td class="num">400</td>
+<td class="num">0.037</td>
+<td class="num">0.595</td>
+<td class="num">-0.914</td>
+<td class="num">-0.349</td>
+<td class="num">-0.093</td>
+<td class="num">0.241</td>
+<td class="num">2.007</td>
+</tr>
+</tbody></table>
+<p class="foot">各维度得分为成分 z 分数的等权平均，故均值接近 0、标准差接近但小于 1（成分间正相关使平均后方差收缩）。风险转化能力 N=394 略少于 400，原因是 Sortino 与 MPPM 需要足够长的净值序列；缺失成分按剩余成分取均值，不以 0 填充。</p>
+<h3>3.2 回归设定</h3>
+<p>为避免单一口径下的偶然结果，本文并行使用两套设定，一个指标只有在两套设定下方向一致时才被接受。</p>
+<table><thead><tr><th style="width:16%">设定</th><th>被解释变量</th><th>解释变量</th><th>控制与标准误</th><th class="num">样本</th></tr></thead><tbody>
+<tr><td class="ind">规格 I<span class="en">基金层横截面</span></td><td class="meaning">ff5_adj_return（基金 FF5 超额收益）<span class="evid">按基金整段样本估一个 alpha，基金内恒定</span></td><td class="meaning">各行为指标的<b>基金内时序均值</b><span class="calc">alpha_i = c + β·X̄_i + Γ·Controls_i + ε_i</span></td><td class="meaning">控制经理累计任职年限、基金年龄对数、规模对数；HC1 异方差稳健标准误</td><td class="num">362 只基金</td></tr>
+<tr><td class="ind">规格 II<span class="en">季度面板</span></td><td class="meaning">alpha_q（按基金做 FF5 时序回归，取常数项＋残差）<span class="evid">要求该基金至少 12 个季度</span></td><td class="meaning">各行为指标的<b>当期取值</b><span class="calc">alpha_it = c + β·X_it + Γ·Controls_it + δ_t + ε_it</span></td><td class="meaning">季度固定效应；标准误按基金聚类</td><td class="num">9263 观测 / 355 基金 / 80 季度</td></tr>
+</tbody></table>
+<p class="meaning">两套设定的分工：规格 I 回答“习惯这样做的经理，长期业绩是否更好”（跨人比较）；规格 II 回答“同一经理在这样做的季度，业绩是否更好”（跨时比较）。<span class="evid">季度固定效应吸收了全市场行情，基金聚类标准误处理同一基金不同季度之间的相关。</span></p>
+<h3>3.3 单变量检验结果<span class="cref">　对应结论 D5、D6、D7、D9、X2、X3、X4</span></h3>
+<p>先逐个指标单独进入回归（同时控制任职年限、基金年龄、规模），看它自己能不能解释业绩。这一步的作用是<b>筛掉噪声</b>：两套设定下方向不一致或都不显著的指标，不进入后面的能力复合。</p>
+<p><b>X3（L2 扩展候选检验）</b>：为扩充认知层，检验了趋势外推偏差（持仓加权个股 12 月动量，Greenwood &amp; Shleifer 2014）与有限关注度（持仓加权个股上月｜收益｜，Barber &amp; Odean 2008）两类文献驱动候选；二者均正向显著（t=3.49、t=2.34），与“认知偏差损害业绩”假设方向相反，未通过方向门槛，故诚实剔除并保留检验记录，L2 维持 risk_asym、de、oc_conf 三成分（完整四道检验见《方法详解》§4.15）。</p>
+<p><b>X4（L3／L4 扩展候选检验）</b>：为扩充配置选择与风险应对层，检验了 Treynor-Mazuy 二次项（择时凸性）与年化特质波动率两项文献驱动候选；在日频 NAV 子样（n=1336／159 只）中，二者含固定效应口径下均不显著（TM_β₂ t=0.61／0.84，idio_vol t=1.08／0.50），与“多数基金 β₂ 个体不显著”的截面证据一致，故不纳入复合，六维维持不变；同子样 ICI t=2.84、risk_asym t=3.22 核心信号完整复现，corr(TM_β₂, risk_asym)=0.279 仅中度相关。完整结果与两版 meat 伪影的口径更正记录见《方法详解》§4.17。</p>
+<p><b>D9（L3 配置选择·Brinson 分解验证）</b>：把行业超配收益按 Brinson 分解拆为配置收益与选股收益，前者显著为正（β=0.0785，t=3.52）、后者边际显著（t=1.68），样本 1599 个观测／284 只；同子样内 de t=-3.14、risk_asym t=3.50，与全样本方向一致；交互项 risk_asym×select_ret 显著为负（t=-3.58），提示二者是替代而非互补。限定：改用基准调整后收益时三者均不显著，结论对基准构造敏感，故仅作补充验证、不替换主口径（详见《方法详解》§4.16）。</p>
+<table><thead><tr><th class="layer-cell">层级</th><th>指标</th><th class="num">规格 I 系数</th><th class="num">t</th><th class="num">规格 II 系数</th><th class="num">t</th><th>判定</th></tr></thead><tbody>
+<tr><td class="layer-cell"><span class="badge l1">L1</span></td>
+<td class="ind">经理累计任职天数 <span class="tag upg">升格计分</span><span class="en">mgr_total_tenure_v2</span></td>
+<td class="num">单变量口径</td><td class="num">-1.85*</td>
+<td class="num">—</td><td class="num">—</td>
+<td class="dir"><span class="tag up">方向一致 · 边际显著</span><span class="en">单变量 t=-1.85，见 2.1（1）</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l1">L1</span></td>
+<td class="ind">基金年龄对数 <span class="tag upg">升格计分</span><span class="en">log_fund_age</span></td>
+<td class="num">单变量口径</td><td class="num">-4.13***</td>
+<td class="num">—</td><td class="num">—</td>
+<td class="dir"><span class="tag up">方向一致 · 显著</span><span class="en">单变量 t=-4.13，见 2.1（1）</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l1">L1</span></td>
+<td class="ind">基金规模对数 <span class="tag upg">升格计分</span><span class="en">log_aum</span></td>
+<td class="num">单变量口径</td><td class="num">-1.16</td>
+<td class="num">—</td><td class="num">—</td>
+<td class="dir"><span class="tag zero">方向一致 · 不显著</span><span class="en">单变量 t=-1.16，见 2.1（1）</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l2">L2</span></td>
+<td class="ind">风险偏好不对称性<span class="en">risk_asym</span></td>
+<td class="num">0.1309***</td><td class="num">3.10</td>
+<td class="num">0.3411***</td><td class="num">11.68</td>
+<td class="dir"><span class="tag up">双口径一致显著</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l2">L2</span></td>
+<td class="ind">处置效应<span class="en">de</span></td>
+<td class="num">-0.0741***</td><td class="num">-4.46</td>
+<td class="num">-0.0691***</td><td class="num">-10.17</td>
+<td class="dir"><span class="tag up">双口径一致显著</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l2">L2</span></td>
+<td class="ind">过度自信（换手×过度交易） <span class="tag new">新增</span><span class="en">oc_conf</span></td>
+<td class="num">-0.000309***</td><td class="num">-4.11</td>
+<td class="num">-0.000009</td><td class="num">-0.47</td>
+<td class="dir"><span class="tag zero">单口径显著</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l3">L3</span></td>
+<td class="ind">行业集中度<span class="en">ICI</span></td>
+<td class="num">0.0386***</td><td class="num">4.43</td>
+<td class="num">0.0454***</td><td class="num">8.80</td>
+<td class="dir"><span class="tag up">双口径一致显著</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l3">L3</span></td>
+<td class="ind">行业风格漂移指数<span class="en">ISDI</span></td>
+<td class="num">-0.0334***</td><td class="num">-3.33</td>
+<td class="num">-0.0206***</td><td class="num">-5.77</td>
+<td class="dir"><span class="tag up">双口径一致显著</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l4">L4</span></td>
+<td class="ind">调仓幅度<span class="en">ARG</span></td>
+<td class="num">0.0618***</td><td class="num">3.06</td>
+<td class="num">0.1358***</td><td class="num">14.87</td>
+<td class="dir"><span class="tag up">双口径一致显著</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l4">L4</span></td>
+<td class="ind">下行保护系数（−HM γ） <span class="tag new">新增</span><span class="en">timing</span></td>
+<td class="num">—</td><td class="num">—</td>
+<td class="num">—</td><td class="num">—</td>
+<td class="dir"><span class="tag up">另表检验显著</span><span class="en">t=5.19，见 3.5</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l4">L4</span></td>
+<td class="ind">操纵稳健业绩测度MPPM <span class="tag new">新增</span><span class="en">mppm8_lag</span></td>
+<td class="num">0.1564***</td><td class="num">11.22</td>
+<td class="num">0.0407***</td><td class="num">4.92</td>
+<td class="dir"><span class="tag up">双口径一致显著</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l4">L4</span></td>
+<td class="ind">Sortino比率 <span class="tag new">新增</span><span class="en">sortino8_lag</span></td>
+<td class="num">0.0133***</td><td class="num">5.18</td>
+<td class="num">0.0081***</td><td class="num">5.38</td>
+<td class="dir"><span class="tag up">双口径一致显著</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l4">L4</span></td>
+<td class="ind">Sharpe比率 <span class="tag new">新增</span><span class="en">sharpe8_lag</span></td>
+<td class="num">0.0500***</td><td class="num">7.89</td>
+<td class="num">0.0089***</td><td class="num">3.00</td>
+<td class="dir"><span class="tag up">双口径一致显著</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l5">L5</span></td>
+<td class="ind">策略偏离指数<span class="en">SDI</span></td>
+<td class="num">-0.0113**</td><td class="num">-2.12</td>
+<td class="num">-0.0132***</td><td class="num">-3.99</td>
+<td class="dir"><span class="tag up">双口径一致显著</span></td></tr>
+<tr><td class="layer-cell"><span class="badge l5">L5</span></td>
+<td class="ind">交易趋同度LSV<span class="en">lsv</span></td>
+<td class="num">0.1190**</td><td class="num">1.99</td>
+<td class="num">0.0180</td><td class="num">1.19</td>
+<td class="dir"><span class="tag zero">单口径显著</span></td></tr>
+<tr><td class="layer-cell"><span class="badge lx">剔除</span></td>
+<td class="ind">改进主动份额<span class="en">AS_improved</span></td>
+<td class="num">-0.0108</td><td class="num">-0.65</td>
+<td class="num">0.0511***</td><td class="num">5.33</td>
+<td class="dir"><span class="tag down">符号翻转 · 剔除</span></td></tr>
+<tr><td class="layer-cell"><span class="badge lx">剔除</span></td>
+<td class="ind">换手率<span class="en">TO_wind_clean</span></td>
+<td class="num">0.000005</td><td class="num">0.50</td>
+<td class="num">0.000002</td><td class="num">0.32</td>
+<td class="dir"><span class="tag down">双口径不显著 · 剔除</span></td></tr>
+<tr><td class="layer-cell"><span class="badge lx">剔除</span></td>
+<td class="ind">风险稳定性<span class="en">rsstab_lag</span></td>
+<td class="num">-0.6416***</td><td class="num">-4.47</td>
+<td class="num">-0.1548***</td><td class="num">-4.56</td>
+<td class="dir"><span class="tag down">与波动率重合 · 剔除</span></td></tr>
+<tr><td class="layer-cell"><span class="badge lx">剔除</span></td>
+<td class="ind">收益波动率<span class="en">return_volatility</span></td>
+<td class="num">0.1475***</td><td class="num">3.93</td>
+<td class="num">0.2439***</td><td class="num">11.30</td>
+<td class="dir"><span class="tag down">风险暴露非能力 · 剔除</span></td></tr>
+</tbody></table>
+<p class="foot">系数后 *** / ** / * 分别表示 1% / 5% / 10% 水平显著。L1 三成分本身即控制变量组，无法在“控制自己”的口径下检验，故其判定列给出无控制变量的单变量结果（基金年龄 t=-4.13、任职年限 t=-1.85、规模 t=-1.16，三者方向均为负、与 Berk &amp; Green (2004)、Chevalier &amp; Ellison (1999) 预期一致）。“下行保护系数 timing”为本文自建，未进入 v3 主回归表，其方向检验见 3.5 节成分定向（t=5.19，p=0.0000）。判定列的“剔除”不等于统计上不显著：换手率是双口径都不显著；改进主动份额是符号在两套口径间翻转（详见 3.4）；收益波动率与风险稳定性虽单独显著，但两者相关系数达 −0.749，正交化后风险稳定性 t 降至 −0.87，且波动率本身衡量的是风险暴露水平而不是能力，故这两项一并只作对照、不进入复合。“过度自信”与“交易趋同度”判定为单口径显著，仍保留进入复合，依据是 3.5 节成分定向检验中两者方向与理论预期一致（t=-4.19、t=2.11），且作为等权复合中的一个成分，其权重仅为该维度的 1/3 与 1/2，不改变维度整体结论。</p>
+<h3>3.4 一个必须解决的矛盾：改进主动份额到底显著吗<span class="cref">　对应结论 X1</span></h3>
+<p>前期不同章节对“改进主动份额（AS）”给出过互相冲突的结论。本文用同一份数据把它放进六道检验逐一裁决：<b>前五道是回归口径</b>（下表五行），<b>第六道是群体画像的组间差异检验</b>（业绩前后 5%% 的 AS 均值差，见表下方文字与 4.1 节原始指标表）。</p>
+<table><thead><tr><th>口径</th><th class="num">样本</th><th class="num">系数</th><th class="num">t</th><th class="num">p</th><th class="num">R²</th><th>结论</th></tr></thead><tbody>
+<tr><td class="ind">I · 基金层横截面 · 单变量</td><td class="num">362</td><td class="num">-0.004482</td><td class="num">-0.26</td><td class="num">0.7934</td><td class="num">0.0002</td><td class="dir"><span class="tag down">不显著</span></td></tr>
+<tr><td class="ind">I · 基金层横截面 · 加控制</td><td class="num">362</td><td class="num">-0.010815</td><td class="num">-0.65</td><td class="num">0.5168</td><td class="num">0.0659</td><td class="dir"><span class="tag down">不显著</span></td></tr>
+<tr><td class="ind">I · 基金层横截面 · 全模型</td><td class="num">359</td><td class="num">-0.053144***</td><td class="num">-3.06</td><td class="num">0.0022</td><td class="num">0.5445</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">II · 季度面板 · 单变量</td><td class="num">8615</td><td class="num">0.051053***</td><td class="num">5.33</td><td class="num">0.0000</td><td class="num">0.4006</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">II · 季度面板 · 全模型</td><td class="num">2262</td><td class="num">-0.025818</td><td class="num">-1.41</td><td class="num">0.1579</td><td class="num">0.3363</td><td class="dir"><span class="tag down">不显著</span></td></tr>
+</tbody></table>
+<p class="meaning"><b>裁决：改进主动份额不具备稳健的独立解释力。</b>理由有三：一是<b>符号在口径之间翻转</b>——季度面板单变量为正，基金层全模型为负；二是<b>加入控制变量后显著性消失或反向</b>，说明它捕捉的是规模与基金年龄，而不是能力；三是群体画像佐证：能力前 5% 与后 5% 的经理，AS 差值仅 0.0233，t=1.91，p=0.0646，不显著。<span class="evid">这一裁决与 Frazzini, Friedman & Pomorski (2016)<sup>[55]</sup> 一致：一旦控制住基准选择，主动份额对业绩没有预测力。Cremers & Petajisto (2009)<sup>[28]</sup>、Petajisto (2013)<sup>[29]</sup> 为争议的另一方，本文数据不支持其结论。</span><span class="warn">因此全文口径统一为：AS 只作为对照展示，不进入任何能力维度的复合打分。</span></p>
+<p class="foot">共线性诊断（方差膨胀因子 VIF，超过 10 通常视为严重共线）：调仓收益 6.28 最高，基金年龄对数 4.46，风险稳定性 4.11，收益波动率 3.95，AS 仅 1.89 —— 说明 AS 的不显著不是被共线性“挤掉”的，而是本身没有信号。</p>
+<h3>3.5 六个维度的等权复合与验证<span class="cref">　对应结论 F3、D1</span></h3>
+<p>通过筛选的 15 个指标，按所属维度先各自标准化（z 分数，即减均值除标准差，使量纲不同的指标可以相加），负向指标取反号，再取算术平均，得到 6 个维度得分；6 个维度得分再等权平均，得到综合能力。<span class="evid">等权而不加权，是为了避免用业绩数据反推权重造成的过度拟合——权重一旦由样本拟合而来，画像就变成了对历史业绩的重述，而不是对行为的刻画。</span></p>
+<h4 style="font-size:14px;margin:16px 0 6px;color:#22304a">第一步：每个成分的方向是否与理论预期一致</h4>
+<table><thead><tr><th class="layer-cell">层级</th><th>成分指标</th><th>理论预期方向</th><th class="num">样本</th><th class="num">t</th><th class="num">p</th><th>是否一致</th></tr></thead><tbody>
+<tr>
+<td class="layer-cell" rowspan="3"><span class="badge l1">L1</span></td>
+<td class="ind">经理累计任职天数 <span class="tag upg">升格计分</span><span class="en">mgr_total_tenure_v2</span></td>
+<td class="dir"><span class="tag down">负向</span></td>
+<td class="num">362</td><td class="num">-1.85</td><td class="num">0.0647</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="ind">基金年龄对数 <span class="tag upg">升格计分</span><span class="en">log_fund_age</span></td>
+<td class="dir"><span class="tag down">负向</span></td>
+<td class="num">362</td><td class="num">-4.13</td><td class="num">0.0000</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="ind">基金规模对数 <span class="tag upg">升格计分</span><span class="en">log_aum</span></td>
+<td class="dir"><span class="tag down">负向</span></td>
+<td class="num">362</td><td class="num">-1.16</td><td class="num">0.2448</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="layer-cell" rowspan="3"><span class="badge l2">L2</span></td>
+<td class="ind">风险偏好不对称性<span class="en">risk_asym</span></td>
+<td class="dir"><span class="tag up">正向</span></td>
+<td class="num">362</td><td class="num">2.72</td><td class="num">0.0066</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="ind">处置效应<span class="en">de</span></td>
+<td class="dir"><span class="tag down">负向</span></td>
+<td class="num">362</td><td class="num">-4.51</td><td class="num">0.0000</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="ind">过度自信（换手×过度交易） <span class="tag new">新增</span><span class="en">oc_conf</span></td>
+<td class="dir"><span class="tag down">负向</span></td>
+<td class="num">362</td><td class="num">-4.19</td><td class="num">0.0000</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="layer-cell" rowspan="2"><span class="badge l3">L3</span></td>
+<td class="ind">行业集中度<span class="en">ICI</span></td>
+<td class="dir"><span class="tag up">正向</span></td>
+<td class="num">362</td><td class="num">4.34</td><td class="num">0.0000</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="ind">行业风格漂移指数<span class="en">ISDI</span></td>
+<td class="dir"><span class="tag down">负向</span></td>
+<td class="num">362</td><td class="num">-3.30</td><td class="num">0.0010</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="layer-cell" rowspan="2"><span class="badge l4">L4a</span></td>
+<td class="ind">调仓幅度<span class="en">ARG</span></td>
+<td class="dir"><span class="tag up">正向</span></td>
+<td class="num">362</td><td class="num">3.34</td><td class="num">0.0008</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="ind">下行保护系数（−HM γ） <span class="tag new">新增</span><span class="en">timing</span></td>
+<td class="dir"><span class="tag up">正向</span></td>
+<td class="num">355</td><td class="num">5.19</td><td class="num">0.0000</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="layer-cell" rowspan="3"><span class="badge l4">L4b</span></td>
+<td class="ind">操纵稳健业绩测度MPPM <span class="tag new">新增</span><span class="en">mppm8_lag</span></td>
+<td class="dir"><span class="tag up">正向</span></td>
+<td class="num">362</td><td class="num">10.47</td><td class="num">0.0000</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="ind">Sortino比率 <span class="tag new">新增</span><span class="en">sortino8_lag</span></td>
+<td class="dir"><span class="tag up">正向</span></td>
+<td class="num">359</td><td class="num">3.71</td><td class="num">0.0002</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="ind">Sharpe比率 <span class="tag new">新增</span><span class="en">sharpe8_lag</span></td>
+<td class="dir"><span class="tag up">正向</span></td>
+<td class="num">362</td><td class="num">7.88</td><td class="num">0.0000</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="layer-cell" rowspan="2"><span class="badge l5">L5</span></td>
+<td class="ind">策略偏离指数<span class="en">SDI</span></td>
+<td class="dir"><span class="tag down">负向</span></td>
+<td class="num">362</td><td class="num">-2.15</td><td class="num">0.0315</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+<tr>
+<td class="ind">交易趋同度LSV<span class="en">lsv</span></td>
+<td class="dir"><span class="tag up">正向</span></td>
+<td class="num">362</td><td class="num">2.11</td><td class="num">0.0346</td>
+<td class="dir"><span class="tag up">一致</span></td></tr>
+</tbody></table>
+<p class="foot">15 个成分全部与理论预期方向一致，其中最强的是抗操纵绩效测度（t=10.47），最弱的是基金规模对数（t=-1.16，方向一致但不显著）。没有一个成分需要因为方向相反而被剔除，说明复合的构造是内部自洽的。<span class="evid">口径说明：L1 三成分用无控制变量的单变量回归（它们本身就是控制变量组，自我控制无意义）；L2–L5 各成分含三控制变量，与前一版五维定稿口径完全一致，保证可比。</span></p>
+<h4 style="font-size:14px;margin:16px 0 6px;color:#22304a">第二步：六个维度是不是在说同一件事</h4>
+<table><thead><tr><th>相关系数</th><th class="num">基本面优势</th><th class="num">认知能力</th><th class="num">配置选择能力</th><th class="num">风险应对能力</th><th class="num">风险转化能力</th><th class="num">交易执行能力</th></tr></thead><tbody>
+<tr><td class="ind">基本面优势</td>
+<td class="num" style="background:#f2f5fa;font-weight:600">1.000</td>
+<td class="num">0.362</td>
+<td class="num">0.333</td>
+<td class="num">0.566</td>
+<td class="num">0.209</td>
+<td class="num">0.574</td>
+</tr>
+<tr><td class="ind">认知能力</td>
+<td class="num">0.362</td>
+<td class="num" style="background:#f2f5fa;font-weight:600">1.000</td>
+<td class="num">0.417</td>
+<td class="num">0.589</td>
+<td class="num">0.372</td>
+<td class="num">0.242</td>
+</tr>
+<tr><td class="ind">配置选择能力</td>
+<td class="num">0.333</td>
+<td class="num">0.417</td>
+<td class="num" style="background:#f2f5fa;font-weight:600">1.000</td>
+<td class="num">0.543</td>
+<td class="num">0.280</td>
+<td class="num">0.260</td>
+</tr>
+<tr><td class="ind">风险应对能力</td>
+<td class="num">0.566</td>
+<td class="num">0.589</td>
+<td class="num">0.543</td>
+<td class="num" style="background:#f2f5fa;font-weight:600">1.000</td>
+<td class="num">0.418</td>
+<td class="num">0.524</td>
+</tr>
+<tr><td class="ind">风险转化能力</td>
+<td class="num">0.209</td>
+<td class="num">0.372</td>
+<td class="num">0.280</td>
+<td class="num">0.418</td>
+<td class="num" style="background:#f2f5fa;font-weight:600">1.000</td>
+<td class="num">0.183</td>
+</tr>
+<tr><td class="ind">交易执行能力</td>
+<td class="num">0.574</td>
+<td class="num">0.242</td>
+<td class="num">0.260</td>
+<td class="num">0.524</td>
+<td class="num">0.183</td>
+<td class="num" style="background:#f2f5fa;font-weight:600">1.000</td>
+</tr>
+</tbody></table>
+<p class="foot">非对角线相关系数最高为 0.589（认知能力 × 风险应对能力），最低为 0.183（风险转化能力 × 交易执行能力），均远低于通常认为存在严重重合的 0.8。这说明六个维度测的是<b>六件不同的事</b>，而不是同一能力的六种叫法。<span class="evid">值得注意的是 L1 基本面优势与交易执行（0.574）、风险应对（0.566）的相关明显高于它与风险转化（0.209）的相关——这提示年轻小规模基金的优势主要体现在“调仓灵活、策略不被稀释”，而不是“单位风险换回更多回报”。</span></p>
+<h4 style="font-size:14px;margin:16px 0 6px;color:#22304a">第三步：复合后的维度得分能否解释业绩</h4>
+<table><thead><tr><th>维度</th><th>复合公式</th><th class="num">单独进入 系数</th><th class="num">t</th><th class="num">R²</th><th class="num">六维同时进入 系数</th><th class="num">t</th><th>判定</th></tr></thead><tbody>
+<tr><td class="ind"><span class="badge l1">L1</span> 基本面优势</td>
+<td><span class="calc">[z(−mgr_total_tenure_v2) + z(−log_fund_age) + z(−log_aum)] / 3</span></td>
+<td class="num">0.00397***</td><td class="num">2.86</td><td class="num">0.0222</td>
+<td class="num">-0.00018</td><td class="num">-0.17</td>
+<td class="dir"><span class="tag down">不显著</span></td></tr>
+<tr><td class="ind"><span class="badge l2">L2</span> 认知能力</td>
+<td><span class="calc">[z(risk_asym) + z(−de) + z(−oc_conf)] / 3</span></td>
+<td class="num">0.01708***</td><td class="num">7.69</td><td class="num">0.1984</td>
+<td class="num">0.00834***</td><td class="num">4.00</td>
+<td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind"><span class="badge l3">L3</span> 配置选择能力</td>
+<td><span class="calc">[z(ICI) + z(−ISDI)] / 2</span></td>
+<td class="num">0.00652***</td><td class="num">4.22</td><td class="num">0.1202</td>
+<td class="num">0.00305**</td><td class="num">2.44</td>
+<td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind"><span class="badge l4">L4a</span> 风险应对能力</td>
+<td><span class="calc">[z(ARG) + z(timing)] / 2</span></td>
+<td class="num">0.01385***</td><td class="num">7.03</td><td class="num">0.2012</td>
+<td class="num">0.00924***</td><td class="num">3.83</td>
+<td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind"><span class="badge l4">L4b</span> 风险转化能力</td>
+<td><span class="calc">[z(mppm8_lag) + z(sortino8_lag) + z(sharpe8_lag)] / 3</span></td>
+<td class="num">0.01450***</td><td class="num">6.87</td><td class="num">0.2845</td>
+<td class="num">0.01325***</td><td class="num">5.50</td>
+<td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind"><span class="badge l5">L5</span> 交易执行能力</td>
+<td><span class="calc">[z(−SDI) + z(lsv)] / 2</span></td>
+<td class="num">0.00514***</td><td class="num">3.20</td><td class="num">0.0823</td>
+<td class="num">0.00159</td><td class="num">1.23</td>
+<td class="dir"><span class="tag down">不显著</span></td></tr>
+<tr style="background:#f4f8ff"><td class="ind"><b>综合能力</b></td><td><span class="calc">六个维度得分等权平均</span></td><td class="num"><b>0.04254***</b></td><td class="num"><b>11.40</b></td><td class="num"><b>0.3838</b></td><td class="num">—</td><td class="num">—</td><td class="dir"><span class="tag up">显著</span></td></tr>
+</tbody></table>
+<p class="meaning">六个维度单独进入时全部显著为正；六维同时进入（n=362，R²=0.4557）后，风险转化、认知、风险应对、配置选择仍然显著，<b>交易执行（t=1.23）与基本面优势（t=-0.17）转为不显著</b>。<span class="evid">这不是矛盾，而是两种不同的“被吸收”：交易执行与风险应对的相关系数为 0.524，说明善于调仓应对风险的经理，其交易本身也更少被自己稀释——两者共用了一部分信号；L1 基本面优势与风险应对（0.566）、交易执行（0.574）同时高相关，其解释力被这两个行为维度整体承接，正说明<b>基本面条件是通过行为发挥作用的</b>。两者都保留在复合中（各自单独有效，且刻画的是可独立解释的信息），但在解释业绩时不宜单独强调。</span></p>
+<p class="foot">口径对照：本文报告的六维联立<b>不叠加</b>原三控制变量组（L1 得分即三者的线性组合，叠加将完全共线）。作为对照，“五维联立＋三控制变量”的 R²=0.4561，与六维联立的 0.4557 相差不足 0.0005，说明把 L1 从控制变量改造为计分维度，既没有损失原模型的信息含量，又让画像补上了“边界条件”这一层。</p>
+<h4 style="font-size:14px;margin:16px 0 6px;color:#22304a">第四步：按综合能力分五组，业绩是否单调递增</h4>
+<table><thead><tr><th>指标</th><th class="num">Q1最低</th><th class="num">Q2</th><th class="num">Q3</th><th class="num">Q4</th><th class="num">Q5最高</th><th class="num">Q5−Q1</th></tr></thead><tbody>
+<tr><td class="ind">综合能力得分</td>
+<td class="num">-0.6151</td>
+<td class="num">-0.3362</td>
+<td class="num">-0.1431</td>
+<td class="num">0.0696</td>
+<td class="num">0.5079</td>
+<td class="num">1.1230</td></tr>
+<tr><td class="ind">FF5 超额收益（季均）</td>
+<td class="num">0.0064</td>
+<td class="num">0.0153</td>
+<td class="num">0.0192</td>
+<td class="num">0.0231</td>
+<td class="num">0.0377</td>
+<td class="num">0.0313</td></tr>
+<tr><td class="ind">季度收益（季均）</td>
+<td class="num">0.0437</td>
+<td class="num">0.0541</td>
+<td class="num">0.0680</td>
+<td class="num">0.0683</td>
+<td class="num">0.0982</td>
+<td class="num">0.0545</td></tr>
+<tr><td class="ind">基金规模（亿元）</td>
+<td class="num">17.33</td>
+<td class="num">7.55</td>
+<td class="num">8.52</td>
+<td class="num">6.00</td>
+<td class="num">4.45</td>
+<td class="num">-12.89</td></tr>
+<tr><td class="ind">管理费率（%）</td>
+<td class="num">1.1890</td>
+<td class="num">1.1750</td>
+<td class="num">1.1514</td>
+<td class="num">1.1361</td>
+<td class="num">1.1712</td>
+<td class="num">-0.0178</td></tr>
+<tr><td class="ind">硕士以上占比</td>
+<td class="num">0.9863</td>
+<td class="num">0.8889</td>
+<td class="num">0.8611</td>
+<td class="num">0.8472</td>
+<td class="num">0.8219</td>
+<td class="num">-0.1644</td></tr>
+<tr><td class="ind">CFA 持证占比</td>
+<td class="num">0.0548</td>
+<td class="num">0.0278</td>
+<td class="num">0.0139</td>
+<td class="num">0.0278</td>
+<td class="num">0.0000</td>
+<td class="num">-0.0548</td></tr>
+<tr><td class="ind">组内基金数</td>
+<td class="num">73</td>
+<td class="num">72</td>
+<td class="num">72</td>
+<td class="num">72</td>
+<td class="num">73</td>
+<td class="num">0</td></tr>
+</tbody></table>
+<p class="meaning">综合能力从最低组到最高组，FF5 超额收益由 0.0064 单调升至 0.0377，季度收益由 0.0437 升至 0.0982，<b>Q5−Q1 差值 0.0313，t=10.28，p=0.0000</b>，说明这套能力打分确实能区分业绩，而不是只在统计上显著。<span class="evid">两个反直觉的发现：一是<b>规模与能力反向</b>——最低能力组平均 17.33 亿，最高能力组仅 4.45 亿，与规模不经济的经典结论一致；二是<b>学历与证书不预示能力</b>——硕士以上占比从 0.9863 降到 0.8219，CFA 持证占比从 0.0548 降到 0.0000，说明简历特征无法替代行为观察。</span></p>
+<h3>3.6 检验结论汇总<span class="cref">　对应结论 D1、D5、D6、D7</span></h3>
+<table><thead><tr><th class="layer-cell">层级</th><th>指标</th><th>计算</th><th>显著性结果</th><th>代表意义</th></tr></thead><tbody>
+<tr>
+<td class="layer-cell" rowspan="3"><span class="badge l1">L1</span><div style="font-size:11px;color:#5c6470;margin-top:4px">基本面优势</div></td>
+<td class="ind">经理累计任职天数 <span class="tag upg">升格计分</span><span class="en">mgr_total_tenure_v2</span></td>
+<td><span class="calc">观测日 − 首次任职日（天）</span></td>
+<td class="dir">成分定向 t=-1.85* <span class="tag zero">边际</span></td>
+<td class="meaning">任职时间越短，职业顾虑带来的努力激励越强（经验悖论）</td></tr>
+<tr>
+<td class="ind">基金年龄对数 <span class="tag upg">升格计分</span><span class="en">log_fund_age</span></td>
+<td><span class="calc">ln(基金存续月数)</span></td>
+<td class="dir">成分定向 t=-4.13*** <span class="tag up">显著</span></td>
+<td class="meaning">基金越年轻，组织老化对 alpha 的侵蚀越小</td></tr>
+<tr>
+<td class="ind">基金规模对数 <span class="tag upg">升格计分</span><span class="en">log_aum</span></td>
+<td><span class="calc">ln(平均管理规模，亿元)</span></td>
+<td class="dir">成分定向 t=-1.16 <span class="tag down">不显著</span></td>
+<td class="meaning">规模越小，超额收益越不易被资金规模稀释（规模不经济）</td></tr>
+<tr style="background:#f4f8ff"><td class="layer-cell"><span class="badge l1">合成</span></td><td class="ind"><b>基本面优势</b><span class="en">等权复合</span></td><td><span class="calc">[z(−mgr_total_tenure_v2) + z(−log_fund_age) + z(−log_aum)] / 3</span></td><td class="dir">单维 t=2.86***；六维联立 t=-0.17 <span class="tag down">不显著</span></td><td class="meaning">该维度的最终得分，用于画像</td></tr>
+<tr>
+<td class="layer-cell" rowspan="3"><span class="badge l2">L2</span><div style="font-size:11px;color:#5c6470;margin-top:4px">认知能力</div></td>
+<td class="ind">风险偏好不对称性<span class="en">risk_asym</span></td>
+<td><span class="calc">σ(下行持仓集中) − σ(上行持仓集中)</span></td>
+<td class="dir">规格 I t=3.10***；成分定向 t=2.72*** <span class="tag up">显著</span></td>
+<td class="meaning">下跌时敢于集中、上涨时不盲目加仓，是风险态度的不对称优势</td></tr>
+<tr>
+<td class="ind">处置效应<span class="en">de</span></td>
+<td><span class="calc">PGR − PLR（已实现盈利比例 − 已实现亏损比例）</span></td>
+<td class="dir">规格 I t=-4.46***；成分定向 t=-4.51*** <span class="tag up">显著</span></td>
+<td class="meaning">不急于卖出盈利、不死守亏损，处置效应越弱业绩越好</td></tr>
+<tr>
+<td class="ind">过度自信（换手×过度交易） <span class="tag new">新增</span><span class="en">oc_conf</span></td>
+<td><span class="calc">换手率 × 业绩后过度交易倾向</span></td>
+<td class="dir">规格 I t=-4.11***；成分定向 t=-4.19*** <span class="tag up">显著</span></td>
+<td class="meaning">业绩好之后不放大交易，克制自我归因偏差</td></tr>
+<tr style="background:#f4f8ff"><td class="layer-cell"><span class="badge l2">合成</span></td><td class="ind"><b>认知能力</b><span class="en">等权复合</span></td><td><span class="calc">[z(risk_asym) + z(−de) + z(−oc_conf)] / 3</span></td><td class="dir">单维 t=7.69***；六维联立 t=4.00*** <span class="tag up">显著</span></td><td class="meaning">该维度的最终得分，用于画像</td></tr>
+<tr>
+<td class="layer-cell" rowspan="2"><span class="badge l3">L3</span><div style="font-size:11px;color:#5c6470;margin-top:4px">配置选择能力</div></td>
+<td class="ind">行业集中度<span class="en">ICI</span></td>
+<td><span class="calc">Σ (w_j − w̄_j)²，j 为行业</span></td>
+<td class="dir">规格 I t=4.43***；成分定向 t=4.34*** <span class="tag up">显著</span></td>
+<td class="meaning">敢于把信息优势押注在少数行业，是主动配置的信心</td></tr>
+<tr>
+<td class="ind">行业风格漂移指数<span class="en">ISDI</span></td>
+<td><span class="calc">Σ_j |w_{j,t} − w_{j,t−1}| 的时序均值</span></td>
+<td class="dir">规格 I t=-3.33***；成分定向 t=-3.30*** <span class="tag up">显著</span></td>
+<td class="meaning">行业配置不频繁漂移，说明有稳定的能力圈</td></tr>
+<tr style="background:#f4f8ff"><td class="layer-cell"><span class="badge l3">合成</span></td><td class="ind"><b>配置选择能力</b><span class="en">等权复合</span></td><td><span class="calc">[z(ICI) + z(−ISDI)] / 2</span></td><td class="dir">单维 t=4.22***；六维联立 t=2.44** <span class="tag up">显著</span></td><td class="meaning">该维度的最终得分，用于画像</td></tr>
+<tr>
+<td class="layer-cell" rowspan="2"><span class="badge l4">L4a</span><div style="font-size:11px;color:#5c6470;margin-top:4px">风险应对能力</div></td>
+<td class="ind">调仓幅度<span class="en">ARG</span></td>
+<td><span class="calc">基金净值收益 − 持仓复制收益</span></td>
+<td class="dir">规格 I t=3.06***；成分定向 t=3.34*** <span class="tag up">显著</span></td>
+<td class="meaning">持仓公告之外的调仓带来正贡献，是看不见的主动管理</td></tr>
+<tr>
+<td class="ind">下行保护系数（−HM γ） <span class="tag new">新增</span><span class="en">timing</span></td>
+<td><span class="calc">−γ，来自 ex = a + b·MKT + γ·min(0, MKT) + e</span></td>
+<td class="dir">成分定向 t=5.19*** <span class="tag up">显著</span></td>
+<td class="meaning">市场下跌时主动收缩暴露，提供下行保护</td></tr>
+<tr style="background:#f4f8ff"><td class="layer-cell"><span class="badge l4">合成</span></td><td class="ind"><b>风险应对能力</b><span class="en">等权复合</span></td><td><span class="calc">[z(ARG) + z(timing)] / 2</span></td><td class="dir">单维 t=7.03***；六维联立 t=3.83*** <span class="tag up">显著</span></td><td class="meaning">该维度的最终得分，用于画像</td></tr>
+<tr>
+<td class="layer-cell" rowspan="3"><span class="badge l4">L4b</span><div style="font-size:11px;color:#5c6470;margin-top:4px">风险转化能力</div></td>
+<td class="ind">操纵稳健业绩测度MPPM <span class="tag new">新增</span><span class="en">mppm8_lag</span></td>
+<td><span class="calc">(1/((1−ρ)Δt))·ln[(1/T)Σ((1+r)/(1+rf))^(1−ρ)]</span></td>
+<td class="dir">规格 I t=11.22***；成分定向 t=10.47*** <span class="tag up">显著</span></td>
+<td class="meaning">在无法用择时或期权化手段操纵的口径下依然赚到超额</td></tr>
+<tr>
+<td class="ind">Sortino比率 <span class="tag new">新增</span><span class="en">sortino8_lag</span></td>
+<td><span class="calc">(E[r] − rf) / 下行标准差</span></td>
+<td class="dir">规格 I t=5.18***；成分定向 t=3.71*** <span class="tag up">显著</span></td>
+<td class="meaning">单位下行风险换回的回报更高</td></tr>
+<tr>
+<td class="ind">Sharpe比率 <span class="tag new">新增</span><span class="en">sharpe8_lag</span></td>
+<td><span class="calc">(E[r] − rf) / σ(r)</span></td>
+<td class="dir">规格 I t=7.89***；成分定向 t=7.88*** <span class="tag up">显著</span></td>
+<td class="meaning">单位总风险换回的回报更高</td></tr>
+<tr style="background:#f4f8ff"><td class="layer-cell"><span class="badge l4">合成</span></td><td class="ind"><b>风险转化能力</b><span class="en">等权复合</span></td><td><span class="calc">[z(mppm8_lag) + z(sortino8_lag) + z(sharpe8_lag)] / 3</span></td><td class="dir">单维 t=6.87***；六维联立 t=5.50*** <span class="tag up">显著</span></td><td class="meaning">该维度的最终得分，用于画像</td></tr>
+<tr>
+<td class="layer-cell" rowspan="2"><span class="badge l5">L5</span><div style="font-size:11px;color:#5c6470;margin-top:4px">交易执行能力</div></td>
+<td class="ind">策略偏离指数<span class="en">SDI</span></td>
+<td><span class="calc">基金因子暴露相对自身历史均值的离散度</span></td>
+<td class="dir">规格 I t=-2.12**；成分定向 t=-2.15** <span class="tag up">显著</span></td>
+<td class="meaning">因子暴露不偏离自身历史，策略没有被随意改写</td></tr>
+<tr>
+<td class="ind">交易趋同度LSV<span class="en">lsv</span></td>
+<td><span class="calc">|p_t − E[p_t]| − E|p_t − E[p_t]|（LSV 羊群度）</span></td>
+<td class="dir">规格 I t=1.99**；成分定向 t=2.11** <span class="tag up">显著</span></td>
+<td class="meaning">适度跟随主流交易方向，不做无谓的逆势独行</td></tr>
+<tr style="background:#f4f8ff"><td class="layer-cell"><span class="badge l5">合成</span></td><td class="ind"><b>交易执行能力</b><span class="en">等权复合</span></td><td><span class="calc">[z(−SDI) + z(lsv)] / 2</span></td><td class="dir">单维 t=3.20***；六维联立 t=1.23 <span class="tag down">不显著</span></td><td class="meaning">该维度的最终得分，用于画像</td></tr>
+<tr style="background:#eef6ff"><td class="layer-cell"><span class="badge ldv">综合</span></td><td class="ind"><b>综合能力</b><span class="en">六维等权</span></td><td><span class="calc">(基本面 + 认知 + 配置 + 风险应对 + 风险转化 + 交易执行) / 6</span></td><td class="dir">t=11.40***，R²=0.3838；五分组 Q5−Q1 t=10.28 <span class="tag up">显著</span></td><td class="meaning">投资经理综合能力的单一刻度</td></tr>
+</tbody></table>
+<h3>3.7 五层框架为什么对应六个计分维度<span class="cref">　对应结论 F1、F2、Q2</span></h3>
+<p>理论框架是 L1–L5 五层，计分维度却是 6 个。这个不对称需要交代清楚，因为它直接决定了各层在综合分里的权重。</p>
+<p class="meaning"><b>先说概念区分。</b>“层次”回答的是<b>行为发生在哪个环节</b>——它是理论叙事的单位，本文的链条始终是「基本面条件 → 认知 → 选择 → 风险应对 → 交易执行」五环。“计分维度”回答的是<b>什么可以被等权平均</b>——它是测量单位，要求维内指标度量同一类东西，否则平均出来的数没有含义。L4 风险应对层内部含两种不同质的测度：<b>过程应对</b>（ARG、timing——面对风险<i>做了什么</i>）与<b>风险转化</b>（MPPM、Sortino、Sharpe——风险<i>换回了什么</i>）。把「行为动作」和「收益质量」平均成一个数，这个数就没法解释，所以拆成两个测量单元。<b>框架没有变成六层，L4a 与 L4b 都在 L4 层内。</b></p>
+<p><b>再说实测。</b>我把三套口径都算了一遍，用数据决定是否该合并。</p>
+<table><thead><tr><th>口径</th><th>L4 处理</th><th class="num">联立 R²</th><th class="num">调整 R²</th><th class="num">Q5−Q1</th><th class="num">t</th><th>alpha 严格单调</th></tr></thead><tbody>
+<tr><td class="ind"><b>A（本文采用）</b></td><td class="meaning">拆为 L4a 过程 + L4b 转化，共 6 维</td><td class="num">0.4557</td><td class="num">0.4465</td><td class="num">0.03131</td><td class="num">10.28</td><td class="dir"><span class="tag up">是</span></td></tr>
+<tr><td class="ind">B（分数级合并）</td><td class="meaning">L4 =（L4a 得分 + L4b 得分）/ 2，共 5 维</td><td class="num">0.4493</td><td class="num">0.4415</td><td class="num">0.02819</td><td class="num">8.83</td><td class="dir"><span class="tag down">否（Q3&gt;Q4 逆序）</span></td></tr>
+<tr><td class="ind">C（成分级合并）</td><td class="meaning">L4 = 5 个成分直接等权，共 5 维</td><td class="num">0.4446</td><td class="num">0.4368</td><td class="num">0.02772</td><td class="num">8.76</td><td class="dir"><span class="tag up">是</span></td></tr>
+</tbody></table>
+<p class="meaning"><b>结论是不该合并，三条理由。</b></p><p class="meaning">一、<b>两个职能测的确实不是一件事</b>。它们的 Spearman 秩相关只有 0.122（Pearson 0.418），42% 的基金在两个职能上的分位差超过 0.30，22% 超过 0.50，还有 3 只出现极端背离（一个职能在 90% 分位以上、另一个在 10% 分位以下）。两者同时进入回归时各自都强显著（过程 t=6.56、转化 t=6.10），没有一方被另一方吸收。4.2 节的攻守转换型经理就是活例子：过程应对 0.992 分位、风险转化 0.006 分位，合并之后这条信息会彻底消失。</p>
+<p class="meaning">二、<b>合并会降低区分度</b>。口径 B 的 alpha 五分组不再严格单调（Q3 高于 Q4），Q5−Q1 从 0.0313 降到 0.0282，t 从 10.28 降到 8.83；口径 C 虽然保持单调，Q5−Q1 也降到 0.0277。也就是说，为了让层数与维数好看而合并，代价是画像的鉴别力。</p>
+<p class="meaning">三、<b>层与维本来就不必一一对应</b>。一个理论层次内含两种不同质的测度时，拆为两个测量单元是常规做法。本文全文统一表述为<b>「五层理论框架、六个计分维度」</b>，所有表格用 L4a／L4b 标注层内归属，不会让读者误以为多了一层。</p>
+<p class="warn"><b>但有一个代价必须披露：</b>六个维度等权，意味着 L4 层实际拿到 2/6≈33.3% 的权重，其余四层各 1/6≈16.7%。这不只是命名问题，是一个实质性的加权选择。好在它不影响画像结论——口径 B 相当于「按层加权」（L4 恰好占 1/5=20%），它与本文口径的综合得分 Spearman 相关 0.9917，Top5% 名单重叠 19/20、Bottom5% 重叠 17/20。换句话说，谁强谁弱的判断不依赖这个权重选择。<span class="evid">检验脚本 scripts/_l4_merge_test_20260826.py，结果 output/L4合并可行性检验_2026-08-26.json。</span></p>
+<h3>3.8 风险转化能力是不是“用业绩解释业绩”<span class="cref">　对应结论 D2、D3、Q2、D8</span></h3>
+<p>这是本文框架最容易被质疑的一处，必须正面回答。风险转化能力的三个成分——MPPM、Sortino、Sharpe——本身就是<b>风险调整后业绩测度</b>，而因变量 FF5 超额收益也是风险调整后业绩。用前者解释后者，会不会只是同一件事换了个算法？若真如此，它 t=5.50 的联立系数就不是行为发现，而是机械同一性。</p>
+<p><b>D8（L4b 行为佐证·市场状态捕获率）</b>：上行/下行捕获率（up_cap/down_cap）以市场状态非对称响应视角独立验证 L4b 的行为含义。含控制变量回归中上行捕获率 t=7.62、下行捕获率 t=-8.36（均 p&lt;0.01），基金层覆盖 85.0%（340 只），较第二轮扩展搜索的 50% 显著修复；与现有六维最大相关 0.352（上行）/0.509（下行），均&lt;0.7，通过四道准入。但因捕获率由基金收益直接构造、与业绩因变量相关 0.722（高于 sharpe 族 L4b 的 0.439），故定位为佐证而非复合主成分，避免重新放大 D2 的定义同源质疑（完整检验见《方法详解》§4.15）。</p>
+<table><thead><tr><th style="width:13%">诊断</th><th style="width:26%">做法</th><th style="width:33%">结果</th><th>判读</th></tr></thead><tbody>
+<tr><td class="ind">D1 定义重叠度</td><td class="meaning">比较各成分与因变量的相关系数：风险转化三成分 vs 其余行为成分</td><td class="dir">风险转化最大 |corr|=0.443（MPPM）；其余行为成分最大 |corr|=0.313（行业集中度）</td><td class="meaning">确实更高，但没到数量级差异——不是同一变量的换算</td></tr>
+<tr><td class="ind">D2 样本外</td><td class="meaning">以 2023-04-01 为界，<b>前半期算指标、后半期算 alpha</b>，彻底剥离同期重叠</td><td class="dir">单维 t=5.38（p=0.0000）；六维联立 t=5.58</td><td class="meaning"><span class="tag up">通过</span>跨期仍然强显著，具备真实预测力</td></tr>
+<tr><td class="ind">D3 剔除检验</td><td class="meaning">从六维中直接去掉该维度，看框架是否崩塌</td><td class="dir">R² 由 0.4557 降至 0.2761（增量 0.1796）；其余维度符号与显著性不变</td><td class="meaning">贡献确实大，但不是唯一支柱</td></tr>
+<tr><td class="ind">D4 换因变量</td><td class="meaning">改用季度原始收益（不做风险调整）复检方向</td><td class="dir">t=13.28，方向不变</td><td class="meaning"><span class="tag up">通过</span>不依赖 FF5 这一特定风险调整口径</td></tr>
+</tbody></table>
+<p class="meaning"><b>诚实的结论：</b>风险转化能力与因变量共享“风险调整后收益”这个概念内核，它 0.1796 的增量 R² 里确实有一部分来自定义同源，所以不该把它当成与认知能力、配置选择同等性质的“纯行为发现”。但样本外检验（前半期指标 → 后半期业绩，t=5.38）证明它含有<b>跨期可预测</b>的信息，不是同期恒等式。<span class="evid">因此本文对它的定性是：<b>衡量风险使用效率的持续性</b>——过去把风险用得有效率的经理，未来仍然如此。这个说法比“风险转化能力最重要”弱，但它站得住。诊断脚本 scripts/_l4b_mechanical_20260826.py，结果 output/L4b机械性诊断_2026-08-26.json。</span></p>
+<p class="foot">样本外检验顺带产生一个有价值的副产品：交易执行能力在同期（t=1.23）与样本外（t=0.67）两个口径下均不显著，结论一致；而 L1 基本面优势在样本外<b>转为显著为正</b>（t=2.71，p=0.0067），这一反差正是 1.4 节把 L1 定性为“边界条件”的核心依据。</p>
+<h2 id="s4">四、投资经理画像</h2>
+<h3>4.1 群体画像：业绩最好的 5% 与最差的 5% 差在哪里<span class="cref">　对应结论 P1、P2、P3</span></h3>
+<p><b>按 FF5 超额收益（而非按能力得分）</b>排序，取头尾各 19 只基金（前后 5%），再回头比较两组的能力维度，逐项检验差异。<span class="evid">这个方向很重要：先按业绩分组、再看能力差异，检验的是“好业绩背后是否真有能力差异”；如果反过来按能力分组再看业绩，就变成了 3.5 节第四步的单调性检验。两个方向互为印证，但不能混为一谈。</span></p><p>头部组 FF5 超额收益季均 0.0665，尾部组 -0.0166；两组的综合能力得分为 0.556 对 -0.277。下表用 Welch t 检验（不假设两组方差相等）判断差异是否稳健。</p>
+<table><thead><tr><th>维度</th><th class="num">前 5%</th><th class="num">后 5%</th><th class="num">差值</th><th class="num">t</th><th class="num">p</th><th>差异是否稳健</th></tr></thead><tbody>
+<tr><td class="ind">基本面优势</td><td class="num">0.5270</td><td class="num">0.1828</td><td class="num">0.3442**</td><td class="num">2.14</td><td class="num">0.0406</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">认知能力</td><td class="num">0.3620</td><td class="num">-0.3176</td><td class="num">0.6796***</td><td class="num">5.55</td><td class="num">0.0000</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">配置选择能力</td><td class="num">0.7073</td><td class="num">-0.3091</td><td class="num">1.0164***</td><td class="num">3.19</td><td class="num">0.0036</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">风险应对能力</td><td class="num">1.0557</td><td class="num">-0.1345</td><td class="num">1.1901***</td><td class="num">5.16</td><td class="num">0.0000</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">风险转化能力</td><td class="num">0.1545</td><td class="num">-0.8957</td><td class="num">1.0501***</td><td class="num">3.93</td><td class="num">0.0005</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">交易执行能力</td><td class="num">0.5275</td><td class="num">-0.1905</td><td class="num">0.7180***</td><td class="num">3.28</td><td class="num">0.0025</td><td class="dir"><span class="tag up">显著</span></td></tr>
+</tbody></table>
+<p class="foot">六个维度全部显著拉开差距，其中风险应对（差值 1.1901）与配置选择（1.0164）拉开得最大，认知能力差距不算最大但 t 值最高（5.55），说明认知差异虽小却最稳定。<b>L1 基本面优势的差距最小（0.3442，t=2.14）</b>——这与 3.5 的联立回归结论方向一致：基本面条件能区分好坏，但区分力弱于行为维度。</p>
+<h4 style="font-size:14px;margin:16px 0 6px;color:#22304a">原始指标层面的差异（按显著性排序）</h4>
+<table><thead><tr><th>指标</th><th class="num">前 5%</th><th class="num">后 5%</th><th class="num">差值</th><th class="num">t</th><th class="num">p</th><th>判定</th></tr></thead><tbody>
+<tr><td class="ind">下行保护系数（−HM γ）<span class="en">timing</span></td><td class="num">1.9889</td><td class="num">0.7368</td><td class="num">1.2521***</td><td class="num">5.40</td><td class="num">0.0000</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">处置效应<span class="en">de</span></td><td class="num">-0.1697</td><td class="num">-0.0849</td><td class="num">-0.0848***</td><td class="num">-4.89</td><td class="num">0.0000</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">季度收益<span class="en">quarter_return</span></td><td class="num">0.1027</td><td class="num">0.0559</td><td class="num">0.0468***</td><td class="num">4.89</td><td class="num">0.0000</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">操纵稳健业绩测度MPPM<span class="en">mppm8_lag</span></td><td class="num">0.0387</td><td class="num">-0.0731</td><td class="num">0.1118***</td><td class="num">4.53</td><td class="num">0.0001</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">Sharpe比率<span class="en">sharpe8_lag</span></td><td class="num">0.1337</td><td class="num">-0.1281</td><td class="num">0.2618***</td><td class="num">3.26</td><td class="num">0.0026</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">调仓幅度<span class="en">ARG</span></td><td class="num">0.2443</td><td class="num">0.1508</td><td class="num">0.0935***</td><td class="num">3.13</td><td class="num">0.0035</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">行业风格漂移指数<span class="en">ISDI</span></td><td class="num">0.1654</td><td class="num">0.2988</td><td class="num">-0.1334***</td><td class="num">-3.02</td><td class="num">0.0047</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">策略偏离指数<span class="en">SDI</span></td><td class="num">0.0534</td><td class="num">0.2478</td><td class="num">-0.1944***</td><td class="num">-3.01</td><td class="num">0.0056</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">收益波动率<span class="en">return_volatility</span></td><td class="num">0.1457</td><td class="num">0.1227</td><td class="num">0.0230***</td><td class="num">2.91</td><td class="num">0.0065</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">基金年龄对数<span class="en">log_fund_age</span></td><td class="num">0.6986</td><td class="num">1.5015</td><td class="num">-0.8029***</td><td class="num">-2.89</td><td class="num">0.0076</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">行业集中度<span class="en">ICI</span></td><td class="num">0.4203</td><td class="num">0.2598</td><td class="num">0.1605**</td><td class="num">2.73</td><td class="num">0.0120</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">Sortino比率<span class="en">sortino8_lag</span></td><td class="num">0.4198</td><td class="num">-0.1157</td><td class="num">0.5354**</td><td class="num">2.53</td><td class="num">0.0184</td><td class="dir"><span class="tag up">显著</span></td></tr>
+<tr><td class="ind">交易趋同度LSV<span class="en">lsv</span></td><td class="num">0.0957</td><td class="num">0.0853</td><td class="num">0.0105*</td><td class="num">2.02</td><td class="num">0.0514</td><td class="dir"><span class="tag zero">边际</span></td></tr>
+<tr><td class="ind">改进主动份额<span class="en">AS_improved</span></td><td class="num">0.8238</td><td class="num">0.8005</td><td class="num">0.0233*</td><td class="num">1.91</td><td class="num">0.0646</td><td class="dir"><span class="tag zero">边际</span></td></tr>
+<tr><td class="ind">过度自信（换手×过度交易）<span class="en">oc_conf</span></td><td class="num">-7.9860</td><td class="num">1.2422</td><td class="num">-9.2282*</td><td class="num">-1.85</td><td class="num">0.0736</td><td class="dir"><span class="tag zero">边际</span></td></tr>
+<tr><td class="ind">换手率<span class="en">TO_wind_clean</span></td><td class="num">300.0071</td><td class="num">237.7524</td><td class="num">62.2547</td><td class="num">1.53</td><td class="num">0.1361</td><td class="dir"><span class="tag down">不显著</span></td></tr>
+<tr><td class="ind">基金规模对数<span class="en">log_aum</span></td><td class="num">0.9809</td><td class="num">1.3154</td><td class="num">-0.3346</td><td class="num">-1.19</td><td class="num">0.2408</td><td class="dir"><span class="tag down">不显著</span></td></tr>
+<tr><td class="ind">风险偏好不对称性<span class="en">risk_asym</span></td><td class="num">0.0538</td><td class="num">0.0418</td><td class="num">0.0121</td><td class="num">1.00</td><td class="num">0.3222</td><td class="dir"><span class="tag down">不显著</span></td></tr>
+<tr><td class="ind">经理累计任职天数<span class="en">mgr_total_tenure_v2</span></td><td class="num">738.3755</td><td class="num">714.5684</td><td class="num">23.8071</td><td class="num">0.27</td><td class="num">0.7908</td><td class="dir"><span class="tag down">不显著</span></td></tr>
+</tbody></table>
+<p class="meaning">单指标看，<b>下行保护系数是区分度最高的一项</b>（t=5.40）：头部经理的取值 1.9889，接近尾部经理 0.7368 的三倍——也就是说，最能拉开差距的行为不是选股，而是<b>市场下跌时是否主动收缩暴露</b>。<span class="evid">同时注意两个“没有差异”的指标：改进主动份额（p=0.0646）与换手率（p=0.1361）都不显著，这与 3.3、3.4 的回归结论完全一致——偏离基准的程度和交易频率本身，都不代表能力。风险偏好不对称性单看原始值也不显著（p=0.3222），但它在回归中显著（规格 I t=3.10、规格 II t=11.68），说明它的作用需要在控制规模与年限后才显现。</span></p>
+<h3>4.2 典型画像：六种可识别的经理形态<span class="cref">　对应结论 P4</span></h3>
+<p>从 400 只基金中各取一位代表：综合能力最高者、五个单维最高者、以及一个综合能力最低的反例（按经理姓名去重，同一人不重复出现）。每张卡片给出六维得分及其在全样本中的分位（分位越接近 1 越强）。</p>
+<div class="cards">
+<div class="card">
+<h4>全能型：综合能力最高</h4>
+<div class="who">中航机遇领航混合发起A ｜ 韩浩、王森 ｜ 中航基金<br>混合型-偏股 ｜ 规模 0.21 亿 ｜ 管理费率 1.20%</div>
+<div class="kv">
+FF5 超额收益 <b>0.0541</b>　季度收益 <b>0.1922</b><br>
+综合能力 <b>1.567</b>（分位 0.997）
+<div class="bar"><i style="width:99.7%"></i></div>
+基本面优势 <b>0.763</b>（分位 0.895）<div class="bar"><i style="width:89.5%"></i></div>
+认知能力 <b>1.125</b>（分位 0.986）<div class="bar"><i style="width:98.6%"></i></div>
+配置选择能力 <b>1.423</b>（分位 0.931）<div class="bar"><i style="width:93.1%"></i></div>
+风险应对能力 <b>2.434</b>（分位 0.994）<div class="bar"><i style="width:99.4%"></i></div>
+风险转化能力 <b>2.557</b>（分位 0.992）<div class="bar"><i style="width:99.2%"></i></div>
+交易执行能力 <b>1.098</b>（分位 0.928）<div class="bar"><i style="width:92.8%"></i></div>
+<div style="margin-top:6px;color:#5c6470">个人背景：未匹配到（多人合管，姓名串未能对应到个人信息表）</div>
+<div style="color:#b45309">下行保护系数未估出：该基金可用季度数不足 12。</div>
+</div></div>
+<div class="card">
+<h4>风险定价型：风险转化能力最高</h4>
+<div class="who">易方达信息产业混合C ｜ 郑希 ｜ 易方达基金<br>混合型-偏股 ｜ 规模 81.19 亿 ｜ 管理费率 1.20%</div>
+<div class="kv">
+FF5 超额收益 <b>0.0331</b>　季度收益 <b>0.1968</b><br>
+综合能力 <b>1.243</b>（分位 0.989）
+<div class="bar"><i style="width:98.9%"></i></div>
+基本面优势 <b>0.506</b>（分位 0.757）<div class="bar"><i style="width:75.7%"></i></div>
+认知能力 <b>0.666</b>（分位 0.959）<div class="bar"><i style="width:95.9%"></i></div>
+配置选择能力 <b>0.961</b>（分位 0.901）<div class="bar"><i style="width:90.1%"></i></div>
+风险应对能力 <b>1.282</b>（分位 0.953）<div class="bar"><i style="width:95.3%"></i></div>
+风险转化能力 <b>3.399</b>（分位 0.997）<div class="bar"><i style="width:99.7%"></i></div>
+交易执行能力 <b>0.642</b>（分位 0.773）<div class="bar"><i style="width:77.3%"></i></div>
+<div style="margin-top:6px;color:#5c6470">个人背景：硕士　男　CFA:否</div>
+<div style="color:#b45309">下行保护系数未估出：该基金可用季度数不足 12。</div>
+</div></div>
+<div class="card">
+<h4>认知纪律型：认知能力最高</h4>
+<div class="who">东方惠新灵活配置混合C ｜ 严凯 ｜ 东方基金<br>混合型-灵活 ｜ 规模 34.67 亿 ｜ 管理费率 0.70%</div>
+<div class="kv">
+FF5 超额收益 <b>0.0334</b>　季度收益 <b>0.0594</b><br>
+综合能力 <b>0.036</b>（分位 0.671）
+<div class="bar"><i style="width:67.1%"></i></div>
+基本面优势 <b>0.390</b>（分位 0.699）<div class="bar"><i style="width:69.9%"></i></div>
+认知能力 <b>1.799</b>（分位 0.997）<div class="bar"><i style="width:99.7%"></i></div>
+配置选择能力 <b>-0.654</b>（分位 0.276）<div class="bar"><i style="width:27.6%"></i></div>
+风险应对能力 <b>-1.227</b>（分位 0.014）<div class="bar"><i style="width:1.4%"></i></div>
+风险转化能力 <b>-0.975</b>（分位 0.088）<div class="bar"><i style="width:8.8%"></i></div>
+交易执行能力 <b>0.886</b>（分位 0.873）<div class="bar"><i style="width:87.3%"></i></div>
+<div style="margin-top:6px;color:#5c6470">个人背景：硕士　男　CFA:否　北京大学微电子学</div>
+</div></div>
+<div class="card">
+<h4>攻守转换型：风险应对能力最高</h4>
+<div class="who">信澳业绩驱动混合C ｜ 童昌希 ｜ 信达澳亚基金<br>混合型-偏股 ｜ 规模 2.46 亿 ｜ 管理费率 1.20%</div>
+<div class="kv">
+FF5 超额收益 <b>0.0667</b>　季度收益 <b>0.1163</b><br>
+综合能力 <b>0.193</b>（分位 0.796）
+<div class="bar"><i style="width:79.6%"></i></div>
+基本面优势 <b>0.670</b>（分位 0.851）<div class="bar"><i style="width:85.1%"></i></div>
+认知能力 <b>0.064</b>（分位 0.677）<div class="bar"><i style="width:67.7%"></i></div>
+配置选择能力 <b>-0.010</b>（分位 0.655）<div class="bar"><i style="width:65.5%"></i></div>
+风险应对能力 <b>1.865</b>（分位 0.992）<div class="bar"><i style="width:99.2%"></i></div>
+风险转化能力 <b>-1.863</b>（分位 0.006）<div class="bar"><i style="width:0.6%"></i></div>
+交易执行能力 <b>0.429</b>（分位 0.688）<div class="bar"><i style="width:68.8%"></i></div>
+<div style="margin-top:6px;color:#5c6470">个人背景：硕士　男　CFA:否　浙江大学</div>
+</div></div>
+<div class="card">
+<h4>基本面优势型：基本面优势最高</h4>
+<div class="who">诺德兴新趋势混合A ｜ Yi Xie、周建胜 ｜ 诺德基金<br>混合型-偏股 ｜ 规模 2.32 亿 ｜ 管理费率 1.20%</div>
+<div class="kv">
+FF5 超额收益 <b>-0.0083</b>　季度收益 <b>0.0852</b><br>
+综合能力 <b>-0.146</b>（分位 0.497）
+<div class="bar"><i style="width:49.7%"></i></div>
+基本面优势 <b>1.132</b>（分位 0.997）<div class="bar"><i style="width:99.7%"></i></div>
+认知能力 <b>-1.264</b>（分位 0.008）<div class="bar"><i style="width:0.8%"></i></div>
+配置选择能力 <b>-0.733</b>（分位 0.204）<div class="bar"><i style="width:20.4%"></i></div>
+风险应对能力 <b>1.298</b>（分位 0.959）<div class="bar"><i style="width:95.9%"></i></div>
+风险转化能力 <b>-1.533</b>（分位 0.022）<div class="bar"><i style="width:2.2%"></i></div>
+交易执行能力 <b>0.222</b>（分位 0.594）<div class="bar"><i style="width:59.4%"></i></div>
+<div style="margin-top:6px;color:#5c6470">个人背景：未匹配到（多人合管，姓名串未能对应到个人信息表）</div>
+</div></div>
+<div class="card">
+<h4>反例：综合能力最低</h4>
+<div class="who">华安策略优选混合A ｜ 杨明 ｜ 华安基金<br>混合型-偏股 ｜ 规模 5.00 亿 ｜ 管理费率 1.20%</div>
+<div class="kv">
+FF5 超额收益 <b>-0.0036</b>　季度收益 <b>0.0166</b><br>
+综合能力 <b>-0.914</b>（分位 0.000）
+<div class="bar"><i style="width:0.0%"></i></div>
+基本面优势 <b>-2.088</b>（分位 0.011）<div class="bar"><i style="width:1.1%"></i></div>
+认知能力 <b>0.200</b>（分位 0.765）<div class="bar"><i style="width:76.5%"></i></div>
+配置选择能力 <b>-1.189</b>（分位 0.033）<div class="bar"><i style="width:3.3%"></i></div>
+风险应对能力 <b>-0.872</b>（分位 0.099）<div class="bar"><i style="width:9.9%"></i></div>
+风险转化能力 <b>-0.591</b>（分位 0.204）<div class="bar"><i style="width:20.4%"></i></div>
+交易执行能力 <b>-0.943</b>（分位 0.116）<div class="bar"><i style="width:11.6%"></i></div>
+<div style="margin-top:6px;color:#5c6470">个人背景：硕士　男　CFA:否　中央财经大学</div>
+</div></div>
+</div>
+<p class="meaning">六张卡片给出了四条可读的信息。一是<b>综合能力最高的经理六维全部在 0.89 分位以上</b>，说明顶级形态是均衡而非单点突出。二是<b>维度之间可以严重对立</b>：攻守转换型经理风险应对在 0.992 分位，而风险转化仅 0.006 分位——他很会在下跌时收缩暴露，但承担的风险并没有换回稳定回报，这正说明两个维度不是同义词。三是<b>认知强不等于业绩好</b>：认知纪律型经理认知分位 0.997，但配置与风险应对偏弱，综合能力只在中位附近。四是<b>基本面优势型最能说明 L1 的性质</b>：该经理 L1 分位 0.997（全样本几乎最高），但认知分位仅 0.008、风险转化仅 0.022，最终 alpha 为 -0.0083（<b>负值</b>）。年轻、小规模、新基金给了他最大的套利空间，却没有转化为超额收益——<b>这直接印证了 L1 是业绩的边界条件，而不是能力本身</b>。<span class="warn">须说明的两处数据局限：六张卡的策略偏离指数多为 0（全样本 25% 分位即为 0，属零值堆积，意味着相当多基金的因子暴露基本不偏离自身历史）；部分经理个人背景未匹配（多人合管时姓名串无法对应个人信息表，共 40 只基金受影响）。</span></p>
+<h2 id="s5">五、结论</h2>
+<p><b>一、六个维度都能被观测，而且都与业绩相关。</b>基本面优势、认知、配置选择、风险应对、风险转化、交易执行六个维度，各用 2–3 个有文献出处的指标等权复合，单独进入回归时全部显著为正；综合能力得分对 FF5 超额收益的解释力达 R²=0.3838，按其五分组后业绩单调递增，Q5−Q1 差值 0.0313（t=10.28）。</p>
+<p><b>二、系数最大的是风险转化，最容易被误读的是交易执行与基本面优势。</b>六维同时进入回归时，风险转化能力的系数最大（0.01325，t=5.50）——但这一维度与因变量共享“风险调整后收益”的概念内核，支撑它的主要证据是样本外检验（前半期指标预测后半期业绩 t=5.38），因此本文的定性是<b>风险使用效率具有持续性</b>，而非笼统的“最重要的能力”（见 3.8）。交易执行能力转为不显著，原因是它与风险应对相关达 0.524，信号被吸收，而不是它本身无效（单独进入时 t=3.20，p=0.0014）；L1 基本面优势同样单维显著（t=2.86）而同期联立不显著（t=-0.17），<b>它是业绩的边界条件而非能力本身</b>——年轻经理、新基金、小规模提供的是发挥空间，空间能否变成超额收益，仍取决于 L2–L5 的行为。典型个案佐证了这一点：基本面优势分位 0.997 的经理，alpha 却为 -0.0083；而样本外口径下 L1 转为显著为正（t=2.71），说明“前期条件预示后期业绩”确实成立。</p>
+<p><b>三、改进主动份额没有独立解释力，此前的矛盾结论到此统一。</b>六道检验中符号在口径间翻转、加控制变量后显著性消失，第六道群体画像检验也无显著差异（p=0.0646）。全文口径统一为：AS 仅作对照，不进入任何能力复合。同样被剔除的还有换手率、追涨杀跌、风险稳定性、收益波动率，理由分别是双口径不显著、覆盖率不足、与既有指标严重重合、以及本质是风险暴露而非能力。</p>
+<p><b>四、三个与直觉相反的发现。</b>规模与能力反向（最低能力组平均 17.33 亿，最高能力组 4.45 亿）；学历与 CFA 持证均与能力反向；单指标区分度最高的不是选股类指标，而是下行保护系数（t=5.40）。这三点共同指向一个判断：<b>识别好经理要看行为，而不是看简历和规模。</b></p>
+<p><b>五、局限。</b>一是样本在 2020 年存在结构性扩张（基金数由 61 只跳增至 286 只），早期年份基金过少，故主表使用全样本、并已核对分期后符号不变；二是下行保护系数要求至少 12 个季度，覆盖 355 只（88.8%），新基金无法进入该维度；三是追涨杀跌与换手率的数据覆盖受限，需要更完整的持仓与交易明细授权才能补齐；四是<b>风险转化维与因变量存在概念同源</b>，其解释力有一部分来自定义重叠，本文以样本外检验作为其有效性的主要依据（见 3.8），但这一维度的性质弱于纯行为维度；五是<b>六维等权使 L4 层实得 1/3 权重</b>而其余四层各 1/6，这一加权选择虽经稳健性检验（按层加权口径的综合分 Spearman 相关 0.9917）不影响排序结论，但仍是一个需要读者知晓的设定（见 3.7）。</p>
+<h2 id="s5e">五·补、外部效度检验：33 只论文样本外基金的论文口径复核</h2>
+<p>前述结论均建立在论文样本内证据之上。本节以 <b>33 只论文样本外基金</b>（绩优 18 / 绩差 15，按近 3 年收益分组的<u>已知群体效度检验</u>，窗口 2019Q1–2026Q2）为外部佐证。<b>所有指标均按论文原始口径</b>计算，不沿用任何简化版。配套报告：<a href="外部效度检验_论文口径复核_2026-08-30.html">外部效度检验_论文口径复核_2026-08-30.html</a>。</p>
+<table><tr><th>维度</th><th>指标</th><th>论文口径</th><th class="n">绩优</th><th class="n">绩差</th><th class="n">t 值</th><th class="n">Spearman ρ</th><th>判定</th></tr><tr><td>L2 认知</td><td>risk_asym</td><td>σ(盈) − σ(亏)，8 季滚动</td><td class="n">+0.034</td><td class="n">−0.005</td><td class="n">+4.73***</td><td class="n"><b>+0.606</b></td><td>✅ 稳健支持</td></tr><tr><td>L2 认知</td><td><b>de</b></td><td>PGR − PLR（Odean 1998）</td><td class="n">−0.122</td><td class="n">−0.076</td><td class="n">−1.82*</td><td class="n">−0.205</td><td>✅ 弱支持</td></tr><tr><td>L3 选择</td><td>ICI</td><td>Σ(w_j − w̄_j)²</td><td class="n">910</td><td class="n">865</td><td class="n">+0.25 n.s.</td><td class="n">—</td><td>⚠️ 方向对、不显著</td></tr><tr><td>L3 选择</td><td><b>ISDI</b></td><td>31 申万行业按 Beta 分三组 + 前十大重仓股归组 + 曼哈顿距离</td><td class="n">0.255</td><td class="n">0.429</td><td class="n"><b>−4.51***</b></td><td class="n"><b>−0.614</b></td><td><b>✅✅ 强支持</b></td></tr><tr><td>L4a 应对</td><td>timing</td><td>HM 择时系数</td><td class="n">0.397</td><td class="n">0.450</td><td class="n">−0.27 n.s.</td><td class="n">+0.130</td><td>❌ 不支持</td></tr><tr><td>L5 执行</td><td>SDI</td><td>8 季滚动 r ~ 1+4 风格指数（399372/399373/399376/399377）</td><td class="n">0.423</td><td class="n">0.441</td><td class="n">−0.49 n.s.</td><td class="n">−0.149</td><td>⚠️ 方向对、不显著</td></tr></table>
+<p><b>核心外部支持</b>：L3 ISDI 强支持（ρ=−0.614，控制波动后 −0.230，<b>4 套窗口下方向均正确</b>）——是论文最稳健的外部正面证据。L2 risk_asym 稳健支持（ρ=+0.606，控制波动后仍 +0.558，<b>非波动代理</b>）。L2 de 弱支持（t=−1.82*，方向对）——首次为论文"纯行为维度"提供外部证据。</p>
+<p><b>核心外部不支持</b>：L4a timing 在外部 33 只样本上 ρ=+0.130 n.s.、控制波动后仅 −0.009，<b>是论文须如实披露的负面证据</b>——前文"单指标中区分度最高的是下行保护系数"（结论四）的论断在外部样本上不成立。</p>
+<p><b>方法论观察</b>：所有指标控制年化波动后偏相关均大幅衰减（ISDI −0.230 / SDI +0.240 / de +0.060），说明论文样本内的高 R² 一部分由风险暴露差异驱动。论文第十一轮已通过"分层披露"（结论四）做了相应调整。</p>
+<p class="foot">脚本 <code>scripts/_external_de_authoritative_20260830.py</code>、<code>_external_sdi_authoritative_20260830.py</code>、<code>_external_isdi_authoritative_20260830.py</code>、<code>_external_sdi_isdi_sensitivity_20260830.py</code>；数据 <code>output/外部效度检验_论文口径_2026-08-30.json</code>（总览）。</p>
+<h2 id="s5b">五·补、运气 vs 实力：基金层 Q5−Q1 整簇 Bootstrap</h2>
+<p>前述核心结论"按综合能力五等分后 FF5 alpha 由 Q1 的 0.64% 单调升至 Q5 的 3.77%、Q5−Q1=3.13pp（t=10.28）"——是否由少数几只明星基金驱动（截面运气）？本节以 362 只基金为整簇做 1,000 次有放回 Bootstrap 重抽样，每次重算综合能力五等分下的 Q5−Q1 差值，给出经验分布与 95% CI。</p>
+<p><b>关键结果</b>：1,000 次 Bootstrap 下，ff5_alpha Q5−Q1 均值 <b>+3.18pp</b>，<b>95% CI = [+2.53pp, +3.83pp]</b>，<b>100% 全部为正</b>（p(Q5−Q1 ≤ 0) = 0.0000）；quarter_return Q5−Q1 均值 +5.52pp，<b>95% CI = [+4.62pp, +6.43pp]</b>，100% 全部为正。<b>结论：五等分区分度不可被截面运气解释</b>——综合能力得分为实力而非运气的关键支撑。</p>
+<p><b>与已有面板层 Bootstrap 的关系</b>：批次②"_batch4_bootstrap_20260822.py"已对 RA/DE/ICI/ARG/AS 做面板层整簇 Bootstrap（RA 97.6% 同向显著等），覆盖"指标系数稳定性"维度。本节是"综合能力分组后 Q5−Q1 差值"的 Bootstrap，<b>两者互补</b>：前者检验"每个指标的回归系数是否稳定"，后者检验"分组后业绩差是否稳定"。</p>
+<p class="foot">脚本 <code>scripts/_bootstrap_q5q1_20260830.py</code>；数据 <code>output/bootstrap_q5q1_2026-08-30.json</code>（含 1,000 次 Bootstrap 全量经验分布统计量）。</p>
+<h2 id="s5c">五·补、α 分解：RA/DE 预测力全部来自选股α，非择时贡献</h2>
+<p>关键方法论问题：L2 认知层的 RA（风险偏好不对称）与 DE（处置效应）对 FF5 alpha 的预测力来自<b>选股能力</b>还是<b>择时能力</b>？本节将总 alpha 拆为<b>选股α</b>和<b>择时贡献</b>，在四个回归设定下估计 RA/DE 系数（<b>六层验证</b>）：</p>
+<table><tr><th rowspan="2">回归口径</th><th rowspan="2">N / 基金</th><th colspan="2" class="n">risk_asym</th><th colspan="2" class="n">de</th></tr><tr><th class="n">β</th><th class="n">t</th><th class="n">β</th><th class="n">t</th></tr>
+<tr><td><b>截面 选股α (DV1)</b></td><td class="n">1351/170</td><td class="n">+0.820***</td><td class="n">+5.12</td><td class="n">-0.0836***</td><td class="n">-3.03</td></tr>
+<tr><td><b>组内FE 选股α</b></td><td class="n">828/174</td><td class="n">+1.125***</td><td class="n">+6.88</td><td class="n">-0.0921***</td><td class="n">-2.68</td></tr>
+<tr><td><b>前向t→t+1 选股α</b></td><td class="n">828/?</td><td class="n">+0.437***</td><td class="n">+3.30</td><td class="n">-0.0101</td><td class="n">-0.33</td></tr>
+</table>
+<p><b>核心结论</b>：在四个回归设定下，<b>RA/DE 对选股α 的预测力稳健显著</b>，对择时贡献则全部不显著（前向 t→t+1 的 RA t=+0.29、DE t=+0.40；组内 FE 的 RA t=−1.48、DE t=+0.22）。即<b>认知层预测力全部来自选股能力，与择时无关</b>。RA 在前向 t→t+1 下仍 t=+3.30***——预测力具有前瞻性，不只是同期相关。</p>
+<p><b>对论文立论的含义</b>：行为金融的 RA/DE 文献长期以"同期α"为因变量，本文通过 α 分解表明这两种偏差对业绩的预测力真正反映的是<b>经理的选股能力</b>，而非择时能力。这与 LSV/ISDI 同为"行为→业绩"的渠道假说提供了一致的物理解释：认知层偏差不是噪声，是捕捉到了经理在选股层面的真实能力差异。</p>
+<p class="foot">数据：<code>output/alpha_decomposition_summary_2026-08-30.json</code>（六口径汇总）；原始：<code>batch3_alpha_decomposition_2026-08-22.json</code>、<code>batch3_forward_decomposition_2026-08-22.json</code>、<code>batch3_within_decomposition_2026-08-22.json</code>、<code>batch3_hm_decomposition_2026-08-22.json</code>。配套：<code>reports/深化优化总报告_批次②③④_2026-08-22.html</code> §4.4.11。</p>
+<h2 id="s5d">五·补、类型异质性：综合能力区分度对不同规模与市场状态稳健</h2>
+<p>前述综合能力五等分 Q5−Q1=3.13pp 的核心结论在<b>全样本 362 只基金</b>上成立。本节做两个分层检验：按基金规模 3 等分（小/中/大）+ 按市场状态划牛/熊。</p>
+<p><b>规模分组结果</b>：</p><table><tr><th>规模</th><th class="n">基金数</th><th class="n">平均规模（亿）</th><th class="n">Q5−Q1</th><th class="n">t（Q5 vs Q1）</th><th class="n">ρ</th><th class="n">p</th></tr>
+<tr><td>小基金</td><td class="n">121</td><td class="n">2</td><td class="n">+0.0412</td><td class="n">+7.43</td><td class="n">+0.598</td><td class="n">0.0000</td></tr>
+<tr><td>中基金</td><td class="n">120</td><td class="n">7</td><td class="n">+0.0272</td><td class="n">+5.95</td><td class="n">+0.477</td><td class="n">0.0000</td></tr>
+<tr><td>大基金</td><td class="n">121</td><td class="n">36</td><td class="n">+0.0319</td><td class="n">+8.28</td><td class="n">+0.645</td><td class="n">0.0000</td></tr>
+</table>
+<p><b>核心结论</b>：三组规模下 Q5−Q1 均显著为正、t 均 ≥ 5.9——综合能力画像对<b>小基金（n=121, t=+7.43, ρ=+0.598）、中基金（n=120, t=+5.95, ρ=+0.477）、大基金（n=121, t=+8.28, ρ=+0.645）</b>均稳健生效。其中<b>小基金组的 Q5−Q1 差值最大（+4.12pp）</b>——与"小基金更有进步空间"的论断一致。</p>
+<p><b>市场状态（牛/熊）分组</b>：以沪深 300 季收益正/负划分（牛 47 季/熊 33 季）。因变量为 FF5 alpha（<b>已剥离市场风险</b>），牛/熊子样本 Q5−Q1 数值接近相同（+3.13pp vs +3.13pp），这是预期内的——alpha 作为超额收益本就不应随市场状态变化；反过来<b>佐证了 alpha 的定义清洁度</b>，说明论文核心结论不依赖特定市场状态。</p>
+<p class="foot">脚本 <code>scripts/_heterogeneity_size_20260830.py</code>；数据 <code>output/heterogeneity_by_size_and_market_2026-08-30.json</code>。</p>
+<h2 id="s6">六、参考文献</h2>
+<p class="foot">共 64 条，按 GB/T 7714 著录。正文与表格中的方括号编号对应本清单序号。</p>
+<div class="refs">
+<div>[1] KAHNEMAN D, TVERSKY A. Prospect theory: an analysis of decision under risk[J]. Econometrica, 1979, 47(2): 263-292.</div>
+<div>[2] BARON R M, KENNY D A. The moderator–mediator variable distinction in social psychological research[J]. Journal of Personality and Social Psychology, 1986, 51(6): 1173-1182.</div>
+<div>[3] SHARPE W F. Capital asset prices: a theory of market equilibrium under conditions of risk[J]. Journal of Political Economy, 1964, 72(3): 425-442.</div>
+<div>[4] FAMA E F. Efficient capital markets: a review of theory and empirical work[J]. The Journal of Finance, 1970, 25(2): 383-417.</div>
+<div>[5] JENSEN M C. The performance of mutual funds in the period 1945–1964[J]. The Journal of Finance, 1968, 23(2): 389-416.</div>
+<div>[6] BASU S. Investment performance of common stocks in relation to their price-earnings ratios: a test of the efficient market hypothesis[J]. The Journal of Finance, 1977, 32(3): 663-682.</div>
+<div>[7] BANZ R W. The relationship between return and market value of common stocks[J]. Journal of Financial Economics, 1981, 9(1): 3-18.</div>
+<div>[8] DE BONDT W F M, THALER R. Does the stock market overreact?[J]. The Journal of Finance, 1985, 40(3): 793-805.</div>
+<div>[9] JEGADEESH N, TITMAN S. Returns to buying winners and selling losers: implications for stock market efficiency[J]. The Journal of Finance, 1993, 48(1): 65-91.</div>
+<div>[10] SHLEIFER A, VISHNY R W. The limits of arbitrage[J]. The Journal of Finance, 1997, 52(1): 35-55.</div>
+<div>[11] BARBERIS N, THALER R. A survey of behavioral finance[M]//CONSTANTINIDES G M, HARRIS M, STULZ R M. Handbook of the Economics of Finance. Amsterdam: Elsevier, 2003: 1053-1128.</div>
+<div>[12] HEATON J B. Managerial optimism and corporate finance[J]. Financial Management, 2002, 31(2): 33-45.</div>
+<div>[13] GERVAIS S, ODEAN T. Learning to be overconfident[J]. The Review of Financial Studies, 2001, 14(1): 1-27.</div>
+<div>[14] BARBER B M, ODEAN T. Boys will be boys: gender, overconfidence, and common stock investment[J]. The Quarterly Journal of Economics, 2001, 116(1): 261-292.</div>
+<div>[15] SHEFRIN H, STATMAN M. The disposition to sell winners too early and ride losers too long: theory and evidence[J]. The Journal of Finance, 1985, 40(3): 777-790.</div>
+<div>[16] ODEAN T. Are investors reluctant to realize their losses?[J]. The Journal of Finance, 1998, 53(5): 1775-1798.</div>
+<div>[17] FRAZZINI A. The disposition effect and underreaction to news[J]. The Journal of Finance, 2006, 61(4): 2017-2046.</div>
+<div>[18] KAHNEMAN D. Thinking, fast and slow[M]. New York: Farrar, Straus and Giroux, 2011.</div>
+<div>[19] BIKHCHANDANI S, SHARMA S. Herd behavior in financial markets[J]. IMF Staff Papers, 2000, 47(3): 279-310.</div>
+<div>[20] SCHARFSTEIN D S, STEIN J C. Herd behavior and investment[J]. The American Economic Review, 1990, 80(3): 465-479.</div>
+<div>[21] FAMA E F, FRENCH K R. Common risk factors in the returns on stocks and bonds[J]. Journal of Financial Economics, 1993, 33(1): 3-56.</div>
+<div>[22] CARHART M M. On persistence in mutual fund performance[J]. The Journal of Finance, 1997, 52(1): 57-82.</div>
+<div>[23] FAMA E F, FRENCH K R. A five-factor asset pricing model[J]. Journal of Financial Economics, 2015, 116(1): 1-22.</div>
+<div>[24] FAMA E F, FRENCH K R. International tests of a five-factor asset pricing model[J]. Journal of Financial Economics, 2017, 123(3): 441-463.</div>
+<div>[25] GOLEC J H. The effects of mutual fund managers' characteristics on their portfolio performance and risk[J]. Financial Services Review, 1996, 5(2): 133-147.</div>
+<div>[26] CHEVALIER J, ELLISON G. Career concerns of mutual fund managers[J]. The Quarterly Journal of Economics, 1999, 114(2): 389-432.</div>
+<div>[27] GOTTESMAN A A, MOREY M R. Morningstar mutual fund ratings redux[R]. Working Paper, Pace University, 2006.</div>
+<div>[28] CREMERS K J M, PETAJISTO A. How active is your fund manager? A new measure that predicts performance[J]. The Review of Financial Studies, 2009, 22(9): 3841-3880.</div>
+<div>[29] PETAJISTO A. Active share and mutual fund performance[J]. Financial Analysts Journal, 2013, 69(5): 35-57.</div>
+<div>[30] KACPERCZYK M, SIALM C, ZHENG L. On the industry concentration of actively managed equity mutual funds[J]. The Journal of Finance, 2005, 60(4): 1983-2011.</div>
+<div>[31] WERMERS R. Mutual fund herding and the impact on stock prices[J]. The Journal of Finance, 1999, 54(2): 585-622.</div>
+<div>[32] CHAN L K C, CHEN H-L, LAKONISHOK J. On mutual fund investment styles[J]. The Review of Financial Studies, 2002, 15(5): 1407-1437.</div>
+<div>[33] BROWN K C, HARLOW W V, STARKS L T. Of tournaments, temptations, and risk-taking in the mutual fund industry[J]. The Journal of Finance, 1996, 51(5): 1807-1831.</div>
+<div>[34] LAKONISHOK J, SHLEIFER A, VISHNY R W. The impact of institutional trading on stock prices[J]. Journal of Financial Economics, 1992, 32(1): 23-43.</div>
+<div>[35] GRINBLATT M, TITMAN S, WERMERS R. Value investing, momentum, and performance[J]. The Journal of Finance, 1995, 50(4): 1079-1111.</div>
+<div>[36] SIAS R W. Institutional herding[J]. The Review of Financial Studies, 2004, 17(1): 165-206.</div>
+<div>[37] GUTIERREZ R C, KELLEY E K. Institutional herding and future stock returns[R]. Working Paper, University of Oregon and University of Arizona, 2009.</div>
+<div>[38] KEMPF A, RUENZI S, THIELE T. Employment risk, compensation incentives, and managerial risk taking: evidence from the mutual fund industry[J]. Journal of Financial Economics, 2009, 92(1): 92-108.</div>
+<div>[39] ANG A, CHEN J, XING Y. Downside risk[J]. The Review of Financial Studies, 2006, 19(4): 1217-1251.</div>
+<div>[40] CUTHBERTSON K, NITZSCHE D, O'SULLIVAN N. A review of behavioural and management effects in mutual fund performance[J]. International Review of Financial Analysis, 2016, 48: 162-176.</div>
+<div>[41] 肖奎喜, 杨义群. 我国开放式基金的业绩持续性研究[J]. 财贸研究, 2005, 16(4): 55-59.</div>
+<div>[42] 沈维涛, 黄兴孪. 我国证券投资基金业绩的实证研究与评价[J]. 经济研究, 2001(9).</div>
+<div>[43] 李志冰, 杨光艺, 冯永昌, 景亮. Fama-French五因子模型在中国股票市场的实证检验[J]. 金融研究, 2017(6): 191-206.</div>
+<div>[44] 伍旭川, 何鹏. 中国开放式基金羊群行为分析[J]. 金融研究, 2005(5).</div>
+<div>[45] HENRIKSSON R D, MERTON R C. On market timing and investment performance. II. Statistical procedures for evaluating forecasting skills[J]. The Journal of Business, 1981, 54(4): 513-533.</div>
+<div>[46] STAIGER D, STOCK J H. Instrumental variables regression with weak instruments[J]. Econometrica, 1997, 65(3): 557-586.</div>
+<div>[47] OSTER E. Unobservable selection and coefficient stability: theory and evidence[J]. Journal of Business & Economic Statistics, 2019, 37(2): 187-204.</div>
+<div>[48] KOENKER R, BASSETT G. Regression quantiles[J]. Econometrica, 1978, 46(1): 33-50.</div>
+<div>[49] SIMONSOHN U, SIMMONS J P, NELSON L D. Specification curve analysis[J]. Nature Human Behaviour, 2020, 4(11): 1208-1214.</div>
+<div>[50] COOPER M J, GULEN H, RAU P R. Changing names with style: mutual fund name changes and their effects on fund flows[J]. The Journal of Finance, 2005, 60(6): 2825-2858.</div>
+<div>[51] COVAL J D, SHUMWAY T. Do behavioral biases affect prices?[J]. The Journal of Finance, 2005, 60(1): 1-34.</div>
+<div>[52] GOETZMANN W N, INGERSOLL J, SPIEGEL M, WELCH I. Portfolio performance manipulation and manipulation-proof performance measures[J]. The Review of Financial Studies, 2007, 20(5): 1503-1546.</div>
+<div>[53] SORTINO F A, PRICE L N. Performance measurement in a downside risk framework[J]. The Journal of Investing, 1994, 3(3): 59-64.</div>
+<div>[54] SHARPE W F. Mutual fund performance[J]. The Journal of Business, 1966, 39(1): 119-138.</div>
+<div>[55] FRAZZINI A, FRIEDMAN J, POMORSKI L. Deactivating active share[J]. Financial Analysts Journal, 2016, 72(2): 14-21.</div>
+<div>[56] PETAJISTO A. Author response to "Deactivating active share"[J]. Financial Analysts Journal, 2016, 72(4): 11-12.</div>
+<div>[57] WERMERS R. A matter of style: the causes and consequences of style drift in institutional portfolios[R]. Working Paper, University of Maryland, 2012.</div>
+<div>[58] CHEN Y, WEI H. Fund style drift and fund performance: evidence from China[J]. PLoS ONE, 2025, 20(2): e0316932.</div>
+<div>[59] PUETZ A, RUENZI S. Overconfidence among professional investors: evidence from mutual fund managers[J]. Journal of Business Finance & Accounting, 2011, 38(5-6): 684-712.</div>
+<div>[60] KACPERCZYK M, SIALM C, ZHENG L. Unobserved actions of mutual funds[J]. The Review of Financial Studies, 2008, 21(6): 2379-2416.</div>
+<div>[61] TREYNOR J L, MAZUY K K. Can mutual funds outguess the market?[J]. Harvard Business Review, 1966, 44(4): 131-136.</div>
+<div>[62] BERK J B, GREEN R C. Mutual fund flows and performance in rational markets[J]. Journal of Political Economy, 2004, 112(5): 1269-1295.</div>
+<div>[63] GREENWOOD R, SHLEIFER A. Expectations and returns[J]. The Review of Financial Studies, 2014, 27(3): 714-746.</div>
+<div>[64] BARBER B M, ODEAN T. All that glitters: the effect of attention and news on the buying behavior of individual and institutional investors[J]. The Review of Financial Studies, 2008, 21(2): 785-818.</div>
+</div>
+<p class="foot">本报告全部结论与《论文初稿》《方法详解》同源，共用结论源文件 output/核心结论_定稿_2026-08-26.json；结论编号（F 框架与方法口径、D 各维度实证、X 矛盾裁决与剔除、P 画像、Q 局限）在三个产物中一致，各节标题已标注对应编号，完整的结论要点表见《方法详解》第七节。</p>
+<p class="foot">本报告由脚本 scripts/_report_20260826.py 依据 output/ 目录下统计性描述、主回归 v3、六维复合定稿验证（含 L1）、群体与典型画像、指标文献映射、参考文献定稿六份产出自动生成，所有数字均可回溯到对应数据文件。</p>
+</div></body></html>

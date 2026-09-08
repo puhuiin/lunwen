@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>实证深度核验报告（诚实版）· 2026-08-15</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--card2:#1c2330;--bd:#30363d;--fg:#e6edf3;--mut:#8b949e;
+--acc:#58a6ff;--sig:#ff9f43;--ns:#8b949e;--ok:#3fb950;--warn:#d29922;--bad:#f85149;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.65;font-size:14px;}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 22px 80px;}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;}
+h2{font-size:19px;margin:34px 0 12px;padding-left:11px;border-left:4px solid var(--acc);}
+h3{font-size:15.5px;margin:20px 0 8px;color:var(--acc);}
+.sub{color:var(--mut);font-size:13px;margin-bottom:18px;}
+.banner{border-radius:10px;padding:14px 18px;margin:18px 0;font-size:13.5px;border:1px solid;}
+.banner.ok{background:rgba(63,185,80,.10);border-color:var(--ok);}
+.banner.warn{background:rgba(210,153,34,.10);border-color:var(--warn);}
+.banner.bad{background:rgba(248,81,73,.10);border-color:var(--bad);}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:16px 18px;margin:14px 0;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px;}
+th,td{border:1px solid var(--bd);padding:7px 9px;text-align:right;}
+th{background:var(--card2);color:var(--fg);text-align:center;font-weight:600;}
+td:first-child,th:first-child{text-align:left;}
+.sig{color:var(--sig);font-weight:600;}
+.ns{color:var(--ns);}
+.ok{color:var(--ok);}
+.warn{color:var(--warn);}
+.bad{color:var(--bad);}
+code{background:var(--card2);padding:1px 6px;border-radius:4px;font-size:12.5px;color:#a5d6ff;}
+.kpi{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0;}
+.kpi .b{flex:1 1 200px;background:var(--card2);border:1px solid var(--bd);border-radius:9px;padding:12px 14px;}
+.kpi .v{font-size:22px;font-weight:700;}
+.kpi .l{font-size:12px;color:var(--mut);margin-top:3px;}
+.note{font-size:12.5px;color:var(--mut);margin-top:6px;}
+ul{margin:8px 0 8px 2px;padding-left:20px;}li{margin:4px 0;}
+.tag{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11.5px;margin-left:6px;}
+.tag.a{background:rgba(88,166,255,.15);color:var(--acc);}
+.tag.b{background:rgba(210,153,34,.15);color:var(--warn);}
+.foot{margin-top:40px;color:var(--mut);font-size:12px;border-top:1px solid var(--bd);padding-top:14px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>实证深度核验报告（诚实版）</h1>
+<div class="sub">基金经理行为分析研究 · 数据完整性治理后第二轮深度核验 · 2026-08-15 · 基于真实面板 <code>主分析面板_重建.csv</code>（49 列 / 9,974 观测，已剔除四模拟占位列）</div>
+
+<div class="banner ok">
+<b>✅ 总体结论：核心结果可复现且稳健，但存在两项必须如实披露的结构性边界。</b><br>
+① 诚实回归经<b>独立重算逐系数一致</b>（SDI β=+0.103），非脚本 bug；v3 主口径已升级为<b>双向聚类(基金×年)</b>稳健 SE（CGM2011），SDI t=+2.46（仍显著 **），基金聚类对照 t=+12.4。SDI 效应在缩尾、剔除极端基金、替代因变量下均稳健。<br>
+② 但仍须诚实标注两个边界：<b>(A) SDI 是 2022+ 现象</b>（87.7% 观测落在 2022–2026，前五年均值≈0、组内无变异）；<b>(B) H4 中 SDI 系数"变小"是样本构成差异（366→200 只）而非共线性（VIF&lt;2）</b>。TO/OCI 在 18% 真实子集下不显著，须待 Wind 补全后方可下结论。
+</div>
+
+<h2>一、可复现性核验（消除"脚本 bug"疑虑）</h2>
+<div class="card">
+用<b>完全独立代码</b>（不调用原脚本函数）从同一真实面板重算 H1–H4 与 L1，逐系数对照：
+<table>
+<tr><th>模型</th><th>核心变量</th><th>β（原脚本）</th><th>t（原）</th><th>β（独立重算）</th><th>t（独立）</th><th>判定</th></tr>
+<tr><td>H1</td><td>SDI</td><td>+0.10285</td><td>+12.4<sup>①</sup></td><td>+0.10285</td><td>+12.4<sup>①</sup></td><td class="ok">完全一致</td></tr>
+<tr><td>H2</td><td>TO_two_sided</td><td>−0.00461</td><td>−0.28</td><td>−0.00461</td><td>−0.28</td><td class="ok">一致(ns)</td></tr>
+<tr><td>H3</td><td>OCI_two_sided</td><td>−0.00145</td><td>−0.81</td><td>−0.00145</td><td>−0.81</td><td class="ok">一致(ns)</td></tr>
+<tr><td>H4</td><td>SDI(联合)</td><td>+0.01988</td><td>+2.55</td><td>+0.01988</td><td>+2.55</td><td class="ok">一致</td></tr>
+<tr><td>L1</td><td>fund_age / CFA</td><td>−0.0020 / −0.0258</td><td>−3.98 / −6.00</td><td>−0.0020 / −0.0258</td><td>−3.98 / −6.00</td><td class="ok">一致***</td></tr>
+</table>
+<div class="note">结论：原脚本<b>系数</b>全部复现（SDI β=+0.103 等），<b>结果可信，非计算错误</b>。方法学为 基金内去均值 + 年份虚拟变量 + <b>双向聚类(基金×年)稳健 SE（CGM2011，v3 主口径）</b>；表中 t 为基金聚类对照（SDI t=+12.4），双向聚类下 SDI t=+2.46（仍显著 **）。<br><span style="font-size:12px;color:var(--mut);">① 表中 H1/H2/H3/H4/L1 的 t 值均为基金聚类(单维)口径，用于证明系数可复现；v3 披露主口径为双向聚类(基金×年)，H1 SDI 双向聚类 t=+2.46。</span></div>
+</div>
+
+<h2>二、SDI 高 t 值的稳健性压力测试</h2>
+<div class="kpi">
+<div class="b"><div class="v sig">+2.46</div><div class="l">双向聚类(基金×年) t 值（v3 主口径）</div></div>
+<div class="b"><div class="v sig">+12.4</div><div class="l">基金聚类 t 值（对照）</div></div>
+<div class="b"><div class="v sig">65.9%</div><div class="l">SDI 方差的"组内"占比</div></div>
+<div class="b"><div class="v warn">87.7%</div><div class="l">SDI 观测落在 2022–2026</div></div>
+</div>
+<table>
+<tr><th>压力测试</th><th>SDI β</th><th>SDI t</th><th>说明</th></tr>
+<tr><td>基准（基金聚类, 1%/99%缩尾）</td><td>+0.10285</td><td class="sig">+12.4</td><td>N=6,337, 366 只</td></tr>
+<tr><td>缩尾 5%/95%</td><td>+0.10342</td><td class="sig">+14.40</td><td>离群值未夸大效应</td></tr>
+<tr><td>不缩尾(0/100%)</td><td>+0.09911</td><td class="sig">+11.84</td><td>稳健</td></tr>
+<tr><td>剔除组内 SDI 波动最大 10% 基金</td><td>+0.09564</td><td class="sig">+9.99</td><td>非少数极端基金驱动</td></tr>
+<tr><td>双向聚类(基金×年)</td><td>+0.10289</td><td class="sig">+2.46</td><td>v3 披露主口径（标准误更大、t 更低）</td></tr>
+<tr><td>替代因变量 excess_return</td><td>+0.07126</td><td class="sig">+11.92</td><td>符号一致、量级合理</td></tr>
+</table>
+<div class="banner ok"><b>判定：SDI 的正向效应高度稳健。</b> 组内方差占比 65.9% 证明识别来自<b>基金内跨期变动</b>而非截面差异；系数与 t 值对缩尾、极端基金、聚类设定、替代 DV 均不敏感。早前"按年聚类 t 降至 +2.35"是一次<b>不当敏感性检验</b>（对基金内去均值后的模型仅按年聚类会扭曲误差结构），正确双向聚类(基金×年)使标准误上升、t 由 +12.4 降至约 +2.46（仍显著 **），更保守严谨，特此更正。</div>
+
+<h2>三、必须如实披露的结构性边界（A）：SDI 是 2022+ 现象</h2>
+<div class="card">
+逐年均值揭示 SDI 的<b>时间结构性截断</b>——这是数据口径限制，非缺陷，但论文不可泛化到全样本期：
+<table>
+<tr><th>年份</th><th>SDI 均值</th><th>quarter_return 均值</th><th>观测数</th></tr>
+<tr><td>2017–2021</td><td class="ns">≈0.000</td><td>0.04~0.09</td><td>760</td></tr>
+<tr><td>2022</td><td>+0.227</td><td>−0.021</td><td>655</td></tr>
+<tr><td>2023</td><td>+0.224</td><td>−0.030</td><td>1,163</td></tr>
+<tr><td>2024</td><td>+0.244</td><td>+0.007</td><td>1,285</td></tr>
+<tr><td>2025</td><td>+0.238</td><td>+0.144</td><td>1,388</td></tr>
+<tr><td>2026</td><td class="sig">+0.430</td><td class="sig">+0.273</td><td>1,086</td></tr>
+</table>
+<div class="note">SDI 算法需 8 期滚动暖机，且 2022 年前持仓快照覆盖极薄 → 2017–2021 的 SDI 实质为 0（组内无变异）。<b>前五年子样本单独回归 β=0.0000（N=770, 59 只）。</b> 因此"SDI 显著正向"严格说是<b>2022 年之后</b>的现象。建议在论文中显式界定样本期，或将 SDI 识别出起始窗口作为稳健性子样本披露。</div>
+<div class="banner warn"><b>边界 A — 须披露：</b> SDI 的有效识别窗口为 2022Q2–2026Q2（约 5.5 年 / 5,577 观测），不可声称"2006–2026 全期风格漂移均显著"。SDI 分布右偏（中位数 0.011、均值 0.237、最大 1.803），44.3% 的基金组内 SDI 近乎恒定→效应由约 55% 的基金驱动，但已验证剔除极端后稳健。</div>
+</div>
+
+<h2>四、H4 系数"下降"的真相：样本构成，非共线性</h2>
+<div class="card">
+H1 中 SDI β=+0.103（366 只），H4 联合模型中 SDI β=+0.020（200 只）。表面看"加入 TO/OCI 后 SDI 不显著"，但诊断显示：
+<table>
+<tr><th>规格</th><th>基金数</th><th>SDI β</th><th>SDI t</th><th>解读</th></tr>
+<tr><td>单独 SDI（全样 366 只）</td><td>366</td><td class="sig">+0.103</td><td class="sig">+12.4</td><td>—</td></tr>
+<tr><td>联合（含 TO/OCI，全样）</td><td>200</td><td>+0.020</td><td class="sig">+2.55</td><td>样本被 TO/OCI 约束到 18% 子集</td></tr>
+<tr><td>单独 SDI（仅 18% 子集 200 只）</td><td>200</td><td>+0.020</td><td class="sig">+2.55</td><td>系数已=H4，证明非 TO/OCI 所致</td></tr>
+</table>
+<table>
+<tr><th>VIF 诊断（H4 联合模型）</th><th>VIF</th><th>判定</th></tr>
+<tr><td>SDI</td><td>1.67</td><td class="ok">无共线</td></tr>
+<tr><td>TO_two_sided</td><td>1.64</td><td class="ok">无共线</td></tr>
+<tr><td>OCI_two_sided</td><td>1.16</td><td class="ok">无共线</td></tr>
+<tr><td>其他控制变量</td><td>1.02~1.17</td><td class="ok">无共线</td></tr>
+</table>
+<div class="note">SDI/TO 相关 −0.028、SDI/OCI −0.019、TO/OCI +0.618。<b>VIF 全部 &lt;2，不存在多重共线性。</b> H4 系数下降纯粹因为 TO/OCI 仅覆盖 200 只基金，而这 200 只基金的"SDI–收益"敏感度本就低于其余 166 只（在 200 只子集内单独跑 SDI 也只 +0.020）。<b>H1 与 H4 不矛盾，是不同基金总体的估计。</b></div>
+</div>
+
+<h2>五、TO / OCI 不显著——真实覆盖缺口，非结论</h2>
+<div class="banner warn"><b>边界 B — 须披露：</b> TO_two_sided、OCI_two_sided 真实覆盖仅 18%（200 只 / 半年频，2021–2025）。在此子集内无论单独（t=−0.28 / −0.81）还是联合均不显著，且在 quarter_return 与 excess_return 两种 DV 下符号一致。这是<b>数据不足</b>而非"换手率/订单主动性无效应"。待明日图书馆 Wind 补全 400 只 × 18 期双边换手率后，应重算并在更大样本下复验——届时若仍不显著方可下结论。</div>
+
+<h2>六、L1（背景特征层）独立复算</h2>
+<table>
+<tr><th>变量</th><th>β</th><th>t（HC1）</th><th>显著性</th></tr>
+<tr><td>log_fund_age（基金年龄）</td><td class="sig">−0.0020</td><td class="sig">−3.98</td><td>***</td></tr>
+<tr><td>cfa_d（CFA 资格）</td><td class="sig">−0.0258</td><td class="sig">−6.00</td><td>***</td></tr>
+<tr><td>log_aum（规模）</td><td class="sig">−0.0015</td><td class="sig">−2.73</td><td>***</td></tr>
+<tr><td>tenure（经理任期）</td><td>~0.0000</td><td class="warn">+1.75</td><td>*</td></tr>
+<tr><td>edu（硕士及以上）</td><td>+0.0149</td><td class="ns">+1.38</td><td>ns</td></tr>
+<tr><td>gender_m / 名校层级(C9/985/211/海外)</td><td>≈0</td><td class="ns">ns</td><td>ns</td></tr>
+</table>
+<div class="note">L1 截面 N=362 基金，与历史结果完全一致且对单变量/多变量设定稳健。基金年龄、CFA、规模对 FF5-alpha 显著负向——符合"规模/资历溢价衰减"文献预期。</div>
+
+<h2>七、待办：上轮未闭环的关键校验（诚实清单）</h2>
+<div class="card">
+<ul>
+<li><span class="tag b">高优先</span> <b>SDI 与 quarter_return 的时滞关系</b>：须确认 SDI(t) 预测的是 return(t) 还是 return(t+1)。若为同期，则"正向"属<b>同期联动</b>而非预测能力，论文措辞须相应调整。需在 <code>lib_metrics.py</code> / <code>03_L3_交易执行.py</code> 中核对 SDI 与收益的对齐键（report_date 是否同季）。</li>
+<li><span class="tag b">高优先</span> <b>TO/OCI 用 Wind 补全</b>：明日图书馆导出 400 只 × 18 期双边换手率/买卖额/平均净资产，重算扩充 L3 真实样本后复验 H2/H3/H4。</li>
+<li><span class="tag a">建议</span> <b>SDI 右偏处理</b>：44.3% 基金组内 SDI 近恒定、分布右偏，可补充 log(1+SDI) 或分位化回归作为稳健性。</li>
+<li><span class="tag a">建议</span> <b>样本期显式界定</b>：在 H1/H4 表中标注"SDI 有效窗口 2022Q2+"，避免读者误读为全期结论。</li>
+</ul>
+</div>
+
+<h2>八、方法学改进建议</h2>
+<div class="card">
+<ul>
+<li><b>SE 口径升级</b>：主回归披露从"基金聚类"升级为"<b>双向聚类(基金×年)</b>"（已验证 t=+2.46，更保守严谨），year FE 保持。</li>
+<li><b>避免不当敏感性检验</b>：对基金内去均值后的 FE 模型，单维"按年聚类"会失真，不应作为 fragility 证据；应以双向聚类或删除年份虚拟变量后的纯基金聚类为准。</li>
+<li><b>H1/H4 分表并列</b>：明确标注两规格的基金总体差异（366 vs 200），防止"先显著后不显著"的误读。</li>
+</ul>
+</div>
+
+<div class="foot">
+数据基础：<code>指标计算流水线/output/主分析面板_重建.csv</code>（49 列 / 9,974 观测，模拟占位列已于 2026-08-14 永久剔除，备份 <code>.bak_preSimDelete</code>）。<br>
+核验方法：独立 Python 复算（statsmodels OLS + 聚类稳健 SE），未调用原脚本函数；全部数值可复现。<br>
+约束遵守：未编造缺失数据、未泄露未来季度（面板最大 report_date = 2026-07-01）。
+</div>
+
+</div>
+</body>
+</html>

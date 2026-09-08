@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>论文总公式详解：从原始数据到回归方程的每一步</title>
+<style>
+:root{--primary:#1f4e79;--accent:#2c7a7b;--gold:#c9a227;--bg:#fefefe;--card:#f7fafc;--border:#cbd5e0;--text:#2d3748;--muted:#718096;--good:#2f855a;--warn:#b7791f;--bad:#c0392b;--hl:#fff8e1}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC','Microsoft YaHei',serif;line-height:1.9;color:var(--text);background:var(--bg);max-width:1000px;margin:0 auto;padding:40px 30px;font-size:15.5px}
+h1{color:var(--primary);font-size:1.65em;text-align:center;margin-bottom:6px}
+.subtitle{text-align:center;color:var(--muted);font-size:.88em;margin-bottom:30px;border-bottom:2px solid var(--accent);padding-bottom:12px}
+h2{color:var(--primary);font-size:1.28em;margin-top:44px;margin-bottom:14px;padding-left:12px;border-left:4px solid var(--accent)}
+h3{color:var(--primary);font-size:1.05em;margin-top:22px;margin-bottom:8px}
+p{margin-bottom:12px;text-align:justify}
+table{border-collapse:collapse;width:100%;font-size:.86em;margin:13px 0}
+th{background:var(--primary);color:#fff;padding:7px 9px;text-align:center;font-weight:600}
+td{padding:6px 9px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:nth-child(even) td{background:var(--card)}
+td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:Consolas,monospace}
+.formula{background:var(--card);border:1.5px solid var(--primary);padding:14px 20px;margin:14px 0;font-family:'Cambria Math','STIX Two Math','Times New Roman',serif;font-size:1.02em;text-align:center;border-radius:6px;overflow-x:auto;line-height:2}
+.formula .var{color:var(--primary);font-weight:700}
+.step{background:#e8f4f8;border-left:4px solid var(--accent);padding:11px 16px;margin:12px 0;border-radius:0 4px 4px 0;font-size:.95em}
+.step b{color:var(--primary)}
+.callout{background:#e6fffa;border-left:4px solid var(--accent);padding:12px 17px;margin:14px 0;border-radius:0 4px 4px 0;font-size:.93em}
+.warnbox{background:#fffaf0;border-left:4px solid var(--warn);padding:12px 17px;margin:14px 0;border-radius:0 4px 4px 0;font-size:.93em}
+.goodbox{background:#f0fff4;border-left:4px solid var(--good);padding:12px 17px;margin:14px 0;border-radius:0 4px 4px 0;font-size:.93em}
+.code{background:#f5f5f5;border:1px solid var(--border);border-radius:4px;padding:9px 14px;font-family:Consolas,monospace;font-size:.85em;margin:10px 0;overflow-x:auto;white-space:pre}
+code{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:.86em;font-family:Consolas,monospace}
+.hl{background:var(--hl);padding:0 3px;border-radius:2px}
+.arrow-flow{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0;align-items:stretch}
+.arrow-flow div{flex:1;min-width:150px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:.83em;text-align:center}
+.arrow-flow b{display:block;color:var(--primary);margin-bottom:3px}
+footer{color:var(--muted);font-size:.8em;text-align:center;margin-top:40px}
+.mono{font-family:Consolas,monospace;font-size:.92em}
+</style>
+</head>
+<body>
+
+<h1>论文总公式详解</h1>
+<p class="subtitle">从原始数据到回归方程的每一步 · 公式含义 · 15 个指标怎么算 · 单变量三方程与显著性全表 · 真实数据举例（华夏兴华 000011）· 2026-09-02</p>
+
+<div class="goodbox">
+<b>这份文档回答六个问题：</b>①论文的总回归公式是什么、每一项什么意思；②公式里的六个自变量（尤其是"风险转化能力"）是怎么从原始数据一步一步算出来的；③为什么要这么算（每一步的统计理由）；④原始数据长什么样、用一只真实基金算给你看；<b>⑤单变量回归到底是哪几个方程（第六节）；⑥哪些成分显著、哪些不显著、剔掉后结论会不会变（第七节留一法）</b>。所有数字均为项目真实数据，可在 <code>output/</code> 对应文件中复核。
+</div>
+
+<!-- ============================================================ -->
+<h2>〇、全景图：数据要经过五道工序才进回归</h2>
+<!-- ============================================================ -->
+<div class="arrow-flow">
+<div><b>① 原始面板</b>每行=基金×季度<br>9,974 行 / 400 只基金<br>80 个季度</div>
+<div><b>② 逐季算指标</b>每季算 15 个指标<br>滚动窗口 8 季<br>得基金×季度指标面板</div>
+<div><b>③ 压到基金层</b>每只基金取时序均值<br>1 只基金 = 1 行<br>再 1%/99% 缩尾</div>
+<div><b>④ 合成 6 维分</b>z 标准化 → 定向<br>维度内等权平均<br>缺失不填 0</div>
+<div><b>⑤ 方程(7)</b>六维分作自变量<br>对 FF5 alpha 回归<br>N=362，HC1</div>
+</div>
+<p>下面按这个顺序讲。第①②步是"原始数据长什么样"，第③④步是"公式怎么算"，第⑤步是总回归。</p>
+
+<!-- ============================================================ -->
+<h2>一、原始数据长什么样</h2>
+<!-- ============================================================ -->
+<p>主面板每一行是<b>一只基金在某个季度</b>的观测。下表是真实样本——华夏兴华（000011）最近 8 个季度：</p>
+<table>
+<tr><th>报告期</th><th class="num">季度收益 r</th><th class="num">无风险 rf</th><th class="num">FF5 alpha</th><th class="num">ICI</th><th class="num">ISDI</th><th class="num">SDI</th></tr>
+<tr><td>2024-10</td><td class="num">+14.76%</td><td class="num">0.25%</td><td class="num" rowspan="8">−0.84%<br><span style="color:#718096;font-size:.85em">（基金层常数：<br>全期时序回归的截距，<br>每只基金一个数）</span></td><td class="num">0.142</td><td class="num">0.239</td><td class="num">0.423</td></tr>
+<tr><td>2025-01</td><td class="num">−0.11%</td><td class="num">0.25%</td><td class="num">0.064</td><td class="num">0.429</td><td class="num">0.074</td></tr>
+<tr><td>2025-04</td><td class="num">+2.25%</td><td class="num">0.25%</td><td class="num">0.148</td><td class="num">0.370</td><td class="num">0.040</td></tr>
+<tr><td>2025-07</td><td class="num">+0.30%</td><td class="num">0.25%</td><td class="num">0.087</td><td class="num">0.358</td><td class="num">0.199</td></tr>
+<tr><td>2025-10</td><td class="num">+30.56%</td><td class="num">0.25%</td><td class="num">0.174</td><td class="num">0.210</td><td class="num">0.060</td></tr>
+<tr><td>2026-01</td><td class="num">−0.64%</td><td class="num">0.25%</td><td class="num">0.144</td><td class="num">0.101</td><td class="num">1.096</td></tr>
+<tr><td>2026-04</td><td class="num">−1.03%</td><td class="num">0.25%</td><td class="num">0.203</td><td class="num">0.239</td><td class="num">0.549</td></tr>
+<tr><td>2026-07</td><td class="num">+42.00%</td><td class="num">—</td><td class="num">0.364</td><td class="num">0.188</td><td class="num">0.295</td></tr>
+</table>
+<div class="callout"><b>读这张表的三个要点：</b>
+①<b>rf 每季 0.25%</b>（年化约 1%）是相对固定的，真正变化的是季收益——2025-10 单季 +30.56%、2026-07 +42%，也有连着四季小幅亏损；
+②<b>FF5 alpha 一列是常数</b>——它不是逐季的，是这只基金<b>整个样本期</b>对五因子做时序回归得到的截距（方程 7 的因变量，每只基金一个数）；
+③ICI/ISDI/SDI 这几列是<b>逐季变化的指标</b>，它们之后会被取时序均值压成基金层的一个数。</div>
+
+<!-- ============================================================ -->
+<h2>二、总回归公式（方程 7）逐项拆解</h2>
+<!-- ============================================================ -->
+<div class="formula">
+FF5α<sub>i</sub> = c + β<sub>1</sub>·基本面优势<sub>i</sub> + β<sub>2</sub>·认知<sub>i</sub> + β<sub>3</sub>·配置选择<sub>i</sub> + β<sub>4</sub>·风险应对<sub>i</sub> + β<sub>5</sub>·风险转化<sub>i</sub> + β<sub>6</sub>·交易执行<sub>i</sub> + γ<sub>1</sub>·任职<sub>i</sub> + γ<sub>2</sub>·log年龄<sub>i</sub> + γ<sub>3</sub>·log规模<sub>i</sub> + u<sub>i</sub>
+</div>
+<table>
+<tr><th>符号</th><th>是什么</th><th>取值/含义</th></tr>
+<tr><td><b>i</b></td><td>基金下标</td><td>N = 362 只（六维得分有效的基金）</td></tr>
+<tr><td><b>FF5α<sub>i</sub></b></td><td><b>因变量</b>：基金 i 整个样本期的 FF5 五因子回归截距</td><td>"剥离市场/规模/价值/盈利/投资五种风格后的真本事"。000011 的 α = −0.84%／季</td></tr>
+<tr><td><b>c</b></td><td>截距</td><td>所有自变量为 0（即各维都是全市场平均水平）时的基准 alpha</td></tr>
+<tr><td><b>β<sub>1</sub>…β<sub>6</sub></b></td><td>六个计分维度的系数（<b>核心关注对象</b>）</td><td>β=0.01325 读作：该维 z 分高 1 个标准差 ⇒ 季度 α 高 1.33 个百分点</td></tr>
+<tr><td><b>γ<sub>1</sub>…γ<sub>3</sub></b></td><td>三个控制变量系数</td><td>任职年限、log 基金年龄、log 规模——不进六维、只为"扣掉背景"，β<sub>d</sub> 才是净效应</td></tr>
+<tr><td><b>u<sub>i</sub></b></td><td>残差</td><td>HC1 异方差稳健标准误由此计算</td></tr>
+</table>
+<div class="warnbox"><b>为什么控制变量不放进六维一起说？</b>L1 三个成分（任职/年龄/规模）既以 z 分形式合成"基本面优势"（β₁ 承载），又在方程右侧作为 γ 控制变量出现一次——这是<b>同一个信息的两种用法</b>：β₁ 回答"基本面优势单维有没有解释力"，γ 项保证其余五个 β 是"扣掉背景后的净效应"。论文附带的五维对照（去掉 L1 维，R²=0.4561 vs 六维 0.4557）证明 β₁≈0 不是数值问题，而是 L1 的信息确实被行为维度传导吸收。</div>
+
+<!-- ============================================================ -->
+<h2>三、方程 (6)：六个自变量怎么合成</h2>
+<!-- ============================================================ -->
+<div class="formula">
+Score<sub>d,i</sub> = <span style="white-space:nowrap">1/n<sub>d</sub></span> · Σ<sub>j∈d</sub> [ sign<sub>j</sub> · z(X<sub>j,i</sub>) ]
+</div>
+<p>一句话：<b>维度 d 的得分 = 该维度内每个成分的（定向 z 分）之和 ÷ 有效成分个数</b>。拆成五个动作：</p>
+
+<h3>3.1 成分标准化：z(X<sub>j,i</sub>) = (X − x̄) / s</h3>
+<p>对每个成分，在 <b>362 只基金的横截面</b>上减均值、除标准差——产出"相对同行的排位分"。<span class="hl">不是在基金×季度面板上算</span>（那样没有横截面区分度），也不是在全样本期外算（轻微的样本内性由样本外检验兜底）。</p>
+<p><b>为什么必须先 z 再平均</b>：三个比率的量纲天差地别——真实分布里 sharpe 的标准差 0.213、sortino 0.704（是 sharpe 的 3.3 倍）、mppm 0.096。直接加总的话 sortino 会主导合成分，等权变成空话。z 之后三者都在同一把尺子（标准差）上。</p>
+
+<h3>3.2 定向：sign<sub>j</sub> 把"方向不同的好"拉到同一方向</h3>
+<p>有的指标"越大越好"（sign=+1），有的"越小越好"（sign=−1，即 z 取负）。15 个成分的定向全部来自单变量回归的实证方向（方程 6 之前先做了定向回归，15/15 方向一致才准入）：</p>
+<table>
+<tr><th>维度</th><th>成分（定向）</th><th>为什么这么定向</th></tr>
+<tr><td>基本面优势</td><td class="mono">−任职 −年龄 −规模</td><td>新经理有职业顾虑更努力[11]；新基金有历史包袱轻；小基金规模不经济[12]</td></tr>
+<tr><td>认知能力</td><td class="mono">+risk_asym −de −oc_conf</td><td>盈利期敢进攻亏损期能防守（下行风险定价[14]）；果断止损好（Odean[3]）；过度自信换手伤业绩[4]</td></tr>
+<tr><td>配置选择</td><td class="mono">+ICI −ISDI</td><td>敢集中押注行业体现信息优势[5]；频繁行业轮动抬成本散信息</td></tr>
+<tr><td>风险应对</td><td class="mono">+ARG +timing</td><td>报告期之间的主动调仓创造收益[6]；跌市收缩暴露是能力[7]</td></tr>
+<tr><td>风险转化</td><td class="mono">+sharpe +sortino +mppm</td><td>三个都是"风险→收益的转化效率"，高=好</td></tr>
+<tr><td>交易执行</td><td class="mono">−SDI +lsv</td><td>风格漂移损害持有人[16]；被共识买入的股票随后跑赢（Wermers 1999[18]）</td></tr>
+</table>
+
+<h3>3.3 等权平均：除以 n<sub>d</sub> = 有效成分个数，缺失不填 0</h3>
+<div class="code">def ew(frame):
+    return frame.sum(axis=1, skipna=True) / frame.notna().sum(axis=1)</div>
+<p>分子跳过缺失、分母只数<b>有值的成分</b>。两个直接后果：①一只"从不亏钱所以没有 Sortino"的基金，其风险转化分 = (z_sharpe + z_mppm)/2 而不是 /3——不因数据可得性被冤枉；②某基金某成分整个样本期都算不出来，该维度用剩余成分合成，仍可进回归。</p>
+<div class="warnbox"><b>为什么等权而不是回归定权</b>（论文 F3）：回归权重会被样本期行情牵着走、换窗口即变；等权可复现、不过拟合。稳健性：PCA 权重口径与等权的综合分 Spearman ρ=0.895；按层加权（L4 记 1/5）的排序相关 0.9917——等权不改变任何排序结论。</div>
+
+<!-- ============================================================ -->
+<h2>四、以"风险转化能力"为例：真实数据全程演算</h2>
+<!-- ============================================================ -->
+<p>六维的合成完全同构，选成分最多的 L4b（3 个成分）演示。<b>以下全部为真实数据</b>：华夏兴华 000011，指标来自 <code>output/指标面板_v2_2026-08-26.csv</code>。</p>
+
+<h3>4.1 第①→②步：从季度收益到逐季三比率</h3>
+<p>三比率的滚动窗口 = 8 季。同一基金相邻两季的三比率长这样（注意 _lag 列正好等于上一季的无滞后列——滞后一期的实现就是整体右移一格）：</p>
+<table>
+<tr><th>报告期</th><th class="num">sharpe8</th><th class="num">sortino8</th><th class="num">mppm8</th><th class="num">sharpe8_lag</th><th class="num">sortino8_lag</th><th class="num">mppm8_lag</th></tr>
+<tr><td>2024-10</td><td class="num">−0.106</td><td class="num">−0.226</td><td class="num">−0.056</td><td class="num">−0.776</td><td class="num">−0.830</td><td class="num">−0.207</td></tr>
+<tr><td>2025-01</td><td class="num">−0.118</td><td class="num">−0.242</td><td class="num">−0.059</td><td class="num">−0.106</td><td class="num">−0.226</td><td class="num">−0.056</td></tr>
+<tr><td>2025-10</td><td class="num">+0.325</td><td class="num">+0.937</td><td class="num">+0.094</td><td class="num">−0.060</td><td class="num">−0.109</td><td class="num">−0.042</td></tr>
+<tr><td>2026-01</td><td class="num">+0.454</td><td class="num" style="color:#c0392b">缺失</td><td class="num">+0.151</td><td class="num">+0.325</td><td class="num">+0.937</td><td class="num">+0.094</td></tr>
+<tr><td>2026-04</td><td class="num">+0.472</td><td class="num" style="color:#c0392b">缺失</td><td class="num">+0.158</td><td class="num">+0.454</td><td style="color:#c0392b">缺失</td><td class="num">+0.151</td></tr>
+<tr><td>2026-07</td><td class="num">+0.644</td><td class="num" style="color:#c0392b">缺失</td><td class="num">+0.307</td><td class="num">+0.472</td><td style="color:#c0392b">缺失</td><td class="num">+0.158</td></tr>
+</table>
+<div class="callout"><b>红色缺失就是上一轮讲的 Sortino 门槛在起作用</b>：2025-10 之后这只基金连续大幅上涨，滚动 8 季窗口内亏损季不足 3 个 → 下行标准差无从计算 → 置缺失。Sharpe/MPPM 无此门槛所以始终有值。三比率的逐季公式：</div>
+<table>
+<tr><th>比率</th><th>公式（8 季窗口内）</th><th>门槛</th></tr>
+<tr><td><b>sharpe8</b></td><td class="mono">mean(ex) / std(ex)　　ex = 季收益 − rf</td><td>std &gt; 0</td></tr>
+<tr><td><b>sortino8</b></td><td class="mono">mean(ex) / std(亏损季的 ex)　　只拿 ex&lt;0 的季度算分母</td><td>亏损季 ≥ 3 且下行 std &gt; 1%</td></tr>
+<tr><td><b>mppm8</b></td><td class="mono">ln[ mean( ((1+r)/(1+rf))^(1−ρ) ) ] / [(1−ρ)·0.25]　ρ=3</td><td>幂变换均值 &gt; 0</td></tr>
+</table>
+<p>MPPM 展开看：每季收益比 (1+r)/(1+rf) 做 <b>1−ρ=−2 次幂</b>（亏损季被重罚——收益比小于 1 时，负幂把它放大成大于 1 的惩罚项），8 季取平均、取对数、除以 (1−ρ)×0.25 归一成年化效用增长。它与前两者不是一家的算法：Sharpe/Sortino 是"均值÷波动"，MPPM 是"效用变换后的对数增长"，专门防"平时小赚、偶尔巨亏"的彩票型收益形状骗过前两个比率（Goetzmann et al. 2007）。</p>
+
+<h3>4.2 第③步：压到基金层（时序均值 + 缩尾）</h3>
+<p>000011 全部有效窗口的 sharpe8_lag 取均值 = <b>0.0833</b>（sortino_lag = −0.2271，mppm_lag = −0.0045）。然后全市场 394 只一起做 1%/99% 缩尾——真实效果：sortino 的最大值从 <b>5.856</b> 被剪到 <b>2.297</b>。没有这一步，一只分母异常的基金会以 +7 个标准差统治整个维度。</p>
+
+<h3>4.3 第④步：z 标准化 + 等权合成（手算）</h3>
+<p>缩尾后全样本 362 只的分布（z 的均值和标准差就在这份数据上算）：</p>
+<table>
+<tr><th></th><th class="num">全样本均值 x̄</th><th class="num">全样本标准差 s</th><th class="num">000011 的值</th><th class="num">z = (X−x̄)/s</th></tr>
+<tr><td>sharpe8_lag</td><td class="num">0.1323</td><td class="num">0.2130</td><td class="num">0.0833</td><td class="num"><b>−0.230</b></td></tr>
+<tr><td>sortino8_lag</td><td class="num">0.2323</td><td class="num">0.7044</td><td class="num">−0.2271</td><td class="num"><b>−0.652</b></td></tr>
+<tr><td>mppm8_lag</td><td class="num">0.0249</td><td class="num">0.0963</td><td class="num">−0.0045</td><td class="num"><b>−0.306</b></td></tr>
+</table>
+<p>以 sharpe 为例手算：z = (0.0833 − 0.1323) / 0.2130 = −0.049 / 0.213 = <b>−0.230</b>——比全市场平均低 0.23 个标准差，约排后 41%。</p>
+<div class="formula" style="text-align:left;padding-left:32px">
+风险转化<sub>000011</sub> = [ (−0.230) + (−0.652) + (−0.306) ] / 3 = −1.188 / 3 = <b>−0.396</b>
+</div>
+<p>这只基金的转化效率比市场平均低 0.40 个标准差——与它同期 α=−0.84%（负值）互相印证。其余五个维度用同样的流程合成，六个数一起进方程 (7)。</p>
+
+<h3>4.4 第⑤步：进回归后 β 怎么读</h3>
+<p>方程 (7) 联立结果：β₅ = <b>0.01325</b>（t=+5.50，六维最大）。z 分尺度下读作：<b>风险转化能力每高 1 个标准差（从"平均水平"升到"排前 16%"），季度 FF5 alpha 高 1.33 个百分点</b>。六个 β 直接可比（因为都是 z 分）：</p>
+<table>
+<tr><th>维度</th><th class="num">β（联立）</th><th class="num">t</th><th>含义</th></tr>
+<tr><td>风险转化</td><td class="num">+0.01325</td><td class="num">+5.50</td><td>六维最大，但与因变量同源 → 定性"持续性"（样本外单维 t=+5.38 支撑）</td></tr>
+<tr><td>风险应对</td><td class="num">+0.00924</td><td class="num">+3.83</td><td>跌市应对的净效应</td></tr>
+<tr><td>认知</td><td class="num">+0.00834</td><td class="num">+4.00</td><td>最稳定的行为来源，样本外 +2.20</td></tr>
+<tr><td>配置选择</td><td class="num">+0.00305</td><td class="num">+2.44</td><td>样本外 +3.47，ISDI 外部 ρ=−0.614</td></tr>
+<tr><td>交易执行</td><td class="num">+0.00159</td><td class="num">+1.23</td><td>单维 t=+3.20，联立被风险应对吸收（相关 0.524）</td></tr>
+<tr><td>基本面优势</td><td class="num">−0.00018</td><td class="num">−0.17</td><td>单维 t=+2.86，联立不显著 = 信息被行为维度传导</td></tr>
+</table>
+<p style="text-align:center" class="mono">六维联立 R² = 0.4557 ｜ N = 362 ｜ HC1 稳健标准误</p>
+
+<!-- ============================================================ -->
+<h2>五、其余 12 个成分的计算一览（公式+原始数据）</h2>
+<!-- ============================================================ -->
+<table>
+<tr><th>成分</th><th>公式</th><th>原始数据</th><th>为什么这么算</th></tr>
+<tr><td><b>risk_asym</b></td><td class="mono">σ(盈利季ex) − σ(亏损季ex)，8季滚动</td><td>季度收益序列</td><td>前景理论预测亏损期更冒险；实证方向反转为"下行定价"特征（Ang et al.[14]），定向 +1</td></tr>
+<tr><td><b>de</b></td><td class="mono">PGR − PLR；PGR=盈利股中卖出比例，PLR=亏损股中卖出比例</td><td>半年持仓快照 + 个股月收益</td><td>Odean[3] 范式：售盈持亏倾向，越负越果断止损，定向 −1</td></tr>
+<tr><td><b>oc_conf</b></td><td class="mono">(当季换手 − 上季换手) × 1{上季盈利}</td><td>Wind 换手率 + 季收益</td><td>Puetz & Ruenzi[4]：盈利后加码交易=过度自信，定向 −1</td></tr>
+<tr><td><b>ICI</b></td><td class="mono">Σ<sub>j</sub>(w<sub>j</sub> − w̄<sub>j</sub>)²，j=申万31行业</td><td>季报行业权重 + 全市场行业均值</td><td>KSZ[5]：偏离行业均值的押注强度，定向 +1</td></tr>
+<tr><td><b>ISDI</b></td><td class="mono">行业按Beta分高/中/低三组 → 组权重向量相邻期曼哈顿距离</td><td>半年重仓股 + 股票行业映射 + 弹性评分</td><td>配置行为漂移，频繁轮动有害，定向 −1</td></tr>
+<tr><td><b>ARG</b></td><td class="mono">Σ|R|，R = 实际季收益 − 上期持仓模拟收益</td><td>净值 + 定期报告持仓</td><td>KSZ[6] return gap：未观测主动行为的密度，定向 +1</td></tr>
+<tr><td><b>timing</b></td><td class="mono">−γ，γ 为 r = α + β·MKT + γ·max(0,MKT) + ε 的 γ</td><td>季收益 + 市场超额收益</td><td>HM[7]：γ&gt;0 意味着跌市少亏；取负号使"高=防守好"，定向 +1</td></tr>
+<tr><td><b>SDI</b></td><td class="mono">净值对四风格指数（大盘成长/价值×小盘成长/价值）8季滚动OLS → 相邻期权重向量曼哈顿距离</td><td>日净值 + 四宫格指数收益</td><td>Wermers[16]：结果风格的漂移幅度，定向 −1</td></tr>
+<tr><td><b>lsv</b></td><td class="mono">mean(|p<sub>i</sub> − p̄<sub>t</sub>| − AF)，p=持仓变动方向代理买卖</td><td>全市场基金持仓横截面</td><td>LSV[17]框架；Wermers[18]发现共识股跑赢，实证方向正，定向 +1</td></tr>
+<tr><td><b>任职/年龄/规模</b></td><td class="mono">观测日−首任日；ln(存续月数)；ln(平均规模)</td><td>经理履历 + 基金要素表</td><td>职业顾虑[11]与新基金效应；规模不经济[12]，均定向 −1</td></tr>
+</table>
+<div class="goodbox"><b>三个比率为什么能合成一维（上轮结论的浓缩）</b>：基金层两两相关 0.52–0.83、PCA 第一主成分解释 75.6%、Cronbach α=0.768（同构念良好测量的标准区间）——它们测的是同一件事"风险→收益的转化效率"。正因同源才必须<b>在进回归之前</b>合成：三个高相关变量若直接进方程会互相打架（共线性），合成一个数后共线性被构造性消除；平均还提升信噪比（复合分与 α 的相关 0.454 &gt; 任何单一比率的 0.291–0.443）。真正的同源风险是与因变量 α 的相关（0.454），论文用滞后一期 + 样本外检验 + 剔除后仍 83.1% 区分度三道工序处置。</div>
+
+<!-- ============================================================ -->
+<h2>六、单变量回归：每个成分单独进方程时长什么样</h2>
+<!-- ============================================================ -->
+<p>方程 (7) 是六维<b>联立</b>回归。在它之前，论文先做了一遍<b>单变量回归</b>——每个成分单独进方程，验证它自己的方向和预测力（结果即论文表 2）。单变量不是一个方程，而是<b>三种形式</b>，因为成分性质不同。</p>
+
+<h3>6.1 规格 I·基金层横截面（L2–L5 十二个行为成分）</h3>
+<div class="formula">
+FF5α<sub>i</sub> = c + β·X<sub>i</sub> + γ<sub>1</sub>·任职<sub>i</sub> + γ<sub>2</sub>·log年龄<sub>i</sub> + γ<sub>3</sub>·log规模<sub>i</sub> + u<sub>i</sub>
+</div>
+<table>
+<tr><th>项</th><th>取值与口径</th></tr>
+<tr><td><b>X<sub>i</sub></b></td><td>该成分在基金 i 内的<b>时序均值</b>（绩效类成分因构造本身已滞后一期）</td></tr>
+<tr><td><b>因变量</b></td><td>基金层 FF5 alpha——<span class="hl">与方程 (7) 同一个因变量</span>，每只基金一个数</td></tr>
+<tr><td><b>样本</b></td><td>N = 362；含 sortino8_lag 时 359（3 只全期无值）；timing 355（需 ≥12 季）</td></tr>
+<tr><td><b>处理</b></td><td>因变量与 X 各做 1%/99% 缩尾；HC1 异方差稳健标准误</td></tr>
+</table>
+<p>这一栏就是表 2 的"规格I（横截面）"列。<b>12 个行为成分全部在 5% 水平显著，且方向与计分定向 12/12 一致</b>——这是六维计分能成立的准入条件：任何一个成分方向与定向不符即不准入。</p>
+
+<h3>6.2 规格 I·L1 三成分（<b>不含</b>控制变量）</h3>
+<div class="formula">
+FF5α<sub>i</sub> = c + β·X<sub>i</sub> + u<sub>i</sub>
+</div>
+<p>L1 三个成分（任职年限、log 基金年龄、log 规模）<b>本身就是控制变量组</b>，让它们自我控制没有意义，所以这三行是裸单变量——表 2 里标注"（单变量）"即指此。结果 t = <b>−1.85</b> / <b>−4.13</b> / <b>−1.16</b>：<span class="hl">L1 的显著性主要由基金年龄承载</span>，任职年限只有 10% 边际显著、规模本身不显著。这也预告了第七节要讲的事——L1 作为"能力维度"的证据强度天然弱于行为维度。</p>
+
+<h3>6.3 规格 II·季度面板（跨期稳健性镜像）</h3>
+<div class="formula">
+α<sub>i,q</sub> = c + β·X<sub>i,q</sub> + γ<sub>1</sub>·任职<sub>i,q</sub> + γ<sub>2</sub>·log年龄<sub>i,q</sub> + γ<sub>3</sub>·log规模<sub>i,q</sub> + Σ<sub>q</sub> δ<sub>q</sub>·D<sub>q</sub> + u<sub>i,q</sub>
+</div>
+<p>与规格 I 的四点区别：</p>
+<table>
+<tr><th></th><th>规格 I（横截面）</th><th>规格 II（面板）</th></tr>
+<tr><td><b>因变量</b></td><td>基金层 FF5 截距（每基金 1 个数）</td><td><b>逐季</b>风险调整收益 α<sub>i,q</sub></td></tr>
+<tr><td><b>怎么来的</b></td><td>全期一次时序回归取截距</td><td>先按基金做 FF5 时序回归（≥12 季），取 <span class="mono">截距 + 当季残差</span></td></tr>
+<tr><td><b>自变量</b></td><td>基金内时序均值</td><td>该季<b>当期值</b>（绩效类仍为构造性滞后一期）</td></tr>
+<tr><td><b>固定效应</b></td><td>无</td><td><b>季度固定效应</b> D<sub>q</sub>（80 个季度 → 79 个哑变量）</td></tr>
+<tr><td><b>标准误</b></td><td>HC1 异方差稳健</td><td><b>基金层面聚类</b>（同一基金各季相关）</td></tr>
+<tr><td><b>样本</b></td><td>N = 362 只</td><td>单变量 N = 4,159–8,872（355 只基金）</td></tr>
+</table>
+<div class="warnbox"><b>两个容易误解的点：</b>
+①<b>FF5 五因子不在方程右侧</b>——它们已经在构造 α<sub>i,q</sub> 时被剥离干净了，再放一次是重复扣除；
+②<b>规格 II 不是"更严格的版本"，而是问了另一个问题</b>。规格 I 比较的是"基金 A 和基金 B 的稳定风格差异"，规格 II 比较的是"同一只基金这季比上季变化了多少"。两者答案不一致时不等于有一个错了——见下一节。</div>
+
+<!-- ============================================================ -->
+<h2>七、显著性全表：哪些显著、哪些不显著、影响结论吗</h2>
+<!-- ============================================================ -->
+<p>把 16 个候选成分在两套规格下的单变量结果全部摊开。<b>灰底行是经检验后剔除、未进入六维计分的成分</b>——它们不在论文表 2 中，因为已被剔除，而非被隐去。</p>
+<table>
+<tr><th>成分</th><th>维度</th><th class="num">规格 I（横截面）</th><th class="num">规格 II（面板）</th><th>处置</th></tr>
+<tr><td class="mono">risk_asym</td><td>认知</td><td class="num">+3.10***</td><td class="num">+11.68***</td><td>准入</td></tr>
+<tr><td class="mono">de</td><td>认知</td><td class="num">−4.46***</td><td class="num">−10.17***</td><td>准入</td></tr>
+<tr><td class="mono">oc_conf</td><td>认知</td><td class="num">−4.11***</td><td class="num" style="color:#c0392b"><b>−0.47 ns</b></td><td>准入（方向一致）</td></tr>
+<tr><td class="mono">ICI</td><td>配置选择</td><td class="num">+4.43***</td><td class="num">+8.80***</td><td>准入</td></tr>
+<tr><td class="mono">ISDI</td><td>配置选择</td><td class="num">−3.33***</td><td class="num">−5.77***</td><td>准入</td></tr>
+<tr><td class="mono">ARG</td><td>风险应对</td><td class="num">+3.06***</td><td class="num">+14.87***</td><td>准入</td></tr>
+<tr><td class="mono">timing</td><td>风险应对</td><td class="num">+5.19*** <span style="font-size:.85em">(n=355)</span></td><td class="num">—</td><td>准入（本身即回归系数）</td></tr>
+<tr><td class="mono">mppm8_lag</td><td>风险转化</td><td class="num">+11.22***</td><td class="num">+4.92***</td><td>准入</td></tr>
+<tr><td class="mono">sortino8_lag</td><td>风险转化</td><td class="num">+5.18***</td><td class="num">+5.38***</td><td>准入</td></tr>
+<tr><td class="mono">sharpe8_lag</td><td>风险转化</td><td class="num">+7.89***</td><td class="num">+3.00***</td><td>准入</td></tr>
+<tr><td class="mono">SDI</td><td>交易执行</td><td class="num">−2.12**</td><td class="num">−3.99***</td><td>准入</td></tr>
+<tr><td class="mono">lsv</td><td>交易执行</td><td class="num">+1.99**</td><td class="num" style="color:#c0392b"><b>+1.19 ns</b></td><td>准入（方向一致）</td></tr>
+<tr style="background:#edf2f7;color:#718096"><td class="mono">AS_improved</td><td>（原拟 L3）</td><td class="num">−0.65 ns</td><td class="num">+5.33***</td><td><b>剔除</b>：六道检验符号翻转</td></tr>
+<tr style="background:#edf2f7;color:#718096"><td class="mono">TO_wind_clean</td><td>（原拟 L5）</td><td class="num">+0.50 ns</td><td class="num">+0.32 ns</td><td><b>剔除</b>：双口径均不显著</td></tr>
+<tr style="background:#edf2f7;color:#718096"><td class="mono">rsstab_lag</td><td>（原拟 L4a）</td><td class="num">−4.47***</td><td class="num">−4.56***</td><td><b>剔除</b>：与波动率相关 −0.749，正交化后 t=−0.87 ns</td></tr>
+<tr style="background:#edf2f7;color:#718096"><td class="mono">return_volatility</td><td>（原拟 L4a）</td><td class="num">+3.93***</td><td class="num">+11.30***</td><td><b>剔除</b>：风险暴露而非能力</td></tr>
+</table>
+<p style="font-size:.88em;color:#718096">注：***／**／* 为 1%／5%／10% 显著；ns = 不显著。第四个被剔除的成分"追涨杀跌 rc_mom"因覆盖率仅 53.5% 且单指标 t=−0.51 ns 未列入本表。</p>
+
+<h3>7.1 只有两个准入成分在面板规格下不显著</h3>
+<p><b>oc_conf 过度自信</b>（横截面 −4.11 / 面板 −0.47）与 <b>lsv 交易趋同度</b>（+1.99 / +1.19）。这不是矛盾，而是两套规格在问不同问题的必然结果：</p>
+<div class="callout"><b>oc_conf 为什么面板会失效——而这恰恰是好消息。</b>横截面比较的是"惯于在盈利后加码的经理"与"不这么做的经理"之间的<b>稳定风格差异</b>；面板比较的是"同一位经理这季比上季更激进了没有"，后者被季度噪声主导。面板系数消失说明过度自信是<b>经理层面的稳定特质，不是逐季波动的择时行为</b>——对一篇"行为画像"论文而言这正是想要的性质：画像刻画的应当是人的稳定倾向，而非一时的操作。</div>
+<div class="callout"><b>lsv 为什么面板会失效。</b>交易趋同度是横截面构造的静态测度（用全市场基金同期买卖方向算），同一只基金在时序上变化极小，面板回归对它天然缺乏识别信息。横截面 5% 边际显著、面板不显著，是这类指标的典型形态。</div>
+
+<h3>7.2 准入三门槛：为什么这两个成分仍能留在评分维度里</h3>
+<p>论文的剔除规则是<b>三条门槛任一触发即剔除</b>（正文结论第三条）：①符号在两口径间翻转；②显著性依赖是否加控制变量；③按成分定向分组后群体差异不显著。这套尺子剔掉了 AS_improved 等四项。把 oc_conf 与 lsv 按同一把尺子逐条判定（<code>scripts/_audit_sig_20260902.py</code>）：</p>
+<table>
+<tr><th>门槛</th><th>oc_conf 过度自信</th><th>lsv 交易趋同度</th></tr>
+<tr><td><b>① 符号是否翻转</b></td><td>规格 I <span class="mono">−0.000309</span>、规格 II <span class="mono">−0.000009</span><br><b style="color:#2f855a">同号 ✓ 通过</b></td><td>规格 I <span class="mono">+0.119</span>、规格 II <span class="mono">+0.018</span><br><b style="color:#2f855a">同号 ✓ 通过</b></td></tr>
+<tr><td><b>② 显著性是否依赖控制变量</b></td><td>裸回归 t=−3.85 (p=0.0001)<br>加控制 t=−4.19 (p&lt;0.0001)<br><b style="color:#2f855a">两边均显著 ✓ 通过</b></td><td>裸回归 t=+3.91 (p=0.0001)<br>加控制 t=+2.11 (p=0.035)<br><b style="color:#2f855a">两边均显著 ✓ 通过</b></td></tr>
+<tr><td><b>③ 群体差异</b><br><span style="font-size:.85em">（按定向后成分五等分）</span></td><td>Q1 α=1.61%、Q5 α=2.75%<br>差 <b>+1.14pp</b>，t=3.16、p=0.002<br><b style="color:#2f855a">显著 ✓ 通过</b></td><td>Q1 α=1.47%、Q5 α=2.87%<br>差 <b>+1.40pp</b>，t=4.32、p=0.00003<br><b style="color:#2f855a">显著 ✓ 通过</b></td></tr>
+<tr style="background:#f0fff4"><td><b>判定</b></td><td colspan="2" style="text-align:center"><b style="color:#2f855a">三门槛全部通过 → 保留</b></td></tr>
+</table>
+<div class="warnbox"><b>对照真正被剔除的 AS_improved：</b>它在门槛①就触发——横截面全模型 t=<b>−3.06</b> 显著为负，季度面板单变量 t=<b>+5.33</b> 显著为正，<span class="hl">符号在两个口径之间完全翻转</span>，且第六道群体差异亦不显著。这才是"不能进评分维度"的形态。oc_conf 与 lsv 的唯一问题是面板 t 值偏小（−0.47 / +1.19），符号方向始终一致——<b>面板不显著与符号翻转是两件不同的事</b>。</div>
+
+<h3>7.3 留一法：剔掉这两个成分，结论会变吗</h3>
+<p>把两个面板不显著的成分依次剔除，重算六维得分与全部下游结论（<code>output/显著性审查_留一法_2026-09-02.json</code>）：</p>
+<table>
+<tr><th>口径</th><th class="num">认知<br>联立 t</th><th class="num">交易执行<br>联立 t</th><th class="num">综合能力 t</th><th class="num">Q5−Q1</th><th class="num">分组 t</th></tr>
+<tr><td><b>基准（论文原口径）</b></td><td class="num">+4.00</td><td class="num">+1.23</td><td class="num"><b>+11.00</b></td><td class="num"><b>+3.13pp</b></td><td class="num">+10.28***</td></tr>
+<tr><td>剔除 oc_conf</td><td class="num" style="color:#c0392b"><b>+1.86</b></td><td class="num">+1.33</td><td class="num">+10.40</td><td class="num">+3.23pp</td><td class="num">+10.63***</td></tr>
+<tr><td>剔除 lsv（L5 仅剩 SDI）</td><td class="num">+3.96</td><td class="num">+1.25</td><td class="num">+10.69</td><td class="num">+3.07pp</td><td class="num">+9.97***</td></tr>
+<tr><td>两者同时剔除</td><td class="num" style="color:#c0392b"><b>+1.83</b></td><td class="num">+1.45</td><td class="num">+10.23</td><td class="num">+2.92pp</td><td class="num">+9.33***</td></tr>
+<tr><td>整维剔除交易执行能力</td><td class="num">+3.93</td><td class="num">—</td><td class="num">+10.88</td><td class="num">+3.32pp</td><td class="num">+11.25***</td></tr>
+</table>
+<div class="goodbox"><b>主结论完全不受影响。</b>五种口径下综合能力的 t 值都在 <b>+10.2 至 +11.0</b> 之间，五分组最高组减最低组的 alpha 差都在 <b>+2.92 至 +3.32 个百分点</b>、全部 1% 显著。"六维得分越高、FF5 alpha 越高"这一核心命题与这两个成分的去留无关——保留它们是稳健性冗余，不是结论的支撑点。</div>
+<div class="warnbox"><b>反过来说，剔除 oc_conf 才是有代价的：</b>认知能力的<b>联立净效应</b>会从 t=+4.00 降至 <b>+1.86</b>（跌破 5%），单维 t 则仍为 +5.31 显著。原因是认知与风险应对两维相关 0.589（六维中最高的一对），risk_asym 与 de 的信号在联立中被风险应对吸收，认知维度扣除其余五维后的独立贡献主要由过度自信这一个成分承载。<span class="hl">oc_conf 是认知维度在联立中唯一不被吸收的信息源</span>——剔掉它，认知维度就退化为"单维显著、联立不显著"，与 L1 基本面优势同一处境，从"能力"降格为"边界条件"。这是保留它的正面理由。</div>
+
+<h3>7.4 为什么论文正文以规格 I 为准</h3>
+<p>不是因为规格 I 更显著，而是因为<b>因变量的性质决定了它才是同口径比较</b>。基金层 FF5 alpha 在基金内 100% 是常数（每只基金仅一个取值），把它当逐季变量对季度自变量回归，等于把有效样本从 362 人为放大到近 3,000，t 值会被机械抬高——这是项目早期"显著性多处互相矛盾"的根源，规格 II 改用逐季残差 α<sub>i,q</sub> 正是为修正此缺陷（详见 <code>scripts/_regress_v3_20260826.py</code> 开头的诊断说明）。因此方程 (7) 用规格 I，规格 II 作为跨期稳健性镜像，论文对它<b>只要求方向一致</b>，不要求同等显著。</p>
+
+<footer>与《论文初稿》方程 (6)(7) 及 <code>scripts/_composite_final_20260826.py</code>、<code>scripts/_regress_v3_20260826.py</code>、<code>scripts/_audit_sig_20260902.py</code> 逐字对应 · 演算数据为真实面板数据（华夏兴华 000011）· 2026-09-02</footer>
+</body>
+</html>

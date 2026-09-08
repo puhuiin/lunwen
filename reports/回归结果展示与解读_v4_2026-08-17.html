@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>回归结果展示与解读 · 基金经理行为指标研究（v4）</title>
+<style>
+*{box-sizing:border-box;}
+body{font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;margin:0;background:#f4f6f9;color:#1a1f29;line-height:1.7;}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 24px 80px;}
+header.hero{background:linear-gradient(135deg,#1f3b57,#2c5f8a);color:#fff;border-radius:14px;padding:30px 34px;box-shadow:0 6px 24px rgba(31,59,87,.25);}
+header.hero h1{margin:0 0 8px;font-size:25px;letter-spacing:.5px;}
+header.hero p{margin:4px 0;font-size:13.5px;opacity:.92;}
+.kpis{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;}
+.kpi{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:12px 16px;min-width:120px;}
+.kpi b{display:block;font-size:21px;line-height:1.2;}
+.kpi span{font-size:11.5px;opacity:.85;}
+section{background:#fff;border-radius:12px;padding:26px 30px;margin:22px 0;box-shadow:0 2px 10px rgba(0,0,0,.05);}
+section h2{font-size:19px;color:#1f3b57;margin:0 0 6px;border-left:5px solid #2c5f8a;padding-left:12px;}
+section h3{font-size:15px;color:#2c5f8a;margin:22px 0 8px;}
+.lead{color:#555;font-size:13.5px;margin:0 0 14px;}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;margin:8px 0 4px;color:#444;}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;}
+.box{border-radius:10px;padding:14px 18px;margin:14px 0;font-size:13.5px;}
+.box.note{background:#eef6ff;border-left:4px solid #2b7de9;}
+.box.key{background:#eafaf1;border-left:4px solid #1e7a34;}
+.box.warn{background:#fff7e6;border-left:4px solid #fa8c16;}
+.box.danger{background:#fff1f0;border-left:4px solid #cf1322;}
+.box b{color:#233;}
+table.tbl{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0;}
+table.tbl th,table.tbl td{border:1px solid #e2e6ec;padding:8px 10px;text-align:center;}
+table.tbl th{background:#2c5f8a;color:#fff;font-weight:600;}
+table.tbl td:first-child,table.tbl th:first-child{text-align:left;}
+.gA{background:#e6f4ea;color:#1e7a34;font-weight:700;}
+.gB{background:#fff4e5;color:#b26a00;font-weight:700;}
+.gC{background:#fdecea;color:#b3261e;font-weight:700;}
+.cv-grid{display:grid;grid-template-columns:140px repeat(4,1fr);gap:6px;align-items:center;margin-top:10px;}
+.cv-head{background:#2c5f8a;color:#fff;text-align:center;font-size:12.5px;padding:8px 4px;border-radius:6px;font-weight:600;}
+.cv-row-lab{font-size:13px;font-weight:600;color:#233;}
+.cv-cell{border-radius:8px;padding:10px 6px;text-align:center;font-size:12px;}
+.cv-mark{display:block;font-size:18px;font-weight:800;}
+.cv-val{display:block;font-size:11px;margin-top:2px;opacity:.9;}
+.flow{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 14px;}
+.step{flex:1;min-width:150px;background:#f7f9fc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px;}
+.step .st{font-size:11px;color:#2c5f8a;font-weight:700;letter-spacing:.5px;}
+.step .sd{font-size:13px;margin-top:3px;}
+.step.done{background:#eafaf1;border-color:#bfe6cc;}
+.step.doing{background:#fff7e6;border-color:#ffe0a3;}
+.step.todo{background:#f4f6f9;border-style:dashed;opacity:.85;}
+.pill{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:700;}
+.pill.red{background:#fdecea;color:#cf1322;}
+.pill.green{background:#e6f7f0;color:#08976b;}
+.pill.gray{background:#eef0f2;color:#6b7280;}
+footer{color:#889;font-size:12px;text-align:center;margin-top:30px;}
+ul.tight{margin:8px 0;padding-left:20px;} li{margin:5px 0;font-size:13.5px;}
+code{background:#eef1f5;padding:1px 6px;border-radius:4px;font-size:12px;color:#1f3b57;}
+</style></head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>基金经理行为指标 · 回归结果展示与解读</h1>
+  <p>五层行为框架（L1–L5）· v4 诚实面板 · 基金×年份双向聚类（CGM 2011）权威口径</p>
+  <p>生成日期 2026-08-17 · 单一真相源：<code>回归表_双向聚类_v4基准_2026-08-16.html</code> · 与 <code>merged_manuscript.html</code> / <code>实证结论_证据强度总览_2026-08-16.html</code> 完全一致</p>
+  <div class="kpis">
+    <div class="kpi"><b>2,264</b><span>回归观测（诚实面板）</span></div>
+    <div class="kpi"><b>348</b><span>基金（去重）</span></div>
+    <div class="kpi"><b>0.1290</b><span>M4 拟合 R²</span></div>
+    <div class="kpi"><b>3</b><span>估算量交叉验证</span></div>
+    <div class="kpi"><b>A×6 / C×6</b><span>证据强度分布</span></div>
+  </div>
+</header>
+
+<!-- ===== 研究进度状态 ===== -->
+<section>
+  <h2>一、研究推进到哪一步了</h2>
+  <p class="lead">实证核心已"诚实化锁定"，文稿主体已完成 v4 口径刷新，当前处于"讨论/机制深化 + 投稿打磨"阶段。</p>
+  <div class="flow">
+    <div class="step done"><div class="st">✓ 已完成</div><div class="sd"><b>指标计算流水线</b><br>10 步数据处理 + L3/L1 回归，输出含TOwind面板（9,974观测/400只/51列）</div></div>
+    <div class="step done"><div class="st">✓ 已完成</div><div class="sd"><b>描述性统计</b><br>报告+数据字典刷新至最新口径（TO_wind 86.6% 等）</div></div>
+    <div class="step done"><div class="st">✓ 已完成</div><div class="sd"><b>主回归 M4</b><br>v4 双向聚类锁定，全程 1%/99% 缩尾，无未来泄漏</div></div>
+    <div class="step done"><div class="st">✓ 已完成</div><div class="sd"><b>稳健性诊断</b><br>WCB / 置换 / FM / LSV脆弱性 / DE选择性 / 增量R²</div></div>
+    <div class="step doing"><div class="st">● 进行中</div><div class="sd"><b>机制与讨论</b><br>AS↔ICI 反向、LSV 截面/组内反转等机制解读落地</div></div>
+    <div class="step todo"><div class="st">○ 待办</div><div class="sd"><b>投稿打磨</b><br>英文 abstract、reviewer 应答、敏感性补充</div></div>
+  </div>
+  <div class="box note">
+    <b>当前最可靠的结论（一句话）：</b>在控制 FF5 因子与全层变量后——
+    <span class="pill green">风险不对称 RA（提升业绩，A级）</span> 与
+    <span class="pill green">处置效应 DE（拖累业绩，A级·外推限46.6%子群）</span>
+    是唯一跨"渐近 / 自助 / 置换"三口径一致显著的行为指标；
+    <span class="pill gray">羊群效应 LSV 在所有口径下均不显著（C级）</span>，
+    其早期"显著"为小样本+同层掩盖的假象，已诊断剔除。
+  </div>
+</section>
+
+<!-- ===== M4 主回归森林图 ===== -->
+<section>
+  <h2>二、M4 主回归：行为指标如何影响基金业绩</h2>
+  <p class="lead">因变量 = FF5 五因子模型残差 alpha（已缩尾）；横轴为 <b>双向聚类 t 统计量</b>，符号表示系数方向。
+  超出红色虚线（|t|&gt;1.96）即统计显著。颜色遵循本文统一约定。</p>
+  <div class="legend">
+    <span><i style="background:#cf1322"></i>β&gt;0 提升业绩（红）</span>
+    <span><i style="background:#08976b"></i>β&lt;0 拖累业绩（绿）</span>
+    <span><i style="background:#9aa0a6"></i>不显著（灰，方向仍标）</span>
+  </div>
+  <svg viewBox="0 0 920 470" width="100%" style="max-width:920px;display:block;margin:0 auto" font-family="-apple-system,Segoe UI,Microsoft YaHei,sans-serif">
+<rect x="398.0" y="38" width="294.0" height="400" fill="#fdecea" opacity="0.55"/>
+<line x1="545.0" y1="38" x2="545.0" y2="456" stroke="#444" stroke-width="1.2"/>
+<line x1="398.0" y1="38" x2="398.0" y2="456" stroke="#cf1322" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
+<text x="398.0" y="34" fill="#cf1322" font-size="10" text-anchor="middle">-1.96</text>
+<line x1="692.0" y1="38" x2="692.0" y2="456" stroke="#cf1322" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
+<text x="692.0" y="34" fill="#cf1322" font-size="10" text-anchor="middle">+1.96</text>
+<text x="545.0" y="468" fill="#444" font-size="10" text-anchor="middle">t = 0（无影响）</text>
+<text x="545.0" y="22" fill="#666" font-size="11" text-anchor="middle">横轴 = 双向聚类 t 统计量（符号=系数方向，超出红虚线≈显著）</text>
+<rect x="355.2" y="49" width="189.8" height="14" rx="3" fill="#08976b" opacity="1"/>
+<circle cx="355.2" cy="56" r="5.5" fill="#08976b" opacity="1" stroke="#fff" stroke-width="1.2"/>
+<text x="218" y="60" fill="#222" font-size="12.5" text-anchor="end">基金年龄对数 <tspan fill="#888" font-size="10.5">[L1]</tspan></text>
+<text x="365.2" y="60" fill="#08976b" font-size="11" font-weight="600">β=-0.00417 **</text>
+<text x="868.0" y="60" fill="#666" font-size="10.5">A</text>
+<rect x="545.0" y="82" width="76.5" height="14" rx="3" fill="#9aa0a6" opacity="0.45"/>
+<circle cx="621.5" cy="89" r="5.5" fill="#9aa0a6" opacity="0.45" stroke="#fff" stroke-width="1.2"/>
+<text x="218" y="93" fill="#222" font-size="12.5" text-anchor="end">经理累计任期 <tspan fill="#888" font-size="10.5">[L1]</tspan></text>
+<text x="631.5" y="93" fill="#666" font-size="11" font-weight="600">β=+0.00000 </text>
+<text x="868.0" y="93" fill="#666" font-size="10.5">C</text>
+<rect x="334.2" y="115" width="210.8" height="14" rx="3" fill="#08976b" opacity="1"/>
+<circle cx="334.2" cy="122" r="5.5" fill="#08976b" opacity="1" stroke="#fff" stroke-width="1.2"/>
+<text x="218" y="126" fill="#222" font-size="12.5" text-anchor="end">主动持股比 AS <tspan fill="#888" font-size="10.5">[L2]</tspan></text>
+<text x="344.2" y="126" fill="#08976b" font-size="11" font-weight="600">β=-0.02982 ***</text>
+<text x="868.0" y="126" fill="#666" font-size="10.5">A</text>
+<rect x="545.0" y="148" width="280.5" height="14" rx="3" fill="#cf1322" opacity="1"/>
+<circle cx="825.5" cy="155" r="5.5" fill="#cf1322" opacity="1" stroke="#fff" stroke-width="1.2"/>
+<text x="218" y="159" fill="#222" font-size="12.5" text-anchor="end">行业集中度 ICI <tspan fill="#888" font-size="10.5">[L2]</tspan></text>
+<text x="835.5" y="159" fill="#cf1322" font-size="11" font-weight="600">β=+0.01804 ***</text>
+<text x="868.0" y="159" fill="#666" font-size="10.5">A</text>
+<rect x="545.0" y="181" width="14.2" height="14" rx="3" fill="#9aa0a6" opacity="0.45"/>
+<circle cx="559.2" cy="188" r="5.5" fill="#9aa0a6" opacity="0.45" stroke="#fff" stroke-width="1.2"/>
+<text x="218" y="192" fill="#222" font-size="12.5" text-anchor="end">行业 HHI <tspan fill="#888" font-size="10.5">[L2]</tspan></text>
+<text x="569.2" y="192" fill="#666" font-size="11" font-weight="600">β=+0.00865 </text>
+<text x="868.0" y="192" fill="#666" font-size="10.5">C</text>
+<rect x="545.0" y="214" width="0.0" height="14" rx="3" fill="#9aa0a6" opacity="0.45"/>
+<circle cx="545.0" cy="221" r="5.5" fill="#9aa0a6" opacity="0.45" stroke="#fff" stroke-width="1.2"/>
+<text x="218" y="225" fill="#222" font-size="12.5" text-anchor="end">风格漂移 SDI <tspan fill="#888" font-size="10.5">[L3]</tspan></text>
+<text x="555.0" y="225" fill="#666" font-size="11" font-weight="600">β=-0.00000 </text>
+<text x="868.0" y="225" fill="#666" font-size="10.5">C</text>
+<rect x="545.0" y="247" width="80.2" height="14" rx="3" fill="#9aa0a6" opacity="0.45"/>
+<circle cx="625.2" cy="254" r="5.5" fill="#9aa0a6" opacity="0.45" stroke="#fff" stroke-width="1.2"/>
+<text x="218" y="258" fill="#222" font-size="12.5" text-anchor="end">换手率 TO_wind <tspan fill="#888" font-size="10.5">[L3]</tspan></text>
+<text x="635.2" y="258" fill="#666" font-size="11" font-weight="600">β=+0.00000 </text>
+<text x="868.0" y="258" fill="#666" font-size="10.5">C</text>
+<rect x="545.0" y="280" width="223.5" height="14" rx="3" fill="#cf1322" opacity="1"/>
+<circle cx="768.5" cy="287" r="5.5" fill="#cf1322" opacity="1" stroke="#fff" stroke-width="1.2"/>
+<text x="218" y="291" fill="#222" font-size="12.5" text-anchor="end">调仓收益缺口 ARG <tspan fill="#888" font-size="10.5">[L4]</tspan></text>
+<text x="778.5" y="291" fill="#cf1322" font-size="11" font-weight="600">β=+0.01625 ***</text>
+<text x="868.0" y="291" fill="#666" font-size="10.5">A</text>
+<rect x="545.0" y="313" width="60.8" height="14" rx="3" fill="#9aa0a6" opacity="0.45"/>
+<circle cx="605.8" cy="320" r="5.5" fill="#9aa0a6" opacity="0.45" stroke="#fff" stroke-width="1.2"/>
+<text x="218" y="324" fill="#222" font-size="12.5" text-anchor="end">收益波动率 <tspan fill="#888" font-size="10.5">[L4]</tspan></text>
+<text x="615.8" y="324" fill="#666" font-size="11" font-weight="600">β=+0.02379 </text>
+<text x="868.0" y="324" fill="#666" font-size="10.5">C</text>
+<rect x="320.8" y="346" width="224.2" height="14" rx="3" fill="#08976b" opacity="1"/>
+<circle cx="320.8" cy="353" r="5.5" fill="#08976b" opacity="1" stroke="#fff" stroke-width="1.2"/>
+<text x="218" y="357" fill="#222" font-size="12.5" text-anchor="end">处置效应 DE <tspan fill="#888" font-size="10.5">[L5]</tspan></text>
+<text x="330.8" y="357" fill="#08976b" font-size="11" font-weight="600">β=-0.00606 ***</text>
+<text x="868.0" y="357" fill="#666" font-size="10.5">A</text>
+<rect x="545.0" y="379" width="57.8" height="14" rx="3" fill="#9aa0a6" opacity="0.45"/>
+<circle cx="602.8" cy="386" r="5.5" fill="#9aa0a6" opacity="0.45" stroke="#fff" stroke-width="1.2"/>
+<text x="218" y="390" fill="#222" font-size="12.5" text-anchor="end">羊群效应 LSV <tspan fill="#888" font-size="10.5">[L5]</tspan></text>
+<text x="612.8" y="390" fill="#666" font-size="11" font-weight="600">β=+0.01548 </text>
+<text x="868.0" y="390" fill="#666" font-size="10.5">C</text>
+<rect x="545.0" y="412" width="267.8" height="14" rx="3" fill="#cf1322" opacity="1"/>
+<circle cx="812.8" cy="419" r="5.5" fill="#cf1322" opacity="1" stroke="#fff" stroke-width="1.2"/>
+<text x="218" y="423" fill="#222" font-size="12.5" text-anchor="end">风险不对称 RA <tspan fill="#888" font-size="10.5">[L5]</tspan></text>
+<text x="822.8" y="423" fill="#cf1322" font-size="11" font-weight="600">β=+0.07311 ***</text>
+<text x="868.0" y="423" fill="#666" font-size="10.5">A</text>
+</svg>
+  <div class="box key">
+    <b>读图要点：</b>
+    <ul class="tight">
+      <li><b>L5 行为层（核心）</b>：RA（t=+3.57***）与 DE（t=−2.99***）显著且方向相反——<b>敢于不对称承担风险者业绩更好，而"卖盈持亏"的处置倾向显著侵蚀 alpha</b>；LSV（t=+0.77）落在灰色区，不显著。</li>
+      <li><b>L2 持仓偏离</b>：ICI（行业集中度，t=+3.74***）正向、AS（主动份额，t=−2.81***）负向——"行业信念被奖励、总主动份额被惩罚"，二者符号相反的机制见第四节。</li>
+      <li><b>L3 交易层 / L4 风控层</b>：ARG（风险调整幅度，属 L4，t=+2.98***）正向显著；L3 的 SDI 与 TO_wind 在全控制下被吸收为不显著（C级），其对应 H1/H2 仅在稀疏设定成立。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== 三指标 × 四口径 交叉验证 ===== -->
+<section>
+  <h2>三、L5 三指标 × 四估算量 交叉验证</h2>
+  <p class="lead">同一组行为指标，在四种推断框架下是否都给出一致方向/显著性？这是结论稳健性的"压力测试"。</p>
+  <div class="cv-grid">
+    <div class="cv-head">指标（方向）</div><div class="cv-head">M4 双向聚类</div><div class="cv-head">WCB 自助</div><div class="cv-head">置换检验</div><div class="cv-head">FM 稀疏</div>
+    <div class="cv-row-lab">处置效应 DE<br><span style="color:#08976b;font-size:11px">预期负向</span></div><div
+    <div class="cv-row-lab">羊群效应 LSV<br><span style="color:#cf1322;font-size:11px">预期正向</span></div> cla
+    <div class="cv-row-lab">风险不对称 RA<br><span style="color:#cf1322;font-size:11px">预期正向</span></div>ss="
+  </div>
+  <div class="box key">
+    <b>结论：</b>
+    <span class="pill green">RA 4/4 全中</span>——M4(WCB/置换/FM) 无一例外正向显著，是<b>最强单指标证据</b>；
+    <span class="pill green">DE 3/4 中</span>——仅 FM 稀疏设定边际（t=−1.57），其余三口径一致负向显著，且组内FE强（t=−3.64），属 A 级但<b>外推限于约46.6%有全持仓数据子群</b>；
+    <span class="pill gray">LSV 0/4 全空</span>——任何口径都不显著，C 级，早期"显著"结论已作废（见 §4.4.8 脆弱性诊断）。
+  </div>
+</section>
+
+<!-- ===== 证据强度总览 ===== -->
+<section>
+  <h2>四、证据强度总览（A / B / C 分级）</h2>
+  <p class="lead">A=强（多口径一致显著）· B=条件（部分口径/子样本显著）· C=弱或不稳（M4 不显著或方向样本敏感）。</p>
+  
+<svg viewBox="0 0 520 120" width="100%" style="max-width:520px;display:block;margin:0 auto" font-family="-apple-system,Segoe UI,Microsoft YaHei,sans-serif">
+  <rect x="10" y="40" width="500" height="34" rx="6" fill="#eee"/>
+  <rect x="10" y="40" width="250.0" height="34" fill="#1e7a34"/>
+  <rect x="260.0" y="40" width="0.0" height="34" fill="#b26a00"/>
+  <rect x="260.0" y="40" width="250.0" height="34" fill="#b3261e"/>
+  <text x="135.0" y="62" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">A 6</text>
+  <text x="260.0" y="62" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">B 0</text>
+  <text x="385.0" y="62" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">C 6</text>
+  <text x="10" y="95" fill="#1e7a34" font-size="11">A 强证据 50%</text>
+  <text x="180" y="95" fill="#b26a00" font-size="11">B 条件 0%</text>
+  <text x="320" y="95" fill="#b3261e" font-size="11">C 弱/不稳 50%</text>
+</svg>
+  <table class="tbl">
+    <thead><tr><th>层</th><th>指标</th><th>M4 β<br>(双向聚类)</th><th>t</th><th>显著性</th><th>WCB p</th><th>置换 p</th><th>分级</th><th>效度边界 / 稳健性索引</th></tr></thead>
+    <tbody>
+<tr><td>L1</td><td style="text-align:left">基金年龄对数</td><td>-0.00417</td><td>-2.53</td><td>**</td><td>—</td><td>—</td><td><span class="gA">A</span></td><td style="text-align:left;font-size:12px;color:#555">越老越弱</td></tr>
+<tr><td>L1</td><td style="text-align:left">经理累计任期</td><td>+0.00000</td><td>+1.02</td><td>n.s.</td><td>—</td><td>—</td><td><span class="gC">C</span></td><td style="text-align:left;font-size:12px;color:#555">无关联</td></tr>
+<tr><td>L2</td><td style="text-align:left">主动持股比 AS</td><td>-0.02982</td><td>-2.81</td><td>***</td><td>—</td><td>—</td><td><span class="gA">A</span></td><td style="text-align:left;font-size:12px;color:#555">拖累</td></tr>
+<tr><td>L2</td><td style="text-align:left">行业集中度 ICI</td><td>+0.01804</td><td>+3.74</td><td>***</td><td>—</td><td>—</td><td><span class="gA">A</span></td><td style="text-align:left;font-size:12px;color:#555">提升</td></tr>
+<tr><td>L2</td><td style="text-align:left">行业 HHI</td><td>+0.00865</td><td>+0.19</td><td>n.s.</td><td>—</td><td>—</td><td><span class="gC">C</span></td><td style="text-align:left;font-size:12px;color:#555">无信息</td></tr>
+<tr><td>L3</td><td style="text-align:left">风格漂移 SDI</td><td>-0.00000</td><td>-0.00</td><td>n.s.</td><td>—</td><td>—</td><td><span class="gC">C</span></td><td style="text-align:left;font-size:12px;color:#555">被吸收</td></tr>
+<tr><td>L3</td><td style="text-align:left">换手率 TO_wind</td><td>+0.00000</td><td>+1.07</td><td>n.s.</td><td>—</td><td>—</td><td><span class="gC">C</span></td><td style="text-align:left;font-size:12px;color:#555">弱</td></tr>
+<tr><td>L4</td><td style="text-align:left">风险调整幅度 ARG</td><td>+0.01625</td><td>+2.98</td><td>***</td><td>—</td><td>—</td><td><span class="gA">A</span></td><td style="text-align:left;font-size:12px;color:#555">提升</td></tr>
+<tr><td>L4</td><td style="text-align:left">收益波动率</td><td>+0.02379</td><td>+0.81</td><td>n.s.</td><td>—</td><td>—</td><td><span class="gC">C</span></td><td style="text-align:left;font-size:12px;color:#555">仅中介</td></tr>
+<tr><td>L5</td><td style="text-align:left">处置效应 DE</td><td>-0.00606</td><td>-2.99</td><td>***</td><td>0.014</td><td>0.047</td><td><span class="gA">A</span></td><td style="text-align:left;font-size:12px;color:#555">拖累(外推限46.6%)</td></tr>
+<tr><td>L5</td><td style="text-align:left">羊群效应 LSV</td><td>+0.01548</td><td>+0.77</td><td>n.s.</td><td>0.229</td><td>0.507</td><td><span class="gC">C</span></td><td style="text-align:left;font-size:12px;color:#555">设定依赖</td></tr>
+<tr><td>L5</td><td style="text-align:left">风险不对称 RA</td><td>+0.07311</td><td>+3.57</td><td>***</td><td>0.0</td><td>0.02</td><td><span class="gA">A</span></td><td style="text-align:left;font-size:12px;color:#555">提升(最强)</td></tr>
+    </tbody>
+  </table>
+  <div class="box warn"><b>增量 R²（L5 三指标整体贡献）：</b>全样本口径 ΔR² = <b>0.0352</b>（M4 R² 0.1290 − 剔除L5后 0.0938）；
+  同样本口径（M3↔M4 可比子集）ΔR² = <b>0.0224</b>（≈2.2%）。两口径定义不同、并存；均远小于原稿误报的 0.0728（34.9%，已作废）。
+  L5 行为指标对 alpha 的解释力虽非压倒性，但<b>方向与显著性稳健</b>，属"小而真实"的效应。</div>
+</section>
+
+<!-- ===== 机制解读 ===== -->
+<section>
+  <h2>五、关键机制解读（为什么结论长这样）</h2>
+
+  <h3>5.1 主动份额 AS 为负、行业集中度 ICI 为正——为什么符号相反？</h3>
+  <div class="box">
+    Active Share 可分解为「行业配置偏离（≈ICI 渠道）+ 行业内个股选择偏离」。二者相关系数仅 <b>+0.045</b>（几乎正交），因此方向相反是<b>各自独立的真实现象，而非共线假象</b>。
+    <ul class="tight">
+      <li><b>ICI（+，t≈3.7）</b>：相对基准做对行业超配/低配（行业择时/配置诀窍）被市场奖励——最"干净"的技能信号。</li>
+      <li><b>AS（−，t≈−2.8）</b>：在行业渠道被控制后，剩余的"行业内广撒网式个股偏离"平均不创造价值、反因交易成本与特质风险侵蚀 alpha（对应 Cremers &amp; Petajisto 2009：集中式主动份额才预测业绩）。</li>
+      <li>旁证：行业 HHI 在联合方程中从单变量 +（t+0.19）翻为不显著——驱动 alpha 的是<b>相对基准的配置偏离（conviction）</b>，不是笼统的绝对集中度。</li>
+    </ul>
+  </div>
+
+  <h3>5.2 LSV：截面 +0.10(不显著) vs 组内FE −0.19(***)——为什么反转？</h3>
+  <div class="box">
+    <ul class="tight">
+      <li><b>截面（between-fund）</b>比的是"高注意力基金 vs 低注意力基金"的平均 alpha，被基金层面时不变特质（经理能力、风格、规模）混淆——平均注意力集中的基金多为成长/赛道型，因风格溢价看似不差（β正但不显著）。</li>
+      <li><b>组内FE（within-fund）</b>清除这些混淆后，<b>同一只基金内部</b>抱团/追热点上升反而侵蚀 alpha（负向显著）。<b>符号反转(+→−)正是"截面受时不变遗漏变量干扰"的典型信号</b>。</li>
+      <li>可靠结论取<b>组内FE（负向显著）</b>；截面仅作参照。与 §4.4.8 诊断（去掉同层 de/RA 后 lsv 单独显著、2022+ 子样本显著）口径一致——LSV 是"时期依存 + 被同层强信号掩盖"的指标，非失败变量，但降级为 C 级。</li>
+    </ul>
+  </div>
+
+  <h3>5.3 DE 与 RA：双显著，但效度边界不同</h3>
+  <div class="box">
+    <ul class="tight">
+      <li><b>RA（A级·最强）</b>：双向聚类*** + WCB*** + 置换* + FM** 全中；构念已对择时正交化，机制多元（赌资/择时/技能），是最稳健的"行为→业绩"证据。</li>
+      <li><b>DE（A级·有外推边界）</b>：覆盖仅 46.6%（结构性缺失），估计样本被"是否有全持仓数据"选择；审计显示 de_avail 独立预测 alpha（+0.0048, t=2.18**）→ <b>存在正向选择偏倚</b>。结论<b>外推限于约46.6%有全持仓数据子群</b>，不可泛化全样本。</li>
+    </ul>
+  </div>
+
+  <h3>5.4 文章主线结论（可直引）</h3>
+  <div class="box key">
+    在 2006Q2–2026Q2 中国主动偏股基金样本中，<b>基金经理的风险承担不对称（RiskAsym）显著正向预测风险调整后的基金业绩，而处置效应（DE）显著负向预测业绩</b>；
+    行业层面的主动配置（ICI）被奖励、泛化的主动份额（AS）反被惩罚；
+    传统"羊群/抱团"（LSV）在控制了同层强信号后不再显著。
+    研究提示：<b>真正创造价值的不是"交易得多"或"跟得紧"，而是"不对称地承担经过判断的风险"与"克服处置倾向"</b>。
+  </div>
+</section>
+
+<footer>
+  数据源：指标计算流水线/output/主分析面板_重建_含TOwind.csv（v4 可复现）· 重算脚本 _v4_benchmark_table.py / _recompute_robustness_v4_2026-08-16.py / _diag_fama_macbeth_v4.py<br>
+  推断口径：基金×年份双向聚类（CGM 2011）为主，单维基金聚类为对照；WCB / 500次置换 / Fama-MacBeth(T=20) 作交叉验证。本文颜色约定为结论导向（红=提升业绩/绿=拖累业绩），与股票涨跌配色无关。
+</footer>
+
+</div>
+</body></html>

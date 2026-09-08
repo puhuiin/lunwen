@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>重跑锁终值 · 可复现性验证报告 2026-08-19</title>
+<style>
+:root{--bg:#0f1419;--card:#1a2230;--fg:#dce3ec;--mut:#8b97a8;--ok:#3fb950;--diff:#f85149;--acc:#58a6ff;--bd:#2a3442;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 -apple-system,"Segoe UI",Roboto,"Microsoft YaHei",sans-serif;padding:32px}
+.wrap{max-width:980px;margin:0 auto}
+h1{font-size:24px;margin:0 0 4px}
+.sub{color:var(--mut);font-size:13px;margin-bottom:24px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:20px 22px;margin-bottom:18px}
+.card h2{font-size:17px;margin:0 0 12px;color:var(--acc)}
+.verdict{font-size:18px;font-weight:600;padding:14px 18px;border-radius:10px;margin-bottom:22px}
+.verdict.ok{background:rgba(63,185,80,.12);border:1px solid var(--ok);color:var(--ok)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd)}
+th{color:var(--mut);font-weight:600;font-size:13px}
+td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:ui-monospace,Consolas,monospace}
+tr.ok td{color:var(--ok)}
+tr.diff td{color:var(--diff)}
+code{background:#0d1117;padding:2px 6px;border-radius:4px;font-size:13px;color:var(--acc)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:14px}
+.kv b{color:var(--mut);font-weight:500}
+.note{font-size:13px;color:var(--mut);margin-top:10px;line-height:1.55}
+.tag{display:inline-block;background:#0d1117;border:1px solid var(--bd);border-radius:5px;padding:2px 8px;font-size:12px;color:var(--mut);margin-right:6px}
+</style></head><body><div class="wrap">
+<h1>重跑锁终值 · 可复现性验证报告</h1>
+<div class="sub">基金经理行为分析研究 · 2026-08-19 · 出稿前全流水线重跑与 v4 基准交叉验证</div>
+<div class="verdict ok">✓ REPRODUCIBLE_EXACT (面板+基准+诚实回归逐字段一致，出稿无需改动)</div>
+
+<div class="card"><h2>一、重跑概况</h2>
+<div class="kv">
+<b>执行命令</b><span><code>python run_full.py</code> → <code>run_all.py</code>(10步数据处理) → <code>L3_L1_regressions_HONEST_2026-08-14.py</code></span>
+<b>运行环境</b><span>托管 venv <code>binaries/python/envs/default/Scripts/python.exe</code></span>
+<b>耗时</b><span>约 4 分 27 秒（run_all 261.8s + HONEST 5.0s）</span>
+<b>退出码</b><span>0（成功）</span>
+<b>基准备份</b><span><code>备份_重跑前基准_20260819_1545/</code>（重跑前 6 个产物，仅复制不删除）</span>
+<b>重跑后产物</b><span>主分析面板_重建.csv / 主分析面板_重建_含TOwind.csv / L3_L1_regression_HONEST_TOWind_2026-08-15.json / 由 <code>_v4_benchmark_table.py</code> 重算 _v4_benchmark.json</span>
+</div></div>
+
+<div class="card"><h2>二、面板可复现性（9,974 观测 / 400 基金 / 2006Q2–2026Q2）</h2>
+<table><thead><tr><th>面板文件</th><th>MD5(前12位)</th><th>shape</th><th>结论</th></tr></thead>
+<tbody><tr class="ok"><td>主分析面板_重建.csv</td><td class='num'>1db522a63d95…</td><td>[9974, 49]</td><td>MD5 一致·精确复现</td></tr><tr class="ok"><td>主分析面板_重建_含TOwind.csv</td><td class='num'>bc0942cec283…</td><td>[9974, 51]</td><td>MD5 一致·精确复现</td></tr></tbody></table>
+<div class="note">含TOwind 面板 MD5 与 2026-08-16 锁定记录 <code>bc0942cec283fcb83307130530e7bd31</code> 一致，确认论文用主面板精确复现。</div>
+</div>
+
+<div class="card"><h2>三、v4 基准 M4 可复现性（双向聚类·权威锁定点）</h2>
+<table><thead><tr><th>变量</th><th class='num'>β 重跑前</th><th class='num'>β 重跑后</th><th class='num'>t2w 前</th><th class='num'>t2w 后</th><th>p2w</th><th>比对</th></tr></thead>
+<tbody><tr class="ok"><td>RiskAsym 风险承担不对称</td><td class='num'>0.07311</td><td class='num'>0.07311</td><td class='num'>3.57</td><td class='num'>3.57</td><td>***</td><td>一致</td></tr><tr class="ok"><td>DE 处置效应</td><td class='num'>-0.00606</td><td class='num'>-0.00606</td><td class='num'>-2.99</td><td class='num'>-2.99</td><td>***</td><td>一致</td></tr><tr class="ok"><td>ICI 行业集中度</td><td class='num'>0.01804</td><td class='num'>0.01804</td><td class='num'>3.74</td><td class='num'>3.74</td><td>***</td><td>一致</td></tr><tr class="ok"><td>ARG 风险调整幅度</td><td class='num'>0.01625</td><td class='num'>0.01625</td><td class='num'>2.98</td><td class='num'>2.98</td><td>***</td><td>一致</td></tr><tr class="ok"><td>AS 主动份额</td><td class='num'>-0.02982</td><td class='num'>-0.02982</td><td class='num'>-2.81</td><td class='num'>-2.81</td><td>***</td><td>一致</td></tr><tr class="ok"><td>SDI 风格漂移</td><td class='num'>-0</td><td class='num'>-0</td><td class='num'>-0</td><td class='num'>-0</td><td>ns</td><td>一致</td></tr><tr class="ok"><td>TO_wind 换手率</td><td class='num'>0</td><td class='num'>0</td><td class='num'>1.07</td><td class='num'>1.07</td><td>ns</td><td>一致</td></tr><tr class="ok"><td>LSV 羊群效应</td><td class='num'>0.01548</td><td class='num'>0.01548</td><td class='num'>0.77</td><td class='num'>0.77</td><td>ns</td><td>一致</td></tr><tr class="ok"><td>log_fund_age 基金年龄</td><td class='num'>-0.00417</td><td class='num'>-0.00417</td><td class='num'>-2.53</td><td class='num'>-2.53</td><td>**</td><td>一致</td></tr><tr class="ok"><td>ff5_MKT 市场因子</td><td class='num'>-0.03396</td><td class='num'>-0.03396</td><td class='num'>-1.89</td><td class='num'>-1.89</td><td>*</td><td>一致</td></tr><tr class="ok"><td>ff5_SMB 规模因子</td><td class='num'>0.01123</td><td class='num'>0.01123</td><td class='num'>1.7</td><td class='num'>1.7</td><td>*</td><td>一致</td></tr><tr class="ok"><td>ff5_HML 价值因子</td><td class='num'>0.05166</td><td class='num'>0.05166</td><td class='num'>2.87</td><td class='num'>2.87</td><td>***</td><td>一致</td></tr><tr class="ok"><td>ff5_RMW 盈利因子</td><td class='num'>-0.04971</td><td class='num'>-0.04971</td><td class='num'>-2.07</td><td class='num'>-2.07</td><td>**</td><td>一致</td></tr><tr class="ok"><td>ff5_CMA 投资因子</td><td class='num'>-0.10853</td><td class='num'>-0.10853</td><td class='num'>-2.84</td><td class='num'>-2.84</td><td>***</td><td>一致</td></tr></tbody></table>
+<div class="note">标量：N=2,264 / 348 基金 / R²=0.1290 / Adj.R²=0.1189 / ΔR²(L5)=0.0352 — 重跑前后逐字段绝对差 = 0。FF5 五因子列（曾于 08-17 审计单独重算路径出现 max|Δt|=1.24 的缓存陈旧漂移）在本次全流水线干净重跑后<b>完全归零</b>，漂移问题闭环。</div>
+</div>
+
+<div class="card"><h2>四、HONEST 五假设（H1–H5）可复现性</h2>
+<table><thead><tr><th>假设</th><th class='num'>N 前</th><th class='num'>N 后</th><th class='num'>max|Δt|</th><th>结论</th></tr></thead>
+<tbody><tr class="ok"><td>H1 SDI(真算风格漂移)</td><td class='num'>6337</td><td class='num'>6337</td><td class='num'>0.0000</td><td>精确复现</td></tr><tr class="ok"><td>H2 TO_wind(Wind集成换手率)</td><td class='num'>8480</td><td class='num'>8480</td><td class='num'>0.0000</td><td>精确复现</td></tr><tr class="ok"><td>H2b TO_two_sided(旧双边,稳健性)</td><td class='num'>1788</td><td class='num'>1788</td><td class='num'>0.0000</td><td>精确复现</td></tr><tr class="ok"><td>H3 OCI_two_sided(真算)</td><td class='num'>1788</td><td class='num'>1788</td><td class='num'>0.0000</td><td>精确复现</td></tr><tr class="ok"><td>H4 SDI+TO_wind+OCI(联合)</td><td class='num'>1192</td><td class='num'>1192</td><td class='num'>0.0000</td><td>精确复现</td></tr><tr class="ok"><td>H5 SDI+控制(不含TO,大样本)</td><td class='num'>6337</td><td class='num'>6337</td><td class='num'>0.0000</td><td>精确复现</td></tr></tbody></table>
+<div class="note">锚点复核（重跑后）：H1 SDI β=+0.1028 t=+2.46**；H2 TO_wind β=+3e-5 t=+1.78*；H4 SDI(联合) β=+0.0198 t=+3.09***。与 MEMORY 锁定值完全一致。</div>
+</div>
+
+<div class="card"><h2>五、出稿结论与边界</h2>
+<p style="margin:0 0 8px"><span class="tag">✓ 面板精确复现</span><span class="tag">✓ v4 基准逐字段一致</span><span class="tag">✓ HONEST 六假设一致</span><span class="tag">✓ FF5 漂移已闭环</span></p>
+<ul style="margin:6px 0 0;padding-left:20px;line-height:1.7">
+<li><b>主文稿无需改动</b>：所有引用数值（merged_manuscript.html v4 散引、回归表、稳健性章、证据矩阵）与本次重跑结果逐字段一致，无需回写。</li>
+<li><b>出稿终值已锁定</b>：N=2,264/348、R²=0.129、关键显著项 RA(+0.0731,t=3.57***)、DE(−0.00606,t=−2.99***)、ICI(+0.0180,t=3.74***)、ARG(+0.0162,t=2.98***)、AS(−0.0298,t=−2.81***)；不显著 SDI/TO_wind/LSV/HHI/RV/tenure 不变。</li>
+<li><b>方法局限仍为诚实披露项（非数值问题）</b>：① DE/LSV 受限于 top-10 持仓代理、外部效度边界≈46.6% 子群；② 幸存者偏差；③ 2006–2015 个股收益偏薄；④ 工具变量外生性未获支持（IV 路径作废）。这些已在 §6.4 诚实披露，重跑不影响。</li>
+</ul>
+</div>
+</div></body></html>

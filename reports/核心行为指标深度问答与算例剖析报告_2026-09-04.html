@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>核心行为指标深度问答与算例剖析报告（对话实录版）</title>
+
+    <!-- KaTeX CSS & JS for ultra-fast, sharp mathematical formula rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <!-- MathJax 3 Fallback -->
+    <script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #2563eb;
+            --primary-subtle: #eff6ff;
+            --user-bg: #f1f5f9;
+            --user-border: #cbd5e1;
+            --assistant-bg: #ffffff;
+            --assistant-border: #bfdbfe;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --card-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+            --callout-bg: #f8fafc;
+            --callout-border: #0ea5e9;
+            --accent-green: #059669;
+            --accent-purple: #7c3aed;
+            --accent-amber: #d97706;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: #f8fafc;
+            color: var(--text-main);
+            line-height: 1.75;
+            font-size: 15px;
+            padding: 30px 16px;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        /* Header banner */
+        .doc-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #3b82f6 100%);
+            color: #ffffff;
+            padding: 36px 32px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.25);
+        }
+
+        .doc-header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .doc-header p {
+            font-size: 15px;
+            color: #bfdbfe;
+            max-width: 860px;
+            line-height: 1.6;
+        }
+
+        .meta-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .meta-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #ffffff;
+        }
+
+        /* Quick Navigation Bar */
+        .quick-nav {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 32px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .quick-nav-title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 14px;
+            margin-right: 8px;
+        }
+
+        .nav-btn {
+            background: #f1f5f9;
+            color: #334155;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-subtle);
+            color: var(--primary);
+            border-color: var(--primary-light);
+        }
+
+        /* Dialogue Stream */
+        .dialogue-stream {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .dialogue-item {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Question Card (User Style) */
+        .msg-user {
+            background: #ffffff;
+            border-left: 5px solid #64748b;
+            border-radius: 12px;
+            padding: 20px 24px;
+            box-shadow: var(--card-shadow);
+            border-top: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .msg-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .speaker-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .speaker-badge.user {
+            color: #475569;
+        }
+
+        .speaker-badge.assistant {
+            color: var(--primary-light);
+        }
+
+        .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .avatar.user-av {
+            background: #64748b;
+        }
+
+        .avatar.asst-av {
+            background: #2563eb;
+        }
+
+        .timestamp {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .msg-text-user {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            line-height: 1.6;
+        }
+
+        /* Answer Card (Assistant Style) */
+        .msg-assistant {
+            background: #ffffff;
+            border-left: 5px solid #2563eb;
+            border-radius: 12px;
+            padding: 24px 28px;
+            box-shadow: var(--card-shadow);
+            border-top: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin-bottom: 14px;
+            border: 1px solid #dbeafe;
+        }
+
+        h2.dialogue-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 14px;
+        }
+
+        h3.block-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e3a8a;
+            margin: 20px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        h3.block-title::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 16px;
+            background-color: var(--primary-light);
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 12px;
+            color: #334155;
+        }
+
+        /* Formula Showcase Box */
+        .formula-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 16px 0;
+            border-left: 4px solid #0284c7;
+        }
+
+        .formula-card .label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #0284c7;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .formula-card .math-center {
+            overflow-x: auto;
+            padding: 6px 0;
+            text-align: center;
+        }
+
+        /* Example Walkthrough Box */
+        .example-box {
+            background: #faf5ff;
+            border: 1px solid #f3e8ff;
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin: 16px 0;
+            border-left: 4px solid #9333ea;
+        }
+
+        .example-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #7e22ce;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Insight Callout */
+        .insight-callout {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin: 14px 0;
+            border-left: 4px solid #16a34a;
+            font-size: 14px;
+            color: #166534;
+        }
+
+        .insight-callout strong {
+            color: #14532d;
+        }
+
+        /* Data Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13.5px;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #cbd5e1;
+        }
+
+        td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        /* Code Snippets */
+        pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 14px 18px;
+            overflow-x: auto;
+            font-size: 13px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            line-height: 1.6;
+            margin: 14px 0;
+            border: 1px solid #1e293b;
+        }
+
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Footer */
+        .doc-footer {
+            text-align: center;
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px 10px;
+            }
+            .msg-assistant, .msg-user {
+                padding: 16px 18px;
+            }
+            .doc-header {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header Banner -->
+    <header class="doc-header">
+        <h1>核心行为指标深度问答与算例剖析报告</h1>
+        <p>本文档采用技术研讨对话实录形式，系统复盘论文中 4 项关键行为金融指标（风险偏好不对称 risk_asym、抗操纵绩效测度 mppm8、策略偏离指数 SDI、交易趋同度 lsv）的文献溯源、数学公理定义、微观算例演示与底层 Python 代码映射。</p>
+        <div class="meta-tags">
+            <span class="meta-tag">📄 格式：学术问答实录</span>
+            <span class="meta-tag">📅 日期：2026-09-04</span>
+            <span class="meta-tag">🔬 适用：审稿答辩 / 团队交接 / 算法复现</span>
+            <span class="meta-tag">⚡ 渲染：KaTeX + MathJax 3 双引擎</span>
+        </div>
+    </header>
+
+    <!-- Quick Navigation Bar -->
+    <nav class="quick-nav">
+        <span class="quick-nav-title">快速直达问答单元：</span>
+        <a href="#qa-risk-asym" class="nav-btn">Q1: 风险偏好不对称 (risk_asym)</a>
+        <a href="#qa-mppm" class="nav-btn">Q2: 抗操纵测度 (mppm8)</a>
+        <a href="#qa-sdi" class="nav-btn">Q3: 策略偏离指数 (SDI)</a>
+        <a href="#qa-lsv" class="nav-btn">Q4: 交易趋同度 (lsv - pbar & AF)</a>
+    </nav>
+
+    <div class="dialogue-stream">
+
+        <!-- ========================================================================= -->
+        <!-- ROUND 1: risk_asym -->
+        <!-- ========================================================================= -->
+        <section id="qa-risk-asym" class="dialogue-item">
+            <!-- User Question -->
+            <div class="msg-user">
+                <div class="msg-header">
+                    <div class="speaker-badge user">
+                        <span class="avatar user-av">问</span>
+                        <span>研究员 / 审稿质询</span>
+                    </div>
+                    <span class="timestamp">2026-09-04 14:13</span>
+                </div>
+                <div class="msg-text-user">
+                    “风险偏好不对称（risk_asym）这个指标在审计报告和论文初稿中，为什么之前没有给显式的学术公式？它的数学公式到底是什么，我们又是怎么在代码中落地的？”
+                </div>
+            </div>
+
+            <!-- Assistant Answer -->
+            <div class="msg-assistant">
+                <div class="msg-header">
+                    <div class="speaker-badge assistant">
+                        <span class="avatar asst-av">答</span>
+                        <span>量化审计团队</span>
+                    </div>
+                    <span class="timestamp">2026-09-04 14:14</span>
+                </div>
+                <span class="section-tag">指标 1 · L2 认知偏差层</span>
+                <h2 class="dialogue-title">风险偏好不对称性（risk_asym）的学术公理化定义与实证测度</h2>
+
+                <p>非常感谢指出！此前审计报告初版中，其余指标均配有独立 LaTeX 公式块，而 <code>risk_asym</code> 直接呈现了 Python 函数逻辑与文字阐述，缺少了显式数学公式。现已全面补齐！</p>
+
+                <h3 class="block-title">1. 文献渊源与理论模型</h3>
+                <p>该指标源自行为经济学奠基之作——Kahneman & Tversky (1979) 的<strong>前景理论（Prospect Theory）</strong>，其核心假说在于决策者存在以参考点为基准的<strong>反射效应（Reflection Effect）</strong>：面对盈利呈现凹性（风险规避），面对亏损呈现凸性（风险寻求）：</p>
+
+                <div class="formula-card">
+                    <div class="label">前景理论 S 型价值函数模型 (Kahneman & Tversky, 1979)</div>
+                    <div class="math-center">
+                        $$v(x) = \begin{cases} x^\alpha, & x \ge 0 \quad (\alpha \in (0, 1)，\text{盈利区凹函数，风险规避}) \\ -\lambda (-x)^\beta, & x < 0 \quad (\lambda > 1, \;\beta \in (0, 1)，\text{亏损区凸函数，风险寻求}) \end{cases}$$
+                    </div>
+                </div>
+
+                <p>在实证资产定价中（Ang, Chen & Xing, 2006, <em>RFS</em>; Bawa & Lindenberg, 1977），微观效用被投影为<strong>上行波动率（Upside Volatility）</strong>与<strong>下行半偏差（Downside Semi-deviation）</strong>：</p>
+
+                <div class="formula-card">
+                    <div class="label">上下行时序波动率定义 (Ang et al., 2006)</div>
+                    <div class="math-center">
+                        $$\sigma^+ = \sqrt{\frac{1}{N^+ - 1} \sum_{t \in \mathcal{T}^+} (R_t - \bar{R}^+)^2}, \quad \mathcal{T}^+ = \{t \mid R_t > 0\}$$
+                        $$\sigma^- = \sqrt{\frac{1}{N^- - 1} \sum_{t \in \mathcal{T}^-} (R_t - \bar{R}^-)^2}, \quad \mathcal{T}^- = \{t \mid R_t \le 0\}$$
+                    </div>
+                </div>
+
+                <h3 class="block-title">2. 本文实证数学计算公式</h3>
+                <p>为了在面板固定效应模型中识别投资经理在不同盈亏情境下的动态调仓与敞口纪律，本文采用 <strong>$W=8$ 季度（2年）滚动窗口</strong>，逐期计算基金在盈利状态与亏损状态下的样本波动率差额：</p>
+
+                <div class="formula-card">
+                    <div class="label">本文实证计算公式 (01_数据获取与指标计算/lib_metrics.py L714–765)</div>
+                    <div class="math-center">
+                        $$\text{risk\_asym}_{i,t} = \sigma^+_{i, [t-W+1, t]} - \sigma^-_{i, [t-W+1, t]}$$
+                    </div>
+                    <div class="math-center" style="margin-top: 10px;">
+                        $$\sigma^+_{i, [t-W+1, t]} = \sqrt{\frac{1}{N^+_{i,t} - 1} \sum_{\tau \in \mathcal{T}^+_{i,t}} \left(R_{i,\tau} - \bar{R}^+_{i,t}\right)^2}, \quad \mathcal{T}^+_{i,t} = \left\{\tau \in [t-W+1, t] \;\middle|\; R_{i,\tau} > 0\right\}$$
+                    </div>
+                    <div class="math-center" style="margin-top: 10px;">
+                        $$\sigma^-_{i, [t-W+1, t]} = \sqrt{\frac{1}{N^-_{i,t} - 1} \sum_{\tau \in \mathcal{T}^-_{i,t}} \left(R_{i,\tau} - \bar{R}^-_{i,t}\right)^2}, \quad \mathcal{T}^-_{i,t} = \left\{\tau \in [t-W+1, t] \;\middle|\; R_{i,\tau} \le 0\right\}$$
+                    </div>
+                </div>
+
+                <p><strong>计算门槛与参数设定：</strong></p>
+                <ul style="padding-left: 20px; margin-bottom: 12px; color: #334155;">
+                    <li>滚动窗口跨度 $W = 8$ 季度（与 <code>return_volatility</code> 保持严格对齐）；</li>
+                    <li>要求窗口内总有效季数 $\ge 4$，且盈利季数 $N^+ \ge 2$、亏损季数 $N^- \ge 2$（确保无偏方差分母 $N-1 \ge 1$ 自由度充足）；</li>
+                    <li>若某一基金在 8 季中仅亏损 0 次或 1 次，无法计算样本标准差，严格赋值为 NaN，杜绝伪方差。</li>
+                </ul>
+
+                <h3 class="block-title">3. 底层代码实现</h3>
+                <pre><code># 01_数据获取与指标计算/lib_metrics.py
+def calc_risk_asym(window=8, min_periods=4):
+    # 提取滚动窗口内盈利季与亏损季收益序列
+    gain = seg[seg > 0]
+    loss = seg[seg <= 0]
+    # 计算无偏样本标准差 (ddof=1)
+    sg = gain.std() if len(gain) > 1 else np.nan
+    sl = loss.std() if len(loss) > 1 else np.nan
+    # 风险偏好不对称性 = 盈利期波动率 - 亏损期波动率
+    ra[i] = sg - sl</code></pre>
+
+                <div class="insight-callout">
+                    <strong>💡 实证回归方向与金融学含义：</strong>
+                    <br>• <strong>散户典型表现（$\text{risk\_asym} < 0$）</strong>：盈利时及早落袋求稳、亏损时死扛甚至加杠杆逆势翻本，是典型的人性认知偏差；
+                    <br>• <strong>优秀基金经理（$\text{risk\_asym} > 0$）</strong>：盈利时顺风乘胜追击扩大风险敞口、亏损时严格纪律止损压缩回撤，表明成功克服了散户弱点。实证中回归系数高度显著为正（$t=+11.68^{***}$），证实了该动态纪律的持续超额回报。
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- ROUND 2: mppm8 -->
+        <!-- ========================================================================= -->
+        <section id="qa-mppm" class="dialogue-item">
+            <!-- User Question -->
+            <div class="msg-user">
+                <div class="msg-header">
+                    <div class="speaker-badge user">
+                        <span class="avatar user-av">问</span>
+                        <span>研究员 / 审稿质询</span>
+                    </div>
+                    <span class="timestamp">2026-09-04 14:15</span>
+                </div>
+                <div class="msg-text-user">
+                    “抗操纵绩效测度（mppm8）这个指标详细介绍下，为什么叫‘抗操纵’？举个具体的数值例子，我们是怎么一步步计算出来的？”
+                </div>
+            </div>
+
+            <!-- Assistant Answer -->
+            <div class="msg-assistant">
+                <div class="msg-header">
+                    <div class="speaker-badge assistant">
+                        <span class="avatar asst-av">答</span>
+                        <span>量化审计团队</span>
+                    </div>
+                    <span class="timestamp">2026-09-04 14:16</span>
+                </div>
+                <span class="section-tag">指标 2 · L4b 风险转化效率层</span>
+                <h2 class="dialogue-title">抗操纵绩效测度（Manipulation-Proof Performance Measure, MPPM）</h2>
+
+                <h3 class="block-title">1. 核心理论：为什么 Sharpe 会被操纵？</h3>
+                <p>经典文献 Goetzmann, Ingersoll, Spiegel & Welch (2007, <em>RFS</em>) 发现：传统的 Sharpe 比率和 Jensen's $\alpha$ 严重依赖正态分布假定。基金经理完全可以通过<strong>非线性期权策略（如卖出虚值看跌期权）</strong>、<strong>博取尾部黑天鹅事件</strong>或<strong>动态加杠杆</strong>，在 95% 的正常时期赚取稳定的微小权利金以做大 Sharpe 比率，但代价是累积了爆发式崩盘风险（极度负偏态、肥尾）。</p>
+                <p>Goetzmann 等人公理化证明：<strong>MPPM 是唯一任何不拥有私有信息的经理都无法通过非线性动态交易来人为虚增期望值的测度</strong>。它本质上是**基于幂效用（Power Utility）的确定性等价年化超额收益率（Certainty Equivalent Excess Return）**。</p>
+
+                <div class="formula-card">
+                    <div class="label">MPPM 经典数学模型 (Goetzmann et al., 2007)</div>
+                    <div class="math-center">
+                        $$\widehat{\text{MPPM}} = \frac{1}{(1 - \rho)\Delta t} \ln \left( \frac{1}{T} \sum_{t=1}^T \left[ \frac{1 + R_{p,t}}{1 + R_{f,t}} \right]^{1 - \rho} \right)$$
+                    </div>
+                </div>
+
+                <p><strong>参数设定说明：</strong></p>
+                <ul style="padding-left: 20px; margin-bottom: 12px; color: #334155;">
+                    <li>$\rho = 3.0$：相对风险厌恶系数（CRRA），文献建议取值在 $2 \sim 4$ 之间，学术基准固定为 $3$；</li>
+                    <li>$\Delta t = 0.25$：季度频率年化折算因子（1年 = 4季度）；</li>
+                    <li>因此分母项恒定为：$(1 - \rho)\Delta t = (1 - 3) \times 0.25 = \mathbf{-0.5}$；</li>
+                    <li>$T = 8$：过去 8 个季度滚动窗口（有效期数 $\ge 4$）。</li>
+                </ul>
+
+                <h3 class="block-title">2. 具体手算数值案例（Step-by-Step）</h3>
+                <div class="example-box">
+                    <div class="example-title">🧮 算例演示：某基金 8 季度收益率序列计算 MPPM</div>
+                    <p>设某基金过去 8 个季度的季度净收益率 $R_t$ 如下，无风险利率取季度基准 $R_f = 0.25\% = 0.0025$：</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>季度 $t$</th>
+                                <th>净值收益率 $R_t$</th>
+                                <th>相对总收益 $X_t = \frac{1+R_t}{1+R_f}$</th>
+                                <th>转换项 $g_t = X_t^{1-\rho} = X_t^{-2}$</th>
+                                <th>金融学直观评价</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Q1</td>
+                                <td>$+8.0\%$ (0.08)</td>
+                                <td>$\frac{1.08}{1.0025} \approx 1.0773$</td>
+                                <td>$1.0773^{-2} \approx \mathbf{0.8616}$</td>
+                                <td>盈利，效用折损小</td>
+                            </tr>
+                            <tr>
+                                <td>Q2</td>
+                                <td>$+5.0\%$ (0.05)</td>
+                                <td>$\frac{1.05}{1.0025} \approx 1.0474$</td>
+                                <td>$1.0474^{-2} \approx \mathbf{0.9116}$</td>
+                                <td>稳健盈利</td>
+                            </tr>
+                            <tr style="background: #fef2f2;">
+                                <td><strong>Q3</strong></td>
+                                <td><strong>$-8.0\%$ (-0.08)</strong></td>
+                                <td>$\frac{0.92}{1.0025} \approx 0.9177$</td>
+                                <td>$0.9177^{-2} \approx \mathbf{1.1874}$</td>
+                                <td><strong>亏损，倒数平方项陡增被严厉惩罚！</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Q4</td>
+                                <td>$+10.0\%$ (0.10)</td>
+                                <td>$\frac{1.10}{1.0025} \approx 1.0973$</td>
+                                <td>$1.0973^{-2} \approx \mathbf{0.8306}$</td>
+                                <td>大幅盈利</td>
+                            </tr>
+                            <tr>
+                                <td>Q5</td>
+                                <td>$+4.0\%$ (0.04)</td>
+                                <td>$\frac{1.04}{1.0025} \approx 1.0374$</td>
+                                <td>$1.0374^{-2} \approx \mathbf{0.9291}$</td>
+                                <td>温和盈利</td>
+                            </tr>
+                            <tr>
+                                <td>Q6</td>
+                                <td>$-2.0\%$ (-0.02)</td>
+                                <td>$\frac{0.98}{1.0025} \approx 0.9776$</td>
+                                <td>$0.9776^{-2} \approx \mathbf{1.0464}$</td>
+                                <td>微幅亏损</td>
+                            </tr>
+                            <tr>
+                                <td>Q7</td>
+                                <td>$+6.0\%$ (0.06)</td>
+                                <td>$\frac{1.06}{1.0025} \approx 1.0574$</td>
+                                <td>$1.0574^{-2} \approx \mathbf{0.8945}$</td>
+                                <td>稳步盈利</td>
+                            </tr>
+                            <tr>
+                                <td>Q8</td>
+                                <td>$+7.0\%$ (0.07)</td>
+                                <td>$\frac{1.07}{1.0025} \approx 1.0673$</td>
+                                <td>$1.0673^{-2} \approx \mathbf{0.8778}$</td>
+                                <td>良好盈利</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p><strong>第一步（计算 8 季几何期望项均值 $\bar{g}$）：</strong></p>
+                    <p style="text-align: center;">$$\bar{g} = \frac{0.8616 + 0.9116 + 1.1874 + 0.8306 + 0.9291 + 1.0464 + 0.8945 + 0.8778}{8} = \frac{7.5390}{8} \approx \mathbf{0.94238}$$</p>
+
+                    <p><strong>第二步（对数变换与年化折算）：</strong></p>
+                    <p style="text-align: center;">$$\text{MPPM} = \frac{\ln(0.94238)}{-0.5} = \frac{-0.05934}{-0.5} \approx \mathbf{+0.1187} \quad (\text{即年化确定性等价超额 } 11.87\%)$$</p>
+                </div>
+
+                <h3 class="block-title">3. 底层代码实现</h3>
+                <pre><code># scripts/_metrics_v2_20260826.py
+RHO = 3.0
+DT = 0.25
+WIN = 8
+
+# 1. 计算毛收益倍数并取 (1 - RHO) 次方
+df['_g'] = ((1 + df['quarter_return']) / (1 + df['rf'])) ** (1 - RHO)
+
+# 2. 滚动 8 季度计算算术均值
+gm = df.groupby('fund_code')['_g'].transform(
+    lambda s: s.rolling(WIN, min_periods=4).mean()
+)
+
+# 3. 取对数并处以归一化分母 ((1 - RHO) * DT = -0.5)
+df['mppm8'] = np.log(gm.where(gm > 0)) / ((1 - RHO) * DT)</code></pre>
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- ROUND 3: SDI -->
+        <!-- ========================================================================= -->
+        <section id="qa-sdi" class="dialogue-item">
+            <!-- User Question -->
+            <div class="msg-user">
+                <div class="msg-header">
+                    <div class="speaker-badge user">
+                        <span class="avatar user-av">问</span>
+                        <span>研究员 / 审稿质询</span>
+                    </div>
+                    <span class="timestamp">2026-09-04 14:15</span>
+                </div>
+                <div class="msg-text-user">
+                    “策略偏离指数（SDI = 风格回归隐含权重相邻两季变动距离）这个指标详细介绍下，纯净值是怎么反推出隐含权重的？举个例子，我们是怎么计算的？”
+                </div>
+            </div>
+
+            <!-- Assistant Answer -->
+            <div class="msg-assistant">
+                <div class="msg-header">
+                    <div class="speaker-badge assistant">
+                        <span class="avatar asst-av">答</span>
+                        <span>量化审计团队</span>
+                    </div>
+                    <span class="timestamp">2026-09-04 14:16</span>
+                </div>
+                <span class="section-tag">指标 3 · L5 交易执行与纪律层</span>
+                <h2 class="dialogue-title">策略偏离指数（Strategy Deviation Index, SDI）</h2>
+
+                <h3 class="block-title">1. 核心理论：基于收益的风格分析（RBSA）</h3>
+                <p>文献源自诺奖得主 Sharpe (1992, 基于收益的风格分析) 与 Wermers (2012, <em>Style Drift</em>)。很多公募基金为了掩盖风格漂移，在季报披露日会进行“橱窗粉饰（Window Dressing）”，导致持仓数据失真。而 <code>SDI</code> 采用<strong>纯净值时序反推</strong>，通过将基金收益率拟合到市场上标准风格基准上，逆向解析出经理真实的<strong>隐含配置权重</strong>，再测度相邻两期的变动距离。</p>
+
+                <h3 class="block-title">2. 国证风格四宫格基准与数学模型</h3>
+                <p>选取覆盖 A 股全市场风格象限的国证核心四宫格指数：</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;">
+                    <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #3b82f6;"><strong>399372</strong>：大盘成长（Large Cap Growth）</div>
+                    <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #10b981;"><strong>399373</strong>：大盘价值（Large Cap Value）</div>
+                    <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #f59e0b;"><strong>399376</strong>：小盘成长（Small Cap Growth）</div>
+                    <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #ef4444;"><strong>399377</strong>：小盘价值（Small Cap Value）</div>
+                </div>
+
+                <div class="formula-card">
+                    <div class="label">滚动风格回归与曼哈顿距离公式 (Wermers, 2012; Sharpe, 1992)</div>
+                    <div class="math-center">
+                        $$R_{i,\tau} = \alpha_t + \beta_{1,t} R_{399372,\tau} + \beta_{2,t} R_{399373,\tau} + \beta_{3,t} R_{399376,\tau} + \beta_{4,t} R_{399377,\tau} + \epsilon_{\tau}, \quad \tau \in [t-7, t]$$
+                    </div>
+                    <div class="math-center" style="margin-top: 10px;">
+                        $$w_{k,t} = \frac{\max(0, \beta_{k,t})}{\sum_{j=1}^4 \max(0, \beta_{j,t})}, \quad \text{满足 } \sum_{k=1}^4 w_{k,t} = 1, \; w_{k,t} \ge 0$$
+                    </div>
+                    <div class="math-center" style="margin-top: 10px;">
+                        $$\text{SDI}_t = \sum_{k=1}^4 \left| w_{k,t} - w_{k,t-1} \right|$$
+                    </div>
+                </div>
+
+                <h3 class="block-title">3. 具体手算数值案例（Step-by-Step）</h3>
+                <div class="example-box">
+                    <div class="example-title">🧮 算例演示：某基金风格漂移距离计算</div>
+                    <p>假设某成长型基金在 2023Q4 与 2024Q1 两个相邻季度，通过 8 季滚动 OLS 回归后归一化得到的隐含权重向量如下：</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>风格基准</th>
+                                <th>2023Q4 隐含权重 $w_{t-1}$</th>
+                                <th>2024Q1 隐含权重 $w_t$</th>
+                                <th>变动量 $(w_t - w_{t-1})$</th>
+                                <th>绝对距离 $|w_t - w_{t-1}|$</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>大盘成长 (399372)</strong></td>
+                                <td>0.60（重仓白马成长）</td>
+                                <td>0.20</td>
+                                <td>$-0.40$</td>
+                                <td><strong>0.40</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>大盘价值 (399373)</strong></td>
+                                <td>0.10</td>
+                                <td>0.10</td>
+                                <td>$0.00$</td>
+                                <td><strong>0.00</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>小盘成长 (399376)</strong></td>
+                                <td>0.20</td>
+                                <td>0.50（大举漂移向小微盘）</td>
+                                <td>$+0.30$</td>
+                                <td><strong>0.30</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>小盘价值 (399377)</strong></td>
+                                <td>0.10</td>
+                                <td>0.20</td>
+                                <td>$+0.10$</td>
+                                <td><strong>0.10</strong></td>
+                            </tr>
+                            <tr style="font-weight: bold; background: #faf5ff;">
+                                <td>合计 / 曼哈顿距离</td>
+                                <td>1.00</td>
+                                <td>1.00</td>
+                                <td>0.00</td>
+                                <td>$\text{SDI} = \mathbf{0.80}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p style="margin-top: 10px;">
+                        $$\text{SDI}_{2024Q1} = |0.20 - 0.60| + |0.10 - 0.10| + |0.50 - 0.20| + |0.20 - 0.10| = 0.40 + 0 + 0.30 + 0.10 = \mathbf{0.80}$$
+                    </p>
+                </div>
+
+                <h3 class="block-title">4. 底层代码实现</h3>
+                <pre><code># 01_数据获取与指标计算/lib_metrics.py L510–525
+for i in range(window, len(merged)):
+    # 构造设计矩阵 (常数项 + 4个风格收益) 与 目标收益 y
+    X = np.column_stack([np.ones(window), X_all[i - window:i]])
+    y = y_all[i - window:i]
+    beta, *_ = np.linalg.lstsq(X, y, rcond=None)
+    
+    # 非负截断并归一化
+    w = np.maximum(beta[1:], 0)
+    if w.sum() > 0:
+        w = w / w.sum()
+    w_hist.append((merged.iloc[i]["report_date"], w))
+
+# 计算相邻期绝对变动之和 (曼哈顿距离)
+for i in range(1, len(w_hist)):
+    sdi = np.abs(w_hist[i][1] - w_hist[i - 1][1]).sum()
+    rows.append((fund, w_hist[i][0], sdi))</code></pre>
+
+                <div class="insight-callout">
+                    <strong>💡 实证回归方向与金融学含义：</strong>
+                    <br>$\text{SDI} \in [0, 2]$，数值越大代表风格飘忽不定。在本文实证回归中，$\text{SDI}$ 系数<strong>高度显著为负（$-0.08^{***}, t=-3.12$）</strong>，强有力地证明了<strong>“风格随风倒、频繁横跳并不能创造超额，反而在追涨杀跌与摩擦成本中严重毁损投资者利益”</strong>！
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- ROUND 4: lsv (pbar & AF) -->
+        <!-- ========================================================================= -->
+        <section id="qa-lsv" class="dialogue-item">
+            <!-- User Question -->
+            <div class="msg-user">
+                <div class="msg-header">
+                    <div class="speaker-badge user">
+                        <span class="avatar user-av">问</span>
+                        <span>研究员 / 审稿质询</span>
+                    </div>
+                    <span class="timestamp">2026-09-04 14:17</span>
+                </div>
+                <div class="msg-text-user">
+                    “交易趋同度：$lsv = \text{均值}_i (|p_i - \bar{p}_t| - AF)$，买入基金比例偏离市场均值绝对程度，越大买卖越跟风抱团。请问这里的 $\bar{p}_t$（pbar）具体是啥？$AF$ 又是啥？为什么要设计这两个量？”
+                </div>
+            </div>
+
+            <!-- Assistant Answer -->
+            <div class="msg-assistant">
+                <div class="msg-header">
+                    <div class="speaker-badge assistant">
+                        <span class="avatar asst-av">答</span>
+                        <span>量化审计团队</span>
+                    </div>
+                    <span class="timestamp">2026-09-04 14:18</span>
+                </div>
+                <span class="section-tag">指标 4 · L5 交易执行与纪律层</span>
+                <h2 class="dialogue-title">LSV 羊群度指标中 $\bar{p}_t$ 与调整项 $AF$ 的统计学内涵</h2>
+
+                <h3 class="block-title">1. $\bar{p}_t$（pbar）是啥？—— 全市场系统性大势基准</h3>
+                <p>某只个股 $i$ 的买入比例定义为 $p_{i,t} = \frac{B_{i,t}}{B_{i,t} + S_{i,t}}$（$B$ 为增持基金数，$S$ 为减持基金数）。</p>
+                <p><strong>痛点直击：</strong>如果某一时期大盘极度繁荣（如牛市），全市场公募基金迎来了海量净申购，<strong>全市场 70% 的股票都被基金加仓</strong>。此时如果某只股票的买入比例刚好也是 70%（$p_i = 0.70$），这算不算基金经理抱团跟风？<strong>不算！</strong> 这只是跟随大盘的系统性仓位扩张。</p>
+                <div class="formula-card">
+                    <div class="label">全市场平均买入倾向基准定义</div>
+                    <div class="math-center">
+                        $$\bar{p}_t = \frac{1}{N_t}\sum_{i=1}^{N_t} p_{i,t}$$
+                    </div>
+                </div>
+                <p>• <strong>减去 $\bar{p}_t$ 的目的</strong>：剥离大盘牛熊周期与系统性加减仓影响，<strong>仅衡量机构对该股是否存在超越全市场基准的异常偏好</strong>。</p>
+
+                <h3 class="block-title">2. $AF$（Adjustment Factor）是啥？—— 小样本随机噪音修正因子</h3>
+                <p>这是 LSV (1992) 中最精妙的统计修正！</p>
+                <p><strong>痛点直击：为什么小盘垃圾股会“伪装成超级抱团”？</strong></p>
+                <p>设想全市场完全没有抱团，每位经理都是抛硬币随机决定买卖（概率为 0.5）：</p>
+                <ul style="padding-left: 20px; margin-bottom: 12px; color: #334155;">
+                    <li><strong>冷门微盘股（仅 2 只基金交易，$n=2$）</strong>：抛硬币两次全正面的概率高达 25%。一旦两家都买了，$p_i = 1.0$。如果不扣除 $AF$：$|p_i - \bar{p}| = |1.0 - 0.5| = \mathbf{0.50}$！看起来“抱团度极高”，但**这纯粹是样本太少（仅2只基金）导致的掷硬币随机波动**！</li>
+                    <li><strong>大盘白马股（有 200 只基金交易，$n=200$）</strong>：即便纯抛硬币，大数定律下买入比例也会极度贴近 0.5，$|p_i - \bar{p}|$ 几乎为 0。</li>
+                </ul>
+
+                <p>若不扣除 $AF$，所有成交冷门的股票都会因为<strong>样本量 $n$ 太小而虚构出极高的“伪抱团”</strong>！</p>
+
+                <div class="formula-card">
+                    <div class="label">二项分布期望偏离调整项 (Lakonishok et al., 1992)</div>
+                    <div class="math-center">
+                        $$AF_{i,t} = \mathbb{E}\left[ \left| p_{i,t} - \bar{p}_t \right| \;\middle|\; H_0 \right] = \sqrt{\frac{2}{\pi}} \cdot \sqrt{\frac{\bar{p}_t(1 - \bar{p}_t)}{n_{i,t}}}$$
+                    </div>
+                </div>
+
+                <p>• <strong>核心规律</strong>：交易该股票的基金总数 $n_{i,t}$ 越小，$AF$ 越大（扣除的随机噪音越多）；当 $n \to \infty$ 时，$AF \to 0$。</p>
+
+                <h3 class="block-title">3. 具体算例对比：白马股 vs 微盘股</h3>
+                <div class="example-box">
+                    <div class="example-title">🧮 算例对比：设当期全市场基准 $\bar{p}_t = 0.60$（市场处于净买入偏好）</div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>股票类型</th>
+                                <th>交易基金数 $n$</th>
+                                <th>买入占比 $p_i$</th>
+                                <th>表面偏离 $|p_i - \bar{p}_t|$</th>
+                                <th>随机噪音项 $AF$</th>
+                                <th>净羊群度 $H = |p - \bar{p}| - AF$</th>
+                                <th>最终判定</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: #eff6ff;">
+                                <td><strong>股票 A（热门白马）</strong></td>
+                                <td>$n=100$ 家</td>
+                                <td>$p_A = 0.85$</td>
+                                <td>$|0.85 - 0.60| = \mathbf{0.25}$</td>
+                                <td>$0.7979 \times \sqrt{\frac{0.24}{100}} \approx \mathbf{0.0391}$</td>
+                                <td>$0.25 - 0.0391 = \mathbf{+0.2109}$</td>
+                                <td><span style="color: #16a34a; font-weight: bold;">确凿高度抱团</span></td>
+                            </tr>
+                            <tr style="background: #fff7ed;">
+                                <td><strong>股票 B（冷门微盘）</strong></td>
+                                <td>$n=4$ 家</td>
+                                <td>$p_B = 0.75$</td>
+                                <td>$|0.75 - 0.60| = \mathbf{0.15}$</td>
+                                <td>$0.7979 \times \sqrt{\frac{0.24}{4}} \approx \mathbf{0.1954}$</td>
+                                <td>$0.15 - 0.1954 = \mathbf{-0.0454}$</td>
+                                <td><span style="color: #dc2626; font-weight: bold;">纯属巧合，无抱团</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="block-title">4. 底层代码实现</h3>
+                <pre><code># 01_数据获取与指标计算/lib_metrics.py L700–710
+# 1. 计算股票买入比例 p_i 与当期全市场均值 pbar
+mkt["p_i"] = mkt["B"] / (mkt["B"] + mkt["S"])
+pbar = mkt.groupby("rd")["p_i"].mean().rename("p_t")
+mkt = mkt.merge(pbar, on="rd")
+
+# 2. 计算二项分布调整因子 AF
+mkt["AF"] = np.sqrt(2.0 / np.pi) * np.sqrt(
+    (mkt["p_t"] * (1.0 - mkt["p_t"])).clip(lower=0) / mkt["n"]
+)
+
+# 3. 股票净羊群度 H_i 与基金层面加权汇总
+mkt["H_i"] = (mkt["p_i"] - mkt["p_t"]).abs() - mkt["AF"]
+fund_lsv = res.groupby(["fund_code", "rd"])["H_i"].mean()</code></pre>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="doc-footer">
+        <p>© 2026 基金经理行为分析研究课题组 · 学术审计与算法工程复现体系</p>
+        <p style="margin-top: 4px; font-size: 12px;">报告文件已自动归档至：<code>接力包_2026-09-10/审计报告/</code> 与 <code>reports/</code></p>
+    </footer>
+
+</div>
+
+<!-- KaTeX Auto-Render Trigger -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    function renderMath() {
+        if (typeof renderMathInElement === 'function') {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '\\[', right: '\\]', display: true},
+                    {left: '\\(', right: '\\)', display: false},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false,
+                ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+            });
+        }
+    }
+    renderMath();
+    setTimeout(renderMath, 300);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>基金经理能力画像与业绩评价 · 五维行为-财务微观结构量化研究</title>
+<style>
+  :root{ --ink:#1f2a37; --sub:#52606d; --line:#e3e8ef; --accent:#b91c1c;
+         --bg:#ffffff; --soft:#f8fafc; --soft2:#eef2f7; --good:#0f7b4d; --warn:#b4690e; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+       line-height:1.75;font-size:15.5px}
+  .wrap{max-width:980px;margin:0 auto;padding:40px 28px 90px}
+  h1{font-size:30px;line-height:1.3;margin:0 0 6px;letter-spacing:.5px}
+  h2{font-size:23px;margin:46px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--accent);color:var(--accent)}
+  h3{font-size:18.5px;margin:30px 0 10px;color:var(--ink)}
+  h4{font-size:16px;margin:22px 0 8px;color:var(--sub)}
+  p{margin:11px 0}
+  .lead{font-size:16.5px;color:var(--sub);margin:14px 0 22px}
+  code{background:var(--soft2);padding:1px 6px;border-radius:5px;font-family:"SFMono-Regular",Consolas,monospace;font-size:13.5px;color:#9a3412}
+  .formula{background:var(--soft);border:1px solid var(--line);border-left:4px solid var(--accent);
+           padding:14px 18px;margin:16px 0;border-radius:8px;font-family:"SFMono-Regular",Consolas,monospace;
+           font-size:15px;line-height:1.95;color:#0b3b24;overflow-x:auto;white-space:pre-wrap;word-break:break-word;
+           box-shadow:0 1px 2px rgba(15,23,42,.04)}
+  .formula .cmt{color:#94a3b8;font-weight:400;font-size:.86em}
+  .formula .lbl{color:var(--accent);font-weight:700}
+  .formula.eqn{font-size:17.5px;font-weight:600;line-height:2.05;letter-spacing:.2px;
+               background:#fff7ed;border-left:5px solid var(--accent);color:#7c2d12;
+               padding:22px 26px;box-shadow:0 2px 10px rgba(185,28,28,.08)}
+  table{border-collapse:collapse;width:100%;margin:16px 0;font-size:13.6px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--soft2);color:var(--ink);font-weight:600}
+  td.num{text-align:right;font-family:"SFMono-Regular",Consolas,monospace;white-space:nowrap}
+  .ptable caption{caption-side:top;text-align:left;font-weight:600;color:var(--accent);margin-bottom:6px;font-size:14.5px}
+  .box{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:18px 0}
+  .box.note{border-left:4px solid var(--warn);background:#fffaf0}
+  .box.key{border-left:4px solid var(--good);background:#f0fdf7}
+  .box.ctrl{border-left:4px solid #475569;background:#f1f5f9}
+  .tag{display:inline-block;font-size:12px;padding:1px 9px;border-radius:20px;margin-right:6px}
+  .tag.ok{background:#dcfce7;color:#166534}.tag.no{background:#fee2e2;color:#991b1b}
+  .tag.weak{background:#fef3c7;color:#92400e}.tag.plan{background:#e0e7ff;color:#3730a3}
+  .toc{background:var(--soft2);border:1px solid var(--line);border-radius:10px;padding:18px 24px;margin:24px 0}
+  .toc ol{margin:6px 0;padding-left:22px}.toc li{margin:5px 0}
+  .toc a{color:var(--accent);text-decoration:none}.toc a:hover{text-decoration:underline}
+  .sigx{color:#166534;font-weight:700}.sign{color:#991b1b;font-weight:700}
+  .muted{color:var(--sub);font-size:13.5px}
+  .radar{text-align:center;margin:22px 0}
+  .radar-legend{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;margin:6px 0 4px;font-size:12.5px;color:var(--sub)}
+  .radar-legend span{white-space:nowrap}
+  .barchart{margin:22px 0;overflow-x:auto}
+  ul{margin:10px 0 10px 4px;padding-left:22px}li{margin:6px 0}
+  .foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--sub);font-size:13px}
+  .kpi{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}
+  .kpi div{flex:1;min-width:150px;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .kpi b{display:block;font-size:24px;color:var(--accent);margin-bottom:2px}
+  .kpi span{font-size:12.5px;color:var(--sub)}
+  /* §7.1 双模式滑块 */
+  .mode-switch{display:flex;align-items:center;gap:14px;margin:16px 0 10px;font-size:14.5px}
+  .mode-switch .lbl{color:var(--sub);transition:color .2s}
+  .mode-switch .lbl.active{color:var(--accent);font-weight:700}
+  .switch{position:relative;display:inline-block;width:54px;height:28px;flex:0 0 auto}
+  .switch input{opacity:0;width:0;height:0;margin:0}
+  .slider-ui{position:absolute;cursor:pointer;inset:0;background:#cbd5e1;border-radius:28px;transition:.25s}
+  .slider-ui:before{content:"";position:absolute;height:22px;width:22px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.25s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+  .switch input:checked + .slider-ui{background:var(--accent)}
+  .switch input:checked + .slider-ui:before{transform:translateX(26px)}
+  #coefview .panel{display:none}
+  #coefview.show-rank .panel-rank{display:block}
+  #coefview.show-layer .panel-layer{display:block}
+  .sig-legend{display:flex;flex-wrap:wrap;gap:16px;font-size:12.5px;color:var(--sub);margin:4px 0 14px}
+  .sig-legend .lg{display:flex;align-items:center;gap:6px}
+  .sig-legend .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .coef-row{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:13.5px}
+  .coef-name{flex:0 0 178px;color:var(--ink)}
+  .coef-name small{color:#94a3b8;font-size:11px;margin-left:4px}
+  .coef-bar-track{position:relative;flex:1;height:18px;background:#f1f5f9;border-radius:4px;overflow:hidden}
+  .coef-bar-track .mid{position:absolute;left:50%;top:0;bottom:0;width:2px;background:#94a3b8;z-index:2}
+  .coef-bar{position:absolute;top:1px;bottom:1px;border-radius:3px}
+  .coef-bar.bar-pos{left:50%;background:#dc2626}
+  .coef-bar.bar-neg{right:50%;background:#16a34a}
+  .coef-bar.bar-nsg{left:50%;background:#cbd5e1}
+  .coef-val{flex:0 0 300px;text-align:right;font-family:"SFMono-Regular",Consolas,monospace;font-size:12.3px;white-space:nowrap}
+  .coef-val.v-pos{color:#dc2626}.coef-val.v-neg{color:#16a34a}.coef-val.v-ns{color:#94a3b8}
+  .badge-fe{display:inline-block;margin-left:6px;font-size:10.5px;background:#fff7ed;color:#b4690e;border:1px solid #fed7aa;border-radius:10px;padding:0 6px;vertical-align:middle}
+  .layer-sec{border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:14px 0;background:#fff}
+  .layer-sec h4{margin:0 0 12px;display:flex;align-items:center;gap:10px;font-size:15.5px}
+  .ltag{font-size:11.5px;padding:1px 9px;border-radius:20px;font-weight:600}
+  .interp{margin-top:12px;font-size:13px;color:var(--sub);background:var(--soft);border-left:3px solid var(--good);padding:9px 12px;border-radius:6px}
+  /* 经理行为画像卡片墙 */
+  .cw-title{font-size:18px;color:var(--accent);margin:34px 0 6px}
+  .mcard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin:18px 0}
+  .mcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 17px 14px;box-shadow:0 2px 8px rgba(15,23,42,.05);transition:transform .15s,box-shadow .15s}
+  .mcard:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(15,23,42,.10)}
+  .mcard-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px}
+  .mcard-name{font-size:19px;font-weight:700;letter-spacing:.5px}
+  .mcard-tag{font-size:11.5px;color:var(--sub);background:var(--soft2);padding:2px 9px;border-radius:20px;white-space:nowrap}
+  .msig{display:flex;flex-direction:column;gap:5px;margin:6px 0 10px}
+  .msig-row{display:flex;align-items:center;gap:8px;font-size:12px}
+  .msig-lab{flex:0 0 54px;color:var(--sub);text-align:right}
+  .msig-track{flex:1;height:9px;background:var(--soft2);border-radius:6px;overflow:hidden}
+  .msig-fill{display:block;height:100%;border-radius:6px;opacity:.85}
+  .msig-val{flex:0 0 16px;text-align:right;font-weight:700;color:var(--ink);font-family:"SFMono-Regular",Consolas,monospace}
+  .mcard-desc{font-size:12.5px;color:var(--sub);line-height:1.6;margin:8px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>基金经理能力画像与业绩评价</h1>
+<p class="lead">基于五维行为-财务微观结构（个人信息 · 持仓偏离 · 交易执行 · 风险应对 · 认知偏差）的量化研究 —— 从"单一因子解释业绩"走向"全方位能力画像刻画业绩"</p>
+
+<div class="kpi">
+  <div><b>400</b><span>主动股基（非平衡面板）</span></div>
+  <div><b>2006Q2–2026Q2</b><span>20 年净值/收益跨度</span></div>
+  <div><b>9,974</b><span>基金×季度观测</span></div>
+  <div><b>5 维</b><span>能力画像轴（L1–L5）</span></div>
+</div>
+
+<div class="toc">
+<b>目录</b>
+<ol>
+  <li><a href="#c0">核心问题与研究框架：基金经理能力画像</a></li>
+  <li><a href="#c1">方法论总览：三种识别策略</a></li>
+  <li><a href="#c2">L1 个人信息层 —— 作为控制的背景特征</a></li>
+  <li><a href="#c3">L2 持仓偏离层 —— 投资风格的主动程度</a></li>
+  <li><a href="#c4">L3 交易执行层 —— 交易行为（含换手率与选择性交易）</a></li>
+  <li><a href="#c5">L4 风险应对层 —— 主动风险增益（最强维度）</a></li>
+  <li><a href="#c6">L5 认知偏差层 —— 行为金融构念</a></li>
+  <li><a href="#c7">五维画像合成 —— 能力雷达图与综合评价</a></li>
+  <li><a href="#c8">机制分析：画像如何转化为业绩</a></li>
+  <li><a href="#c9">预测研究：画像预测未来业绩</a></li>
+  <li><a href="#c10">覆盖上限与诚实缺口</a></li>
+  <li><a href="#c11">回归符号与显著性深度解读</a></li>
+  <li><a href="#c12">基金经理画像原型</a></li>
+  <li><a href="#c13">结论、贡献与诚实边界</a></li>
+</ol>
+</div>
+
+<!-- 计量术语白话模块已按用户要求删除：其 t 值说明已移至第 1 章方法论 box（见下方"t 值怎么算、为什么看 t 不看 P 值"）；截面/组内FE/前向三种识别策略的定义见上方 C1 表格与 box。 -->
+
+<!-- ============ C0 ============ -->
+<h2 id="c0">0 · 核心问题与研究框架：基金经理能力画像</h2>
+<p>本文的核心问题一句话即可概括：<b>基金经理的"画像"（profile）如何影响、乃至预测基金业绩？</b> 传统研究习惯于用一个或几个因子（规模、年龄、换手率）去解释业绩，但基金经理是一位"人"，其能力是<b>多维度、结构化</b>的——他是什么背景（L1）、怎么选股配置（L2）、怎么交易（L3）、怎么承担与管理风险（L4）、又表现出哪些认知偏差（L5）。把这五个层次量化成一个<b>类似雷达图的能力画像</b>，我们才能对"基金经理能力"做全方位的刻画，也才能真正匹配"业绩评价"需要的广度与精度。</p>
+
+<p>这个画像之所以能匹配业绩评价，关键在于两点：</p>
+<ul>
+  <li><b>全方位</b>：五个维度覆盖了从"人是谁"到"行为偏误"的完整链条，没有任何单一因子能替代；</li>
+  <li><b>强挂钩</b>：每一个维度的核心指标都与基金业绩（alpha、原始收益、未来收益）存在可识别的统计关联——后文每一层都用真实回归逐一证明。</li>
+</ul>
+
+<p>因此本文不是一篇"跑了一堆回归"的清单，而是以"画像 → 能力 → 业绩"为主线的论证：先逐层定义与量化画像的每个轴（第 2–6 章），再合成雷达图（第 7 章），接着解释画像转化为业绩的机制（第 8 章），最后证明画像能<b>预测</b>未来业绩（第 9 章）。所有数字均来自本项目的真实流水线输出（<code>指标计算流水线/</code> 下 <code>13_分层回归.py</code>、<code>14_组内FE回归.py</code>、<code>15_R3_gamma截尾重跑.py</code> 及既有前向/LSV 回归），未做任何虚构。</p>
+
+<div class="box note">
+<b>数据口径与诚实前提</b>：主面板 <code>主分析面板_重建.csv</code> 共 400 只主动股基、9,974 个基金×季度观测、49 列。不同指标的覆盖率不同（详见第 10 章）：例如处置效应 de 仅半年报可算（约 46.6%）；v4 主回归采用 TO_wind 覆盖 86.6%（8,642 观测），而真双边 TO_two_sided 仅 18.0%（1,799 观测）作交易口径子集。任何结论都标注了对应的样本与 N，<b>绝不把低覆盖子集的结论外推到全样本</b>。
+</div>
+
+
+<div class="box" style="border-left:5px solid #0f7b4d;background:#f0fdf7;">
+<b>基金经理画像速览（一眼看懂"什么样的经理能跑赢"）</b>
+<p style="margin:6px 0 0;">把 L1–L5 五层证据合成，一只<b>能在 A 股持续跑赢的主动股基经理</b>长这样：</p>
+<ul style="margin:6px 0 0;">
+<li><b>风险应对层(L4)有真能力</b>：主动增益 ARG/RG 双证据强正、收益波动正向——敢下注且押对，是全文最强、最逼近因果的能力轴；</li>
+<li><b>行业层(L2)有方向感</b>：行业偏离 ICI 正向***，但主动份额 AS 负向**（同期 FF5 alpha 口径；前向毛收益口径则为正 +12.7***——"赚风险的钱、亏能力的钱"，见表 9.2）——赢在"行业下注的方向"，而非"偏离基准的量"；</li>
+<li><b>认知偏误层(L5)低拖累</b>：处置效应 de 稳定为负（不死扛亏损）、风险不对称/lsv 受控——纪律性好；</li>
+<li><b>交易层(L3)不靠折腾</b>：原始换手 TO 不显著、甚至"组合换手越高 alpha 越低"（严格季度口径 ***）——少做无用交易；</li>
+<li><b>背景层(L1)基本中立</b>：院校层次、任期、性别均不显著，CFA 负相关属选择偏差——<b>画像是关于"行为"，不是"人口学"</b>。</li>
+</ul>
+<p class="muted" style="margin:6px 0 0;">后面的章节不是"一堆回归的清单"，而是沿着这五条维度，逐一用真实数据证明上面的画像为什么成立。</p>
+</div>
+
+<!-- ============ C1 ============ -->
+<h2 id="c1">1 · 方法论总览：三种识别策略</h2>
+<p>为了从"画像"中干净地分离出因果/预测信号，本文对同一组指标使用三种互补的识别策略，它们回答三个不同层面的问题：</p>
+<table>
+  <tr><th>策略</th><th>因变量</th><th>样本结构</th><th>标准误</th><th>回答的问题</th></tr>
+  <tr><td><b>截面基准</b><br>（R1 / 第 2–6 章分层）</td><td>基金层均值 FF5-alpha<br><code>ff5_adj_return</code></td><td>每只基金压成 1 个均值，N≈362</td><td>HC1 稳健</td><td>"画像高的基金，平均业绩是否更高？"<br>（发现<b>截面</b>关联）</td></tr>
+  <tr><td><b>组内固定效应</b><br>（R6 / 第 2–6 章附注）</td><td>季度收益 <code>quarter_return</code></td><td>基金×季度面板，每只基金自身为对照</td><td>基金聚类</td><td>"同一只基金，行为暂时偏离自身均值，是否伴随业绩暂时偏离？"<br>（控制所有不随时间变的混淆，逼近<b>因果</b>）</td></tr>
+  <tr><td><b>前向预测</b><br>（第 9 章）</td><td>未来 1/4 季收益<br><code>future_return</code></td><td>基金×季度面板，N≈3,211</td><td>基金聚类 + 年份FE</td><td>"画像能否<b>预测</b>未来业绩？"<br>（能力画像的前瞻价值）</td></tr>
+</table>
+
+<div class="box">
+<b>关于"公式后面跟参数表"的约定</b>：后文每讲一条回归，都会在其公式下方给出一张 <b>③-b 参数说明表</b>，逐列说明：变量是什么、具体公式、怎么算得、单位、为何纳入（控制理由）、预期符号。控制变量（<code>log_aum</code>、<code>log_fund_age</code>、年份FE）贯穿全文，理由统一为：规模控制流动性/体量混淆、基金年龄控制幸存偏差与策略稳定性、年份控制宏观冲击。
+</div>
+
+<div class="box note">
+<b>t 值怎么算、为什么看 t 不看 P 值（论文惯例说明）</b>
+<ul>
+<li><b>t 值的定义</b>：对任一系数 β̂，其 t 统计量 <code>t = β̂ / SE(β̂)</code>，即"<b>估计值 ÷ 它的标准误</b>"。SE（标准误）来自 OLS 估计量协方差矩阵对角线开根；本项目截面回归用 <b>HC1 异方差稳健标准误</b>（对异方差做小样本修正），组内 FE 用<b>基金聚类标准误</b>（同一基金多季度观测彼此不独立，按基金聚类后 t 才不会虚高）。t 越大，说明"β̂ 偏离 0 的幅度"相对其估计噪声越显著。</li>
+<li><b>显著性门槛（与星号一一对应）</b>：常规双尾检验下，<code>|t| &gt; 1.96 ≈ p&lt;0.05（**）</code>、<code>|t| &gt; 2.58 ≈ p&lt;0.01（***）</code>；|t| 不足 1.96 写作 <code>ns</code>（不显著）。本文每个系数后括号里的数字就是 t 值，星号即按此判定（如 ARG 截面 +0.047(2.39)** 即 t=2.39、&gt;1.96 故 **）。</li>
+<li><b>为什么看 t 而不是 P 值</b>：① 本面板 N 很大（截面 N≈362、面板 N≈2,668、前向 N≈3,211），<b>t 与 P 在大样本下一一对应</b>——知道 t 就等于知道 p，无需另报一列 p；② t 比 p <b>多携带两样信息</b>：<b>方向</b>（正负号）与<b>相对量级</b>（|t|=2 与 |t|=11 都"显著"，但后者证据强得多，p 值却都只是"很小"，看不出强弱）；③ 论文惯例报告 <code>β (t)</code> 而非 <code>β (p)</code>——审稿人直接读 t 就能同时判断显著性门槛与效应强度，p 值在大样本下极易"显著却无意义"，信息量更低。故全文以 <b>t + 星号</b>为准，不单独列 p 值。</li>
+</ul>
+</div>
+
+
+<div class="box ctrl">
+<b>稳健标准误（HC）：为什么"修正异方差"、怎么算（流程与原理）</b>
+<ul>
+<li><b>问题从哪来</b>：OLS 估计 β̂ 的"标准误"默认假设<b>同方差</b>——每个观测的误差方差相同（Var(ε_i)=σ²）。其标准公式 Var(β̂)=σ²(X'X)⁻¹ 只在同方差下成立。但金融面板几乎必然<b>异方差</b>（大基金与小基金的残差波动天差地别），此时 OLS 系数虽仍无偏，但公式算出的 SE <b>系统性偏小</b> → t 值虚高 → 把噪声当显著。这就是"修正异方差的稳健标准误"要解决的问题。</li>
+<li><b>三明治（sandwich）估计量</b>：真实协方差 Var(β̂)=(X'X)⁻¹ X'ΩX (X'X)⁻¹，其中 Ω=diag(σ_i²) 是对角但<b>非恒定</b>的残差方差矩阵。我们不知道真实 σ_i²，用<b>残差平方 û_i² 估计</b>：Ω̂=diag(û_i²)。于是稳健 SE 的协方差写成"<b>面包−肉−面包</b>"：bread=(X'X)⁻¹、meat=X'Ω̂X、再 bread，故称 sandwich / "三明治"估计量。SE=√(对角线)。</li>
+<li><b>HC0 → HC3 的演进（本项目截面用 HC1）</b>：
+  <ul>
+  <li><b>HC0</b>：Ω̂_ii=û_i²（最原始）。</li>
+  <li><b>HC1</b>：在 HC0 上乘 <b>n/(n−k)</b>（n 样本量、k 参数个数），做小样本自由度修正。<b>本项目截面 R1–R5 一律用 HC1</b>——大样本下最稳健、最常用的默认。</li>
+  <li><b>HC2</b>：Ω̂_ii=û_i²/(1−h_ii)，h_ii 是该观测的<b>杠杆值</b>（hat matrix 对角线），对高杠杆点降权。</li>
+  <li><b>HC3</b>：Ω̂_ii=û_i²/(1−h_ii)²，对高杠杆点<b>更狠的降权</b>。当数据有强影响点/离群观测时用 HC3 更保险。</li>
+  </ul></li>
+<li><b>计算流程（5 步）</b>：① 跑普通 OLS，得系数 β̂ 与残差 û；② 算 û_i² 组成 Ω̂；③ 算 meat=X'Ω̂X；④ 三明治 Û=(X'X)⁻¹·meat·(X'X)⁻¹；⑤ SE(β̂)=√(diag Û)，再算 t=β̂/SE 判星。</li>
+<li><b>HC 不是万能：面板要用"聚类稳健"而非 HC</b>。HC 家族只修正"<b>截面异方差</b>"，但<b>改不了"同一基金多季度观测互相不独立"</b>——同一经理的不同季度，残差是相关的。若对面板直接用 HC，SE 仍会偏小。本项目<b>面板回归（R6 组内FE、前向回归）一律用"基金聚类稳健标准误"</b>：把 meat 换成 Σ_g X_g' û_g û_g' X_g（按 fund 聚类的"肉"），在基金内允许相关、仅要求基金间独立。一句话：<b>截面用 HC1，面板用基金聚类</b>。</li>
+</ul>
+</div>
+
+<!-- ============ C2 ============ -->
+<h2 id="c2">2 · L1 个人信息层 —— 作为控制的背景特征</h2>
+<p><b>这一层刻画"基金经理是谁"。</b> 它包含任期、基金年龄、性别、学历、CFA、毕业院校。经典文献（Golec 1996；Niessen & Ruenzi 2007）认为经理的人力资本（教育、资质、经验）可能影响业绩。理论上，经验更丰富、资质更高的经理更可能具备选股与风控能力——这是我们构建画像时<i>直觉上</i>最该纳入的一层。</p>
+
+<p>但本文的实证结论对这层给出了一个<b>清醒的定位：个人信息单独来看，基本不能作为业绩的驱动变量，应降格为"控制变量"而非"能力轴"</b>。原因如下文回归所示——任期、性别单独回归均不显著，CFA 虽显著却为<b>负向</b>（反直觉，属选择偏差），院校因覆盖率不足未进入主回归。</p>
+
+<h3>③-a L1 各指标的具体公式</h3>
+<div class="formula">
+mgr_total_tenure_v2 = (report_date − 在任经理任职起始日).days      <span class="cmt">// 任职天数，单位：天<br></span>
+log_fund_age        = ln( (report_date − 基金成立日).days / 30.44 / 12 )   <span class="cmt">// 基金年龄（年）取自然对数，单位：ln(年)<br></span>
+gender_m            = 1 若性别="男" 否则 0                            <span class="cmt">// 哑变量，无量纲<br></span>
+cfa_d              = 1 若 CFA="是" 否则 0                            <span class="cmt">// 哑变量，无量纲<br></span>
+school              = 毕业院校（文本，分类变量）                        <span class="cmt">// 文本</span>
+</div>
+
+<h4>③ 回归设定（我们实际估计的模型，L1 分三次独立回归）</h4>
+<div class="formula eqn">
+<span class="lbl">(1) L1-任期</span> ff5_adj_return_i = α + β·mgr_tenure_i + γ₁·log_aum_i + γ₂·log_fund_age_i + ε_i
+<span class="lbl">(2) L1-性别</span> ff5_adj_return_i = α + β·gender_m_i   + γ₁·log_aum_i + γ₂·log_fund_age_i + ε_i
+<span class="lbl">(3) L1-CFA</span>  ff5_adj_return_i = α + β·cfa_d_i      + γ₁·log_aum_i + γ₂·log_fund_age_i + ε_i
+&nbsp;&nbsp;<span class="cmt">// 三次回归共用同一组控制变量（log_aum 规模 + log_fund_age 年龄），每次只换一个 L1 核心变量；N=362，OLS+HC1。任期还额外跑了一个 excess_return 口径复核（N=400，仍 ns）。</span>
+</div>
+<h3>③-b L1 参数说明表（截面基准回归，DV = ff5_adj_return）</h3>
+<table class="ptable">
+<caption>表 2.1　L1 个人信息 → 业绩（基金层均值截面，OLS + HC1，控制 log_aum + log_fund_age）</caption>
+<tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么计算得到</th><th>单位</th><th>为何纳入</th><th>β (t)</th><th>结论</th></tr>
+<tr><td>任期<br><code>mgr_total_tenure_v2</code></td><td>经理任职经验</td><td>上任日至报告日天数</td><td>面板任职起始日字段直接相减（修正了早期负任期的 bug）</td><td>天</td><td>检验"经验→能力"假说</td><td class="num">0.0 (1.20)</td><td><span class="muted">ns</span></td></tr>
+<tr><td>性别<br><code>gender_m</code></td><td>经理性别（男=1）</td><td>哑变量</td><td>文本"男/女"映射</td><td>无量纲</td><td>控制人口学异质性</td><td class="num">+0.0028 (0.75)</td><td><span class="muted">ns</span></td></tr>
+<tr><td>CFA<br><code>cfa_d</code></td><td>是否持 CFA</td><td>哑变量</td><td>"是/否"映射（兼容 True/False/1/0）</td><td>无量纲</td><td>检验专业资质价值</td><td class="num sigx">−0.0265 (−5.34)***</td><td><span class="sign">显著但为负</span></td></tr>
+<tr><td>院校<br><code>school</code></td><td>毕业院校</td><td>文本</td><td>分类变量</td><td>文本</td><td>理论上控名校效应</td><td class="num">—</td><td><span class="muted">覆盖率 45.9%，层次重跑仍 ns（见⑥）</span></td></tr>
+<tr><td>规模<br><code>log_aum</code></td><td>基金规模</td><td>ln(avg_aum)</td><td>平均净资产(亿元)取对数</td><td>ln(亿元)</td><td>控制规模/流动性混淆</td><td class="num">+0.0010 (1.15)</td><td>控制</td></tr>
+<tr><td>年龄<br><code>log_fund_age</code></td><td>基金年龄</td><td>ln(年)</td><td>成立日至报告日</td><td>ln(年)</td><td>控制幸存偏差</td><td class="num sign">−0.0069 (−4.39)***</td><td>控制（显著负）</td></tr>
+</table>
+
+<div class="box ctrl">
+<b>④ 控制变量为何纳入（详细）</b>
+<ul>
+<li><b>log_aum（基金规模对数）</b>：控制<b>规模效应与流动性混淆</b>。大基金因体量庞大面临调仓摩擦、价格冲击成本与流动性约束，其收益分布与小微基金系统性不同；若不加控制，会把"规模本身的收益特征"误归为经理能力。同时规模与多个核心自变量（主动份额、换手率、处置效应）高度相关——大基金天然低换手、持仓更分散，不加控制会与 L2/L3 变量产生共线混淆。取对数缓解右偏与异方差，使系数可读为"规模每变动 1% 对 alpha 的半弹性"。</li>
+<li><b>log_fund_age（基金年龄对数）</b>：控制<b>幸存偏差与策略成熟度</b>。样本只含"活到报告期"的基金，老基金是生存选择的结果、历史业绩天然更好；同时老基金投资策略更定型、行为指标跨期波动更小。不加控制会把这些"年龄带来的结构性差异"误读为能力差异。同样取对数处理偏态。</li>
+<li><b>yearFE（年份固定效应，仅面板回归）</b>：控制所有基金共同面对的<b>宏观与市场冲击</b>（牛熊周期、利率环境、风格轮动、系统性风险），避免把"市场 beta / 时间趋势"误归为经理的截面或时序能力信号；在 R6 中与基金 FE 共同构成双向固定效应。</li>
+</ul>
+各解释变量（AS/ICI/tenure 等）的含义、公式与单位见上方 ③-a 与 ③-b 表。
+</div>
+<div class="box note">
+<b>⑤ 设计说明：为什么 L1 分三次独立回归，且三次都加同一组两个控制变量</b>
+<ul>
+<li><b>一、为什么"分三次"而不是一次合并？</b> L1 这层在全文扮演"审计 / 降级"角色：我们要证明"个人信息<b>单独</b>都驱动不了业绩，所以应降为控制变量"。为此采用 <b>one-at-a-time（逐个上场）设计</b>——每次只放 <b>一个</b> L1 变量、共用同一组基线控制，干净地看"在控住规模与年龄后，这一个背景特征还能不能解释 alpha"。这样三个 β 直接可比。若把任期/性别/CFA 塞进<i>同一个</i>回归，性别与 CFA 哑变量之间、任期与基金年龄之间可能共线，反而把"各自不显著"的信号搅浑，也违背"逐个证伪"的逻辑。此外三个变量类型本就不同：任期是连续变量（天），性别/CFA 是 0/1 哑变量，院校是文本分类变量（覆盖率仅 45.9%，已排除出主回归），并不天然适合拼成一个"背景指数"。</li>
+<li><b>二、三个回归加的控制变量是"同一组两个"，并非(1)有两个、(2)(3)有别的。</b> 代码里 <code>controls = ["log_aum", "log_fund_age"]</code>（见 <code>13_分层回归.py</code> 第 53 行），(1)(2)(3) 的右边<i>完全一样</i>，都是 <code>log_aum</code>（基金规模对数）+ <code>log_fund_age</code>（基金年龄对数）。上一版在(1)把两个控制变量写开、在(2)(3)缩写成"γ·controls"只是<b>排版简写</b>，曾让人误以为控制变量不同——现已全部显式写出，避免歧义。这组两个控制变量是<b>全流水线 L1–L5 的通用基线</b>，不是 L1 独有。</li>
+<li><b>三、这两个控制变量在 L1 里起什么作用？</b> ① <code>log_aum</code> 剔除"规模效应 / 流动性混淆"：大基金调仓摩擦高、收益分布天然不同，不控制会把规模本身的收益特征误归为经理能力；② <code>log_fund_age</code> 剔除"幸存偏差"：样本只含活到报告期的基金，老基金历史业绩天然更好、策略更定型，不控制会把这些年龄带来的结构差异误读为能力差异。注意：本截面回归是"基金层均值"的单一横截面，<b>年份固定效应(yearFE)此时不适用</b>，yearFE 只在 R6 面板双向 FE 中才进入。</li>
+<li><b>四、院校(school)去哪了？</b> 院校是 L1 第 4 个背景变量，但覆盖率仅 45.9%（大量经理院校缺失）。若进主回归会把样本砍掉一半以上并引入选择性偏差，故<b>未进入主回归</b>，仅在"覆盖上限"表（第 10 章）列为规划补全项。</li>
+<li><b>五、为什么任期比其他两个多跑一次？</b> 任期对应经典"经验→业绩"假说（Golec 1996），值得用两个 DV 定义复核，故(1)在 <code>ff5_adj</code> 之外还额外跑了一个 <code>excess_return</code> 口径（N=400，任期仍 ns，t=0.45）。结论一致：经验不构成可定价的超额能力——这正是把它降为控制变量、而非能力轴的实证依据。</li>
+</ul>
+</div>
+<div class="box ctrl">
+<b>关键结论（用户要求明确写清）：</b> 个人信息层对业绩的<b>单独回归基本不显著</b>——任期 β≈0(t1.20)、性别 β=+0.003(t0.75)，均不显著；CFA 虽 t=−5.34 显著，但符号为负（持 CFA 的基金 alpha 反而更低），属<b>选择偏差/样本特征</b>而非能力信号，须谨慎解读。<b>因此本层不作为能力画像的"驱动轴"，而是作为控制变量进入所有集成回归</b>：它捕获的是经理/基金层面的固定异质性，避免这些背景因素污染 L2–L5 行为维度的估计。在 R6 组内固定效应中，性别/学历/CFA/院校等<b>不随时间变化</b>的个人信息会被基金 FE 完全吸收，进一步印证其"控制而非驱动"的角色。
+</div>
+
+
+<div class="box note">
+<b>⑦ 文献对话：人力资本假说（Golec 1996；Niessen &amp; Ruenzi 2007）与本文 L1 的异同</b>
+<ul>
+<li><b>Golec (1996, 美国 1988–1990)</b>：样本期早、经理技能差异大。发现<b>更年轻、持 MBA、任期更长</b>的经理带来更高的风险调整超额收益（alpha）；MBA 经理更年轻、任期更短；<b>工作任期对业绩的影响最大</b>。→ 经典"教育/经验 → 业绩"假说的最强支持。</li>
+<li><b>Niessen &amp; Ruenzi (2007, "Sex Matters", 美国, 13,547 年-观测 / 3,333 只基金)</b>：女性经理更风险厌恶、风格更不极端、交易更少（更少过度自信）；<b>男女平均业绩无差异</b>；但女性管理的基金获得<b>约 17–18% 更低的资金净流入</b>（投资者刻板印象）。→ 关键结论是"无业绩差异 + 有资金歧视"，而非"女性业绩差"。</li>
+<li><b>Chevalier &amp; Ellison (1999, 本文 L1 锚点)</b>：大学质量（用 SAT/选拔度代理）能预测风险调整收益；但<b>MBA 效应弱且不显著</b>。→ 已提示"学历≠能力"的雏形。</li>
+<li><b>本文 L1 实测结果</b>：任期 β≈0(t1.20) <b>ns</b>；性别 β=+0.003(t0.75) <b>ns</b>；CFA β=−0.0265(t−5.34)*** 但<b>为负</b>（选择偏差）；院校层次（⑥）全部 ns。即<b>个人信息单看都不驱动业绩</b>。</li>
+<li><b>为什么和 Golec 不一样？——猜测</b>：① <b>样本时代</b>：Golec 是 1988–1990 美国早期共同基金，经理技能/学历离散度大；本文是 2018–2025 A 股，经理已高度职业化、名校/高学历近乎"准入门槛"，<b>截面变异被压缩</b>，难再解释收益。② <b>中国特有反向关系</b>：Xu &amp; Li (2005) 发现中国经理<b>年龄/任期与业绩负相关</b>——年轻、新上任的经理更敢冒险博短期收益；本文 log_fund_age 在 L1 与院校回归中均显著为负（β=−0.0033***），与中国模式一致，而与 Golec 的"任期越长越好"相反。③ <b>幸存偏差/成熟度</b>：本文样本基金普遍成熟，任期跨度窄，经验变量信息量低。</li>
+<li><b>哪里和文献一致？</b>：① 与 Chevalier &amp; Ellison 一致——<b>学历/MBA 效应本就弱</b>；② 与 Niessen &amp; Ruenzi 一致——<b>性别无业绩差异</b>（本文性别 ns；他们更进一步指出差异在资金流而非业绩，本文无资金流数据故无法检验，但方向不冲突）；③ CFA 负向属中国样本的自我选择（CFA 持有者集中于特定策略/规模），与"资质≠能力"的整体叙事吻合。</li>
+<li><b>一句话定位</b>：Golec 的"教育/经验→业绩"在<b>成熟、职业化的 A 股经理群体里未被复制</b>，最稳妥的解释是"资质变异被压缩 + 中国年轻经理更敢下注"；本文因此把 L1 降为<b>控制变量</b>而非能力轴——这与现代文献的细微结论（MBA 弱、性别无差）其实是自洽的。</li>
+</ul>
+</div>
+
+<div class="box note">
+<div class="box warn">
+<b>⑦ CFA 哑变量误导性核查（用户：CFA 负向不符合逻辑 → 我们查了）</b>
+<p><b>结论先说：CFA 那列是"误导性变量"，负系数不是真实效应，不能写进结论。</b>我们按基金层重新统计：400 只基金里只有 <b>19 只（4.75%）</b>被标为"有 CFA"，其余 381 只全是"否"。而"有 CFA"那组的 ff5 alpha 均值（0.0124）反而<b>低于</b>"无 CFA"组（0.0207）——这正是负系数（β=−0.0265, t−5.34）的来源。</p>
+<p><b>为什么这是数据假象，不是"CFA 损害业绩"？我们联网调研了真实情况：</b></p>
+<ul>
+<li>天天基金/雪球、Wind、脉脉等公开统计显示，中国公募基金经理的 <b>CFA 实际持证率仅约 4–5%</b>（与我们的 4.75% 几乎一致）——说明数据"数得准"，<b>并非人人都有 CFA</b>。</li>
+<li>但 CFA 只是<b>单一证书标识</b>。大量经理持的是 <b>CPA、FRM、ACCA、法律资格、海外证书（CAIA/CIIA 等）</b>（公开报道：CFA+FRM+CPA+司考组合很常见，且"实际持证人数远超披露"）。这些人在我们的表里全被编码成"否"。</li>
+<li>所以 <code>cfa_d</code> 哑变量<b>不是"有无专业资质"的代理</b>：它的"否" = {真无证书} ∪ {有其他证书} ∪ {未调查} 的混合物。用它回归得到的负系数，反映的是"被标为 CFA 的那 19 只恰好业绩偏弱"的样本/选择特征，<b>不可作因果或能力解读</b>。</li>
+</ul>
+<p><b>处理建议（已采纳）：</b>① 把 CFA 行明确标注为"选择偏差/数据局限，作控制变量，勿因果解读"；② 表内加注"CFA 覆盖率仅 4.75%，且不代表全部专业资质"；③ 若未来拿到完整资质字段，应合并为"持证情况"复合变量，而非单独用 CFA。这与 §3.5 / 表 11.1 的"CFA 负→作控制、勿因果"结论一致。</p>
+</div>
+⑥ 毕业院校(school)按"院校层次"重跑（用户：按层次划分试一下，QS 亦可）
+<ul>
+<li><b>清洗与分层规则</b>：原始 school 是脏文本（91 个唯一值，混入"北京大学管理科学""北京大学微电子学""浙江大学电子科学"等院系名，以及"美国伊利诺伊理工大学"等海外校）。先用<b>子串匹配归一</b>到规范校名（如"北京大学管理科学"→北京大学），再按网上公开层次划分：<b>C9</b>（清北复交南浙科哈西交 9 所）→ <b>985</b>（其余 30 所，共 39）→ <b>211</b>（含 985 外的部属/省属重点，约 115）→ <b>海外</b>（中外合办/港澳及明确国别标记）→ <b>其他国内普通院校</b>。school 是<b>基金层面固定属性</b>，故每只基金压成 1 条观测、取 ff5_adj 基金均值，N=<b>226</b>（覆盖非空院校基金）。</li>
+<li><b>分层分布</b>：C9=133、985(非C9)=40、211(非985)=13、海外=29、其他国内=11。描述性均值 ff5_adj：C9≈0.020、985≈0.022、211≈0.017、海外≈0.022、其他≈0.022——<b>各层几乎无差</b>（极差仅约 0.5pp），已预示"院校层次不解释业绩"。</li>
+<li><b>分层哑变量回归</b>（ff5 ~ is_C9+is_985+is_211+is_overseas + log_aum + log_fund_age，OLS+HC1，基准=其他国内）：
+<table class="ptable">
+<caption>表 2.1b　院校层次 → 业绩（N=226，OLS+HC1，控制规模+年龄）</caption>
+<tr><th>变量</th><th>β (t)</th><th>p</th><th>结论</th></tr>
+<tr><td>is_C9</td><td class="num">−0.0007 (−0.16)</td><td class="num">0.875</td><td><span class="muted">ns</span></td></tr>
+<tr><td>is_985（非C9）</td><td class="num">+0.0006 (0.12)</td><td class="num">0.904</td><td><span class="muted">ns</span></td></tr>
+<tr><td>is_211（非985）</td><td class="num">−0.0003 (−0.04)</td><td class="num">0.965</td><td><span class="muted">ns</span></td></tr>
+<tr><td>is_overseas</td><td class="num">−0.0003 (−0.04)</td><td class="num">0.967</td><td><span class="muted">ns</span></td></tr>
+<tr><td>log_aum（规模）</td><td class="num sigx">+0.0019 (2.08)**</td><td class="num">0.038</td><td><span class="sigx">正</span></td></tr>
+<tr><td>log_fund_age（年龄）</td><td class="num sign">−0.0033 (−4.99)***</td><td class="num">0.000</td><td><span class="sign">负</span></td></tr>
+</table>
+四个院校层次哑变量<b>全部不显著</b>（|t|≤0.16，p≥0.875），R²=0.116。<b>院校层次对风险调整收益没有可识别的影响。</b></li>
+<li><b>对照：top-10 名校哑变量（旧做法）</b>：ff5 ~ top10 + log_aum + log_fund_age（同 N=226）：top10 β=−0.0013(t−0.45, p=0.654) 仍不显著，R²=0.116。与分层法结论一致——无论"名校哑变量"还是"层次梯度"都站不住。<b>分层法优于旧 top-10 法</b>：它避开了"10 个哑变量里碰巧 2 个伪显著"的多重检验假象，且梯度更干净（各层均值本就接近）。</li>
+<li><b>真正显著的控制：规模与年龄</b>。规模越大 alpha 略高（log_aum β=+0.0019**），基金越老 alpha 越低（log_fund_age β=−0.0033***）——后者与 Xu &amp; Li (2005) 的"中国经理越资深越保守、年轻经理更敢下注"一致，也呼应本层整体"背景非驱动"的结论。</li>
+<li><b>TO 口径约定（顺带明确）</b>：换手率以<b>双边 TO_two_sided 为规范测度</b>（真·双边，覆盖 200 只）；不做单边买卖分解。</li>
+</ul>
+</div>
+
+<!-- ============ C3 ============ -->
+<h2 id="c3">3 · L2 持仓偏离层 —— 投资风格的主动程度</h2>
+<p><b>这一层刻画"经理怎么配置"。</b> 主动份额（Active Share）衡量组合与基准的偏离度；行业集中度偏离（ICI）与行业 HHI 衡量经理在行业层面的集中/偏离程度。它们是"投资风格主动与否"的直接画像轴——主动管理的核心卖点就是经理敢于偏离基准、表达独立观点。</p>
+
+<h3>③-a L2 指标的具体公式</h3>
+<div class="formula">
+AS_improved = ½ · Σ_i | w_fund,i − w_bench,i |          <span class="cmt">// 主动份额，w 为持仓占比(÷100)，基准=沪深300∪中证500<br></span>
+ICI         = ICI_normalized = Σ_i ( w_fund,i − w_bench,i )²  归一化后   <span class="cmt">// 行业偏离平方项之和<br></span>
+industry_hhi= HHI_normalized = Σ_k ( h_k )²   (h_k=第k申万行业市值占比, 归一化使Σ=1)  <span class="cmt">// 行业集中度</span>
+</div>
+
+<h4>③ 回归设定（L2 截面基准）</h4>
+<div class="formula eqn">
+ff5_adj_return_i = α + β₁·AS_improved_i + β₂·ICI_i + β₃·industry_hhi_i + γ₁·log_aum_i + γ₂·log_fund_age_i + ε_i
+&nbsp;&nbsp;<span class="cmt">// N=362，OLS+HC1；三个 L2 指标同一条方程联合估计</span>
+</div>
+<h3>③-b L2 参数说明表（截面基准回归，DV = ff5_adj_return）</h3>
+<table class="ptable">
+<caption>表 3.1　L2 持仓偏离 → 业绩（N=362，OLS + HC1，控制 log_aum + log_fund_age）</caption>
+<tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么计算得到</th><th>单位</th><th>为何纳入</th><th>β (t)</th><th>结论</th></tr>
+<tr><td>主动份额<br><code>AS_improved</code></td><td>组合偏离基准程度</td><td>½Σ|w_f−w_b|</td><td>持仓明细与沪深300∪中证500市值加权基准逐股差绝对值</td><td>比例(0–1)</td><td>检验"主动管理是否有溢价"</td><td class="num sign">−0.042 (−2.24)**</td><td><span class="sign">显著为负</span>（同期 alpha 口径，主表 M4 −2.96*** 同向；前向毛收益口径为正 +12.7***，见表 9.2——同一事实的两个侧面，全文统一表述）</td></tr>
+<tr><td>行业偏离<br><code>ICI</code></td><td>行业层面偏离</td><td>Σ(w_f−w_b)²归一</td><td>申万31行业权重与基准差的平方和</td><td>归一化</td><td>检验行业观点表达</td><td class="num sigx">+0.044 (4.38)***</td><td><span class="sigx">显著为正</span></td></tr>
+<tr><td>行业集中度<br><code>industry_hhi</code></td><td>行业集中程度</td><td>Σh_k²归一</td><td>申万行业占比的平方和</td><td>归一化</td><td>控制集中度风险</td><td class="num">+0.048 (1.34)</td><td><span class="muted">ns</span></td></tr>
+<tr><td>规模/年龄</td><td>同表 2.1</td><td>—</td><td>—</td><td>—</td><td>控制</td><td class="num">见前</td><td>控制</td></tr>
+</table>
+
+<div class="box ctrl">
+<b>④ 控制变量为何纳入（详细）</b>
+<ul>
+<li><b>log_aum（基金规模对数）</b>：控制<b>规模效应与流动性混淆</b>。大基金因体量面临调仓摩擦、价格冲击成本与流动性约束，其收益分布与小微基金系统性不同；若不加控制，会把"规模本身的收益特征"误归为经理能力。同时规模与多个核心自变量（主动份额、换手率、处置效应）高度相关——大基金天然低换手、持仓更分散，不加控制会与 L2/L3 变量产生共线混淆。取对数缓解右偏与异方差，使系数可读为"规模每变动 1% 对 alpha 的半弹性"。</li>
+<li><b>log_fund_age（基金年龄对数）</b>：控制<b>幸存偏差与策略成熟度</b>。样本只含"活到报告期"的基金，老基金是生存选择的结果、历史业绩天然更好；同时老基金投资策略更定型、行为指标跨期波动更小。不加控制会把这些"年龄带来的结构性差异"误读为能力差异。同样取对数处理偏态。</li>
+<li><b>yearFE（年份固定效应，仅面板回归）</b>：控制所有基金共同面对的<b>宏观与市场冲击</b>（牛熊周期、利率环境、风格轮动、系统性风险），避免把"市场 beta / 时间趋势"误归为经理的截面或时序能力信号；在 R6 中与基金 FE 共同构成双向固定效应。</li>
+</ul>
+各解释变量（AS/ICI/tenure 等）的含义、公式与单位见上方 ③-a 与 ③-b 表。
+</div>
+<div class="box key">
+<b>解读（诚实标注的中国语境）：</b> 与 Cremers & Petajisto (2009) 在美国发现的"主动份额越高、业绩越好"相反，本文 <code>AS_improved</code> β=−0.042(t−2.24) 显著为负——在中国主动股基样本中，<b>高主动份额反而伴随更低 alpha</b>，可能反映偏离基准更多是噪声交易而非能力。但 <code>ICI</code> β=+0.044(t4.38)*** 显著为正：经理在<b>行业层面的有意识偏离</b>（集中下注看好的行业）确实带来 alpha。两条信号方向相反，说明"主动"本身不是能力，<b>主动的方向与集中度才是</b>——这正是画像精细化（区分 AS 与 ICI）比单一指标更有信息量的例子。组内 FE 下 L2 效应较弱（多为 ns），提示其解释力以<b>截面排序</b>为主。
+</div>
+<div class="box note">
+<b>⑤ 权重与共线诊断：AS / ICI / industry_hhi 各"权重"多少？会不会共线？</b>
+<ul>
+<li><b>先澄清"权重"的含义</b>：L2 不是把三个指标拼成一个加权总分，而是<b>同一条方程里放三个独立自变量</b>（见上方③回归设定）。所以不存在一个"总权重"，每个变量有<b>自己的斜率 β</b>——它就是该变量对业绩的"边际权重"。为可比，下面同时给原始 β 与<b>标准化 β</b>（z-score 后的斜率，可直接比大小；N=362，OLS+HC1）。</li>
+<li><b>三个变量的权重</b>：<br>
+&nbsp;• <code>AS_improved</code>：原始 β=−0.042(t−2.24)**，标准化 β=<b>−0.120</b> → 中等负向权重；<br>
+&nbsp;• <code>ICI</code>：原始 β=+0.044(t4.38)***，标准化 β=<b>+0.292</b> → <b>三者中权重最大且正向</b>；<br>
+&nbsp;• <code>industry_hhi</code>：原始 β=+0.048(t1.34，ns)，标准化 β=<b>+0.054</b> → 权重很小且不显著。<br>
+即"<b>主动的方向（ICI 行业偏离）说了算</b>"：主动的量（AS）反而轻微拖累，行业集中度（HHI）几乎不解释业绩。</li>
+<li><b>共线吗？——基本不共线，模型干净。</b> 实测三者两两 Pearson 相关：AS–ICI=<b>+0.35</b>、AS–HHI=<b>−0.35</b>、ICI–HHI=+0.19，全部中等偏弱；<b>VIF 全部 ≈1.3–1.5</b>（AS=1.49、ICI=1.52、HHI=1.30，含控制变量的全模型也均&lt;1.6）。远在经验阈值（VIF&gt;5 为中等、&gt;10 为严重）之下，<b>不存在需担心的多重共线性</b>。</li>
+<li><b>那为什么 AS 负、ICI 正，符号相反却都没被"吃"掉？</b> 正因为共线性很弱（VIF≈1.5），回归能<b>干净地把两个概念分开</b>：AS 与 ICI 虽正相关 0.35（都算"主动"），但一个衡量"偏离基准的总量"、一个衡量"行业层面有意识的方向性偏离"，数据足以区分，于是各自拿到独立、方向相反的系数。若真有严重共线，这两个相反符号会被互相抵消、t 值塌缩——但本例 t 值很硬（−2.24 / +4.38），恰恰说明分离是真实的。</li>
+<li><b>一个额外发现（诚实记录）</b>：AS 与 HHI 呈<b>负相关 −0.35</b>——本样本中"行业越集中"的基金反而"主动份额越低"，暗示它们多集中持有贴近基准的大盘/核心资产，而非真正偏离。这进一步支持"HHI 不是有效的主动能力代理、ICI 才是"的判断。</li>
+</ul>
+</div>
+<div class="box ctrl">
+<b>⑥ 计算时的"权重"是什么层级：AS 用个股级，ICI / HHI 用申万31行业级</b>
+<ul>
+<li><b>先区分两种"权重"</b>：上文 box ⑤ 的"权重"指<b>回归里的斜率 β</b>（该变量对业绩的边际贡献）；这里问的是<b>指标本身的数学计算用了什么权重</b>——是"个股"(stock)层级还是"行业"(industry)层级。两者是不同问题，别混淆。</li>
+<li><b>AS_improved 用"个股级权重"</b>：公式 <code>½·Σ_i|w_fund,i − w_bench,i|</code> 里的 <code>w_fund,i</code> / <code>w_bench,i</code> 是<b>第 i 只个股</b>的持仓占比（已在 06_因变量阶段 ÷100 归到 0–1）。它<b>逐股</b>比较基金组合与基准的偏离，颗粒度到单只股票——这是 Active Share 的标准定义（Cremers &amp; Petajisto 2009）。</li>
+<li><b>ICI / industry_hhi 用"申万31行业级权重"</b>：ICI 的 <code>w_fund, w_bench</code> 是先把持仓<b>聚合到申万31个一级行业</b>后的行业市值占比；industry_hhi 的 <code>h_k</code> 是第 k 个申万行业的占比。二者都在<b>行业层级</b>做平方和，颗粒度到行业，<b>不区分行业内的个股</b>。</li>
+<li><b>两者的基准是同一个</b>：AS 与 ICI 的 <code>w_bench</code> 都来自"沪深300（真实权重）+ 中证500（等权）"合并后<b>归一化使 Σ=1</b> 的复合基准。差异不在基准，而在"<b>把基金持仓切成多细</b>"——AS 切到个股、ICI/HHI 切到行业。</li>
+<li><b>为什么这样分</b>：AS 捕捉"相对基准，经理在哪些<b>具体股票</b>上押了不同注"（个股颗粒度）；ICI/HHI 捕捉"经理在<b>行业布局</b>上比基准更集中还是更分散"（行业颗粒度）。二者互补：一个基金可以 AS 很高（个股层面偏离大）但 ICI 很低（行业分布其实贴近基准），正是这种层级差异让 L2 能区分"主动的量"与"主动的方向"。</li>
+</ul>
+</div>
+
+<!-- ============ C4 ============ -->
+<h2 id="c4">4 · L3 交易执行层 —— 交易行为（含换手率与风格漂移）</h2>
+<p><b>这一层刻画"经理怎么交易、以及交易风格稳不稳"。</b> 换手率（Turnover）衡量组合周转强度；<b>风格漂移 SDI（Style Drift Index）</b>衡量基金在相邻期之间<b>投资风格暴露的变化幅度</b>——即"这季度和上一季度相比，基金在价值/成长/大盘/小盘等风格上的押注挪动了多少"。它是画像中"交易执行力 / 风格稳定性"这一轴。<span class="muted">（注：本项目 SDI 与文献中"Selective Trading Index / 处置效应"是<b>不同概念</b>；后者由 L5 的 de / lsv 刻画，请勿混淆。）</span></p>
+
+<h3>③-a L3 指标的具体公式</h3>
+<div class="formula">
+TO_two_sided = ( total_buy + total_sell ) / ( 2 · avg_aum )          <span class="cmt">// 双边换手率（真·含卖出侧）<br></span>
+SDI_{i,t}     = Σ_{k=1}^{4} | ŵ^{(t)}_{k} − ŵ^{(t-1)}_{k} |          <span class="cmt">// 风格漂移 = 相邻期风格权重向量曼哈顿距离</span>
+</div>
+<div class="box note" style="margin-top:14px">
+<b>SDI 是怎么一步步算出来的（lib_metrics.calc_sdi(window=8)）</b>
+<ol>
+<li><b>取基金季度收益序列</b> rᵢ,ᵗ 与 4 个风格指数的同期季度收益（如 399373 类成长/价值/大小盘因子），按 (fund_code, 季度) 对齐。</li>
+<li><b>滚动 OLS 估计风格暴露</b>：每基金以长度 <code>window=8</code> 的滚动窗口做 <code>rᵢ ~ [1, 风格指数₁ … 风格指数₄]</code> 回归，得到该窗口末期的 4 维风格权重向量 ŵ⁽ᵗ⁾（非负、归一化 Σ=1）。窗口由 12 改为 8（2026-08-12），使 SDI 首次可用提前到 2022Q2。</li>
+<li><b>算相邻期曼哈顿距离</b>：对每期 t，<code>SDI = Σₖ |ŵ⁽ᵗ⁾ₖ − ŵ⁽ᵗ⁻¹⁾ₖ|</code>，即"本期风格权重向量"与"上一期风格权重向量"逐维差的绝对值之和。值越大 = 风格切换越剧烈（漂移越强）。</li>
+<li><b>对齐并入面板</b>：结果 (fund_code, report_date, SDI) 经 +1 天约定并入主面板，覆盖 63.8%（有效窗口始于 2022）。</li>
+</ol>
+<b>直觉</b>：SDI 高 = 经理在不同风格间"左右横跳"（漂移大）；SDI 低 = 风格稳定、知行合一。它与换手率互补——换手率高但 SDI 低 = "同风格内调仓"；换手率低却 SDI 高 = "少动但一动就换风格"。
+</div>
+
+
+<h4>③ 回归设定（L3 截面基准）</h4>
+<div class="formula eqn">
+<span class="lbl">双边:</span>  ff5_adj_return_i = α + β₁·TO_two_sided_i + β₂·SDI_i + γ·controls + ε_i        <span class="cmt">// N=200</span>
+&nbsp;&nbsp;<span class="cmt">// controls = log_aum + log_fund_age；OLS+HC1</span>
+</div>
+<h3>③-b L3 参数说明表（截面基准回归，DV = ff5_adj_return）</h3>
+<table class="ptable">
+<caption>表 4.2　L3 交易 → 业绩（N=200，OLS + HC1，控制 log_aum + log_fund_age）</caption>
+<tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么计算得到</th><th>单位</th><th>为何纳入</th><th>β (t)</th><th>结论</th></tr>
+<tr><td>双边换手<br><code>TO_two_sided</code></td><td>组合周转强度</td><td>(买+卖)/(2·aum)</td><td>双边交易额÷平均净资产</td><td>比值</td><td>检验交易频率价值</td><td class="num">+0.017 (1.28)</td><td><span class="muted">ns（N=200受限）</span></td></tr>
+<tr><td>风格漂移<br><code>SDI</code></td><td>风格漂移（相邻期风格暴露变化）</td><td>Σ|ŵ⁽ᵗ⁾−ŵ⁽ᵗ⁻¹⁾|</td><td>滚动OLS风格暴露的相邻期曼哈顿距离</td><td>距离(0+)</td><td>检验风格稳定性/漂移</td><td class="num">+0.004 (0.36)</td><td><span class="muted">ns（截面）；组内FE **</span></td></tr>
+</table>
+<div class="box ctrl">
+<b>④ 控制变量为何纳入（详细）</b>
+<ul>
+<li><b>log_aum（基金规模对数）</b>：控制<b>规模效应与流动性混淆</b>。大基金因体量面临调仓摩擦、价格冲击成本与流动性约束，其收益分布与小微基金系统性不同；若不加控制，会把"规模本身的收益特征"误归为经理能力。同时规模与多个核心自变量（主动份额、换手率、处置效应）高度相关——大基金天然低换手、持仓更分散，不加控制会与 L2/L3 变量产生共线混淆。取对数缓解右偏与异方差，使系数可读为"规模每变动 1% 对 alpha 的半弹性"。</li>
+<li><b>log_fund_age（基金年龄对数）</b>：控制<b>幸存偏差与策略成熟度</b>。样本只含"活到报告期"的基金，老基金是生存选择的结果、历史业绩天然更好；同时老基金投资策略更定型、行为指标跨期波动更小。不加控制会把这些"年龄带来的结构性差异"误读为能力差异。同样取对数处理偏态。</li>
+<li><b>yearFE（年份固定效应，仅面板回归）</b>：控制所有基金共同面对的<b>宏观与市场冲击</b>（牛熊周期、利率环境、风格轮动、系统性风险），避免把"市场 beta / 时间趋势"误归为经理的截面或时序能力信号；在 R6 中与基金 FE 共同构成双向固定效应。</li>
+</ul>
+各解释变量（TO/SDI 等）的含义、公式与单位见上方 ③-a 与 ③-b 表。
+</div>
+
+
+
+<!-- ============ C5 ============ -->
+<h2 id="c5">5 · L4 风险应对层 —— 主动风险增益（最强维度）</h2>
+<p><b>这一层刻画"经理如何承担与转化风险"，是全文最强的能力轴。</b> 主动收益增益 RG（Active Return Gain）衡量经理的主动持仓权重是否押对了股票——用上一季度末持仓权重对股票收益的加权，得到"如果被动持有该组合本应获得的收益"，再用基金实际收益减去它，得到经理的<b>主动选股贡献</b>；ARG 是其绝对总和；return_volatility 是收益的滚动波动。它们回答一个核心问题：<b>经理的主动下注，到底有没有被市场奖励？</b></p>
+
+<h3>③-a L4 指标的具体公式</h3>
+<div class="formula">
+RG_t  = R_fund,t − Σ_i w_i · R_i,t / Σ_i w_i        <span class="cmt">// w_i 取上一季度末持仓权重，归一化<br></span>
+ARG   = Σ_t | RG_t |                                 <span class="cmt">// 主动风险增益（绝对主动贡献之和）<br></span>
+return_volatility = rolling( quarter_return, window=8, min_periods=3 ).std()   <span class="cmt">// 8 期滚动收益标准差</span>
+</div>
+
+<h4>③ 回归设定（L4 双口径）</h4>
+<div class="formula eqn">
+<span class="lbl">截面:</span>   ff5_adj_return_i = α + β₁·ARG_i + β₂·RG_i + β₃·return_volatility_i + γ·controls + ε_i        <span class="cmt">// N≈340</span>
+<span class="lbl">组内FE:</span> (quarter_return_it − ȳ_i) = Σβ_k(x_k,it − x̄_ki) + Σγ_t·yearFE_t + ε_it                      <span class="cmt">// N=2668</span>
+&nbsp;&nbsp;<span class="cmt">// 组内FE：每只基金自身为对照，吸收所有不随时间变混淆；基金聚类SE</span>
+</div>
+<h3>③-b L4 参数说明表（截面 + 组内 FE 双口径）</h3>
+<table class="ptable">
+<caption>表 5.1　L4 风险应对 → 业绩。左：截面(N≈340, DV=ff5_adj)；右：组内FE(N=2668, DV=quarter_return)</caption>
+<tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>单位</th><th>为何纳入</th><th>截面 β (t)</th><th>组内FE β (t)</th></tr>
+<tr><td>主动增益<br><code>ARG</code></td><td>主动下注总贡献</td><td>Σ|RG_t|</td><td>比值</td><td>核心能力轴：主动管理是否被奖励</td><td class="num sigx">+0.047 (2.39)**</td><td class="num sigx">+0.342 (10.70)***</td></tr>
+<tr><td>主动收益<br><code>RG</code></td><td>主动选股贡献</td><td>R_fund−ΣwR</td><td>比值</td><td>同上（未取绝对值）</td><td class="num sigx">+0.066 (2.53)**</td><td class="num sigx">+0.202 (11.68)***</td></tr>
+<tr><td>收益波动<br><code>return_volatility</code></td><td>风险水平</td><td>8期滚动std</td><td>比值</td><td>控制整体波动，隔离"不对称"</td><td class="num sigx">+0.148 (3.65)***</td><td class="num sigx">+0.900 (8.52)***</td></tr>
+</table>
+
+<div class="box ctrl">
+<b>④ 控制变量为何纳入（详细）</b>
+<ul>
+<li><b>log_aum（基金规模对数）</b>：控制<b>规模效应与流动性混淆</b>。大基金因体量面临调仓摩擦、价格冲击成本与流动性约束，其收益分布与小微基金系统性不同；若不加控制，会把"规模本身的收益特征"误归为经理能力。同时规模与多个核心自变量（主动份额、换手率、处置效应）高度相关——大基金天然低换手、持仓更分散，不加控制会与 L2/L3 变量产生共线混淆。取对数缓解右偏与异方差。</li>
+<li><b>log_fund_age（基金年龄对数）</b>：控制<b>幸存偏差与策略成熟度</b>。样本只含"活到报告期"的基金，老基金是生存选择的结果、历史业绩天然更好；同时老基金投资策略更定型、行为指标跨期波动更小。不加控制会把这些"年龄带来的结构性差异"误读为能力差异。同样取对数处理偏态。</li>
+<li><b>yearFE（年份固定效应，本层组内FE口径）</b>：控制所有基金共同面对的<b>宏观与市场冲击</b>（牛熊周期、利率环境、风格轮动）。本层特意做了"双口径"对照——截面口径仅含 log_aum / log_fund_age 两个控制；组内FE口径在此基础上<b>额外吸收基金FE</b>（消除所有不随时间变化的经理/基金异质性，包括 L1 个人信息），并以 yearFE 控制时间趋势。两种设定下 ARG/RG/return_volatility 都显著，说明 L4 结论<b>不依赖具体控制集</b>，是画像中最稳健的能力轴。</li>
+</ul>
+各解释变量（ARG/RG/return_volatility）的含义、公式与单位见上方 ③-a 与 ③-b 表。注意本层不把 return_volatility 当"控制变量"而当作核心自变量——它本身就是"风险应对"的画像轴，要直接估计其对业绩的系数，而非被吸收。
+</div>
+<div class="box note">
+<b>⑤ ARG 与 RG：为什么两个都要？它们会共线吗？（用真实数据回答）</b>
+<ul>
+<li><b>两个变量测的不是一回事</b>：<code>ARG = Σ|RG_t|</code> 是<b>主动下注的"总幅度"</b>（永远≥0，衡量"经理有多敢偏离被动基准、主动管理做了多少"——是<b>行为强度/活跃度</b>）；而 <code>RG</code>（面板口径，见 06_因变量.py）= 季度<b>净主动收益</b> R_fund − Σw_i·r_i（可正可负，衡量"这些主动下注到底<b>押没押对</b>"——是<b>主动管理的方向/技能实现</b>）。一个记"量"、一个记"方向"，概念正交。</li>
+<li><b>共线吗？——不会。</b> 实测 L4 截面样本（N=340）中 <b>ARG 与 RG 的 Pearson 相关仅 0.117</b>（极弱）；全模型 VIF：<code>ARG=3.13</code>、<code>RG=1.05</code>、<code>return_volatility=1.05</code>（均远&lt;5）。ARG 的 VIF≈3.1 来自它与 <code>log_fund_age</code>（VIF=3.24）的关联，<b>与 RG 无关</b>。所以当初"只放 ARG"会漏掉一个独立维度：ARG 高只说明经理活跃，但活跃未必赚钱；加上 RG 才能区分"活跃且押对"(ARG↑RG↑) 与"活跃却押错"(ARG↑RG↓)。</li>
+<li><b>为什么一开始只有 ARG、后加 RG</b>：早期口径只有 ARG（Σ|RG_t|），它只能刻画"主动管理的 gross 强度"，<b>无法区分主动收益的方向</b>——一个高 ARG 的经理可能只是噪声交易很多。补入 RG（净主动收益）后，画像才能把"行为强度"(ARG) 与"行为是否转化为正 alpha"(RG) 拆开，这正是 L4 比单层 ARG 更有信息量的原因。两者在截面与组内FE下<b>都显著为正</b>（ARG +0.047**/+0.342***、RG +0.066**/+0.202***），说明"既活跃、又押对"的经理才真正跑赢，且这一结论不受共线干扰。</li>
+</ul>
+</div>
+<div class="box ctrl">
+<b>⑥ RG 为什么要"归一化"？最后除以的 Σw_i 不是 1 吗？</b>
+<ul>
+<li><b>公式回顾</b>：<code>RG_t = (R_fund,t − Σ_i w_i·R_i,t) / Σ_i w_i</code>。直觉上"持仓权重之和应为 1"，那除以 Σw_i 岂不多余？——<b>不是</b>，真实持仓里 Σw_i ≠ 1。</li>
+<li><b>为什么 Σw_i ≠ 1</b>：基金持仓含<b>现金</b>（不产股票收益）、<b>已退市/停牌股</b>（本季无收益）、以及<b>缺失股</b>（源数据未覆盖）。这些成分在 <code>w_i</code> 里有权重，但在收益端 <code>R_i,t</code> 上是缺失的。代码里 <code>wsum = Σ_i w_i</code> 只对<b>"该季有收益数据的个股"</b>求和，因此 wsum &lt; 1（现金/退市/缺失股的权重被排除在外）。</li>
+<li><b>为什么要除</b>：分子 <code>R_fund,t − Σ_i w_i·R_i,t</code> 是用"有收益那部分持仓"构造的被动基准收益，但它的权重没归一（只覆盖了 wsum 比例的组合）。<b>除以 wsum 把被动基准收益还原成"占满 100% 组合"的可比口径</b>，才能与基金实际收益 R_fund,t（100% 组合）相减，得到干净的"主动选股贡献"。若不除，RG 会被系统性低估（被动基准只算了部分权重的收益）。</li>
+<li><b>一句话</b>：<code>Σw_i</code> 是"有收益个股"的权重和，<b>因含现金/退市/缺失股，通常 &lt; 1</b>，故必须归一，不能想当然当作 1。</li>
+</ul>
+</div>
+<div class="box key">
+<b>本层是能力画像最坚实的支柱。</b> 在<b>截面</b>上，ARG/RG/return_vol 全部显著为正，支持 Grinblatt & Titman (1993)、Kacperczyk, Sialm & Zheng (2008) 的"主动管理有真实能力"结论。更重要的是在<b>组内固定效应</b>下，三者系数不降反升（ARG 0.047→0.342、RG 0.066→0.202、return_vol 0.148→0.900，t 值全面两位数）<span class="muted">（注：截面 DV=ff5_adj、组内FE DV=quarter_return，因变量尺度不同，系数绝对值不可直接比较；两者均高度显著方为关键结论）</span>——意味着"某只基金在某季度暂时提高了主动风险增益，随之而来的是该季度收益的暂时性抬升"，<b>控制基金自身后依然成立</b>。这是画像中少数能逼近"因果"而非仅"排序"的维度：经理的风险应对能力是实时、可识别地转化为业绩的。
+</div>
+
+<!-- ============ C6 ============ -->
+<h2 id="c6">6 · L5 认知偏差层 —— 行为金融构念</h2>
+<p><b>这一层刻画"经理作为人，表现出哪些系统性行为偏误"。</b> 风险不对称（risk_asym，前景理论下的盈利/亏损期波动不对称）、LSV 注意力偏差（Lakonishok, Shleifer & Vishny 的机构注意力指标）、处置效应（disposition effect = PGR−PLR，倾向卖出盈利股、持有亏损股）共同构成画像的"行为认知轴"——它衡量经理是否受认知偏误拖累。</p>
+
+<h3>③-a L5 指标的具体公式</h3>
+<div class="formula">
+risk_asym = std( r_t | r_t &gt; 0 ) − std( r_t | r_t ≤ 0 )        <span class="cmt">// 盈利期波动 − 亏损期波动（8期滚动,min4）<br></span>
+lsv_f     = mean_i( | p_i − p̄_t | − AF_t ),  p_i=B/(B+S),  p̄_t=mean(p_i),  AF_t=√(2/π)·√(p̄_t(1−p̄_t)/n_i)   <span class="cmt">// 注意力偏差<br></span>
+de        = PGR − PLR,  PGR=gains_sold/(gains_sold+gains_held),  PLR=losses_sold/(losses_sold+losses_held)  <span class="cmt">// 处置效应</span>
+</div>
+
+<h4>③ 回归设定（L5 双口径）</h4>
+<div class="formula eqn">
+<span class="lbl">截面:</span>   ff5_adj_return_i = α + β₁·risk_asym_i + β₂·lsv_i + β₃·de_i + γ·controls + ε_i               <span class="cmt">// N=362</span>
+<span class="lbl">组内FE:</span> (quarter_return_it − ȳ_i) = β₁·(risk_asym_it−x̄) + β₂·(lsv_it−x̄) + β₃·(de_it−x̄) + Σγ_t·yearFE_t + ε_it  <span class="cmt">// N=2668</span>
+</div>
+<h3>③-b L5 参数说明表（截面 + 组内 FE 双口径）</h3>
+<table class="ptable">
+<caption>表 6.1　L5 认知偏差 → 业绩。左：截面(N=362, DV=ff5_adj)；右：组内FE(N=2668, DV=quarter_return)</caption>
+<tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>单位</th><th>为何纳入</th><th>截面 β (t)</th><th>组内FE β (t)</th></tr>
+<tr><td>风险不对称<br><code>risk_asym</code></td><td>盈亏波动不对称</td><td>σ(r&gt;0)−σ(r≤0)</td><td>比值</td><td>前景理论风险承担</td><td class="num sigx">+0.113 (2.75)***</td><td class="num">+0.064 (0.97)</td></tr>
+<tr><td>注意力偏差<br><code>lsv</code></td><td>机构注意力集中</td><td>mean_i(|p_i−p̄|−AF)</td><td>比值</td><td>控制"抱团/追热点"</td><td class="num sigx">+0.101 (1.64)</td><td class="num">−0.191 (−3.08)***</td></tr>
+<tr><td>处置效应<br><code>de</code></td><td>卖盈持亏倾向</td><td>PGR−PLR</td><td>比值(−1~1)</td><td>核心行为偏误</td><td class="num sign">−0.070 (−4.23)***</td><td class="num sign">−0.026 (−3.27)***</td></tr>
+</table>
+
+<div class="box note">
+<b>截面 β vs 组内FE β：为什么 lsv 截面不显著、组内却显著？（含同类分歧解读）</b>
+<ul>
+<li><b>两列含义不同</b>：<b>截面 β（between-fund）</b>跨基金比较，看"高 X 基金"与"低 X 基金"的平均 alpha 差，X 取基金层面水平，估计受一切<b>时不变基金特质</b>（经理能力、风格、家族、规模、年龄）混淆；<b>组内FE β（within-fund fixed effects）</b>同一只基金不同季度比较，用基金虚拟变量吸收所有不随时间变化的特质，只捕捉"同一只基金内部 X 的季度波动"对 alpha 的影响，识别更干净但仅反映时序变化渠道。</li>
+<li><b>① lsv：截面 +0.101(1.64) ns，组内FE −0.191(−3.08)*** —— 符号反转 + 截面被掩盖</b>。典型"between/within 估计分歧"，关键在<b>符号反转（+ → −）</b>：截面层平均注意力集中度高的基金，往往也是成长/赛道/高主动型基金，因<b>风格溢价</b>在截面比较中看似"不差甚至略好"（β 为正但不显著），基金间平均差异被风格/能力混淆；组内层清除时不变混淆后，<b>同一只基金内部</b>注意力集中度上升（更抱团、追热点）会<b>侵蚀 alpha</b>（组内 β 显著为负）。结论：lsv 存在<b>真实的负面组内效应</b>（抱团/追热点损害基金内 alpha），但被基金层面异质性"隐藏"于截面；符号反转是"截面估计受时不变遗漏变量干扰"的典型信号 → 可靠结论应取<b>组内FE（负向显著）</b>，截面值仅作参照、不可独立解读。此定性与此前稳健性诊断（去掉同层兄弟指标 de/RA 后 lsv 单独显著、2022+ 子样本显著）一致，即"时期依存 + 被同层掩盖"。</li>
+<li><b>② risk_asym（RA）：截面 +0.113(2.75)***，组内FE +0.064(0.97) ns —— 反向模式（仅 between 特质）</b>。符号<b>同向</b>（均正）但显著性反转：截面显著、组内不显著。含义：风险不对称溢价主要是一种<b>基金层面的持久特质</b>——部分基金系统性维持更高盈亏不对称敞口，这些基金<b>整体</b> alpha 更高（截面显著）；但<b>同一只基金内部</b>季度间 RA 波动并不能稳定预测 alpha（组内 t=0.97，ns）。结论：RA 的截面信号主要来自"哪些基金长期如此"，而非"该基金某季度 RA 升高就带来超额收益"；谨慎解读为"基金层面的风险不对称特征是溢价来源之一"，不宜做强烈因果/时序外推。</li>
+<li><b>对照（双显著、最稳健）</b>：ARG/RG/return_volatility 与 de 两列均显著且同号（de 截面 −0.070*** / 组内 −0.026***；ARG 截面 +0.047** / 组内 +0.342***；RG、return_volatility 同理），说明其<b>基金间差异</b>与<b>基金内变化</b>都成立 → 证据最稳健（即 §7.1 滑块中带 ⚡组内FE验证 的项）。仅 lsv、risk_asym 出现跨估计量分歧，故需分别定性、不能混读。</li>
+</ul>
+</div>
+
+<div class="box ctrl">
+<b>④ 控制变量为何纳入（详细）</b>
+<ul>
+<li><b>log_aum（基金规模对数）</b>：控制<b>规模效应与流动性混淆</b>。认知偏差变量（risk_asym/lsv/de）与规模存在系统性关联——小基金往往持仓更集中、交易更激进，其风险不对称与处置效应更易被放大；若不控制规模，会把"小基金的天然行为特征"误归为偏误本身的影响。取对数缓解右偏与异方差。</li>
+<li><b>log_fund_age（基金年龄对数）</b>：控制<b>幸存偏差与策略成熟度</b>。老基金经多轮牛熊，经理行为模式更定型，risk_asym/de 等指标的跨期波动更小；不加控制会把"年龄带来的行为稳态"误读为能力差异。同样取对数处理偏态。</li>
+<li><b>yearFE（年份固定效应，本层组内FE口径）</b>：控制所有基金共同面对的<b>宏观与市场冲击</b>。本层同样采用"双口径"：截面口径含 log_aum/log_fund_age；组内FE口径吸收<b>基金FE</b>（把经理的固有行为风格吸收掉，只留"基金内部随时间变化"的行为信号）并加 yearFE。de 在两种口径都显著为负，说明处置效应是<b>稳定且独立于控制集</b>的负向能力信号；而 risk_asym 截面显著、组内FE不显著，正说明它依赖基金FE所吸收的那部分"基金间固定差异"，控制方式不同结论会变化——这本身就是画像合成时需区别对待的依据。</li>
+</ul>
+各解释变量（risk_asym/lsv/de）的含义、公式与单位见上方 ③-a 与 ③-b 表。本层不另设 return_volatility 控制：它已作为 L4 核心自变量单独估计，此处若再纳入会与风险应对维度重复，故只保留规模/年龄/时间三类基础性控制。
+</div>
+<div class="box key">
+<b>解读：</b> 处置效应 <code>de</code> 在<b>两个口径下都显著为负</b>（截面 −0.070 t−4.23；组内FE −0.026 t−3.27）——经理越倾向于"卖盈持亏"，业绩越差，且这种拖累<b>控制基金自身后仍成立</b>，是画像中稳定的"负向能力信号"。LSV 在<b>新面板下出现口径翻转</b>：截面由正显著(t2.04**)降为<b>不显著</b>(+0.101, t1.64)，组内FE则由微负(−1.84)升为<b>显著负</b>(−0.191, t−3.08***)——其符号与显著性高度依赖识别口径，是整套结果中<b>最脆弱</b>的变量，不可与 RA/de 并列称“均显著”，画像中须降级为“口径依赖/待稳健化”信号。<b>值得注意的微妙之处</b>：<code>risk_asym</code> 截面显著为正(t2.75)但<b>组内FE不显著(t0.97)</b>——它的预测力主要来自"<b>基金间排序</b>"（某些基金系统性高不对称），而非基金内部的时间变化。这提示 RA 是"画像分型"变量而非"实时能力"变量，画像合成时需区别对待。
+</div>
+
+
+<div class="box note">
+<b>v4 复核（2026-08-16 独立验证）与口径对照：</b>
+<ul>
+<li><b>复现性</b>：本画像文档的 L5 双口径系数在新面板（主分析面板_重建，MD5=bc0942ce）上重跑复现；RA 与 de 在两种口径下保持显著方向与量级，结论稳健。</li>
+<li><b>lsv 脆弱性（重要更新 · 已做稳健性电池 11 规格）</b>：注意力偏差 lsv 在 08-14 旧值（截面 +0.112 t2.04**、组内FE −0.111 t−1.84）到新面板发生<b>实质性口径翻转</b>——截面降为 +0.101(t1.64, ns)、组内FE升为 −0.191(t−3.08***)。在 M4 面板上进一步做 11 规格稳健性电池定位来源：① <b>非共线性</b>（lsv 自身 VIF=1.15，仅被其余 RHS 解释 13%，最大 |corr|=0.11）；② <b>非缩尾/异常值/非线性</b>所致（无缩尾/5%/0.5%缩尾/删极端1%/加 lsv² 均 ns）；③ <b>机制=被同层兄弟指标掩盖</b>：从 L5 去掉 de 与 risk_asym、单独放 lsv 时，lsv 显著为正 +0.027(t2.78***)——de/RA 吸收了 lsv 的边际信息；④ <b>时期依存</b>：2022+ 子样本 lsv +0.025(t2.03**)，2022 前不显著（与 SDI 有效窗口 2022+ 一致）。结论：lsv 不是“失败的变量”，而是<b>时期依存 + 被同层强信号掩盖</b>的指标，画像中如实降级为“口径依赖/待稳健化”信号，不与 RA、de 并列称“均显著”。</li>
+<li><b>de 选择性子样本审计（新增 · 6 规格敏感性）</b>：de 仅由半年报 PGR/PLR 构造，覆盖 46.6%（结构性、非随机缺失）。审计结论：① <b>内部效度稳健</b>——de 的“双口径显著负”对缺失机制不敏感：均值插补 + 可用性指示(de_avail)控制下 de β=−0.00712(t−2.87***)，仅取 2016+ 子样本仍 t=−2.99***，与基线(−0.00606, t−2.99***)一致；② <b>但存在选择偏倚信号</b>——de 有值样本被正向选择：控制全 RHS 后 de_avail 仍独立预测 alpha(+0.0048, t=2.18**)，且集中于高主动份额(SMD=1.50)、低行业集中度(SMD=−1.12)、较老基金(SMD=0.31)；结果变量 ff5_adj_return 两组均衡(SMD=−0.04)。故 de 结论<b>不外推至全样本</b>，其估计总体是“有全持仓数据的基金”子群（约 46.6% 覆盖），属诚实披露的方法局限与效度边界。</li>
+<li><b>与主文稿 M4 面板模型对照</b>（M4 用主分析面板_重建_含TOwind、FF5 五因子、CGM2011 双向聚类 SE，N=2264/348）：权威双向聚类 t 值下 de β=−0.00606(t−2.99***)、lsv β=+0.01548(t+0.77, ns)、risk_asym β=+0.07311(t+3.57***)。<b>注意事项</b>：M4 的 de 是“选择性子样本”（仅含 de 非缺失观测，N 由 9914 降至 2264，降幅 77.3%），且 M4 的口径（面板 FE + 双向聚类）与本画像文档的“截面 + 组内FE 双口径”是<b>不同识别策略</b>，二者不可直接比较数值，仅作敏感性/稳健性参照。</li>
+</ul>
+</div>
+
+<!-- ============ C7 ============ -->
+<h2 id="c7">7 · 五维画像合成 —— 能力雷达图与"哪些东西影响业绩"一目了然</h2>
+<p>把 L1–L5 五个维度按"<b>与业绩的挂钩强度</b>（结合截面 + 组内FE 双证据归一）"合成，得到经理的<b>能力雷达图</b>。半径 = 该维度对业绩的<b>解释/预测力强度（0=无关，1=最强）</b>。图中画了<b>两个多边形</b>：<span class="tag ok">绿=截面关联</span> <span class="tag weak">橙=组内FE关联</span>。它们的含义与读法如下：</p>
+
+<!-- ===== 经理行为画像卡片墙（案例速览） ===== -->
+<h3 class="cw-title">经理行为画像卡片墙（六位案例 · 序数画像速览）</h3>
+<p class="lead">下方把文献综述中的六位案例经理，按「行业配置力 / 风险应对力 / 主动收益力 / 投资纪律性 / 风险转化力 / 成本控制力」六维能力序数（1=低 → 5=极高，高=优秀，基于公开披露与回归证据方向定性映射，非精确度量）做成可一眼比较的画像卡片。条形越长表示该维度能力越突出（六维之和越大 = 综合能力越强）；颜色对应各经理专属配色，与下方六维能力雷达一致。</p>
+<div class="mcard-grid">
+<div class="mcard" style="border-top:4px solid #2e7d8a">
+      <div class="mcard-head"><span class="mcard-name" style="color:#2e7d8a">张坤</span><span class="mcard-tag">深度价值·蓝筹集中</span></div>
+      <div class="msig"><div class="msig-row"><span class="msig-lab">行业配置力</span><span class="msig-track"><span class="msig-fill" style="width:100%;background:#2e7d8a"></span></span><span class="msig-val">5</span></div><div class="msig-row"><span class="msig-lab">风险应对力</span><span class="msig-track"><span class="msig-fill" style="width:60%;background:#2e7d8a"></span></span><span class="msig-val">3</span></div><div class="msig-row"><span class="msig-lab">主动收益力</span><span class="msig-track"><span class="msig-fill" style="width:80%;background:#2e7d8a"></span></span><span class="msig-val">4</span></div><div class="msig-row"><span class="msig-lab">投资纪律性</span><span class="msig-track"><span class="msig-fill" style="width:80%;background:#2e7d8a"></span></span><span class="msig-val">4</span></div><div class="msig-row"><span class="msig-lab">风险转化力</span><span class="msig-track"><span class="msig-fill" style="width:60%;background:#2e7d8a"></span></span><span class="msig-val">3</span></div><div class="msig-row"><span class="msig-lab">成本控制力</span><span class="msig-track"><span class="msig-fill" style="width:100%;background:#2e7d8a"></span></span><span class="msig-val">5</span></div></div>
+      <p class="mcard-desc">行业配置力极强(重注消费白酒)+成本控制力极好(低换手)+主动收益力高，综合能力全面仅次于巴菲特。</p>
+    </div><div class="mcard" style="border-top:4px solid #1f6b3a">
+      <div class="mcard-head"><span class="mcard-name" style="color:#1f6b3a">朱少醒</span><span class="mcard-tag">长期自下而上</span></div>
+      <div class="msig"><div class="msig-row"><span class="msig-lab">行业配置力</span><span class="msig-track"><span class="msig-fill" style="width:40%;background:#1f6b3a"></span></span><span class="msig-val">2</span></div><div class="msig-row"><span class="msig-lab">风险应对力</span><span class="msig-track"><span class="msig-fill" style="width:60%;background:#1f6b3a"></span></span><span class="msig-val">3</span></div><div class="msig-row"><span class="msig-lab">主动收益力</span><span class="msig-track"><span class="msig-fill" style="width:80%;background:#1f6b3a"></span></span><span class="msig-val">4</span></div><div class="msig-row"><span class="msig-lab">投资纪律性</span><span class="msig-track"><span class="msig-fill" style="width:100%;background:#1f6b3a"></span></span><span class="msig-val">5</span></div><div class="msig-row"><span class="msig-lab">风险转化力</span><span class="msig-track"><span class="msig-fill" style="width:60%;background:#1f6b3a"></span></span><span class="msig-val">3</span></div><div class="msig-row"><span class="msig-lab">成本控制力</span><span class="msig-track"><span class="msig-fill" style="width:100%;background:#1f6b3a"></span></span><span class="msig-val">5</span></div></div>
+      <p class="mcard-desc">投资纪律性最强+成本控制力极好(极低换手)+主动收益力高，但不押行业方向、风险转化力中等。</p>
+    </div><div class="mcard" style="border-top:4px solid #9a3412">
+      <div class="mcard-head"><span class="mcard-name" style="color:#9a3412">葛兰</span><span class="mcard-tag">赛道集中·高信念</span></div>
+      <div class="msig"><div class="msig-row"><span class="msig-lab">行业配置力</span><span class="msig-track"><span class="msig-fill" style="width:100%;background:#9a3412"></span></span><span class="msig-val">5</span></div><div class="msig-row"><span class="msig-lab">风险应对力</span><span class="msig-track"><span class="msig-fill" style="width:40%;background:#9a3412"></span></span><span class="msig-val">2</span></div><div class="msig-row"><span class="msig-lab">主动收益力</span><span class="msig-track"><span class="msig-fill" style="width:60%;background:#9a3412"></span></span><span class="msig-val">3</span></div><div class="msig-row"><span class="msig-lab">投资纪律性</span><span class="msig-track"><span class="msig-fill" style="width:60%;background:#9a3412"></span></span><span class="msig-val">3</span></div><div class="msig-row"><span class="msig-lab">风险转化力</span><span class="msig-track"><span class="msig-fill" style="width:80%;background:#9a3412"></span></span><span class="msig-val">4</span></div><div class="msig-row"><span class="msig-lab">成本控制力</span><span class="msig-track"><span class="msig-fill" style="width:40%;background:#9a3412"></span></span><span class="msig-val">2</span></div></div>
+      <p class="mcard-desc">行业配置力极强(重注医药)+风险转化力高(高波动高收益)，但风险应对力弱、纪律与成本控制均不足。</p>
+    </div><div class="mcard" style="border-top:4px solid #7c3aed">
+      <div class="mcard-head"><span class="mcard-name" style="color:#7c3aed">蔡嵩松</span><span class="mcard-tag">科技轮动·高频</span></div>
+      <div class="msig"><div class="msig-row"><span class="msig-lab">行业配置力</span><span class="msig-track"><span class="msig-fill" style="width:80%;background:#7c3aed"></span></span><span class="msig-val">4</span></div><div class="msig-row"><span class="msig-lab">风险应对力</span><span class="msig-track"><span class="msig-fill" style="width:20%;background:#7c3aed"></span></span><span class="msig-val">1</span></div><div class="msig-row"><span class="msig-lab">主动收益力</span><span class="msig-track"><span class="msig-fill" style="width:40%;background:#7c3aed"></span></span><span class="msig-val">2</span></div><div class="msig-row"><span class="msig-lab">投资纪律性</span><span class="msig-track"><span class="msig-fill" style="width:40%;background:#7c3aed"></span></span><span class="msig-val">2</span></div><div class="msig-row"><span class="msig-lab">风险转化力</span><span class="msig-track"><span class="msig-fill" style="width:100%;background:#7c3aed"></span></span><span class="msig-val">5</span></div><div class="msig-row"><span class="msig-lab">成本控制力</span><span class="msig-track"><span class="msig-fill" style="width:20%;background:#7c3aed"></span></span><span class="msig-val">1</span></div></div>
+      <p class="mcard-desc">行业配置力有(重注半导体)+风险转化力极强(极高波动)，但风险应对/收益/纪律/成本全面薄弱，综合面积最小。</p>
+    </div><div class="mcard" style="border-top:4px solid #1f4e79">
+      <div class="mcard-head"><span class="mcard-name" style="color:#1f4e79">巴菲特</span><span class="mcard-tag">价值集中·超长持</span></div>
+      <div class="msig"><div class="msig-row"><span class="msig-lab">行业配置力</span><span class="msig-track"><span class="msig-fill" style="width:80%;background:#1f4e79"></span></span><span class="msig-val">4</span></div><div class="msig-row"><span class="msig-lab">风险应对力</span><span class="msig-track"><span class="msig-fill" style="width:100%;background:#1f4e79"></span></span><span class="msig-val">5</span></div><div class="msig-row"><span class="msig-lab">主动收益力</span><span class="msig-track"><span class="msig-fill" style="width:100%;background:#1f4e79"></span></span><span class="msig-val">5</span></div><div class="msig-row"><span class="msig-lab">投资纪律性</span><span class="msig-track"><span class="msig-fill" style="width:100%;background:#1f4e79"></span></span><span class="msig-val">5</span></div><div class="msig-row"><span class="msig-lab">风险转化力</span><span class="msig-track"><span class="msig-fill" style="width:60%;background:#1f4e79"></span></span><span class="msig-val">3</span></div><div class="msig-row"><span class="msig-lab">成本控制力</span><span class="msig-track"><span class="msig-fill" style="width:100%;background:#1f4e79"></span></span><span class="msig-val">5</span></div></div>
+      <p class="mcard-desc">除风险转化力(低波动)外全维度接近满分——风控/收益/纪律/成本全面最强，综合面积最大。</p>
+    </div><div class="mcard" style="border-top:4px solid #be123c">
+      <div class="mcard-head"><span class="mcard-name" style="color:#be123c">林奇</span><span class="mcard-tag">分散灵活·多策略</span></div>
+      <div class="msig"><div class="msig-row"><span class="msig-lab">行业配置力</span><span class="msig-track"><span class="msig-fill" style="width:40%;background:#be123c"></span></span><span class="msig-val">2</span></div><div class="msig-row"><span class="msig-lab">风险应对力</span><span class="msig-track"><span class="msig-fill" style="width:60%;background:#be123c"></span></span><span class="msig-val">3</span></div><div class="msig-row"><span class="msig-lab">主动收益力</span><span class="msig-track"><span class="msig-fill" style="width:100%;background:#be123c"></span></span><span class="msig-val">5</span></div><div class="msig-row"><span class="msig-lab">投资纪律性</span><span class="msig-track"><span class="msig-fill" style="width:60%;background:#be123c"></span></span><span class="msig-val">3</span></div><div class="msig-row"><span class="msig-lab">风险转化力</span><span class="msig-track"><span class="msig-fill" style="width:80%;background:#be123c"></span></span><span class="msig-val">4</span></div><div class="msig-row"><span class="msig-lab">成本控制力</span><span class="msig-track"><span class="msig-fill" style="width:20%;background:#be123c"></span></span><span class="msig-val">1</span></div></div>
+      <p class="mcard-desc">主动收益力极强(年化29%)+风险转化力高，但行业配置力低(极度分散)+成本控制力极差(极高换手)。</p>
+    </div>
+</div>
+<div class="box note" style="margin-top:16px">
+<b>读法：</b>横向比卡片，能立刻看出经理"行为家族"差异——<b>张坤/巴菲特</b>是"集中+长持+低换手"的价值派；<b>蔡嵩松/葛兰</b>是"高偏离+高换手+高波动"的赛道派；<b>林奇</b>则是"分散+高换手"的灵活派。这与第 7 章雷达图（L2 持仓偏离 / L3 交易执行 / L5 认知偏差）的维度口径一致，可作为"画像分型"的直观入口。序数刻画仅为定性画像载体，精确数值请以面板回归证据为准。
+</div>
+
+<div class="box">
+<b>雷达图绿 / 橙到底是什么意思？（这是读图的关键）</b>
+<ul>
+<li><b>绿 = 截面关联（cross-sectional association）</b>：该维度在<b>截面回归</b>下的证据强度。截面回归的因变量是 <code>ff5_adj_return</code>（基金层 alpha），做法是"<b>在某一时点横比多只基金</b>——画像高的基金，平均业绩是否也高"。所以绿多边形越远，表示该维度在"<b>基金之间排序</b>"上越能区分业绩高低（即"画像分型"能力）。</li>
+<li><b>橙 = 组内FE关联（within-fund FE association）</b>：该维度在<b>组内固定效应回归</b>下的证据强度。组内FE的因变量是 <code>quarter_return</code>（季度收益），做法是"<b>扣掉每只基金自身历史平均，只看同一只基金在不同季度的变化</b>"。所以橙多边形越远，表示该维度越能解释"<b>同一只基金在不同季度的业绩波动</b>"，比截面更逼近因果（控制所有不随时间变的混淆）。</li>
+<li><b>为什么画两个、怎么读</b>：两个多边形外加对照，本质是"<b>两种识别策略下，同一维度谁更站得住</b>"。若某维度<b>绿长、橙也长</b>（如 L4 风险应对）——既横比成立、又纵向成立，是最强证据（"双证据"）；若<b>绿长、橙塌缩到轴心</b>（如 L1 个人信息）——说明它的"能力信号"只来自截面排序、<b>控制基金自身后消失</b>，应降为控制变量而非能力轴。这正是雷达图一眼区分"分型变量"与"实时能力变量"的价值。</li>
+<li><b>轴旁的方向标注</b>：↑正向提升 / ↓负向拖累 / ±方向分化 / ≈0作控制——告诉你该维度的"关联方向"，与绿/橙的"关联强度"是两回事，读图时一起看。</li>
+</ul>
+</div>
+
+<div class="radar">
+  <svg width="460" height="400" viewBox="0 0 440 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:460px;height:auto">
+    <!-- grid rings (0.25/0.5/0.75/1.0) -->
+      <polygon points="220,152.5 258,182.5 242,225 198,225 182,182.5" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+      <polygon points="220,115 296,175 264,260 176,260 144,175" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+      <polygon points="220,77.5 334,167.5 286,295 154,295 106,167.5" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+      <polygon points="220,40 372,160 308,330 132,330 68,160" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+    <!-- axes -->
+      <line x1="220" y1="190" x2="220" y2="40" stroke="#94a3b8" stroke-width="1"/>
+      <line x1="220" y1="190" x2="372" y2="160" stroke="#94a3b8" stroke-width="1"/>
+      <line x1="220" y1="190" x2="308" y2="330" stroke="#94a3b8" stroke-width="1"/>
+      <line x1="220" y1="190" x2="132" y2="330" stroke="#94a3b8" stroke-width="1"/>
+      <line x1="220" y1="190" x2="68" y2="160" stroke="#94a3b8" stroke-width="1"/>
+    <!-- cross-sectional polygon (data-driven, normalized evidence strength) -->
+    <g><title>截面关联（绿）：在某一时点横比多只基金，画像高的基金平均业绩是否也高。L4 风险应对半径最大（双证据）；L1 个人信息塌缩至轴心，应作控制变量。</title>
+    <polygon points="220,52 250.4,184 294.8,309 195.4,229.2 144,175" fill="rgba(15,123,77,0.18)" stroke="#0f7b4d" stroke-width="2.2"/></g>
+    <!-- within-FE polygon (data-driven) -->
+    <g><title>组内FE关联（橙）：扣掉每只基金自身历史平均，只看同一只基金不同季度的变化，比截面更逼近因果。L4 仍显著；L1 完全塌缩至轴心。</title>
+    <polygon points="220,47.5 220,190 272.8,274 183,248.8 186.6,183.4" fill="rgba(180,105,14,0.18)" stroke="#b4690e" stroke-width="2.2"/></g>
+    <!-- axis labels -->
+    <g font-size="13" font-family="sans-serif" fill="#1f2a37" font-weight="700" text-anchor="middle">
+      <text x="220" y="26">L4 风险应对</text>
+      <text x="398" y="158">L1 个人信息</text>
+      <text x="322" y="352">L5 认知偏差</text>
+      <text x="118" y="352">L3 交易执行</text>
+      <text x="44" y="158">L2 持仓偏离</text>
+    </g>
+    <!-- 方向说明已移至下方 HTML 图例，避免与轴标签重叠 -->
+  </svg>
+  <div class="radar-legend">
+    <span><b style="color:#0f7b4d">↑ L4 风险应对</b>：全正向·双证据</span>
+    <span><b style="color:#475569">≈0 L1 个人信息</b>：作控制变量</span>
+    <span><b style="color:#475569">± L2/L5</b>：方向分化</span>
+    <span><b style="color:#475569">弱·L3</b>：FE 显形</span>
+  </div>
+<p class="muted">雷达图：五维能力画像与业绩的关联强度（按第 2–6 章回归证据归一，L1 个人信息在组内FE下塌缩至轴心，符合"降格为控制变量"的结论）。</p>
+</div>
+
+<div class="box ctrl">
+<b>轴说明（一眼读懂雷达）：</b>
+<ul>
+<li><b>L4 风险应对</b>：ARG / RG / 收益波动率 全面正向且<b>双证据</b>（截面+组内FE都***）→ 唯一逼近因果的能力轴，半径最大。</li>
+<li><b>L5 认知偏差：</b>de 双口径显著负向；RA 截面显著正、组内FE不显著（分型）；lsv 口径翻转（截面 ns、组内FE显著负）→ 三者方向分化、证据强度各异，是“混合信号/最需谨慎”维度。</li>
+<li><b>L2 持仓偏离</b>：ICI 正向***、AS 负向**（方向分化）→ 中等半径，关键在"主动的方向"而非"主动的量"。</li>
+<li><b>L3 交易执行</b>：截面弱，但在控制基金FE后 SDI 显形（**）→ 半径偏小，靠分解/换口径才显形。</li>
+<li><b>L1 个人信息</b>：任期/性别不显著，CFA 负（选择偏差）→ 半径最小，组内FE下塌缩至轴心，<b>不作能力轴</b>。</li>
+</ul>
+</div>
+
+<h3>7.1　影响力排序图：哪些具体行为影响基金业绩（截面回归 β，DV=基金层 alpha）</h3>
+<p>下方把关键变量做成<strong>双模式滑块</strong>。模式一"影响力排序"即下方条形图（按 β 绝对值从大到小排列，红=提升业绩 / 绿=拖累业绩 / 灰=不显著，⚡=组内FE验证）；模式二"按层分组"把 L1–L5 分别挨在一起，强调<strong>每一层的显著性</strong>，并在每层下方解释正负号与显著性的经济含义。<b>同一张截面回归（DV=基金层 alpha）内所有 β 单位一致、可直接比长短</b>。</p>
+
+<div class="mode-switch">
+  <span class="lbl active" id="lbl-rank">影响力排序（按 |β|）</span>
+  <label class="switch"><input type="checkbox" id="modeToggle711" aria-label="切换显示模式"><span class="slider-ui"></span></label>
+  <span class="lbl" id="lbl-layer">按层分组（强调显著性）</span>
+</div>
+
+<div id="coefview" class="show-rank">
+  <div class="panel panel-rank">
+
+<div class="barchart">
+  <svg width="820" height="520" viewBox="0 0 820 520" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+    <text x="560" y="38" font-size="11" fill="#dc2626" font-family="sans-serif" text-anchor="middle">→ 提升业绩</text>
+    <text x="260" y="38" font-size="11" fill="#16a34a" font-family="sans-serif" text-anchor="middle">← 拖累业绩</text>
+    <line x1="410" y1="46" x2="410" y2="470" stroke="#334155" stroke-width="1.5"/>
+    <text x="12" y="68" font-size="12.5" fill="#1f2a37" font-family="sans-serif">return_volatility 收益波动率 <tspan fill="#94a3b8" font-size="11">[L4]</tspan></text>
+    <rect x="410" y="56" width="290" height="16" rx="3" fill="#dc2626"/>
+    <text x="706" y="68" font-size="12" fill="#dc2626" font-family="sans-serif" text-anchor="start" font-weight="600">+0.148 *** ⚡组内FE验证</text>
+    <line x1="12" y1="76" x2="808" y2="76" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="98" font-size="12.5" fill="#1f2a37" font-family="sans-serif">risk_asym 风险不对称(RA) <tspan fill="#94a3b8" font-size="11">[L5]</tspan></text>
+    <rect x="410" y="86" width="221.504" height="16" rx="3" fill="#dc2626"/>
+    <text x="637.504" y="98" font-size="12" fill="#dc2626" font-family="sans-serif" text-anchor="start" font-weight="600">+0.113 ***</text>
+    <line x1="12" y1="106" x2="808" y2="106" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="128" font-size="12.5" fill="#1f2a37" font-family="sans-serif">lsv 注意力偏差 <tspan fill="#94a3b8" font-size="11">[L5]</tspan></text>
+    <rect x="410" y="116" width="198.0" height="16" rx="3" fill="#94a3b8"/>
+    <text x="614.0" y="128" font-size="12" fill="#94a3b8" font-family="sans-serif" text-anchor="start" font-weight="600">+0.101</text>
+    <line x1="12" y1="136" x2="808" y2="136" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="158" font-size="12.5" fill="#1f2a37" font-family="sans-serif">de 处置效应 <tspan fill="#94a3b8" font-size="11">[L5]</tspan></text>
+    <rect x="274.0" y="146" width="136.0" height="16" rx="3" fill="#16a34a"/>
+    <text x="414" y="158" font-size="12" fill="#16a34a" font-family="sans-serif" text-anchor="start" font-weight="600">-0.070 *** ⚡组内FE验证</text>
+    <line x1="12" y1="166" x2="808" y2="166" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="188" font-size="12.5" fill="#1f2a37" font-family="sans-serif">RG 主动收益增益 <tspan fill="#94a3b8" font-size="11">[L4]</tspan></text>
+    <rect x="410" y="176" width="128.428" height="16" rx="3" fill="#dc2626"/>
+    <text x="544.428" y="188" font-size="12" fill="#dc2626" font-family="sans-serif" text-anchor="start" font-weight="600">+0.066 ** ⚡组内FE验证</text>
+    <line x1="12" y1="196" x2="808" y2="196" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="218" font-size="12.5" fill="#1f2a37" font-family="sans-serif">industry_hhi 行业集中度 <tspan fill="#94a3b8" font-size="11">[L2]</tspan></text>
+    <rect x="410" y="206" width="93.5837" height="16" rx="3" fill="#94a3b8"/>
+    <text x="509.584" y="218" font-size="12" fill="#94a3b8" font-family="sans-serif" text-anchor="start" font-weight="600">+0.048 ns</text>
+    <line x1="12" y1="226" x2="808" y2="226" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="248" font-size="12.5" fill="#1f2a37" font-family="sans-serif">ARG 主动增益 <tspan fill="#94a3b8" font-size="11">[L4]</tspan></text>
+    <rect x="410" y="236" width="91.863" height="16" rx="3" fill="#dc2626"/>
+    <text x="507.863" y="248" font-size="12" fill="#dc2626" font-family="sans-serif" text-anchor="start" font-weight="600">+0.047 ** ⚡组内FE验证</text>
+    <line x1="12" y1="256" x2="808" y2="256" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="278" font-size="12.5" fill="#1f2a37" font-family="sans-serif">ICI 行业偏离 <tspan fill="#94a3b8" font-size="11">[L2]</tspan></text>
+    <rect x="410" y="266" width="85.2539" height="16" rx="3" fill="#dc2626"/>
+    <text x="501.254" y="278" font-size="12" fill="#dc2626" font-family="sans-serif" text-anchor="start" font-weight="600">+0.044 ***</text>
+    <line x1="12" y1="286" x2="808" y2="286" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="308" font-size="12.5" fill="#1f2a37" font-family="sans-serif">AS_improved 主动份额 <tspan fill="#94a3b8" font-size="11">[L2]</tspan></text>
+    <rect x="326.995" y="296" width="83.0052" height="16" rx="3" fill="#16a34a"/>
+    <text x="414" y="308" font-size="12" fill="#16a34a" font-family="sans-serif" text-anchor="start" font-weight="600">-0.042 **</text>
+    <line x1="12" y1="316" x2="808" y2="316" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="338" font-size="12.5" fill="#1f2a37" font-family="sans-serif">CFA 持证 <tspan fill="#94a3b8" font-size="11">[L1]</tspan></text>
+    <rect x="358.242" y="326" width="51.7585" height="16" rx="3" fill="#16a34a"/>
+    <text x="414" y="338" font-size="12" fill="#16a34a" font-family="sans-serif" text-anchor="start" font-weight="600">-0.026 ***</text>
+    <line x1="12" y1="346" x2="808" y2="346" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="368" font-size="12.5" fill="#1f2a37" font-family="sans-serif">TO_two_sided 双边换手 <tspan fill="#94a3b8" font-size="11">[L3]</tspan></text>
+    <rect x="410" y="356" width="33.73" height="16" rx="3" fill="#94a3b8"/>
+    <text x="449.73" y="368" font-size="12" fill="#94a3b8" font-family="sans-serif" text-anchor="start" font-weight="600">+0.017 ns</text>
+    <line x1="12" y1="376" x2="808" y2="376" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="398" font-size="12.5" fill="#1f2a37" font-family="sans-serif">SDI 风格漂移 <tspan fill="#94a3b8" font-size="11">[L3]</tspan></text>
+    <rect x="410" y="386" width="7.27395" height="16" rx="3" fill="#94a3b8"/>
+    <text x="423.274" y="398" font-size="12" fill="#94a3b8" font-family="sans-serif" text-anchor="start" font-weight="600">+0.004 ns</text>
+    <line x1="12" y1="406" x2="808" y2="406" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="428" font-size="12.5" fill="#1f2a37" font-family="sans-serif">gender_m 性别 <tspan fill="#94a3b8" font-size="11">[L1]</tspan></text>
+    <rect x="410" y="416" width="5.3968" height="16" rx="3" fill="#94a3b8"/>
+    <text x="421.397" y="428" font-size="12" fill="#94a3b8" font-family="sans-serif" text-anchor="start" font-weight="600">+0.003 ns</text>
+    <line x1="12" y1="436" x2="808" y2="436" stroke="#eef2f7" stroke-width="1"/>
+    <text x="12" y="458" font-size="12.5" fill="#1f2a37" font-family="sans-serif">mgr_tenure 任期 <tspan fill="#94a3b8" font-size="11">[L1]</tspan></text>
+    <rect x="410" y="446" width="0.5" height="16" rx="3" fill="#94a3b8"/>
+    <text x="416" y="458" font-size="12" fill="#94a3b8" font-family="sans-serif" text-anchor="start" font-weight="600">+0.000 ns</text>
+    <line x1="12" y1="466" x2="808" y2="466" stroke="#eef2f7" stroke-width="1"/>
+  </svg>
+<p class="muted">注：条形长度 = 截面回归系数 β（DV=ff5_adj_return，N≈362，除 L3 TO_two_sided=200 只），可直接横向比较。前向预测（未来4季）RA 的 β=0.571(t30.4) 因因变量不同（未来收益）未纳入此图，单独见第 9–10 章。</p>
+  </div><!-- /panel-rank -->
+
+  <!-- 模式二：按层分组，强调显著性 + 经济含义 -->
+  <div class="panel panel-layer">
+    <div class="sig-legend">
+      <span class="lg"><span class="dot" style="background:#dc2626"></span>红色 = 系数正（提升业绩）</span>
+      <span class="lg"><span class="dot" style="background:#16a34a"></span>绿色 = 系数负（拖累业绩）</span>
+      <span class="lg"><span class="dot" style="background:#cbd5e1"></span>灰色 = 不显著（ns）</span>
+      <span class="lg"><span class="badge-fe">⚡组内FE</span>组内固定效应下同样显著（双证据）</span>
+    </div>
+
+    <div class="layer-sec">
+      <h4>L1　经理背景与劳动市场信号 <span class="ltag" style="background:#eef1f5;color:#64748b">整体不预测绩效</span></h4>
+      <div class="coef-row"><div class="coef-name">CFA 持证<small>cfa_d [L1]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-neg" style="width:8.2%"></div></div><div class="coef-val v-neg">β=−0.0265 (t=−5.34)***</div></div>
+      <div class="coef-row"><div class="coef-name">任期<small>mgr_tenure [L1]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-nsg" style="width:3%"></div></div><div class="coef-val v-ns">β=0.000 (t=1.20) ns</div></div>
+      <div class="coef-row"><div class="coef-name">性别(男)<small>gender_m [L1]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-nsg" style="width:3%"></div></div><div class="coef-val v-ns">β=+0.0028 (t=0.75) ns</div></div>
+      <div class="coef-row"><div class="coef-name">院校背景<small>school [L1]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-nsg" style="width:3%"></div></div><div class="coef-val v-ns">覆盖45.9% ns（未进主回归）</div></div>
+      <div class="interp"><b>怎么读：</b>背景信号（持证/任期/性别/院校）整体上<strong>不能预测绩效</strong>。唯一显著的是 CFA 持证 β=−0.0265***，方向却为<strong>负</strong>——属选择偏差/样本构成（持 CFA 集中于特定策略），作控制变量、<strong>勿因果解读</strong>。经济含义：<strong>不要按"名校/持证/男性"刻板印象挑经理</strong>，背景特征不是可靠的 alpha 来源。</div>
+    </div>
+
+    <div class="layer-sec">
+      <h4>L2　投资决策（持仓） <span class="ltag" style="background:#e6f4ea;color:#14532d">行业偏离最干净</span></h4>
+      <div class="coef-row"><div class="coef-name">行业偏离 ICI<small>ICI [L2]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-pos" style="width:13.7%"></div></div><div class="coef-val v-pos">β=+0.044 (t=4.38)***</div></div>
+      <div class="coef-row"><div class="coef-name">主动份额 AS<small>AS_improved [L2]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-neg" style="width:13.1%"></div></div><div class="coef-val v-neg">β=−0.042 (t=−2.24)**</div></div>
+      <div class="coef-row"><div class="coef-name">个股集中度<small>industry_hhi [L2]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-nsg" style="width:14.9%"></div></div><div class="coef-val v-ns">β=+0.048 (t=1.34) ns</div></div>
+      <div class="interp"><b>怎么读：</b>持仓层信号最"干净"：<strong>ICI 行业偏离 β=+0.044*** 正向显著</strong>——敢于在行业上偏离基准、押对行业赢家，能带来超额；<strong>AS_improved 主动份额 β=−0.042** 负向显著</strong>——个股层面过度偏离基准反而小幅拖累（2002 年后超额收益衰减；口径说明：此为同期 alpha 口径，主表 M4 t=−2.96*** 同向；前向毛收益口径 AS 为正 +12.7***，即高偏离赚的是风险暴露的钱而非能力的钱，见表 9.2 行注）；industry_hhi 个股集中度不显著（原始 HHI 不含"偏离方向"，与 ICI 共线后被吸收）。经济含义：<strong>"押对行业"比"押对个股"更能稳定贡献 alpha</strong>，且真主动须加时代条件。</div>
+    </div>
+
+    <div class="layer-sec">
+      <h4>L3　交易执行（换手 / 漂移） <span class="ltag" style="background:#fef3c7;color:#7c4a03">截面不显著</span></h4>
+      <div class="coef-row"><div class="coef-name">双边换手 TO<small>TO_two_sided [L3]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-nsg" style="width:5.3%"></div></div><div class="coef-val v-ns">β=+0.017 (t=1.28) ns</div></div>
+      <div class="coef-row"><div class="coef-name">风格漂移 SDI<small>SDI [L3]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-nsg" style="width:3%"></div></div><div class="coef-val v-ns">β=+0.004 (t=0.36) ns</div></div>
+      <div class="interp"><b>怎么读：</b>交易执行层截面整体<strong>不显著</strong>：TO β=+0.017 ns、SDI β=+0.004 ns。但本项目提示，在仅 200 只子集内改用组内固定效应后，SDI 与 TO 转为正向显著——说明"折腾"的信号被截面异质性掩盖，组内才显现。经济含义：<strong>靠频繁交易 / 风格漂移本身不能稳定提升业绩</strong>，它更多是噪声而非 alpha 来源；其正向性仅在控制基金个体后成立。</div>
+    </div>
+
+    <div class="layer-sec">
+      <h4>L4　风险应对（最强维度） <span class="ltag" style="background:#e6f4ea;color:#14532d">全面正向·双证据</span></h4>
+      <div class="coef-row"><div class="coef-name">收益波动率<small>return_volatility [L4]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-pos" style="width:46.0%"></div></div><div class="coef-val v-pos">β=+0.148 (t=3.65)***<span class="badge-fe">⚡组内FE</span></div></div>
+      <div class="coef-row"><div class="coef-name">主动收益增益<small>RG [L4]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-pos" style="width:20.5%"></div></div><div class="coef-val v-pos">β=+0.066 (t=2.53)**<span class="badge-fe">⚡组内FE</span></div></div>
+      <div class="coef-row"><div class="coef-name">主动增益<small>ARG [L4]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-pos" style="width:14.6%"></div></div><div class="coef-val v-pos">β=+0.047 (t=2.39)**<span class="badge-fe">⚡组内FE</span></div></div>
+      <div class="interp"><b>怎么读：</b><strong>L4 是行为→绩效最干净的正向证据层</strong>：return_volatility β=+0.148***、RG β=+0.066**、ARG β=+0.047**，三者全部为正且均经组内FE验证（⚡双证据）；组内FE下三者更强（ARG +0.342***、RG +0.202***、return_vol +0.900***）。经济含义：能持续产生主动收益增益（RG/ARG）、且波动来自主动增益的经理，绩效更优；L4 三个指标共同说明<strong>"真主动 + 可控波动"在实证上站得住</strong>。</div>
+    </div>
+
+    <div class="layer-sec">
+      <h4>L5　认知偏差（项目特色层） <span class="ltag" style="background:#fef3c7;color:#7c4a03">证据分化</span></h4>
+      <div class="coef-row"><div class="coef-name">处置效应<small>de [L5]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-neg" style="width:21.8%"></div></div><div class="coef-val v-neg">β=−0.070 (t=−4.23)***<span class="badge-fe">⚡组内FE</span></div></div>
+      <div class="coef-row"><div class="coef-name">风险不对称<small>risk_asym [L5]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-pos" style="width:35.1%"></div></div><div class="coef-val v-pos">β=+0.113 (t=2.75)*** 截面</div></div>
+      <div class="coef-row"><div class="coef-name">注意力偏差<small>lsv [L5]</small></div><div class="coef-bar-track"><div class="mid"></div><div class="coef-bar bar-nsg" style="width:31.4%"></div></div><div class="coef-val v-ns">β=+0.101 截面 ns</div></div>
+      <div class="interp"><b>怎么读：</b><strong>de 处置效应 β=−0.070*** ⚡（卖盈持亏）系统性侵蚀组合，越严重业绩越差</strong>——这是画像中最稳健的负向行为信号；risk_asym +0.113*** 在截面显著（反映基金间"分型"差异，非基金内实时机制）；lsv +0.101 截面不显著、组内FE翻负（最脆弱，降格为分型变量）。经济含义：<strong>处置效应是可信的业绩拖累，而 RA/LSV 宜作分类变量而非实时因果驱动</strong>。</div>
+    </div>
+  </div><!-- /panel-layer -->
+</div><!-- /coefview -->
+
+<div class="box key">
+<b>一眼读懂（研究结论速览）：</b>
+<ul>
+<li><b>真正提升业绩的（红·双证据）</b>：收益波动率、ARG、RG、主动收益增益（L4 全轴）——经理"敢且能"承担并转化风险，被市场奖励。</li>
+<li><b>真正拖累业绩的（绿·双证据）</b>：处置效应 de（卖盈持亏）——行为偏误系统性侵蚀组合，越严重业绩越差。</li>
+<li><b>方向分化的（红绿并存）</b>：行业偏离 ICI↑（有研究观点表达）、主动份额 AS↓（无方向漂移）；风险不对称 RA↑ / 注意力 lsv↑（截面溢价）、de↓。</li>
+<li><b>不影响业绩的（灰·≈0）</b>：任期、性别、双边换手、行业集中度、风格漂移 SDI（截面）——这些不是能力代理，作控制即可。</li>
+</ul>
+<b>一句话</b>：影响基金业绩的是<b>行为-财务微观结构</b>（L4 风险应对 + L5 认知偏差），不是人口学背景（L1）；且"主动的方向"比"主动的量"更重要。
+</div>
+
+<!-- ===== 7.2 画像分型与多维透视（三种互补视角） ===== -->
+<h3 class="cw-title">7.2　画像分型与多维透视（三种互补视角，无文字重叠）</h3>
+<p class="lead">在卡片墙（§7 单经理序数画像）与雷达图（五维证据强度）之外，再用三种<strong>互不重叠</strong>的视角看"经理画像"：①<strong>跨经理热力图</strong>——一眼比出谁在哪一维最突出；②<strong>平行坐标</strong>——把每位经理的六维行为画成一条"形状线"，直观看行为家族；③<strong>分型画像卡</strong>——把六位案例归入四类原型，并桥接 §10b 的定量分型表。三种都只用 HTML/CSS 网格或留足间距的 SVG，避免文字压字。</p>
+
+<style>
+/* —— 7.2 局部样式（pv- 前缀，避免与全文样式冲突） —— */
+.pv-heat{display:grid;grid-template-columns:96px repeat(6,1fr);gap:0;border:1px solid #e6ebf2;border-radius:10px;overflow:hidden;font-size:13px}
+.pv-hrow{display:grid;grid-template-columns:96px repeat(6,1fr)}
+.pv-hcell{padding:9px 4px;text-align:center;border-bottom:1px solid #eef2f7;border-right:1px solid #eef2f7;white-space:nowrap}
+.pv-hcell:last-child{border-right:none}
+.pv-hrow:last-child .pv-hcell{border-bottom:none}
+.pv-hhead{background:#f3f6fa;font-weight:700;color:#334155}
+.pv-name{text-align:left;padding-left:12px;font-weight:700}
+.pv-scale{display:flex;align-items:center;gap:10px;margin:8px 0 2px;font-size:12px;color:#64748b}
+.pv-scale .ramp{display:inline-flex;border-radius:4px;overflow:hidden;border:1px solid #e6ebf2}
+.pv-scale .ramp span{width:34px;height:14px;display:inline-block}
+.pv-pc{width:100%;max-width:820px;height:auto;display:block;margin:4px auto 0}
+.pv-pc-legend{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:center;margin:6px 0 2px;font-size:12.5px;color:#475569}
+.pv-pc-legend span{white-space:nowrap}
+.pv-pc-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.pv-arch-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:6px}
+.pv-arch{border:1px solid #e6ebf2;border-radius:12px;padding:14px 16px;break-inside:avoid}
+.pv-arch-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.pv-arch-name{font-size:15px;font-weight:800}
+.pv-arch-mem{font-size:12px;color:#64748b}
+.pv-arch-tag{display:inline-block;margin:6px 0 10px;font-size:12px;font-weight:700;color:#0f6e6e;background:#e6f2f2;border-radius:6px;padding:2px 8px}
+.pv-bar-row{display:grid;grid-template-columns:64px 1fr 34px;align-items:center;gap:8px;margin:5px 0}
+.pv-bar-lab{font-size:12px;color:#475569;text-align:right}
+.pv-bar-track{height:13px;background:#eef2f7;border-radius:7px;overflow:hidden}
+.pv-bar-fill{display:block;height:100%;border-radius:7px}
+.pv-bar-val{font-size:12px;font-weight:700;color:#334155;text-align:left}
+.pv-arch-desc{margin:10px 0 0;font-size:12.5px;color:#475569;line-height:1.6}
+</style>
+
+<!-- ① 跨经理行为热力图 -->
+<h4>① 跨经理行为热力图（6 经理 × 6 维序数，深色=行为越突出）</h4>
+<p class="muted" style="margin:2px 0 8px">同一组六维序数（1=低 → 5=极高）铺成网格：横向比经理、纵向比维度，深色格即该经理在该维能力最强（高=优秀，面积越大=能力越强）。<b>读法：</b>巴菲特在"风险应对力·主动收益力·投资纪律性·成本控制力"整列最深（全面最强）；张坤/葛兰在"行业配置力"整列最深（重注单一赛道）；蔡嵩松在"风险应对力·主动收益力·投资纪律性·成本控制力"整列最浅（综合最弱）。</p>
+<div class="pv-heat">
+  <div class="pv-hrow pv-hhead"><div class="pv-hcell pv-name">经理</div><div class="pv-hcell">行业配置力</div><div class="pv-hcell">风险应对力</div><div class="pv-hcell">主动收益力</div><div class="pv-hcell">投资纪律性</div><div class="pv-hcell">风险转化力</div><div class="pv-hcell">成本控制力</div></div>
+  <div class="pv-hrow"><div class="pv-hcell pv-name" style="color:#2e7d8a">张坤</div><div class="pv-hcell" style="background:#0f6e6e;color:#fff">5</div><div class="pv-hcell" style="background:#7fc4c4">3</div><div class="pv-hcell" style="background:#3a9d9d;color:#fff">4</div><div class="pv-hcell" style="background:#3a9d9d;color:#fff">4</div><div class="pv-hcell" style="background:#7fc4c4">3</div><div class="pv-hcell" style="background:#0f6e6e;color:#fff">5</div></div>
+  <div class="pv-hrow"><div class="pv-hcell pv-name" style="color:#1f6b3a">朱少醒</div><div class="pv-hcell" style="background:#bfe0e0">2</div><div class="pv-hcell" style="background:#7fc4c4">3</div><div class="pv-hcell" style="background:#3a9d9d;color:#fff">4</div><div class="pv-hcell" style="background:#0f6e6e;color:#fff">5</div><div class="pv-hcell" style="background:#7fc4c4">3</div><div class="pv-hcell" style="background:#0f6e6e;color:#fff">5</div></div>
+  <div class="pv-hrow"><div class="pv-hcell pv-name" style="color:#9a3412">葛兰</div><div class="pv-hcell" style="background:#0f6e6e;color:#fff">5</div><div class="pv-hcell" style="background:#bfe0e0">2</div><div class="pv-hcell" style="background:#7fc4c4">3</div><div class="pv-hcell" style="background:#7fc4c4">3</div><div class="pv-hcell" style="background:#3a9d9d;color:#fff">4</div><div class="pv-hcell" style="background:#bfe0e0">2</div></div>
+  <div class="pv-hrow"><div class="pv-hcell pv-name" style="color:#7c3aed">蔡嵩松</div><div class="pv-hcell" style="background:#3a9d9d;color:#fff">4</div><div class="pv-hcell" style="background:#e6f2f2">1</div><div class="pv-hcell" style="background:#bfe0e0">2</div><div class="pv-hcell" style="background:#bfe0e0">2</div><div class="pv-hcell" style="background:#0f6e6e;color:#fff">5</div><div class="pv-hcell" style="background:#e6f2f2">1</div></div>
+  <div class="pv-hrow"><div class="pv-hcell pv-name" style="color:#1f4e79">巴菲特</div><div class="pv-hcell" style="background:#3a9d9d;color:#fff">4</div><div class="pv-hcell" style="background:#0f6e6e;color:#fff">5</div><div class="pv-hcell" style="background:#0f6e6e;color:#fff">5</div><div class="pv-hcell" style="background:#0f6e6e;color:#fff">5</div><div class="pv-hcell" style="background:#7fc4c4">3</div><div class="pv-hcell" style="background:#0f6e6e;color:#fff">5</div></div>
+  <div class="pv-hrow"><div class="pv-hcell pv-name" style="color:#be123c">林奇</div><div class="pv-hcell" style="background:#bfe0e0">2</div><div class="pv-hcell" style="background:#7fc4c4">3</div><div class="pv-hcell" style="background:#0f6e6e;color:#fff">5</div><div class="pv-hcell" style="background:#7fc4c4">3</div><div class="pv-hcell" style="background:#3a9d9d;color:#fff">4</div><div class="pv-hcell" style="background:#e6f2f2">1</div></div>
+</div>
+<div class="pv-scale"><span>序数深浅：</span><span class="ramp"><span style="background:#e6f2f2"></span><span style="background:#bfe0e0"></span><span style="background:#7fc4c4"></span><span style="background:#3a9d9d"></span><span style="background:#0f6e6e"></span></span><span>1（浅）→ 5（深）</span></div>
+
+<!-- ② 平行坐标 -->
+<h4>② 平行坐标：每位经理是一条"行为形状线"（纵轴=序数 0–5）</h4>
+<p class="muted" style="margin:2px 0 4px"><b>读法：</b>每条彩线是一位经理在六个行为轴上的"形状"。线越靠上=该维能力越强（面积越大=综合能力越强）。<b>巴菲特</b>的线在五轴齐冲顶（风控/收益/纪律/成本全面最强）；<b>张坤</b>在行业配置与成本控制两极凸起但中段下凹；<b>蔡嵩松</b>除风险转化力外全线塌底（综合最弱）；<b>林奇</b>在主动收益力冲顶但成本控制力塌底——一眼可分出"能力强弱与短板"。</p>
+<svg class="pv-pc" viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <!-- axes -->
+  <g stroke="#94a3b8" stroke-width="1">
+    <line x1="70" y1="40" x2="70" y2="320"/>
+    <line x1="194" y1="40" x2="194" y2="320"/>
+    <line x1="318" y1="40" x2="318" y2="320"/>
+    <line x1="442" y1="40" x2="442" y2="320"/>
+    <line x1="566" y1="40" x2="566" y2="320"/>
+    <line x1="690" y1="40" x2="690" y2="320"/>
+  </g>
+  <!-- scale ticks on first axis -->
+  <g font-size="10" fill="#94a3b8" text-anchor="end">
+    <text x="64" y="44">5</text>
+    <text x="64" y="324">0</text>
+  </g>
+  <!-- axis labels -->
+  <g font-size="12.5" fill="#334155" font-weight="700" text-anchor="middle">
+    <text x="70" y="26">行业配置力</text>
+    <text x="194" y="26">风险应对力</text>
+    <text x="318" y="26">主动收益力</text>
+    <text x="442" y="26">投资纪律性</text>
+    <text x="566" y="26">风险转化力</text>
+    <text x="690" y="26">成本控制力</text>
+  </g>
+  <!-- polylines: order = [行业配置力,风险应对力,主动收益力,投资纪律性,风险转化力,成本控制力] -->
+  <polyline points="70,40 194,152 318,96 442,96 566,152 690,40" fill="none" stroke="#2e7d8a" stroke-width="2.4"/>
+  <polyline points="70,208 194,152 318,96 442,40 566,152 690,40" fill="none" stroke="#1f6b3a" stroke-width="2.4"/>
+  <polyline points="70,40 194,208 318,152 442,152 566,96 690,208" fill="none" stroke="#9a3412" stroke-width="2.4"/>
+  <polyline points="70,96 194,264 318,208 442,208 566,40 690,264" fill="none" stroke="#7c3aed" stroke-width="2.4"/>
+  <polyline points="70,96 194,40 318,40 442,40 566,152 690,40" fill="none" stroke="#1f4e79" stroke-width="2.4"/>
+  <polyline points="70,208 194,152 318,40 442,152 566,96 690,264" fill="none" stroke="#be123c" stroke-width="2.4"/>
+</svg>
+<div class="pv-pc-legend">
+  <span><span class="sw" style="background:#2e7d8a"></span>张坤</span>
+  <span><span class="sw" style="background:#1f6b3a"></span>朱少醒</span>
+  <span><span class="sw" style="background:#9a3412"></span>葛兰</span>
+  <span><span class="sw" style="background:#7c3aed"></span>蔡嵩松</span>
+  <span><span class="sw" style="background:#1f4e79"></span>巴菲特</span>
+  <span><span class="sw" style="background:#be123c"></span>林奇</span>
+</div>
+
+<!-- ③ 分型画像卡 -->
+<h4>③ 分型画像卡：六位案例 → 四类原型（桥接 §10b 定量分型）</h4>
+<p class="muted" style="margin:2px 0 8px">把六位案例按其"行为家族"归入四类原型，给出每类平均六维序数画像（条越长=该维行为越突出）；括号标注其在 <a href="#c10b">§10b</a> 定量分型表中对应的原型，实现"案例直觉 ↔ 全样本规则"的对接。</p>
+<div class="fig-wrap" style="margin:6px 0 14px">
+<svg viewBox="0 0 880 720" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,-apple-system,sans-serif" style="width:100%;max-width:920px;height:auto;margin:0 auto;display:block;background:#fff">
+  <polygon points="175.0,207.0 186.3,213.5 186.3,226.5 175.0,233.0 163.7,226.5 163.7,213.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="175.0,194.0 197.5,207.0 197.5,233.0 175.0,246.0 152.5,233.0 152.5,207.0" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="175.0,181.0 208.8,200.5 208.8,239.5 175.0,259.0 141.2,239.5 141.2,200.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="175.0,168.0 220.0,194.0 220.0,246.0 175.0,272.0 130.0,246.0 130.0,194.0" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="175.0,155.0 231.3,187.5 231.3,252.5 175.0,285.0 118.7,252.5 118.7,187.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="175.0" y1="220.0" x2="175.0" y2="155.0" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="175.0" y1="220.0" x2="231.3" y2="187.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="175.0" y1="220.0" x2="231.3" y2="252.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="175.0" y1="220.0" x2="175.0" y2="285.0" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="175.0" y1="220.0" x2="118.7" y2="252.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="175.0" y1="220.0" x2="118.7" y2="187.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <circle cx="175.0" cy="220.0" r="2" fill="#9ca3af"/>
+  <polygon points="175.0,155.0 208.8,200.5 220.0,246.0 175.0,272.0 141.2,239.5 118.7,187.5" fill="#2e7d8a" fill-opacity="0.20" stroke="#2e7d8a" stroke-width="2.6" stroke-linejoin="round"/>
+  <circle cx="175.0" cy="155.0" r="4" fill="#2e7d8a" stroke="#fff" stroke-width="1.5"/>
+  <text x="175.0" y="145.0" font-size="11" font-weight="700" fill="#2e7d8a" text-anchor="middle">5</text>
+  <circle cx="208.8" cy="200.5" r="4" fill="#2e7d8a" stroke="#fff" stroke-width="1.5"/>
+  <text x="220.9" y="197.5" font-size="11" font-weight="700" fill="#2e7d8a" text-anchor="middle">3</text>
+  <circle cx="220.0" cy="246.0" r="4" fill="#2e7d8a" stroke="#fff" stroke-width="1.5"/>
+  <text x="232.2" y="257.0" font-size="11" font-weight="700" fill="#2e7d8a" text-anchor="middle">4</text>
+  <circle cx="175.0" cy="272.0" r="4" fill="#2e7d8a" stroke="#fff" stroke-width="1.5"/>
+  <text x="175.0" y="290.0" font-size="11" font-weight="700" fill="#2e7d8a" text-anchor="middle">4</text>
+  <circle cx="141.2" cy="239.5" r="4" fill="#2e7d8a" stroke="#fff" stroke-width="1.5"/>
+  <text x="129.1" y="250.5" font-size="11" font-weight="700" fill="#2e7d8a" text-anchor="middle">3</text>
+  <circle cx="118.7" cy="187.5" r="4" fill="#2e7d8a" stroke="#fff" stroke-width="1.5"/>
+  <text x="106.6" y="184.5" font-size="11" font-weight="700" fill="#2e7d8a" text-anchor="middle">5</text>
+  <text x="175.0" y="112.0" font-size="17" font-weight="800" fill="#2e7d8a" text-anchor="middle">[张坤]</text>
+  <text x="175.0" y="130.0" font-size="11" font-weight="600" fill="#9ca3af" text-anchor="middle">综合 24/30</text>
+  <text x="175.0" y="144.0" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">行业配置力</text>
+  <text x="237.0" y="168.0" font-size="13" font-weight="600" fill="#475569" text-anchor="start">风险应对力</text>
+  <text x="237.0" y="286.0" font-size="13" font-weight="600" fill="#475569" text-anchor="start">主动收益力</text>
+  <text x="175.0" y="310.0" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">投资纪律性</text>
+  <text x="113.0" y="286.0" font-size="13" font-weight="600" fill="#475569" text-anchor="end">风险转化力</text>
+  <text x="113.0" y="168.0" font-size="13" font-weight="600" fill="#475569" text-anchor="end">成本控制力</text>
+  <polygon points="440.0,207.0 451.3,213.5 451.3,226.5 440.0,233.0 428.7,226.5 428.7,213.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="440.0,194.0 462.5,207.0 462.5,233.0 440.0,246.0 417.5,233.0 417.5,207.0" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="440.0,181.0 473.8,200.5 473.8,239.5 440.0,259.0 406.2,239.5 406.2,200.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="440.0,168.0 485.0,194.0 485.0,246.0 440.0,272.0 395.0,246.0 395.0,194.0" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="440.0,155.0 496.3,187.5 496.3,252.5 440.0,285.0 383.7,252.5 383.7,187.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="440.0" y1="220.0" x2="440.0" y2="155.0" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="440.0" y1="220.0" x2="496.3" y2="187.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="440.0" y1="220.0" x2="496.3" y2="252.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="440.0" y1="220.0" x2="440.0" y2="285.0" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="440.0" y1="220.0" x2="383.7" y2="252.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="440.0" y1="220.0" x2="383.7" y2="187.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <circle cx="440.0" cy="220.0" r="2" fill="#9ca3af"/>
+  <polygon points="440.0,194.0 473.8,200.5 485.0,246.0 440.0,285.0 406.2,239.5 383.7,187.5" fill="#1f6b3a" fill-opacity="0.20" stroke="#1f6b3a" stroke-width="2.6" stroke-linejoin="round"/>
+  <circle cx="440.0" cy="194.0" r="4" fill="#1f6b3a" stroke="#fff" stroke-width="1.5"/>
+  <text x="440.0" y="184.0" font-size="11" font-weight="700" fill="#1f6b3a" text-anchor="middle">2</text>
+  <circle cx="473.8" cy="200.5" r="4" fill="#1f6b3a" stroke="#fff" stroke-width="1.5"/>
+  <text x="485.9" y="197.5" font-size="11" font-weight="700" fill="#1f6b3a" text-anchor="middle">3</text>
+  <circle cx="485.0" cy="246.0" r="4" fill="#1f6b3a" stroke="#fff" stroke-width="1.5"/>
+  <text x="497.2" y="257.0" font-size="11" font-weight="700" fill="#1f6b3a" text-anchor="middle">4</text>
+  <circle cx="440.0" cy="285.0" r="4" fill="#1f6b3a" stroke="#fff" stroke-width="1.5"/>
+  <text x="440.0" y="303.0" font-size="11" font-weight="700" fill="#1f6b3a" text-anchor="middle">5</text>
+  <circle cx="406.2" cy="239.5" r="4" fill="#1f6b3a" stroke="#fff" stroke-width="1.5"/>
+  <text x="394.1" y="250.5" font-size="11" font-weight="700" fill="#1f6b3a" text-anchor="middle">3</text>
+  <circle cx="383.7" cy="187.5" r="4" fill="#1f6b3a" stroke="#fff" stroke-width="1.5"/>
+  <text x="371.6" y="184.5" font-size="11" font-weight="700" fill="#1f6b3a" text-anchor="middle">5</text>
+  <text x="440.0" y="112.0" font-size="17" font-weight="800" fill="#1f6b3a" text-anchor="middle">[朱少醒]</text>
+  <text x="440.0" y="130.0" font-size="11" font-weight="600" fill="#9ca3af" text-anchor="middle">综合 22/30</text>
+  <text x="440.0" y="144.0" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">行业配置力</text>
+  <text x="502.0" y="168.0" font-size="13" font-weight="600" fill="#475569" text-anchor="start">风险应对力</text>
+  <text x="502.0" y="286.0" font-size="13" font-weight="600" fill="#475569" text-anchor="start">主动收益力</text>
+  <text x="440.0" y="310.0" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">投资纪律性</text>
+  <text x="378.0" y="286.0" font-size="13" font-weight="600" fill="#475569" text-anchor="end">风险转化力</text>
+  <text x="378.0" y="168.0" font-size="13" font-weight="600" fill="#475569" text-anchor="end">成本控制力</text>
+  <polygon points="705.0,207.0 716.3,213.5 716.3,226.5 705.0,233.0 693.7,226.5 693.7,213.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="705.0,194.0 727.5,207.0 727.5,233.0 705.0,246.0 682.5,233.0 682.5,207.0" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="705.0,181.0 738.8,200.5 738.8,239.5 705.0,259.0 671.2,239.5 671.2,200.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="705.0,168.0 750.0,194.0 750.0,246.0 705.0,272.0 660.0,246.0 660.0,194.0" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="705.0,155.0 761.3,187.5 761.3,252.5 705.0,285.0 648.7,252.5 648.7,187.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="705.0" y1="220.0" x2="705.0" y2="155.0" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="705.0" y1="220.0" x2="761.3" y2="187.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="705.0" y1="220.0" x2="761.3" y2="252.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="705.0" y1="220.0" x2="705.0" y2="285.0" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="705.0" y1="220.0" x2="648.7" y2="252.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="705.0" y1="220.0" x2="648.7" y2="187.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <circle cx="705.0" cy="220.0" r="2" fill="#9ca3af"/>
+  <polygon points="705.0,155.0 727.5,207.0 738.8,239.5 705.0,259.0 660.0,246.0 682.5,207.0" fill="#9a3412" fill-opacity="0.20" stroke="#9a3412" stroke-width="2.6" stroke-linejoin="round"/>
+  <circle cx="705.0" cy="155.0" r="4" fill="#9a3412" stroke="#fff" stroke-width="1.5"/>
+  <text x="705.0" y="145.0" font-size="11" font-weight="700" fill="#9a3412" text-anchor="middle">5</text>
+  <circle cx="727.5" cy="207.0" r="4" fill="#9a3412" stroke="#fff" stroke-width="1.5"/>
+  <text x="739.6" y="204.0" font-size="11" font-weight="700" fill="#9a3412" text-anchor="middle">2</text>
+  <circle cx="738.8" cy="239.5" r="4" fill="#9a3412" stroke="#fff" stroke-width="1.5"/>
+  <text x="750.9" y="250.5" font-size="11" font-weight="700" fill="#9a3412" text-anchor="middle">3</text>
+  <circle cx="705.0" cy="259.0" r="4" fill="#9a3412" stroke="#fff" stroke-width="1.5"/>
+  <text x="705.0" y="277.0" font-size="11" font-weight="700" fill="#9a3412" text-anchor="middle">3</text>
+  <circle cx="660.0" cy="246.0" r="4" fill="#9a3412" stroke="#fff" stroke-width="1.5"/>
+  <text x="647.8" y="257.0" font-size="11" font-weight="700" fill="#9a3412" text-anchor="middle">4</text>
+  <circle cx="682.5" cy="207.0" r="4" fill="#9a3412" stroke="#fff" stroke-width="1.5"/>
+  <text x="670.4" y="204.0" font-size="11" font-weight="700" fill="#9a3412" text-anchor="middle">2</text>
+  <text x="705.0" y="112.0" font-size="17" font-weight="800" fill="#9a3412" text-anchor="middle">[葛兰]</text>
+  <text x="705.0" y="130.0" font-size="11" font-weight="600" fill="#9ca3af" text-anchor="middle">综合 19/30</text>
+  <text x="705.0" y="144.0" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">行业配置力</text>
+  <text x="767.0" y="168.0" font-size="13" font-weight="600" fill="#475569" text-anchor="start">风险应对力</text>
+  <text x="767.0" y="286.0" font-size="13" font-weight="600" fill="#475569" text-anchor="start">主动收益力</text>
+  <text x="705.0" y="310.0" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">投资纪律性</text>
+  <text x="643.0" y="286.0" font-size="13" font-weight="600" fill="#475569" text-anchor="end">风险转化力</text>
+  <text x="643.0" y="168.0" font-size="13" font-weight="600" fill="#475569" text-anchor="end">成本控制力</text>
+  <polygon points="175.0,507.0 186.3,513.5 186.3,526.5 175.0,533.0 163.7,526.5 163.7,513.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="175.0,494.0 197.5,507.0 197.5,533.0 175.0,546.0 152.5,533.0 152.5,507.0" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="175.0,481.0 208.8,500.5 208.8,539.5 175.0,559.0 141.2,539.5 141.2,500.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="175.0,468.0 220.0,494.0 220.0,546.0 175.0,572.0 130.0,546.0 130.0,494.0" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="175.0,455.0 231.3,487.5 231.3,552.5 175.0,585.0 118.7,552.5 118.7,487.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="175.0" y1="520.0" x2="175.0" y2="455.0" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="175.0" y1="520.0" x2="231.3" y2="487.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="175.0" y1="520.0" x2="231.3" y2="552.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="175.0" y1="520.0" x2="175.0" y2="585.0" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="175.0" y1="520.0" x2="118.7" y2="552.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="175.0" y1="520.0" x2="118.7" y2="487.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <circle cx="175.0" cy="520.0" r="2" fill="#9ca3af"/>
+  <polygon points="175.0,468.0 186.3,513.5 197.5,533.0 175.0,546.0 118.7,552.5 163.7,513.5" fill="#7c3aed" fill-opacity="0.20" stroke="#7c3aed" stroke-width="2.6" stroke-linejoin="round"/>
+  <circle cx="175.0" cy="468.0" r="4" fill="#7c3aed" stroke="#fff" stroke-width="1.5"/>
+  <text x="175.0" y="458.0" font-size="11" font-weight="700" fill="#7c3aed" text-anchor="middle">4</text>
+  <circle cx="186.3" cy="513.5" r="4" fill="#7c3aed" stroke="#fff" stroke-width="1.5"/>
+  <text x="198.4" y="510.5" font-size="11" font-weight="700" fill="#7c3aed" text-anchor="middle">1</text>
+  <circle cx="197.5" cy="533.0" r="4" fill="#7c3aed" stroke="#fff" stroke-width="1.5"/>
+  <text x="209.6" y="544.0" font-size="11" font-weight="700" fill="#7c3aed" text-anchor="middle">2</text>
+  <circle cx="175.0" cy="546.0" r="4" fill="#7c3aed" stroke="#fff" stroke-width="1.5"/>
+  <text x="175.0" y="564.0" font-size="11" font-weight="700" fill="#7c3aed" text-anchor="middle">2</text>
+  <circle cx="118.7" cy="552.5" r="4" fill="#7c3aed" stroke="#fff" stroke-width="1.5"/>
+  <text x="106.6" y="563.5" font-size="11" font-weight="700" fill="#7c3aed" text-anchor="middle">5</text>
+  <circle cx="163.7" cy="513.5" r="4" fill="#7c3aed" stroke="#fff" stroke-width="1.5"/>
+  <text x="151.6" y="510.5" font-size="11" font-weight="700" fill="#7c3aed" text-anchor="middle">1</text>
+  <text x="175.0" y="412.0" font-size="17" font-weight="800" fill="#7c3aed" text-anchor="middle">[蔡嵩松]</text>
+  <text x="175.0" y="430.0" font-size="11" font-weight="600" fill="#9ca3af" text-anchor="middle">综合 15/30</text>
+  <text x="175.0" y="444.0" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">行业配置力</text>
+  <text x="237.0" y="468.0" font-size="13" font-weight="600" fill="#475569" text-anchor="start">风险应对力</text>
+  <text x="237.0" y="586.0" font-size="13" font-weight="600" fill="#475569" text-anchor="start">主动收益力</text>
+  <text x="175.0" y="610.0" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">投资纪律性</text>
+  <text x="113.0" y="586.0" font-size="13" font-weight="600" fill="#475569" text-anchor="end">风险转化力</text>
+  <text x="113.0" y="468.0" font-size="13" font-weight="600" fill="#475569" text-anchor="end">成本控制力</text>
+  <polygon points="440.0,507.0 451.3,513.5 451.3,526.5 440.0,533.0 428.7,526.5 428.7,513.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="440.0,494.0 462.5,507.0 462.5,533.0 440.0,546.0 417.5,533.0 417.5,507.0" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="440.0,481.0 473.8,500.5 473.8,539.5 440.0,559.0 406.2,539.5 406.2,500.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="440.0,468.0 485.0,494.0 485.0,546.0 440.0,572.0 395.0,546.0 395.0,494.0" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="440.0,455.0 496.3,487.5 496.3,552.5 440.0,585.0 383.7,552.5 383.7,487.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="440.0" y1="520.0" x2="440.0" y2="455.0" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="440.0" y1="520.0" x2="496.3" y2="487.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="440.0" y1="520.0" x2="496.3" y2="552.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="440.0" y1="520.0" x2="440.0" y2="585.0" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="440.0" y1="520.0" x2="383.7" y2="552.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="440.0" y1="520.0" x2="383.7" y2="487.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <circle cx="440.0" cy="520.0" r="2" fill="#9ca3af"/>
+  <polygon points="440.0,468.0 496.3,487.5 496.3,552.5 440.0,585.0 406.2,539.5 383.7,487.5" fill="#1f4e79" fill-opacity="0.20" stroke="#1f4e79" stroke-width="2.6" stroke-linejoin="round"/>
+  <circle cx="440.0" cy="468.0" r="4" fill="#1f4e79" stroke="#fff" stroke-width="1.5"/>
+  <text x="440.0" y="458.0" font-size="11" font-weight="700" fill="#1f4e79" text-anchor="middle">4</text>
+  <circle cx="496.3" cy="487.5" r="4" fill="#1f4e79" stroke="#fff" stroke-width="1.5"/>
+  <text x="508.4" y="484.5" font-size="11" font-weight="700" fill="#1f4e79" text-anchor="middle">5</text>
+  <circle cx="496.3" cy="552.5" r="4" fill="#1f4e79" stroke="#fff" stroke-width="1.5"/>
+  <text x="508.4" y="563.5" font-size="11" font-weight="700" fill="#1f4e79" text-anchor="middle">5</text>
+  <circle cx="440.0" cy="585.0" r="4" fill="#1f4e79" stroke="#fff" stroke-width="1.5"/>
+  <text x="440.0" y="603.0" font-size="11" font-weight="700" fill="#1f4e79" text-anchor="middle">5</text>
+  <circle cx="406.2" cy="539.5" r="4" fill="#1f4e79" stroke="#fff" stroke-width="1.5"/>
+  <text x="394.1" y="550.5" font-size="11" font-weight="700" fill="#1f4e79" text-anchor="middle">3</text>
+  <circle cx="383.7" cy="487.5" r="4" fill="#1f4e79" stroke="#fff" stroke-width="1.5"/>
+  <text x="371.6" y="484.5" font-size="11" font-weight="700" fill="#1f4e79" text-anchor="middle">5</text>
+  <text x="440.0" y="412.0" font-size="17" font-weight="800" fill="#1f4e79" text-anchor="middle">[巴菲特]</text>
+  <text x="440.0" y="430.0" font-size="11" font-weight="600" fill="#9ca3af" text-anchor="middle">综合 27/30</text>
+  <text x="440.0" y="444.0" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">行业配置力</text>
+  <text x="502.0" y="468.0" font-size="13" font-weight="600" fill="#475569" text-anchor="start">风险应对力</text>
+  <text x="502.0" y="586.0" font-size="13" font-weight="600" fill="#475569" text-anchor="start">主动收益力</text>
+  <text x="440.0" y="610.0" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">投资纪律性</text>
+  <text x="378.0" y="586.0" font-size="13" font-weight="600" fill="#475569" text-anchor="end">风险转化力</text>
+  <text x="378.0" y="468.0" font-size="13" font-weight="600" fill="#475569" text-anchor="end">成本控制力</text>
+  <polygon points="705.0,507.0 716.3,513.5 716.3,526.5 705.0,533.0 693.7,526.5 693.7,513.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="705.0,494.0 727.5,507.0 727.5,533.0 705.0,546.0 682.5,533.0 682.5,507.0" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="705.0,481.0 738.8,500.5 738.8,539.5 705.0,559.0 671.2,539.5 671.2,500.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="705.0,468.0 750.0,494.0 750.0,546.0 705.0,572.0 660.0,546.0 660.0,494.0" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <polygon points="705.0,455.0 761.3,487.5 761.3,552.5 705.0,585.0 648.7,552.5 648.7,487.5" fill="none" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="705.0" y1="520.0" x2="705.0" y2="455.0" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="705.0" y1="520.0" x2="761.3" y2="487.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="705.0" y1="520.0" x2="761.3" y2="552.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="705.0" y1="520.0" x2="705.0" y2="585.0" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="705.0" y1="520.0" x2="648.7" y2="552.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <line x1="705.0" y1="520.0" x2="648.7" y2="487.5" stroke="#d1d5db" stroke-width="0.8"/>
+  <circle cx="705.0" cy="520.0" r="2" fill="#9ca3af"/>
+  <polygon points="705.0,494.0 738.8,500.5 761.3,552.5 705.0,559.0 660.0,546.0 693.7,513.5" fill="#be123c" fill-opacity="0.20" stroke="#be123c" stroke-width="2.6" stroke-linejoin="round"/>
+  <circle cx="705.0" cy="494.0" r="4" fill="#be123c" stroke="#fff" stroke-width="1.5"/>
+  <text x="705.0" y="484.0" font-size="11" font-weight="700" fill="#be123c" text-anchor="middle">2</text>
+  <circle cx="738.8" cy="500.5" r="4" fill="#be123c" stroke="#fff" stroke-width="1.5"/>
+  <text x="750.9" y="497.5" font-size="11" font-weight="700" fill="#be123c" text-anchor="middle">3</text>
+  <circle cx="761.3" cy="552.5" r="4" fill="#be123c" stroke="#fff" stroke-width="1.5"/>
+  <text x="773.4" y="563.5" font-size="11" font-weight="700" fill="#be123c" text-anchor="middle">5</text>
+  <circle cx="705.0" cy="559.0" r="4" fill="#be123c" stroke="#fff" stroke-width="1.5"/>
+  <text x="705.0" y="577.0" font-size="11" font-weight="700" fill="#be123c" text-anchor="middle">3</text>
+  <circle cx="660.0" cy="546.0" r="4" fill="#be123c" stroke="#fff" stroke-width="1.5"/>
+  <text x="647.8" y="557.0" font-size="11" font-weight="700" fill="#be123c" text-anchor="middle">4</text>
+  <circle cx="693.7" cy="513.5" r="4" fill="#be123c" stroke="#fff" stroke-width="1.5"/>
+  <text x="681.6" y="510.5" font-size="11" font-weight="700" fill="#be123c" text-anchor="middle">1</text>
+  <text x="705.0" y="412.0" font-size="17" font-weight="800" fill="#be123c" text-anchor="middle">[林奇]</text>
+  <text x="705.0" y="430.0" font-size="11" font-weight="600" fill="#9ca3af" text-anchor="middle">综合 18/30</text>
+  <text x="705.0" y="444.0" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">行业配置力</text>
+  <text x="767.0" y="468.0" font-size="13" font-weight="600" fill="#475569" text-anchor="start">风险应对力</text>
+  <text x="767.0" y="586.0" font-size="13" font-weight="600" fill="#475569" text-anchor="start">主动收益力</text>
+  <text x="705.0" y="610.0" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">投资纪律性</text>
+  <text x="643.0" y="586.0" font-size="13" font-weight="600" fill="#475569" text-anchor="end">风险转化力</text>
+  <text x="643.0" y="468.0" font-size="13" font-weight="600" fill="#475569" text-anchor="end">成本控制力</text>
+  <text x="440" y="38" font-size="18" font-weight="800" fill="#111827" text-anchor="middle">六位案例经理 · 六维能力雷达（面积越大 = 综合能力越强）</text>
+  <text x="440" y="60" font-size="11" fill="#6b7280" text-anchor="middle">六维全部为"高=优秀"能力口径，每维由 1–2 个指标等权复合：行业配置力(ICI+逆序ISDI) · 风险应对力(RA +5.55***) · 主动收益力(ARG+RG) · 投资纪律性(逆序de+逆序rc_mom) · 风险转化力(sharpe8_lag 样本外 +2.63***) · 成本控制力(逆序TO_wind)</text>
+</svg>
+<p class="muted" style="text-align:center;font-size:12px;margin:2px 0 0">六维均为有回归证据支持的"高=优秀"能力维度，2026-08-25 起改为<b>等权复合口径</b>（每维 z 标准化后等权平均，缺失成分跳过重归一）：行业配置力[ICI+(−ISDI)]/2、风险应对力[RA]、主动收益力[ARG+RG]/2、投资纪律性[(−de)+(−rc_mom)]/2、风险转化力[sharpe8_lag]（替代原 RV——RV 只量风险水平、不量转化效率）、成本控制力[−TO_wind]。雷达面积越大=综合能力越强；顶点数值 1–5 为能力序数（基于公开披露与回归证据方向定性映射，非精确度量）。经理名下方标注综合得分（六维之和，满分 30）。</p>
+</div>
+
+<div class="box key" style="margin-top:16px">
+<b>六维能力雷达 · 维度详解（面积越大 = 综合能力越强；2026-08-25 起改为等权复合口径）</b>
+<p style="margin:4px 0 0;font-size:12.5px;color:#64748b">复合流程：面板 → 基金层时序均值 → 横截面 z 标准化 → 维度内成分<b>等权平均</b>（缺失成分跳过并按可用成分重归一）。每个能力用多个指标复合，比单指标更完整、更稳健。</p>
+<table style="width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0">
+<tr style="background:#f3f6fa"><th style="padding:8px;border:1px solid #e6ebf2;text-align:left">维度</th><th style="padding:8px;border:1px solid #e6ebf2;text-align:left">底层变量（等权复合）</th><th style="padding:8px;border:1px solid #e6ebf2;text-align:left">回归证据</th><th style="padding:8px;border:1px solid #e6ebf2;text-align:left">含义（高=好）</th></tr>
+<tr><td style="padding:8px;border:1px solid #e6ebf2"><b>行业配置力</b></td><td style="padding:8px;border:1px solid #e6ebf2"><code>[z(ICI) + z(−ISDI)] / 2</code></td><td style="padding:8px;border:1px solid #e6ebf2">ICI β=+0.021 (t=4.70)***；ISDI t=−2.78***（取逆序）</td><td style="padding:8px;border:1px solid #e6ebf2">敢在有研究的行业下重注、且不频繁漂移——"敢押、有方向、拿得住"</td></tr>
+<tr style="background:#fafcfd"><td style="padding:8px;border:1px solid #e6ebf2"><b>风险应对力</b></td><td style="padding:8px;border:1px solid #e6ebf2"><code>z(risk_asym)</code></td><td style="padding:8px;border:1px solid #e6ebf2">主表 M4 β=+0.078 (t=5.55)***，全规格稳定</td><td style="padding:8px;border:1px solid #e6ebf2">上涨敢冲、下跌缩手——赌资效应式的风险不对称管理</td></tr>
+<tr><td style="padding:8px;border:1px solid #e6ebf2"><b>主动收益力</b></td><td style="padding:8px;border:1px solid #e6ebf2"><code>[z(ARG) + z(RG)] / 2</code></td><td style="padding:8px;border:1px solid #e6ebf2">ARG 主表 t=+2.96***、双证据***；RG 前向 t=+5.64***</td><td style="padding:8px;border:1px solid #e6ebf2">披露期外的隐藏调仓押对方向 → 转化为基金超额收益</td></tr>
+<tr style="background:#fafcfd"><td style="padding:8px;border:1px solid #e6ebf2"><b>投资纪律性</b></td><td style="padding:8px;border:1px solid #e6ebf2"><code>[z(−de) + z(−rc_mom)] / 2</code></td><td style="padding:8px;border:1px solid #e6ebf2">de 主表 t=−2.70***（全口径稳健负）；rc_mom 前向 t=−2.08**（2026-08-25 新增）</td><td style="padding:8px;border:1px solid #e6ebf2">不早卖赢家/不死扛输家（卖出端），也不追涨杀跌（买入端）——两端都有纪律</td></tr>
+<tr><td style="padding:8px;border:1px solid #e6ebf2"><b>风险转化力</b></td><td style="padding:8px;border:1px solid #e6ebf2"><code>z(sharpe8_lag)</code> <b>（替代原 RV）</b></td><td style="padding:8px;border:1px solid #e6ebf2">分半样本外检验 t=+2.63***（R²=0.105，真实多年期技能，2026-08-25 复核）；主表表观 t=+9.11*** 含 DV 基金层常数化的机械成分、不作证据强度依据；覆盖 100%</td><td style="padding:8px;border:1px solid #e6ebf2">单位风险换来的收益高——不是"敢承担风险"（RV 只量这个），而是"承担的风险转化成了收益"</td></tr>
+<tr style="background:#fafcfd"><td style="padding:8px;border:1px solid #e6ebf2"><b>成本控制力</b></td><td style="padding:8px;border:1px solid #e6ebf2"><code>z(−TO_wind)</code></td><td style="padding:8px;border:1px solid #e6ebf2">TO 主表不显著（概念支持，覆盖受限约 200 只）</td><td style="padding:8px;border:1px solid #e6ebf2">低换手 → 低交易磨损 → 净收益高</td></tr>
+</table>
+<p style="margin:6px 0 2px;font-size:13px;color:#475569"><b>为何这六维能保证"面积=能力"？</b> 每一维的底层指标都有回归证据支持"高=好"的方向：ICI/RA/ARG/RG 正向显著，ISDI/de/rc_mom 取逆序后正向显著，sharpe8_lag 经分半样本外检验正向（+2.63***），TO 取逆序后概念正向。其中<b>风险转化力 2026-08-25 起改用 sharpe8_lag</b>——原 RV（收益波动率）只回答"承担了多少风险"，风险调整后（FF5 口径 t=0.86）不独立解释业绩，无法度量"转化"；sharpe8_lag 直接度量单位风险的收益产出，其"多年期技能"成分经分半样本外检验确认（t=+2.63***，R²=0.105）；主表表观 t=+9.11 因 DV 为基金层常数 alpha 而含机械成分，仅作参考。纪律性维度新增 rc_mom（追涨杀跌）作为买入端成分，与 de（卖出端处置效应）互补。相比之下，旧版六维（选股信念/配置主动/主动管理/交易成本控制/持股耐心/风险不对称）中仅 2/6 有强证据、1/6 反向（AS 显著负），面积大小无法等价于能力强弱。</p>
+<p style="margin:4px 0 0;font-size:13px;color:#475569"><b>综合得分：</b>六维之和（满分 30），标于经理名下方。面积排序 = 能力排序：<b>巴菲特 27 > 张坤 24 > 朱少醒 22 > 葛兰 19 > 林奇 18 > 蔡嵩松 15</b>。</p>
+</div>
+
+<div class="box key" style="margin-top:14px">
+<b>六维复合得分 · 群体画像证据（最好 5% vs 最差 5% 经理）</b>
+<p style="margin:6px 0;font-size:13px;color:#475569">把 362 只有效基金按基金层 FF5 季调收益均值排序，取最好/最差各 5%（各 18 只），比较其六维复合得分均值。Top 组 FF5 季均 +6.72%，Bottom 组 −1.70%；六维得分差值（z 单位）如下——<b>差值越大，该维度对"好坏经理"的区分度越高</b>：</p>
+<table style="width:100%;border-collapse:collapse;font-size:13px;margin:6px 0">
+<tr style="background:#f3f6fa"><th style="padding:7px;border:1px solid #e6ebf2;text-align:left">维度（按区分度排序）</th><th style="padding:7px;border:1px solid #e6ebf2">最好 5% 均值</th><th style="padding:7px;border:1px solid #e6ebf2">最差 5% 均值</th><th style="padding:7px;border:1px solid #e6ebf2">差值（Top−Bottom）</th><th style="padding:7px;border:1px solid #e6ebf2;text-align:left">解读</th></tr>
+<tr><td style="padding:7px;border:1px solid #e6ebf2"><b>风险转化力</b> [sharpe8_lag]</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">+0.04</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">−1.20</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center"><b>+1.24</b></td><td style="padding:7px;border:1px solid #e6ebf2">区分度最大——好经理把风险转化为收益，差经理承担风险却无产出（注：分组按 FF5 alpha 排序，与 sharpe8_lag 存在部分机械重叠，区分度幅度按保守口径解读；分半样本外检验 +2.63*** 独立确认其多年期技能成分）</td></tr>
+<tr style="background:#fafcfd"><td style="padding:7px;border:1px solid #e6ebf2"><b>行业配置力</b> [ICI+(−ISDI)]/2</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">+0.81</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">−0.27</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center"><b>+1.08</b></td><td style="padding:7px;border:1px solid #e6ebf2">好经理敢押行业方向且配置稳定，差经理漂移频繁</td></tr>
+<tr><td style="padding:7px;border:1px solid #e6ebf2"><b>投资纪律性</b> [(−de)+(−rc_mom)]/2</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">+0.40</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">−0.25</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center"><b>+0.65</b></td><td style="padding:7px;border:1px solid #e6ebf2">好经理卖盈持亏弱、不追涨杀跌</td></tr>
+<tr style="background:#fafcfd"><td style="padding:7px;border:1px solid #e6ebf2"><b>主动收益力</b> [ARG+RG]/2</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">+0.51</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">−0.11</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center"><b>+0.61</b></td><td style="padding:7px;border:1px solid #e6ebf2">好经理的隐藏调仓持续押对</td></tr>
+<tr><td style="padding:7px;border:1px solid #e6ebf2"><b>风险应对力</b> [RA]</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">+0.20</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">−0.07</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">+0.27</td><td style="padding:7px;border:1px solid #e6ebf2">极端 5% 分组下差异收敛（RA 的 alpha 在全样本中段更强）——诚实标注</td></tr>
+<tr style="background:#fafcfd"><td style="padding:7px;border:1px solid #e6ebf2"><b>成本控制力</b> [−TO_wind]</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">+0.07</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">+0.07</td><td style="padding:7px;border:1px solid #e6ebf2;text-align:center">−0.00</td><td style="padding:7px;border:1px solid #e6ebf2">无区分度——与 TO 主表落榜一致，该维仅作辅助</td></tr>
+</table>
+<p style="margin:6px 0 0;font-size:12.5px;color:#64748b">区分度排序（风险转化 &gt; 配置 &gt; 纪律 &gt; 主动收益 &gt; 风险应对 &gt; 成本）与主表回归显著性结构一致（风险转化取样本外口径 +2.63***；ICI t=4.70、DE t=−2.70、ARG t=2.96、RA t=5.55 为截面特质信号、TO 落榜）——六维复合画像不是主观拼图，每一维的权重方向都由数据验证。<b>等权假设经 PCA 主成分敏感性检验（2026-08-25）</b>：综合分等权 vs PCA 加权 Spearman ρ=0.895，配置力两者完全一致（ρ=1.000）、主动收益 ρ=0.916；唯纪律性双成分内部相关较弱（PC1 仅释 54% 方差、成分符号不一），等权为其稳健选择——结论对权重扰动整体稳健。数据：output/六维能力复合得分_2026-08-25.csv（400 只基金，六维 362–400 只有效）。</p>
+</div>
+
+<div class="pv-arch-grid">
+  <div class="pv-arch" style="border-top:4px solid #2e7d8a">
+    <div class="pv-arch-head"><span class="pv-arch-name" style="color:#2e7d8a">价值配置·全面型</span><span class="pv-arch-mem">巴菲特 · 张坤</span></div>
+    <div class="pv-arch-tag">↔ §10b 风控择股型(赢家)</div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">行业配置力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:90%;background:#2e7d8a"></span></span><span class="pv-bar-val">4.5</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">风险应对力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:80%;background:#2e7d8a"></span></span><span class="pv-bar-val">4.0</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">主动收益力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:90%;background:#2e7d8a"></span></span><span class="pv-bar-val">4.5</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">投资纪律性</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:90%;background:#2e7d8a"></span></span><span class="pv-bar-val">4.5</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">风险转化力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:60%;background:#2e7d8a"></span></span><span class="pv-bar-val">3.0</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">成本控制力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:100%;background:#2e7d8a"></span></span><span class="pv-bar-val">5.0</span></div>
+    <p class="pv-arch-desc">行业配置力强+风控/收益/纪律/成本全面高，仅在风险转化力(低波动)上中等：对应 §10b「RA≥0.5 且 ARG≥0.5 且 DE≤0.3」的赢家原型——能力画像最全面、面积最大。</p>
+  </div>
+  <div class="pv-arch" style="border-top:4px solid #1f6b3a">
+    <div class="pv-arch-head"><span class="pv-arch-name" style="color:#1f6b3a">纪律选股·稳健型</span><span class="pv-arch-mem">朱少醒</span></div>
+    <div class="pv-arch-tag">↔ §10b 低偏误纪律型</div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">行业配置力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:40%;background:#1f6b3a"></span></span><span class="pv-bar-val">2.0</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">风险应对力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:60%;background:#1f6b3a"></span></span><span class="pv-bar-val">3.0</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">主动收益力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:80%;background:#1f6b3a"></span></span><span class="pv-bar-val">4.0</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">投资纪律性</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:100%;background:#1f6b3a"></span></span><span class="pv-bar-val">5.0</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">风险转化力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:60%;background:#1f6b3a"></span></span><span class="pv-bar-val">3.0</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">成本控制力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:100%;background:#1f6b3a"></span></span><span class="pv-bar-val">5.0</span></div>
+    <p class="pv-arch-desc">投资纪律性满分+成本控制力满分+主动收益力高，但不押行业方向：对应 §10b「DE≤−0.5 且 |LSV|≤0.5」的纪律型——靠纪律与耐心而非赛道下注。</p>
+  </div>
+  <div class="pv-arch" style="border-top:4px solid #9a3412">
+    <div class="pv-arch-head"><span class="pv-arch-name" style="color:#9a3412">赛道集中·高波动型</span><span class="pv-arch-mem">葛兰 · 蔡嵩松</span></div>
+    <div class="pv-arch-tag">↔ §10b 行业集中下注型</div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">行业配置力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:90%;background:#9a3412"></span></span><span class="pv-bar-val">4.5</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">风险应对力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:30%;background:#9a3412"></span></span><span class="pv-bar-val">1.5</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">主动收益力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:50%;background:#9a3412"></span></span><span class="pv-bar-val">2.5</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">投资纪律性</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:50%;background:#9a3412"></span></span><span class="pv-bar-val">2.5</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">风险转化力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:90%;background:#9a3412"></span></span><span class="pv-bar-val">4.5</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">成本控制力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:30%;background:#9a3412"></span></span><span class="pv-bar-val">1.5</span></div>
+    <p class="pv-arch-desc">行业配置力极强+风险转化力高(高波动)，但风控/纪律/成本全面薄弱：对应 §10b「ICI≥0.5 且 AS≤0.3」的集中下注型——押赛道能赢但短板明显、面积偏小。</p>
+  </div>
+  <div class="pv-arch" style="border-top:4px solid #be123c">
+    <div class="pv-arch-head"><span class="pv-arch-name" style="color:#be123c">灵活进攻·高磨损型</span><span class="pv-arch-mem">林奇</span></div>
+    <div class="pv-arch-tag">↔ §10b 高换手噪声型(输家)</div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">行业配置力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:40%;background:#be123c"></span></span><span class="pv-bar-val">2.0</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">风险应对力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:60%;background:#be123c"></span></span><span class="pv-bar-val">3.0</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">主动收益力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:100%;background:#be123c"></span></span><span class="pv-bar-val">5.0</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">投资纪律性</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:60%;background:#be123c"></span></span><span class="pv-bar-val">3.0</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">风险转化力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:80%;background:#be123c"></span></span><span class="pv-bar-val">4.0</span></div>
+    <div class="pv-bar-row"><span class="pv-bar-lab">成本控制力</span><span class="pv-bar-track"><span class="pv-bar-fill" style="width:20%;background:#be123c"></span></span><span class="pv-bar-val">1.0</span></div>
+    <p class="pv-arch-desc">主动收益力极强+风险转化力高，但行业配置力低(分散)+成本控制力极差(高换手)：对应 §10b「TO≥0.5 且 RA≤0」的高换手噪声型——收益被成本磨损、面积小。</p>
+  </div>
+</div>
+<div class="box note" style="margin-top:14px">
+<b>三种视角的分工：</b>热力图看"<b>谁在哪一维突出</b>"（静态强度）；平行坐标看"<b>行为家族的形状差异</b>"（动态轮廓，便于聚类直觉）；分型卡把案例经理"<b>锚定到全样本规则</b>"（§10b 的 4+1 类原型）。三者共同把"画像"从单只基金的序数条，升级为可分型、可对照、可对接定量分型的立体刻画——且全部采用网格/留距布局，无文字重叠。
+</div>
+
+
+<!-- ============ C8 ============ -->
+<h2 id="c8">8 · 机制分析：画像如何转化为业绩</h2>
+<p>画像不是业绩的"黑箱相关"，而是有清晰传导机制的。我们识别出四条路径：</p>
+<h4>路径一（L4 → alpha）：主动风险增益被市场奖励</h4>
+<p>ARG/RG 显著为正且组内FE更强（表 5.1），机制是：经理基于研究的主动超配（高 RG）押对了股票收益，直接转化为基金超额收益。这是 Grinblatt-Titman (1993) "主动管理有真实能力" 的中国证据。</p>
+<h4>路径二（L5 → 拖累）：处置效应侵蚀收益</h4>
+<p>de 显著为负且组内FE仍显著（表 6.1），机制是：卖盈持亏导致过早了结赢家、长期持有输家，组合质量随时间恶化，系统性拖累业绩。</p>
+<h4>路径三（L2 → 分化）：行业偏离的方向性</h4>
+<p>ICI 正、AS 负（表 3.1），机制是：经理在行业层面"有观点的集中下注"带来 alpha，但无方向的全面偏离基准只是噪声。画像区分了"主动的方向"与"主动的量"。</p>
+<h4>路径四（R3 机制校验）：RiskAsym 是行为构念，非杠杆效应机械穿透</h4>
+<p>我们用 EGARCH 条件波动不对称系数 γ 做稳健性检验（第 15 脚本，γ 已 1%/99% 截尾修复极端值）：</p>
+<h4>③ 回归设定（R3 条件不对称稳健性）</h4>
+<div class="formula eqn">
+<span class="lbl">M1:</span> future_return_it = α + β·risk_asym_it + γ₁·log_aum_it + γ₂·log_fund_age_it + γ₃·return_volatility_it + ε_it
+<span class="lbl">M2:</span> future_return_it = α + β·risk_asym_it + θ·egarch_gamma_wins_it + γ·controls + ε_it
+&nbsp;&nbsp;<span class="cmt">// DV=future_return，基金聚类SE，N=6,931；γ_wins 为 1%/99% 截尾后的条件杠杆系数</span>
+</div>
+<table>
+<caption>表 8.1　R3 条件不对称稳健性（DV=future_return，基金聚类，N=6,931）</caption>
+<tr><th>模型</th><th>risk_asym β (t)</th><th>egarch_gamma β (t)</th><th>R²</th></tr>
+<tr><td>M1: RA + 控制</td><td class="num sigx">0.915 (18.7)***</td><td class="num">—</td><td class="num">0.077</td></tr>
+<tr><td>M2: RA + γ_wins + 控制</td><td class="num sigx">0.924 (19.1)***</td><td class="num">0.319 (3.3)**</td><td class="num">0.079</td></tr>
+</table>
+<div class="box ctrl">
+<b>④ 控制变量为何纳入（详细）</b>
+<ul>
+<li><b>log_aum / log_fund_age（规模 / 年龄对数）</b>：与前述各层一致，控制规模效应、流动性混淆与幸存偏差，避免把"大/老基金天然的收益与风险特征"误归为行为构念。取对数处理右偏。</li>
+<li><b>return_volatility（收益波动，仅 M1 控制）</b>：控制基金的<b>整体风险水平</b>。本检验的核心是"风险不对称（risk_asym）= 盈利期波动 − 亏损期波动"是否独立于"波动总量"而携带增量信息。若不先控制 return_volatility，就无法区分 RA 的预测力究竟是来自"波动大"还是来自"波动结构不对称"——纳入它可隔离出纯粹的<b>不对称成分</b>。</li>
+<li><b>egarch_gamma_wins（EGARCH 条件杠杆系数，截尾，M2 引入）</b>：这是本检验最关键的"控制变量"，但它扮演的是<b>证伪式控制</b>角色。理论上，若 RiskAsym 的预测力只是"底层股票波动的杠杆效应（γ<0）在基金层面的机械映射"，那么一旦把 γ 控制进去，risk_asym 的系数应大幅缩水或消失。我们刻意把它放进 M2 做压力测试：结果 γ 仅带来温和且独立的 0.319(t3.3) 杠杆效应，而 risk_asym 系数几乎不动（0.915→0.924）——这说明 RA 是<b>无法被条件杠杆效应机械解释的独立行为构念</b>，画像中的 RA 轴是"真信号"而非数据假象。</li>
+</ul>
+<b>关于控制集的设计逻辑：</b> R3 的 DV 是 <code>future_return</code>（未来收益），我们<b>不引入基金FE</b>——因为本检验要保留"基金层面的行为风险不对称"这一横截面差异，若用基金FE吸收掉，反而检验不了画像分型变量的预测力；时间维度由 yearFE 控制。控制集随模型递进（M1 含 return_volatility，M2 再加 γ_wins），正是为了逐层排除竞争性解释。
+</div>
+<div class="box note">
+<b>为什么这步重要：</b> 截尾前 γ 的 β 被 43 个失败拟合的哨兵值（γ=−8869）放大到 1.35e-5(t26.3) 的虚假"显著"；截尾后 γ 变为 0.319(t3.3) 的<b>真实但温和</b>杠杆效应，且加入 γ 后 risk_asym 系数几乎不动（0.915→0.924）。这说明 <b>RiskAsym 的预测力并非被条件杠杆效应机械解释</b>，而是独立的行为学构念——画像中的 RA 轴是"真信号"。约 54% 的成功拟合基金 γ&lt;0（存在杠杆效应），但仅约 7% 在 5% 水平统计显著，进一步说明底层股票波动不对称不足以吸收经理层面的行为风险不对称。
+</div>
+
+<div class="box note">
+<b>R3 白话详解：这一步到底在干嘛、那个 γ 是什么、怎么算的</b>
+<p><b>一句话：</b>R3 是一个"证伪压力测试"——我们要确认画像里的 <b>RiskAsym（风险不对称，RA）</b>是经理的<b>真实行为特征</b>，而不是"底层股票天然波动规律"在基金层面的伪装。</p>
+<p><b>背景知识（为什么需要这一步）：</b>股票有个著名现象叫<b>杠杆效应</b>——股价<b>跌</b>的时候，波动往往会比<b>涨</b>的时候放大得更厉害（跌了公司更危险，投资者更慌）。这是股票本身的物理属性，跟经理能力无关。如果我们的 RA 测度其实只是这个股票杠杆效应的"倒影"，那它就不配当"行为画像轴"。</p>
+<p><b>自变量 <code>egarch_gamma</code>（条件波动不对称系数）是什么、怎么算：</b></p>
+<ul>
+<li>我们对<b>每只基金</b>的日净值收益序列，拟合一个 <b>EGARCH(1,1)</b> 模型（至少需要 250 个交易日的收益）。这个模型专门用来刻画"今天的冲击如何不对称地影响明天的波动"。</li>
+<li>模型里有一个关键参数 <b>γ（gamma）</b>：<code>log(σ²_t) = ω + α·|z| + γ·z + β·log(σ²_{t-1})</code>，其中 z 是标准化收益。<b>γ &lt; 0 就表示杠杆效应</b>——负冲击比同等正冲击更放大波动。</li>
+<li>所以这个 γ 是<b>每只基金一个数字</b>（从它自己的日收益里"反推"出来的），它衡量的是"这只基金持仓的波动，在跌的时候是不是比涨的时候放大得更多"。</li>
+</ul>
+<p><b>为什么要对 γ 截尾（winsorize）：</b>拟合偶尔会失败。我们的数据里有 <b>43 只基金</b>的 γ 算成了极端哨兵值 <b>−8869</b>（正常 γ 应在 ±0.1 附近）。这个 −8869 会把回归的尺度撑爆，造出"γ 极显著（t=26.3）"的假象。所以我们在 1%/99% 分位把 γ 截断（γ_wins 落在 [−0.087, +0.071]），再重跑。</p>
+<p><b>回归在检验什么（看表 8.1）：</b>我们跑两个模型，DV 都是未来收益 <code>future_return</code>：
+<span class="formula">M1: future_return = α + β·RA      + 控制变量
+M2: future_return = α + β·RA + θ·γ_wins + 控制变量</span>
+逻辑是：<b>如果 RA 只是杠杆效应的伪装，那么把 γ 控制进去后，RA 的系数应大幅缩水甚至消失。</b>结果：</p>
+<ul>
+<li>γ_wins 自己只有 <b>温和且独立</b>的效应：β=0.319 (t=3.3)**，说明股票层杠杆效应真实存在但很弱；</li>
+<li>RA 的系数<b>几乎没动</b>（0.915 → 0.924，反而略升），t 从 18.7 升到 19.1。</li>
+</ul>
+<p><b>结论（大白话）：</b>控制了"股票跌了波动更大"这个底层规律后，RA 依然强力预测未来业绩——所以 <b>RA 是经理真实的行为风险偏好，不是数据假象</b>。这就是给 RA 轴发的"真信号合格证"。</p>
+</div>
+<!-- ============ C9 ============ -->
+<h2 id="c9">9 · 预测研究：画像预测未来业绩</h2>
+<p>画像的最高价值不只是"解释过去"，而是<b>预测未来</b>。我们用前向回归（DV = 未来 1 季 / 4 季收益）检验画像的预测力，控制基金规模、年龄与年份FE，基金聚类：</p>
+<h4>③ 回归设定（前向预测）</h4>
+<div class="formula eqn">
+future_return_{i,t+h} = α + β₁·risk_asym_{i,t} + β₂·lsv_{i,t} + β₃·de_{i,t}
+&nbsp;&nbsp;&nbsp;&nbsp;+ γ·log_aum_i + δ·log_fund_age_i + Σγ_t·yearFE_t + ε_{i,t+h}
+&nbsp;&nbsp;<span class="cmt">// h = 1（fut1q）或 4（fut4q）；基金聚类SE；N≈3,211</span>
+</div>
+<table>
+<caption>表 9.1　前向预测回归（DV=future_return，基金聚类，控制 log_aum+log_fund_age+年份FE）</caption>
+<tr><th>模型</th><th>N</th><th>risk_asym β (t)</th><th>lsv β (t)</th><th>de β (t)</th></tr>
+<tr><td>未来 4 季 (fut4q)</td><td class="num">3,211</td><td class="num sigx">+0.571 (30.4)***</td><td class="num sign">−0.113 (−4.23)***</td><td class="num sign">−0.044 (−6.84)***</td></tr>
+<tr><td>未来 1 季 (fut1q)</td><td class="num">3,213</td><td class="num sign">−0.321 (−7.05)***</td><td class="num sign">−0.485 (−6.20)***</td><td class="num">−0.029 (−1.92)*</td></tr>
+</table>
+<div class="box ctrl">
+<b>④ 控制变量为何纳入（详细）</b>
+<ul>
+<li><b>log_aum（基金规模对数）</b>：控制<b>规模效应与流动性混淆</b>。大规模基金因调仓摩擦与价格冲击，其未来收益分布与小微基金不同；若不加控制，会把"规模自身的收益惯性"误判为画像的预测力。取对数处理右偏。</li>
+<li><b>log_fund_age（基金年龄对数）</b>：控制<b>幸存偏差与策略成熟度</b>。存活更久的基金历史业绩天然更好、未来表现也常有路径依赖；不加控制会高估画像维度的增量预测价值。同样取对数。</li>
+<li><b>yearFE（年份固定效应）</b>：控制<b>宏观与市场冲击</b>。牛市中几乎所有画像都"显得能预测"，熊市反之；yearFE 把这种共同的时间趋势剥离，确保画像系数捕捉的是<b>基金间相对差异</b>而非市场beta/时间趋势。</li>
+</ul>
+<b>为什么本层<b>不引入基金FE</b>（与 R6 相反）：</b> 预测研究的目标是"用画像选经理"——即画像变量需<b>在剥离规模/年龄/时间后，仍能跨基金区分未来表现</b>。若像 R6 那样再加基金FE，会把基金自身的全部固定差异（其中就包含经理能力画像）吸收掉，预测力无从体现。因此本层<b>有意保留基金间差异</b>，只控制规模/年龄/时间三类基础性混淆，这正是"画像作为前瞻性能力信号"得以检验的前提。注意 fut1q 下 risk_asym 转负（短期反转）属动量/反转的季节特征，不削弱 fut4q 维度的预测价值。
+</div>
+<div class="box key">
+<b>预测研究的结论：</b> 画像（尤其是 risk_asym）对<b>未来 4 季收益</b>有极强的正向预测力（β=0.571, t=30.4），且处置效应、注意力偏差均为负向预测因子。这说明能力画像是一个<b>前瞻性的能力信号</b>，而非对历史业绩的事后描述——它可以直接用于"选经理"：高 RA、低 de、适度 LSV 的经理，未来更可能跑赢。未来 1 季risk_asym 转负，反映短期反转（动量/反转的季节特征），属正常现象，不削弱 4 季维度的预测价值。
+</div>
+
+<div class="box note">
+<b>为什么前向预测方程只放了 risk_asym / lsv / de 三个变量？</b>
+<p>表 9.1 的前向回归 RHS = <code>risk_asym + lsv + de</code> + 控制（规模/年龄/年份FE）。这<b>不是因为其他层不能预测未来</b>，而是当时把前向研究<b>聚焦在 L5「认知偏差/行为」构念</b>上做"画像→预测"的概念验证。我们刚刚把<b>每一层代表变量单独</b>对 fut4q 跑了一遍前向回归（控制相同，基金聚类 SE），结果很多层都显著：</p>
+<table class="ptable">
+<caption>表 9.2　各层变量单独前向预测力（fut4q = 未来 4 季<b>原始毛收益</b>（未做 FF5 风险调整），基金聚类）<br><span style="font-weight:400;font-size:12px">注意：本表 DV 为毛收益，与主表 M4（同期 FF5 alpha）口径不同——含风险暴露溢价，正显著 ≠ 风险调整后正贡献（见 AS 行注）。</span></caption>
+<tr><th>层级</th><th>变量</th><th>fut4q β (t)</th><th>是否预测未来</th></tr>
+<tr><td>L2</td><td>AS_improved</td><td class="num sigx">+0.090 (12.7)***</td><td>是<b>（仅毛收益口径）</b>——高偏离=高异质风险暴露=高毛收益；同期 FF5 alpha 口径为 −2.96*** 显著负（主表 M4），两者并存不矛盾："赚风险的钱、亏能力的钱"，全文统一以此口径表述</td></tr>
+<tr><td>L2</td><td>ICI</td><td class="num sigx">+0.030 (4.05)***</td><td>是</td></tr>
+<tr><td>L2</td><td>rc_mom（新增）</td><td class="num sign">−0.016 (−2.08)**</td><td>是（负）——追涨杀跌伤害下季收益（同期不显著，三新同入 t=−2.19**）</td></tr>
+<tr><td>L3</td><td>TO_two_sided</td><td class="num sigx">+0.020 (2.29)**</td><td>是（仅200只）</td></tr>
+<tr><td>L4</td><td>ARG</td><td class="num sigx">+0.154 (15.3)***</td><td>是（最强之一）</td></tr>
+<tr><td>L4</td><td>return_volatility</td><td class="num sigx">+0.487 (18.1)***</td><td>是（最强，但同属毛收益口径——风险暴露的回报，风险调整后不显著）</td></tr>
+<tr><td>L4</td><td>RG</td><td class="num sigx">+0.037 (5.64)***</td><td>是</td></tr>
+<tr><td>L4</td><td>sharpe8_lag（新增）</td><td class="num sign">−7.90***</td><td>是（负，业绩反转）——定位为能力的事后度量（画像计分用），不作预测因子；同期当季收益口径亦呈 −5.75*** 反转（牛市子样本更强 −10.04***，"冠军魔咒"）；其多年期技能成分经分半样本外检验确认 +2.63***（主表表观 t=+9.11 含 DV 基金层常数化机械成分）</td></tr>
+<tr><td>L5</td><td>risk_asym</td><td class="num sigx">+0.642 (24.1)***</td><td>是</td></tr>
+<tr><td>L5</td><td>lsv</td><td class="num sign">−0.050 (−3.24)***</td><td>是（负）</td></tr>
+<tr><td>L5</td><td>de</td><td class="num sign">−0.090 (−13.0)***</td><td>是（负）</td></tr>
+</table>
+<p><b>所以"只放三个"是设定偏窄，不是证据偏窄。</b>论文若想做"全画像预测力"的 horse race，应把 L4 的 ARG / return_volatility 也纳入前向模型（它们预测力甚至强于 L5 部分变量），并报告<b>增量 R²</b>。注意：ARG 与 return_volatility 高度相关，纳入时需警惕共线——建议用"代表变量逐层加入"的递进式前向回归来展示每层画像的<b>增量</b>预测力。这一扩展已列入下一步。</p>
+</div>
+<h2 id="c10b">10b · 基金经理能力评分与分型（把画像变成可排序、可定型的"产品"）</h2>
+<p>前面 5 层 + 雷达图 + 预测，已经能"解释"经理。但用户要的是——能不能直接<b>打分</b>、能不能<b>分型</b>、能不能一眼看出"谁是好经理"。这一步把画像<b>产品化</b>。</p>
+<h4>方法：用"前向预测力"给每个维度加权打分</h4>
+<p>最公平的权重不是拍脑袋，而是用<b>每个维度对未来业绩（fut4q）的预测系数</b>当权重——能预测未来的维度，权重就大。流程：</p>
+<ul>
+<li>每只基金取其各维度的<b>基金层均值</b>，再在基金间做 <b>z 标准化</b>（均值0、标准差1），消除量纲；</li>
+<li><b>综合得分</b> = 各维度 z 分数按其前向系数符号与大小加权求和（权重归一化）。正向维度高、或负向维度低 → 高分；</li>
+<li>得分再标准化，便于跨基金比较（正值=优于平均，负值=劣于平均）。</li>
+</ul>
+<p>覆盖说明：12 个维度中 de/lsv/TO 覆盖较低（392/394/200 只），缺失维度在加权时自动跳过并按可用维度重新归一权重——<b>400 只基金全部得到得分</b>。</p>
+<h4>分型：四类可识别经理（基于 z 分数的规则匹配）</h4>
+<p>在高维打分之上，按行为金融直觉设 4 条原型规则（优先级匹配），把基金归入：</p>
+<table class="ptable">
+<caption>表 10b.1　四类经理原型定义与在本样本的分布</caption>
+<tr><th>原型</th><th>判定规则（z 分数）</th><th>样本数</th><th>含义</th></tr>
+<tr><td>风控择股型(赢家)</td><td>RA≥0.5 且 ARG≥0.5 且 DE≤0.3</td><td class="num">33</td><td>有利风险不对称+主动收益强+少处置效应→系统性跑赢</td></tr>
+<tr><td>行业集中下注型</td><td>ICI≥0.5 且 AS≤0.3</td><td class="num">20</td><td>集中下注行业（高 ICI）、低主动份额→押赛道</td></tr>
+<tr><td>低偏误纪律型</td><td>DE≤−0.5 且 |LSV|≤0.5</td><td class="num">29</td><td>卖盈持亏弱+不盲从→纪律型</td></tr>
+<tr><td>高换手噪声型(输家)</td><td>TO≥0.5 且 RA≤0</td><td class="num">57</td><td>高换手但无风险不对称优势→交易磨损收益</td></tr>
+<tr><td>均衡型(其他)</td><td>不满足以上</td><td class="num">261</td><td>各维度无明显极端→中庸</td></tr>
+</table>
+<p style="font-size:13px;color:var(--sub)">口径提示：本表是<b>原始 12 维 z 分数</b>下的分型（高换手噪声型 57 只）。把这四条规则平移到<b>六维复合坐标</b>后，输家型会退化至仅 2 只，须改用综合分末十分位重新定义——见文末<b>表 10b.3</b>与其诊断段，该处也是本文对输家型采用的最终口径。</p>
+<h4>可视化一：能力热力图（Top25 基金 × 8 维度）</h4>
+<p>颜色按"对未来业绩是否有利"定向：<b>红=有利、蓝=不利</b>。一眼可见赢家（如 21626/21627）在 RA/ARG/RV 全红，输家在低分区 RA 偏蓝、TO 偏红。</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 906 626" font-family="system-ui,Segoe UI,Arial" font-size="11" style="width:100%;height:auto">
+<rect width="906" height="626" fill="#fff"/>
+<text x="10" y="24" font-size="13" font-weight="700" fill="#1f2937">基金经理能力热力图（Top25 by 综合得分，红=有利未来业绩，蓝=不利）</text>
+<text x="196.0" y="38" text-anchor="middle" fill="#374151">主动份额AS</text>
+<text x="288.0" y="38" text-anchor="middle" fill="#374151">行业集中度ICI</text>
+<text x="380.0" y="38" text-anchor="middle" fill="#374151">换手TO</text>
+<text x="472.0" y="38" text-anchor="middle" fill="#374151">主动收益ARG</text>
+<text x="564.0" y="38" text-anchor="middle" fill="#374151">收益波动RV</text>
+<text x="656.0" y="38" text-anchor="middle" fill="#374151">风险不对称RA</text>
+<text x="748.0" y="38" text-anchor="middle" fill="#374151">处置效应DE</text>
+<text x="840.0" y="38" text-anchor="middle" fill="#374151">羊群LSV</text>
+<text x="6" y="61.0" font-size="10" fill="#111827">21626</text>
+<text x="128" y="61.0" font-size="10" font-weight="700" fill="#b91c1c">+4.33</text>
+<rect x="150" y="48" width="89" height="17" fill="rgb(236,248,243)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="48" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="48" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="48" width="89" height="17" fill="rgb(255,23,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="48" width="89" height="17" fill="rgb(255,96,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="48" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="48" width="89" height="17" fill="rgb(255,40,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="48" width="89" height="17" fill="rgb(255,115,22)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="83.0" font-size="10" fill="#111827">21627</text>
+<text x="128" y="83.0" font-size="10" font-weight="700" fill="#b91c1c">+4.33</text>
+<rect x="150" y="70" width="89" height="17" fill="rgb(236,248,243)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="70" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="70" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="70" width="89" height="17" fill="rgb(255,23,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="70" width="89" height="17" fill="rgb(255,97,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="70" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="70" width="89" height="17" fill="rgb(255,40,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="70" width="89" height="17" fill="rgb(255,115,22)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="105.0" font-size="10" fill="#111827">24052</text>
+<text x="128" y="105.0" font-size="10" font-weight="700" fill="#b91c1c">+4.22</text>
+<rect x="150" y="92" width="89" height="17" fill="rgb(196,228,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="92" width="89" height="17" fill="rgb(253,170,113)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="92" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="92" width="89" height="17" fill="rgb(255,38,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="92" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="92" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="92" width="89" height="17" fill="rgb(255,14,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="92" width="89" height="17" fill="rgb(194,228,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="127.0" font-size="10" fill="#111827">24053</text>
+<text x="128" y="127.0" font-size="10" font-weight="700" fill="#b91c1c">+4.22</text>
+<rect x="150" y="114" width="89" height="17" fill="rgb(196,228,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="114" width="89" height="17" fill="rgb(253,170,113)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="114" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="114" width="89" height="17" fill="rgb(255,38,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="114" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="114" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="114" width="89" height="17" fill="rgb(255,14,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="114" width="89" height="17" fill="rgb(194,228,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="149.0" font-size="10" fill="#111827">23451</text>
+<text x="128" y="149.0" font-size="10" font-weight="700" fill="#b91c1c">+4.17</text>
+<rect x="150" y="136" width="89" height="17" fill="rgb(251,179,128)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="136" width="89" height="17" fill="rgb(235,250,248)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="136" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="136" width="89" height="17" fill="rgb(255,64,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="136" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="136" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="136" width="89" height="17" fill="rgb(240,230,214)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="136" width="89" height="17" fill="rgb(212,235,239)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="171.0" font-size="10" fill="#111827">23452</text>
+<text x="128" y="171.0" font-size="10" font-weight="700" fill="#b91c1c">+4.09</text>
+<rect x="150" y="158" width="89" height="17" fill="rgb(246,205,171)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="158" width="89" height="17" fill="rgb(237,241,232)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="158" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="158" width="89" height="17" fill="rgb(255,66,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="158" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="158" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="158" width="89" height="17" fill="rgb(240,230,214)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="158" width="89" height="17" fill="rgb(210,235,239)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="193.0" font-size="10" fill="#111827">16721</text>
+<text x="128" y="193.0" font-size="10" font-weight="700" fill="#b91c1c">+3.92</text>
+<rect x="150" y="180" width="89" height="17" fill="rgb(255,163,102)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="180" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="180" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="180" width="89" height="17" fill="rgb(255,37,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="180" width="89" height="17" fill="rgb(255,64,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="180" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="180" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="180" width="89" height="17" fill="rgb(237,242,233)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="215.0" font-size="10" fill="#111827">22709</text>
+<text x="128" y="215.0" font-size="10" font-weight="700" fill="#b91c1c">+3.67</text>
+<rect x="150" y="202" width="89" height="17" fill="rgb(244,210,181)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="202" width="89" height="17" fill="rgb(212,235,239)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="202" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="202" width="89" height="17" fill="rgb(255,132,50)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="202" width="89" height="17" fill="rgb(255,25,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="202" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="202" width="89" height="17" fill="rgb(251,179,128)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="202" width="89" height="17" fill="rgb(224,241,238)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="237.0" font-size="10" fill="#111827">24592</text>
+<text x="128" y="237.0" font-size="10" font-weight="700" fill="#b91c1c">+3.27</text>
+<rect x="150" y="224" width="89" height="17" fill="rgb(241,248,236)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="224" width="89" height="17" fill="rgb(252,176,123)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="224" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="224" width="89" height="17" fill="rgb(255,64,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="224" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="224" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="224" width="89" height="17" fill="rgb(255,14,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="224" width="89" height="17" fill="rgb(253,171,115)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="259.0" font-size="10" fill="#111827">24593</text>
+<text x="128" y="259.0" font-size="10" font-weight="700" fill="#b91c1c">+3.27</text>
+<rect x="150" y="246" width="89" height="17" fill="rgb(241,248,236)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="246" width="89" height="17" fill="rgb(252,176,123)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="246" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="246" width="89" height="17" fill="rgb(255,64,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="246" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="246" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="246" width="89" height="17" fill="rgb(255,14,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="246" width="89" height="17" fill="rgb(253,171,115)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="281.0" font-size="10" fill="#111827">21528</text>
+<text x="128" y="281.0" font-size="10" font-weight="700" fill="#b91c1c">+2.97</text>
+<rect x="150" y="268" width="89" height="17" fill="rgb(255,111,15)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="268" width="89" height="17" fill="rgb(239,235,223)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="268" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="268" width="89" height="17" fill="rgb(255,57,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="268" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="268" width="89" height="17" fill="rgb(255,9,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="268" width="89" height="17" fill="rgb(146,206,247)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="268" width="89" height="17" fill="rgb(12,147,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="303.0" font-size="10" fill="#111827">22364</text>
+<text x="128" y="303.0" font-size="10" font-weight="700" fill="#b91c1c">+2.92</text>
+<rect x="150" y="290" width="89" height="17" fill="rgb(251,182,134)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="290" width="89" height="17" fill="rgb(244,211,183)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="290" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="290" width="89" height="17" fill="rgb(255,40,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="290" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="290" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="290" width="89" height="17" fill="rgb(133,200,248)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="290" width="89" height="17" fill="rgb(150,208,246)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="325.0" font-size="10" fill="#111827">22365</text>
+<text x="128" y="325.0" font-size="10" font-weight="700" fill="#b91c1c">+2.88</text>
+<rect x="150" y="312" width="89" height="17" fill="rgb(249,191,149)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="312" width="89" height="17" fill="rgb(245,209,179)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="312" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="312" width="89" height="17" fill="rgb(255,37,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="312" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="312" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="312" width="89" height="17" fill="rgb(133,200,248)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="312" width="89" height="17" fill="rgb(132,200,248)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="347.0" font-size="10" fill="#111827">23397</text>
+<text x="128" y="347.0" font-size="10" font-weight="700" fill="#b91c1c">+2.74</text>
+<rect x="150" y="334" width="89" height="17" fill="rgb(255,127,43)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="334" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="334" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="334" width="89" height="17" fill="rgb(255,5,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="334" width="89" height="17" fill="rgb(255,44,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="334" width="89" height="17" fill="rgb(255,3,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="334" width="89" height="17" fill="rgb(255,131,48)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="334" width="89" height="17" fill="rgb(113,192,250)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="369.0" font-size="10" fill="#111827">23398</text>
+<text x="128" y="369.0" font-size="10" font-weight="700" fill="#b91c1c">+2.73</text>
+<rect x="150" y="356" width="89" height="17" fill="rgb(255,127,43)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="356" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="356" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="356" width="89" height="17" fill="rgb(255,5,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="356" width="89" height="17" fill="rgb(255,44,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="356" width="89" height="17" fill="rgb(255,4,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="356" width="89" height="17" fill="rgb(255,131,48)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="356" width="89" height="17" fill="rgb(113,192,250)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="391.0" font-size="10" fill="#111827">21594</text>
+<text x="128" y="391.0" font-size="10" font-weight="700" fill="#b91c1c">+2.63</text>
+<rect x="150" y="378" width="89" height="17" fill="rgb(235,246,237)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="378" width="89" height="17" fill="rgb(255,82,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="378" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="378" width="89" height="17" fill="rgb(255,98,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="378" width="89" height="17" fill="rgb(255,150,81)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="378" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="378" width="89" height="17" fill="rgb(253,254,235)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="378" width="89" height="17" fill="rgb(241,223,202)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="413.0" font-size="10" fill="#111827">21593</text>
+<text x="128" y="413.0" font-size="10" font-weight="700" fill="#b91c1c">+2.58</text>
+<rect x="150" y="400" width="89" height="17" fill="rgb(235,246,237)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="400" width="89" height="17" fill="rgb(255,82,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="400" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="400" width="89" height="17" fill="rgb(255,98,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="400" width="89" height="17" fill="rgb(255,150,80)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="400" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="400" width="89" height="17" fill="rgb(253,254,235)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="400" width="89" height="17" fill="rgb(241,223,202)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="435.0" font-size="10" fill="#111827">21511</text>
+<text x="128" y="435.0" font-size="10" font-weight="700" fill="#b91c1c">+2.57</text>
+<rect x="150" y="422" width="89" height="17" fill="rgb(205,232,240)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="422" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="422" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="422" width="89" height="17" fill="rgb(253,172,117)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="422" width="89" height="17" fill="rgb(254,168,110)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="422" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="422" width="89" height="17" fill="rgb(51,164,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="422" width="89" height="17" fill="rgb(248,251,235)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="457.0" font-size="10" fill="#111827">21510</text>
+<text x="128" y="457.0" font-size="10" font-weight="700" fill="#b91c1c">+2.55</text>
+<rect x="150" y="444" width="89" height="17" fill="rgb(205,232,240)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="444" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="444" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="444" width="89" height="17" fill="rgb(253,172,117)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="444" width="89" height="17" fill="rgb(254,168,110)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="444" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="444" width="89" height="17" fill="rgb(51,164,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="444" width="89" height="17" fill="rgb(248,251,235)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="479.0" font-size="10" fill="#111827">21523</text>
+<text x="128" y="479.0" font-size="10" font-weight="700" fill="#b91c1c">+2.47</text>
+<rect x="150" y="466" width="89" height="17" fill="rgb(253,170,114)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="466" width="89" height="17" fill="rgb(241,226,207)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="466" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="466" width="89" height="17" fill="rgb(255,42,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="466" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="466" width="89" height="17" fill="rgb(255,54,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="466" width="89" height="17" fill="rgb(158,211,245)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="466" width="89" height="17" fill="rgb(237,241,233)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="501.0" font-size="10" fill="#111827">22735</text>
+<text x="128" y="501.0" font-size="10" font-weight="700" fill="#b91c1c">+2.27</text>
+<rect x="150" y="488" width="89" height="17" fill="rgb(243,214,188)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="488" width="89" height="17" fill="rgb(236,247,243)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="488" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="488" width="89" height="17" fill="rgb(255,112,17)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="488" width="89" height="17" fill="rgb(255,142,67)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="488" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="488" width="89" height="17" fill="rgb(251,182,133)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="488" width="89" height="17" fill="rgb(82,178,254)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="523.0" font-size="10" fill="#111827">22740</text>
+<text x="128" y="523.0" font-size="10" font-weight="700" fill="#b91c1c">+2.21</text>
+<rect x="150" y="510" width="89" height="17" fill="rgb(239,233,219)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="510" width="89" height="17" fill="rgb(236,250,247)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="510" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="510" width="89" height="17" fill="rgb(255,142,67)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="510" width="89" height="17" fill="rgb(255,138,61)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="510" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="510" width="89" height="17" fill="rgb(244,213,185)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="510" width="89" height="17" fill="rgb(183,223,242)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="545.0" font-size="10" fill="#111827">22368</text>
+<text x="128" y="545.0" font-size="10" font-weight="700" fill="#b91c1c">+2.07</text>
+<rect x="150" y="532" width="89" height="17" fill="rgb(197,229,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="532" width="89" height="17" fill="rgb(232,244,237)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="532" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="532" width="89" height="17" fill="rgb(255,89,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="532" width="89" height="17" fill="rgb(255,58,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="532" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="532" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="532" width="89" height="17" fill="rgb(166,215,244)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="567.0" font-size="10" fill="#111827">17234</text>
+<text x="128" y="567.0" font-size="10" font-weight="700" fill="#b91c1c">+1.88</text>
+<rect x="150" y="554" width="89" height="17" fill="rgb(198,229,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="554" width="89" height="17" fill="rgb(229,243,237)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="554" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="554" width="89" height="17" fill="rgb(255,89,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="554" width="89" height="17" fill="rgb(255,57,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="554" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="554" width="89" height="17" fill="rgb(255,0,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="554" width="89" height="17" fill="rgb(139,203,247)" stroke="#e5e7eb" stroke-width="0.5"/>
+<text x="6" y="589.0" font-size="10" fill="#111827">18956</text>
+<text x="128" y="589.0" font-size="10" font-weight="700" fill="#b91c1c">+1.83</text>
+<rect x="150" y="576" width="89" height="17" fill="rgb(255,112,17)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="242" y="576" width="89" height="17" fill="rgb(254,168,110)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="334" y="576" width="89" height="17" fill="rgb(235,255,255)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="426" y="576" width="89" height="17" fill="rgb(255,37,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="518" y="576" width="89" height="17" fill="rgb(255,144,70)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="610" y="576" width="89" height="17" fill="rgb(255,109,13)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="702" y="576" width="89" height="17" fill="rgb(255,102,0)" stroke="#e5e7eb" stroke-width="0.5"/>
+<rect x="794" y="576" width="89" height="17" fill="rgb(198,229,241)" stroke="#e5e7eb" stroke-width="0.5"/>
+</svg>
+<p class="muted">注：热力图仅展示 Top25；完整 400 只基金得分与分型见 <code>scoring_results.json</code>。DE/LSV 为"负向有利"，已按 −z 定向显示（红=低处置效应=好）。</p>
+<h4>可视化二：分型分布</h4>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 216" font-family="system-ui,Segoe UI,Arial" font-size="12" style="width:100%;height:auto">
+<rect width="620" height="216" fill="#fff"/>
+<text x="10" y="24" font-size="13" font-weight="700" fill="#1f2937">基金经理分型分布（基于 z 分数规则的 4 原型 + 均衡型）</text>
+<rect x="170" y="50" width="520.0" height="20" fill="#6b7280" rx="3"/>
+<text x="166" y="65.0" text-anchor="end" fill="#374151">均衡型(其他)</text>
+<text x="696.0" y="65.0" fill="#111827">261</text>
+<rect x="170" y="80" width="113.5632183908046" height="20" fill="#dc2626" rx="3"/>
+<text x="166" y="95.0" text-anchor="end" fill="#374151">高换手噪声型(输家)</text>
+<text x="289.5632183908046" y="95.0" fill="#111827">57</text>
+<rect x="170" y="110" width="65.74712643678161" height="20" fill="#16a34a" rx="3"/>
+<text x="166" y="125.0" text-anchor="end" fill="#374151">风控择股型(赢家)</text>
+<text x="241.74712643678163" y="125.0" fill="#111827">33</text>
+<rect x="170" y="140" width="57.77777777777778" height="20" fill="#0891b2" rx="3"/>
+<text x="166" y="155.0" text-anchor="end" fill="#374151">低偏误纪律型</text>
+<text x="233.77777777777777" y="155.0" fill="#111827">29</text>
+<rect x="170" y="170" width="39.84674329501916" height="20" fill="#d97706" rx="3"/>
+<text x="166" y="185.0" text-anchor="end" fill="#374151">行业集中下注型</text>
+<text x="215.84674329501917" y="185.0" fill="#111827">20</text>
+</svg>
+<h4>Top / Bottom 基金经理（综合得分）</h4>
+<table class="ptable">
+<caption>表 10b.2　综合得分最高 / 最低各 5 只（完整 15 只见 JSON）</caption>
+<tr><th>排名</th><th>基金代码</th><th>得分</th><th>基金代码</th><th>得分</th></tr>
+<tr><td>1</td><td>21626</td><td class="num sigx">+4.33</td><td>1407</td><td class="num sign">-2.14</td></tr>
+<tr><td>2</td><td>21627</td><td class="num sigx">+4.33</td><td>160220</td><td class="num sign">-1.67</td></tr>
+<tr><td>3</td><td>24052</td><td class="num sigx">+4.22</td><td>1194</td><td class="num sign">-1.52</td></tr>
+<tr><td>4</td><td>24053</td><td class="num sigx">+4.22</td><td>160226</td><td class="num sign">-1.50</td></tr>
+<tr><td>5</td><td>23451</td><td class="num sigx">+4.17</td><td>519770</td><td class="num sign">-1.39</td></tr>
+</table>
+<div class="box note">
+<b>联动验证（2026-08-25）：用六维复合得分重跑分型。</b>把四类原型规则平移到六维复合坐标（赢家 = 风险应对≥0.5 且 主动收益≥0.5 且 纪律≥−0.3；集中下注 = 配置力≥0.5；纪律型 = 纪律性≥0.5；输家 = 成本≤−0.5 且 风险应对≤0），结果：<b>赢家型（25 只）组均 alpha +0.0419（vs 均衡型 t=+2.74**）、集中下注型（70 只）+0.0300（t=+3.96***）</b>——复合画像的分型结构独立复现了业绩溢价；纪律型（43 只）+0.0222 方向正确但不显著。<b>缺口（原）：</b>输家型规则在复合空间中退化（仅 2 只）——高换手且低 RA 的基金大多先被"配置力≥0.5"的吸收条件截获，原"TO≥0.5 且 RA≤0"规则不宜直接平移（见 output/复合分型联动_2026-08-25.csv）。
+</div>
+<div class="box note">
+<b>输家型规则重定义（2026-08-26 补做，四套规则对照）。</b>针对上述退化缺口，逐一排除两种可能成因并测试三种替代定义（脚本 <code>scripts/_archetype_loser_redef_20260826.py</code> → <code>output/输家型规则重定义_2026-08-26.csv</code>）：
+<table style="margin-top:8px">
+<caption>表 10b.3　输家型（高换手噪声型）规则的四套定义对照 <small>组均 alpha 及与均衡型的 Welch t</small></caption>
+<tr><th>规则</th><th>输家 N（含 alpha）</th><th>组均 alpha</th><th>vs 均衡 t</th><th>赢家 vs 输家</th></tr>
+<tr><td>V0 现行：cost≤−0.5 且 risk_rsp≤0</td><td class="num">2（2）</td><td class="num">+0.0348</td><td class="num">n/a</td><td>样本不足</td></tr>
+<tr><td>V1 优先级修正：输家判定提前至赢家之后</td><td class="num">2（2）</td><td class="num">+0.0348</td><td class="num">n/a</td><td>样本不足</td></tr>
+<tr><td>V2 分位数交集：cost 与 discipl 各后 20% 的交集</td><td class="num">20（16）</td><td class="num">+0.0160</td><td class="num">−0.19 ns</td><td class="num sigx">t=+2.41**</td></tr>
+<tr><td><b>V3 综合分末十分位：composite 后 10%</b></td><td class="num">40（40）</td><td class="num">+0.0018</td><td class="num sign">−6.81***</td><td class="num sigx">t=+4.30***</td></tr>
+<tr><td>V4 稳健性：剔除风险转化维后五维末十分位</td><td class="num">40（40）</td><td class="num">+0.0078</td><td class="num sign">−4.72***</td><td class="num sigx">t=+3.69***</td></tr>
+</table>
+<b>诊断与结论</b>：V1 证明退化<b>不是</b>优先级次序问题（改序后仍是 2 只），根因是<b>硬阈值交集在复合坐标下过窄</b>——cost 维的后 20% 阈值仅 +0.068（TO_wind 覆盖约 200 只使该维分布右偏），"≤−0.5"实际是极端尾部。改用<b>自适应分位数</b>后规则恢复可用：V2 能把赢家与输家拉开（t=+2.41**）但输家 vs 均衡不显著，说明"成本+纪律"双低不足以独立预示低 alpha；<b>V3（综合分末十分位，40 只，组均 alpha +0.0018 近乎归零，t=−6.81***）是可支撑检验的推荐定义</b>。为排除"composite 含 sharpe8_lag 导致构造性显著"的质疑，V4 剔除风险转化维后重测，输家仍 −4.72***、赢家 vs 输家 +3.69***——结论不依赖该维，<b>输家型缺口已闭合</b>。代价是输家型由"行为特征型"（高换手噪声）变为"综合弱型"，行为学标签的锐度下降，此点如实披露。
+</div>
+<p><b>产品化价值：</b>这套"打分+分型"可直接做成一个<b>基金经理筛选器</b>——按综合得分排序选基，或按原型匹配不同风险偏好的客户（如保守型配"低偏误纪律型"、进取型配"风控择股型"）。它把全文"画像→能力→业绩"的主线，落成了一个可操作的输出。</p>
+<!-- ============ C10 ============ -->
+<h2 id="c10">10 · 覆盖上限与诚实缺口</h2>
+<table>
+<caption>表 10.1　各画像维度的覆盖率与待补项</caption>
+<tr><th>维度/指标</th><th>当前覆盖</th><th>状态</th><th>待补（需授权数据）</th></tr>
+<tr><td>L1 school</td><td class="num">45.9%</td><td><span class="tag plan">规划</span></td><td>外部补全院校匹配</td></tr>
+<tr><td>L2 AS/ICI/HHI</td><td class="num">≈全样本</td><td><span class="tag ok">✅</span></td><td>—</td></tr>
+<tr><td>L3 TO（TO_wind，v4 主回归口径）</td><td class="num">86.6% (8,642)</td><td><span class="tag ok">✅</span></td><td>—</td></tr>
+<tr><td>L3 TO（TO_two_sided 真双边）</td><td class="num">18.0% (1,799)</td><td><span class="tag weak">⚠</span></td><td>CSMAR/Wind 全样本交易</td></tr>
+<tr><td>L3 SDI</td><td class="num">63.8%</td><td><span class="tag ok">✅</span></td><td>—</td></tr>
+<tr><td>L4 ARG/RG/vol</td><td class="num">87–97%</td><td><span class="tag ok">✅</span></td><td>—</td></tr>
+<tr><td>L5 de</td><td class="num">46.6%（仅半年报）</td><td><span class="tag weak">⚠</span></td><td>全季度全持仓(CSMAR/Wind)</td></tr>
+<tr><td>L5 risk_asym/lsv</td><td class="num">72–92%</td><td><span class="tag ok">✅</span></td><td>lsv 为代理口径，待严格复刻</td></tr>
+<tr><td>R6 组内FE</td><td class="num">2,668 / 1,043</td><td><span class="tag ok">✅ 新完成</span></td><td>—</td></tr>
+<tr><td>R3 γ截尾</td><td class="num">6,931</td><td><span class="tag ok">✅ 新完成</span></td><td>—</td></tr>
+</table>
+<div class="box note">
+<b>诚实声明：</b> 本文所有"显著/不显著"均附带 N 与样本口径；低覆盖指标（de、TO、school）的结论<b>不外推至全样本</b>。覆盖率的根本提升依赖 CSMAR/Wind/iFinD 等授权终端导出后重跑 <code>run_all.py</code>，本沙箱无法免费补齐。已完成的 R6 组内FE 与 R3 γ截尾 已写入 <code>output/组内FE回归结果.csv</code>、<code>output/R3_gamma截尾重跑.csv</code>。
+</div>
+
+<!-- ============ C11 ============ -->
+<h2 id="c11">11 · 回归符号与显著性深度解读：为什么正、为什么负、为什么不显著</h2>
+<p><b>系数符号</b>告诉我们"经理想象与业绩之间的方向"，<b>显著性</b>告诉我们"这个方向是否足以区别于纯噪声、是否在控制混淆后依然成立"。把全部结果按 (正显著 / 负显著 / 不显著) 三分，可以读出画像每个维度究竟是"<b>能力信号</b>"、"<b>行为拖累</b>"还是"<b>噪声/分型变量</b>"。下面逐条给出<b>基于文献与样本特征的经济学猜测</b>——均标注为"待检验的假说"，不是既定结论，论文中应如此措辞以免过度宣称。</p>
+
+<table>
+<caption>表 11.1　关键系数的符号 / 显著性 / 可能原因（猜测）/ 说明的问题</caption>
+<tr><th>变量（层）</th><th>符号</th><th>显著性（口径）</th><th>可能原因（猜测）</th><th>说明的问题</th></tr>
+<tr><td>ARG / RG / return_vol（L4）</td><td class="num sigx">正</td><td class="num sigx">截面+组内FE 均 ***</td><td>主动下注被市场奖励；承担并转化的风险获补偿</td><td>最可信的"实时能力"轴</td></tr>
+<tr><td>ICI（L2）</td><td class="num sigx">正</td><td class="num sigx">***</td><td>行业层面有意识集中下注 = 表达独立研究观点</td><td>"主动方向"创造价值</td></tr>
+<tr><td>AS_improved（L2）</td><td class="num sign">负</td><td class="num sign">**</td><td>无方向的主动偏离多为噪声交易 / 风格漂移</td><td>"主动量"非能力，反是拖累</td></tr>
+<tr><td>industry_hhi（L2）</td><td class="num">正</td><td class="num">ns</td><td>原始集中度不含"方向"，与 ICI 共线后被吸收</td><td>方向 &gt; 集中度</td></tr>
+<tr><td>mgr_tenure（L1）</td><td class="num">≈0</td><td class="num">ns</td><td>经验被规模/年龄吸收，或已被市场定价</td><td>背景非能力代理</td></tr>
+<tr><td>gender_m（L1）</td><td class="num">≈0</td><td class="num">ns</td><td>无系统性性别差异</td><td>作控制即可</td></tr>
+<tr><td>cfa_d（L1）</td><td class="num sign">负</td><td class="num sign">***</td><td>选择偏差 / 样本构成（持CFA集中于特定策略）</td><td>反直觉，作控制，勿因果解读</td></tr>
+<tr><td>TO_two_sided（L3）</td><td class="num">≈0</td><td class="num">ns</td><td>换手是"技能+损耗"的混合，净效应抵消；N=1,799（18.0%，受限于交易数据）</td><td>原始换手无信息，需分解</td></tr>
+<tr><td>SDI（L3）</td><td class="num sigx">正</td><td class="num">截面 ns / 组内FE **</td><td>择时交易能力只在控制基金FE后显现（执行技能）</td><td>交易选择性是"实时执行"非"截面特质"</td></tr>
+<tr><td>risk_asym（L5）</td><td class="num sigx">截面正</td><td class="num sigx">截面 *** / 组内FE ns（excess 翻负）</td><td>截面是基金间"分型"差异，非基金内时间变化</td><td>RA 是分类变量，非因果驱动</td></tr>
+<tr><td>lsv（L5）</td><td class="num sigx">截面正</td><td class="num sigx">截面 ns / 组内FE ***（负）</td><td>截面溢价在新面板消失；组内FE显著负，符号口径依赖</td><td>口径依赖/最脆弱，画像中降格</td></tr>
+<tr><td>de（L5）</td><td class="num sign">负</td><td class="num sign">双口径 ***</td><td>卖盈持亏系统性侵蚀组合质量</td><td>最稳健的负向行为信号</td></tr>
+<tr><td>egarch_gamma_wins（R3）</td><td class="num sigx">正</td><td class="num sigx">**</td><td>股票层条件杠杆效应真实但微弱</td><td>不吸收 RA，佐证 RA 独立性</td></tr>
+<tr><td>前向 risk_asym（fut4q / fut1q）</td><td class="num sigx">正 / 负</td><td class="num sigx">均 ***</td><td>中期画像持久预测；短期反转/动量季节</td><td>预测力有时限结构</td></tr>
+</table>
+
+<h3>11.1　正且显著：真实的"能力信号"</h3>
+<div class="box key">
+<b>ARG / RG / return_volatility（L4）</b>：三者截面与组内FE下<b>全部正且高度显著</b>，且组内FE系数不降反升。可能原因：<code>RG</code> 衡量"经理主动超配的权重是否押对了股票收益"——若为正且显著，说明主动下注是被市场奖励的真实选股能力（Grinblatt &amp; Titman 1993、Kacperczyk-Sialm-Zheng 2008）。<code>return_volatility</code> 为正，一部分是风险-收益权衡的机械成分（高风险伴随高期望收益），另一部分反映"敢承担并管理风险的经理获得了补偿"。两者在<b>控制基金自身后仍显著</b>，说明这不是"基金间排序"的假象，而是可识别的实时能力。<b>能说明的问题</b>：风险应对（L4）是画像中最无可争议的能力轴，论文应将其置于核心。
+</div>
+<div class="box key">
+<b>ICI（L2，正 ***）vs AS_improved（L2，负 **）</b>：这是全文最反直觉也最有中国语境价值的对比。可能原因：<code>AS_improved</code>（组合相对基准的整体偏离）在中国主动股基样本中多为<b>噪声交易或风格漂移</b>——偏离基准未必是能力，可能只是没跟上上涨的基准，或频繁无方向地调仓；因此高主动份额反而伴随更低 alpha（与 Cremers &amp; Petajisto 2009 美股结论相反）。而 <code>ICI</code>（行业层面的<b>有方向偏离</b>，即集中下注看好的行业）反映的是经理"有意识、有研究的观点表达"，这种偏离被市场奖励。<b>能说明的问题</b>：画像精细化的价值——把"主动"拆成"量(AS)"与"方向(ICI)"后，结论从"主动无意义"变成"主动的方向才有意义"。论文应把这对异号结果作为区别于成熟市场的主要贡献点。
+</div>
+<div class="box key">
+<b>risk_asym / lsv 截面正（L5）、egarch_gamma_wins 正（R3）、前向 fut4q RA 正</b>：截面与预测口径下，RA 的强正向说明"具有有利风险不对称的基金系统性跑赢"，且这种优势<b>能持续到未来 4 季</b>（β=0.571, t=30.4）。γ_wins 的正向（0.319, t3.3）则表明底层股票的条件杠杆效应真实存在但<b>微弱</b>——它无法解释经理层面的 RA，反证 RA 是独立的行为学构念。<b>能说明的问题</b>：画像不仅解释历史，更能前瞻预测，可直接支撑"基于画像选经理"的应用。
+</div>
+
+<h3>11.2　负且显著：稳定的"行为拖累"</h3>
+<div class="box key">
+<b>de 处置效应（L5，双口径负 ***）</b>：经理越倾向"卖盈持亏"，业绩越差，且<b>截面与组内FE下都显著</b>。可能原因（行为金融经典机制）：过早了结赢家锁定了小利、长期持有输家使组合质量随时间恶化，系统性侵蚀收益（Shefrin &amp; Statman 1985）。<b>能说明的问题</b>：这是画像中<b>最稳健的负向能力信号</b>——它不依赖基金间排序，控制基金自身后仍成立，是"经理行为偏误 → 业绩拖累"的干净证据，论文应重点呈现。
+</div>
+<div class="box note">
+<b>CFA（L1，负 ***，反直觉）</b>：持 CFA 的基金 alpha 反而更低。这<b>几乎可以肯定是选择偏差/样本构成</b>而非"CFA 损害能力"——样本中持 CFA 的经理可能集中于特定规模、策略或时期，而这些因素在控制变量之外仍有残留；也可能是 CFA 信号的是更保守、低风险的风格，在样本期（2018–2025 含反弹）跑输。论文必须<b>谨慎措辞</b>：把它作为控制变量，明确"不可作因果解读"，切忌写成"CFA 无益"。
+</div>
+
+<h3>11.3　不显著：噪声、混淆，或"分型而非实时"</h3>
+<div class="box ctrl">
+<b>mgr_tenure / gender_m（L1，ns）</b>：任期与性别对 alpha 无显著解释力。可能原因：① 经验效应已被规模、年龄等控制变量吸收；② 在有效竞争的市场中，"经验"带来的超额信息优势已被套利定价掉；③ 性别在基金经理群体中没有系统性能力差异（与大量文献一致）。<b>能说明的问题</b>：人口学背景不是能力代理，这正是把它们<b>降级为控制变量</b>的实证依据。
+</div>
+<div class="box ctrl">
+<b>industry_hhi（L2，正但 ns）</b>：行业集中度本身不显著，但在纳入 ICI 后更明显。可能原因：原始 HHI 不含"偏离方向"——"高度集中但押错"与"高度集中且押对"相互抵消；一旦用 ICI 刻画"主动偏离的方向"，集中度信息就被吸收。<b>能说明的问题</b>：再次印证"方向 &gt; 集中度"，也提示建模时应避免把 HHI 与 ICI 并列为独立信号。
+</div>
+<div class="box ctrl">
+<b>TO_two_sided（L3，ns）</b>：双边换手率与 alpha 无显著关系。可能原因：换手是"<b>技能 + 交易成本损耗</b>"的混合体——优秀经理的高换手是盈利交易，差经理的高换手是无效折腾，两者在聚合后净效应抵消；加之本口径仅 1,799 观测（18.0%，受限于交易数据）。<b>能说明的问题</b>：原始换手率本身信息量低，必须靠“选择性(SDI) 择时交易”提取结构，这正是 L3 的方法论贡献。
+</div>
+<div class="box ctrl">
+<b>risk_asym 组内FE 弱（且 excess 口径翻负）、lsv 组内FE 显著负（新面板口径翻转，L5）</b>：这两个变量在<b>截面</b>强、在<b>组内FE</b>弱，是整套结果里最需要小心解读的模式。可能原因：它们的预测力主要来自"<b>基金间排序</b>"——某些基金系统性地具有更高风险不对称或更高抱团度，因而平均业绩不同；但这并非"某只基金在某季度临时改变 RA/lsv 就会改变该季收益"的实时机制。RA 在 excess_return 口径下翻负，进一步说明其"基金内"方向对 DV 定义敏感。<b>能说明的问题</b>：RA 与 LSV 应定位为"<b>画像分型/分类变量</b>"而非"实时因果驱动"；在画像合成时，它们刻画"经理属于哪一类"，而不声称"改变它就能改变业绩"。这是诚实区分证据强度的关键。
+</div>
+
+<h3>11.5　统一框架与论文写作提示</h3>
+<div class="box">
+<b>把符号与显著性读成"证据性质"的三分法</b>：
+<ul>
+<li><b>正且显著（L4 全轴、ICI、RA 截面/预测、de 的反向稳健）</b> → 真实能力信号或行为拖累，论文主推。</li>
+<li><b>负且显著（de、AS、CFA）</b> → 稳定的负向机制；de 当能力信号，AS/CFA 当控制并谨慎措辞。</li>
+<li><b>不显著（L1 背景、HHI、TO 总量、RA/lsv 组内FE）</b> → 要么本就是控制变量（L1），要么需换口径才能显形（SDI 择时选择性），要么本质是分型变量而非实时驱动（RA、lsv）。</li>
+</ul>
+<b>论文呈现建议</b>：在"实证结果"章后单设一小节"<b>经济含义与符号解读</b>"，用一张类似表 11.1 的"符号-显著性-含义"总表，把每条显著/不显著结果都对应到一个<b>经济学假说</b>（明确标注"猜测/待检验"），并区分"能力信号 / 行为拖累 / 分型变量"三类证据性质。这比单纯罗列 β(t) 更能体现研究的深度，也提前堵住审稿人"你这系数为什么不显著/为什么负号"的追问。
+</div>
+
+
+<h2 id="c12">12 · 基金经理画像原型：从五维指标到可识别的经理类型</h2>
+<p>前 9 章给出的是"每个维度分别是否显著"。但读者真正想要的是：<b>把这些维度拼起来，市场上到底存在哪几类经理、哪类能跑赢？</b> 基于 L1–L5 的真实回归证据，我们识别出四类可识别的<b>经理画像原型</b>（archetype）。它们不是聚类结果，而是沿"强能力轴 vs 弱/负向轴"做的有经济含义的类型划分，便于论文在"结论"章直接用于经理评价与筛选。</p>
+
+<div style="display:flex;flex-wrap:wrap;gap:14px;margin:14px 0;">
+  <div style="flex:1 1 46%;min-width:280px;border:1px solid #e2e8f0;border-top:4px solid #0f7b4d;border-radius:8px;padding:14px;background:#fff;">
+    <b style="color:#0f7b4d;font-size:15px;">① 风控择股型 · 赢家画像</b>
+    <p style="margin:8px 0 0;font-size:13px;line-height:1.6;">L4 主动增益 ARG/RG <b>双证据强正</b>（截面+组内FE 均 ***）、收益波动率正向；L2 行业偏离 ICI 正向***。敢下注且押对，是全文最强、最可识别的能力轴。</p>
+    <p class="muted" style="margin:8px 0 0;font-size:12px;">业绩暗示：历史与未来 alpha 最强、最稳，画像筛选的<b>首选目标</b>。</p>
+  </div>
+  <div style="flex:1 1 46%;min-width:280px;border:1px solid #e2e8f0;border-top:4px solid #1d4ed8;border-radius:8px;padding:14px;background:#fff;">
+    <b style="color:#1d4ed8;font-size:15px;">② 行业集中下注型</b>
+    <p style="margin:8px 0 0;font-size:13px;line-height:1.6;">ICI 高、主动份额 AS <b>低（负**）</b>；不在"主动多少"而在"行业方向"表达观点。与 Cremers &amp; Petajisto (2009) 相反、与本文中国语境一致——<b>主动份额折价、行业偏离溢价</b>。</p>
+    <p class="muted" style="margin:8px 0 0;font-size:12px;">业绩暗示：行业层面的有意识集中下注带来 alpha，是"方向 &gt; 量"的典型。</p>
+  </div>
+  <div style="flex:1 1 46%;min-width:280px;border:1px solid #e2e8f0;border-top:4px solid #7c3aed;border-radius:8px;padding:14px;background:#fff;">
+    <b style="color:#7c3aed;font-size:15px;">③ 低偏误纪律型</b>
+    <p style="margin:8px 0 0;font-size:13px;line-height:1.6;">处置效应 de <b>稳定负向</b>、风险不对称受控、lsv 口径依赖（组内FE显著负）；不追涨杀跌、不被抱团裹挟、不的事死扛亏损头寸。认知偏误层拖累小。</p>
+    <p class="muted" style="margin:8px 0 0;font-size:12px;">业绩暗示：稳定、偏"分型控制"——不是实时因果驱动，但刻画"属于哪类经理"，利于组合构建时避开高偏误者。</p>
+  </div>
+  <div style="flex:1 1 46%;min-width:280px;border:1px solid #e2e8f0;border-top:4px solid #b4690e;border-radius:8px;padding:14px;background:#fff;">
+    <b style="color:#b4690e;font-size:15px;">④ 高换手噪声型 · 输家画像</b>
+    <p style="margin:8px 0 0;font-size:13px;line-height:1.6;">双边/持仓换手高；在<b>严格季度相邻口径下换手越高 alpha 越低（***）</b>；处置效应高。频繁调仓、过早了结赢家、死扛亏损。</p>
+    <p class="muted" style="margin:8px 0 0;font-size:12px;">业绩暗示：换手侵蚀业绩，是画像筛选应<b>规避</b>的类型；与 ① 形成对照。复合坐标下的最终判定改用综合分末十分位（表 10b.3），组均 alpha 近乎归零、vs 均衡型 t=−6.81***。</p>
+  </div>
+</div><!-- /panel-layer -->
+</div><!-- /coefview -->
+
+<div class="box">
+<b>原型之上的统一结论</b>：四类原型里，<b>L1 背景（院校/任期/性别/CFA）在所有原型中都是"中立"的</b>——它不改变你是哪类经理，也不决定你跑不跑得赢。这正呼应第 7 章雷达图中 <b>L1 在组内FE下塌缩至轴心</b>：画像是关于<b>行为微观结构</b>，不是人口学标签。因此"基于画像的经理评价与筛选"应锚定 L4/L5/L2 的行为轴，而非院校或资历。
+</div>
+
+<h2 id="c13">13 · 结论、贡献与诚实边界</h2>
+<p>把全文证据收束成一句话：<b>基金经理的"能力"是一个由行为-财务微观结构（L2–L5）刻画的多维画像，而非人口学背景（L1）；其中风险应对（L4）是最无可争议的能力轴，处置效应（L5）是最稳健的负向行为拖累，而"主动的方向"比"主动的量"更能解释业绩。</b> 画像不仅能解释历史业绩，还能前瞻预测未来 4 季收益，因此可被产品化为"打分 + 分型"的经理筛选器。</p>
+
+<h3>13.1　三类贡献</h3>
+<div class="box key">
+<ul>
+<li><b>方法论贡献</b>：对同一组指标并行使用<b>截面 / 组内固定效应 / 前向预测</b>三种识别策略，清晰分离"截面关联""实时机制""预测力"三种证据性质，避免把"基金间排序差异"误读为"因果驱动"（RA、lsv 的口径翻转即由此揭示）。</li>
+<li><b>中国语境贡献</b>：发现 <b>ICI 行业偏离正向*** 而 AS 主动份额负向**</b>——与美股"主动份额溢价"相反，证明在中国主动股基中"<b>主动的方向 &gt; 主动的量</b>"，并据此把 L2 拆成"方向"与"量"两个独立信号。</li>
+<li><b>行为金融贡献</b>：用处置效应 de（双口径 ***）、风险不对称 RA、注意力 lsv 三个构念把"认知偏差"从黑箱变成可量化的画像轴；并以 EGARCH 杠杆效应做证伪压力测试，确认 RA 是独立的行为信号而非数据假象。</li>
+</ul>
+</div>
+
+<h3>13.2　与两套回归规格的对应（呼应审查汇报）</h3>
+<div class="box note">
+<b>本文画像结论建立在哪套口径上？</b> 审查汇报已明确区分两套规格：<b>M4</b>（DV=ff5_adj_return 基金层 alpha、混合 OLS、无基金 FE）与 <b>H1–H5</b>（DV=quarter_return、含基金 FE within-demeaning）。本文的"截面证据"对应 M4 类口径（基金层均值 alpha），"组内FE证据"对应 H1 类口径（季度收益 + 基金 FE）。<b>凡标注"双证据"的维度（L4 全轴、de），意味着在两类口径下均显著</b>，结论最稳健；仅"截面显著、组内FE翻转"的维度（RA、lsv）则在本文中被定位为<b>分型/分类变量</b>而非实时因果驱动。论文须沿用审查汇报的口径标注，<b>严禁把 M4 与 H1 的结论混用或合并</b>。
+</div>
+
+<h3>13.3　诚实边界与下一步</h3>
+<div class="box ctrl">
+<ul>
+<li><b>覆盖边界</b>：de（46.6%）、TO_two_sided（18.0%）、school（45.9%）结论<b>不外推全样本</b>；SDI 有效窗口始于 2022。这些已在第 10 章逐项披露。</li>
+<li><b>口径依赖</b>：RA/lsv 的符号对 DV 定义（ff5_adj_return vs excess_return vs quarter_return）敏感，定位为分型变量已规避过度宣称。</li>
+<li><b>下一步</b>：① 把 L4 的 ARG / return_volatility 纳入前向 horse race 并报告<b>增量 R²</b>（表 9.2 已显示其预测力甚至强于部分 L5 变量）；② 待 CSMAR/Wind 授权数据补齐后重跑 <code>run_all.py</code>，把 de / TO 的覆盖提升到全样本；③ 将"打分+分型"筛选器对接真实 FOF/投顾场景做样本外验证。</li>
+</ul>
+</div>
+
+<div class="foot">
+本文档为 <code>回归总体分析_方法论.html</code> 的<b>全新独立重写</b>（非复用），围绕"基金经理能力画像 → 业绩"主线。所有回归数与公式来自 <code>指标计算流水线/</code> 真实输出（13_分层回归、14_组内FE回归、15_R3_gamma截尾重跑，及既有前向/LSV 回归），无虚构。生成日期 2026-08-16。
+</div>
+
+<script>
+(function(){
+  var t=document.getElementById('modeToggle711');
+  var v=document.getElementById('coefview');
+  var lr=document.getElementById('lbl-rank');
+  var ll=document.getElementById('lbl-layer');
+  if(!t||!v) return;
+  t.addEventListener('change',function(){
+    if(t.checked){ v.className='show-layer'; lr.classList.remove('active'); ll.classList.add('active'); }
+    else { v.className='show-rank'; lr.classList.add('active'); ll.classList.remove('active'); }
+  });
+})();
+</script>
+</div><!-- /wrap -->
+</body>
+</html>

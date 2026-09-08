@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Return Gap (RG) 数据源仲裁与诚实零结果报告 · 2026-08-21</title>
+<style>
+  :root{
+    --bg:#0f1419; --panel:#171d26; --panel2:#1f2733; --ink:#e6edf3; --muted:#9aa7b4;
+    --line:#2b3543; --accent:#4ea1ff; --ok:#3fb950; --warn:#e3b341; --bad:#f85149; --vio:#bc8cff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;line-height:1.65;font-size:15px}
+  .wrap{max-width:980px;margin:0 auto;padding:38px 26px 70px}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:.3px}
+  h2{font-size:20px;margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line);color:#fff}
+  h3{font-size:16px;margin:22px 0 8px;color:var(--accent)}
+  .meta{color:var(--muted);font-size:13px;margin-bottom:6px}
+  p{margin:10px 0}
+  code{background:#0b0f14;padding:2px 6px;border-radius:5px;color:#ffd9a0;font-size:13px}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:center}
+  th{background:var(--panel2);color:#cfe3ff;font-weight:600}
+  td.l,th.l{text-align:left}
+  tr:nth-child(even) td{background:#121821}
+  .sig-ns{color:var(--muted)}
+  .sig-star{color:var(--ok);font-weight:700}
+  .bad{color:var(--bad);font-weight:700}
+  .box{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:14px 18px;margin:16px 0}
+  .box.warn{border-left-color:var(--warn)}
+  .box.ok{border-left-color:var(--ok)}
+  .box.bad{border-left-color:var(--bad)}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:10px 0}
+  .kv b{color:var(--muted);font-weight:600}
+  .tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:20px;background:var(--panel2);border:1px solid var(--line);color:var(--muted);margin-right:6px}
+  ul{margin:10px 0 10px 4px;padding-left:20px}
+  li{margin:6px 0}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:8px}
+  .formula{background:#0b0f14;border:1px solid var(--line);border-radius:6px;padding:10px 14px;margin:10px 0;font-family:ui-monospace,Consolas,monospace;color:#ffd9a0;font-size:13px;overflow-x:auto}
+  .corr-good{color:var(--ok)} .corr-mid{color:var(--warn)} .corr-bad{color:var(--bad)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Return Gap (RG) 数据源仲裁与诚实零结果报告</h1>
+<div class="meta">基金经理行为分析研究 · 数据可信度仲裁 · 生成日期 2026-08-21 · 关联脚本 <code>_arbitrate_RG_20260821.py</code> / <code>_test_RG_regression_20260821.py</code></div>
+
+<div class="box bad">
+<b>核心结论（一句话）：</b> 面板既有的 <code>RG</code> 列（非 v2 源，358 只基金）经精确复刻验证无误；v2 持仓源（仅取 6/12 月全持仓）是其 400 只超集，二者在共同基金上仅中度相关（corr=0.427）。在 M4 同规格、项目权威口径<b>双向聚类 (CGM2011)</b> 下，<b>两源 RG 对 alpha 与未来收益均不显著</b>（|t<sub>2w</sub>|&lt;0.1，p&gt;0.98）。此前"RG 强显著 (t=−7.68 / −3.92)"为伪信号，已作废。RG 不构成可用的 L3 深化指标——这是一项应诚实披露的<b>零结果</b>。
+</div>
+
+<h2>1. 背景与授权</h2>
+<p>用户此前授权："以新增 <code>RG_v2</code> 列 + 重跑 M4 含 RG 的方式落入管线并刷新 v4 基准"。执行首步（向面板新增 <code>RG_v2</code>）时，发现候选列分布异常（std=73、max=5068、与原 RG 相关仅 0.099），经定位为 <b>v2 持仓文件 3/9 月快照仅为前十大持仓</b> 所致，立即回滚面板。本报告的仲裁即在此回滚前提下，彻底厘清 RG 应采用哪个数据源、是否真的不显著。</p>
+
+<h2>2. 方法：精确复刻原始 RG 计算</h2>
+<p>为获得可信任的对照基线，本仲裁<b>逐行复刻</b> <code>06_因变量.py::_compute_RG</code> 的全部逻辑，不做任何简化：</p>
+<ul>
+  <li>快照日期：<code>rd = to_panel_date(report_date)</code> = 报告日 +1 天；快照季度 <code>q = rd.dt.to_period("Q")</code>。</li>
+  <li>真实基金季度：<code>q = (report_date − 1天).dt.to_period("Q")</code>（与 06 由净值派生的 NAV 季度一致，<b>非</b> <code>to_panel_date</code> 后的季度）。</li>
+  <li>快照选择：取最近一个 <code>快照q ≤ 基金q</code> 的持仓快照（半年频滞后，无前视）。</li>
+  <li><b>归一（关键）</b>：<code>port = Σ wᵢ·rᵢ / Σ wᵢ(已匹配收益)</code>，再 <code>RG = quarter_return − port</code>。仅对"有收益的个股"权重之和做归一。</li>
+</ul>
+<div class="formula">RG = quarter_return − ( Σᵢ wᵢ·rᵢ ) / ( Σᵢ wᵢ ) ,  i 仅遍历"个股季度收益存在"的持仓</div>
+
+<h2>3. 发现一：复刻认证（sanity check）</h2>
+<p>用非 v2 持仓文件重算 RG，与面板既有 <code>RG</code> 列逐观测比较：</p>
+<table>
+<tr><th class="l">对照</th><th>样本 N</th><th>相关系数</th><th>结论</th></tr>
+<tr><td class="l">面板 RG &nbsp;vs&nbsp; 非v2 重算 RG</td><td>8704</td><td class="corr-good">+1.000</td><td class="sig-ns">完全一致</td></tr>
+</table>
+<p>两列均值/标准差/极值逐项相等（mean=−0.0548, std=0.1700, min=−1.0505, max=1.4199）。<b>复刻逻辑被认证为正确</b>，后续对 v2 源的对照具备可信度。</p>
+
+<h2>4. 发现二：两数据源真实分歧</h2>
+<p>用 v2 文件（限制为 6/12 月全持仓，剔除 3/9 月前十大污染）重算 RG，与权威非 v2 源比较：</p>
+<table>
+<tr><th class="l">对照</th><th>样本 N</th><th>相关系数</th><th>解读</th></tr>
+<tr><td class="l">面板 RG &nbsp;vs&nbsp; v2(6/12) RG</td><td>8682</td><td class="corr-mid">+0.427</td><td>中度相关，非一致</td></tr>
+<tr><td class="l">非v2 重算 &nbsp;vs&nbsp; v2(6/12)</td><td>8682</td><td class="corr-mid">+0.427</td><td>同上</td></tr>
+</table>
+<div class="kv">
+  <b>基金覆盖</b><span>非 v2：358 只；v2(6/12)：400 只；共同 358 只，v2 仅新增 42 只。</span>
+  <b>RG 非空</b><span>非 v2：8704；v2(6/12)：9457（含新增基金与更多匹配观测）。</span>
+  <b>分布差异</b><span>v2(6/12) mean=−0.0976、std=0.2494、min=−5.6404；其极端负值是"匹配权重和过小→归一放大"所致，提示 v2 部分快照质量不及非 v2。</span>
+</div>
+<p>两源在共同基金上仅中度相关（0.427）而非 ~1.0，说明 v2 与非 v2 的 6/12 全持仓快照在<b>成分/权重/股票对齐</b>上确有差异；v2 另含 42 只额外基金。这是切换数据源会实质性改变 RG 的风险所在。</p>
+
+<h2>5. 发现三：两源在 M4 双向聚类下均不显著（核心）</h2>
+<p>将两源 RG 分别放入 M4 同规格回归（18 控制 + FF5 + C(year)，全变量 1%/99% 缩尾），项目权威推断口径为<b>基金×年份双向聚类 (CGM2011)</b>：</p>
+<table>
+<tr><th class="l">指标（源）</th><th>因变量 DV</th><th>N</th><th>R²</th><th>β</th><th>t<sub>2w</sub>（双向聚类）</th><th>p<sub>2w</sub></th><th>显著性</th></tr>
+<tr><td class="l" rowspan="2">RG（面板·非v2，358只）</td><td class="l">ff5_adj_return (alpha)</td><td>2210</td><td>0.1255</td><td>+0.00310</td><td>+0.02</td><td>0.984</td><td class="sig-ns">n.s.</td></tr>
+<tr><td class="l">future_return</td><td>2210</td><td>0.7964</td><td>−0.05042</td><td>−0.02</td><td>0.985</td><td class="sig-ns">n.s.</td></tr>
+<tr><td class="l" rowspan="2">RG（v2·仅6/12，400只）</td><td class="l">ff5_adj_return (alpha)</td><td>2264</td><td>0.1293</td><td>−0.00235</td><td>−0.01</td><td>0.989</td><td class="sig-ns">n.s.</td></tr>
+<tr><td class="l">future_return</td><td>2264</td><td>0.8011</td><td>−0.08809</td><td>−0.02</td><td>0.981</td><td class="sig-ns">n.s.</td></tr>
+</table>
+<div class="box ok">
+<b>判定：</b> 无论采用哪个数据源、无论以 alpha 还是未来收益为因变量，RG 在双向聚类下的 |t| 均 &lt; 0.1、p &gt; 0.98，<b>彻底不显著</b>。RG 加入 M4 对 R² 的贡献可忽略（R² 与不含 RG 的 M4 ≈ 0.1290 持平）。
+</div>
+<div class="foot">注：单维基金聚类（t<sub>1w</sub>）下 RG→future_return 显示显著（非v2 t=−2.44 p=0.015；v2 t=−5.58 p=0.000），但<b>该口径已被项目废弃为主推断标准</b>——v4 基准明确规定双向聚类 (CGM2011) 为 M4 主口径（与 L5 指标 DE/LSV/RA 的处置完全一致）。以双向聚类为准，RG 不显著。</div>
+
+<h2>6. 根因：此前"强显著"为何是伪信号</h2>
+<p>2026-08-20 记录中"RG 翻盘 (t=−7.68 / −3.92 强显著)"由两个独立错误共同制造，<b>均已定位并修正</b>：</p>
+<div class="kv">
+  <b>错误① 归一式写错</b><span>本人 RG_clean 脚本误用 <code>(qr − port)/ws</code>（整体除以匹配权重和），而正确式应为 <code>qr − port/wsum</code>。当快照匹配权重和 ≈0.85 时，错误式将噪声放大约 1/0.85 倍，人为制造离散度与表面显著性。</span>
+  <b>错误② 3/9 月前十大污染</b><span>v2 文件的 3/9 月快照仅为前十大持仓（权重和 0.3–0.5）。原始 <code>_compute_RG</code> 的"快照q ≤ 基金q"选择逻辑会把这些残缺快照选入 Q1/Q3 基金收益，再经归一放大成极端噪声（max=5068），是 t=−7.68 的主要来源。</span>
+</div>
+<p>本报告已严格采用<b>正确归一</b>并<b>剔除 3/9 月、仅取 6/12 全持仓</b>，两个伪信号来源同时消除，得到第 3–5 节的干净结论。</p>
+
+<h2>7. 结论与建议</h2>
+<ul>
+  <li><b>面板权威 RG（非 v2，358 只）维持不变</b>，不新增 <code>RG_v2</code> 列；其计算已认证无误（corr=1.000）。</li>
+  <li><b>RG 不构成可用的 L3 深化指标。</b>两源、两因变量、双向聚类下均 n.s.，与既有的"SDI 显著、TO_wind 边际"格局互补——L3 的可用信号仍来自 SDI 与 TO_wind。</li>
+  <li><b>零结果是论文的诚实贡献：</b>"即便引入信息密度更高的季度频 Return Gap，也无法解释基金 alpha/未来收益的跨期差异" 本身支持"业绩 durable 来源在风险(L4)与认知(L5)层"的核心论点，应在报告 §6 作为负结果明确披露。</li>
+  <li>若未来获得<b>真正的季度全持仓</b>（彻底净化 Q1/Q3 滞后），可重做 RG；但在当前数据下，切换数据源（v2）只会引入 42 只额外基金与中度分歧，且<b>不改变"RG 不显著"的结论</b>，故无必要。</li>
+</ul>
+
+<h2>8. 对 2026-08-20 记录的更正声明</h2>
+<div class="box warn">
+<b>撤回：</b> 2026-08-20 日志"L3 深化实证：Return Gap(RG) 重算翻盘"整段结论（含 RG_v2→future_return t=−7.68、lead alpha t=−3.33、lead excess t=−8.31，以及"半年度滞后假说被证伪/真杠杆是数据源+对齐"）因依赖被 3/9 月前十大污染的 v2 源 + 错误归一式，<b>全部作废</b>。以本报告（正确归一 + 仅 6/12 全持仓 + 双向聚类）为准：RG 两源均 n.s.。
+</div>
+
+<div class="meta" style="margin-top:30px;border-top:1px solid var(--line);padding-top:14px">
+  权威数值源：<code>指标计算流水线/output/主分析面板_重建_含TOwind.csv</code>（51 列，9974 观测/400 只/2006Q2–2026Q2）<br>
+  可复现：本报告全部数字由 <code>_arbitrate_RG_20260821.py</code> 与 <code>_test_RG_regression_20260821.py</code> 在托管 venv 下重跑得到。
+</div>
+
+</div>
+</body>
+</html>

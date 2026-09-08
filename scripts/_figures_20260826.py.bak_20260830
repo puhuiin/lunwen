@@ -1,0 +1,137 @@
+# -*- coding: utf-8 -*-
+"""论文核心配图（2026-08-26）——三张图覆盖全文主线
+================================================================================
+图 1  综合能力五分组的 FF5 alpha（季均）柱状图 —— 最直观的有效性证据
+图 2  六个计分维度的相关系数热力图 —— 维度间信息重叠度
+图 3  六名典型投资经理的能力雷达图 —— 画像章节的灵魂
+
+数据来源（只读不算）：output/六维复合定稿验证_含L1_2026-08-26.json、
+                     output/画像_群体与典型_2026-08-26.json
+输出：figures/论文图1_五分组alpha.png 等三张，300 dpi，供 docx 内嵌。
+"""
+import json
+import os
+import io
+import numpy as np
+import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from math import pi
+
+BASE = r'd:\Desktop\基金经理行为分析研究'
+OUT = os.path.join(BASE, 'output')
+FIG = os.path.join(BASE, 'figures')
+TODAY = '2026-08-26'
+os.makedirs(FIG, exist_ok=True)
+
+plt.rcParams['font.sans-serif'] = ['Microsoft YaHei', 'SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+plt.rcParams['font.size'] = 10.5
+
+
+def rj(name):
+    with io.open(os.path.join(OUT, name), encoding='utf-8') as f:
+        return json.load(f)
+
+
+CP = rj(f'六维复合定稿验证_含L1_{TODAY}.json')
+PT = rj(f'画像_群体与典型_{TODAY}.json')
+S4 = CP['S4_分组']
+DIMS = ['基本面优势', '认知能力', '配置选择能力', '风险应对能力',
+        '风险转化能力', '交易执行能力']
+SHORT = {'基本面优势': 'L1\n基本面优势', '认知能力': 'L2\n认知', '配置选择能力': 'L3\n配置选择',
+         '风险应对能力': 'L4a\n风险应对', '风险转化能力': 'L4b\n风险转化',
+         '交易执行能力': 'L5\n交易执行'}
+
+# ============================== 图 1 ==============================
+g = ['Q1最低', 'Q2', 'Q3', 'Q4', 'Q5最高']
+vals = [S4['alpha均值'][k] * 100 for k in g]
+labels = ['Q1\n最低', 'Q2', 'Q3', 'Q4', 'Q5\n最高']
+
+fig, ax = plt.subplots(figsize=(7.0, 4.2))
+colors = ['#b8cfe0', '#93b4d4', '#6f99c8', '#4b7ebc', '#2263ac']
+bars = ax.bar(labels, vals, color=colors, width=0.62,
+              edgecolor='#1e3a5f', linewidth=0.8)
+for b, v in zip(bars, vals):
+    ax.text(b.get_x() + b.get_width() / 2, v + 0.06, f'{v:.2f}%',
+            ha='center', va='bottom', fontsize=10, color='#1e3a5f')
+ax.axhline(0, color='#666666', lw=0.8)
+ax.set_ylabel('FF5 超额收益（%／季）')
+ax.set_ylim(0, max(vals) * 1.22)
+ax.spines[['top', 'right']].set_visible(False)
+ax.annotate(f'Q5−Q1 = {S4["Q5_Q1"]*100:.2f} 个百分点／季（t={S4["t"]:.2f}，p<0.001）\n逐组严格单调递增',
+            xy=(0.98, 0.72), xycoords='axes fraction', ha='right', fontsize=10.5,
+            bbox=dict(boxstyle='round,pad=0.45', fc='#fff8e6', ec='#c9a227', lw=0.9))
+ax.set_title('按综合能力五等分的组合超额收益（全样本 %d 只基金）' % sum(S4['规模'][k] for k in g),
+             fontsize=12, pad=10)
+fig.tight_layout()
+p1 = os.path.join(FIG, '论文图1_五分组alpha.png')
+fig.savefig(p1, dpi=300)
+plt.close(fig)
+print('saved:', p1)
+
+# ============================== 图 2 ==============================
+S2 = CP['S2_维度相关']
+M = np.array([[S2[a][b] for b in DIMS] for a in DIMS])
+short = [SHORT[d].replace('\n', '\n') for d in DIMS]
+
+fig, ax = plt.subplots(figsize=(6.8, 5.4))
+im = ax.imshow(M, cmap='Blues', vmin=0, vmax=0.8)
+ax.set_xticks(range(6), short, fontsize=9)
+ax.set_yticks(range(6), short, fontsize=9)
+for i in range(6):
+    for j in range(6):
+        v = M[i, j]
+        ax.text(j, i, f'{v:.3f}'.rstrip('0').rstrip('.') if v != 1 else '1',
+                ha='center', va='center', fontsize=9.5,
+                color='white' if v > 0.45 else '#1e3a5f',
+                fontweight='bold' if i != j and v > 0.5 else 'normal')
+ax.set_title('六个计分维度的两两相关（基金层，N=362）', fontsize=12, pad=10)
+cbar = fig.colorbar(im, ax=ax, shrink=0.85)
+cbar.set_label('相关系数', fontsize=9.5)
+ax.annotate('非对角线最大 0.589，远低于 0.8 的共线警戒线；\nL4a×L4b 仅 0.418 —— 两职能分开计分的直接依据',
+            xy=(0.02, -0.16), xycoords='axes fraction', ha='left', fontsize=9.5,
+            color='#444444')
+fig.tight_layout()
+p2 = os.path.join(FIG, '论文图2_维度相关热力图.png')
+fig.savefig(p2, dpi=300, bbox_inches='tight')
+plt.close(fig)
+print('saved:', p2)
+
+# ============================== 图 3 ==============================
+ARCH = PT['典型画像']
+tag_short = [c['标签'].split('：')[0] for c in ARCH]
+n = len(DIMS)
+theta = np.linspace(0, 2 * np.pi, n, endpoint=False)
+theta_c = np.concatenate([theta, theta[:1]])
+
+fig, axes = plt.subplots(2, 3, figsize=(11.0, 8.0),
+                         subplot_kw=dict(polar=True))
+palette = ['#2263ac', '#b8860b', '#2e8b57', '#b0413e', '#6a4c93', '#555555']
+tick_lbl = ['L1 基本面', 'L2 认知', 'L3 配置选择',
+            'L4a 风险应对', 'L4b 风险转化', 'L5 交易执行']
+for ax, c, tg, col in zip(axes.flat, ARCH, tag_short, palette):
+    vals = [max(c['六维分位'].get(d) or 0.0, 0.0) for d in DIMS]
+    vals_c = vals + vals[:1]
+    ax.set_theta_zero_location('N')
+    ax.set_theta_direction(-1)
+    ax.set_thetagrids(np.degrees(theta), tick_lbl, fontsize=8)
+    ax.plot(theta_c, vals_c, color=col, lw=1.8)
+    ax.fill(theta_c, vals_c, color=col, alpha=0.22)
+    ax.set_ylim(0, 1.0)
+    ax.set_yticks([0.25, 0.50, 0.75, 1.00])
+    ax.set_yticklabels(['25%', '50%', '75%', '100%'], fontsize=6, color='#999999')
+    ax.set_rlabel_position(180 / n)
+    ax.grid(color='#dddddd', lw=0.6)
+    ax.set_title(f'{tg}|{c["基金简称"]}  α={c["ff5_alpha"]:+.2%}',
+                 fontsize=9.5, pad=16)
+fig.suptitle('六名典型投资经理的六维能力雷达图（数值＝全样本百分位）',
+             fontsize=13, y=0.985)
+fig.subplots_adjust(left=0.05, right=0.95, top=0.86, bottom=0.07,
+                    hspace=0.55, wspace=0.45)
+p3 = os.path.join(FIG, '论文图3_典型经理雷达图.png')
+fig.savefig(p3, dpi=300)
+plt.close(fig)
+print('saved:', p3)
+print('三张论文配图完成')

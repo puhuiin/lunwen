@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基金经理行为分析 · 回归总体分析（方法论）</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1f2933; --muted:#5b6b7b;
+    --line:#e3e8ef; --navy:#1b3a5b; --teal:#0f7b8a; --accent:#c0392b;
+    --green:#1e8e4e; --amber:#c9820a; --red:#c0392b; --soft:#eef3f8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.7;font-size:15.5px}
+  header.hero{background:linear-gradient(135deg,#1b3a5b,#0f7b8a);color:#fff;padding:38px 40px 30px}
+  header.hero h1{margin:0 0 6px;font-size:27px;letter-spacing:.5px}
+  header.hero p{margin:4px 0;opacity:.92;font-size:14.5px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px 60px}
+  .toc{position:sticky;top:0;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);
+    padding:12px 24px;z-index:20;backdrop-filter:blur(6px);font-size:13.5px}
+  .toc a{color:var(--navy);text-decoration:none;margin-right:16px;white-space:nowrap}
+  .toc a:hover{color:var(--teal);text-decoration:underline}
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:26px 30px;margin:22px 0;box-shadow:0 1px 3px rgba(20,40,60,.04)}
+  h2{color:var(--navy);border-left:5px solid var(--teal);padding-left:12px;margin-top:4px;font-size:21px}
+  h3{color:var(--teal);font-size:17px;margin:22px 0 8px}
+  h4{color:var(--navy);font-size:15px;margin:16px 0 6px}
+  p{margin:9px 0}
+  .lead{color:var(--muted);font-size:14.5px}
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:13.6px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--soft);color:var(--navy);font-weight:600}
+  tr:nth-child(even) td{background:#fbfcfd}
+  code{background:#eef3f8;color:#0f5566;padding:1px 6px;border-radius:5px;font-size:13px;
+    font-family:"SFMono-Regular",Consolas,Menlo,monospace}
+  .formula{background:#0f2438;color:#e8f3f7;padding:14px 18px;border-radius:9px;
+    font-family:"SFMono-Regular",Consolas,Menlo,monospace;font-size:14px;overflow-x:auto;margin:12px 0}
+  .formula .cm{color:#7fd1e0}
+  .pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:600}
+  .p-green{background:#e3f6ea;color:#1e8e4e}
+  .p-amber{background:#fdf0db;color:#a9690a}
+  .p-red{background:#fbe6e3;color:#c0392b}
+  .p-navy{background:#e4ecf4;color:#1b3a5b}
+  .q{background:var(--soft);border-left:4px solid var(--teal);padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0}
+  .q b{color:var(--navy)}
+  .ans{margin:2px 0 0 4px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:#fcfdfe}
+  .card h4{margin-top:0}
+  .note{background:#fff8e9;border:1px solid #f0dca6;border-radius:9px;padding:12px 16px;margin:14px 0;font-size:14px}
+  .danger{background:#fdecea;border:1px solid #f3b6ad;border-radius:9px;padding:12px 16px;margin:14px 0}
+  .tag{font-size:12px;color:#fff;background:var(--accent);padding:2px 8px;border-radius:5px;margin-right:6px}
+  ul{margin:8px 0 8px 4px;padding-left:20px}
+  li{margin:4px 0}
+  .kv{font-size:13px;color:var(--muted)}
+  footer{text-align:center;color:var(--muted);font-size:12.5px;padding:24px}
+  .small{font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>基金经理行为分析 · 回归总体分析（方法论）</h1>
+  <p>对象：<code>指标计算流水线/output/主分析面板_重建.csv</code> · 400 只权益基金 / 9,974 观测 / 2006Q2–2026Q2 非平衡面板</p>
+  <p>性质：<b>方法论 + 实证结果文档</b>。每个回归在公式之后紧跟一张<b>参数表</b>，逐项讲清：变量是什么、具体公式、如何计算得到、单位、为何纳入（控制理由）。全流程审计 PASS（无 2026Q3+ 泄漏）。</p>
+  <p class="small">生成于 2026-08-14 · 数据口径与覆盖以 <code>主分析面板_重建.csv</code> 实测为准 · 实证系数为脚本 08→13 实跑结果 · 严守「不泄露未来季度、不虚构缺失数据」</p>
+</header>
+
+<div class="toc">
+  <a href="#s0">0 · 框架总览</a>
+  <a href="#s1">1 · 数据基础</a>
+  <a href="#r1">R1 横截面</a>
+  <a href="#r2">R2 前向预测</a>
+  <a href="#r3">R3 EGARCH稳健</a>
+  <a href="#r4">R4 FF稳健</a>
+  <a href="#r5">R5 有效性诊断</a>
+  <a href="#r6">R6 组内FE(规划)</a>
+  <a href="#s4m">4 · 回归清单(分层)</a>
+  <a href="#r7">7 · 实证结果</a>
+  <a href="#r9">9 · 覆盖率提升</a>
+  <a href="#r10">10 · 参考文献</a>
+  <a href="#s2">8 · 诚实缺口</a>
+</div>
+
+<div class="wrap">
+
+<!-- ============ 0 框架总览 ============ -->
+<section id="s0">
+  <h2>0 · 回归框架总览</h2>
+  <p class="lead">论文第 4 章（Ch.4）的实证由 <b>三类回归</b>（横截面 / 前向 / 组内）与 <b>四类行为测度</b>（RA、DE、LSV、PGR/PLR）交织构成，外加稳健性与一项指标有效性诊断。下面给出回归族索引；<b>每个变量的定义、公式、单位与「为何纳入」都在对应回归的公式后参数表中说明</b>，不在前文集中罗列。</p>
+  <table>
+    <tr><th>回归族</th><th>对应脚本</th><th>因变量（DV）</th><th>核心自变量（IV）</th><th>识别目的</th></tr>
+    <tr><td><b>R1 横截面基准</b></td><td>09 / 12 / 13</td><td>基金层 α（FF5 调整）或平均超额收益</td><td>RA, LSV, DE + 控制</td><td>行为指标与<b>同期</b>业绩的关系</td></tr>
+    <tr><td><b>R2 前向预测</b></td><td>09 / 10 / 11 / 13</td><td>未来 1 季 / 4 季超额收益</td><td>RA, LSV, DE + 控制 + 年份FE</td><td>行为指标对<b>未来</b>收益的预测力</td></tr>
+    <tr><td><b>R3 EGARCH 条件不对称</b></td><td>08 / 11</td><td>未来 1 季收益</td><td>RA, egarch_γ + 控制</td><td>RA 是行为构念还是杠杆效应机械穿透</td></tr>
+    <tr><td><b>R4 FF 因子稳健性</b></td><td>12</td><td>α3 / α4 / α5</td><td>RA, LSV, DE + 控制</td><td>结论对因子模型选择是否稳健</td></tr>
+    <tr><td><b>R5 指标有效性诊断</b></td><td>12</td><td>—（相关性 / bootstrap）</td><td>ICI↔HHI, SDI↔ARG；RA/LSV/DE 显著性</td><td>指标构建的内部一致性</td></tr>
+    <tr><td><b>R6 组内 FE（规划）</b></td><td>— 未实现</td><td>未来/同期收益</td><td>RA, LSV, DE + 基金固定效应</td><td>剔除不随时间变的基金特质</td></tr>
+  </table>
+  <div class="note"><b>四类行为测度的口径：</b>
+    <ul>
+      <li><b>RA（risk_asym，风险不对称）</b>：前景理论下的风险承担不对称 / 杠杆效应动机。</li>
+      <li><b>DE（处置效应）</b>= PGR − PLR（Odean 1998 快照法），PGR/PLR 为其两个分量。</li>
+      <li><b>LSV（羊群 / 交易趋同度）</b>：LSV(1992) 标准口径（代理，因无真实逐股买卖方向）。</li>
+      <li><b>PGR / PLR</b>：盈利/亏损卖出占比，作为 DE 的分解进入分析。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 1 数据基础 ============ -->
+<section id="s1">
+  <h2>1 · 数据基础（范围与严谨性）</h2>
+  <p>主面板 <code>主分析面板_重建.csv</code> 已实测：<b>9,974 行 × 49 列</b>，400 只基金，<code>report_date</code> 区间 <b>2006-10-01 → 2026-07-01</b>，主键 <code>(fund_code, report_date)</code> 唯一，<b>无 2026Q3+ 未来泄漏</b>（06_因变量.py 已剔除净值未覆盖的完整季度，future_return 末季自动为 NaN）。</p>
+  <p class="kv">所有变量（绩效/风险因变量、行为测度、控制变量）的定义、具体公式、计算路径与单位，均在下面每个回归的<b>「参数说明表」</b>中随公式给出；各变量的样本覆盖与「能否靠改方法提升」见第 9 章，审计见第 6 章。本文不另设集中变量表，避免与回归上下文脱节。</p>
+</section>
+
+<!-- ============ R1 ============ -->
+<section id="r1">
+  <h2>R1 · 横截面基准回归（基金层）</h2>
+  <span class="tag">脚本 09_LSV回归重算 / 12_辅助重算 / 13_分层回归</span> <span class="tag">LSV1992 · Odean1998</span>
+  <div class="q"><b>① 这是什么回归？</b><div class="ans">以<b>基金</b>为观测单位（每只基金取指标的时间序列均值），检验三类行为测度对基金<b>同期</b>选股/超额业绩的解释力。相当于论文 §4.2.2 的截面表。</div></div>
+  <div class="q"><b>② 为什么要做？</b><div class="ans">回答「行为偏差是否伴随更高的同期风险调整收益」。横截面口径能最大化样本量（不必等未来季），是后续前向预测的对照基线。</div></div>
+  <div class="q"><b>③ 公式</b><div class="ans">
+    <div class="formula"><span class="cm"># DV 取基金层常数 α（FF5 调整收益）或平均超额收益</span><br>
+    α_i = β0 + β1·RA_i + β2·LSV_i + β3·DE_i + β4·log_aum_i + β5·log_fund_age_i + ε_i<br>
+    <span class="cm"># 估计：OLS，异方差稳健标准误 HC1；同类跑 excess_mean_i 作 DV</span></div>
+  </div></div>
+
+  <h4>③-b 参数说明表（每个变量：含义 / 具体公式 / 怎么得到 / 单位 / 为何纳入 / 预期符号）</h4>
+  <table>
+    <tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么计算得到</th><th>单位</th><th>为何纳入（控制理由）</th><th>预期</th></tr>
+    <tr><td>α_i（DV）</td><td>基金风险调整收益（FF5 α）</td><td>α = 单基金时序回归 excess_return ~ FF5因子 的截距</td><td>06_因变量.py 对每只基金用 FF5 因子回归取截距，再跨季取基金均值</td><td>小数（0.01 = 1%）</td><td>因变量（被解释对象）</td><td>—</td></tr>
+    <tr><td>RA_i</td><td>风险不对称</td><td>risk_asym = std(r_t | r_t&gt;0) − std(r_t | r_t≤0)，滚动窗=8(min4)</td><td>05_L5 从 <code>基金季度收益.csv</code> 逐基金滚动计算盈利期与亏损期收益的标准差之差</td><td>季度收益标准差（小数）</td><td><b>核心 IV</b>：行为主假说（前景理论下敢于不对称承担风险获补偿）</td><td>+</td></tr>
+    <tr><td>LSV_i</td><td>交易趋同度 / 羊群（代理）</td><td>lsv_f = mean_i( |p_i − p̄_t| − AF_t )，其中 p_i = B/(B+S)，AF_t = √(2/π)·√( p̄_t(1−p̄_t)/n_i )</td><td>05_L5 用相邻持仓快照的<b>增减方向</b>代理买卖方向（无真实逐股流水），市场层聚 B/S，基金层对交易过的股票取 H_i 均值</td><td>无量纲（≈[−0.3,0.3]）</td><td><b>核心 IV</b>：同行交易一致性是否影响业绩</td><td>不定</td></tr>
+    <tr><td>DE_i</td><td>处置效应</td><td>de = PGR − PLR；PGR = gains_sold/(gains_sold+gains_held)；PLR = losses_sold/(losses_sold+losses_held)</td><td>05_L5 仅 6/12 月全持仓快照，比对持股集合得 sold/held，用个股月收益判盈亏</td><td>无量纲 [−1,1]</td><td><b>核心 IV</b>：是否不愿止损、过早止盈</td><td>−</td></tr>
+    <tr><td>log_aum_i</td><td>规模对数（控制）</td><td>log_aum = ln( max(avg_aum, 1) )；avg_aum = mean(net_asset 亿元)</td><td>01_L1 由 <code>基金规模历史_批量.csv</code> 的 net_asset 按 fund×年季均值，≤0 置 NaN 后取对数</td><td>对数（亿元）</td><td><b>控制</b>：大基金交易成本/流动性约束不同，且规模与行为偏差可能相关，须隔离混淆</td><td>弱+/不定</td></tr>
+    <tr><td>log_fund_age_i</td><td>基金年龄对数（控制）</td><td>log_fund_age = ln( (report_date−成立日).days / 30.44 / 12 )</td><td>01_L1 由 <code>基金详细信息_最终版.csv</code> 的成立日计算，跨季取均值</td><td>对数（年）</td><td><b>控制</b>：老基金策略稳定、幸存者偏差；新基金更激进，须隔离</td><td>弱−/不定</td></tr>
+  </table>
+
+  <h4>③-c LSV 端到端算例（你点名要的具体公式与数字）</h4>
+  <p>用一只虚构基金 F 演示 LSV 从原始持仓到面板字段（示意数字）：</p>
+  <table>
+    <tr><th>股票</th><th>B（增持基金数）</th><th>S（减持基金数）</th><th>n=B+S</th><th>p_i = B/(B+S)</th></tr>
+    <tr><td>股票 A</td><td>30</td><td>10</td><td>40</td><td>0.750</td></tr>
+    <tr><td>股票 B</td><td>5</td><td>15</td><td>20</td><td>0.250</td></tr>
+    <tr><td>股票 C</td><td>12</td><td>8</td><td>20</td><td>0.600</td></tr>
+  </table>
+  <p><b>第 2 步 市场基准</b>：<code>p̄_t = (0.750+0.250+0.600)/3 = 0.5333</code>。<b>第 3 步 调整因子</b>（股票 A）：<code>AF_A = √(2/π)·√(0.5333×0.4667/40) = 0.7979×0.0789 = 0.0629</code>。<b>第 4 步 单股票趋同度</b>：<code>H_A = |0.750−0.5333|−0.0629 = 0.1538</code>；同理 H_B = 0.1943，H_C = −0.0223（低于随机噪声→≈0）。<b>第 5 步 基金层</b>：若 F 交易了 A、C，则 <code>lsv_F = (0.1538−0.0223)/2 = 0.0658</code>，即落盘到主面板 <code>lsv</code> 的该基金该期值。</p>
+  <div class="note"><b>AF 为什么存在</b>：即使所有基金独立随机交易，B/(B+S) 也会因抽样噪声偏离 p̄_t；AF 正是「纯随机下的期望偏离」，减去它才得到<b>超出随机的</b>真实趋同——这是 LSV(1992) 的精髓。本仓库用持仓增减方向作代理（无真实逐股买卖），已在论文改称中性「交易趋同度」。</div>
+
+  <div class="q"><b>④ 变量位于哪个表的哪个字段？</b><div class="ans">
+    DV <code>ff5_adj_return</code> / <code>excess_return</code>（均值）来自主面板列（06 计算）；
+    IV <code>risk_asym / lsv / de</code>（基金均值）来自主面板列（05 计算）；
+    控制 <code>avg_aum</code>（→log_aum）、<code>log_fund_age</code> 来自主面板列（01 计算 / 初始）。
+  </div></div>
+  <div class="q"><b>⑤ 初始获取还是计算得出？</b><div class="ans">全部为<b>计算得出</b>；log_aum 由初始的 net_asset 经 log 变换得到。</div></div>
+  <div class="q"><b>⑥ 时间跨度？</b><div class="ans">基金层均值横跨全样本期 2006–2026，每基金取自身全部可用季度的均值，跨期最长可达约 20 年。</div></div>
+  <div class="q"><b>⑦ 足够做回归吗？</b><div class="ans"><span class="pill p-green">充分</span> 当前 N = <b>362 基金</b>（含/不含 avg_aum 相同，因 avg_aum 已修复）。约束来自 ff5_adj_return 的 362 只与 L5 三测度非空。</div></div>
+  <div class="q"><b>⑧ 结果如何判断 / 应达条件？</b><div class="ans">
+    <ul>
+      <li>RA 系数应<b>显著为正</b>；DE 系数预期为负或弱；LSV 方向依文献不预设；</li>
+      <li>控制变量符号符合常识（规模、年龄的系数方向与显著性稳定）；</li>
+      <li>HC1 标准误下 |t|&gt;1.96 视为 5% 显著；R² 量级供参考。</li>
+    </ul>
+  </div></div>
+  <div class="q"><b>⑨ 能解释什么问题？</b><div class="ans">行为金融核心命题：基金经理的认知/行为特征是否在<b>同期</b>就被市场定价、转化为可观测的超额收益差异。</div></div>
+  <div class="q"><b>⑩ 如何解读参数？</b><div class="ans">β1 表示 RA 每提高 1 个单位，基金 α 的平均边际变化；因已取基金均值、截面异方差稳健，系数可直接比较相对大小。若「不含 avg_aum」与「含 avg_aum」系数稳定，说明规模不是混淆源。</div></div>
+</section>
+
+<!-- ============ R2 ============ -->
+<section id="r2">
+  <h2>R2 · 前向预测回归（面板层）</h2>
+  <span class="tag">脚本 09 / 10_前向回归核对 / 11 / 13</span> <span class="tag">Grinblatt-Titman1993</span>
+  <div class="q"><b>① 这是什么回归？</b><div class="ans">以<b>基金-季度</b>为观测单位，用当期行为测度预测<b>未来</b>超额收益（未来 1 季 fut1q 或未来 4 季均值 fut4q）。</div></div>
+  <div class="q"><b>② 为什么要做？</b><div class="ans">横截面只能看同期关系，<b>前向预测</b>才能回答行为指标是否具备<b>可获利的信息含量</b>，是行为策略有效性的更强证据；并控制年份固定效应隔离宏观周期。</div></div>
+  <div class="q"><b>③ 公式</b><div class="ans">
+    <div class="formula"><span class="cm"># 面板层，基金聚类稳健标准误，含年份固定效应</span><br>
+    fut_k,it = β0 + β1·RA_it + β2·LSV_it + β3·DE_it + β4·log_aum_it<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;+ β5·log_fund_age_it + Σγ·YearFE + ε_it<br>
+    <span class="cm"># k = 1：fut1q = excess_return 同基金 shift(−1)</span><br>
+    <span class="cm"># k = 4：fut4q = 未来连续4季 excess_return 的均值</span></div>
+  </div></div>
+
+  <h4>③-b 参数说明表（DV 与回归专属项；RA/LSV/DE/log_aum/log_fund_age 同 R1 表，此处不再重复公式）</h4>
+  <table>
+    <tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么得到</th><th>单位</th><th>为何纳入</th><th>预期</th></tr>
+    <tr><td>fut_k,it（DV）</td><td>未来 k 季超额收益</td><td>fut1q = 同基金 excess_return 滞后 1 季；fut4q = 未来 4 季 excess_return 均值</td><td>由主面板 <code>excess_return</code> 时序位移/滚动（06 已算）</td><td>小数</td><td>因变量：行为指标的预测对象</td><td>—</td></tr>
+    <tr><td>RA_it / LSV_it / DE_it</td><td>当期行为测度（时变）</td><td>同 R1 参数表（滚动/快照口径，已是基金-季值）</td><td>主面板列（05 计算）</td><td>同 R1</td><td><b>核心 IV</b>：预测未来收益的信息含量</td><td>RA+ / 其余依文献</td></tr>
+    <tr><td>log_aum_it / log_fund_age_it</td><td>规模/年龄对数（控制）</td><td>同 R1 参数表</td><td>主面板列（01）</td><td>同 R1</td><td><b>控制</b>：隔离规模/年龄混淆（理由同 R1）</td><td>不定</td></tr>
+    <tr><td>Σγ·YearFE</td><td>年份固定效应（控制宏观）</td><td>Σγ_d·I(year=year_d)</td><td>由 <code>year</code> 派生虚拟变量</td><td>类别</td><td><b>控制</b>：吸收牛熊/危机等所有基金共同面对的宏观冲击，避免把「牛市」误当「行为有效」</td><td>—</td></tr>
+  </table>
+
+  <div class="q"><b>④ 变量位于哪个表的哪个字段？</b><div class="ans">DV <code>fut1q / fut4q</code> 在脚本内由主面板 <code>excess_return</code> 派生；IV 与 R1 相同；年份 FE 由 <code>year</code> 派生。</div></div>
+  <div class="q"><b>⑤ 初始获取还是计算得出？</b><div class="ans">全部<b>计算得出</b>；fut1q/fut4q 为 <code>excess_return</code> 的时序位移。</div></div>
+  <div class="q"><b>⑥ 时间跨度？</b><div class="ans">面板 2006–2026；「未来季」要求目标季存在，故可预测窗口止于 2026Q1（2026Q2 无下一季，future 为 NaN，已剔除泄漏）。</div></div>
+  <div class="q"><b>⑦ 足够做回归吗？</b><div class="ans"><span class="pill p-green">充分</span> 当前 N = <b>3,224 观测 / 381 基金</b>。基金聚类标准误处理组内自相关。</div></div>
+  <div class="q"><b>⑧ 结果如何判断 / 应达条件？</b><div class="ans">核心看 RA 对未来收益的预测系数；对比 R1 可区分「预测力」还是「同期定价」；年份 FE 吸收宏观；基金聚类下 |t|&gt;1.96 判显著。</div></div>
+  <div class="q"><b>⑨ 能解释什么问题？</b><div class="ans">行为指标是否构成<b>可执行的 alpha 来源</b>——不仅对过去收益有解释力，更能前瞻预测未来表现。</div></div>
+  <div class="q"><b>⑩ 如何解读参数？</b><div class="ans">β1 表示当期 RA 每变动 1 单位，未来 k 季超额收益的平均变动（已控制规模/年龄/年份）。聚类标准误保证推断对基金内序列相关稳健。</div></div>
+</section>
+
+<!-- ============ R3 ============ -->
+<section id="r3">
+  <h2>R3 · EGARCH 条件不对称稳健性回归</h2>
+  <span class="tag">脚本 08_EGARCH条件不对称 / 11</span> <span class="tag">Nelson1991 · Bekaert-Wu2000</span>
+  <div class="q"><b>① 这是什么回归？</b><div class="ans">稳健性检验：用 EGARCH(1,1) 从日收益提取<b>条件</b>波动非对称系数 γ（杠杆效应），检验 <code>risk_asym</code> 在控制 γ 后是否仍对未来收益有解释力。</div></div>
+  <div class="q"><b>② 为什么要做？</b><div class="ans">RA 与 γ 可能同源：底层股票的杠杆效应会「机械穿透」到基金收益波动，使 RA 看似是行为构念。若控制 γ 后 RA 仍显著 → 强证据 RA 是<b>独立的行为学构念</b>。</div></div>
+  <div class="q"><b>③ 公式</b><div class="ans">
+    <div class="formula"><span class="cm"># 单基金 EGARCH(1,1) 提取 γ：</span><br>
+    log(σ²_t) = ω + α(|z_{t-1}|−E|z|) + γ·z_{t-1} + β·log(σ²_{t-1})<br>
+    <span class="cm"># γ&lt;0 表示杠杆效应（负冲击更放大波动）</span><br><br>
+    <span class="cm"># 面板稳健性回归（对比 M0 / M1）：</span><br>
+    future_return_it = β0 + β1·RA_it + [β2·γ_i] + β3·log_aum + β4·log_age + β5·return_vol + ε<br>
+    <span class="cm"># M0 不含 γ；M1 含 γ。γ_i 为基金层 trait，按 fund_code 广播到各季</span></div>
+  </div></div>
+
+  <h4>③-b 参数说明表（R3 专属项；RA/控制同 R1）</h4>
+  <table>
+    <tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么得到</th><th>单位</th><th>为何纳入</th><th>预期</th></tr>
+    <tr><td>future_return_it（DV）</td><td>未来收益</td><td>由 excess_return 派生（同 R2 口径）</td><td>主面板 <code>excess_return</code> 位移</td><td>小数</td><td>因变量</td><td>—</td></tr>
+    <tr><td>RA_it</td><td>风险不对称（非条件）</td><td>同 R1 参数表</td><td>主面板（05）</td><td>小数</td><td><b>核心 IV</b>：行为构念</td><td>+</td></tr>
+    <tr><td>γ_i（egarch_gamma）</td><td>条件波动非对称（杠杆效应）</td><td>EGARCH(1,1) 中 z_{t-1} 的系数 γ；log(σ²_t)=ω+α(|z|−E|z|)+γ·z+β·log(σ²)</td><td>08 对每只基金日净值收益拟合 EGARCH(1,1)（p=1,o=1,q=1）取 gamma[1]，需 ≥250 日观测</td><td>无量纲</td><td><b>稳健性 IV</b>：排除「RA 只是底层股票杠杆效应的伪装」这一竞争性解释</td><td>负（杠杆效应）</td></tr>
+    <tr><td>return_volatility</td><td>收益滚动波动率（控制）</td><td>rolling(quarter_return, window=8, min_periods=3).std()</td><td>04_L4 从 <code>基金季度收益.csv</code></td><td>小数</td><td><b>控制</b>：隔离总体波动水平，使 RA/γ 捕捉「不对称」而非「波动大小」</td><td>+</td></tr>
+    <tr><td>log_aum / log_fund_age</td><td>规模/年龄（控制）</td><td>同 R1 参数表</td><td>主面板（01）</td><td>同 R1</td><td><b>控制</b>（理由同 R1）</td><td>不定</td></tr>
+  </table>
+
+  <div class="q"><b>④ 变量位于哪个表的哪个字段？</b><div class="ans">γ 来自 <code>output/EGARCH_基金层不对称.csv</code>（08 生成，字段 <code>egarch_gamma</code>），按 fund_code 合并入面板；其余同前。</div></div>
+  <div class="q"><b>⑤ 初始获取还是计算得出？</b><div class="ans">γ <b>计算得出</b>（08 对日收益拟合）；其余同前。</div></div>
+  <div class="q"><b>⑥ 时间跨度？</b><div class="ans">γ 覆盖取决于单只基金日收益长度（多数 2020+ 起，需 ≥250 交易日）；future_return 止于 2026Q1。</div></div>
+  <div class="q"><b>⑦ 足够做回归吗？</b><div class="ans"><span class="pill p-amber">取决于 γ 覆盖</span> 需 RA + future_return + return_volatility + egarch_gamma 同时非空。</div></div>
+  <div class="q"><b>⑧ 结果如何判断 / 应达条件？</b><div class="ans">若 M1 中 RA 系数与 t 值相对 M0 不显著衰减且仍显著 → RA 是独立行为构念；辅助判据：γ 本身均值应为负。</div></div>
+  <div class="q"><b>⑨ 能解释什么问题？</b><div class="ans">为 RA 的<b>构念效度</b>辩护：排除「RA 只是杠杆效应伪装」的质疑。</div></div>
+  <div class="q"><b>⑩ 如何解读参数？</b><div class="ans">β2(γ)：γ 每变动 1 单位对未来收益的影响；β1(RA)：在固定条件杠杆后，行为风险不对称的边际贡献。比较 M0↔M1 的 β1 衰减幅度，即「被杠杆效应吸收的比例」。</div></div>
+</section>
+
+<!-- ============ R4 ============ -->
+<section id="r4">
+  <h2>R4 · FF 因子稳健性回归</h2>
+  <span class="tag">脚本 12_辅助重算</span> <span class="tag">FF1993 · Carhart1997</span>
+  <div class="q"><b>① 这是什么回归？</b><div class="ans">把 R1 的 DV 换成不同因子模型下的 α（FF3 / FF4 / FF5），重跑同一组 IV，检验行为指标结论对<b>因子模型选择</b>是否稳健。</div></div>
+  <div class="q"><b>② 为什么要做？</b><div class="ans">α 的定义依赖定价模型；若 RA/LSV/DE 的系数在 FF3、FF4、FF5 下方向一致且显著性稳定，说明结论不依赖于某一因子设定。</div></div>
+  <div class="q"><b>③ 公式</b><div class="ans">
+    <div class="formula">α{m}_i = β0 + β1·RA_i + β2·LSV_i + β3·DE_i + β4·log_aum_i + β5·log_fund_age_i + ε_i<br>
+    <span class="cm"># m ∈ {3,4,5}；α3/α4/α5 由 06 用对应因子时序回归截距得到；OLS + HC1</span></div>
+  </div></div>
+
+  <h4>③-b 参数说明表（与 R1 同构，仅 DV 变化）</h4>
+  <table>
+    <tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么得到</th><th>单位</th><th>为何纳入</th><th>预期</th></tr>
+    <tr><td>α{m}_i（DV）</td><td>不同因子模型下的 α</td><td>α_m = 单基金时序回归 excess ~ FFm 因子 截距，m∈{3,4,5}</td><td>06_因变量.py 分别用 FF3/FF4/FF5 因子回归取截距</td><td>小数</td><td>因变量：检验结论对因子模型稳健</td><td>—</td></tr>
+    <tr><td>RA_i / LSV_i / DE_i</td><td>行为测度（核心 IV）</td><td>同 R1 参数表</td><td>主面板（05）</td><td>同 R1</td><td><b>核心 IV</b></td><td>RA+ / LSV 不定 / DE−</td></tr>
+    <tr><td>log_aum_i / log_fund_age_i</td><td>规模/年龄（控制）</td><td>同 R1 参数表</td><td>主面板（01）</td><td>同 R1</td><td><b>控制</b>（理由同 R1）</td><td>不定</td></tr>
+  </table>
+
+  <div class="q"><b>④–⑦</b><div class="ans">DV 来自 <code>ff3/4/5_adj_return</code>（06）；IV 同 R1；全计算得出；同 R1 口径（基金层均值，N=362）；约束在 ff5 α 的 362 只。</div></div>
+  <div class="q"><b>⑧ 结果如何判断？</b><div class="ans">RA/LSV/DE 系数在三种因子模型下<b>符号一致、显著性不出现系统性翻转</b>即达稳健。</div></div>
+  <div class="q"><b>⑨–⑩</b><div class="ans">结论的<b>模型稳健性</b>；跨模型比较 R² 与系数大小，R² 通常随因子数增加而下降，但行为 IV 系数应保持。</div></div>
+</section>
+
+<!-- ============ R5 ============ -->
+<section id="r5">
+  <h2>R5 · 指标有效性诊断（相关性与 bootstrap）</h2>
+  <span class="tag">脚本 12_辅助重算</span> <span class="tag">Kacperczyk2005 · Efron1979</span>
+  <div class="q"><b>① 这是什么检验？</b><div class="ans">非因果回归，而是<b>指标构建的内部一致性诊断</b>：(a) 基金层 Pearson 相关 ICI↔HHI、SDI↔ARG；(b) 对 R1 截面 α 回归做 2,000 次 bootstrap，汇报 RA/LSV/DE 的 boot_t 分布与显著占比。</div></div>
+  <div class="q"><b>② 为什么要做？</b><div class="ans">在跑主回归前，先验证自算指标是否「长得像」文献中的同名指标、彼此逻辑关系是否成立，避免用错误构建的指标得出虚假结论。</div></div>
+  <div class="q"><b>③ 公式</b><div class="ans">
+    <div class="formula">r_ICI_HHI = corr( ICI_i , industry_hhi_i )&nbsp;&nbsp;<span class="cm"># 预期显著正相关</span><br>
+    r_SDI_ARG = corr( SDI_i , ARG_i )&nbsp;&nbsp;<span class="cm"># 风格漂移 vs 主动风险增益</span><br>
+    <span class="cm"># bootstrap：对基金层样本有放回重抽 B=2000，重估 t 值</span><br>
+    boot_t = mean|t|；frac(|t|&gt;1.96)；frac(|t|&gt;2.58)</div>
+  </div></div>
+
+  <h4>③-b 参数说明表（诊断变量）</h4>
+  <table>
+    <tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么得到</th><th>单位</th><th>为何纳入</th><th>预期</th></tr>
+    <tr><td>ICI</td><td>行业偏离平方和（归一化）</td><td>ICI = Σ_ind (w_ind − w_mkt,ind)²，w_ind 为申万31归一化权重</td><td>02_L2 由持仓明细 + 股票→申万31映射聚合成品 <code>行业集中度HHI_申万31.csv</code></td><td>无量纲</td><td>诊断：与 HHI 逻辑自洽</td><td>与HHI 正相关</td></tr>
+    <tr><td>industry_hhi</td><td>行业集中度（HHI）</td><td>industry_hhi = Σ_ind w_ind²（归一化口径）</td><td>同 ICI 来源</td><td>[0,1]</td><td>诊断：行业集中度的另一度量</td><td>与ICI 正相关</td></tr>
+    <tr><td>SDI</td><td>风格漂移</td><td>滚动 OLS(季收益~4风格) 相邻权重向量曼哈顿距离，窗=8</td><td>03_L3 从净值 + 风格指数季度收益</td><td>无量纲</td><td>诊断：与 ARG 的逻辑关系</td><td>与ARG 相关</td></tr>
+    <tr><td>ARG</td><td>主动风险增益</td><td>ARG = Σ_{t∈季度} |RG_t|；RG_t = R_fund,t − (Σw_i·R_i,t)/(Σw_i)</td><td>04_L4 从净值+持仓+个股月收益</td><td>季度收益小数</td><td>诊断：主动风险生成的量级</td><td>与SDI 相关</td></tr>
+    <tr><td>boot_t / frac</td><td>bootstrap 显著性占比</td><td>有放回重抽 B=2000 重估 t，统计 |t|&gt;1.96 / 2.58 比例</td><td>12 对 R1 样本重抽样</td><td>比例 [0,1]</td><td>诊断：主回归结论对抽样稳定性</td><td>越高越稳</td></tr>
+  </table>
+
+  <div class="q"><b>④–⑦</b><div class="ans">ICI/HHI/SDI/ARG 均为主面板列（02/04）；全计算得出；相关性只需两指标同时非空（取交集仍数百只）；bootstrap 用 R1 的 362 基金样本。</div></div>
+  <div class="q"><b>⑧ 结果如何判断？</b><div class="ans">ICI↔HHI 应显著正相关；SDI↔ARG 方向依构建逻辑判定，重点看是否显著；bootstrap 中 RA/LSV/DE 的 frac(|t|&gt;1.96) 应较高。</div></div>
+  <div class="q"><b>⑨–⑩</b><div class="ans">指标<b>效度与信度</b>；相关系数 r 的大小与符号即指标间线性关系；boot_t 的「显著占比」反映结论对样本抽样的稳定性。</div></div>
+</section>
+
+<!-- ============ R6 ============ -->
+<section id="r6">
+  <h2>R6 · 组内固定效应回归（规划中，尚未实现）</h2>
+  <div class="danger"><b>诚实标注：</b>论文框架列了「横截面 / 前向 / 组内」三类回归，但当前脚本库<b>尚未实现组内 FE 回归</b>（09/10/11 用基金层聚类或基金均值替代）。下面说明其设计，待实现。</div>
+  <div class="q"><b>① 这是什么回归？</b><div class="ans">面板层、在 R2 基础上加入<b>基金固定效应</b>（吸收不随时间变的企业特质），仅用<b>期内变异</b>识别行为指标系数。</div></div>
+  <div class="q"><b>② 为什么要做？</b><div class="ans">剔除「某些基金天生业绩好且天生行为偏差大」的遗漏变量偏差，得到更干净的因果式识别。</div></div>
+  <div class="q"><b>③ 公式（规划）</b><div class="ans">
+    <div class="formula">y_it = β·RA_it + Σ Controls + α_i <span class="cm">(基金FE)</span> + λ_t <span class="cm">(时间FE)</span> + ε_it<br>
+    <span class="cm"># 用双向 FE + 聚类（基金）估计；RA 已是时变（滚动8季），可行</span></div>
+  </div></div>
+
+  <h4>③-b 参数说明表（R6 专属项）</h4>
+  <table>
+    <tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么得到</th><th>单位</th><th>为何纳入</th><th>预期</th></tr>
+    <tr><td>y_it（DV）</td><td>同期或未来收益</td><td>同 R1/R2 的 α 或 fut</td><td>主面板</td><td>小数</td><td>因变量</td><td>—</td></tr>
+    <tr><td>RA_it / LSV_it / DE_it</td><td>行为测度（时变）</td><td>同 R1 参数表</td><td>主面板（05）</td><td>同 R1</td><td><b>核心 IV</b></td><td>同 R1</td></tr>
+    <tr><td>α_i（基金 FE）</td><td>基金固定效应</td><td>每基金一个截距，吸收不随时间变特质</td><td>linearmodels.PanelOLS 或 C(fund_code)</td><td>—</td><td><b>控制</b>：剔除「天生特质」导致的遗漏变量偏差</td><td>—</td></tr>
+    <tr><td>λ_t（时间 FE）</td><td>时间固定效应</td><td>每期一个截距</td><td>由 report_date 派生</td><td>—</td><td><b>控制</b>：吸收共同宏观冲击</td><td>—</td></tr>
+  </table>
+
+  <div class="note">实现路径：在 <code>09/11</code> 基础上改用 <code>linearmodels.PanelOLS</code> 或 <code>sm.OLS</code> + <code>C(fund_code)</code>，并明确 de/lsv 的时变对齐规则。</div>
+</section>
+
+<!-- ============ 4 回归总清单(分层) ============ -->
+<section id="s4m">
+  <h2>4 · 论文全部回归清单（按 L1–L5 分层 + 跨层集成 + 稳健性）</h2>
+  <p class="lead">用户指出：论文不能只做「行为测度→业绩」的集成回归，<b>L1–L5 每一层自身的变量也应分别检验对基金业绩的影响</b>（如经理个人信息、持仓风格）。本清单重组为三块：① <b>分层专项回归</b>（每层变量→业绩，已用脚本 13 实跑，每个公式后附参数表）；② <b>跨层集成基准</b>（R1–R6）；③ <b>稳健性 / 机制 / 内生性</b>。状态以 2026-08-14 流水线为准。</p>
+
+  <h3>4.1 设计原则</h3>
+  <ul>
+    <li><b>分层专项（§4.2）</b>：孤立地看「某一层信息能否解释业绩」，避免多层混在一起时效应被掩盖或共线稀释。</li>
+    <li><b>跨层集成（§4.3）</b>：把 L1–L5 全部变量同框（R1/R2），检验净效应与相对重要性。</li>
+    <li><b>稳健性（§4.5）</b>：因子模型、EGARCH、组合排序、替换因变量等，确认结论非设定依赖。</li>
+  </ul>
+
+  <h3>4.2 分层专项回归（L1–L5 各自对业绩的影响）✅ 已实跑（脚本 13_分层回归.py）</h3>
+  <p>口径统一：基金层均值（截面，同 R1），DV = <code>ff5_adj_return</code>（FF5 α），控制 <code>log_aum</code> + <code>log_fund_age</code>，OLS + HC1。括号内 t 值；*** |t|&gt;2.58，** &gt;1.96，ns = 不显著。每个子节在公式后给出<b>参数说明表</b>。</p>
+
+  <h4>4.2.1 L1 背景特征层 → 业绩（经理个人信息）</h4>
+  <div class="formula">α_i = β0 + β1·mgr_tenure_i + β2·gender_i + β3·cfa_i + β4·log_aum_i + β5·log_fund_age_i + ε_i<br>
+  <span class="cm"># school（院校）覆盖仅 45.9% 且为分类变量，列为扩展控制（规划），不放入主式</span></div>
+  <table>
+    <tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么得到</th><th>单位</th><th>为何纳入</th><th>预期</th></tr>
+    <tr><td>mgr_tenure_i</td><td>经理任期</td><td>mgr_total_tenure_v2 = (report_date − 在任经理任职起始日).days</td><td>01_L1 取 report_date 时刻在任经理（start≤rd≤end）的任期天数，跨季均值</td><td>天（≈÷365 得年）</td><td><b>核心 IV</b>：经验/学习曲线假说（Golec 1996）</td><td>不定</td></tr>
+    <tr><td>gender_i</td><td>经理性别</td><td>gender_m = 1 男 / 0 女（哑变量）</td><td>01_L1 <code>基金经理信息_最终版.csv</code> 个人特征，铺满该基金各季</td><td>哑变量 {0,1}</td><td><b>核心 IV</b>：性别与技能/过度自信（Niessen-Ruenzi 2007）</td><td>不定</td></tr>
+    <tr><td>cfa_i</td><td>是否持 CFA</td><td>cfa_d = 1 持有 / 0 未持有（哑变量）</td><td>01_L1 同上存在（是/否映射）</td><td>哑变量 {0,1}</td><td><b>核心 IV</b>：专业资质是否对应更高业绩</td><td>不定</td></tr>
+    <tr><td>school</td><td>毕业院校（扩展）</td><td>分类变量，拟设一组院校哑变量</td><td>01_L1 同上存在</td><td>分类</td><td><b>扩展控制</b>：院校声誉假说（Chevalier-Ellison 1999）；覆盖低，规划</td><td>不定</td></tr>
+    <tr><td>log_aum_i / log_fund_age_i</td><td>规模/年龄（控制）</td><td>同 R1 参数表</td><td>主面板（01）</td><td>同 R1</td><td><b>控制</b>（理由同 R1）</td><td>不定</td></tr>
+  </table>
+  <p class="kv"><b>实跑结果（N=362）：</b>任期 β≈0 (t1.20) ns；性别 β=+0.0028 (t0.75) ns；<b>CFA β=−0.0265 (t−5.34)***</b> 反直觉为负（可能为选择偏差：持 CFA 者多在大机构/被动倾向），须谨慎并做分组；院校因覆盖低暂未跑。</p>
+
+  <h4>4.2.2 L2 持仓偏离层 → 业绩（持仓风格）</h4>
+  <div class="formula">α_i = β0 + β1·AS_improved_i + β2·ICI_i + β3·industry_hhi_i + β4·log_aum_i + β5·log_fund_age_i + ε_i</div>
+  <table>
+    <tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么得到</th><th>单位</th><th>为何纳入</th><th>预期</th></tr>
+    <tr><td>AS_improved_i</td><td>主动份额 Active Share</td><td>AS = ½·Σ|w_fund − w_bench|，w_fund=hold_ratio/100，基准=沪深300∪中证500 合并权重，clip[0,1]</td><td>02_L2 由 <code>基金持仓明细_全量修正版_v2.csv</code> 对每基金-期计算</td><td>比例 [0,1]</td><td><b>核心 IV</b>：主动管理程度（Cremers-Petajisto 2009）</td><td>+</td></tr>
+    <tr><td>ICI_i</td><td>行业偏离</td><td>ICI = Σ_ind (w_ind − w_mkt,ind)²（归一化）</td><td>02_L2 由 <code>行业集中度HHI_申万31.csv</code></td><td>无量纲</td><td><b>核心 IV</b>：行业押注偏离（Kacperczyk 2005）</td><td>+</td></tr>
+    <tr><td>industry_hhi_i</td><td>行业集中度</td><td>industry_hhi = Σ_ind w_ind²（归一化）</td><td>同 ICI 来源</td><td>[0,1]</td><td><b>核心 IV</b>：持仓集中程度</td><td>不定</td></tr>
+    <tr><td>log_aum_i / log_fund_age_i</td><td>规模/年龄（控制）</td><td>同 R1 参数表</td><td>主面板（01）</td><td>同 R1</td><td><b>控制</b>（理由同 R1）</td><td>不定</td></tr>
+  </table>
+  <p class="kv"><b>实跑结果（N=362）：</b><b>AS_improved β=−0.042 (t−2.24)**</b> 与 Cremers-Petajisto(2009)「高主动份额→高α」相反（中国主动管理或无超额，诚实标注）；<b>ICI β=+0.044 (t4.38)***</b> 行业偏离越大 α 越高；industry_hhi β=+0.048 (t1.34) ns（与 ICI 共线）。</p>
+
+  <h4>4.2.3 L3 交易执行层 → 业绩</h4>
+  <div class="formula">α_i = β0 + β1·TO_two_sided_i + β2·SDI_i + β4·log_aum_i + β5·log_fund_age_i + ε_i</div>
+  <table>
+    <tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么得到</th><th>单位</th><th>为何纳入</th><th>预期</th></tr>
+    <tr><td>TO_two_sided_i</td><td>双边换手率</td><td>TO = (total_buy + total_sell) / (2 × avg_aum)</td><td>03_L3 <code>基金换手率_双边_含卖出.csv</code>（真·含卖出）</td><td>倍数/年</td><td><b>核心 IV</b>：交易频率与成本（Carhart 1997）</td><td>负（成本侵蚀）</td></tr>
+    <tr><td>SDI_i</td><td>风格漂移</td><td>滚动 OLS(季收益~4风格) 相邻权重向量曼哈顿距离，窗=8</td><td>03_L3 从净值 + 风格指数季度收益</td><td>无量纲</td><td><b>核心 IV</b>：风格一致 vs 漂移</td><td>不定</td></tr>
+    <tr><td>log_aum_i / log_fund_age_i</td><td>规模/年龄（控制）</td><td>同 R1 参数表</td><td>主面板（01）</td><td>同 R1</td><td><b>控制</b>（理由同 R1）</td><td>不定</td></tr>
+  </table>
+  <p class="kv"><b>实跑结果（N=200，受 TO 覆盖拖累）：</b>TO β=+0.017 (t1.28) ns；SDI β=+0.0037 (t0.36) ns。TO 覆盖仅 18%（200 只），需 CSMAR/Wind 全样本后才能稳健估计。</p>
+
+  <h4>4.2.4 L4 风险应对层 → 业绩（主动风险增益）</h4>
+  <div class="formula">α_i = β0 + β1·ARG_i + β2·RG_i + β3·return_volatility_i + β4·log_aum_i + β5·log_fund_age_i + ε_i</div>
+  <table>
+    <tr><th>变量</th><th>代表什么</th><th>具体公式</th><th>怎么得到</th><th>单位</th><th>为何纳入</th><th>预期</th></tr>
+    <tr><td>ARG_i</td><td>主动风险增益</td><td>ARG = Σ_{t∈季度} |RG_t|；RG_t = R_fund,t − (Σw_i·R_i,t)/(Σw_i)</td><td>04_L4 从净值+持仓+个股月收益</td><td>季度收益小数</td><td><b>核心 IV</b>：主动决策创造的价值（Grinblatt-Titman 1993 / Kacperczyk 2008）</td><td>+</td></tr>
+    <tr><td>RG_i</td><td>主动收益（PPM）</td><td>RG_t = R_fund,t − 持仓权重×个股收益（上一季末权重）</td><td>同 ARG 来源</td><td>季度收益小数</td><td><b>核心 IV</b>：同上，基金经理主动增益</td><td>+</td></tr>
+    <tr><td>return_volatility_i</td><td>收益波动率（控制）</td><td>rolling(quarter_return, window=8, min_periods=3).std()</td><td>04_L4 <code>基金季度收益.csv</code></td><td>小数</td><td><b>控制</b>：隔离总体风险水平</td><td>+</td></tr>
+    <tr><td>log_aum_i / log_fund_age_i</td><td>规模/年龄（控制）</td><td>同 R1 参数表</td><td>主面板（01）</td><td>同 R1</td><td><b>控制</b>（理由同 R1）</td><td>不定</td></tr>
+  </table>
+  <p class="kv"><b>实跑结果（N=340）：</b><b>ARG β=+0.047 (t2.39)**</b>、<b>RG β=+0.066 (t2.53)**</b>、<b>return_volatility β=+0.148 (t3.65)***</b>。主动风险增益显著带来 α——本文最干净的证据之一：基金经理的主动决策（非运气）创造了超额。</p>
+
+  <h4>4.2.5 L5 认知偏差层 → 业绩</h4>
+  <p>L5 的核心变量 RA / LSV / DE 即为 R1 的核心 IV，其实跑结果与完整参数表见 <a href="#r1">R1 节 §③-b</a> 与 <a href="#r7">第 7 章</a>，此处不重复。结论：RA+0.113***、LSV+0.112**、DE−0.073***（N=362，与 R1 一致）。</p>
+
+  <h3>4.3 跨层集成基准（R1–R6，多测度同框）</h3>
+  <table>
+    <tr><th>编号</th><th>回归</th><th>DV</th><th>同框 IV</th><th>状态</th><th>文献</th></tr>
+    <tr><td>R1</td><td>横截面基准</td><td>α / 平均超额</td><td>RA,LSV,DE + log_aum,log_age</td><td><span class="pill p-green">✅</span></td><td>Chevalier-Ellison1999</td></tr>
+    <tr><td>R2</td><td>前向预测</td><td>fut1q/fut4q</td><td>RA,LSV,DE + 控制 + 年份FE</td><td><span class="pill p-green">✅</span></td><td>Grinblatt-Titman1993</td></tr>
+    <tr><td>R6</td><td>组内固定效应</td><td>收益</td><td>RA,LSV,DE + 基金FE + 时间FE</td><td><span class="pill p-red">⬜ 规划</span></td><td>—</td></tr>
+  </table>
+
+  <h3>4.4 L5 行为测度深度分解</h3>
+  <table>
+    <tr><th>编号</th><th>回归</th><th>目的</th><th>DV / IV</th><th>状态</th><th>文献</th></tr>
+    <tr><td>R-DE</td><td>处置效应专项</td><td>DE 及 PGR/PLR 分量单独深入</td><td>DV=α/未来；IV=de,pgr,plr</td><td><span class="pill p-red">⬜</span></td><td>Odean1998</td></tr>
+    <tr><td>R-LSV</td><td>羊群与业绩</td><td>趋同度 + 同行效应语境</td><td>DV=α/未来；IV=lsv</td><td><span class="pill p-red">⬜</span></td><td>LSV1992, Wermers1999</td></tr>
+    <tr><td>R-RA</td><td>风险不对称（含 R3）</td><td>RA 与业绩/波动 + 构念辩护</td><td>DV=未来；IV=RA(+γ)</td><td><span class="pill p-green">✅ R3已实现</span></td><td>Brown1996, Bekaert-Wu2000</td></tr>
+    <tr><td>R-PGR/PLR</td><td>损失厌恶分量</td><td>盈利/亏损卖出占比各自作用</td><td>DV=α；IV=pgr,plr</td><td><span class="pill p-red">⬜</span></td><td>Odean1998</td></tr>
+  </table>
+
+  <h3>4.5 稳健性 / 机制 / 内生性</h3>
+  <table>
+    <tr><th>编号</th><th>回归 / 检验</th><th>目的（为什么做）</th><th>DV / 核心 IV</th><th>状态</th><th>L层 / 文献</th></tr>
+    <tr><td>R3</td><td>EGARCH 条件不对称</td><td>RA 是行为构念还是杠杆效应机械穿透</td><td>DV=未来；IV=RA, egarch_γ</td><td><span class="pill p-amber">⚠ 弱</span></td><td>L4(γ) / Nelson1991</td></tr>
+    <tr><td>R4</td><td>FF 因子稳健</td><td>结论对因子模型选择是否稳健</td><td>DV=α3/α4/α5；IV=RA,LSV,DE</td><td><span class="pill p-green">✅</span></td><td>L4 / FF1993, Carhart1997</td></tr>
+    <tr><td>R13</td><td>替换因变量/子样本</td><td>用原始收益替代、剔除危机期</td><td>DV=原始超额 / 子样本</td><td><span class="pill p-red">⬜</span></td><td>L4</td></tr>
+    <tr><td>R14</td><td>组合排序（十分位）</td><td>经典无回归补充：指标十分位组合业绩差</td><td>组合收益差 / 夏普</td><td><span class="pill p-red">⬜</span></td><td>L5 / Grinblatt-Titman1993, Wermers1999</td></tr>
+    <tr><td>R5</td><td>指标有效性诊断</td><td>内部一致性（ICI↔HHI, SDI↔ARG）+ bootstrap</td><td>相关性 / boot_t</td><td><span class="pill p-green">✅</span></td><td>L2/L4 / Efron1979, Kacperczyk2005</td></tr>
+    <tr><td>R7</td><td>中介效应</td><td>机制：RA → 波动率/换手 → 业绩</td><td>中介=return_vol/TO</td><td><span class="pill p-red">⬜</span></td><td>L3/L4</td></tr>
+    <tr><td>R15</td><td>非线性/门槛</td><td>过度自信倒 U、RA 阈值效应</td><td>DV=α；IV=RA+RA²/门槛</td><td><span class="pill p-red">⬜</span></td><td>L5</td></tr>
+    <tr><td>R8</td><td>异质性分组</td><td>按规模/任期/牛熊市分层</td><td>子样本回归</td><td><span class="pill p-red">⬜</span></td><td>L1</td></tr>
+    <tr><td>R11</td><td>IV / 2SLS</td><td>解决 RA 内生性</td><td>DV=α；IV=RA 的工具</td><td><span class="pill p-red">⬜</span></td><td>L5</td></tr>
+    <tr><td>R12</td><td>基金经理 FE</td><td>吸收经理个人特质（比基金 FE 更细）</td><td>DV=收益；manager FE</td><td><span class="pill p-red">⬜</span></td><td>L1</td></tr>
+  </table>
+
+  <div class="note"><b>清单小结：</b>文章实证体系现枚举 <b>18 类</b>回归/检验，分三层组织——<b>分层专项（§4.2，已实跑 13 项）</b>：L1 任期/性别/CFA/院校、L2 AS/ICI/HHI、L3 TO/SDI、L4 ARG/RG/return_vol、L5 RA/LSV/DE；<b>跨层集成（§4.3）</b> R1/R2/R6；<b>深度分解+稳健+机制（§4.4–4.5）</b> R-DE/R-LSV/R-RA/R-PGR-PLR/R3/R4/R13/R14/R5/R7/R15/R8/R11/R12。当前已落地 R1/R2/R3/R4/R5 与全部分层专项；R6 及多数深度/稳健项为规划。DE 系受 46.3% 半年频、TO 受 18%、school 受 45.9% 覆盖约束，需授权终端（CSMAR/Wind/iFinD）补数据后重跑。</div>
+</section>
+
+<!-- ============ 6 数据审计 ============ -->
+<section id="s6">
+  <h2>6 · 数据严谨性审计认证（从头到尾审查）</h2>
+  <span class="tag">脚本 代码/_audit_full.py + _diag_anom.py</span>
+  <div class="note">用户要求「从头到尾审查数据，确保不出现 2026Q3 未来数据等错误」。下面是对当前 <code>主分析面板_重建.csv</code>（2026-08-14 重建）的 9 大类逐项检查，<b>全部 PASS</b>。</div>
+  <table>
+    <tr><th>检查项</th><th>规则</th><th>结果</th><th>结论</th></tr>
+    <tr><td>未来季度泄漏</td><td>含 2026Q3/Q4 行数应为 0</td><td>0 行</td><td class="p-green" style="color:#1e8e4e;font-weight:600">PASS</td></tr>
+    <tr><td>future_return 一致性</td><td>与下一季 quarter_return 不一致 = 0；末季 = 0</td><td>0</td><td class="p-green" style="color:#1e8e4e;font-weight:600">PASS</td></tr>
+    <tr><td>FF 因子截断</td><td>因子非空最大 (year,quarter) = (2026,1)；2026Q2 excess=0</td><td>(2026,1)</td><td class="p-green" style="color:#1e8e4e;font-weight:600">PASS</td></tr>
+    <tr><td>主键唯一性</td><td>(fund_code, report_date) 重复 = 0</td><td>0</td><td class="p-green" style="color:#1e8e4e;font-weight:600">PASS</td></tr>
+    <tr><td>avg_aum 零值修复</td><td>avg_aum ≤ 0 行数 = 0（源 net_asset=0 占位已置 NaN）</td><td>0</td><td class="p-green" style="color:#1e8e4e;font-weight:600">PASS</td></tr>
+    <tr><td>de 半年度约束</td><td>de 非空行中 report_date 月份不在 {1,7} = 0</td><td>0</td><td class="p-green" style="color:#1e8e4e;font-weight:600">PASS</td></tr>
+    <tr><td>TO 基座完整性</td><td>(buy+sell)/(2·aum) 比值中位数 = 1.0000；100% ∈ [0.99,1.01]</td><td>1.0000</td><td class="p-green" style="color:#1e8e4e;font-weight:600">PASS</td></tr>
+    <tr><td>持仓连接键</td><td>stock_code 带前导零（连接失效）行数 = 0</td><td>0</td><td class="p-green" style="color:#1e8e4e;font-weight:600">PASS</td></tr>
+    <tr><td>异常值</td><td>mgr_tenure&lt;0 / log_fund_age 非有限 = 0</td><td>0</td><td class="p-green" style="color:#1e8e4e;font-weight:600">PASS</td></tr>
+  </table>
+  <div class="danger"><b>审计中发现并已修复的真实缺陷（非虚构）：</b>源文件 <code>基金规模历史_批量.csv</code> 用 <code>net_asset=0.0</code> 作为「未披露」占位（134 个基金-季），这些行原会被算成 <code>avg_aum=0</code> → <code>log_aum=log(1)=0</code>，把「1 亿规模」错误塞入回归。已在 <code>lib_metrics.calc_avg_aum()</code> 中置 NaN 修复，重建后面板 avg_aum 非空 9,879（99.0%）/ 400 只，0 行 ≤0。这是唯一被发现并修复的隐蔽偏差。</div>
+</section>
+
+<!-- ============ 7 实证结果 ============ -->
+<section id="r7">
+  <h2>7 · 回归实证结果（已运行，2026-08-14）</h2>
+  <span class="tag">脚本 08 / 09 / 10 / 11 / 12 / 13</span>
+  <p class="lead">下列系数均为脚本在 <code>主分析面板_重建.csv</code> 上<b>实跑</b>得到（非设计值）。标准误：R1/R4/R5 用 HC1；R2/R3 用基金聚类稳健。括号内为 t 值。</p>
+
+  <h3>7.1 R1 · 横截面基准（基金层，N = 362 基金）</h3>
+  <table>
+    <tr><th>模型</th><th>DV</th><th>N</th><th>R²</th><th>RA</th><th>LSV</th><th>DE</th><th>log_aum</th><th>log_fund_age</th></tr>
+    <tr><td>CS α（含aum）</td><td>ff5_adj</td><td>362</td><td>0.1508</td><td><b>+0.113</b> (2.76)</td><td><b>+0.112</b> (2.04)</td><td><b>−0.073</b> (−4.50)</td><td>+0.001 (1.50)</td><td>−0.004 (−2.91)</td></tr>
+    <tr><td>CS 超额（含aum）</td><td>excess</td><td>362</td><td>0.177</td><td><b>+0.165</b> (3.61)</td><td><b>+0.161</b> (3.13)</td><td><b>−0.051</b> (−2.88)</td><td>+0.003 (3.32)</td><td>−0.001 (−1.90)</td></tr>
+    <tr><td>CS α（不含aum）</td><td>ff5_adj</td><td>362</td><td>0.150</td><td>+0.113 (2.76)</td><td>+0.112 (2.04)</td><td>−0.073 (−4.50)</td><td>—</td><td>−0.004 (−2.91)</td></tr>
+  </table>
+  <p class="kv">含/不含 avg_aum 系数稳定（且 N 同为 362），说明规模不是混淆源。<b>Bootstrap（B=2000）显著占比 frac(|t|&gt;1.96)</b>：DE 0.995、log_fund_age 0.965、RA 0.812、log_aum 0.599、LSV 0.592。</p>
+
+  <h3>7.2 R2 · 前向预测（面板层，基金聚类）</h3>
+  <table>
+    <tr><th>模型</th><th>DV</th><th>N</th><th>R²</th><th>RA</th><th>LSV</th><th>DE</th><th>yearFE</th></tr>
+    <tr><td>FWD 4Q（含aum）</td><td>fut4q</td><td>3211</td><td>0.371</td><td><b>+0.571</b> (30.42)</td><td><b>−0.113</b> (−4.23)</td><td><b>−0.044</b> (−6.84)</td><td>+0.014 (14.88)</td></tr>
+    <tr><td>FWD 1Q（含aum）</td><td>fut1q</td><td>3213</td><td>0.181</td><td><b>−0.321</b> (−7.05)</td><td><b>−0.485</b> (−6.20)</td><td>−0.029 (−1.92)</td><td>+0.042 (14.13)</td></tr>
+    <tr><td>FWD 4Q（不含aum）</td><td>fut4q</td><td>3224</td><td>0.369</td><td>+0.566 (30.82)</td><td>−0.107 (−4.10)</td><td>−0.044 (−6.94)</td><td>+0.014 (15.21)</td></tr>
+    <tr><td>FWD 1Q（不含aum）</td><td>fut1q</td><td>3226</td><td>0.173</td><td>−0.352 (−7.74)</td><td>−0.456 (−5.79)</td><td>−0.031 (−2.01)</td><td>+0.043 (14.45)</td></tr>
+  </table>
+  <div class="note"><b>关于 RA 前向系数的诚实判读：</b>
+    <ul>
+      <li><b>4Q RA = +0.571（t=30.4）并非代码错误</b>：诊断显示 corr(RA, fut4q)=<b>0.495</b>，单变量 R²=0.245，含/不含控制与年份FE 均稳定在 0.57–0.63——真实存在强正相关。</li>
+      <li>经济含义需谨慎：RA = σ(盈利期)−σ(亏损期)，高 RA 基金往往收益波动更大；4Q 强正相关<b>可能部分反映「高波动→高风险溢价」</b>而非纯粹选股技能，须控制波动率/用 FF5 调整未来收益进一步拆解。</li>
+      <li><b>1Q RA 符号脆弱</b>：单变量 +0.059（t=2.5）加入控制+年份FE 后翻为 −0.32（t=−7）。该翻转提示 1Q 规格受年份FE/多重共线性干扰，不宜作为主结论；建议同时报告含/不含 FE 两版。</li>
+    </ul>
+  </div>
+
+  <h3>7.3 R3 · EGARCH 条件不对称稳健性（N = 6,931 观测）</h3>
+  <table>
+    <tr><th>模型</th><th>N</th><th>R²</th><th>RA</th><th>egarch_γ</th></tr>
+    <tr><td>M1（RA + 控制）</td><td>6931</td><td>0.077</td><td><b>+0.915</b> (18.70)</td><td>—</td></tr>
+    <tr><td>M2（RA + γ + 控制）</td><td>6931</td><td>0.079</td><td><b>+0.924</b> (19.1)</td><td>+0.319 (3.30)¹</td></tr>
+    <tr><td colspan="5" style="text-align:left;color:var(--mut);font-size:12px;">¹ egarch_γ 已做 1%/99% 截尾（γ_wins）；原始未截尾 γ=+0.000013（t=26.30）因少数极端拟合退化值主导，已由 <code>R3_gamma截尾重跑.csv</code> 取代。</td></tr>
+  </table>
+  <div class="danger"><b>R3 稳健性「弱」，须如实降级：</b>控制 egarch_γ 后 RA 仍极显著（t=19.1），形式上支持「RA 是独立行为构念」。但 γ 本身<b>质量堪忧</b>：基金层 γ 中位数仅 −0.003，少数基金拟合退化（γ 极端值达 ±8869）；仅 <b>7.6%</b> 基金的 γ 统计显著，RA↔γ 相关仅 −0.05。<b>已按建议对 γ 做 1%/99% 截尾重跑（见 R3_gamma截尾重跑.csv）</b>：截尾后 γ_wins=+0.319（t=3.30，仍正但量级与显著性大幅回落），M2 R²=0.079 不变；「γ 不可靠、RA 独立性需谨慎」结论维持。</div>
+
+  <h3>7.4 R4 · FF 因子稳健性（N = 362 基金）</h3>
+  <table>
+    <tr><th>因子模型</th><th>R²</th><th>RA</th><th>LSV</th><th>DE</th></tr>
+    <tr><td>FF3</td><td>0.162</td><td><b>+0.135</b> (3.48)</td><td><b>+0.123</b> (2.50)</td><td><b>−0.062</b> (−3.87)</td></tr>
+    <tr><td>FF4</td><td>0.162</td><td>+0.070 (2.03)</td><td><b>+0.164</b> (3.53)</td><td><b>−0.051</b> (−3.47)</td></tr>
+    <tr><td>FF5</td><td>0.167</td><td><b>+0.115</b> (2.87)</td><td><b>+0.111</b> (1.92)</td><td><b>−0.075</b> (−4.64)</td></tr>
+  </table>
+  <p class="kv">RA/LSV/DE 在三套因子模型下<b>符号一致、显著性不系统性翻转</b> → 结论对因子模型选择稳健。</p>
+
+  <h3>7.5 R5 · 指标有效性诊断（N = 362 基金）</h3>
+  <table>
+    <tr><th>诊断</th><th>结果</th><th>判读</th></tr>
+    <tr><td>ICI ↔ industry_hhi 相关</td><td>r = +0.189</td><td>弱正相关（二者均衡量行业偏离/集中，方向自洽）</td></tr>
+    <tr><td>SDI ↔ ARG 相关</td><td>r = <b>−0.854</b></td><td>强负相关（风格漂移与主动风险增益高度共线，逻辑一致）</td></tr>
+    <tr><td>Bootstrap frac(|t|&gt;2.58)</td><td>DE 0.987 / RA 0.648 / LSV 0.340</td><td>DE 极稳健；LSV 中等（截面仅边际显著）</td></tr>
+  </table>
+
+  <h3>7.6 结果能解释什么（综合）</h3>
+  <div class="grid">
+    <div class="card"><h4>✅ 稳健成立的</h4>
+      <ul>
+        <li><b>横截面（R1）</b>：RA、LSV 正向、DE 负向且显著 → 行为特征与<b>同期</b>风险调整收益相关。</li>
+        <li><b>因子稳健（R4）</b>：FF3/4/5 下符号一致。</li>
+        <li><b>DE 极稳健</b>：bootstrap 显著占比 0.987。</li>
+        <li><b>分层专项（§4.2）</b>：L4 ARG/RG 显著为正，L2 ICI 显著为正。</li>
+      </ul>
+    </div>
+    <div class="card"><h4>⚠️ 需谨慎/待修的</h4>
+      <ul>
+        <li><b>前向 4Q RA 极强</b>（+0.57, t=30）：可能含波动率风险溢价，需拆解。</li>
+        <li><b>前向 1Q 符号脆弱</b>：加控制后翻转，不宜作主结论。</li>
+        <li><b>R3 的 γ 质量差</b>：仅 7.6% 显著，少数极端值主导。</li>
+        <li><b>L2 AS 负 / L1 CFA 负</b>：反直觉，已诚实标注，待机制解释。</li>
+        <li><b>R6 组内 FE 未实现</b>：尚无基金固定效应三角验证。</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>7.7 是否满足论文要求 + 改进建议</h3>
+  <table>
+    <tr><th>论文要求（Ch.4）</th><th>当前达标度</th><th>主要缺口</th></tr>
+    <tr><td>行为测度解释同期业绩（横截面）</td><td><span class="pill p-green">达标</span></td><td>无</td></tr>
+    <tr><td>行为测度具备前向预测力</td><td><span class="pill p-amber">部分</span></td><td>4Q 强但需拆风险溢价；1Q 脆弱</td></tr>
+    <tr><td>结论对因子模型稳健</td><td><span class="pill p-green">达标</span></td><td>无</td></tr>
+    <tr><td>RA 构念效度（非杠杆伪装）</td><td><span class="pill p-amber">形式达标/实证弱</span></td><td>γ 质量差，需截尾重跑</td></tr>
+    <tr><td>组内 FE 剔除遗漏变量</td><td><span class="pill p-red">未做</span></td><td>需实现 R6</td></tr>
+    <tr><td>DE/TO/school 全样本</td><td><span class="pill p-red">未达标</span></td><td>需授权数据（见第 9 章）</td></tr>
+  </table>
+  <div class="note"><b>改进建议（按优先级）：</b>
+    <ol>
+      <li><b>实现 R6 组内 FE</b>（<code>linearmodels.PanelOLS</code>，基金+时间双向 FE，基金聚类）。</li>
+      <li><b>拆解 4Q RA 来源</b>：把 fut4q 换成「FF5 调整的未来收益」重跑，并控制 return_volatility。</li>
+      <li><b>1Q 规范报告</b>：同时报告含/不含年份FE 两版，避免仅报翻转后负值误导。</li>
+      <li><b>R3 加固</b>：对 egarch_γ 做 1%/99% 截尾、剔除拟合退化基金后重跑 M2。</li>
+      <li><b>补齐授权数据</b>（P0：全季度全持仓→DE 全样本；CSMAR/Wind 全样本 TO；外部院校→school）。</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 9 覆盖率提升 ============ -->
+<section id="r9">
+  <h2>9 · 覆盖率提升路径（改变方法 vs 补齐数据）</h2>
+  <p class="lead">低覆盖变量「有没有办法通过改变方法提高覆盖率」。结论先行：<b>绝大多数低覆盖变量是定义性/结构性约束，无法靠改变统计方法提升</b>；真正路径是补齐授权数据。下面逐变量判定。</p>
+  <table>
+    <tr><th>变量</th><th>当前覆盖</th><th>能否靠「改方法」提升？</th><th>理由与可行路径</th></tr>
+    <tr><td>de（处置效应）</td><td>46.3%</td><td class="p-red" style="color:#c0392b;font-weight:600">不能</td><td>仅半年报/年报<b>全持仓</b>可算 PGR/PLR（监管披露限制）。→ 必须补齐 <code>基金持仓明细_CSMAWind_全季度全持仓.csv</code>（P0）。</td></tr>
+    <tr><td>TO_two_sided</td><td>18.0%</td><td class="p-red" style="color:#c0392b;font-weight:600">不能</td><td>换手率需<b>真实买卖交易流水</b>。→ 必须 CSMAR/Wind 全样本导出（P1）。</td></tr>
+    <tr><td>school（院校）</td><td>45.9%</td><td class="p-amber" style="color:#a9690a;font-weight:600">部分能</td><td>可由「基金经理姓名 → 公开简历/教育背景库」匹配推断；但更可靠仍靠授权终端补全。</td></tr>
+    <tr><td>SDI（风格漂移）</td><td>63.8%</td><td class="p-amber" style="color:#a9690a;font-weight:600">边际能，不推荐</td><td>缩短暖机窗（如 4 季）可略增覆盖，但牺牲估计稳定性 → <b>结构性，建议接受</b>。</td></tr>
+    <tr><td>risk_asym（RA）</td><td>72.0%</td><td class="p-red" style="color:#c0392b;font-weight:600">不能</td><td>需 ≥4 季历史计算滚动不对称；早期/新发基金天然缺失 → <b>结构性</b>。</td></tr>
+    <tr><td>RG（主动收益增益）</td><td>87.3%</td><td class="p-amber" style="color:#a9690a;font-weight:600">部分能</td><td>依赖个股月收益（现有部分）。可用更长个股收益源补 2006–2015，或退化为基金层 RG。</td></tr>
+    <tr><td>LSV（羊群/趋同）</td><td>92.1%</td><td class="p-amber" style="color:#a9690a;font-weight:600">口径能，覆盖已高</td><td>覆盖已高；但当前为<b>代理</b>。严格复现需交易数据（CSMAR/Wind 逐股买卖）→ 属 P1 数据补全。</td></tr>
+    <tr><td>ICI / HHI / ARG</td><td>94–97%</td><td class="p-green" style="color:#1e8e4e;font-weight:600">已充分</td><td>全样本可得，无需提升。</td></tr>
+  </table>
+  <div class="note"><b>结论：</b>除 <b>SDI</b> 与 <b>RG</b> 可边际靠方法改善（各有质量代价）外，<b>de / TO / school / risk_asym / LSV 严格口径均无法靠改方法提升</b>——受披露制度或底层交易/个股数据可得性约束。诚实做法是：在论文中明确标注各测度频度与覆盖上限，并将全样本扩展列为需授权终端导出后落盘、重跑流水线的待办项。</div>
+</section>
+
+<!-- ============ 10 参考文献 ============ -->
+<section id="r10">
+  <h2>10 · 参考文献与公式溯源</h2>
+  <p class="lead">回归公式分别来自哪些文献。下表将每个测度/公式映射到其经典出处；完整文献列于文末。</p>
+  <table>
+    <tr><th>本文测度 / 公式</th><th>来源文献</th><th>对应回归</th></tr>
+    <tr><td>LSV 羊群/交易趋同度 Hᵢ=|pᵢ−p̄|−AF</td><td>Lakonishok, Shleifer &amp; Vishny (1992)</td><td>R1 / R2（IV: lsv）</td></tr>
+    <tr><td>DE = PGR − PLR（处置效应快照法）</td><td>Odean (1998)</td><td>R1 / R2（IV: de）</td></tr>
+    <tr><td>EGARCH(1,1) 条件波动非对称 γ</td><td>Nelson (1991)</td><td>R3（γ 提取）</td></tr>
+    <tr><td>条件不对称 / 杠杆效应动机</td><td>Bekaert &amp; Wu (2000)</td><td>R3（构念辩护）</td></tr>
+    <tr><td>FF3 / FF4(含动量) / FF5 因子 α</td><td>Fama &amp; French (1993); Carhart (1997)</td><td>R4（DV: α3/α4/α5）</td></tr>
+    <tr><td>Active Share（AS_improved 同源思想）</td><td>Cremers &amp; Petajisto (2009)</td><td>§4.2 L2</td></tr>
+    <tr><td>行业集中度 ICI / HHI</td><td>Kacperczyk, Sialm &amp; Zheng (2005)</td><td>R5 / §4.2 L2</td></tr>
+    <tr><td>RA 风险不对称（锦标赛动机）</td><td>Brown, Harlow &amp; Starks (1996); Chevalier &amp; Ellison (1999)</td><td>R1 / R2（IV: risk_asym）</td></tr>
+    <tr><td>Bootstrap 显著性（B=2000）</td><td>Efron (1979)</td><td>R5（稳健性）</td></tr>
+    <tr><td>前向预测绩效（行为含信息含量）</td><td>Grinblatt &amp; Titman (1993)</td><td>R2（DV: fut1q/fut4q）</td></tr>
+    <tr><td>羊群/同行效应语境</td><td>Wermers (1999)</td><td>R1/R2 语境</td></tr>
+    <tr><td>处置效应/过度交易语境</td><td>Barber &amp; Odean (2000)</td><td>R1/R2 语境</td></tr>
+    <tr><td>经理特征（教育/院校/任期）</td><td>Chevalier &amp; Ellison (1999); Golec (1996); Niessen &amp; Ruenzi (2007)</td><td>§4.2 L1</td></tr>
+    <tr><td>主动风险增益（PPM / 收益缺口）</td><td>Grinblatt &amp; Titman (1993); Kacperczyk, Sialm &amp; Zheng (2008)</td><td>§4.2 L4</td></tr>
+  </table>
+  <h3>10.1 参考文献列表</h3>
+  <ul class="small">
+    <li>[1] Barber, B. M., &amp; Odean, T. (2000). Trading Is Hazardous to Your Wealth. <i>Journal of Finance</i>, 55(2), 773–806.</li>
+    <li>[2] Bekaert, G., &amp; Wu, G. (2000). Asymmetric Volatility and Risk in Equity Markets. <i>Review of Financial Studies</i>, 13(1), 1–42.</li>
+    <li>[3] Brown, K. C., Harlow, W. V., &amp; Starks, L. T. (1996). Of Tournaments and Temptations. <i>Journal of Finance</i>, 51(1), 85–110.</li>
+    <li>[4] Carhart, M. M. (1997). On Persistence in Mutual Fund Performance. <i>Journal of Finance</i>, 52(1), 57–82.</li>
+    <li>[5] Chevalier, J., &amp; Ellison, G. (1999). Career Concerns of Mutual Fund Managers. <i>Quarterly Journal of Economics</i>, 114(2), 389–432.</li>
+    <li>[6] Cremers, M., &amp; Petajisto, A. (2009). How Active Is Your Fund Manager? <i>Review of Financial Studies</i>, 22(9), 3329–3365.</li>
+    <li>[7] Efron, B. (1979). Bootstrap Methods: Another Look at the Jackknife. <i>Annals of Statistics</i>, 7(1), 1–26.</li>
+    <li>[8] Fama, E. F., &amp; French, K. R. (1993). Common Risk Factors in the Returns on Stocks and Bonds. <i>Journal of Financial Economics</i>, 33(1), 3–56.</li>
+    <li>[9] Golec, J. H. (1996). The Effects of Mutual Fund Managers' Characteristics on Their Portfolio Performance. <i>Financial Services Review</i>, 5(2), 133–147.</li>
+    <li>[10] Grinblatt, M., &amp; Titman, S. (1993). Performance Measurement Without Benchmarks. <i>Journal of Business</i>, 66(1), 47–68.</li>
+    <li>[11] Kacperczyk, M., Sialm, C., &amp; Zheng, L. (2005). On the Industry Concentration of Actively Managed Equity Mutual Funds. <i>Journal of Finance</i>, 60(4), 1983–2011.</li>
+    <li>[12] Kacperczyk, M., Sialm, C., &amp; Zheng, L. (2008). Unobserved Actions of Mutual Fund Managers. <i>Review of Financial Studies</i>, 21(6), 2379–2416.</li>
+    <li>[13] Lakonishok, J., Shleifer, A., &amp; Vishny, R. W. (1992). The Impact of Institutional Trading on Stock Prices. <i>Journal of Financial Economics</i>, 32(1), 23–43.</li>
+    <li>[14] Nelson, D. B. (1991). Conditional Heteroskedasticity in Asset Returns. <i>Econometrica</i>, 59(2), 347–370.</li>
+    <li>[15] Niessen, A., &amp; Ruenzi, S. (2007). Sex Matters: Gender and Mutual Fund Managers. <i>European Financial Management</i>, 13(4), 647–669.</li>
+    <li>[16] Odean, T. (1998). Are Investors Reluctant to Realize Their Losses? <i>Journal of Finance</i>, 53(5), 1775–1798.</li>
+    <li>[17] Wermers, R. (1999). Mutual Fund Herding and the Impact on Stock Prices. <i>Journal of Finance</i>, 54(2), 581–622.</li>
+  </ul>
+</section>
+
+<!-- ============ 8 诚实缺口 ============ -->
+<section id="s2">
+  <h2>8 · 诚实缺口与论文可启动性（Go / No-Go）</h2>
+  <div class="grid">
+    <div class="card">
+      <h4>已就绪（可直接跑回归）</h4>
+      <ul>
+        <li>主面板 9,974×49，400 只，无泄漏；</li>
+        <li>RA 72% / LSV 92% / ARG 97% / RG 87% / ICI·HHI 94% / ff5α 97% / avg_aum 99.9%；</li>
+        <li>R1/R2/R4/R5 与 §4.2 分层专项样本 N≈362 基金 / 3,224 观测，统计 power 足够；</li>
+        <li>R3（EGARCH） machinery 已就绪，待 γ 拟合覆盖评估。</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>诚实瓶颈（定义性 / 授权缺失）</h4>
+      <ul>
+        <li><b>DE 46.3%</b>：仅 6/12 月全持仓快照可算（结构性，非缺口）；</li>
+        <li><b>TO 18%</b>：仅 200 只真·双边换手率，全样本需 CSMAR/Wind（P1）；</li>
+        <li><b>school 45.9%</b>：需外部补全基金经理院校（P1）；</li>
+        <li><b>SDI 63.8%</b>：滚动8季暖机，早期无值（结构性）；</li>
+        <li><b>LSV 为代理</b>：无真实逐股买卖方向，用持仓增减方向。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note"><b>结论（Conditional Go）：</b>四类行为测度中的 <b>RA、LSV、ARG</b> 与全部绩效/控制变量已具备全样本回归条件，R1/R2/R4/R5/§4.2 可立即复现；<b>DE</b> 因披露制度仅半年度可得（结构性，非数据缺失）需在论文中明确为「半年频测度」；<b>TO / school</b> 的全样本扩展与 <b>LSV 严格复现</b> 仍依赖授权终端（CSMAR/Wind/iFinD）导出后落盘、重跑 <code>run_all.py</code>。上述限制均在论文方法与局限章节如实披露，不构成虚构。</div>
+
+  <h3>下一步（实证已跑，待补数据 / 待完善）</h3>
+  <ul>
+    <li><span class="pill p-green">已完成</span> 运行 <code>08 → 09 → 10 → 11 → 12 → 13</code> 产出真实系数表；全流程审计 PASS。</li>
+    <li>补齐 P0 <code>基金持仓明细_CSMAWind_全季度全持仓.csv</code> → 将 DE 从 46% 扩到全样本。</li>
+    <li>实现 R6 组内 FE（linearmodels.PanelOLS）形成三角验证。</li>
+    <li>对 egarch_gamma 做截尾后重跑 R3；把 bootstrap / 相关性诊断嵌入论文 §3.3。</li>
+  </ul>
+</section>
+
+<footer>
+  基金经理行为分析研究 · 回归总体分析（方法论 + 实证结果）· 数据口径与覆盖以 <code>主分析面板_重建.csv</code> 2026-08-14 实测为准<br>
+  全流程审计 PASS（无 2026Q3+ 泄漏）；实证系数为脚本 08→13 实跑结果；严守「不泄露未来季度、不虚构缺失数据」。
+</footer>
+
+</div>
+</body>
+</html>

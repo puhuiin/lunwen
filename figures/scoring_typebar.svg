@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 216" font-family="system-ui,Segoe UI,Arial" font-size="12">
+<rect width="620" height="216" fill="#fff"/>
+<text x="10" y="24" font-size="13" font-weight="700" fill="#1f2937">基金经理分型分布（基于 z 分数规则的 4 原型 + 均衡型）</text>
+<rect x="170" y="50" width="520.0" height="20" fill="#6b7280" rx="3"/>
+<text x="166" y="65.0" text-anchor="end" fill="#374151">均衡型(其他)</text>
+<text x="696.0" y="65.0" fill="#111827">261</text>
+<rect x="170" y="80" width="113.5632183908046" height="20" fill="#dc2626" rx="3"/>
+<text x="166" y="95.0" text-anchor="end" fill="#374151">高换手噪声型(输家)</text>
+<text x="289.5632183908046" y="95.0" fill="#111827">57</text>
+<rect x="170" y="110" width="65.74712643678161" height="20" fill="#16a34a" rx="3"/>
+<text x="166" y="125.0" text-anchor="end" fill="#374151">风控择股型(赢家)</text>
+<text x="241.74712643678163" y="125.0" fill="#111827">33</text>
+<rect x="170" y="140" width="57.77777777777778" height="20" fill="#0891b2" rx="3"/>
+<text x="166" y="155.0" text-anchor="end" fill="#374151">低偏误纪律型</text>
+<text x="233.77777777777777" y="155.0" fill="#111827">29</text>
+<rect x="170" y="170" width="39.84674329501916" height="20" fill="#d97706" rx="3"/>
+<text x="166" y="185.0" text-anchor="end" fill="#374151">行业集中下注型</text>
+<text x="215.84674329501917" y="185.0" fill="#111827">20</text>
+</svg>

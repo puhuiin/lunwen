@@ -1,0 +1,118 @@
+# -*- coding: utf-8 -*-
+"""
+择时系数稳健性核实（2026-08-26）
+须回答三问，否则不能纳入复合：
+  R1 定向：HM 规格 ex = a + b*MKT + g*min(0,MKT)，下行斜率 = b + g。
+     g < 0 表示下跌时实际暴露低于线性预期 = 下行保护。故「择时能力」= -g。
+     样本 93.5% 基金 g < 0，且 g 越负 alpha 越高（t=-5.19），与理论同向。
+  R2 是否只是低 beta 的机械产物？-> 控制 b_i（市场暴露）后重判
+  R3 是否只是波动率/风险不对称的另一种写法？-> 同时控制后重判
+"""
+import pandas as pd, numpy as np, os, json
+import statsmodels.api as sm
+
+BASE = r'd:\Desktop\基金经理行为分析研究'
+OUT = os.path.join(BASE, 'output')
+CTRL = ['mgr_total_tenure_v2', 'log_fund_age', 'log_aum']
+res = {}
+
+panel = pd.read_csv(os.path.join(OUT, '分析面板_v3_2026-08-26.csv'), parse_dates=['report_date'])
+panel = panel.sort_values(['fund_code', 'report_date'])
+
+rows = []
+for fc, g in panel.groupby('fund_code'):
+    gg = g.dropna(subset=['ex', 'ff5_MKT_excess'])
+    if len(gg) < 12:
+        continue
+    mkt = gg['ff5_MKT_excess']
+    X = sm.add_constant(pd.DataFrame({'MKT': mkt, 'HM_down': np.minimum(0.0, mkt)}))
+    m = sm.OLS(gg['ex'].values, X.values).fit()
+    rows.append(dict(fund_code=fc, hm_beta=m.params[1], hm_gamma=m.params[2]))
+tim = pd.DataFrame(rows).set_index('fund_code')
+tim['timing'] = -tim['hm_gamma']
+
+
+def winsor(s, p=0.01):
+    return s.clip(s.quantile(p), s.quantile(1 - p))
+
+
+def z(s):
+    return (s - s.mean()) / s.std()
+
+
+def ew(frame):
+    return frame.sum(axis=1, skipna=True) / frame.notna().sum(axis=1)
+
+
+def reg(y, X):
+    d = pd.concat([y, X], axis=1).dropna()
+    return sm.OLS(d.iloc[:, 0], sm.add_constant(d.iloc[:, 1:])).fit(cov_type='HC1')
+
+
+COLS = ['ARG', 'return_volatility', 'risk_asym', 'de', 'oc_conf', 'ICI', 'ISDI',
+        'SDI', 'lsv', 'mppm8_lag', 'sortino8_lag', 'sharpe8_lag']
+fm = panel.groupby('fund_code')[COLS + CTRL + ['ff5_adj_return']].mean()
+fm = fm.join(tim[['timing', 'hm_beta']], how='left')
+for c in COLS + CTRL + ['timing', 'hm_beta']:
+    fm[c] = winsor(fm[c])
+Y = fm['ff5_adj_return']
+
+print('=== R1 timing = -hm_gamma 描述 ===')
+print('  mean=%+.4f std=%.4f  正值（有下行保护）占比 %.1f%%'
+      % (fm['timing'].mean(), fm['timing'].std(), (fm['timing'] > 0).mean() * 100))
+print('  corr(timing, hm_beta) = %+.3f' % fm['timing'].corr(fm['hm_beta']))
+
+print('\n=== R2/R3 逐步加控制 ===')
+paths = {
+    '1_timing单指标': ['timing'],
+    '2_加市场暴露beta': ['timing', 'hm_beta'],
+    '3_加波动率': ['timing', 'hm_beta', 'return_volatility'],
+    '4_加风险不对称': ['timing', 'hm_beta', 'return_volatility', 'risk_asym'],
+    '5_加ARG': ['timing', 'hm_beta', 'return_volatility', 'risk_asym', 'ARG'],
+    '6_全指标': ['timing', 'hm_beta'] + COLS,
+}
+r23 = {}
+for k, xs in paths.items():
+    m = reg(Y, fm[xs + CTRL])
+    r23[k] = dict(n=int(m.nobs), t=round(float(m.tvalues['timing']), 2),
+                  p=round(float(m.pvalues['timing']), 4), r2=round(float(m.rsquared), 4))
+    print('  %-18s n=%3d  timing t=%+6.2f  p=%.4f  R2=%.4f' % (k, m.nobs, m.tvalues['timing'], m.pvalues['timing'], m.rsquared))
+res['R23_逐步加控制'] = r23
+
+print('\n=== R4 择时五分组 alpha 单调性 ===')
+q = fm.dropna(subset=['timing', 'ff5_adj_return']).copy()
+q['grp'] = pd.qcut(q['timing'], 5, labels=['Q1最弱', 'Q2', 'Q3', 'Q4', 'Q5最强'])
+tab = q.groupby('grp', observed=True)['ff5_adj_return'].agg(['size', 'mean'])
+print(tab.round(5).to_string())
+hi, lo = q[q['grp'] == 'Q5最强']['ff5_adj_return'], q[q['grp'] == 'Q1最弱']['ff5_adj_return']
+tt = sm.stats.ttest_ind(hi, lo, usevar='unequal')
+print('  Q5-Q1 = %+.5f  t=%+.2f  p=%.4f' % (hi.mean() - lo.mean(), tt[0], tt[1]))
+res['R4_分组'] = dict(组均值={str(k): round(float(v), 5) for k, v in tab['mean'].items()},
+                      Q5_Q1=round(float(hi.mean() - lo.mean()), 5),
+                      t=round(float(tt[0]), 2), p=round(float(tt[1]), 4))
+
+print('\n=== R5 风险应对能力复合终选 ===')
+r5 = {}
+for k, items in {
+    'A_ARG单指标': [('ARG', +1)],
+    'B_ARG+timing': [('ARG', +1), ('timing', +1)],
+    'C_ARG+timing+波动率': [('ARG', +1), ('timing', +1), ('return_volatility', +1)],
+    'D_ARG+波动率': [('ARG', +1), ('return_volatility', +1)],
+}.items():
+    s = ew(pd.DataFrame({m_: sg * z(fm[m_]) for m_, sg in items}))
+    mm = reg(Y, pd.concat([s.rename('x'), fm[CTRL]], axis=1))
+    r5[k] = dict(n=int(mm.nobs), 有效基金=int(s.notna().sum()),
+                 t=round(float(mm.tvalues['x']), 2), p=round(float(mm.pvalues['x']), 4),
+                 r2=round(float(mm.rsquared), 4))
+    print('  %-22s 有效%3d  t=%+6.2f  p=%.4f  R2=%.4f'
+          % (k, s.notna().sum(), mm.tvalues['x'], mm.pvalues['x'], mm.rsquared))
+res['R5_复合终选'] = r5
+
+# 本文件是下游唯一依赖的主产物：必须含 timing 列
+# （_harden_20260827 / _improve_indicators_20260827 均读 [['timing']]）。
+# 注意：_timing_metric_20260826.py 产出无 timing 列的原始系数，已改名为
+# 择时系数_季度HM_原始_2026-08-26.csv，不再覆盖本文件。
+tim.reset_index().to_csv(os.path.join(OUT, '择时系数_季度HM_2026-08-26.csv'), index=False, encoding='utf-8-sig')
+with open(os.path.join(OUT, '择时稳健性_2026-08-26.json'), 'w', encoding='utf-8') as f:
+    json.dump(res, f, ensure_ascii=False, indent=2)
+print('\n已保存 output/择时稳健性_2026-08-26.json')

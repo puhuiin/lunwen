@@ -1,0 +1,222 @@
+# -*- coding: utf-8 -*-
+"""论文核心配图（2026-08-26 数据 · 2026-08-31 美化版）
+================================================================================
+图 1  综合能力五分组的 FF5 alpha（季均）柱状图 —— 单色蓝渐变 + Q5 强调
+图 2  六个计分维度的相关系数热力图 —— 学术蓝渐变 + 高值白字加粗
+图 3  五名正向典型 + 反例的能力雷达图 —— 放大到 13.0×9.5，标签留白加大
+
+美化原则（学术风格）：
+  · 单色蓝系（深蓝 #1f4e79 主色），黑白打印兼容
+  · 无边框 spines，去除视觉噪声
+  · 统一字体层级：标题 13 / 轴标签 11 / 数据标签 10.5 / 注释 9.5
+  · 数据源只读不重算，与 2026-08-26 定稿 JSON 完全一致
+输出：figures/论文图1_五分组alpha.png 等三张，300 dpi，供 docx 内嵌。
+"""
+import json
+import os
+import io
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
+import matplotlib.patheffects as pe
+
+BASE = r'd:\Desktop\基金经理行为分析研究'
+OUT = os.path.join(BASE, 'output')
+FIG = os.path.join(BASE, 'figures')
+TODAY = '2026-08-26'
+os.makedirs(FIG, exist_ok=True)
+
+# ---------- 学术风格统一配置 ----------
+PRIMARY = '#1f4e79'      # 深蓝主色
+ACCENT = '#c9a227'       # 金色点缀（用于强调）
+GRID = '#e2e8f0'         # 浅灰网格
+TEXT_DARK = '#1e293b'    # 正文深灰
+TEXT_MUTED = '#64748b'   # 次要灰
+BG_CARD = '#f8fafc'      # 浅灰底
+
+plt.rcParams['font.sans-serif'] = ['Microsoft YaHei', 'SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+plt.rcParams['font.size'] = 10.5
+plt.rcParams['axes.edgecolor'] = TEXT_MUTED
+plt.rcParams['axes.linewidth'] = 0.8
+plt.rcParams['xtick.color'] = TEXT_DARK
+plt.rcParams['ytick.color'] = TEXT_DARK
+plt.rcParams['text.color'] = TEXT_DARK
+plt.rcParams['axes.labelcolor'] = TEXT_DARK
+
+
+def rj(name):
+    with io.open(os.path.join(OUT, name), encoding='utf-8') as f:
+        return json.load(f)
+
+
+CP = rj(f'六维复合定稿验证_含L1_{TODAY}.json')
+PT = rj(f'画像_群体与典型_{TODAY}.json')
+S4 = CP['S4_分组']
+DIMS = ['基本面优势', '认知能力', '配置选择能力', '风险应对能力',
+        '风险转化能力', '交易执行能力']
+SHORT = {'基本面优势': 'L1\n基本面优势', '认知能力': 'L2\n认知', '配置选择能力': 'L3\n配置选择',
+         '风险应对能力': 'L4a\n风险应对', '风险转化能力': 'L4b\n风险转化',
+         '交易执行能力': 'L5\n交易执行'}
+
+# ============================== 图 1 ==============================
+g = ['Q1最低', 'Q2', 'Q3', 'Q4', 'Q5最高']
+vals = [S4['alpha均值'][k] * 100 for k in g]
+labels = ['Q1\n最低', 'Q2', 'Q3', 'Q4', 'Q5\n最高']
+
+# 学术单色蓝渐变：浅 → 深，Q5 最深作视觉锚点
+grad = ['#c5d5e8', '#9cb8d6', '#6f99c4', '#4179b3', '#1f4e79']
+
+fig, ax = plt.subplots(figsize=(7.4, 4.4))
+fig.patch.set_facecolor('white')
+ax.set_facecolor('white')
+
+bars = ax.bar(labels, vals, color=grad, width=0.60,
+              edgecolor='none', zorder=3)
+# 只给 Q5 加金色顶边以作强调（学术风格下的克制点缀）
+bars[-1].set_edgecolor(ACCENT)
+bars[-1].set_linewidth(1.6)
+
+# 柱顶数据标签（深蓝加粗，非金色，保持学术克制）
+for b, v in zip(bars, vals):
+    ax.text(b.get_x() + b.get_width() / 2, v + 0.07, f'{v:.2f}%',
+            ha='center', va='bottom', fontsize=10.5, fontweight='bold',
+            color=PRIMARY)
+
+ax.axhline(0, color=TEXT_MUTED, lw=0.8, zorder=2)
+ax.set_ylabel('FF5 超额收益（%／季）', fontsize=11)
+ax.set_ylim(0, max(vals) * 1.28)
+ax.spines[['top', 'right']].set_visible(False)
+ax.spines['left'].set_color(TEXT_MUTED)
+ax.spines['bottom'].set_color(TEXT_MUTED)
+ax.tick_params(axis='both', labelsize=10.5)
+ax.yaxis.grid(True, color=GRID, lw=0.7, zorder=0)
+ax.set_axisbelow(True)
+
+# 统计注释框：米白底 + 金边 + 深蓝字（放在左上空白区，避开 Q4/Q5 标签）
+ax.annotate(
+    f'Q5−Q1 = {S4["Q5_Q1"]*100:.2f} 个百分点／季（t={S4["t"]:.2f}，p<0.001）\n逐组严格单调递增',
+    xy=(0.03, 0.94), xycoords='axes fraction', ha='left', va='top',
+    fontsize=10, color=PRIMARY, linespacing=1.6,
+    bbox=dict(boxstyle='round,pad=0.55', fc='#fffaf0', ec=ACCENT, lw=1.0))
+
+ax.set_title('按综合能力五等分的组合超额收益（全样本 %d 只基金）'
+             % sum(S4['规模'][k] for k in g),
+             fontsize=13, pad=14, fontweight='bold', color=TEXT_DARK)
+
+fig.tight_layout()
+p1 = os.path.join(FIG, '论文图1_五分组alpha.png')
+fig.savefig(p1, dpi=300, facecolor='white')
+plt.close(fig)
+print('saved:', p1)
+
+# ============================== 图 2 ==============================
+S2 = CP['S2_维度相关']
+M = np.array([[S2[a][b] for b in DIMS] for a in DIMS])
+short = [SHORT[d] for d in DIMS]
+
+fig, ax = plt.subplots(figsize=(7.0, 5.8))
+fig.patch.set_facecolor('white')
+
+# 学术 Blues：0–0.8 映射，保证高值足够深
+im = ax.imshow(M, cmap='Blues', vmin=0, vmax=0.8, aspect='equal')
+
+ax.set_xticks(range(6))
+ax.set_xticklabels(short, fontsize=9.5, linespacing=1.4)
+ax.set_yticks(range(6))
+ax.set_yticklabels(short, fontsize=9.5, linespacing=1.4)
+ax.tick_params(length=0)
+
+# 白色细线分隔单元格（学术热力图标准做法）
+ax.set_xticks(np.arange(-0.5, 6, 1), minor=True)
+ax.set_yticks(np.arange(-0.5, 6, 1), minor=True)
+ax.grid(which='minor', color='white', linewidth=1.6)
+ax.tick_params(which='minor', length=0)
+
+for i in range(6):
+    for j in range(6):
+        v = M[i, j]
+        txt = '1' if v == 1 else f'{v:.3f}'.rstrip('0').rstrip('.')
+        is_hi = (i != j and v > 0.50)
+        ax.text(j, i, txt,
+                ha='center', va='center', fontsize=10,
+                color='white' if v > 0.45 else PRIMARY,
+                fontweight='bold' if is_hi else 'normal')
+
+ax.set_title('六个计分维度的两两相关（基金层，N=362）',
+             fontsize=13, pad=14, fontweight='bold', color=TEXT_DARK)
+
+cbar = fig.colorbar(im, ax=ax, shrink=0.82, pad=0.02)
+cbar.set_label('相关系数', fontsize=10)
+cbar.ax.tick_params(labelsize=9)
+cbar.outline.set_linewidth(0.6)
+cbar.outline.set_edgecolor(TEXT_MUTED)
+
+# 注释放到 colorbar 正下方，避开图形区
+fig.text(0.13, 0.015,
+         '非对角线最大 0.589，远低于 0.8 共线警戒；L4a×L4b 仅 0.418 —— 两职能分开计分的直接依据',
+         fontsize=9, color=TEXT_MUTED, ha='left')
+
+fig.tight_layout(rect=[0, 0.045, 1, 1])
+p2 = os.path.join(FIG, '论文图2_维度相关热力图.png')
+fig.savefig(p2, dpi=300, facecolor='white', bbox_inches='tight')
+plt.close(fig)
+print('saved:', p2)
+
+# ============================== 图 3 ==============================
+ARCH = PT['典型画像']
+tag_short = [c['标签'].split('：')[0] for c in ARCH]
+n = len(DIMS)
+theta = np.linspace(0, 2 * np.pi, n, endpoint=False)
+theta_c = np.concatenate([theta, theta[:1]])
+
+# 放大到 13.0 × 9.5（用户选定）
+fig, axes = plt.subplots(2, 3, figsize=(13.0, 9.5),
+                         subplot_kw=dict(polar=True))
+fig.patch.set_facecolor('white')
+
+# 学术单色蓝渐变（按综合能力排名由深到浅，反例用中性灰）
+# 排序：全能（最深）→ 风险定价 → 认知纪律 → 攻守转换 → 基本面优势 → 反例（灰）
+rank_palette = ['#1f4e79', '#2e6da4', '#4179b3', '#6f99c4', '#93b4d6', '#8a8f98']
+
+tick_lbl = ['L1 基本面', 'L2 认知', 'L3 配置选择',
+            'L4a 风险应对', 'L4b 风险转化', 'L5 交易执行']
+
+for ax, c, tg, col in zip(axes.flat, ARCH, tag_short, rank_palette):
+    vals = [max(c['六维分位'].get(d) or 0.0, 0.0) for d in DIMS]
+    vals_c = vals + vals[:1]
+    ax.set_facecolor('white')
+    ax.set_theta_zero_location('N')
+    ax.set_theta_direction(-1)
+    ax.set_thetagrids(np.degrees(theta), tick_lbl, fontsize=10.5)
+    # 粗主线 + 半透明填充
+    ax.plot(theta_c, vals_c, color=col, lw=2.4, zorder=3)
+    ax.fill(theta_c, vals_c, color=col, alpha=0.20, zorder=2)
+    ax.set_ylim(0, 1.0)
+    ax.set_yticks([0.25, 0.50, 0.75, 1.00])
+    ax.set_yticklabels(['25%', '50%', '75%', '100%'],
+                       fontsize=7.5, color=TEXT_MUTED)
+    ax.set_rlabel_position(180 / n)
+    ax.grid(color=GRID, lw=0.7)
+    ax.spines['polar'].set_color(TEXT_MUTED)
+    ax.spines['polar'].set_linewidth(0.8)
+
+    # 标题：类型 + 基金名（截断过长名）+ α
+    fname = c['基金简称']
+    if len(fname) > 12:
+        fname = fname[:11] + '…'
+    ax.set_title(f'{tg}｜{fname}\nα = {c["ff5_alpha"]:+.2%}',
+                 fontsize=11, pad=20, color=TEXT_DARK, linespacing=1.5)
+
+fig.suptitle('典型投资经理的六维能力雷达图（数值＝全样本百分位）',
+             fontsize=14, y=0.985, fontweight='bold', color=TEXT_DARK)
+
+fig.subplots_adjust(left=0.06, right=0.94, top=0.87, bottom=0.05,
+                    hspace=0.42, wspace=0.38)
+p3 = os.path.join(FIG, '论文图3_典型经理雷达图.png')
+fig.savefig(p3, dpi=300, facecolor='white')
+plt.close(fig)
+print('saved:', p3)
+print('三张论文配图完成（学术美化版）')

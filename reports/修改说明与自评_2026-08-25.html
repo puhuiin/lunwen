@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>修改说明与自评 · 2026-08-25 · 基金经理行为分析研究</title>
+<style>
+  :root{
+    --paper:#f6f1e7; --paper2:#fdfaf3; --ink:#1c1a15; --ink2:#4a463c; --mute:#8a8375;
+    --seal:#b23a2a; --jade:#1e6e5a; --amber:#a8690e; --line:#ddd3c0; --card:#fffdf8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.75;
+    background-image:
+      linear-gradient(rgba(28,26,21,.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(28,26,21,.028) 1px, transparent 1px);
+    background-size:28px 28px;
+  }
+  .wrap{max-width:1020px;margin:0 auto;padding:56px 28px 90px}
+  .serif{font-family:"Noto Serif SC","Songti SC",Georgia,"SimSun",serif}
+
+  /* ===== 头部 ===== */
+  header{border-bottom:3px double var(--ink);padding-bottom:26px;margin-bottom:8px;position:relative}
+  .kicker{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.35em;color:var(--mute);text-transform:uppercase;margin-bottom:14px}
+  .kicker::before,.kicker::after{content:"";flex:1;height:1px;background:var(--line)}
+  h1{font-size:40px;font-weight:900;letter-spacing:.04em;line-height:1.25}
+  h1 em{font-style:normal;color:var(--seal)}
+  .sub{margin-top:12px;color:var(--ink2);font-size:15.5px;max-width:760px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:16px;font-size:12.5px;color:var(--mute)}
+  .meta b{color:var(--ink2);font-weight:600}
+  .chop{
+    position:absolute;right:0;top:18px;width:86px;height:86px;border:3px solid var(--seal);border-radius:10px;
+    color:var(--seal);display:flex;align-items:center;justify-content:center;text-align:center;
+    font-family:"Noto Serif SC","Songti SC",serif;font-weight:900;font-size:19px;line-height:1.3;
+    transform:rotate(6deg);opacity:.85;letter-spacing:.1em;padding:6px;
+    box-shadow:inset 0 0 0 2px var(--paper), inset 0 0 0 4px rgba(178,58,42,.35);
+  }
+
+  /* ===== 章节 ===== */
+  section{margin-top:52px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:20px}
+  .sec-no{font-family:"Noto Serif SC",serif;font-size:15px;font-weight:700;color:var(--paper);background:var(--ink);
+    width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+  h2{font-size:24px;font-weight:900;letter-spacing:.05em}
+  .sec-note{color:var(--mute);font-size:13px;margin-left:auto}
+
+  /* ===== 改动卡片 ===== */
+  .chg{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--jade);border-radius:6px;
+    padding:22px 26px;margin-bottom:18px;box-shadow:0 1px 0 rgba(28,26,21,.06), 0 10px 24px -18px rgba(28,26,21,.35);
+    animation:rise .6s both}
+  .chg:nth-of-type(2){animation-delay:.08s}.chg:nth-of-type(3){animation-delay:.16s}.chg:nth-of-type(4){animation-delay:.24s}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .chg-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+  .chg-head h3{font-size:18px;font-weight:800}
+  .tag{font-size:11.5px;padding:2px 10px;border-radius:99px;border:1px solid;font-weight:600;letter-spacing:.05em}
+  .tag.req{color:var(--mute);border-color:var(--line);background:var(--paper2)}
+  .tag.done{color:var(--jade);border-color:var(--jade);background:rgba(30,110,90,.07)}
+  .tag.part{color:var(--amber);border-color:var(--amber);background:rgba(168,105,14,.08)}
+  .chg p{color:var(--ink2);font-size:14.5px}
+  .chg p+p{margin-top:6px}
+  .chg b{color:var(--ink)}
+  code{font-family:"JetBrains Mono",Consolas,monospace;font-size:.88em;background:rgba(28,26,21,.06);padding:1px 6px;border-radius:4px}
+  .stat-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .stat{background:var(--paper2);border:1px solid var(--line);border-radius:6px;padding:8px 14px;font-size:13px}
+  .stat b{display:block;font-size:17px;font-family:"Noto Serif SC",serif;color:var(--ink)}
+  .pos{color:var(--jade)} .neg{color:var(--seal)}
+
+  /* ===== 三口径表 ===== */
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card)}
+  caption{caption-side:top;text-align:left;font-weight:800;font-size:15px;padding:10px 4px;color:var(--ink)}
+  caption small{font-weight:400;color:var(--mute);font-size:12.5px}
+  th{background:var(--ink);color:var(--paper);padding:9px 12px;text-align:left;font-size:12.5px;letter-spacing:.08em;font-weight:600}
+  td{padding:9px 12px;border:1px solid var(--line);vertical-align:top}
+  tr:nth-child(even) td{background:var(--paper2)}
+  .num{font-family:"JetBrains Mono",Consolas,monospace;white-space:nowrap;font-size:12.5px}
+
+  /* ===== 自评印章 ===== */
+  .stamp{display:inline-block;min-width:64px;text-align:center;font-family:"Noto Serif SC",serif;font-weight:900;
+    font-size:14px;padding:3px 10px;border:2px solid;border-radius:6px;transform:rotate(-2deg);letter-spacing:.15em}
+  .stamp.ok{color:var(--jade);border-color:var(--jade)}
+  .stamp.half{color:var(--amber);border-color:var(--amber)}
+
+  /* ===== 雷达与柱状 ===== */
+  .evi{display:grid;grid-template-columns:340px 1fr;gap:28px;align-items:center;background:var(--card);
+    border:1px solid var(--line);border-radius:8px;padding:26px}
+  @media(max-width:820px){.evi{grid-template-columns:1fr}}
+  .bar-row{display:grid;grid-template-columns:92px 1fr 64px;align-items:center;gap:10px;margin:7px 0;font-size:13px}
+  .bar-track{height:16px;background:var(--paper);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .bar-fill{height:100%;background:linear-gradient(90deg,var(--jade),#2f8f77);border-radius:3px;transform-origin:left;animation:grow 1s cubic-bezier(.2,.7,.2,1) both}
+  .bar-fill.weak{background:linear-gradient(90deg,#b8a77e,#cbbd97)}
+  .bar-fill.zero{background:#c9c2b2}
+  @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .bar-val{font-family:"JetBrains Mono",monospace;font-size:12.5px;text-align:right}
+
+  /* ===== 待改进清单 ===== */
+  .todo{counter-reset:td;list-style:none}
+  .todo li{counter-increment:td;position:relative;background:var(--card);border:1px solid var(--line);border-radius:6px;
+    padding:16px 18px 16px 60px;margin-bottom:12px;font-size:14px;color:var(--ink2)}
+  .todo li::before{content:counter(td,decimal-leading-zero);position:absolute;left:16px;top:16px;
+    font-family:"Noto Serif SC",serif;font-weight:900;font-size:19px;color:var(--seal)}
+  .todo b{color:var(--ink)}
+  .prio{float:right;font-size:11.5px;font-weight:700;letter-spacing:.1em;padding:2px 9px;border-radius:99px;margin-left:8px}
+  .p-high{background:rgba(178,58,42,.1);color:var(--seal)}
+  .p-mid{background:rgba(168,105,14,.12);color:var(--amber)}
+  .p-low{background:rgba(30,110,90,.1);color:var(--jade)}
+  .p-done{background:var(--ink);color:var(--paper)}
+  .todo li.fin{border-left:3px solid var(--jade);background:rgba(30,110,90,.035)}
+  .fin-res{display:block;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:13px;color:var(--ink2)}
+
+  .verdict{margin-top:56px;border:2px solid var(--ink);border-radius:8px;background:var(--paper2);padding:26px 30px;position:relative}
+  .verdict::before{content:"总 评";position:absolute;top:-16px;left:24px;background:var(--ink);color:var(--paper);
+    font-family:"Noto Serif SC",serif;font-weight:900;font-size:15px;letter-spacing:.3em;padding:4px 14px 4px 18px;border-radius:4px}
+  .verdict p{color:var(--ink2);font-size:14.5px}
+  .verdict b{color:var(--ink)}
+  footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="chop">修改<br>说明</div>
+  <div class="kicker">基金经理行为分析研究 · 工作纪要</div>
+  <h1 class="serif">本轮改了什么、<em>达没达到要求</em>、还差什么</h1>
+  <p class="sub">针对《投资经理画像分析大纲.docx》提出的四点意见——认知层指标不足、改进主动份额（AS）结论自相矛盾、风险转化能力需换指标、六维能力应等权复合打分——本轮对两份核心 HTML 文档做了全量修订，并补齐了全部数据脚本与结构校验。本页是修改记录 + 逐条自评 + 后续改进清单。</p>
+  <div class="meta">
+    <span>日期 <b>2026-08-25</b></span>
+    <span>涉及文档 <b>指标总表_五层框架.html · 基金经理能力画像与业绩评价.html</b></span>
+    <span>指标框架 <b>15 项 → 17 项</b></span>
+    <span>结构校验 <b>标签配平 OK · rowspan 对齐 OK</b></span>
+  </div>
+</header>
+
+<!-- ============ 一、四大改动 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-no">壹</span><h2 class="serif">我们做了什么：四项改动</h2><span class="sec-note">按您的四条意见逐条对应</span></div>
+
+  <div class="chg">
+    <div class="chg-head"><h3>① 认知层新增指标：RC 追涨杀跌</h3><span class="tag req">意见 1 · 认知指标不够</span><span class="tag done">已落地</span></div>
+    <p><b>构造</b>：调仓权重变动 Δw 与个股 12 个月动量（跳过最近 1 个月）的 Spearman 秩相关 <code>rc_mom = Spearman(Δw, MOM₁₂₋₁)</code>——直接刻画"越涨越买、越跌越卖"的决策偏误，与 LSV 羊群（截面扎堆）是不同维度。</p>
+    <p><b>实证</b>：同期口径不显著，但<b>前向预测显著为负（t=−2.08**，三新指标同入 t=−2.19**）</b>——追涨杀跌的经理下一季业绩显著更差；与旧指标两两相关均 &lt;0.10，是干净独立的新信号，定级 <b>B−</b>。</p>
+    <div class="stat-row">
+      <div class="stat">前向 t 值<b class="neg">−2.08**</b></div>
+      <div class="stat">样本覆盖率<b>53.5%</b></div>
+      <div class="stat">与旧指标相关性<b>&lt; 0.10</b></div>
+      <div class="stat">L2 认知层<b>3 项 → 4 项</b></div>
+    </div>
+  </div>
+
+  <div class="chg" style="border-left-color:var(--seal)">
+    <div class="chg-head"><h3>② AS（改进主动份额）矛盾：全文统一口径</h3><span class="tag req">意见 2 · 结论矛盾</span><span class="tag done">已落地</span></div>
+    <p><b>矛盾根源不是错误，而是因变量口径不同</b>。三处结果各自为真，现在全文（速览、表 3.1、系数条形图、表 9.2、指标总表，共 5 处加注）统一按下表表述：</p>
+    <table style="margin-top:10px">
+      <caption>AS 三口径对照 <small>——同一事实的两个侧面，不再是矛盾</small></caption>
+      <tr><th>口径</th><th>结果</th><th>经济学含义</th></tr>
+      <tr><td>同期 FF5 alpha（主表 M4）</td><td class="num neg">t = −2.96***</td><td>剥离因子风险后，偏离基准是"伪主动折价"</td></tr>
+      <tr><td>前向 4 季原始毛收益</td><td class="num pos">t = +12.7***</td><td>高偏离 = 高异质风险暴露，赚的是风险溢价</td></tr>
+      <tr><td>朴素同期收益</td><td class="num">不显著</td><td>信号被相关变量遮掩</td></tr>
+    </table>
+    <p style="margin-top:10px"><b>统一后的一句话结论</b>（中国语境核心发现）：<b>"赚风险的钱、亏能力的钱"——主动的方向（ICI，正）优于主动的量（AS，负）</b>，与美股"主动份额溢价"文献相反，恰是本文的边际贡献。</p>
+  </div>
+
+  <div class="chg">
+    <div class="chg-head"><h3>③ 风险转化能力换指标：sharpe8_lag</h3><span class="tag req">意见 3 · 风险转化重找指标</span><span class="tag done">已落地</span></div>
+    <p><b>为什么淘汰 RV</b>：收益波动率只度量"敢承担风险"，没有"转化"维度；且 M4 全指标回归中信号消失（t=0.86 ns），属"借光型"变量——它的显著性实为 ARG/ICI 风险承担通道的投影。已降级为对照项。</p>
+    <p><b>新指标</b>：截至上季末的滚动 8 季夏普比率 <code>sharpe8_lag</code>（shift(1) 滞后），度量"单位风险换成多少收益"。定级 <b>A 级</b>，但定级依据已在 2026-08-25 复核后<b>从主表表观 t 值改为分半样本外检验</b>（见下）。</p>
+    <div class="stat-row">
+      <div class="stat">分半样本外 t 值<b class="pos">+2.63***</b></div>
+      <div class="stat">样本外 R²<b>0.105</b></div>
+      <div class="stat">样本覆盖率<b>100%</b></div>
+      <div class="stat">框架定级<b>A 级</b></div>
+    </div>
+    <p style="margin-top:10px"><b>复核补记（2026-08-25）</b>：主表表观 t=+9.11***（增量 R² +5.2pp）经查含<b>机械成分</b>——362/400 只基金的 ff5_adj_return 在基金内几乎无逐季变异，DV 在基金层被常数化，使"基金层慢变量 × 基金层常数 DV"产生非技能性关联，故<b>该 t 值不再作为证据强度依据</b>。改以前半样本算指标、后半样本算业绩的分半设计重测：<b>t=+2.63***，R²=0.105</b>（Pearson 0.267 / Spearman 0.140，N=355），多年期技能为真。同期当季收益口径反呈 <b>−5.75***</b>（牛市 −10.04***、熊市 −1.71*）的"冠军魔咒"反转，前向一季 −7.90***——因此该指标的正确定位是<b>能力的事后度量</b>，不是短期选基信号；纯特质版 <code>ir8_lag</code> 样本内外均为负（−3.06***/−2.89***）。</p>
+  </div>
+
+  <div class="chg">
+    <div class="chg-head"><h3>④ 六维能力：多指标等权复合 + 群体画像证据</h3><span class="tag req">意见 4 · 复合打分画像</span><span class="tag done">已落地</span></div>
+    <p>每个能力维度由 1–2 个指标 z 标准化后<b>等权复合</b>，再画雷达：行业配置力 <code>[ICI+(−ISDI)]/2</code> · 风险应对力 <code>RA</code> · 主动收益力 <code>[ARG+RG]/2</code> · 投资纪律性 <code>[(−de)+(−rc_mom)]/2</code> · 风险转化力 <code>sharpe8_lag</code> · 成本控制力 <code>−TO_wind</code>。全量 400 只基金得分已产出（<code>output/六维能力复合得分_2026-08-25.csv</code>）。</p>
+    <p><b>新增群体画像证据</b>（最好 5% vs 最差 5%，各 18 只基金的 z 分数均值差）——区分度排序与回归显著性结构完全吻合：</p>
+  </div>
+
+  <div class="evi">
+    <svg viewBox="0 0 300 260" width="100%" role="img" aria-label="六维区分度雷达">
+      <g transform="translate(150,132)">
+        <g stroke="#ddd3c0" fill="none">
+          <polygon points="0,-100 86.6,-50 86.6,50 0,100 -86.6,50 -86.6,-50"/>
+          <polygon points="0,-66.7 57.7,-33.3 57.7,33.3 0,66.7 -57.7,33.3 -57.7,-33.3"/>
+          <polygon points="0,-33.3 28.9,-16.7 28.9,16.7 0,33.3 -28.9,16.7 -28.9,-16.7"/>
+        </g>
+        <g stroke="#b8b0a0" stroke-width="1">
+          <line x1="0" y1="0" x2="0" y2="-100"/><line x1="0" y1="0" x2="86.6" y2="-50"/><line x1="0" y1="0" x2="86.6" y2="50"/>
+          <line x1="0" y1="0" x2="0" y2="100"/><line x1="0" y1="0" x2="-86.6" y2="50"/><line x1="0" y1="0" x2="-86.6" y2="-50"/>
+        </g>
+        <!-- values scaled: 1.24,1.08,0.65,0.61,0.27,0.00 -> r = v/1.4*100 -->
+        <polygon points="0,-88.6 66.7,-38.6 40.2,23.2 0,43.6 -16.7,9.6 0,0"
+          fill="rgba(30,110,90,.18)" stroke="#1e6e5a" stroke-width="2.5" stroke-linejoin="round"/>
+        <g font-family="sans-serif" font-size="11.5" fill="#4a463c" font-weight="600">
+          <text x="0" y="-110" text-anchor="middle">风险转化 1.24</text>
+          <text x="98" y="-52" text-anchor="start">行业配置 1.08</text>
+          <text x="98" y="58" text-anchor="start">投资纪律 0.65</text>
+          <text x="0" y="122" text-anchor="middle">主动收益 0.61</text>
+          <text x="-98" y="58" text-anchor="end">风险应对 0.27</text>
+          <text x="-98" y="-52" text-anchor="end">成本控制 0.00</text>
+        </g>
+      </g>
+    </svg>
+    <div>
+      <div class="bar-row"><span>风险转化力</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-val pos">+1.24</span></div>
+      <div class="bar-row"><span>行业配置力</span><div class="bar-track"><div class="bar-fill" style="width:87%"></div></div><span class="bar-val pos">+1.08</span></div>
+      <div class="bar-row"><span>投资纪律性</span><div class="bar-track"><div class="bar-fill" style="width:52%"></div></div><span class="bar-val pos">+0.65</span></div>
+      <div class="bar-row"><span>主动收益力</span><div class="bar-track"><div class="bar-fill" style="width:49%"></div></div><span class="bar-val pos">+0.61</span></div>
+      <div class="bar-row"><span>风险应对力</span><div class="bar-track"><div class="bar-fill weak" style="width:22%"></div></div><span class="bar-val">+0.27</span></div>
+      <div class="bar-row"><span>成本控制力</span><div class="bar-track"><div class="bar-fill zero" style="width:2%"></div></div><span class="bar-val">−0.00</span></div>
+      <p style="margin-top:12px;font-size:13px;color:var(--ink2)">解读：<b>好经理把风险转化为收益，差经理承担风险却无产出</b>（+1.24 的区分度为六维之最）；成本控制力区分度为零，与 TO 主表不显著互为印证。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 二、自评 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-no">贰</span><h2 class="serif">自评：达到您的要求了吗</h2><span class="sec-note">诚实逐条对照，含未竟事项</span></div>
+  <table>
+    <caption>要求—落实对照表 <small>印章为自评结论，非客套</small></caption>
+    <tr><th style="width:30%">您的要求</th><th style="width:14%">自评</th><th>落实情况与遗留问题</th></tr>
+    <tr>
+      <td><b>1 · 认知能力层新增指标</b></td>
+      <td><span class="stamp ok">达成</span></td>
+      <td>RC 追涨杀跌已入库并进入纪律性复合维度，前向显著、与旧指标独立；<b>机制已补做衰减检验</b>：同期 ns、前向 1Q ns、2Q ns、<b>前向 4 季累计 −0.0483（t=−3.46***）</b>，确认是"慢变量"式行为拖累（与 TO_wind 的交互项 +4.53***），假说升级为有形态证据。<b>遗留</b>：覆盖率仅 53.5%（依赖半年报全持仓明细），结论暂不外推全样本。</td>
+    </tr>
+    <tr>
+      <td><b>2 · AS 矛盾全文理清，结论一致</b></td>
+      <td><span class="stamp ok">达成</span></td>
+      <td>定位矛盾根源为 DV 口径差异，三口径并表陈述，两份 HTML 全文 grep 终检、5 处加注，已无任何"裸写显著性"的 AS 表述。结论从"互相打架"升级为"中国语境核心发现"，逻辑闭环。</td>
+    </tr>
+    <tr>
+      <td><b>3 · 风险转化能力重新找指标</b></td>
+      <td><span class="stamp ok">达成</span></td>
+      <td>sharpe8_lag 覆盖 100%、群体画像区分度第一，<b>且已完成技能 vs 运气剥离复核</b>：主表表观 t=+9.11*** 含 DV 基金层常数化的机械成分（已下修、不作证据依据）；分半样本外 <b>t=+2.63***（R²=0.105，N=355）</b>确认多年期技能真实；同期口径 −5.75***（牛市 −10.04***）呈"冠军魔咒"反转，故定位为<b>能力的事后度量</b>而非选基信号。证据等级表述统一改为"样本外验证的多年期技能信号"。<b>遗留</b>：纯特质版 ir8_lag 持续为负，说明"转化力"里仍含系统性风险择时成分，二者的分解尚未彻底。</td>
+    </tr>
+    <tr>
+      <td><b>4 · 多指标等权复合打分再画像</b></td>
+      <td><span class="stamp ok">达成</span></td>
+      <td>六维全部改为 1–2 指标等权复合，400 只基金得分落盘，最好/最差 5% 群体证据与主回归结构互证。<b>权重敏感性已补做</b>（PCA 主成分加权对比）：综合分 ρ=0.895、行业配置力 ρ=1.000（PCA 载荷恰为 +0.707/+0.707，与等权数学等价）、主动收益力 ρ=0.916——等权由假设升级为<b>经检验稳健</b>。<b>遗留</b>：投资纪律性 ρ 仅 0.383（PC1 只解释 54.2% 方差、两成分载荷异号 −0.363/+0.932），说明 DE 与 rc_mom 内部异质，该维等权是保守而非最优选择，已在画像报告披露；TO_wind 覆盖仅约 200 只，成本控制力缺失值按"跳过并重归一"处理。</td>
+    </tr>
+    <tr>
+      <td><b>5 · 全文不要太冗长，故事讲清楚</b></td>
+      <td><span class="stamp ok">达成</span></td>
+      <td>正文已成文：<b>《论文初稿_2026-08-26.docx》</b>严格按大纲提纲结构撰写（引言→一、理论研究→二、实证检验→三、投资经理画像（群体画像／典型画像／结论）），正文约 7.8 千字、7 张表，所有数值直接读自 output/ 定稿 JSON、不手工录入；标题沿用大纲原文《你是什么样的投资者？》。"不冗长"通过三条实现：结论段只保留四条主结论；每张表只承载一个论点；典型画像每例一段五句内。配套《方法详解》《投资经理行为画像》两份 HTML 作为数据底稿（细节备索），正文不再重复其细节。</td>
+    </tr>
+  </table>
+</section>
+
+<!-- ============ 三、后续改进 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-no">叁</span><h2 class="serif">要不要继续改进：建议清单</h2><span class="sec-note">按优先级排序</span></div>
+  <ol class="todo">
+    <li class="fin"><span class="prio p-done">已完成</span><b>大纲正文成文</b>——以 docx 提纲为骨架撰写正式论文/报告正文，本轮修订后的 17 项框架、AS 三口径叙事、六维复合画像直接作为素材；写作时执行"不冗长"要求，把两份 HTML 降级为数据底稿。<span class="fin-res"><b>结论（2026-08-26）</b>：<b>《论文初稿_2026-08-26.docx》</b>成文，1121 段 / 7 表 / 另含 3 张配图（2026-09-01 按用户要求执行大纲化改写：删除中英文摘要与引言后两段；实证检验仅保留数据来源说明与检验结果两节——删除统计性描述、检验手段、口径稳健性检验三个小节及表 2/3/7；第三部分重组为群体画像→典型画像→结论三节，删除独立的"四、结论"；附录 A 分期稳健性整节删除；检验结果六段与结论四条二次精简；数据来源段按用户要求极简化——仅列 AKShare／东方财富／Wind 三源与样本窗口；标题去 L1–L5 改"五层行为框架"、全文去"职能"二字，正文 7821 字），结构严格对应大纲（引言→一、理论研究→二、实证检验→三、投资经理画像含结论），15 指标（含 L1 三成分）+ AS 六道检验 + 六维复合 + 群体/典型画像全部入文，数值全部读自 output/ 定稿 JSON。图 3 雷达图第四轮精修：页眉改两行式（主标题+灰色副题）并下压子图区（top 0.865→0.78），标题带与顶行子图标题留出约 2cm 源图间距；低分顶点（<0.15）省略圆点、▲▽标记仅在维度极差≥0.25 时标注，消除反例子图圆心墨团；画布 11.6×9.8 英寸、全部字号上调、docx 整页宽 17cm 插入（版面有效字号约 8pt）、反例灰色加深。配套《方法详解_2026-08-26.html》（九节 38 表，置顶"为什么加入新指标"，§4.14b 新增认知层四指标专节）与《投资经理行为画像_2026-08-26.html》。生成脚本 <code>scripts/_draft_docx_20260826.py</code> 与 <code>scripts/_figures_20260826.py</code>。</span></li>
+    <li class="fin"><span class="prio p-done">已完成</span><b>sharpe8_lag 的技能 vs 运气剥离</b>——按市场状态与业绩持久性重测滚动夏普，排除"行情馈赠"成分。<span class="fin-res"><b>结论（2026-08-25）</b>：主表表观 t=+9.11*** 含 DV 基金层常数化的机械成分，已从证据依据中剔除；分半样本外 <b>t=+2.63***（R²=0.105，N=355）</b>确认多年期技能为真，A 级定级改由此坐实。同期口径 −5.75***（牛市 −10.04***、熊市 −1.71*）呈"冠军魔咒"反转，指标定位下修为<b>能力的事后度量</b>。脚本 <code>scripts/_sharpe_lag_fix_20260825.py</code>。</span></li>
+    <li class="fin"><span class="prio p-done">已完成</span><b>等权复合的权重敏感性检验</b>——用 PCA 第一主成分权重与等权对比。<span class="fin-res"><b>结论</b>：综合分 Spearman <b>ρ=0.895</b>、行业配置力 ρ=1.000（PCA 载荷 +0.707/+0.707 与等权数学等价）、主动收益力 ρ=0.916 → 等权稳健，从假设升级为结论。唯<b>投资纪律性 ρ=0.383</b>（PC1 仅解释 54.2% 方差、载荷异号 −0.363/+0.932），DE 与 rc_mom 内部异质，等权是该维的保守选择，已在画像报告披露。脚本 <code>scripts/_weight_sensitivity_20260825.py</code> → <code>output/权重敏感性对比_2026-08-25.csv</code>。</span></li>
+    <li><span class="prio p-mid">重要</span><b>RC 覆盖率提升</b>——53.5% 的覆盖来自半年报全持仓可得性；接入 CSMAR/Wind/iFinD 授权数据后重跑 <code>run_all.py</code>，把 RC 与 TO_wind（约 200 只）的样本短板补齐。<b>沙箱内不可行，需外部授权数据</b>，故本轮未动。</li>
+    <li class="fin"><span class="prio p-done">已完成</span><b>rc_mom 机制深化</b>——分持有期衰减检验。<span class="fin-res"><b>结论</b>：同期 t=−1.27 ns → 前向 1Q −0.14 ns → 2Q −0.06 ns → <b>前向 4 季累计 −0.0483（t=−3.46***）</b>，呈"慢变量"式行为拖累（渠道可能是冲击成本累积／风格暴露漂移），并与 TO_wind 显著交互（+4.53***）。支撑纪律性维度取 z(−rc_mom)。脚本 <code>scripts/_rc_mom_decay_20260825.py</code> → <code>output/rc_mom前向衰减_2026-08-25.csv</code>。</span></li>
+    <li class="fin"><span class="prio p-done">已完成</span><b>画像分型联动验证</b>——用六维复合得分重跑 §10b 经理分型，检验复合口径下分型边界是否干净。<span class="fin-res"><b>结论</b>：风控择股型（赢家）25 只，组均 alpha <b>+0.0419（t=+2.74**</b> vs 均衡型）；行业集中下注型 70 只 <b>+0.0300（t=+3.96***）</b>——原分型的业绩溢价在复合坐标下复现。低偏误纪律型 43 只 +0.0222 ns。<b>缺口</b>：高换手噪声型（输家）规则退化至仅 2 只（成本控制力低分被配置力优先级吸收 + 复合空间交集过窄），输家型需重定义，已于 08-26 单列一项重跑闭合（见下条）。脚本 <code>scripts/_archetype_relink_20260825.py</code> → <code>output/复合分型联动_2026-08-25.csv</code>。</span></li>
+    <li class="fin"><span class="prio p-done">已完成</span><b>输家型分型规则在复合坐标下的重定义</b>——四套候选规则（V1 优先级调序 / V2 双维分位数交集 / V3 综合分最差十分位 / V4 剔除风险转化维的五维最差十分位）对照重跑。<span class="fin-res"><b>结论（2026-08-26）</b>：V1 仍仅 2 只，证明退化<b>不是</b>优先级次序问题；根因是硬阈值交集过窄——成本控制力后 20% 的分位阈值仅 +0.068（TO_wind 仅覆盖约 200 只致该维分布右偏），原"≤ −0.5"落在极端尾部。V2（cost 与 discipl 双维后 20%）得 20 只，vs 均衡型 −0.19 ns、<b>赢家 vs 输家 +2.41**</b>；<b>V3（综合分后 10%，40 只，组均 alpha +0.0018，vs 均衡型 t=−6.81***、赢家 vs 输家 +4.30***）为推荐定义</b>。V4 剔除含机械成分的风险转化维后仍得 −4.72***／+3.69***，<b>排除构造性显著</b>。代价：输家型由"行为特征型"转为"综合弱型"，行为学标签锐度下降，已如实披露。脚本 <code>scripts/_archetype_loser_redef_20260826.py</code> → <code>output/输家型规则重定义_2026-08-26.csv</code>。</span></li>
+  </ol>
+</section>
+
+<!-- ============ 四、清单 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-no">肆</span><h2 class="serif">改动落点清单</h2></div>
+  <table>
+    <tr><th style="width:34%">文件</th><th>改动内容</th></tr>
+    <tr><td><code>指标总表_五层框架.html</code></td><td>框架 15→17 项：L2 加 RC 行、L4 加 sharpe8_lag 行（RV 降级对照）、AS 行三口径统一表述、定级更新（A：RA/sharpe8_lag；B：DE/ICI/ARG/AS/ISDI；B−：RC）、附录新增"附表 7 新增指标筛选全景"</td></tr>
+    <tr><td><code>reports/基金经理能力画像与业绩评价.html</code></td><td>表 3.1 / 表 9.2 / 速览 / 系数条形图共 5 处 AS 口径加注；第 7 章六维雷达底层重构为等权复合口径；插入"最好 5% vs 最差 5%"群体画像证据表</td></tr>
+    <tr><td><code>scripts/_sharpe_lag_fix_20260825.py</code></td><td>滞后版夏普 + 新认知指标的 M4 面板回归检验 → <code>output/新增指标面板_2026-08-25.csv</code></td></tr>
+    <tr><td><code>scripts/_composite_score_20260825.py</code></td><td>400 只基金六维等权复合得分 → <code>output/六维能力复合得分_2026-08-25.csv</code></td></tr>
+    <tr><td><code>scripts/_group_evidence.py</code></td><td>Top/Bottom 5%（各 18 只）六维均值差计算</td></tr>
+    <tr><td><code>scripts/_html_check.py · _tag_balance_check.py</code></td><td>表格 rowspan 结构校验（18 行全对齐）与全文档标签配平校验——均通过</td></tr>
+    <tr><td colspan="2" style="background:var(--paper2);font-weight:700">第二轮加固（2026-08-25 晚 — 08-26，对应上节已完成项）</td></tr>
+    <tr><td><code>scripts/_weight_sensitivity_20260825.py</code></td><td>PCA 主成分权重 vs 等权的六维排序对比（Spearman ρ、PC1 方差解释率、载荷）→ <code>output/权重敏感性对比_2026-08-25.csv</code></td></tr>
+    <tr><td><code>scripts/_rc_mom_decay_20260825.py</code></td><td>rc_mom 同期／前向 1Q／2Q／4Q 累计衰减检验 + rc×TO_wind 交互 → <code>output/rc_mom前向衰减_2026-08-25.csv</code></td></tr>
+    <tr><td><code>scripts/_archetype_relink_20260825.py</code></td><td>§10b 分型规则平移到六维复合坐标，各型 vs 均衡型 Welch t 检验 → <code>output/复合分型联动_2026-08-25.csv</code> · <code>output/复合分型明细_2026-08-25.csv</code></td></tr>
+    <tr><td><code>scripts/_archetype_loser_redef_20260826.py</code></td><td>输家型规则 V0–V4 五套定义对照（优先级调序、双维分位数交集、综合分最差十分位、剔除风险转化维的五维版）+ 各型 vs 均衡型与赢家 vs 输家 Welch t → <code>output/输家型规则重定义_2026-08-26.csv</code> · <code>output/输家型规则明细_2026-08-26.csv</code></td></tr>
+    <tr><td><code>指标总表_五层框架.html</code>（二轮）</td><td>8 处口径下修：正表 sharpe8_lag 行加复核段、附表 7 新增"技能 vs 运气剥离"与"rc_mom 前向衰减"两行、七信号行／A 级段／B− RC 行／顶部定级脚注全部改为样本外口径；修正"伪主动"笔误</td></tr>
+    <tr><td><code>reports/基金经理能力画像与业绩评价.html</code>（二轮）</td><td>8 处修订：雷达图注与维度详解表改样本外 t=+2.63***、群体画像 +1.24 加注机械重叠提示、插入 PCA 权重敏感性结论、§10b 后插入复合分型联动验证框、前向表补"冠军魔咒"反转说明、§10b 追加表 10b.3（输家型四套规则对照）与根因诊断段并声明该缺口闭合</td></tr>
+    <tr><td colspan="2" style="background:var(--paper2);font-weight:700">第三轮：大纲正文成文（2026-08-26）</td></tr>
+    <tr><td><code>reports/论文初稿_2026-08-26.docx</code></td><td>按大纲五段结构成文（1026 段 / 11 表 / 正文约 1.5 万字，含 3 张配图；2026-09-03 结构重写：候选指标总表、各行为指标理论预期表、横向单变量回归矩阵、三因变量对照、维度归并后置；剔除 cgo/house_money/bhm_shm 三指标，保留 25 个候选）：表 1 五层理论框架、表 2 描述统计、表 3 理论预期、表 4 横向单变量回归矩阵、表 5 因变量口径对照、表 6 复合得分回归、表 7 指标详细显著性、表 8 AS 六道检验、表 9–10 群体画像与五分组背景、表 11 典型画像、四条结论；参考文献 20 条按引用序号排列；数值全部读自 output/ 定稿 JSON。2026-08-27 补入 D8（L4b 市场状态捕获率佐证）与 X3（L2 扩展候选趋势外推/有限关注诚实剔除）两结论正文</td></tr>
+    <tr><td><code>reports/方法详解_2026-08-26.html</code></td><td>九节 38 表方法文档（含 §4.8 基本面优势专节、§4.13 四个追问、§4.14 第二轮候选扩展、§4.14b 认知层新增四指标专节）：置顶首章"为什么加入这些新指标"（两个结构性问题诊断 + 5 指标准入表 + L4 职能分工框架说明），15 指标卡（公式/参数/文献/描述统计/双规格实证，含 L1 三成分）、回归设计全部公式、S1–S4 复合验证、数据与文献缺口清单</td></tr>
+    <tr><td><code>reports/投资经理行为画像_2026-08-26.html</code></td><td>独立新做的画像报告（不动旧版《基金经理能力画像与业绩评价.html》）：L1–L5 框架下的六维能力画像（L1 基本面优势升级为计分维）、Top/Bottom 5% 群体证据、六名典型经理案例</td></tr>
+    <tr><td><code>scripts/_draft_docx_20260826.py · _detail_html_20260826.py</code></td><td>论文初稿与方法详解的生成脚本，所有数值从 output/ 定稿 JSON 读取，杜绝手工录入错误</td></tr>
+  </table>
+</section>
+
+<div class="verdict">
+  <p><b>自评结论：五条意见全部达成且有数据闭环。</b>四条硬性意见（新指标、矛盾统一、风险转化、复合画像）在第一轮完成；第二轮补齐五项加固检验（夏普技能/运气剥离、复合权重敏感性、rc_mom 机制、分型联动、输家型规则重定义）；第三轮（08-26）<b>大纲正文成文</b>——《论文初稿_2026-08-26.docx》按大纲五段结构撰写完毕，"不冗长、故事讲清楚"在正文层面兑现，自评表第 5 项由"部分"转"达成"。其中最重要的一条仍是<b>反向修正</b>：sharpe8_lag 表观 t=+9.11*** 被查出含 DV 基金层常数化的机械成分，全文口径已下修为分半样本外的 +2.63***——结论更弱但更可信。分型侧的输家型缺口也已闭合（根因是硬阈值落在成本控制力的极端右偏尾部，改用综合分最差十分位后得 40 只、vs 均衡型 t=−6.81***，并用剔除风险转化维的五维版排除了构造性显著）。<b>剩余唯一硬缺口是 RC/TO_wind 覆盖率</b>（需 CSMAR/Wind/iFinD 授权数据，沙箱内不可行），已在论文结论的局限性部分诚实披露。沙箱内可闭环的工作至此全部完成。</p>
+</div>
+
+<footer>
+  <span>基金经理行为分析研究 · 修改说明与自评</span>
+  <span>2026-08-25 · 数据截至当日回归产出 · 含 08-25 晚至 08-26 第二轮加固复核 · 08-26 第三轮大纲正文成文</span>
+</footer>
+
+</div>
+</body>
+</html>

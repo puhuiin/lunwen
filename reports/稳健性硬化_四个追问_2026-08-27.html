@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
+<title>四个追问硬化报告 2026-08-27</title>
+<style>
+body{font-family:-apple-system,'Segoe UI',Roboto,'Microsoft YaHei',sans-serif;max-width:960px;margin:32px auto;padding:0 20px;color:#1a1a1a;line-height:1.7;}
+h1{border-bottom:3px solid #2c5f8a;padding-bottom:8px;}
+h2{color:#2c5f8a;margin-top:36px;border-left:4px solid #2c5f8a;padding-left:10px;}
+.card{background:#f7f9fc;border:1px solid #e1e8f0;border-radius:8px;padding:14px 18px;margin:14px 0;}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px;}
+th,td{border:1px solid #ddd;padding:7px 9px;text-align:center;}
+th{background:#2c5f8a;color:#fff;}
+td:nth-child(1){text-align:left;}
+.tag{display:inline-block;background:#2c5f8a;color:#fff;border-radius:4px;padding:1px 8px;font-size:13px;}
+.ok{color:#1a7a3a;font-weight:600;}
+.warn{color:#b8860b;font-weight:600;}
+code{background:#eef2f7;padding:1px 5px;border-radius:3px;}
+</style></head><body>
+<h1>四个追问的硬化与优化报告</h1>
+<p class="card">基于 2026-08-26 的「四问诊断」与 §4.13，本轮（2026-08-27）对四处薄弱点做硬化：
+<span class="tag">A</span> L1 重新定位＋五维能力分 ｜
+<span class="tag">B</span> L4b 权重稳健性 ｜
+<span class="tag">C</span> 四项代价提级主表 ｜
+<span class="tag">D</span> 厘清 M4_idio 的 ICI 异常(t=+38.6)：伪影确认＋正确值 +2.84***。
+所有数值由脚本复算，源数据见 <code>output/*_2026-08-27.json</code>。</p>
+
+<h2>① L1 重新定位：五维行为能力分为主能力口径</h2>
+<p>L1 本质是「边界条件/状态层」而非行为能力。剥离 L1 后，五维行为能力综合分当期区分度反而<b>更高</b>，
+且六维联立 R² 与五维完全相同（0.4557）——证明 L1 在联立中已被完全吸收，剥离它<b>无损能力刻画</b>。</p>
+<table><thead><tr><th>口径</th><th>Q5−Q1</th><th>t</th><th>单调</th><th>联立R²</th><th>L1联立t</th></tr></thead><tbody><tr><td>五维行为能力综合分（主能力口径）</td><td>0.03351</td><td>11.87</td><td>是</td><td>0.4557</td><td>—</td></tr><tr><td>六维综合分（含L1）</td><td>0.03131</td><td>10.28</td><td>是</td><td>0.4557</td><td>-0.17</td></tr></tbody></table>
+<div class="card"><b>建议口径：</b>主能力口径 = 五维行为能力综合分（剔除 L1）；L1 基本面优势作为「边界条件/状态层」单列报告，
+参与样本外预测与画像刻画，但不进入等权能力计分。同期稀释 = 五维 Q5−Q1 0.03351 − 六维 0.03131 = <b>0.0022</b>（已在主表披露）。</div>
+
+<h2>② L4b 权重稳健性：等权选择被 PCA 验证</h2>
+<p>PCA 第一主成分权重为 mppm8=0.357 / sortino8=0.296 / sharpe8=0.346，与等权（各 1/3）几乎一致，<b>等权并非随意，而是数据一致的选择</b>。
+mppm8 单成分预测力更强（联立 t=+8.64、R²=0.5116），但其与 alpha 同源度最高（相关 0.443），
+故等权是以一点预测力换取概念覆盖与抗操纵的权衡。</p>
+<table><thead><tr><th>L4b 构造</th><th>单维t</th><th>单维R²</th><th>联立coef</th><th>联立t</th><th>联立R²</th></tr></thead><tbody><tr><td>等权三成分（当前）</td><td>7.44</td><td>0.2092</td><td>0.01325</td><td>5.5</td><td>0.4557</td></tr><tr><td>mppm8 单成分</td><td>9.42</td><td>0.196</td><td>0.01469</td><td>8.64</td><td>0.5116</td></tr><tr><td>PCA 加权</td><td>7.43</td><td>0.1978</td><td>0.01315</td><td>5.6</td><td>0.4574</td></tr></tbody></table>
+
+<h2>③ 四项代价提级进主表／稳健性章节</h2>
+<p>以下四项原仅在 §4.13 披露，现提级为主回归表脚注与稳健性章节，供答辩直接引用。</p>
+<table><thead><tr><th>代价项</th><th>关键数值</th><th>披露结论</th></tr></thead><tbody><tr><td>① L1 同期稀释</td><td>五维 0.03351 vs 六维 0.03131；L1联立t=-0.17；OOS嵌套F p=0.0236</td><td>L1 为边界条件，主能力口径采用五维；样本外仍有增量</td></tr><tr><td>② mppm8 精度次优</td><td>等权 R²=0.2092 t=7.44；mppm8单成分 R²=0.196 t=9.42</td><td>等权为覆盖/抗操纵选择，非精度最优；纯预测力可改用 mppm8</td></tr><tr><td>③ TO 残余信号</td><td>控制六维后 TO 净t=2.1；双口径单变量t=[0.5, 0.32]</td><td>TO 未通过预注册双口径单变量稳健性，按规则剔除</td></tr><tr><td>④ L4b 概念同源</td><td>sharpe↔mppm 相关=0.868；成分-alpha最大相关=0.443；增量R²=0.1796</td><td>L4b 与因变量共享风险调整后收益内核，性质弱于纯行为维度</td></tr></tbody></table>
+
+<h2>④ 厘清 M4_idio 的 ICI 异常(t=+38.6)：伪影确认 ＋ 正确值 +2.84***</h2>
+<p><b>根因（8-21 版）：</b>ICI t=+38.6 为<b>数值伪影</b>，由两处缺陷叠加：
+① 双向聚类 meat 误用「组内残差和(标量)外积」<code>np.outer(s,s)</code>（正确应为组内得分向量 <code>X_g'u_g</code> 的外积）；
+② NAV 子集 SDI 为结构零常数列使 XᵀX 秩亏，原 <code>inv→pinv</code> 对奇异矩阵退化求逆，产生虚假极小 SE。</p>
+<p><b>8-27 首版的二次伪影（已更正）：</b>首版仅修复了条件数（剔除 SDI ＋ 缩尾 TO_wind，cond 2.1e7→1.1e5 满秩），
+但<b>未修复 meat 矩阵 bug</b>，标量外积使 SE 被系统性高估，得到 ICI t≈+0.15（不显著）这一<b>二次伪影</b>。</p>
+<p><b>正确口径（与 8-22 完全一致、可复现）：</b>采用正确的 CGM2011 得分向量 meat ＋ V1+V2−V12 交集校正 ＋ SDI 剔除 ＋ TO_wind 缩尾，四规格重算（N=1,336/1,454，neg_diag=0 全清洁）：</p>
+<table><thead><tr><th>正确口径规格</th><th>N</th><th>R²</th><th>ICI t</th><th>RA t</th></tr></thead><tbody><tr><td>M4_base</td><td>1336</td><td>0.1232</td><td>+2.839***</td><td>+3.225***</td></tr><tr><td>M4_idio</td><td>1336</td><td>0.1242</td><td>+2.486**</td><td>+2.606***</td></tr><tr><td>M4_tm</td><td>1336</td><td>0.1241</td><td>+2.718***</td><td>+3.227***</td></tr><tr><td>M4_full</td><td>1454</td><td>0.1273</td><td>+2.092**</td><td>+3.286***</td></tr></tbody></table>
+<div class="card">
+<b>最终结论：</b>ICI 在 NAV 子样本的真实 t=<b>+2.84***</b>（显著），与全文 v4 基准方向一致，<b>v4 核心结论在独立日频子样本完整复现</b>。
+TM_β₂≈0（M4_tm t=+0.61、M4_full t=+0.84，均不显著）、idio_vol 不显著（t=+1.08）——与华泰「多数基金 β₂ 个体不显著」在截面维度互相印证。
+corr(TM_β₂, RA)=<b>0.279</b>（缩尾口径，N=3,374），RA 是 TM 择时之外的行为型信号。
+批次②「修正版」报告（2026-08-22）的结论经本重算确认无误，<b>无需软化</b>；原 8-21 稿的「不显著」叙事系错误 SE 伪影，已作废。
+</div>
+
+<h2>附：产出文件</h2>
+<ul>
+<li><code>output/L1重定位与五维能力分_2026-08-27.json</code></li>
+<li><code>output/L4b权重稳健性_2026-08-27.json</code></li>
+<li><code>output/稳健性_四项代价_2026-08-27.json</code></li>
+<li><code>output/ICI异常修复_2026-08-27.json</code></li>
+<li>复算脚本：<code>scripts/_harden_20260827.py</code>、<code>scripts/_fix_ici3_20260827.py</code>（2026-08-27 校正版：已修正 meat 矩阵标量外积 bug，结果与 <code>_batch2_regress_v2_20260822.py</code> 完全一致）</li>
+<li>权威口径交叉验证：<code>scripts/_batch2_regress_v2_20260822.py</code> → <code>output/batch2_regressions_v2_2026-08-22.json</code></li>
+</ul>
+</body></html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>指标改进评估 · 2026-08-27</title>
+<style>
+  :root{ --bg:#16181d; --card:#1f232b; --line:#333a45; --txt:#e6e9ef; --mut:#9aa4b2;
+         --ok:#3fb950; --bad:#f85149; --warn:#d29922; --acc:#58a6ff; --acc2:#bc8cff; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+       font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6;padding:32px}
+  .wrap{max-width:980px;margin:0 auto}
+  h1{font-size:24px;margin:0 0 4px}
+  .sub{color:var(--mut);font-size:13px;margin-bottom:24px}
+  h2{font-size:17px;margin:30px 0 12px;padding-left:10px;border-left:3px solid var(--acc)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--mut);font-weight:600;background:rgba(255,255,255,.02)}
+  .pass{color:var(--ok);font-weight:700}
+  .fail{color:var(--bad);font-weight:700}
+  .pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700}
+  .p-pass{background:rgba(63,185,80,.15);color:var(--ok)}
+  .p-fail{background:rgba(248,81,73,.15);color:var(--bad)}
+  .warn-box{background:rgba(210,153,34,.10);border:1px solid rgba(210,153,34,.4);
+            border-radius:10px;padding:16px 18px;margin:16px 0}
+  .warn-box b{color:var(--warn)}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;font-size:13.5px}
+  .kv b{color:var(--mut);font-weight:600}
+  .num{font-variant-numeric:tabular-nums;color:var(--acc)}
+  ul{margin:8px 0 8px 18px;padding:0}
+  li{margin:5px 0}
+  .foot{color:var(--mut);font-size:12px;margin-top:26px;border-top:1px solid var(--line);padding-top:14px}
+  code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:4px;font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>指标改进评估 · L4b 捕获率 / L2 认知新指标</h1>
+  <div class="sub">基金经理行为分析研究 · 2026-08-27 · 数据源 <code>output/分析面板_v3_2026-08-26.csv</code>（400 只 / 9,974 基金-季）</div>
+
+  <div class="card">
+    <h2 style="margin-top:0">执行摘要</h2>
+    <ul>
+      <li><b>L4b 上行/下行捕获率</b>：通过全部 4 道准入门槛（方向一致、5% 显著、覆盖 85%≥80%、与现有维度相关&lt;0.7）。覆盖由 <code>_expand_search</code> 的 50% 修复至 85%（改用季度面板直接计算，非薄日频 NAV）。</li>
+      <li><b>但存在关键权衡</b>：新 L4b 与业绩 DV（FF5 alpha）相关高达 <span class="num">0.722</span>，旧 sharpe 族 L4b 仅 <span class="num">0.439</span>。直接替换会<b>重新放大</b> §六.2「用业绩解释业绩」质疑，而非消解。</li>
+      <li><b>L2 候选（趋势外推 / 有限关注）</b>：方向与假设相反（正向显著），未通过方向门槛 → 诚实剔除，保留检验记录。</li>
+    </ul>
+  </div>
+
+  <h2>一、L4b 上行/下行捕获率 · 四门槛评估</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>指标</th><th>预期</th><th>t 值</th><th>p</th><th>覆盖</th><th>与现有维度最大相关</th><th>裁决</th></tr></thead>
+      <tbody>
+        <tr><td>上行捕获率 up_cap</td><td>+</td><td class="num">+7.62</td><td>0.0000</td><td>85%</td><td>0.352（风险应对能力）</td><td><span class="pill p-pass">通过</span></td></tr>
+        <tr><td>下行捕获率 down_cap</td><td>−</td><td class="num">−8.36</td><td>0.0000</td><td>85%</td><td>0.509（风险转化能力）</td><td><span class="pill p-pass">通过</span></td></tr>
+        <tr><td>趋势外推偏差 extrap</td><td>−</td><td class="num">+3.49</td><td>0.0005</td><td>100%</td><td>0.514（风险应对能力）</td><td><span class="pill p-fail">不通过·方向反</span></td></tr>
+        <tr><td>有限关注度 attn</td><td>−</td><td class="num">+2.34</td><td>0.0192</td><td>100%</td><td>0.551（风险应对能力）</td><td><span class="pill p-fail">不通过·方向反</span></td></tr>
+      </tbody>
+    </table>
+    <div class="kv" style="margin-top:10px">
+      <b>捕获率口径</b><span>up_cap = E(fund_ex | mkt_ex&gt;0) / E(mkt_ex | mkt_ex&gt;0)；down_cap 同理 mkt_ex&lt;0。fund_ex=季收益−无风险；mkt_ex=FF5 市场超额。基金层，要求涨/跌段各≥6 期。</span>
+      <b>中位捕获率</b><span>up_cap 中位 <span class="num">1.392</span>，down_cap 中位 <span class="num">1.088</span>（中位基金下行段略多参与于市场，属截面相对排序）。</span>
+    </div>
+  </div>
+
+  <h2>二、复合重验 · 旧 L4b vs 新 L4b（六维联立，不叠加控制变量）</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>口径</th><th>单维 R²</th><th>单维 t</th><th>六维联立 R²</th><th>六维联立 L4b t</th></tr></thead>
+      <tbody>
+        <tr><td>旧 L4b（mppm8/sortino8/sharpe8）</td><td class="num">0.2845</td><td class="num">+6.87</td><td class="num">0.4557</td><td class="num">+5.50</td></tr>
+        <tr><td><b>新 L4b（up/down 捕获率）</b></td><td class="num">0.5409</td><td class="num">+15.64</td><td class="num">0.6408</td><td class="num">+16.31</td></tr>
+      </tbody>
+    </table>
+    <p style="color:var(--mut);font-size:13px;margin:10px 0 0">拟合显著跃升，但主要来自捕获率与业绩 DV 的高机械相关（见第三节），非「独立行为增量」。</p>
+  </div>
+
+  <div class="warn-box">
+    <b>⚠ 关键方法论权衡 —— 为何不宜直接替换</b>
+    <div class="kv" style="margin-top:8px">
+      <b>corr(旧 L4b, Y)</b><span class="num">0.439</span>
+      <b>corr(新 L4b, Y)</b><span class="num">0.722</span>
+      <b>corr(up_cap, Y)</b><span class="num">0.485</span>
+      <b>corr(down_cap, Y)</b><span class="num">−0.394</span>
+      <b>corr(mppm8_lag, Y)</b><span class="num">0.443</span>
+    </div>
+    <p style="margin:10px 0 0">捕获率本质是「基金收益相对市场涨/跌状态的非对称响应」，由基金收益直接构造，故与业绩 DV 相关远高于 sharpe 族。若以之<b>替换</b> L4b 主成分，会把 §六.2 已下修的「用业绩解释业绩」同源问题<b>重新放大</b>（六维联立 R² 由 0.46 升至 0.64 主要来自该机械相关）。建议将捕获率定位为 L4b 的<b>行为佐证 / 稳健性证据</b>，而非复合主成分。</p>
+  </div>
+
+  <h2>三、L2 认知新指标 · 诚实剔除</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>候选</th><th>文献</th><th>预期</th><th>实测 t</th><th>结论</th></tr></thead>
+      <tbody>
+        <tr><td>趋势外推偏差 extrap<br><span style="color:var(--mut);font-size:12px">持仓加权个股 12 月动量</span></td><td>Greenwood &amp; Shleifer (2014)</td><td>−</td><td class="num">+3.49</td><td><span class="fail">方向反 · 不通过</span></td></tr>
+        <tr><td>有限关注度 attn<br><span style="color:var(--mut);font-size:12px">持仓加权个股上月｜收益｜</span></td><td>Barber &amp; Odean (2008)</td><td>−</td><td class="num">+2.34</td><td><span class="fail">方向反 · 不通过</span></td></tr>
+      </tbody>
+    </table>
+    <p style="color:var(--mut);font-size:13px;margin:10px 0 0">二者均正向显著于 FF5 alpha，与「认知偏差损害业绩」假设相反。按 §八「剔除指标留检验记录」纪律，保留于 <code>output/指标改进_2026-08-27.json</code>，L2 维持现有 3 成分（risk_asym / de / oc_conf）。</p>
+  </div>
+
+  <h2>四、建议处置（待确认）</h2>
+  <div class="card">
+    <ul>
+      <li><b>L4b</b>：保留 sharpe 族为主成分（R² 0.4557 不变，184 核验不受影响）；将 up/down 捕获率作为「L4b 反映真实市场状态非对称响应」的行为佐证写入方法详解与论文稳健性节，<b>中和</b>而非放大 §六.2 质疑。</li>
+      <li><b>L2</b>：extrap/attn 诚实剔除，留检验记录；如需扩充 L2，须另寻方向一致的候选。</li>
+      <li>该路径为<b>增量</b>修改，不撼动锁定框架与 184 核验门槛。</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    复算脚本：<code>scripts/_improve_indicators_20260827.py</code> · 落盘：<code>output/指标改进_2026-08-27.json</code> · 四门槛定义见接力提示词 §一/§六.7。所有数字由脚本与 output/ JSON 产出，非手写。
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>深化优化总报告：批次②修正 + 批次③④ (2026-08-22)</title>
+<style>
+body { font-family: "PingFang SC","Microsoft YaHei",system-ui,sans-serif; max-width: 1100px; margin: 24px auto; padding: 0 20px; color: #111827; line-height: 1.65; background: #fff; }
+h1 { font-size: 24px; border-bottom: 3px solid #7c2d12; padding-bottom: 8px; }
+h2 { font-size: 19px; color: #7c2d12; border-left: 4px solid #7c2d12; padding-left: 10px; margin-top: 36px; }
+h3 { font-size: 15px; color: #1e293b; margin-top: 22px; }
+.lede { background: #fff7ed; border-left: 4px solid #ea580c; padding: 12px 16px; border-radius: 4px; margin: 12px 0 24px; }
+.tbl { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+.tbl th, .tbl td { padding: 6px 8px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+.tbl th { background: #f1f5f9; font-weight: 600; }
+.tbl td.num { text-align: right; font-family: ui-monospace,Consolas,monospace; }
+.pos { color: #15803d; font-weight: 600; } .neg { color: #b91c1c; font-weight: 600; } .ns { color: #94a3b8; }
+.callout { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 10px 14px; margin: 12px 0; border-radius: 4px; font-size: 14px; }
+.callout-key { background: #dbeafe; border-left: 4px solid #2563eb; padding: 10px 14px; margin: 12px 0; border-radius: 4px; font-size: 14px; }
+.callout-fix { background: #fee2e2; border-left: 4px solid #dc2626; padding: 14px 18px; margin: 16px 0; border-radius: 4px; font-size: 14.5px; }
+code { background: #f1f5f9; padding: 1px 6px; border-radius: 3px; font-size: 12.5px; }
+.toc { background: #fafafa; padding: 12px 18px; border-radius: 6px; font-size: 13.5px; }
+</style>
+</head>
+<body>
+
+<h1>深化优化总报告：批次②勘误修正 + 批次③能力分解 + 批次④运气与机制检验</h1>
+<p style="color: #6b7280; font-size: 13.5px; margin-top: -6px;">2026-08-22 · 承接 8-21 路线图（华泰对照路径 A/B/C/D + 业绩归因调研批次①–④）· 主稿已同步新增 §4.4.11</p>
+
+<div class="lede">
+<b>今日四项产出（按重要性）：</b><br>
+① <b>勘误</b>：批次② 8-21 版双向聚类 SE 实现有误（meat 用标量残差和外积）→ 全部 t 值作废重跑；修正后出现<b>方向反转</b>——"NAV 子样本下 v4 不再显著"是伪影，实际 RA/ICI/ARG <b>完整复现</b>；<br>
+② <b>批次③（路径C，论文级发现）</b>：alpha 分解显示 <b>RA 与 DE 的预测力全部来自选股α（+5.12***/−3.03***），择时维度不显著</b>——认知偏差损害的是选股能力，不是择时能力；<br>
+③ <b>批次④（路径B+D+机制）</b>：基金层 Bootstrap 1,000 次——RA 同向显著比例 97.6%（基本免疫截面运气）、LSV 确认零；RA×灵活配置交互 +2.22**（探索性）；<br>
+④ <b>主稿同步</b>：新增自包含小节 §4.4.11（能力分解/子样本复验/截面运气/DV口径边界），标签平衡校验通过。
+</div>
+
+<div class="toc"><b>目录</b> · §1 批次②勘误与修正 · §2 批次③ 能力分解 · §3 路径D 类型异质性（探索） · §4 截面运气 Bootstrap · §5 机制检验 · §6 对论文的意义与写稿清单 · §7 可复现产物</div>
+
+<h2>§1 批次②勘误：一次必须直面的方法学修正</h2>
+<div class="callout-fix">
+<b>🔴 8-21 版批次②报告全部 t 值与 SE 作废。</b>根因（<code>_batch2_regress_20260821.py</code>）：
+(1) <b>meat 矩阵用了组内残差和（标量）的外积</b>，正确应为组内得分向量 X_g'u_g 的外积——错误公式使全部 SE 失去意义（典型症状：ICI t=+38.6）；
+(2) 缺 CGM2011 交集校正；(3) 未缩尾、未剔除结构零列（NAV 子样本 SDI 全为 0）。<br>
+修正版 <code>_batch2_regress_v2_20260822.py</code> 完全对齐 v4 权威口径，原报告文件已整体重写（含勘误声明）。
+</div>
+<h3>修正后的方向反转（比勘误本身更重要）</h3>
+<table class="tbl">
+<tr><th>指标（M4 基线，NAV 子样本 N=1,336/159，R²=0.123）</th><th>8-21 版（错误SE）</th><th>修正后</th><th>定性</th></tr>
+<tr><td>risk_asym</td><td class="ns">t=+0.07 n.s.</td><td class="pos">t=+3.22***</td><td><b>复现</b>（全样本 +3.57***）</td></tr>
+<tr><td>ICI</td><td class="ns">t=+0.52 n.s.</td><td class="pos">t=+2.84***</td><td><b>复现</b>（全样本 +3.74***）</td></tr>
+<tr><td>ARG</td><td class="ns">t=−0.28 n.s.</td><td class="pos">t=+2.27**</td><td><b>复现</b>（全样本 +2.98***）</td></tr>
+<tr><td>TO_wind</td><td class="ns">t=+0.14 n.s.</td><td class="pos">t=+1.72*</td><td>边际（全样本不显著）</td></tr>
+<tr><td>AS_improved / DE</td><td class="ns">n.s. / n.s.</td><td class="ns">t=−0.38 / t=−1.30</td><td>未复现（AS）；DE 方向一致（其证据本在组内FE维度）</td></tr>
+</table>
+<p><b>意义</b>：批次②从"代表性受限的探索"升级为 <b>v4 核心结论的独立复验</b>——194 只基金的日频 NAV 子样本（数据源与构造逻辑均不同）复现了 RA/ICI/ARG。旧报告"子样本 R² 衰减至 0.058、多数变量不显著"的叙事整体作废（修正后 R²=0.123，与全样本 0.129 几乎一致）。三个日频新变量无实质增量（idio_vol t=+1.08、TM_β₂ t=+0.61、factor_drift t=+1.88*，同样本 ΔR²=+0.002），不采纳为正式指标。</p>
+
+<h2>§2 批次③（路径C）：行为指标预测的是"哪种能力"</h2>
+<p>每个基金-年（滚动两年 TM 回归，1,182 基金-年/194 基金）把业绩分解为<b>选股α</b>（TM 截距）与<b>择时贡献</b>（β₂×E[(r_m−r_f)²]），分别作 DV（N=1,351/170）：</p>
+<table class="tbl">
+<tr><th>变量</th><th>DV=选股α</th><th>DV=择时贡献</th><th>DV=总α（参照）</th></tr>
+<tr><td><b>RiskAsym</b></td><td class="pos">β=+0.820, t=+5.12***</td><td class="ns">t=−0.34 n.s.</td><td class="pos">t=+3.30***</td></tr>
+<tr><td><b>DE</b></td><td class="neg">β=−0.084, t=−3.03***</td><td class="ns">t=+1.83* （边际反向）</td><td class="ns">t=−1.27 n.s.</td></tr>
+<tr><td>LSV</td><td class="ns">t=+0.02</td><td class="ns">t=−0.19</td><td class="ns">t=+0.71</td></tr>
+<tr><td>ICI（对照）</td><td class="ns">t=−1.55</td><td class="pos">t=+2.78***</td><td class="pos">t=+2.84***</td></tr>
+<tr><td>ARG（对照）</td><td class="pos">t=+8.59***</td><td class="ns">t=−0.82</td><td class="pos">t=+2.36**</td></tr>
+<tr><td>TO_wind（对照）</td><td class="ns">t=+0.89</td><td class="neg">t=−2.11**</td><td class="pos">t=+1.73*</td></tr>
+</table>
+<div class="callout-key">
+<b>论文级发现（双分离）</b>：认知偏差指标（RA/DE）的预测力<b>只出现在选股α维度</b>——处置效应损害选股质量，风险不对称增益选股质量；两者都不预测择时。而 L2 的行业偏离（ICI）与 L3 的换手（TO）只在择时维度有信号，ARG 只在选股维度有信号。<b>五层框架的各层由此获得了"能力维度"层面的分工图景</b>。辅助证据：corr(选股α, 择时贡献)=−0.39（替代关系，与批次① RA×select_ret 交互 t=−3.58*** 互相印证）；corr(TM_β₂, RA)=0.28（缩尾口径，8-21 未缩尾为 0.19）——RA 不是统计择时的行为复述。<br>
+<b>披露</b>：选股α与择时贡献产自同一次 TM 回归（估计误差相关），本分解为机制定位证据而非独立复验。
+</div>
+<div class="callout-key">
+<b>HM 口径复验（8/22 追加，<code>_batch3_hm_decomp_20260822.py</code>）</b>：以 Henriksson-Morton 分段设定替代 TM 二次式重做同一分解（同样本 N=1,351/170）——<b>双分离完全复现</b>：RA/DE 在 HM 选股α上 t=+3.45***/−3.42***，择时贡献上 t=−0.91 n.s./+1.92*；对照变量维度分工亦复现（ICI +2.53**、TO −2.95*** 在择时；ARG +3.53*** 在选股）。HM 口径下两分项相关 −0.81（替代关系更强）。结论对分解模型选择稳健，已写入主稿 §4.4.11。
+</div>
+<div class="callout-key">
+<b>组内维度复验（8/22 追加，<code>_batch3_within_decomp_20260822.py</code>，N=828/174，基金+年份双 FE）</b>：双分离在<b>组内维度</b>同样成立——DE 对选股α −2.68***（TM）/−2.66***（HM）、择时贡献 n.s.（+0.22/+1.02）；RA +6.88***/+5.16*** 集中于选股α。<b>这是本轮最重要的闭环</b>：DE 的 A 级证据本以组内效应为最强维度，组内复验表明该效应的承接维度正是选股α——"处置效应损害选股能力"从截面关联升级为组内（准因果方向）证据。披露：组内 ICI 对选股α转负（−2.76***，与截面反向，属基金内时序现象）；组内 HM 择时下 RA −2.49**（次级现象，不改主结论）。
+</div>
+<div class="callout-key">
+<b>前向复验 + 经济量级（8/22 追加，<code>_batch3_forward_magnitude_20260822.py</code>）</b>：t 年行为 → t+1 年能力（N=828/174）——<b>RA 前向预测下一年选股α（TM +3.30***/HM +2.01**）、择时仍不预测</b>；DE 不具前瞻性（−0.33/−1.18 n.s.），与 §4.16"RA=前瞻预测因子、DE=组内准因果"分工互证。经济量级：DE 1 SD（0.137）→ 选股α −1.2~−2.2 pp/年；RA 1 SD（0.072）→ +5.9~+8.1 pp/年（选股α SD≈18.5 pp，即 RA 1 SD 约为其 1/3 离散度）。已写入主稿 §4.4.11。
+</div>
+
+<h2>§3 路径D（基金类型异质性）：数据不可行 + 一个探索性提示</h2>
+<p>类型字段（<code>全部基金列表_含清盘.csv</code>）仅匹配 119/400 只基金（混合型-偏股 97、混合型-灵活 22；同花顺投资类型字段 0 匹配）。<b>正式交互检验因 70% 缺失不可行</b>，以下仅作探索性提示：</p>
+<ul>
+<li>RA×灵活配置交互 <b>t=+2.22**</b>（N=793/119 只）；分组：偏股组 RA β=+0.023（t=+1.23 n.s.），灵活组 β=+0.065（t=+1.94*）。</li>
+<li>方向与华泰"灵活配置型基金择时空间/能力更大"一致；但样本选择风险高（匹配到的基金可能系统性不同），<b>不得作为正式结论</b>，已在主稿 §4.4.11 作探索性披露。</li>
+</ul>
+
+<h2>§4 批次④（路径B）：截面运气 Bootstrap——"实力还是运气"的最终回答</h2>
+<p>基金层整簇 pairs bootstrap（B=1,000，种子 20260822，v4 M4 全样本 N=2,264/348）：</p>
+<table class="tbl">
+<tr><th>变量</th><th>β 均值</th><th>经验 95% CI</th><th>CI 排零</th><th>同向显著比例</th><th>定性</th></tr>
+<tr><td><b>RiskAsym</b></td><td class="num">+0.0706</td><td class="num">[+0.041, +0.099]</td><td>是</td><td class="pos"><b>97.6%</b></td><td>免疫截面运气</td></tr>
+<tr><td>ICI</td><td class="num">+0.0180</td><td class="num">[+0.009, +0.028]</td><td>是</td><td>84.0%</td><td>稳健</td></tr>
+<tr><td>AS_improved</td><td class="num">−0.0295</td><td class="num">[−0.050, −0.008]</td><td>是</td><td>59.8%</td><td>中等</td></tr>
+<tr><td>ARG</td><td class="num">+0.0170</td><td class="num">[+0.006, +0.028]</td><td>是</td><td>56.7%</td><td>中等</td></tr>
+<tr><td>DE</td><td class="num">−0.0059</td><td class="num">[−0.011, −0.001]</td><td>是（近界）</td><td>42.0%</td><td>符号稳、显著性敏感</td></tr>
+<tr><td>LSV</td><td class="num">+0.0139</td><td class="num">[−0.010, +0.039]</td><td class="neg">否</td><td>6.8%</td><td>确认零结果</td></tr>
+</table>
+<p><b>回答审稿人"DE/RA 驱动的 alpha 差异是实力还是噪声"</b>：RA 的系数分布在 97.6% 的基金重抽样本中同向显著——它不是少数明星基金的截面运气；DE 符号全程稳定但显著性对基金构成敏感（42%），与其既有边界（组内维度 + 46.6% 子群）一致；LSV 的 CI 含 0 再次确认 C 级零结果。本检验补齐截面维度，与既有 WCB（组内）+ 置换检验形成三维运气/稳健覆盖。</p>
+
+<h2>§5 机制检验：TO×规模交互（成本渠道）</h2>
+<p>TO_wind×log_aum 交互（v4 全样本，中心化后入模）：<b>β=+0.000002, t=+1.65*</b>（正向、边际显著）。冲击成本假说预测负号（大基金的换手边际价值应更低），实证为正 → <b>成本渠道未获支持</b>；正向弱信号更符合"大基金+高换手=信息处理能力强"的选择性解读，或纯属边际噪声。RA/DE 主系数不受交互项影响（+3.25***/−2.56**）。另：factor_drift vs SDI 口径互证经核查<b>不可行</b>（NAV 可用样本内 SDI 无变异），作为口径差异披露而非互证结论。</p>
+
+<h2>§6 对论文的意义与写稿清单</h2>
+<h3>结论被强化的</h3>
+<ul>
+<li><b>RA 的证据链再加三环</b>：独立日频子样本复现（§1）+ 选股维度定位（§2）+ 截面运气免疫（§4）——A 级更实。</li>
+<li><b>五层框架获得"能力分工"新叙事</b>：L5 认知偏差→选股α；L2 行业偏离/L3 换手→择时维度；这比"预测 alpha"精细一层，建议作为论文新卖点写进贡献段。</li>
+<li><b>诚实零结果再+1</b>：LSV 在 Bootstrap 下 CI 含 0，三口径（渐近/WCB/置换/Bootstrap）全部指向零。</li>
+</ul>
+<h3>新增的效度边界（必须写）</h3>
+<ul>
+<li>headline 结论限于 <b>FF5-alpha 口径</b>（法定基准 DV 下 L5 全不显著，批次①）；</li>
+<li>选股/择时分解产自同一次 TM 回归（机制定位，非独立复验）；</li>
+<li>RA×灵活配置交互仅为探索性（类型字段 30% 覆盖）。</li>
+</ul>
+<h3>已完成 / 剩余</h3>
+<p>✅ 主稿已新增 <b>§4.4.11</b>（自包含，含全部上述结果与披露，标签平衡校验通过）。⬜ 剩余（建议下次）：摘要与 §6.1.7 证据表的口径边界标注；§3.6.4/§4.1.1 的 L5 观测数与 154 列等数字统一（见《稿件问题清单与改进建议_2026-08-22.md》）；Hansen J 摘要表述修正。</p>
+
+<h2>§7 可复现产物</h2>
+<table class="tbl">
+<tr><th>产物</th><th>路径</th></tr>
+<tr><td>批次②修正回归脚本 / 结果</td><td><code>_batch2_regress_v2_20260822.py</code> → <code>output/batch2_regressions_v2_2026-08-22.json</code></td></tr>
+<tr><td>批次②报告（已重写，含勘误声明）</td><td><code>批次②_L4_idio_vol与L3_TMβ₂优化报告_2026-08-21.html</code></td></tr>
+<tr><td>批次③ alpha 分解</td><td><code>_batch3_alpha_decomp_20260822.py</code> → <code>output/batch3_alpha_decomposition_2026-08-22.json</code> + 窗口二阶矩 <code>output/batch3_mkt2_window_2026-08-22.csv</code></td></tr>
+<tr><td>批次③ HM 复验（8/22 追加）</td><td><code>_batch3_hm_decomp_20260822.py</code> → <code>output/batch3_hm_factors_2026-08-22.csv / batch3_hm_decomposition_2026-08-22.json</code></td></tr>
+<tr><td>Bootstrap</td><td><code>_batch4_bootstrap_20260822.py</code> → <code>output/batch4_bootstrap_2026-08-22.json</code></td></tr>
+<tr><td>路径D + 机制检验</td><td><code>_batch4_pathD_mechanism_20260822.py</code> → <code>output/batch4_pathD_mechanism_2026-08-22.json</code></td></tr>
+<tr><td>主稿新增小节</td><td><code>merged_manuscript.html</code> §4.4.11（4.5 节之前）</td></tr>
+<tr><td>临时对照脚本</td><td><code>_tmp_samesample_dR2.py</code>（同样本 ΔR² 核验）</td></tr>
+</table>
+<p style="font-size:12px;color:#6b7280;">全部回归：1%/99% 缩尾（界取自全样本）+ C(year) FE + CGM2011 双向聚类（含交集校正）；fund_code 已统一字符串口径（避免 NAV int 与面板 str 的合并塌缩）。本报告不修改 v4 基准数值。</p>
+
+</body>
+</html>

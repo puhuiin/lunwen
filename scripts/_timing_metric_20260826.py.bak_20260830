@@ -1,0 +1,102 @@
+# -*- coding: utf-8 -*-
+"""
+择时能力指标构造（2026-08-26）—— 为「风险应对能力」补一个全覆盖、有文献依据的第二成分
+
+背景：原第二成分 rsstab_lag 正交化后失效（56% 由 return_volatility 解释）；
+      batch3 的日频 HM_beta2 仅覆盖 194/400 只基金，且与 ARG 联立后 t=1.34 ns。
+方案：用 v3 主面板的季度数据，按基金逐一估计 Henriksson-Merton 下行保护系数，
+      与其余全部指标同源同频，覆盖 400 只基金。
+
+    HM:  ex_it = a_i + b_i * MKT_t + g_i * min(0, MKT_t) + e_it
+         g_i > 0 表示市场下跌时基金实际暴露低于线性预期 = 下行保护能力
+    TM:  ex_it = a_i + b_i * MKT_t + c_i * MKT_t^2 + e_it （交叉验证）
+
+文献：Treynor, J. L. & Mazuy, K. K. (1966). Can Mutual Funds Outguess the Market?
+        Harvard Business Review, 44(4), 131-136.
+      Henriksson, R. D. & Merton, R. C. (1981). On Market Timing and Investment
+        Performance II. Journal of Business, 54(4), 513-533.
+"""
+import pandas as pd, numpy as np, os, json
+import statsmodels.api as sm
+
+BASE = r'd:\Desktop\基金经理行为分析研究'
+OUT = os.path.join(BASE, 'output')
+CTRL = ['mgr_total_tenure_v2', 'log_fund_age', 'log_aum']
+MINQ = 12
+res = {}
+
+panel = pd.read_csv(os.path.join(OUT, '分析面板_v3_2026-08-26.csv'), parse_dates=['report_date'])
+panel = panel.sort_values(['fund_code', 'report_date'])
+
+rows = []
+for fc, g in panel.groupby('fund_code'):
+    gg = g.dropna(subset=['ex', 'ff5_MKT_excess'])
+    if len(gg) < MINQ:
+        continue
+    mkt = gg['ff5_MKT_excess']
+    X = pd.DataFrame({'MKT': mkt, 'HM_down': np.minimum(0.0, mkt)})
+    mh = sm.OLS(gg['ex'].values, sm.add_constant(X).values).fit()
+    X2 = pd.DataFrame({'MKT': mkt, 'MKT_sq': mkt ** 2})
+    mt = sm.OLS(gg['ex'].values, sm.add_constant(X2).values).fit()
+    rows.append(dict(fund_code=fc, n_q=len(gg),
+                     hm_gamma=mh.params[2], hm_gamma_t=mh.tvalues[2],
+                     tm_gamma=mt.params[2], tm_gamma_t=mt.tvalues[2]))
+
+tim = pd.DataFrame(rows).set_index('fund_code')
+print('择时系数估计成功 %d 只基金（每只至少 %d 季）' % (len(tim), MINQ))
+print('  hm_gamma: mean=%+.4f std=%.4f  正值占比 %.1f%%  |t|>1.65 占比 %.1f%%'
+      % (tim['hm_gamma'].mean(), tim['hm_gamma'].std(),
+         (tim['hm_gamma'] > 0).mean() * 100, (tim['hm_gamma_t'].abs() > 1.65).mean() * 100))
+print('  tm_gamma: mean=%+.4f std=%.4f  正值占比 %.1f%%'
+      % (tim['tm_gamma'].mean(), tim['tm_gamma'].std(), (tim['tm_gamma'] > 0).mean() * 100))
+print('  corr(hm_gamma, tm_gamma) = %+.3f' % tim['hm_gamma'].corr(tim['tm_gamma']))
+res['构造'] = dict(n_funds=len(tim), min_quarters=MINQ,
+                   hm_mean=round(float(tim['hm_gamma'].mean()), 4),
+                   hm_std=round(float(tim['hm_gamma'].std()), 4),
+                   hm_正值占比=round(float((tim['hm_gamma'] > 0).mean() * 100), 1),
+                   corr_hm_tm=round(float(tim['hm_gamma'].corr(tim['tm_gamma'])), 3))
+
+
+def winsor(s, p=0.01):
+    return s.clip(s.quantile(p), s.quantile(1 - p))
+
+
+def reg(y, X):
+    d = pd.concat([y, X], axis=1).dropna()
+    return sm.OLS(d.iloc[:, 0], sm.add_constant(d.iloc[:, 1:])).fit(cov_type='HC1')
+
+
+COLS = ['ARG', 'return_volatility', 'risk_asym', 'rsstab_lag', 'mppm8_lag', 'ICI', 'de']
+fm = panel.groupby('fund_code')[COLS + CTRL + ['ff5_adj_return']].mean()
+fm = fm.join(tim[['hm_gamma', 'tm_gamma']], how='left')
+for c in COLS + CTRL + ['hm_gamma', 'tm_gamma']:
+    fm[c] = winsor(fm[c])
+Y = fm['ff5_adj_return']
+
+print('\n=== T1 择时系数单指标（规格I，HC1，含三控制） ===')
+for v in ['hm_gamma', 'tm_gamma']:
+    m = reg(Y, fm[[v] + CTRL])
+    print('  %-10s n=%3d  coef=%+.5f  t=%+6.2f  p=%.4f  R2=%.4f'
+          % (v, m.nobs, m.params[v], m.tvalues[v], m.pvalues[v], m.rsquared))
+    res.setdefault('T1_单指标', {})[v] = dict(n=int(m.nobs), coef=round(float(m.params[v]), 5),
+                                             t=round(float(m.tvalues[v]), 2),
+                                             p=round(float(m.pvalues[v]), 4))
+
+print('\n  与既有指标相关（hm_gamma）：')
+cr = fm[['hm_gamma', 'ARG', 'return_volatility', 'risk_asym', 'rsstab_lag', 'mppm8_lag']].corr()['hm_gamma']
+print(cr.round(3).to_string())
+res['T1_相关'] = {k: round(float(v), 3) for k, v in cr.items() if k != 'hm_gamma'}
+
+print('\n=== T2 hm_gamma 与 ARG 联立（独立性） ===')
+m = reg(Y, fm[['hm_gamma', 'ARG'] + CTRL])
+for v in ['hm_gamma', 'ARG']:
+    print('  %-10s t=%+6.2f  p=%.4f' % (v, m.tvalues[v], m.pvalues[v]))
+print('  R2=%.4f' % m.rsquared)
+res['T2_联立'] = {v: dict(t=round(float(m.tvalues[v]), 2), p=round(float(m.pvalues[v]), 4))
+                  for v in ['hm_gamma', 'ARG']}
+
+tim.reset_index().to_csv(os.path.join(OUT, '择时系数_季度HM_2026-08-26.csv'),
+                         index=False, encoding='utf-8-sig')
+with open(os.path.join(OUT, '择时指标构造_2026-08-26.json'), 'w', encoding='utf-8') as f:
+    json.dump(res, f, ensure_ascii=False, indent=2)
+print('\n已保存 output/择时系数_季度HM_2026-08-26.csv')

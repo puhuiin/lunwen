@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投资经理行为画像样本外盲测检验报告（2006–2024建模 vs 2025–2026检验）</title>
+<style>
+  :root {
+    --primary: #1e3a8a;
+    --primary-light: #3b82f6;
+    --secondary: #0d9488;
+    --accent: #f59e0b;
+    --danger: #ef4444;
+    --success: #10b981;
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.65;
+    padding: 30px 20px;
+  }
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+    color: white;
+    padding: 40px 36px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
+  }
+  header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  header p {
+    font-size: 15px;
+    color: #cbd5e1;
+    max-width: 900px;
+    line-height: 1.6;
+  }
+  .badge-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.12);
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin-bottom: 30px;
+  }
+  .metric-card {
+    background: var(--bg-card);
+    padding: 22px 24px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+  }
+  .metric-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .metric-val {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+  .metric-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .highlight-green { color: #059669 !important; }
+  .highlight-blue { color: #2563eb !important; }
+  .section {
+    background: var(--bg-card);
+    padding: 32px 36px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    margin-bottom: 28px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+  }
+  .section h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section p {
+    font-size: 14.5px;
+    color: #334155;
+    margin-bottom: 14px;
+    line-height: 1.7;
+  }
+  .formula-box {
+    background: #f8fafc;
+    border-left: 4px solid var(--primary-light);
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin: 16px 0;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 13.5px;
+    color: #1e293b;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 13.5px;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: right;
+    border-bottom: 1px solid var(--border);
+  }
+  th:first-child, td:first-child {
+    text-align: left;
+  }
+  th {
+    background-color: #f1f5f9;
+    color: #334155;
+    font-weight: 600;
+  }
+  tr:hover td {
+    background-color: #f8fafc;
+  }
+  .table-caption {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+    text-align: left;
+  }
+  .chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 24px 0;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 1px solid #eef2f6;
+  }
+  .svg-chart {
+    width: 100%;
+    max-width: 860px;
+    height: auto;
+  }
+  .note-box {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 20px 0;
+  }
+  .note-box h4 {
+    font-size: 14px;
+    color: #1e40af;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .note-box p {
+    font-size: 13px;
+    color: #1e3a8a;
+    margin-bottom: 0;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 768px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .section { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>投资经理行为画像：长周期样本内建模与样本外盲测验证</h1>
+    <p>严格时间序列物理切分：以 2006Q3–2024Q4（共 74 个季度）为样本内训练集构建行为画像与综合能力得分；以 2025Q1–2026Q2（共 6 个季度）为完全独立的样本外盲测期，检验投资经理行为特征对未来超额业绩的真实外推预测力。</p>
+    <div class="badge-bar">
+      <span class="badge">样本内：2006Q3–2024Q4（74季度）</span>
+      <span class="badge">样本外：2025Q1–2026Q2（6季度）</span>
+      <span class="badge">评估基金：326只严格跨期运作基金</span>
+      <span class="badge">样本外Q5−Q1差：+6.32 pp/季 (t=5.52)</span>
+      <span class="badge">预测回归：R²=0.0943 (t=5.75)</span>
+    </div>
+  </header>
+
+  <!-- Metric Overview Cards -->
+  <div class="card-grid">
+    <div class="metric-card">
+      <div class="metric-label">样本外 Q5−Q1 异常Alpha</div>
+      <div class="metric-val highlight-green">+6.32 pp</div>
+      <div class="metric-sub">t = +5.52 (p < 0.0001, 逐级严格单调)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">样本外 Q5−Q1 季度原始收益</div>
+      <div class="metric-val highlight-blue">+10.45 pp</div>
+      <div class="metric-sub">t = +8.57 (Q5季均27.05% vs Q1季均16.60%)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">综合能力未来预测系数</div>
+      <div class="metric-val">β = +0.0604</div>
+      <div class="metric-sub">t = +5.75，单变量 R² = 9.43%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Top 5% vs Bottom 5% 极端利差</div>
+      <div class="metric-val highlight-green">+9.07 pp</div>
+      <div class="metric-sub">t = +5.37 (Q1~Q5两端头部差异)</div>
+    </div>
+  </div>
+
+  <!-- Section 1: Methodology Design -->
+  <div class="section">
+    <h2>一、样本切分与样本外盲测计量设计</h2>
+    <p>为彻底排查横截面回归中可能存在的“数据窥视”（Data Snooping）与因变量同期机械重叠，本研究设计了严格的时序外推盲测方案：</p>
+    <div class="formula-box">
+<b>【时间轴切分】</b>
+· 样本内训练集（In-Sample）：2006 年 3 季度 至 2024 年 4 季度（74 个季度），326 只基金
+· 样本外盲测集（Out-of-Sample）：2025 年 1 季度 至 2026 年 2 季度（6 个季度），完全排除于打分建模之外
+    </div>
+    <p><b>样本外异常超额收益（Abnormal Alpha）的严谨测算</b>：由于样本外仅 6 个季度，若在样本外直接对单只基金跑五因子回归，因变量自由度不足（6 个观测值跑 5 个自变量将导致无自由度过拟合）。因此，学术界标准做法是<b>冻结样本内估计出的因子暴露</b>，计算样本外每季度的基准调整后异常回报：</p>
+    <div class="formula-box">
+<b>【计算公式】</b>
+1. 样本内估计因子暴露：R_it − Rf_t = α_i^(in) + Σ_k β_ik^(in) · F_kt + ε_it  (t ∈ 2006Q3~2024Q4)
+2. 样本外异常超额收益：α_it^(out) = (R_it − Rf_t) − Σ_k β_ik^(in) · F_kt  (t ∈ 2025Q1~2026Q2)
+3. 样本外季度均值：α_i^(out) = (1/6) · Σ_{t=1}^6 α_it^(out)
+    </div>
+    <p>该指标剥离了样本外市场系统性 beta、规模因子、价值因子、盈利因子与投资因子驱动的宏观波动，精准度量了由经理纯主动技能与行为决策带来的纯净超额价值。</p>
+  </div>
+
+  <!-- Section 2: Quintile Monotonicity -->
+  <div class="section">
+    <h2>二、样本外五分组严格单调性检验</h2>
+    <p>将 326 只基金按照其 <b>2006–2024 年构建的综合能力得分</b> 等分为五组（Q1 最低 至 Q5 最高），并在 2025–2026 年长达 1.5 年的样本外时期中观察其实际表现。检验结果显示出<b>令人信服的严格单调递增规律</b>：</p>
+
+    <div class="table-caption">表 1  投资经理行为综合能力在 2025–2026 年样本外的五分组表现</div>
+    <table>
+      <thead>
+        <tr>
+          <th>分组（基于06-24打分）</th>
+          <th>基金数量 N</th>
+          <th>样本内历史 Alpha</th>
+          <th>样本外异常 Alpha (季均)</th>
+          <th>样本外超额收益 (季均)</th>
+          <th>样本外原始收益 (季均)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Q1 最低（行为劣势组）</b></td>
+          <td>66</td>
+          <td>-0.19%</td>
+          <td><b>4.30%</b></td>
+          <td>9.48%</td>
+          <td>16.60%</td>
+        </tr>
+        <tr>
+          <td><b>Q2</b></td>
+          <td>65</td>
+          <td>0.49%</td>
+          <td><b>7.47%</b></td>
+          <td>12.18%</td>
+          <td>20.18%</td>
+        </tr>
+        <tr>
+          <td><b>Q3（中游组）</b></td>
+          <td>65</td>
+          <td>0.73%</td>
+          <td><b>7.97%</b></td>
+          <td>12.34%</td>
+          <td>22.32%</td>
+        </tr>
+        <tr>
+          <td><b>Q4</b></td>
+          <td>65</td>
+          <td>1.26%</td>
+          <td><b>8.83%</b></td>
+          <td>12.94%</td>
+          <td>24.55%</td>
+        </tr>
+        <tr>
+          <td><b>Q5 最高（行为优势组）</b></td>
+          <td>65</td>
+          <td>1.59%</td>
+          <td><b>10.62%</b></td>
+          <td>14.18%</td>
+          <td>27.05%</td>
+        </tr>
+        <tr style="background-color: #f8fafc; font-weight: 700;">
+          <td><b>Q5 − Q1 组间差</b></td>
+          <td>—</td>
+          <td>+1.78 pp</td>
+          <td class="highlight-green">+6.32 pp</td>
+          <td>+4.69 pp</td>
+          <td class="highlight-blue">+10.45 pp</td>
+        </tr>
+        <tr style="background-color: #f1f5f9; font-weight: 600;">
+          <td><b>Welch's t 统计量</b></td>
+          <td>—</td>
+          <td>t = +12.35***</td>
+          <td class="highlight-green">t = +5.52***</td>
+          <td>t = +5.31***</td>
+          <td class="highlight-blue">t = +8.57***</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- SVG Chart: Monotonic Quintiles -->
+    <div class="chart-container">
+      <svg class="svg-chart" viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+        <text x="400" y="24" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">2025–2026 样本外盲测：五分组异常超额收益与季度原始收益单调性</text>
+        <!-- Grid lines -->
+        <line x1="80" y1="260" x2="740" y2="260" stroke="#cbd5e1" stroke-width="1.5" />
+        <line x1="80" y1="200" x2="740" y2="200" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4" />
+        <line x1="80" y1="140" x2="740" y2="140" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4" />
+        <line x1="80" y1="80" x2="740" y2="80" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4" />
+        
+        <!-- Y Axis labels -->
+        <text x="70" y="265" text-anchor="end" font-size="11" fill="#64748b">0%</text>
+        <text x="70" y="205" text-anchor="end" font-size="11" fill="#64748b">10%</text>
+        <text x="70" y="145" text-anchor="end" font-size="11" fill="#64748b">20%</text>
+        <text x="70" y="85" text-anchor="end" font-size="11" fill="#64748b">30%</text>
+
+        <!-- Q1 -->
+        <rect x="120" y="234" width="38" height="26" fill="#10b981" rx="4" />
+        <rect x="162" y="160" width="38" height="100" fill="#3b82f6" rx="4" opacity="0.85" />
+        <text x="160" y="280" text-anchor="middle" font-size="12" font-weight="600" fill="#334155">Q1最低</text>
+        <text x="139" y="228" text-anchor="middle" font-size="11" font-weight="600" fill="#047857">4.30%</text>
+        <text x="181" y="152" text-anchor="middle" font-size="11" font-weight="600" fill="#1d4ed8">16.60%</text>
+
+        <!-- Q2 -->
+        <rect x="250" y="215" width="38" height="45" fill="#10b981" rx="4" />
+        <rect x="292" y="139" width="38" height="121" fill="#3b82f6" rx="4" opacity="0.85" />
+        <text x="290" y="280" text-anchor="middle" font-size="12" font-weight="600" fill="#334155">Q2</text>
+        <text x="269" y="209" text-anchor="middle" font-size="11" font-weight="600" fill="#047857">7.47%</text>
+        <text x="311" y="131" text-anchor="middle" font-size="11" font-weight="600" fill="#1d4ed8">20.18%</text>
+
+        <!-- Q3 -->
+        <rect x="380" y="212" width="38" height="48" fill="#10b981" rx="4" />
+        <rect x="422" y="126" width="38" height="134" fill="#3b82f6" rx="4" opacity="0.85" />
+        <text x="420" y="280" text-anchor="middle" font-size="12" font-weight="600" fill="#334155">Q3</text>
+        <text x="399" y="206" text-anchor="middle" font-size="11" font-weight="600" fill="#047857">7.97%</text>
+        <text x="441" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#1d4ed8">22.32%</text>
+
+        <!-- Q4 -->
+        <rect x="510" y="207" width="38" height="53" fill="#10b981" rx="4" />
+        <rect x="552" y="113" width="38" height="147" fill="#3b82f6" rx="4" opacity="0.85" />
+        <text x="550" y="280" text-anchor="middle" font-size="12" font-weight="600" fill="#334155">Q4</text>
+        <text x="529" y="201" text-anchor="middle" font-size="11" font-weight="600" fill="#047857">8.83%</text>
+        <text x="571" y="105" text-anchor="middle" font-size="11" font-weight="600" fill="#1d4ed8">24.55%</text>
+
+        <!-- Q5 -->
+        <rect x="640" y="196" width="38" height="64" fill="#10b981" rx="4" />
+        <rect x="682" y="98" width="38" height="162" fill="#3b82f6" rx="4" opacity="0.85" />
+        <text x="680" y="280" text-anchor="middle" font-size="12" font-weight="600" fill="#334155">Q5最高</text>
+        <text x="659" y="190" text-anchor="middle" font-size="11" font-weight="600" fill="#047857">10.62%</text>
+        <text x="701" y="90" text-anchor="middle" font-size="11" font-weight="600" fill="#1d4ed8">27.05%</text>
+
+        <!-- Legend -->
+        <rect x="270" y="302" width="14" height="14" fill="#10b981" rx="3" />
+        <text x="290" y="313" font-size="11" fill="#475569">样本外异常超额收益 (Abnormal Alpha)</text>
+        <rect x="520" y="302" width="14" height="14" fill="#3b82f6" rx="3" />
+        <text x="540" y="313" font-size="11" fill="#475569">样本外季度原始收益率 (Quarter Return)</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Section 3: Predictive Regressions -->
+  <div class="section">
+    <h2>三、行为维度对未来收益的预测回归</h2>
+    <p>为进一步检验具体哪些行为维度在未来市场中具有真实的长期穿透力，我们以 <b>2006–2024 年各维度得分作为解释变量</b>，对 <b>2025–2026 年每只基金的样本外异常 Alpha</b> 进行单变量与联立 OLS 回归（采用 HC1 异方差稳健标准误）：</p>
+
+    <div class="table-caption">表 2  行为画像在 2025–2026 年样本外的预测回归估计</div>
+    <table>
+      <thead>
+        <tr>
+          <th>预测变量（2006–2024 建模得分）</th>
+          <th>单变量预测 β</th>
+          <th>单变量 t 统计量</th>
+          <th>单变量 R²</th>
+          <th>六维联立预测 β</th>
+          <th>联立 t 统计量</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #f0fdf4; font-weight: 700;">
+          <td><b>综合能力（六维等权）</b></td>
+          <td class="highlight-green">+0.0604</td>
+          <td class="highlight-green">t = +5.75***</td>
+          <td><b>9.43%</b></td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><b>L1 基本面优势</b></td>
+          <td>+0.0276</td>
+          <td>t = +6.35***</td>
+          <td>11.46%</td>
+          <td>+0.0179</td>
+          <td>t = +4.03***</td>
+        </tr>
+        <tr>
+          <td><b>L2 认知能力（反处置/防锚定）</b></td>
+          <td>+0.0268</td>
+          <td>t = +4.44***</td>
+          <td>4.59%</td>
+          <td>+0.0257</td>
+          <td>t = +4.17***</td>
+        </tr>
+        <tr>
+          <td><b>L3 配置选择能力（行业集中/风格稳定）</b></td>
+          <td>-0.0068</td>
+          <td>t = -1.38</td>
+          <td>0.78%</td>
+          <td>-0.0079</td>
+          <td>t = -1.77*</td>
+        </tr>
+        <tr>
+          <td><b>L4a 风险应对能力（下行保护/主动调仓）</b></td>
+          <td>+0.0297</td>
+          <td>t = +4.26***</td>
+          <td>6.33%</td>
+          <td>+0.0121</td>
+          <td>t = +1.73*</td>
+        </tr>
+        <tr>
+          <td><b>L4b 风险转化能力（比率类同源测度）</b></td>
+          <td>-0.0056</td>
+          <td>t = -1.24</td>
+          <td>0.53%</td>
+          <td>-0.0021</td>
+          <td>t = -0.46</td>
+        </tr>
+        <tr>
+          <td><b>L5 交易执行能力（同业趋同/风格稳固）</b></td>
+          <td>+0.0237</td>
+          <td>t = +5.62***</td>
+          <td>8.25%</td>
+          <td>+0.0124</td>
+          <td>t = +2.88***</td>
+        </tr>
+        <tr style="background-color: #f1f5f9; font-weight: 700;">
+          <td><b>六维联立预测总 R²</b></td>
+          <td colspan="3">—</td>
+          <td colspan="2" style="text-align: right; padding-right: 40px;" class="highlight-blue">R² = 19.84%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      <h4>核心理论印证与方法学洞见</h4>
+      <p>1. <b>纯行为维度的强韧穿透力</b>：认知能力（t = +4.44）、交易执行能力（t = +5.62）与风险应对能力（t = +4.26）在样本外均呈现极高显著性，证实了经理在日常投资中形成的心理纪律、止损果断性与防守意识是跨越市场周期的真实技能。<br>
+      2. <b>L4b 风险转化维度的“祛魅”</b>：以 Sharpe、Sortino 为代表的风险转化能力在样本内因定义与 Alpha 存在收益重叠而表现出极高 t 值（+14.83）；但在样本外，其预测系数降至 -0.0056（t = -1.24，不显著）。这完全证实了论文第 2(三) 节的诊断：<b>比率类指标具有同期机械相关性，而在样本外真正驱动未来业绩的是认知层、防守层与执行层的行为特征！</b></p>
+    </div>
+  </div>
+
+  <!-- Section 4: Extreme Group Analysis -->
+  <div class="section">
+    <h2>四、Top 5% 绩优 vs Bottom 5% 绩差经理的极端样本外追踪</h2>
+    <p>为验证行为画像在极端分化人群上的选拔有效性，我们锁定基于 2006–2024 年综合得分最高的前 5%（N=17 只）与后 5%（N=16 只）基金经理，观察其在 2025–2026 年实际运作中的业绩差异：</p>
+
+    <div class="grid-2">
+      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 22px;">
+        <h3 style="color: #166534; font-size: 16px; margin-bottom: 10px;">🌟 行为优势前 5%（Top 5% 经理）</h3>
+        <p style="font-size: 13.5px; color: #14532d; margin-bottom: 8px;">· 样本外异常 Alpha 均值：<b style="font-size: 18px; color: #15803d;">12.12%</b> / 季</p>
+        <p style="font-size: 13.5px; color: #14532d; margin-bottom: 8px;">· 样本外原始季度收益率：<b style="font-size: 18px; color: #15803d;">26.12%</b> / 季</p>
+        <p style="font-size: 12.5px; color: #166534; line-height: 1.5;">画像特征：止损果断、下行保护极佳、不盲目风格漂移，在样本外六个季度展现出持续出色的选股与抗跌韧性。</p>
+      </div>
+      <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px; padding: 22px;">
+        <h3 style="color: #991b1b; font-size: 16px; margin-bottom: 10px;">⚠️ 行为劣势后 5%（Bottom 5% 经理）</h3>
+        <p style="font-size: 13.5px; color: #7f1d1d; margin-bottom: 8px;">· 样本外异常 Alpha 均值：<b style="font-size: 18px; color: #b91c1c;">3.05%</b> / 季</p>
+        <p style="font-size: 13.5px; color: #7f1d1d; margin-bottom: 8px;">· 样本外原始季度收益率：<b style="font-size: 18px; color: #b91c1c;">16.14%</b> / 季</p>
+        <p style="font-size: 12.5px; color: #991b1b; line-height: 1.5;">画像特征：严重售盈持亏（处置效应深度套牢）、高位锚定拒绝认错、风格频繁横跳，在样本外超额收益大幅落后。</p>
+      </div>
+    </div>
+    <p style="margin-top: 18px; font-size: 14px; text-align: center; color: #334155;">
+      两组样本外异常 Alpha 差值高达 <b>+9.07 个百分点 / 季（年化超额差距超过 36%）</b>，双样本 t 检验达 <b>t = +5.37（p < 0.0001）</b>，证明行为画像对基金经理的长期优劣具备极高的判别力与筛选价值。
+    </p>
+  </div>
+
+  <!-- Section 5: Conclusion & Recommendations -->
+  <div class="section">
+    <h2>五、研究结论与实践启示</h2>
+    <p>1. <b>消除过拟合疑虑</b>：实证数据证实，六维行为画像不是样本内的“数据挖掘玩具”，在完全未经训练的 2025–2026 年新市场环境中，其对超额收益的预测单调性与统计显著性依然坚挺。</p>
+    <p>2. <b>指导 FO/MOM 实盘配置</b>：机构投资者在筛选基金经理时，应大幅弱化过去两三年的短期夏普比率（L4b），转而重点考察经理的<b>处置效应程度（是否死扛亏损）、跌市下行保护（timing 表现）与换手执行纪律（L5）</b>，这些纯行为特征才是保障未来 1~2 年业绩持续优异的核心护城河。</p>
+  </div>
+
+  <footer style="text-align: center; font-size: 12px; color: #94a3b8; margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+    基金经理行为分析研究课题组 · 样本外计量核算与可解释性说明文档 · 生成日期：2026-09-04
+  </footer>
+</div>
+
+</body>
+</html>

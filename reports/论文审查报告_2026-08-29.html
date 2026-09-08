@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>论文审查报告 · 基金经理投资行为画像研究 · 2026-08-29</title>
+<style>
+  :root{
+    --ink:#1a1d21; --sub:#5a6472; --line:#e3e7ec; --bg:#ffffff; --soft:#f7f9fb;
+    --a:#c0392b; --b:#b9770e; --c:#2c6fad; --ok:#1e7a4d;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:"Songti SC","SimSun","Source Han Serif SC",Georgia,serif;
+       font-size:15px;line-height:1.75;}
+  .wrap{max-width:1000px;margin:0 auto;padding:44px 34px 90px;}
+  h1{font-size:25px;margin:0 0 6px;letter-spacing:.5px}
+  .meta{color:var(--sub);font-size:13px;margin-bottom:26px;
+        border-bottom:2px solid var(--ink);padding-bottom:14px}
+  h2{font-size:19px;margin:38px 0 14px;padding-left:11px;border-left:4px solid var(--ink)}
+  h3{font-size:15.5px;margin:22px 0 8px}
+  p{margin:9px 0}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--soft);font-weight:600}
+  .tag{display:inline-block;padding:1px 8px;border-radius:3px;font-size:12px;
+       font-weight:600;color:#fff;font-family:sans-serif}
+  .t-a{background:var(--a)} .t-b{background:var(--b)} .t-c{background:var(--c)}
+  .t-ok{background:var(--ok)}
+  .box{border:1px solid var(--line);border-left:4px solid var(--c);
+       background:var(--soft);padding:12px 16px;margin:14px 0;border-radius:2px}
+  .box.a{border-left-color:var(--a)} .box.b{border-left-color:var(--b)}
+  .box.ok{border-left-color:var(--ok)}
+  code{background:#eef1f4;padding:1px 5px;border-radius:3px;
+       font-family:Consolas,Monaco,monospace;font-size:12.5px}
+  .num{font-family:Consolas,Monaco,monospace}
+  ul{margin:8px 0 8px 20px;padding:0} li{margin:5px 0}
+  .small{font-size:12.5px;color:var(--sub)}
+  .kv{margin:6px 0}
+  .kv b{display:inline-block;min-width:78px;color:var(--sub);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>论文审查报告：公式、数据处理与结论一致性</h1>
+<div class="meta">
+  审查对象：<code>reports/论文初稿_2026-08-26.docx</code>（8-27 03:44 版，正文 14,715 字 / 12 表 / 21 条结论）<br>
+  对照基准：主面板 <code>主分析面板_重建_含TOwind.csv</code>、结论源 <code>核心结论_定稿_2026-08-26.json</code>、构造脚本 <code>scripts/*.py</code><br>
+  审查日期：2026-08-29 ｜ 审查方式：全文逐节核对 + 原始数据复算 + 脚本逻辑追踪
+</div>
+
+<div class="box ok">
+<b>【2026-08-29 下午更新 · 修正已执行】</b>
+A 级 3 项 + B 级 5 项 + C 级 1 项<b>已修正完毕</b>，并补回一项被遗漏的重要证据；三产物重跑后核验 <b>188/188 全绿</b>，
+正文 <b>14,996 字</b>（阈值 15,000，<b>余量仅 4 字，已达物理上限</b>）。
+<table style="margin-top:8px">
+<tr><th style="width:11%">项</th><th style="width:47%">修正内容</th><th style="width:12%">状态</th></tr>
+<tr><td>A1</td><td>2020 年基金数 279 → <b>286</b>（根因：report_date 为季末次日，Q4 观测被错位到次年）</td><td><span class="tag t-ok">已改</span></td></tr>
+<tr><td>A2</td><td>样本期 → <b>2006Q3 至 2026Q2</b>（原「80 季」本就正确，仅表述歧义）</td><td><span class="tag t-ok">已改</span></td></tr>
+<tr><td>A3</td><td>中英摘要加 Wind 授权限定语</td><td><span class="tag t-ok">已改</span></td></tr>
+<tr><td>B2</td><td><b>更正初判</b>：六维样本外结果全在（L4a +7.05 / L4b +5.58 / L3 +3.47 / L2 +2.20 / L1 +2.71 / L5 +0.67），
+并非「缺检验」而是「未写入」。已补入 §3.5 与结论源 D5、D6</td><td><span class="tag t-ok">已补</span></td></tr>
+<tr><td>B4</td><td>§5 局限披露 SDI 零值堆积 <b>45.4%</b>（基金层；其余成分均 ≤4%）</td><td><span class="tag t-ok">已改</span></td></tr>
+<tr><td>B5</td><td>§3.4 注明显著性「以规格 I 为主口径」，oc_conf／lsv 规格 II 不显著但保留</td><td><span class="tag t-ok">已改</span></td></tr>
+<tr><td>C2</td><td>英文关键词补 diseconomies of scale</td><td><span class="tag t-ok">已改</span></td></tr>
+<tr><td>B1</td><td><b>已裁定并修正</b>：corr(timing, alpha)=0.334 高于 D1 对照组上限 0.313、亦高于 L4b 最弱成分 sortino8(0.304)；
+L4a／L4b 复合维度与 alpha 相关 0.446／0.448 实质相当。结论源 D7 定性由「纯行为性质最强」
+<b>下调</b>为「应对能力具有持续性」，§5 局限改为风险应对层两职能同等披露</td><td><span class="tag t-ok">已改</span></td></tr>
+<tr><td>B6</td><td>结论源 D5／D6／D7 标注「成分定向（单变量相关 t）」，与论文表 4 含三控制变量的回归 t 区分</td><td><span class="tag t-ok">已改</span></td></tr>
+<tr><td>B3</td><td>规格 II 样本损失 74% 披露（需约 40 字）</td><td><span class="tag t-c">篇幅已满</span></td></tr>
+<tr><td>C1 / C3–C8</td><td>参考文献重排、公式(6) 缺失值说明、脚本工程项（C4–C8）</td><td><span class="tag t-c">未做</span></td></tr>
+</table>
+</div>
+
+<div class="box ok">
+<b>总体结论</b>：论文主体框架与绝大多数数字是扎实的，跨产物核验 <span class="num">188/188</span> 全绿，
+回归方程 (1)(2)(4)(5)(6)(7) 的数学设定经核验<b>正确</b>，
+<code>timing = −γ</code> 的符号定向经推导自洽，oc_conf 构造<b>无前视偏差</b>。
+但核验脚本只保证「三产物与结论源互相一致」，<b>不保证与原始数据一致</b>——这正是本次发现问题的区域：
+共查出 <b>3 项必改错误（A 级）</b>、<b>6 项方法论缺口（B 级）</b>、<b>8 项表述与工程问题（C 级）</b>。
+其中 A 级三项错误均已通过原始数据复算坐实，非口径之争。
+</div>
+
+<h2>一、A 级：必改错误（3 项）</h2>
+
+<h3>A1. 2020 年基金数「279 只」错误，应为 286 只 <span class="tag t-a">必改</span></h3>
+<div class="box a">
+<div class="kv"><b>位置</b>：§3.2 第 23 段；结论源 Q3 证据；附录 A 第 94 段</div>
+<div class="kv"><b>论文表述</b>：「基金数从 2019 年的 61 只跃升至 2020 年的 279 只」</div>
+<div class="kv"><b>复算事实</b>：逐季基金数为 2020Q1=263、Q2=270、<b>Q3=279</b>、<b>Q4=286</b>；2020 全年存续并集 = <b>286</b></div>
+<div class="kv"><b>根因</b>：<span class="num">279</span> 是 <b>2020Q3 单季</b>的基金数（源自 <code>统计性描述_2026-08-26.json</code> 的 <code>"2020": 279</code>，
+其旧版备份中键名为 <code>"2020Q3": 279</code>），被当作年度数字写入论文</div>
+<div class="kv"><b>连带问题</b>：2019 的 61 用的是<b>年末值</b>，2020 的 279 用的是<b>三季度值</b>，两者口径不一致</div>
+<div class="kv"><b>修正</b>：统一为年末口径 ——「2019 年末 61 只 → 2020 年末 286 只」；或明确写「2020Q3 为 279 只」</div>
+</div>
+
+<h3>A2. 样本期「2006-10 至 2026-07」表述错误，且与「80 个季度」不自洽 <span class="tag t-a">必改</span></h3>
+<div class="box a">
+<div class="kv"><b>位置</b>：§1 第 13 段、§3.2 第 23 段</div>
+<div class="kv"><b>论文表述</b>：「2006-10 至 2026-07 共 80 个季度」</div>
+<div class="kv"><b>复算事实</b>：面板首季 = <b>2006Q3</b>（2006-07~09），末季 = <b>2026Q2</b>（2026-04~06），唯一季度数 = <b>80</b> ✓</div>
+<div class="kv"><b>问题一</b>：按「2006Q4 至 2026Q2」计只有 <span class="num">79</span> 季，与文中 80 季矛盾；正确区间是 2006Q3–2026Q2</div>
+<div class="kv"><b>问题二（更敏感）</b>：<b>「2026-07」属 Q3</b>。实际数据止于 2026Q2，<b>并未使用未来数据</b>，
+但表述会让审稿人直接质疑违反「不泄露未来季度（≥2026Q3）」纪律</div>
+<div class="kv"><b>修正</b>：改为 <b>「2006Q3–2026Q2」</b>（或「2006 年 7 月至 2026 年 6 月」），季度标注最无歧义</div>
+</div>
+
+<h3>A3. 摘要「全部指标可由公开数据复算」与 Wind 授权依赖矛盾 <span class="tag t-a">必改</span></h3>
+<div class="box a">
+<div class="kv"><b>位置</b>：中文摘要末句；英文 Abstract 末句（<i>All measures are computable from public holdings and NAV data.</i>）</div>
+<div class="kv"><b>事实</b>：oc_conf 依赖 Wind 换手率 —— 脚本 <code>_metrics_v2_20260826.py:68</code> 用 <code>TO_wind_clean</code>；
+§3.1 明写「换手率取自 Wind 授权终端」；局限披露「主口径改用 Wind 集成换手率（基金层 98.5%）」</div>
+<div class="kv"><b>问题</b>：Wind 是商业授权数据，<b>非公开</b>；摘要断言与正文、局限自相矛盾</div>
+<div class="kv"><b>修正</b>：改为「除换手率需 Wind 授权外，其余指标均可由公开持仓与净值数据复算」；英文 Abstract 同步修改</div>
+</div>
+
+<h2>二、B 级：方法论缺口与内部不一致（6 项）</h2>
+
+<h3>B1. L4a 的 timing 与 L4b 同样「概念同源」，却未被同等对待 <span class="tag t-b">重要</span></h3>
+<p><b>事实</b>：<code>timing = −hm_gamma</code> 由 <code>_timing_robust_20260826.py</code> 用<b>全样本期</b>收益序列逐基金估计；
+而因变量 FF5 alpha 同样由全样本期收益序列估计 —— 二者<b>共享同一收益序列，存在机械相关</b>。</p>
+<p><b>内部不一致</b>：论文因「概念同源」把 L4b（sharpe/sortino/mppm）定性下调为「风险使用效率的持续性」；
+但结论源 D7 却称 L4a「是<b>纯行为性质最强</b>的维度之一」。两者构造性质同类，处置标准不同。</p>
+<p><b>披露缺口</b>：全文未报告 <code>corr(timing, ff5_adj_return)</code>，读者无法判断 L4a 的同源程度。</p>
+<div class="box ok"><b>【已裁定 · 2026-08-29】</b>实测 corr(timing, alpha) = <b>+0.334</b>，
+高于 D1 对照组上限 0.313，亦高于 L4b 最弱成分 sortino8（0.304）；
+L4a／L4b 复合维度与 alpha 相关分别为 <b>0.446／0.448</b>，同源程度实质相当。
+<b>结论：L4a 与 L4b 应同等披露。</b>已修正——结论源 D7 定性下调为「对市场冲击的应对能力具有持续性」，
+§5 局限改为「风险应对层两职能与因变量均存在概念同源（0.446、0.448）」。
+诊断数据落盘 <code>output/L4a同源诊断_2026-08-29.json</code>，脚本 <code>_audit_l4a_homology.py</code>。</div>
+<div class="box b"><b>原建议（已执行）</b>：补报该相关系数。若偏高，需将 timing 一并纳入「概念同源」讨论（与 L4b 同等）；
+若较低，则应论证 HM γ（尾部/二阶特征）与 FF5 alpha（一阶截距）为何正交，以此支撑 L4a「纯行为」的定性。</div>
+
+<h3>B2. 遗漏 L4a 样本外强证据，且 L2 / L3 缺样本外检验 <span class="tag t-b">重要</span></h3>
+<p>结论源 D7 记载 <b>L4a 样本外联立 t = +7.05（六维中最高）</b>，这是对 L4a 最有力的证据，
+但论文 §3.5 与表 7 <b>只报告了 L4b（+5.38 / +5.58）、L1（+2.71）、L5（+0.67）</b>，L4a 的 +7.05 未出现。</p>
+<p>同时 D5（L2 认知）、D6（L3 选择）<b>未报告任何样本外结果</b>。
+而论文摘要恰恰将「认知、配置选择、风险应对两职能」四个维度并列为显著维度 ——
+其中 L2、L3 只有同期证据，却是唯一未做样本外检验的两个维度，而 L4b 因做了样本外才被允许定性下调。
+<b>检验标准在维度之间不统一</b>。</p>
+<div class="box b"><b>建议</b>：补一张「六维样本外联立 t」完整表（含 L4a 的 +7.05），
+并对 L2 / L3 补做样本外检验；若不便补做，须在局限中明示「同期设计的因果识别强度弱于样本外」。</div>
+
+<h3>B3. 规格 II 全模型样本损失 74%，未披露 <span class="tag t-b">建议</span></h3>
+<p>表 5：规格 II 单变量 <span class="num">N=8,615</span> → 全模型 <span class="num">N=2,262</span>，<b>丢失 74% 观测</b>（listwise deletion）。
+论文用「符号翻转」裁决 AS，但两个口径样本量相差近 4 倍，可比性存疑，且全模型结论可能受样本选择影响。</p>
+<div class="box b"><b>建议</b>：在 §3.4 或局限中披露该样本损失，并补做「同一样本下 AS 单变量 vs 全模型」的对照。</div>
+
+<h3>B4. SDI 零值堆积 45.4%（基金层），披露不充分 <span class="tag t-b">建议</span></h3>
+<table>
+<tr><th style="width:22%">口径</th><th>零值比例</th><th>说明</th></tr>
+<tr><td>观测层</td><td class="num">48.04%</td><td>6,362 个有效观测</td></tr>
+<tr><td>基金层（时序均值）</td><td class="num">45.36%</td><td>366 只基金；缩尾后 mean=0.2332、sd=0.2288，<b>与表 2 完全吻合</b></td></tr>
+</table>
+<p>后果：近半数基金 SDI 取值为 0，z 标准化后<b>共享同一取值</b>（z ≈ −1.02），
+SDI 对这部分基金<b>零区分度</b>，直接影响 L5 交易执行维度的得分质量。</p>
+<p>结论源 P4 限定仅写「全样本 25% 分位即为 0，零值堆积」，<b>低估了严重程度</b>（实际是 45% 而非 25%）。</p>
+<div class="box b"><b>建议</b>：准确披露 45.4%，并讨论该零堆积对 L5 维度得分的影响（或考虑对 SDI 做零值特殊处理）。</div>
+
+<h3>B5. 「十二个成分全部达到 5% 显著」仅指规格 I，表述易误导 <span class="tag t-b">建议</span></h3>
+<p>§3.4 先说「表 4 汇总 15 个成分指标在<b>两个规格</b>下的结果」，紧接着说「L2–L5 的十二个成分<b>全部达到 5% 水平</b>」。
+但表 4 中 <code>oc_conf</code> 规格 II <span class="num">t=−0.47</span>、<code>lsv</code> 规格 II <span class="num">t=+1.19</span>，<b>均不显著</b>。</p>
+<p>而这两个指标<b>仍被纳入复合得分</b>（L2 含 oc_conf、L5 含 lsv），论文未说明「规格 II 不显著仍纳入」的依据。</p>
+<div class="box b"><b>建议</b>：明确「纳入以规格 I 为主口径」，并单独说明 oc_conf / lsv 在规格 II 下不显著却仍纳入的理由（方向一致 + 规格 I 显著）。</div>
+
+<h3>B6. 表 4 与结论源的成分 t 值口径不同，跨产物对照会出现数字冲突 <span class="tag t-b">建议</span></h3>
+<table>
+<tr><th>成分</th><th>论文表 4（规格 I，含三控制变量回归 t）</th><th>结论源（单变量相关 t）</th></tr>
+<tr><td>risk_asym</td><td class="num">+3.10***</td><td class="num">+2.72（D5）</td></tr>
+<tr><td>de</td><td class="num">−4.46***</td><td class="num">−4.51（D5）</td></tr>
+<tr><td>oc_conf</td><td class="num">−4.11***</td><td class="num">−4.19（D5）</td></tr>
+<tr><td>ICI</td><td class="num">+4.43***</td><td class="num">+4.34（D6）</td></tr>
+<tr><td>ISDI</td><td class="num">−3.33***</td><td class="num">−3.30（D6）</td></tr>
+<tr><td>ARG</td><td class="num">+3.06***</td><td class="num">+3.34（D7）</td></tr>
+<tr><td>timing</td><td class="num">+5.19***</td><td class="num">+5.19（D7，一致）</td></tr>
+</table>
+<div class="box b"><b>建议</b>：在结论源「证据」字段标注口径（如「单变量相关 t」/「含三控制变量回归 t」），
+避免审稿人对照三产物时判定为数字打架。</div>
+
+<h2>三、C 级：表述、格式与工程（8 项）</h2>
+<table>
+<tr><th style="width:6%">编号</th><th style="width:26%">问题</th><th>说明与建议</th></tr>
+<tr><td>C1</td><td>参考文献编号不连续</td>
+<td>正文编号 <code>[1][15][16][59][13][30][58][57][60][45][61][52][53][54][34][31][55][28][23][43][26][62]</code>，
+既非出现顺序也非字母序，不符合期刊规范。<b>建议重排为 [1]–[22]</b>。</td></tr>
+<tr><td>C2</td><td>中英文关键词不对齐</td>
+<td>中文 6 个（含「规模不经济」），英文 5 个且缺对应项。<b>建议对齐</b>。</td></tr>
+<tr><td>C3</td><td>复合公式 (6) 未写明缺失值处理</td>
+<td>结论源 F3 明确「缺失成分按剩余成分取均值，不填 0」，但表 3 方程 (6) 未体现。表 2 存在缺失（88.8%~100%），<b>建议补入</b>。</td></tr>
+<tr><td>C4</td><td>方法详解与实现口径不符</td>
+<td>方法详解称 oc_conf 输入为「双边换手率（Wind 授权导出，200 只）」，
+实际脚本 <code>_metrics_v2_20260826.py:68</code> 用 <code>TO_wind_clean</code>（覆盖 98.5% / 394 只，与表 2 一致）。<b>建议修正文档表述</b>。</td></tr>
+<tr><td>C5</td><td>两脚本写同名文件，可复现性风险</td>
+<td><code>_timing_metric_20260826.py</code>（输出 hm_gamma / tm_gamma，<b>无 timing 列</b>）与
+<code>_timing_robust_20260826.py</code>（输出 timing / hm_beta）<b>均写</b>
+<code>择时系数_季度HM_2026-08-26.csv</code>，互相覆盖。下游脚本读取 <code>[['timing']]</code>，
+若运行顺序颠倒即 KeyError（8-27 已踩过此坑）。<b>建议合并或改名</b>。</td></tr>
+<tr><td>C6</td><td>脚本注释符号错误</td>
+<td><code>_timing_metric_20260826.py:11</code> 称「g_i &gt; 0 表示下行保护」，
+按 HM 形式应为 γ&lt;0。<b>最终实现 <code>timing = -hm_gamma</code> 正确，仅注释错</b>，但会误导后续维护。</td></tr>
+<tr><td>C7</td><td>表 5 的 R² 含季度固定效应，易误读</td>
+<td>规格 II 单变量 R²=0.4006 主要来自季度 FE 而非 AS；且全模型 R²(0.3363) &lt; 单变量(0.4006) 系样本量变化所致。
+<b>建议改报增量 R²</b>，或加注说明。</td></tr>
+<tr><td>C8</td><td>HM 择时方程 (3) 未控制 FF5 其余因子</td>
+<td>方程 (1) 用 FF5 五因子，方程 (3) 仅含 MKT，口径不一致（HM 原文本为单因子，做法可接受）。
+<b>建议加注说明</b>为何择时估计不控制 SMB/HML/RMW/CMA。</td></tr>
+</table>
+
+<h2>四、已核验通过项（确认无误，无需改动）</h2>
+<div class="box ok">
+<ul>
+<li><b>回归方程 (1)(2)(4)(5)(6)(7) 数学设定正确</b>。其中方程 (2) <code>alpha_q = α̂ + ê = ex − β̂'F</code> 是标准的因子调整后收益；
+方程 (6)「先 1%/99% 缩尾 → 再 z 标准化 → 定向 → 等权」顺序正确（先缩尾可避免极端值主导 z 分数）。</li>
+<li><b>方程 (7) 不叠加 Z 的「完全共线」论证正确</b>：L1 得分 = −[z(tenure)+z(log_age)+z(log_aum)]/3 是 Z 的仿射变换，
+设计矩阵 [1, Score_L1, tenure, log_age, log_aum] 秩为 4 而非 5，确为秩亏。</li>
+<li><b><code>timing = −γ</code> 的符号定向自洽</b>：按论文形式 <code>ex = a + b·MKT + γ·min(0,MKT)</code>，
+熊市暴露为 b+γ，γ&lt;0 才是「熊市减仓保护」，故 timing=−γ&gt;0 表示保护强，与文中「timing 高为保护能力强」一致。</li>
+<li><b>oc_conf 构造无前视偏差</b>：<code>oc_conf_t = (TO_t − TO_{t−1}) × 1(R_{t−1}&gt;0)</code>，仅用 t 与 t−1 期数据。</li>
+<li><b>规格 II 改用 alpha_q 的做法正确</b>：复算确认 ff5_adj_return 在基金内为常数（362 只各 1 个取值、0 只 &gt;1），
+若直接用它做季度回归会机械放大样本量并虚增 t 值 —— 论文表 3 注的判断准确。</li>
+<li><b>表 2 覆盖率、样本量与结论源自洽</b>：timing 88.8%→N=355、SDI 91.5%→N=366、sortino8 92.8%→N=371、400×比例均吻合；
+ff5_adj_return N=362 与五分组 73+72+72+72+73=362 一致。</li>
+<li><b>表 6 / 表 8 / 表 9 / 表 10 / 表 11 与结论源逐条一致</b>（含 Q5−Q1=3.13pp、t=10.28、L4b 联立 0.01325/t=5.50 等）。</li>
+<li><b>AS 六道检验的「符号翻转」裁决与结论源 X1 完全一致</b>，三产物无残留矛盾。</li>
+</ul>
+</div>
+
+<h2>五、建议处理顺序</h2>
+<table>
+<tr><th style="width:8%">优先级</th><th style="width:34%">动作</th><th>涉及文件</th></tr>
+<tr><td><span class="tag t-a">1</span></td><td>修正 2020 年基金数（279→286，或标注 Q3）</td><td>结论源 Q3 证据 → 重跑 docx / 两份 HTML</td></tr>
+<tr><td><span class="tag t-a">2</span></td><td>样本期改为「2006Q3–2026Q2」</td><td>论文 §1、§3.2（结论源 Q3 建议同步）</td></tr>
+<tr><td><span class="tag t-a">3</span></td><td>摘要「公开数据」限定语（中英文）</td><td>论文摘要 / Abstract</td></tr>
+<tr><td><span class="tag t-b">4</span></td><td>补六维样本外联立 t 表；补 L2 / L3 样本外检验</td><td>新增脚本 → 表 7 或新表</td></tr>
+<tr><td><span class="tag t-b">5</span></td><td>补报 corr(timing, alpha)，裁定 L4a 同源问题</td><td>§3.5 / 结论源 D7</td></tr>
+<tr><td><span class="tag t-b">6</span></td><td>披露 SDI 零值 45.4%、规格 II 样本损失 74%</td><td>§3.4 / §5 局限</td></tr>
+<tr><td><span class="tag t-c">7</span></td><td>参考文献重排、关键词对齐、C3–C8 表述修正</td><td>docx 与脚本</td></tr>
+</table>
+
+<p class="small" style="margin-top:26px">
+<b>复核提示</b>：任何改动后须重跑 <code>scripts/_xcheck_20260826.py</code>，188 项须全绿。
+但请注意该核验只覆盖「产物 ↔ 结论源」一致性，<b>不覆盖「结论源 ↔ 原始数据」</b>——
+本次 A1、A2、A4 三项均属后者。建议在核验脚本中增补「关键数字回归原始数据复算」检查组。
+</p>
+
+</div>
+</body>
+</html>

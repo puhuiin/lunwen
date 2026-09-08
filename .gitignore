@@ -1,0 +1,21 @@
+# Temporary & lock files
+~$*.docx
+~$*.xlsx
+*.tmp
+
+# Caches & IDE directories
+.workbuddy/
+.ipynb_checkpoints/
+.jspace/
+.trae-html-share-packages/
+.agents/
+__pycache__/
+*.pyc
+
+# Local secrets & tokens
+*.token
+.tushare_token
+
+# Large backups & archive dumps (>100MB exceeds GitHub hard limit)
+backups/
+参考文献/*.zip

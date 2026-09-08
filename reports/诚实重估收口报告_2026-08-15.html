@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>诚实重估收口报告 · 基金经理行为分析研究 · 2026-08-15</title>
+<style>
+  :root{
+    --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; --bg:#f7f8fa; --card:#ffffff;
+    --pos:#b91c1c; --neg:#047857; --warn:#b45309; --accent:#1d4ed8; --soft:#eef2ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.65;}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 28px 64px;}
+  header h1{font-size:26px;margin:0 0 6px;letter-spacing:.3px}
+  .sub{color:var(--muted);font-size:14px;margin-bottom:24px}
+  .verdict{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #a7f3d0;
+    border-radius:14px;padding:18px 22px;margin:0 0 28px;display:flex;gap:16px;align-items:center}
+  .verdict .dot{width:14px;height:14px;border-radius:50%;background:var(--neg);flex:0 0 auto;box-shadow:0 0 0 5px rgba(4,120,87,.15)}
+  .verdict b{font-size:17px}
+  .verdict span{color:#065f46;font-size:14px}
+  h2{font-size:19px;margin:34px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+  h3{font-size:15px;margin:20px 0 8px;color:var(--accent)}
+  p{margin:8px 0;font-size:14.5px}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px;background:var(--card);
+    border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f1f5f9;font-weight:600;color:#334155}
+  tr:last-child td{border-bottom:none}
+  .tag{display:inline-block;padding:1px 8px;border-radius:6px;font-size:12px;font-weight:600}
+  .t-pos{background:#fee2e2;color:var(--pos)}
+  .t-neg{background:#d1fae5;color:var(--neg)}
+  .t-warn{background:#fef3c7;color:var(--warn)}
+  .t-ns{background:#e5e7eb;color:#4b5563}
+  .t-rev{background:#ede9fe;color:#5b21b6}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:12.5px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .callout{background:var(--soft);border-left:4px solid var(--accent);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:14px}
+  .kv{font-size:13px;color:var(--muted)}
+  ul{margin:8px 0;padding-left:20px;font-size:14px}
+  li{margin:4px 0}
+  code{background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:12.5px}
+  footer{margin-top:40px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}.wrap{padding:24px 16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>诚实重估收口报告</h1>
+  <div class="sub">基金经理行为分析研究 · 主文稿 <code>merged_manuscript.html</code> · Option A 完整诚实重估 · 2026-08-15</div>
+</header>
+
+<div class="verdict">
+  <div class="dot"></div>
+  <div>
+    <b>M1「版本漂移 / 可复现性」零残留已确认</b><br>
+    <span>全稿所有依赖旧 M4 数值（β=0.086/0.029/−0.004、N=3,226、Oster δ=1.03–2.25、RESET p=0.336、拐点=0.133、β²=−0.410、Hansen J 等）的段落，已逐处替换为当前可复现管线的诚实值；末次 Grep 仅余两处显式「已被推翻」引用（符合披露预期）。</span>
+  </div>
+</div>
+
+<div class="callout" style="border-left-color:#b45309;background:#fffbeb;">
+<b>v4 更新（2026-08-16）· 双向聚类 SE 口径升级与 WCB 零假设修正</b><br>
+本报告 2026-08-15 版的 M4 L5 系数与稳健性 p 值采用<b>单维基金聚类</b>口径（t=−2.50 / +1.12 / +4.52）。经 2026-08-16 复核，M4 主推断口径应统一为<b>双向聚类（基金×年份, CGM 2011）</b>且 FF5 因子一并缩尾，权威值如下：<br>
+• <b>de</b> β=−0.00606（t=−2.99, p=0.003***）<br>
+• <b>lsv</b> β=+0.01548（t=+0.77, p=0.441, n.s.）<br>
+• <b>risk_asym</b> β=+0.07311（t=+3.57, p≈0.000***）<br>
+置换检验 p（two-way）：RA 0.02 / DE 0.047 / LSV 0.51；WCB-S p（two-way, 修正 H₀：β_L5=0）：RA 0.000 / <b>DE 0.014**</b> / LSV 0.229。<br>
+<b>关键修正</b>：原 §4「WCB-S de p=0.183 不显著」系旧规格 H₀ 未置零所致；修正后 <b>DE 在 WCB 下仍显著（p=0.014**）</b>。最终定稿：<b>RA 与 DE 在渐近 / WCB / 置换三种口径下均稳健显著，仅 LSV 不显著。</b><br>
+权威来源：<code>_repro_M4_authoritative_v4_2026-08-16.py</code> + <code>_v4_robust.json</code>；主文稿 <code>merged_manuscript.html</code> 与 <code>5层架构完整研究方案.html</code> 已据此刷新。
+</div>
+
+<h2>1 · 诚实 M4 完整模型规格</h2>
+<div class="card">
+  <p><b>因变量</b> <code>ff5_adj_return</code>（FF5 时序 alpha 截距）。</p>
+  <p><b>右侧变量</b>：控制 <code>log_aum</code> + FF5（MKT/SMB/HML/RMW/CMA）+ L1（<code>log_fund_age</code>, <code>mgr_total_tenure_v2</code>）+ L2（<code>AS_improved</code>, <code>ICI</code>, <code>industry_hhi</code>）+ L3（<code>SDI</code>, <code>TO_wind</code>）+ L4（<code>ARG</code>, <code>return_volatility</code>）+ L5（<code>de</code>, <code>lsv</code>, <code>risk_asym</code>）+ 年度固定效应 <code>C(year)</code>。</p>
+  <p><b>推断</b>：基金×年份双向聚类稳健标准误（CGM 2011，主口径 t2w）；全样本 1%/99% 缩尾。</p>
+  <p class="kv">诚实样本：N = <b>2,264</b> 观测 / <b>348</b> 只基金 / R² = <b>0.1308</b>。基准面板 MD5 不变（b8c153d0），含 TO_wind 面板 MD5 = f79b4900，二次重跑一致 → 可复现。</p>
+</div>
+
+<h2>2 · 诚实 M4 系数（双向聚类 t2w，主口径）</h2>
+<table>
+  <tr><th>L5 指标</th><th>β（系数）</th><th>t 值</th><th>p 值</th><th>显著性</th><th>结论</th></tr>
+  <tr>
+    <td>risk_asym（风险不对称）</td>
+    <td class="mono">+0.07271</td><td class="mono">+4.52</td><td>&lt;0.001</td>
+    <td><span class="tag t-pos">***</span></td>
+    <td>正向关联最强且高度显著；盈利期风险承担↑ → 业绩↑（赌资效应）</td>
+  </tr>
+  <tr>
+    <td>de（处置效应）</td>
+    <td class="mono">−0.00609</td><td class="mono">−2.50</td><td>0.012</td>
+    <td><span class="tag t-pos">**</span></td>
+    <td>负向且显著；果断止损的经理业绩更好</td>
+  </tr>
+  <tr>
+    <td>lsv（羊群）</td>
+    <td class="mono">+0.01399</td><td class="mono">+1.12</td><td>0.263</td>
+    <td><span class="tag t-ns">n.s.</span></td>
+    <td>正向但<b>不显著</b>；对样本选择高度敏感，定位为选择敏感的描述性证据</td>
+  </tr>
+</table>
+<div class="callout">早期「L5 三指标在完整模型中同时显著」的表述<b>不再成立</b>——仅 RiskAsym 高度显著、de 显著、lsv 不显著。N 由旧 3,226 修正为诚实 2,264。</div>
+
+<h2>3 · 被推翻 / 撤回的稳健性主张（旧值 → 诚实值 → 状态）</h2>
+<table>
+  <tr><th>主张</th><th>旧稿数值</th><th>诚实重估</th><th>状态</th></tr>
+  <tr>
+    <td>L5 三指标同时显著</td>
+    <td class="mono">β=0.086 / 0.029 / −0.004<br>t=5.49 / 3.88 / −2.22<br>N=3,226</td>
+    <td class="mono">β=0.07271 / 0.01399 / −0.00609<br>t=4.52 / 1.12 / −2.50<br>N=2,264</td>
+    <td><span class="tag t-rev">推翻</span> 仅 RA 显著、lsv n.s.</td>
+  </tr>
+  <tr>
+    <td>Oster 遗漏变量界 δ&gt;1</td>
+    <td class="mono">δ=1.03 / 1.19 / 2.25</td>
+    <td class="mono">δ=−2.88 / −2.67 / −1.66（全负）</td>
+    <td><span class="tag t-rev">推翻</span> 不满足 δ&gt;1 基准</td>
+  </tr>
+  <tr>
+    <td>IV / 2SLS / Hansen J 外生性</td>
+    <td class="mono">Hansen J=21.59（拒绝外生）</td>
+    <td class="mono">iv_N=0（交集塌缩）</td>
+    <td><span class="tag t-rev">作废</span> 不可复现，不据 IV 主张因果量级</td>
+  </tr>
+  <tr>
+    <td>RESET 设定偏误检验</td>
+    <td class="mono">p=0.336</td>
+    <td class="mono">F=1.794, p=0.168</td>
+    <td><span class="tag t-warn">修订</span> 诚实面板下未拒绝线性</td>
+  </tr>
+  <tr>
+    <td>RiskAsym 倒 U 型确证</td>
+    <td class="mono">β²=−0.410, p&lt;0.001<br>拐点=0.133</td>
+    <td class="mono">β²=−0.2383, p=0.065<br>拐点=0.164（边际）</td>
+    <td><span class="tag t-rev">降级</span> 仅 10% 边际显著</td>
+  </tr>
+  <tr>
+    <td>LSV 稳健显著 / 100% 功效</td>
+    <td class="mono">正向显著、f²=0.029、≈100%</td>
+    <td class="mono">n.s.（t=1.12, p=0.263）<br>效应量可忽略、功效不足</td>
+    <td><span class="tag t-rev">推翻</span> 早期高功效表述不成立</td>
+  </tr>
+  <tr>
+    <td>面板观测数 N</td>
+    <td class="mono">3,226（L5 完整观测）</td>
+    <td class="mono">2,264</td>
+    <td><span class="tag t-warn">修订</span> 全稿统一</td>
+  </tr>
+</table>
+
+<h2>4 · 稳健性结构诊断汇总（诚实面板）</h2>
+<div class="grid">
+  <div class="card">
+    <h3>置换检验（true_t）</h3>
+    <p class="mono">de −2.50 (p=0.012)<br>lsv +1.12 (p=0.220, n.s.)<br>RA +4.52 (p=0.002)</p>
+  </div>
+  <div class="card">
+    <h3>牛熊格局（MKT_excess 符号）</h3>
+    <p><b>牛市</b> N=1680：de −0.00664(−2.39**)、lsv n.s.、RA +0.06476(4.06***)</p>
+    <p><b>熊市</b> N=584：de n.s.、lsv +0.043(2.36**)、RA +0.10267(3.70***)</p>
+    <p class="kv">格局分化：DE 仅牛市显著、LSV 仅熊市显著、RA 两市均显著（原「均熊市更强」已推翻）。</p>
+  </div>
+  <div class="card">
+    <h3>中介效应（bootstrap）</h3>
+    <p><b>return_volatility 三路径 ✓</b>（LSV_RV p₂=0.068 边际、RA_RV p₂=0.012、DE_RV p₂=0.016）</p>
+    <p><b>TO_wind 三路径 ✗</b>（CI 均含 0）</p>
+  </div>
+  <div class="card">
+    <h3>其他稳健性</h3>
+    <p>WCB-S（聚类 348）：de p=0.183、lsv p=0.358、RA p=0.051（10% 边际）</p>
+    <p>非线性：RA 倒 U 边际（β²=−0.2383, 拐点 0.164）；LSV/DE 线性不显著</p>
+    <p>PS 权重 |β|：RA 0.07271 / LSV 0.01399 / DE 0.00609；描述统计 N=2,264 / 348 只 / std=0.0733</p>
+  </div>
+</div>
+
+<h2>5 · M1 零残留核验清单</h2>
+<table>
+  <tr><th>陈旧 token</th><th>核验结果</th></tr>
+  <tr><td class="mono">β=0.086 / β=0.029 / β=−0.004</td><td><span class="tag t-neg">清零</span> 已替换为 0.07271 / 0.01399 / −0.00609</td></tr>
+  <tr><td class="mono">N=3,226</td><td><span class="tag t-neg">清零</span> 全稿（含 §4.2.1 叙述句 L623 本晚补刀）→ 2,264</td></tr>
+  <tr><td class="mono">Oster δ=1.03 / 1.19 / 2.25</td><td><span class="tag t-neg">清零</span> 改 δ 全负</td></tr>
+  <tr><td class="mono">RESET p=0.336</td><td><span class="tag t-neg">清零</span> 改 p=0.168</td></tr>
+  <tr><td class="mono">拐点=0.133 / β²=−0.410</td><td><span class="tag t-neg">清零</span> 改 0.164 / −0.2383（仅 L985/L1156 显式「已被推翻」保留）</td></tr>
+  <tr><td class="mono">Hansen J, p&lt;0.001</td><td><span class="tag t-neg">清零</span> 改 iv_N=0 不可复现</td></tr>
+  <tr><td class="mono">LSV 100% 功效 / 稳健显著</td><td><span class="tag t-neg">清零</span> 改 n.s.（t=1.12，功效不足）</td></tr>
+</table>
+
+<h2>6 · 交付物与同步</h2>
+<ul>
+  <li><b>主文稿</b> <code>merged_manuscript.html</code>：摘要、第二章、§3.6.3、§4.4–§4.14、§5 证据表/功效表/小结/PS 表、第六章 §6.1.1–§6.1.6 / §6.2.2–§6.2.4 / §6.3.1–§6.3.2 / §6.4.1–§6.4.2 / §6.6 全部诚实化。</li>
+  <li><b>权威数据源</b> <code>_repro_all_OptionA_2026-08-15.json</code>（已逐系数核对：N=2264、R²=0.1308、三项 β、iv_N=0、Oster δ 全负）。</li>
+  <li><b>记忆同步</b>：<code>MEMORY.md</code>「回归实证当前状态」末条 manuscript 诚实化标注为「已全部完成（M1 零残留）」；<code>2026-08-15.md</code> 追加本晚收尾备忘。</li>
+  <li><b>任务状态</b>：Task #199（稳健性章节）、#200（中介/PS/第五六章）已 completed；Task #189（本报告）收口。</li>
+</ul>
+<div class="callout">结论：主文稿现以当前可复现管线的诚实值为唯一引用基准，版本漂移类审稿指控（M1）在正文层面已无残留；被推翻的稳健性主张（Oster、IV、倒 U 型确证、LSV 高功效）均如实降级或撤销，研究声称锚定于数据真正支撑的截面/前向预测关联与 DE 组内（准因果）证据。</div>
+
+<footer>
+  诚实重估收口报告 · 2026-08-15 · 所有数值源自 <code>_repro_all_OptionA_2026-08-15.json</code> 与可复现管线面板（MD5 b8c153d0 / 含TOwind f79b4900）。无未来季度泄漏（面板终点 2026Q2）。· 见正文顶部「v4 更新（2026-08-16）」框：M4 L5 已升级为双向聚类（CGM 2011）权威值。
+</footer>
+</div>
+</body>
+</html>

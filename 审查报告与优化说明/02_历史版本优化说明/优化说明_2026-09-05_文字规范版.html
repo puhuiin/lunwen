@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>优化说明_2026-09-05_文字规范版</title>
+<style>
+  body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;max-width:1080px;margin:0 auto;padding:24px;color:#1f2937;line-height:1.7;background:#fff}
+  h1{font-size:24px;border-bottom:3px solid #1d4ed8;padding-bottom:10px}
+  h2{font-size:19px;color:#1d4ed8;margin-top:32px;border-left:5px solid #1d4ed8;padding-left:10px}
+  h3{font-size:16px;color:#111827;margin-top:22px}
+  .meta{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;padding:14px 16px;margin:16px 0}
+  .meta code{background:#e2e8f0;padding:1px 6px;border-radius:4px}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+  th,td{border:1px solid #cbd5e1;padding:8px 10px;vertical-align:top;text-align:left}
+  th{background:#1d4ed8;color:#fff}
+  tr:nth-child(even){background:#f8fafc}
+  .old{color:#b91c1c;background:#fef2f2;padding:1px 4px;border-radius:3px}
+  .new{color:#15803d;background:#f0fdf4;padding:1px 4px;border-radius:3px}
+  .pill{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;margin-right:6px}
+  .p-text{background:#dbeafe;color:#1e40af}
+  .p-ref{background:#fef3c7;color:#92400e}
+  .p-note{background:#ede9fe;color:#5b21b6}
+  .ok{color:#15803d;font-weight:700}
+  .warn{color:#b45309;font-weight:700}
+  .frozen{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:12px 16px}
+  footer{margin-top:36px;font-size:12.5px;color:#64748b;border-top:1px solid #e2e8f0;padding-top:12px}
+  a{color:#1d4ed8}
+</style>
+</head>
+<body>
+<h1>《你是什么样的投资者？》优化说明 —— 文字规范版（2026-09-05）</h1>
+<div class="meta">
+  <div><b>基于版本（只读，未改动）：</b><code>论文初稿_2026-09-04.docx</code>（1622217 bytes，123段/12表/3图/12个公式）</div>
+  <div><b>本次新生成：</b><code>论文初稿_2026-09-05_文字规范版.docx</code>（125段/12表/3图/12个公式，文末+版本说明附记）</div>
+  <div><b>本次原则（分两步走之第一步）：</b>只动文字与引用规范，<b>所有回归系数、t值、R²、N、分组收益数字与结论判断全部冻结</b>；2025Q3/2026Q2数据质量、表12干净重估、Sortino/HM算法、L4b同源等实证重跑留待第二步。</div>
+  <div><b>验证结论：</b>新版旧字符串清零、表4/表6/表12数字逐字不变、图片与公式100%保留（见第四节）。</div>
+</div>
+
+<h2>一、改了什么 —— 逐项对照（旧 → 新）</h2>
+
+<h3><span class="pill p-text">正文</span> 1. 章节编号：三、（四）→（三）</h3>
+<table><tr><th style="width:18%">位置</th><td>第三章“三、投资经理画像”下，原“（一）群体画像”“（二）典型案例”后直接“（四）长周期样本外检验”，缺（三）</td></tr>
+<tr><th>改动</th><td><span class="old">（四）长周期样本外检验：2006–2024 建模与 2025–2026 盲测验证</span> → <span class="new">（三）长周期样本外检验：2006–2024 建模与 2025–2026 盲测验证</span></td></tr></table>
+
+<h3><span class="pill p-ref">引用</span> 2. 文献角标[11]–[31]级联错位（正文6处+表1全量）</h3>
+<table>
+<tr><th>位置</th><th>旧（错）</th><th>新（对，=文末题录）</th></tr>
+<tr><td>正文P9</td><td>Ungeheuer[11] / Henriksson[12] / Sharpe[13] / Sortino[14] / Goetzmann[15]</td><td>Ungeheuer<span class="new">[14]</span> / Henriksson<span class="new">[15]</span> / Sharpe<span class="new">[16]</span> / Sortino<span class="new">[17]</span> / Goetzmann<span class="new">[19]</span></td></tr>
+<tr><td>正文P10</td><td>Brown &amp; Goetzmann[16] / Lakonishok[17]</td><td><span class="new">[20]</span> / <span class="new">[21]</span></td></tr>
+<tr><td>正文P55</td><td>Frazzini[25]</td><td><span class="new">[29]</span>（[25]实为Puetz）</td></tr>
+<tr><td>表1</td><td>性别[18] / Ang[19] / Gervais[20] / Puetz[21] / Greenwood[22] / Chen&Wei[23] / Cremers[24] / Frazzini[25] / Kacperczyk08[26] / HM[12] / TM[27] / Brown[28]×2 / Sharpe[13] / Sortino94[29] / Goetzmann[15] / Wermers12[30] / LSV[17]+[31] / TO[21]</td><td>依次改为<span class="new">[22]/[23]/[24]/[25]/[26]/[27]/[28]/[29]/[11]/[15]/[30]/[18]×2/[16]/[31]/[19]/[12]/[21]+[13]/[25]</span>，与文末33条一一对应</td></tr>
+</table>
+
+<h3><span class="pill p-text">正文</span> 3. anchor_high符号颠倒（P31）</h3>
+<table><tr><th style="width:18%">旧</th><td><span class="old">…与高位锚定（anchor_high）显著为负…25个指标…全部显著且方向与理论一致…</span>（但表4第12行β=+0.09***、表5 t=+3.1***、表7 t=+3.22***均为正）</td></tr>
+<tr><th>新</th><td><span class="new">12个行为指标单变量显著：…三项转化比率及高位锚定（β=+0.09***，与表2负向预期不一致，机制待第二步重塑）显著为正；…与策略偏离（SDI）显著为负。</span>删“全部与理论一致”，补漏列的SDI，anchor如实归正。</td></tr></table>
+
+<h3><span class="pill p-text">正文</span> 4. 沉没成本定性（P39）</h3>
+<table><tr><th style="width:18%">旧</th><td><span class="old">…有效捕捉经理在历史高点参考点上的沉没成本偏差。</span>（与实证正号矛盾）</td></tr>
+<tr><th>新</th><td><span class="new">高位持仓的正向效应已按实证方向计入认知维度，其理论机制（动量延续 vs 沉没成本）待第二步重塑，本版暂不做偏误定性。</span></td></tr></table>
+
+<h3><span class="pill p-text">正文</span> 5. 单调性夸大（P48/P79/P85）</h3>
+<table><tr><th>旧</th><td><span class="old">原始季度收益亦严格单调 / 近乎完美的单调规律 / 依然保持严格单调递增…彻底排除了过拟合疑虑</span>（但表10 Q3 6.93%→Q4 6.64%倒挂）</td></tr>
+<tr><th>新</th><td><span class="new">总体向上（Q3→Q4略有回撤，非严格单调，见表10）/ 总体单调（数字暂保留，污染季待第二步重估）/ 总体保持单调…为排除过拟合提供了初步证据（严格时序推断待第二步）。</span>数字不动，只收回绝对化措辞。</td></tr></table>
+
+<h3><span class="pill p-text">正文</span> 6. 幽灵统计量（P54/P84）</h3>
+<table><tr><th>旧</th><td><span class="old">加控制 t=+3.28</span>（表7实为+3.22）；<span class="old">样本外t=+2.71</span>（全书无此数；表12实为单变量+6.35/联立+4.03）</td></tr>
+<tr><th>新</th><td><span class="new">t=+3.22（见表7）</span>；<span class="new">单变量t=+6.35***，联立t=+4.03***（见表12；本版数字暂保留，第二步重估）</span>。只做文表对齐，未重估。</td></tr></table>
+
+<h3><span class="pill p-text">正文</span> 7. 反例表述（P72）</h3>
+<table><tr><th>旧</th><td><span class="old">反例则全面低分位</span>（但表11杨明认知79%，图3单角外凸）</td></tr>
+<tr><th>新</th><td><span class="new">反例在五维处于极低分位（1%~20%），仅认知维度相对突出（79%，见表11与图3）。</span></td></tr></table>
+
+<h3><span class="pill p-note">表注</span> 8. 表3超额口径 + 表1两处注</h3>
+<table>
+<tr><th>表3注</th><td><span class="old">超额收益＝季度收益减沪深300</span>（但<code>06_因变量.py:181</code>实为<code>quarter_return-rf</code>，2006–2025差恒0.25pp即rf）→ <span class="new">超额＝季度收益减季度无风险利率（rf，缺失按0.25%/季补；非沪深300超额；数字暂不动，第二步重算；2026含待核查季度）。</span></td></tr>
+<tr><th>表1 timing注</th><td><span class="old">γ&lt;0 即跌市额外下跌，保护越好</span>（字面倒置：γ&lt;0×下行负值=额外收益）→ <span class="new">以HM下行项取相反数为timing，timing越大防守越好（原注倒置，仅修正表述，估计不变）。</span></td></tr>
+<tr><th>表1 CFA注</th><td><span class="old">仅9人持证样本过小</span>（与表4 N=322矛盾观感）→ <span class="new">N=322中有9人持证，变异不足，未纳入复合（见表4）。</span></td></tr>
+</table>
+
+<h3><span class="pill p-text">正文</span> 9. 幽灵变量（P58）</h3>
+<table><tr><th>旧</th><td><span class="old">趋势外推与有限关注度方向检验未通过…</span>（表1 25指标无此二名，无法溯源）</td></tr>
+<tr><th>新</th><td><span class="new">扩展候选中未入表1的趋势外推与有限关注度变量…（明细见方法详解；表1仅列25个核心候选）。</span></td></tr></table>
+
+<h3>10. 版本附记（新增，不动正文编号）</h3>
+<p>文末参考文献后追加一段“版本说明（文字规范版，2026-09-05…）”，声明本版范围与冻结事项。段数123→125，表/图/公式编号零位移。</p>
+
+<h2>二、为什么改 —— 证据链</h2>
+<table>
+<tr><th>问题</th><th>证据</th></tr>
+<tr><td>文献错位</td><td>文末[11]=Kacperczyk08，但正文[11]引Ungeheuer（实为[14]）；表1 ARG引[26]实为Greenwood（应[11]）。插入3条文献后未联动更新角标，[11]–[31]系统性后移。</td></tr>
+<tr><td>anchor符号</td><td>表4 β=+0.09***、表5 t=+3.1***、表7 t=+3.22***全为正；表2预期为负；代码按+1计分。正文写“负”且称“全部一致”属事实相反。</td></tr>
+<tr><td>单调性</td><td>表10 R03 6.93% vs R04 6.64%，Q4倒挂。图2只画alpha未画原始收益，无法支撑“亦严格单调”。</td></tr>
+<tr><td>幽灵t</td><td>全书12表无2.71；表12 L1为+6.35/+4.03；表7 anchor为+3.22。+2.71/+3.28为历史残留。</td></tr>
+<tr><td>表3口径</td><td>2006–2025收益−超额恒0.25pp（20年牛熊不变），2026差35.73pp，全样本差3.99pp；代码<code>excess=quarter−rf</code>，元数据“减沪深300”虚假。</td></tr>
+<tr><td>章节缺号</td><td>三、下仅（一）（二）（四）；生成脚本<code>_draft_docx_20260826.py:1211</code>直接写（四），管线级bug。</td></tr>
+</table>
+
+<h2>三、怎么改的 —— 方法（可复现）</h2>
+<ol>
+<li><b>只读源文件：</b><code>论文初稿_2026-09-04.docx</code>全程未写入；用 <code>python-docx</code> 打开后逐段/逐表单元格字符串替换，另存为 <code>论文初稿_2026-09-05_文字规范版.docx</code>。图片（3幅）、公式（12个m:oMath）、样式原样保留。</li>
+<li><b>替换粒度：</b>正文17组、表1 20组（含Brown两处、Puetz两处），每组记录命中数（17/17正文命中，表1 MPPM补丁1处），缺失即告警停改。</li>
+<li><b>数字冻结：</b>表4/表6/表12等12表单元格数字逐字比对，不许改；只改 surrounding 文字与角标。</li>
+<li><b>脚本留痕：</b>生成逻辑见临时脚本 <code>make_v1.py / patch_mppm.py / verify_v1.py</code>（路径见页脚），日志输出命中数备查。</li>
+</ol>
+
+<h2>四、结果怎么样 —— 验证</h2>
+<table>
+<tr><th>指标</th><th>原版</th><th>新版</th><th>判定</th></tr>
+<tr><td>段落数</td><td>123</td><td>125（+空段+版本附记）</td><td class="ok">✓ 预期内</td></tr>
+<tr><td>表格数</td><td>12</td><td>12</td><td class="ok">✓</td></tr>
+<tr><td>图片数</td><td>3</td><td>3</td><td class="ok">✓</td></tr>
+<tr><td>公式 m:oMath</td><td>12</td><td>12</td><td class="ok">✓</td></tr>
+<tr><td>旧问题字符串残留</td><td colspan="2">Ungeheuer[11]、Sharpe[13]、anchor显著为负、严格单调、t=3.28/2.71、全面低分位、（四）长周期、近乎完美、彻底排除疑虑：全部0残留</td><td class="ok">✓ 清零</td></tr>
+<tr><td>表4/表6/表12数字</td><td colspan="2">逐单元格比对完全一致</td><td class="ok">✓ 冻结落实</td></tr>
+<tr><td>表1角标</td><td colspan="2">R4–R25与文末[1]–[31]逐项对应（含[11]/[15]/[16]/[17]/[19]/[20]/[21]/[22]–[31]）</td><td class="ok">✓ 对齐</td></tr>
+</table>
+
+<h2>五、本次明确未动事项（第二步）</h2>
+<div class="frozen">
+<ul>
+<li>表12数字仍为污染版（+6.32pp/t=5.52），干净版（+2.78pp/t=2.36，Q4倒挂，L5失效）待第二步经你确认后一次性切换正文+表+图。</li>
+<li>表3的2026行（+39.35% vs +3.62%）与全样本行暂保留原数，只改了表注口径说明。</li>
+<li>Sortino条件std/n≥3、HM语义估计、L4b同源、AS机制、TWFE等算法与结论判断全部冻结，只在正文加了“待重塑/待重估”限定语。</li>
+<li>文件名互换的图（论文图1/图2）与“Yi Xie”译名本版未动，已记录待第二步。</li>
+</ul>
+</div>
+
+<footer>
+基于：论文初稿_2026-09-04.docx ｜ 新版：论文初稿_2026-09-05_文字规范版.docx ｜ 本页：优化说明_2026-09-05_文字规范版.html<br>
+工具链：C:/Users/26955/.workbuddy/binaries/python/envs/default/Scripts/python.exe ＋ python-docx ｜ 临时脚本：C:\Users\26955\AppData\Local\Temp\opencode\paper_audit\make_v1.py · patch_mppm.py · verify_v1.py
+</footer>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>优化说明_2026-09-09_双源验证版</title>
+<style>
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;max-width:1080px;margin:0 auto;padding:24px;color:#1f2937;line-height:1.7;background:#fff}
+h1{font-size:24px;border-bottom:3px solid #7c3aed;padding-bottom:10px}
+h2{font-size:19px;color:#7c3aed;margin-top:32px;border-left:5px solid #7c3aed;padding-left:10px}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+th,td{border:1px solid #cbd5e1;padding:8px 10px;vertical-align:top;text-align:left}
+th{background:#7c3aed;color:#fff}
+tr:nth-child(even){background:#f5f3ff}
+.old{color:#b91c1c;background:#fef2f2;padding:1px 4px;border-radius:3px}
+.new{color:#15803d;background:#f0fdf4;padding:1px 4px;border-radius:3px}
+.meta{background:#f5f3ff;border:1px solid #c4b5fd;border-radius:8px;padding:14px 16px;margin:16px 0}
+.meta code{background:#ede9fe;padding:1px 6px;border-radius:4px}
+.ok{color:#15803d;font-weight:700}
+.warn{color:#b45309;font-weight:700}
+footer{margin-top:36px;font-size:12.5px;color:#64748b;border-top:1px solid #e2e8f0;padding-top:12px}
+</style>
+</head>
+<body>
+<h1>《你是什么样的投资者？》优化说明 —— 双源验证版（2026-09-09）</h1>
+<div class="meta">
+<div><b>基于版本（只读）：</b><code>论文初稿_2026-09-08_深度优化版.docx</code></div>
+<div><b>本次新生成：</b><code>论文初稿_2026-09-09_双源验证版.docx</code>（137段/12表/3图/12公式；+双源验证附注+版本说明）</div>
+<div><b>原始文件：</b>09-04至09-08全程未写入。</div>
+<div><b>核心事件：</b>第二源（盈米MCP <code>BatchGetFundNavHistory</code>）与东财逐tick一致，推翻污染假说；09-06的4季度剔除系误伤，本版回滚并统一5季度OOS分母。</div>
+</div>
+
+<h2>一、仲裁证据（为什么回滚）</h2>
+<table>
+<tr><th>检验</th><th>结果</th><th>判定</th></tr>
+<tr><td>002163的2026Q2：东财 vs 盈米</td><td>同为 <span class="new">1.7371→4.1942（+141.45%）</span>，2025Q4/2026Q1同样一致</td><td class="ok">✓ 同源复刻，非管线bug</td></tr>
+<tr><td>面板 vs 东财（2163/40008/18956）</td><td>+148.6%/+141.4%、+17.1%/+14.5%、+68.8%/+61.3%，同量级</td><td class="ok">✓ 管线忠实</td></tr>
+<tr><td>指数独立佐证（akshare）</td><td>沪深300在2025Q3 <span class="new">+17.7%</span>、2026Q2 +10.0%</td><td>2025Q3为真牛市；2026Q2离散极大但双源一致</td></tr>
+<tr><td>NAV↔日增长率、分红记录、截面形态</td><td>复利互认、无分红可误调、有涨有跌（−22%~+149%），排除统一level-shift</td><td>非复权事故形态</td></tr>
+<tr><td>tushare</td><td>新装1.4.29；新旧token均无 <code>fund_basic/fund_nav</code> 权限（stock daily通）</td><td class="warn">有接口无权限，需升级点数</td></tr>
+<tr><td>iFinD refresh_token</td><td>401 <code>expired or illegal</code>，需重取新鲜token</td><td class="warn">待用户重取</td></tr>
+</table>
+<p><b>关键纠正：</b>旧表12异常列本就是5季度均值（2026Q2因子NaN→NaN被mean跳过），与新跑5Q逐位一致（+6.32pp t=5.52等）；旧表12原始收益列才是6季度均值（含2026Q2爆发）。09-06删2025Q3是真误伤（指数+17.7%的真逼空季）。</p>
+
+<h2>二、改了什么</h2>
+<table>
+<tr><th style="width:24%">位置</th><th>09-08（误伤版） → 09-09（本版）</th></tr>
+<tr><td>表3三行</td><td>2025 <span class="old">10.9/254/+3.39/+3.14</span>→<span class="new">11.5/252/+15.30/+15.05</span>；2026 <span class="old">14.8/+3.87</span>→<span class="new">22.2/+39.35</span>；全样本 <span class="old">13.3/+1.96/+1.71</span>→<span class="new">14.4/+8.41/+4.42</span>（与09-04逐格一致）</td></tr>
+<tr><td>表12（32格）</td><td>异常列 <span class="old">0.70→3.48/Q4倒挂/+2.78 t2.36</span>→<span class="new">4.30→10.62严格单调/+6.32 t5.52</span>；原始列 <span class="old">2.75→4.07/+1.32 t1.85</span>→<span class="new">9.73→14.43/+4.69 t5.31</span>；回归 <span class="old">综合2.33/L5-0.58/R²10.96%</span>→<span class="new">5.75***/5.62***/19.84%</span>（源=<code>output/样本外检验_2006_2024_2026Q1_5Q.json</code>，5季度：2025Q1–Q4+2026Q1）</td></tr>
+<tr><td>P76/P78/P79/P84/P85</td><td>4季度/倒挂/L5死亡口径 → 统一5季度、双口径严格单调、认知/防守/执行均显著；P85恢复执行重点（“有价值的实战参考”）</td></tr>
+<tr><td>P3/P16/P81/表3注</td><td>“有效78季/剔除污染” → 双源验证保留＋指数基准＋2026Q2“描述性保留、不入OOS（分母统一）”；80季度 Huntington 回正</td></tr>
+<tr><td>新增附注</td><td>双源验证与自我纠正说明：承认09-06误判、此前弱结论（Q4倒挂/L5死亡/R²腰斩）作废</td></tr>
+</table>
+
+<h2>三、怎么改的</h2>
+<ol>
+<li>复制 <code>scripts/_oos_validation_20260904.py</code> 为 <code>_oos_validation_20260909_5Q.py</code>（仅改掩膜为保留2025Q3、输出新文件名；原脚本文件未动，经核查仍是4Q掩膜），重跑得5Q JSON（1988行，5季度）。2025Q3因子经核查400/400齐全。</li>
+<li>只读09-08，字符串/单元格替换（日志：正文14组全命中，表3九格、表12三十二格逐格OK），另存09-09；图片3幅、公式12个原样。</li>
+<li>表4/6/7及09-05以来全部文字修复逐格冻结延续。</li>
+</ol>
+
+<h2>四、结果怎么样</h2>
+<table>
+<tr><th>指标</th><th>结果</th></tr>
+<tr><td>结构</td><td>133段→<span class="new">137段</span>/12表/3图/12公式；<span class="ok">✓</span></td></tr>
+<tr><td>误伤残留</td><td>有效78季/4干净季度/0.70%/+2.78/t2.36/+3.39%/+1.96%：正文表格 <span class="ok">清零</span>（4处命中均为新附注中“作废声明”引用的历史措辞）</td></tr>
+<tr><td>回滚一致性</td><td>表3与09-04逐格一致；表4/6/7与09-08逐格一致：<span class="ok">✓</span></td></tr>
+<tr><td>遗留</td><td>2026Q2因子缺失（OOS天然排除）；tushare基金权限、iFinD新鲜token待办；表4/表8口径差等需全管线重跑项不变</td></tr>
+</table>
+
+<footer>基于：论文初稿_2026-09-08_深度优化版.docx ｜ 新版：论文初稿_2026-09-09_双源验证版.docx ｜ 本页：优化说明_2026-09-09_双源验证版.html ｜ 源数：output/样本外检验_2006_2024_2026Q1_5Q.json ＋ scripts/_oos_validation_20260909_5Q.py</footer>
+</body>
+</html>

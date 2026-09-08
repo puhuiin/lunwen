@@ -1,0 +1,126 @@
+{
+ "total_specs": 60,
+ "by_family": {
+  "cross_section": 36,
+  "forward": 16,
+  "within": 8
+ },
+ "cross_section_N": 358,
+ "de": {
+  "significant": "52/60",
+  "sig_share": 0.867,
+  "direction_consistency": 1.0,
+  "median_coef": -0.06772,
+  "coef_range": [
+   -0.09333,
+   -0.00734
+  ],
+  "by_family": {
+   "cross_section": {
+    "sig": "36/36",
+    "median": -0.0731,
+    "range": [
+     -0.09333,
+     -0.05539
+    ],
+    "same_sign_share": 1.0
+   },
+   "forward": {
+    "sig": "8/16",
+    "median": -0.02486,
+    "range": [
+     -0.03772,
+     -0.00734
+    ],
+    "same_sign_share": 1.0
+   },
+   "within": {
+    "sig": "8/8",
+    "median": -0.06526,
+    "range": [
+     -0.07144,
+     -0.05685
+    ],
+    "same_sign_share": 1.0
+   }
+  }
+ },
+ "lsv": {
+  "significant": "34/60",
+  "sig_share": 0.567,
+  "direction_consistency": 0.733,
+  "median_coef": 0.10497,
+  "coef_range": [
+   -0.41805,
+   0.18102
+  ],
+  "by_family": {
+   "cross_section": {
+    "sig": "21/36",
+    "median": 0.11535,
+    "range": [
+     0.05025,
+     0.18102
+    ],
+    "same_sign_share": 1.0
+   },
+   "forward": {
+    "sig": "9/16",
+    "median": -0.1576,
+    "range": [
+     -0.41805,
+     -0.01511
+    ],
+    "same_sign_share": 0.0
+   },
+   "within": {
+    "sig": "4/8",
+    "median": 0.09778,
+    "range": [
+     0.03198,
+     0.17683
+    ],
+    "same_sign_share": 1.0
+   }
+  }
+ },
+ "risk_asym": {
+  "significant": "43/60",
+  "sig_share": 0.717,
+  "direction_consistency": 0.767,
+  "median_coef": 0.11141,
+  "coef_range": [
+   -0.1334,
+   0.67349
+  ],
+  "by_family": {
+   "cross_section": {
+    "sig": "29/36",
+    "median": 0.10775,
+    "range": [
+     -0.04882,
+     0.15632
+    ],
+    "same_sign_share": 0.833
+   },
+   "forward": {
+    "sig": "8/16",
+    "median": 0.035,
+    "range": [
+     -0.1334,
+     0.20457
+    ],
+    "same_sign_share": 0.5
+   },
+   "within": {
+    "sig": "6/8",
+    "median": 0.34737,
+    "range": [
+     0.05452,
+     0.67349
+    ],
+    "same_sign_share": 1.0
+   }
+  }
+ }
+}

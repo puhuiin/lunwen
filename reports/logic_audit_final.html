@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>逻辑链条与理论一致性审查 · 2026-08-29</title>
+<style>
+  :root{--ink:#1a1d21;--sub:#5a6472;--line:#e3e7ec;--bg:#fff;--soft:#f7f9fb;
+        --a:#c0392b;--b:#b9770e;--c:#2c6fad;--ok:#1e7a4d;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:"Songti SC","SimSun","Source Han Serif SC",Georgia,serif;
+       font-size:15px;line-height:1.75;}
+  .wrap{max-width:1000px;margin:0 auto;padding:44px 34px 90px;}
+  h1{font-size:24px;margin:0 0 6px}
+  .meta{color:var(--sub);font-size:13px;margin-bottom:24px;
+        border-bottom:2px solid var(--ink);padding-bottom:14px}
+  h2{font-size:19px;margin:34px 0 12px;padding-left:11px;border-left:4px solid var(--ink)}
+  h3{font-size:15.5px;margin:20px 0 7px}
+  p{margin:9px 0}
+  table{width:100%;border-collapse:collapse;margin:13px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--soft);font-weight:600}
+  .tag{display:inline-block;padding:1px 8px;border-radius:3px;font-size:12px;
+       font-weight:600;color:#fff;font-family:sans-serif}
+  .t-a{background:var(--a)}.t-b{background:var(--b)}.t-c{background:var(--c)}.t-ok{background:var(--ok)}
+  .box{border:1px solid var(--line);border-left:4px solid var(--c);background:var(--soft);
+       padding:12px 16px;margin:13px 0;border-radius:2px}
+  .box.a{border-left-color:var(--a)}.box.b{border-left-color:var(--b)}.box.ok{border-left-color:var(--ok)}
+  code{background:#eef1f4;padding:1px 5px;border-radius:3px;
+       font-family:Consolas,Monaco,monospace;font-size:12.5px}
+  .num{font-family:Consolas,Monaco,monospace}
+  ul{margin:8px 0 8px 20px;padding:0}li{margin:5px 0}
+  .small{font-size:12.5px;color:var(--sub)}
+  .kv{margin:6px 0}.kv b{display:inline-block;min-width:76px;color:var(--sub)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>逻辑链条与理论一致性审查</h1>
+<div class="meta">
+  审查对象：<code>reports/论文初稿_2026-08-26.docx</code>（14,996 字）<br>
+  审查维度：叙事逻辑 · 构建链条（指标→维度→画像）· 指标实质与文献口径 · 可解释性<br>
+  方法：基金层/观测层复算 + 构造方法追踪（<code>_audit_construct_logic.py</code>）+ 文献—构造比对<br>
+  日期：2026-08-29
+</div>
+
+<div class="box ok">
+<b>【2026-08-29 晚更新 · 六项建议已全部落地】</b>
+经用户批准后依次执行。策略：详细论证落结论源与方法详解（不受 15,000 字限制），论文正文只做字数中性的最小改动。
+核验 <b>188/188 全绿</b>，正文 <b>14,993 字</b>（余量 7 字）。
+<table style="margin-top:8px">
+<tr><th style="width:5%">项</th><th style="width:55%">落地内容</th><th style="width:14%">位置</th><th style="width:10%">状态</th></tr>
+<tr><td>①</td><td>lsv 与 extrap/attn 的区别（羊群文献无方向共识 vs 明确预期负）；
+诚实标注「共识信息利用」属事后解读、证据强度弱于先验定向</td><td>结论源 X3 ＋ 方法详解</td><td><span class="tag t-ok">已落地</span></td></tr>
+<tr><td>②</td><td>ARG 由「调仓收益」正名为「调仓幅度」；表 4 解释改为「持仓外操作幅度越大，alpha 越高」</td><td>表 1/2/4/9 ＋ 引言 ＋ 结论</td><td><span class="tag t-ok">已落地</span>（残留 0）</td></tr>
+<tr><td>③</td><td>ARG×SDI = −0.84 成分级相关，含经济含义（偏离幅度大者风格漂移小，近乎同一构念两端）</td><td>结论源 D4 ＋ 方法详解</td><td><span class="tag t-ok">已落地</span></td></tr>
+<tr><td>④</td><td>risk_asym 改用 Ang, Chen &amp; Xing (2006) 下行风险定价；说明与前景理论方向相反（61.1% 正值）</td><td>结论源 D5 ＋ 方法详解</td><td><span class="tag t-ok">已落地</span></td></tr>
+<tr><td>⑤</td><td>如实披露 risk_asym×sortino8 = 0.715 略超 0.7 门槛，并说明保留分层的理由</td><td>结论源 D7 ＋ 方法详解</td><td><span class="tag t-ok">已落地</span></td></tr>
+<tr><td>⑥</td><td>公式 (6) 补入「缺失成分按剩余成分取均值」（净 +1 字，靠措辞精简腾出空间）</td><td>论文表 3 公式 (6)</td><td><span class="tag t-ok">已落地</span></td></tr>
+</table>
+<p style="margin-top:8px" class="small"><b>第四轮补充（同日晚）</b>：经用户批准精简 §3.4 中 AS 六道检验的非线性/条件效应细节（−82 字），已把 ③ 的 <b>ARG×SDI = −0.84</b> 写入论文 §3.4、④ 的 <b>Ang, Chen &amp; Xing (2006)</b> 写入表 1 来源列并新增参考文献 [39]。另补入 B3（口径 II 单变量 N=8,615 vs 全模型 N=2,262，样本损失约 74%）至结论源 X1。核验 <b>188/188 全绿</b>，正文 <b>14,972 字</b>。<b>至此 A 级 3 项 + B 级 6 项全部完成。</b></p><p class="small"><b>剩余未做</b>：C1 参考文献编号重排（22+ 条编号与正文引用映射，风险较高）；C4–C8 脚本工程项（两脚本写同名文件、注释符号错、表 5 R² 含季度 FE、HM 未控 FF5、方法详解 oc_conf 口径）——均不影响结论，属可复现性与文档一致性层面。</p>
+</div>
+
+<div class="box ok">
+<b>总体判断</b>：论文的<b>故事主线是清楚的</b>——「收益混合能力与运气 → 用可复算的行为指标刻画能力 → 等权复合 → 画像可用」，
+这条链条在结构上成立，且每一步都有交付物支撑。
+但链条的<b>三个内部环节存在裂缝</b>：
+（1）「偏差损害业绩」的筛选标准在两个指标上执行相反；
+（2）两个指标跨层高度重叠（|r|=0.84），分层的信息增量存疑；
+（3）三个指标的构造方式与其所引文献的原始口径不一致。
+这三类问题都不是数字错误，而是<b>可解释性与理论一致性</b>问题——恰恰是审稿人最可能追问之处。
+</div>
+
+<h2>一、叙事逻辑：主线成立，两处断裂</h2>
+
+<h3>1.1 主线（成立）✓</h3>
+<p>「评价基金经理不能只看收益 → 行为金融提供可观测的能力代理 → 15 个有文献出处的成分 → 筛得六维 → 等权复合 → 五等分单调 + 画像」。
+该链条中：等权复合可复现（F3 已论证）、五等分严格单调（Q1 0.64%→Q5 3.77%，t=10.28）、
+群体画像按业绩分组反过来验证维度差异（P1），<b>正反向双向印证，叙事闭环成立</b>。</p>
+
+<h3>1.2 断裂一：「偏差损害业绩」的筛选标准执行相反 <span class="tag t-a">最严重</span></h3>
+<div class="box a">
+<p><b>对照两处处理</b>：</p>
+<table>
+<tr><th style="width:16%">指标</th><th style="width:26%">文献预期方向</th><th style="width:18%">实证结果</th><th>论文处理</th></tr>
+<tr><td><code>extrap</code> 趋势外推<br><code>attn</code> 有限关注</td>
+<td>偏差损害业绩 → <b>预期负号</b>（Greenwood &amp; Shleifer 2014；Barber &amp; Odean 2008）</td>
+<td>均<b>正向</b>显著<br>t=+3.49 / +2.34</td>
+<td><b>剔除</b>（§3.4：「方向检验均未通过…与'偏差损害业绩'的预期负号相反」）</td></tr>
+<tr><td><code>lsv</code> 交易趋同度</td>
+<td>羊群行为（LSV 1992；Wermers 1999）→ 通常视为无效率</td>
+<td><b>正向</b>显著<br>t=+1.99**</td>
+<td><b>保留</b>，事后解释为「共识信息利用」（表 4）</td></tr>
+</table>
+<p><b>问题</b>：两者同为「偏差/行为型指标、实证符号为正、与文献直觉相反」，
+处理结果却完全相反——一个因「方向不符」被剔除，另一个因「方向为正」被保留并重新解释。</p>
+<p><b>可辩护之处</b>：羊群文献本身对业绩方向<b>并无明确预期</b>（Wermers 1999 发现羊群与业绩关系不显著，
+羊群既可能是信息级联〈无效〉，也可能是对共同信息的合理反应〈有效〉）；
+而趋势外推、有限关注的文献预期<b>明确为负</b>。因此二者处理不同<b>在学理上可以说得通</b>。</p>
+<p><b>但论文没有说出这个区别</b>——读者只会看到「正向就剔除」与「正向就保留」并存的矛盾。
+且「共识信息利用」这一解释<b>未附任何文献引用</b>，属事后归因（HARKing 风险）。</p>
+<p><b>建议</b>：在 §3.4 或表 4 注中补一句区分说明，并为「共识信息利用」补文献
+（如 Wermers 1999 关于羊群与业绩关系不显著的证据，或信息级联文献）。</p>
+</div>
+
+<h3>1.3 断裂二：「能力」与「边界条件」的边界模糊</h3>
+<p>论文成功地把 L1 定性为「边界条件而非能力」（D3），却未对另两个维度做同等审视：</p>
+<ul>
+<li><b>L2 的 <code>risk_asym</code></b>：归入「认知层（认知偏差）」，但实证为<b>正向</b>——
+它不是「偏差损害业绩」，而是「有利特征」。这与 L1 的问题同构（论文批评 L1「把边界条件当能力维度概念上略混」，
+而 risk_asym 是把「有利特征当偏差」）。详见 §2.2。</li>
+<li><b>L4b</b>：已被定性为「风险使用效率的持续性」✓（处理得当）。</li>
+</ul>
+<p><b>建议</b>：要么给 risk_asym 一个「非偏差」的理论定位（下行风险定价框架），
+要么承认 L2 也混入了一个「有利特征」而非纯偏差。</p>
+
+<h2>二、构建链条：分层三处可质疑</h2>
+
+<h3>2.1 ARG 与 SDI 跨层高度重叠（|r| = 0.84）<span class="tag t-a">重要</span></h3>
+<table>
+<tr><th style="width:26%">指标对</th><th style="width:14%">所属层</th><th style="width:16%">相关系数</th><th>判读</th></tr>
+<tr><td><code>ARG</code> × <code>SDI</code></td><td>L4a × L5</td><td class="num">−0.84</td>
+<td><b>极高</b>。论文仅披露维度层面相关 0.524，未披露成分级 −0.84</td></tr>
+<tr><td><code>mppm8</code> × <code>sharpe8</code></td><td>L4b 内</td><td class="num">+0.87</td>
+<td>已知（MPPM 本质为 Sharpe 单调变换），以「不合入回归、先合成维度」消解 ✓</td></tr>
+<tr><td><code>risk_asym</code> × <code>sortino8</code></td><td>L2 × L4b</td><td class="num">+0.71</td>
+<td><b>超过论文自设的 0.7 冗余门槛</b>（D8 用 0.7 拒绝了捕获率），但此处未处理</td></tr>
+<tr><td><code>ICI</code> × <code>ISDI</code></td><td>L3 内</td><td class="num">−0.63</td>
+<td>同层且定向相反，复合时叠加增强信号，<b>合理</b> ✓</td></tr>
+<tr><td><code>ISDI</code> × <code>SDI</code></td><td>L3 × L5</td><td class="num">+0.098</td>
+<td>两个「漂移」指标几乎正交，<b>分层合理</b> ✓</td></tr>
+<tr><td><code>ARG</code> × <code>timing</code></td><td>L4a 内</td><td class="num">−0.06</td>
+<td>几乎正交，<b>两职能拆分合理</b> ✓</td></tr>
+</table>
+<div class="box a">
+<p><b>ARG × SDI = −0.84 的实质</b>：ARG 测「基金收益与静态持仓收益的偏离幅度」，
+SDI 测「净值风格权重的漂移程度」。二者强负相关意味着：
+<b>偏离幅度大的基金，风格漂移反而小</b>——即经理在风格内积极调仓（选股），而非漂移风格。
+这是一个<b>有经济含义的合理发现</b>，但带来两个后果：</p>
+<ul>
+<li>L5 交易执行联立不显著（t=1.23）很可能正源于此：其信息已被 L4a 的 ARG 吸收。</li>
+<li>论文用维度层面 0.524 论证「L5 与 L4a 相关」，但成分级 −0.84 更能说明问题，<b>未披露</b>。</li>
+</ul>
+<p><b>建议</b>：披露成分级相关，并据此重新表述 L5——「L5 与 L4a 在成分层面高度重叠（ARG×SDI=−0.84），
+其独立解释力被吸收」比现在的「与 L4 过程应对相关 0.524」更有说服力。</p>
+</div>
+
+<h3>2.2 risk_asym 的方向与前景理论相反 <span class="tag t-b">理论问题</span></h3>
+<div class="box b">
+<div class="kv"><b>构造</b>：<code>risk_asym = σ(盈利期收益) − σ(亏损期收益)</code>，滚动 8 季</div>
+<div class="kv"><b>文献</b>：表 1 引 Kahneman &amp; Tversky (1979) 前景理论</div>
+<div class="kv"><b>冲突</b>：前景理论预测<b>亏损期 risk-seeking</b>（输家冒险），
+即 σ(亏损) &gt; σ(盈利) → risk_asym &lt; 0 才是「前景理论式的偏差」。
+但本文实证 risk_asym <b>正向</b>显著（观测层 61.1% 取值为正，均值 +0.0349），
+即「盈利期进攻、亏损期防守」的经理业绩更好——这<b>与前景理论的偏差方向相反</b>。</div>
+<div class="kv"><b>后果</b>：把它归入「L2 认知层（认知偏差）」在概念上站不住——
+它测的不是偏差，而是<b>有利的风险管理特征</b>。</div>
+<div class="kv"><b>出路</b>：方法详解已引 Ang, Chen &amp; Xing (2006) 下行风险定价
+（σ(gain) − σ(loss) 的度量思路源自该文，而非前景理论的偏差检验）。
+建议正文改用<b>下行风险定价框架</b>作为理论基础：即「下行波动被定价，
+能压缩亏损期波动的经理获得更高 alpha」，这与正向实证一致，
+且 Ang, Chen &amp; Xing (2006) 本身就是该度量的文献出处。</div>
+</div>
+
+<h3>2.3 缺失值处理未写入公式 (6) <span class="tag t-c">可解释性</span></h3>
+<p>结论源 F3 明确「缺失成分按剩余成分取均值，不填 0」，但论文表 3 方程 (6) 未体现。
+后果：不同基金的维度得分可能基于<b>不同成分数</b>——
+例如 timing 覆盖 88.8%，约 11% 基金的 L4a 得分只由 ARG 构成，其得分口径与其余基金不同。
+这是复合链条中一个未被说明的可比性问题。（受篇幅限制，本轮未能补入正文。）</p>
+
+<h2>三、指标实质 vs 文献口径</h2>
+<table>
+<tr><th style="width:12%">指标</th><th style="width:30%">论文命名 / 解释</th><th style="width:26%">实际构造</th><th>与文献口径的差异</th></tr>
+<tr><td><b>ARG</b></td>
+<td>「调仓收益」<br>「调仓行为创造的收益差越大，alpha 越高」</td>
+<td><code>RG_t = R_fund − Σw·R_i</code><br><code>ARG = Σ|RG_t|</code><br>（观测层 n=9,648，<b>负数占比 0.00%</b>，min=0.0000）</td>
+<td><span class="tag t-b">命名与实质不符</span><br>取绝对值后丢失方向，测的是<b>调仓活跃度</b>而非「收益」。
+所引 KSZ (2008) <i>Unobserved Actions</i> 的 return gap 是<b>带符号</b>的，
+衡量未观测行为的<b>净贡献</b>。本文改为绝对值后经济含义已变。<br>
+<b>佐证</b>：带符号的 RG 此前已被仲裁为零结果（两源对 alpha 均 n.s.），
+而取绝对值后的 ARG 显著（t=+3.06***）——说明对业绩而言<b>重要的不是调仓方向，而是调仓幅度</b>。
+这本身是个好发现，但论文的解释文字未反映这一点。</td></tr>
+<tr><td><b>oc_conf</b></td>
+<td>「过度自信（换手×过度交易）」<br>引 Puetz &amp; Ruenzi (2011)</td>
+<td><code>(TO_t − TO_{t−1}) × 1(R_{t−1}&gt;0)</code><br>（已核验<b>无前视偏差</b> ✓）</td>
+<td><span class="tag t-c">简化实现</span><br>Puetz &amp; Ruenzi 用<b>换手率对过去业绩的回归敏感性</b>，
+本文用「换手差分 × 上期盈利指示函数」这一简化版。方向一致（好业绩→换手放大→业绩差），
+但严格说不是同一测度。建议在方法部分注明为「简化实现」。</td></tr>
+<tr><td><b>lsv</b></td>
+<td>「交易趋同度」<br>「共识信息利用」</td>
+<td><code>mean_i(|p_i − p̄_t| − AF)</code></td>
+<td><span class="tag t-a">解释缺文献</span><br>构造与 LSV (1992) 一致 ✓，
+但「共识信息利用」这一正向解释<b>无文献引用</b>，属事后归因。见 §1.2。</td></tr>
+<tr><td><b>timing</b></td>
+<td>「下行保护系数（−HM γ）」<br>引 Henriksson &amp; Merton (1981)</td>
+<td><code>timing = −γ</code>，γ 为 <code>min(0, MKT)</code> 系数<br>（已核验<b>符号定向自洽</b> ✓）</td>
+<td>构造与 HM (1981) 一致 ✓。<br>
+⚠️ 但 HM 仅含 MKT、未控 FF5 其余因子（方程 3），与方程 (1) 口径不一致——建议加注说明。</td></tr>
+</table>
+
+<h2>四、已核验通过（本轮新增确认）</h2>
+<div class="box ok">
+<ul>
+<li><b>12 个成分的实证符号与论文定向全部一致</b>（risk_asym +0.241、de −0.227、oc_conf −0.195、
+ICI +0.323、ISDI −0.247、ARG +0.286、timing +0.334、mppm8 +0.452、sortino8 +0.304、sharpe8 +0.416、
+SDI −0.236、lsv +0.198）。
+<b>但需注意</b>：这是在<b>全样本</b>上核对的，定向若为事后确定则必然一致，属循环论证风险——
+论文的真正支撑应是样本外检验（六维已补齐，见上一份报告 §B2）。</li>
+<li><b>分层合理的部分</b>：ISDI × SDI = +0.098（两个「漂移」指标正交，分置 L3/L5 合理）；
+ARG × timing = −0.06（L4a 两职能正交，拆分合理）；ICI × ISDI = −0.63（同层定向相反，叠加增强）。</li>
+<li><b>oc_conf 无前视偏差</b>（仅用 t 与 t−1 期）；<b>timing 符号定向自洽</b>；
+<b>等权复合的可复现性论证成立</b>（F3）。</li>
+</ul>
+</div>
+
+<h2>五、优先建议（按审稿人追问概率排序）</h2>
+<table>
+<tr><th style="width:6%">序</th><th style="width:40%">动作</th><th style="width:14%">成本</th><th>收益</th></tr>
+<tr><td>1</td><td>统一「方向与文献不符」的处理标准：明确 lsv（文献方向本无共识）与
+extrap/attn（文献明确预期负）的区别，并为「共识信息利用」补文献</td><td>改结论源 + 表 4 注</td>
+<td>消除最明显的逻辑矛盾，堵住审稿人第一问</td></tr>
+<tr><td>2</td><td>ARG 正名：由「调仓收益」改为「调仓活跃度／持仓外操作幅度」，
+并说明「重要的不是调仓方向而是幅度」（以 RG 零结果 vs ARG 显著作佐证）</td><td>改表 1／表 4／正文</td>
+<td>命名与实质对齐，并把一个弱点转化为发现</td></tr>
+<tr><td>3</td><td>披露成分级相关 ARG×SDI=−0.84，据此改写 L5 不显著的原因</td><td>改 §3.4</td>
+<td>比现有 0.524 的解释有力得多</td></tr>
+<tr><td>4</td><td>risk_asym 换理论基础：由前景理论改为 Ang, Chen &amp; Xing (2006) 下行风险定价</td><td>改表 1 来源列</td>
+<td>消除理论与实证方向相反的问题</td></tr>
+<tr><td>5</td><td>处理 risk_asym × sortino8 = 0.71（超自设 0.7 门槛）</td><td>补披露或论证</td>
+<td>避免被指双标</td></tr>
+<tr><td>6</td><td>公式 (6) 补缺失值处理；注明 oc_conf 为 Puetz &amp; Ruenzi 的简化实现</td><td>受篇幅限制，需先精简</td>
+<td>补全可复现性链条</td></tr>
+</table>
+
+<p class="small" style="margin-top:24px">
+<b>篇幅提示</b>：论文正文已 14,996 字（阈值 15,000，余量 4 字）。
+上述第 1、4 项可主要落在结论源与方法详解（HTML 不受篇幅限制），
+第 2、3 项若进正文需先精简等量文字。诊断脚本 <code>_audit_construct_logic.py</code> 可复跑。
+</p>
+
+</div>
+</body>
+</html>

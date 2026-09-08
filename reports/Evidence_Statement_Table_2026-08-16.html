@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Evidence Statement Table</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:#1a1a1a; margin:32px auto; max-width:1150px; line-height:1.5; }
+h1 { font-size:22px; border-bottom:3px solid #2563eb; padding-bottom:8px; }
+h2 { font-size:15px; margin-top:26px; color:#2563eb; }
+.meta { font-size:12.5px; color:#555; background:#f5f7fb; border-left:4px solid #2563eb; padding:10px 14px; margin:14px 0; }
+table { border-collapse:collapse; width:100%; font-size:12px; margin:12px 0; }
+th,td { border:1px solid #cbd5e1; padding:7px 9px; vertical-align:top; text-align:left; }
+th { background:#eef2f9; font-weight:700; }
+td.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+td.grade { text-align:center; font-weight:800; border:2px solid; border-radius:4px; }
+td.note { font-size:11px; color:#444; }
+.legend { display:flex; gap:18px; font-size:13px; margin:10px 0; flex-wrap:wrap; }
+.legend span { padding:4px 12px; border-radius:5px; font-weight:700; }
+.legend .A { background:#e6f4ea; color:#1e7a34; }
+.legend .B { background:#fff4e5; color:#b26a00; }
+.legend .C { background:#fdecea; color:#b3261e; }
+.foot { font-size:11px; color:#666; margin-top:18px; border-top:1px solid #e2e8f0; padding-top:10px; }
+@media print { body { margin:14mm; } h1 { color:#000; } }
+</style></head>
+<body>
+<h1>Evidence Statement Table</h1>
+<div class="meta">
+<b>Source</b>: v4 authoritative benchmark (main model M4) &mdash; panel mixed OLS, dependent variable
+<i>ff5_adj_return</i>; 18 right-hand-side regressors (including the FF5 five factors) + C(year);
+fund&times;year two-way clustered standard errors (CGM 2011); all continuous variables winsorized at 1%/99%.
+Sample N = 2,264 fund-quarter observations / 348 funds, R&sup2; = 0.1290.
+Coefficients, t, p, and WCB / permutation p are programmatically extracted from
+<code>_v4_benchmark.json</code>, sharing the same source as manuscript &sect;6.1.7 and verified field-by-field by a consistency audit.
+</div>
+
+<h2>Evidence-grading rules</h2>
+<div class="legend">
+  <span class="A">A &middot; Strong</span>
+  <span class="B">B &middot; Conditional</span>
+  <span class="C">C &middot; Weak / Unstable</span>
+</div>
+<p style="font-size:12.5px"><b>A (Strong)</b>: M4 two-way clustered at least ** and consistent significance across &ge;2 of
+asymptotic / WCB / permutation inference; no overturning item in the robustness chapter.
+<b>B (Conditional)</b>: significant in some specification or subsample, directionally stable but magnitude / significance limited.
+<b>C (Weak / Unstable)</b>: M4 insignificant (n.s.) or direction highly sensitive to sample selection; descriptive support only.
+(No indicator falls into B in this study.)</p>
+
+<h2>Evidence statement &mdash; full table (L1&ndash;L5 framework)</h2>
+<table>
+<thead><tr><th>Layer</th><th>Indicator</th><th>Hyp.</th><th>M4 coef.<br>(2-way clust.)</th><th>t</th><th>p</th>
+<th>WCB p</th><th>Perm. p</th><th>Grade</th><th>Validity boundary &amp; robustness index</th></tr></thead>
+<tbody>
+<tr><td>L1</td><td>Fund age (log)</td><td>—</td><td class='num'>-0.00417</td><td class='num'>-2.53</td><td class='num'>0.011 **</td><td class='num'>—</td><td class='num'>—</td><td class='grade' style='color:#1e7a34;border-color:#1e7a34'>A</td><td class='note'>Stable control; robust across full sample; no external-validity restriction</td></tr>
+<tr><td>L1</td><td>Manager cumulative tenure</td><td>—</td><td class='num'>+0.00000</td><td class='num'>+1.02</td><td class='num'>0.309 n.s.</td><td class='num'>—</td><td class='num'>—</td><td class='grade' style='color:#b3261e;border-color:#b3261e'>C</td><td class='note'>Insignificant in M4; tenure length shows no stable cross-sectional association with performance</td></tr>
+<tr><td>L2</td><td>Active Share (AS)</td><td>—</td><td class='num'>-0.02982</td><td class='num'>-2.81</td><td class='num'>0.005 ***</td><td class='num'>—</td><td class='num'>—</td><td class='grade' style='color:#1e7a34;border-color:#1e7a34'>A</td><td class='note'>Higher active share associated with lower alpha; robust; structural control</td></tr>
+<tr><td>L2</td><td>Industry Concentration (ICI)</td><td>—</td><td class='num'>+0.01804</td><td class='num'>+3.74</td><td class='num'>&lt;0.001 ***</td><td class='num'>—</td><td class='num'>—</td><td class='grade' style='color:#1e7a34;border-color:#1e7a34'>A</td><td class='note'>Industry concentration yields excess return; robust; net effect depends on stock-selection skill</td></tr>
+<tr><td>L2</td><td>Industry HHI</td><td>—</td><td class='num'>+0.00865</td><td class='num'>+0.19</td><td class='num'>0.852 n.s.</td><td class='num'>—</td><td class='num'>—</td><td class='grade' style='color:#b3261e;border-color:#b3261e'>C</td><td class='note'>Insignificant in M4; HHI dimension of concentration carries no independent information</td></tr>
+<tr><td>L3</td><td>Style Drift (SDI)</td><td>H1</td><td class='num'>-0.00000</td><td class='num'>-0.00</td><td class='num'>0.999 n.s.</td><td class='num'>—</td><td class='num'>—</td><td class='grade' style='color:#b3261e;border-color:#b3261e'>C</td><td class='note'>Absorbed (insignificant) under full M4 controls (by L2/L4); H1 holds under sparse specification but effective window is 2022+ (§4.2)</td></tr>
+<tr><td>L3</td><td>Turnover (TO_wind)</td><td>H2</td><td class='num'>+0.00000</td><td class='num'>+1.07</td><td class='num'>0.287 n.s.</td><td class='num'>—</td><td class='num'>—</td><td class='grade' style='color:#b3261e;border-color:#b3261e'>C</td><td class='note'>Insignificant under full M4 controls; sparse-spec t=+1.78*; weak cost-erosion effect, overturned by mediation test (§4.2)</td></tr>
+<tr><td>L3</td><td>Active Return Gap (ARG)</td><td>—</td><td class='num'>+0.01625</td><td class='num'>+2.98</td><td class='num'>0.003 ***</td><td class='num'>—</td><td class='num'>—</td><td class='grade' style='color:#1e7a34;border-color:#1e7a34'>A</td><td class='note'>Active risk-adjusted return positively associated with performance; robust; execution-consistency dimension</td></tr>
+<tr><td>L3</td><td>Return volatility</td><td>—</td><td class='num'>+0.02379</td><td class='num'>+0.81</td><td class='num'>0.415 n.s.</td><td class='num'>—</td><td class='num'>—</td><td class='grade' style='color:#b3261e;border-color:#b3261e'>C</td><td class='note'>Insignificant in M4; significant as a mediation channel (§6.1.5) but no independent information as direct predictor</td></tr>
+<tr><td>L5</td><td>Disposition Effect (DE)</td><td>H3*</td><td class='num'>-0.00606</td><td class='num'>-2.99</td><td class='num'>0.003 ***</td><td class='num'>0.014 **</td><td class='num'>0.047 **</td><td class='grade' style='color:#1e7a34;border-color:#1e7a34'>A</td><td class='note'>Two-way clustered *** + WCB ** + permutation * all aligned; within-fund FE t=-3.64 strong. Validity boundary: estimate sample is a selection-biased subsample (de_avail -> alpha +0.0048, t=2.18**); external validity limited to ~46.6% of funds with full-holding data (§4.4.9)</td></tr>
+<tr><td>L5</td><td>Herd Behavior (LSV)</td><td>—</td><td class='num'>+0.01548</td><td class='num'>+0.77</td><td class='num'>0.441 n.s.</td><td class='num'>0.229 n.s.</td><td class='num'>0.507 n.s.</td><td class='grade' style='color:#b3261e;border-color:#b3261e'>C</td><td class='note'>Insignificant in M4; fragility diagnosed: not collinear (VIF=1.15), not data artifact; mechanism = masked by same-layer de/RA (J-isolation -> +0.027, t=2.78***), period-dependent (2022+ +0.025, t=2.03**). Descriptive/selection-sensitive evidence only (§4.4.8)</td></tr>
+<tr><td>L5</td><td>Risk-taking Asymmetry (RiskAsym)</td><td>—</td><td class='num'>+0.07311</td><td class='num'>+3.57</td><td class='num'>&lt;0.001 ***</td><td class='num'>&lt;0.001 ***</td><td class='num'>0.020 **</td><td class='grade' style='color:#1e7a34;border-color:#1e7a34'>A</td><td class='note'>Two-way clustered *** + WCB *** + permutation * all aligned; construct orthogonalized to market timing (§4.4.5). Multiple mechanisms (house-money/timing/skill); inverse-U only marginal; strongest single-indicator evidence</td></tr>
+</tbody></table>
+
+<div class="meta" style="border-color:#1e7a34">
+<b>Grade tally</b>: A = 6 ({ Fund age (log), Active Share (AS), Industry Concentration (ICI), Active Return Gap (ARG), Disposition Effect (DE), Risk-taking Asymmetry (RiskAsym) });
+C = 6 ({ Manager cumulative tenure, Industry HHI, Style Drift (SDI), Turnover (TO_wind), Return volatility, Herd Behavior (LSV) }); B = 0.
+<strong>Strongest evidence</strong>: RiskAsym (A, significant in forward + within-fund dimensions), DE (A, within-fund quasi-causal but external validity limited to ~46.6% subsample),
+and structural controls AS / ICI / ARG.
+<strong>Weakest evidence</strong>: LSV (C, direction sample-sensitive, masked by same-layer indicators; descriptive only).
+</div>
+
+<div class="foot">
+<p>WCB p = Wild Cluster Bootstrap-S small-sample inference p-value; Perm. p = 500-draw permutation-test p-value.
+* H3* marks DE as an L5 behavioral indicator whose disposition-effect construct corresponds to the prospect-theory loss-aversion hypothesis.</p>
+<p>Diagnostic index: LSV fragility mechanism &sect;4.4.8; DE selection bias &amp; validity boundary &sect;4.4.9;
+full-RHS multicollinearity (VIF) diagnostic &sect;4.4.10 (all headline coefficients VIF &lt; 2).
+Full grading and citations in manuscript &sect;6.1.7. This table is a stand-alone submission companion and may be submitted separately or as an online appendix.</p>
+<p>Generated 2026-08-16 &middot; programmatically built from the v4 authoritative benchmark by <code>_build_evidence_statement_table_en.py</code>.</p>
+</div>
+</body></html>
