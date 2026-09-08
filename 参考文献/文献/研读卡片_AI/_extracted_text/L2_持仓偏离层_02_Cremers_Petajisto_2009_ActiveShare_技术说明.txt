@@ -1,0 +1,905 @@
+                                          
+                                                                                                                                         The Active Share Measure 
+1   
+ 
+ 
+ 
+Introduction                                         
+ 
+The debate about using active versus passive portfolio management continues among investors, consultants, 
+and academic researchers. For the most part, empirical evidence suggests that active equity managers who beat 
+their benchmarks net of fees and trading costs are few and far between. Nonetheless, many investors insist on 
+searching for active managers who belong to that elite group. Others are content choosing passive index funds 
+for their traditional asset portfolios.  
+ 
+It is surprising how often distinctions between (and arguments about) passive and active devolve into “index 
+funds versus everything else.” This sometimes is simply the result of the “ne’er the twain shall meet” attitudes of 
+the two extreme positions in the debate, but it also reflects the fact that there is no simple, continuous measure of 
+the “degree” of active management. Although we may describe actively managed portfolios as “closet index,” 
+“concentrated,” or “best ideas,” such classifications generally reflect only one identifiable aspect of the manager’s 
+style. We look to Tracking Error, delighting in its quantifiable nature, but acknowledge that although it indicates 
+active management, it cannot serve as a single, simple measure.   
+ 
+As the search for active managers will undoubtedly continue, it seems obvious that investors and consultants 
+should keep current on research relating to measurement and performance issues and should take advantage of 
+any new insights that might facilitate and improve the selection process. The purpose of this note is to  
+ 
+• 
+define a relatively new measure of active management, namely, “Active Share,”  
+• 
+discuss how we might use it by itself and in combination with Tracking Error to better 
+characterize and compare active managers, 
+• 
+discuss how it might help to identify managers most likely to outperform their benchmarks, and 
+• 
+promote further discussion, research, data collection, and the possible adoption of Active Share 
+as another measure in our toolbox of manager analytics.  
+ 
+The first part of this note draws from the working paper by K.J. Martijn Cremers and Antti Petajisto1 that has 
+attracted the attention of many in the industry, including MorningStar, who added a version of Active Share as a 
+screening tool in late 2007. (We warn readers that while Part I may seem a dry five pages, the alternative is fifty 
+pages by Cremers and Petajisto.) The second part illustrates applications of Active Share using a sample of 
+long-only, domestic large-cap equity managers that Hammond Associates follows. We conclude with 
+recommendations and cautions about using Active Share.  
+ 
+Part I 
+ 
+The “Active Share” Measure 
+ 
+K. J. Martin Cremers and Antti Petajisto (C&P), professors at Yale University, began presenting results of their 
+research on actively managed equity mutual funds about three years ago. In their quest for further evidence of 
+value added by active managers, they developed a new measure of active portfolio management. That measure, 
+                                                 
+1 K.J. Martijn Cremers and Antti Petajisto, “How Active Is Your Fund Manager? A New Measure That Predicts Performance,“ Working Paper, 
+Yale School of Management, March 31, 2009. 
+RESEARCH NOTE
+August 2009 
+Active versus Passive Equity Managers
+Using the “Active Share” Measure
+                                          
+                                                                                                                                         The Active Share Measure 
+2   
+Active Share, represents the proportion of portfolio holdings that differ from those in the benchmark index and is 
+defined as follows: 
+ 
+                                           N 
+ 
+Active Share = 1/2 ∑ │w fund,i - w index,i│, 
+                                          i =1 
+where w fund,i and w index,i  are the portfolio weights of stock i in a fund and in its benchmark index, and the sum 
+is taken over the N stocks in the index and in the fund2.  
+ 
+Active Share depends on the absolute differences in portfolio weights for all stocks in the managed fund and its 
+index benchmark, which are simply the manager’s over-weights and under-weights. Active Share is simple to 
+calculate, requiring only the market values of stocks in both the benchmark portfolio and the actively managed 
+fund: Calculate the difference between the fund’s weight and the index’s weight for all stocks in either, sum the 
+absolute differences, and divide by 2. Dividing by 2 ensures that Active Share takes on a value between zero and 
+100%, so it can be read and interpreted as follows: 
+ 
+Active Share = the % of stock holdings in a fund that differ from those in the index.   
+ 
+Remember that the sum of the weights for any fund’s stocks is 100% and the sum of the weights for any index’s 
+constituents is 100%. So, if the fund contained none of the stocks in the index, then the sum of the absolute 
+differences would be 200%; dividing by 2 reduces the calculation in this extreme example to 100%.3 Active 
+Share then has a straightforward interpretation: a fund that diverges from its benchmark completely (i.e., holds 
+none of the benchmark stocks) has Active Share =100% and can be described as being 100% actively managed.  
+At the other end of the spectrum is a fund that contains exactly the same stocks with exactly the same weights as 
+the index (i.e., a perfectly replicated index fund). In this case, the sum of the absolute differences in weights is 
+0%. The interpretation is that 0% of the fund’s holdings diverge from the index, so there is 0% active 
+management; it is totally passive. For any fund holding some but not all of the stocks in the benchmark (or with 
+different weightings), Active Share will fall between 0% and 100%. The observed sizes and distribution of fund 
+Active Shares will be discussed later in this note.  
+ 
+Combining Active Share and Tracking Error to Characterize Active Equity Management 
+ 
+The only way that an equity fund manager can outperform a given benchmark is by taking positions that differ 
+from those in the benchmark. There are basically two paths that lead to holdings differences—stock selection or 
+factor-timing. Stock selection refers to the picking of stocks that outperform the benchmark index without 
+changing the level of systematic risk.4 Factor-timing, which is also known as “tactical allocation,” “market timing,” 
+or “sector rotation,” means taking positions in particular factors such as market cap, price-to-book, sector, 
+industry, etc. Either approach results in different stock weightings relative to a manager’s official benchmark 
+index.5 
+ 
+C&P suggest that Active Share, a holdings-based measure, can be used to describe and compare active equity 
+fund managers on one dimension—basically, that of stock-selection. Tracking Error (TE) can be used to describe 
+the other dimension of factor-timing. Recall that the typical calculation of TE is the standard deviation of a fund’s 
+excess returns relative to its benchmark index. It is obvious that TE cannot be positive unless a fund has different 
+risk exposures than the benchmark. C&P argue that since TE depends on a fund’s return covariances with the  
+                                                 
+2 The calculation should include the weights of all assets in the fund and index, including cash, derivatives, short positions, etc. We are 
+limiting our discussion here to long-only equity portfolios and therefore focusing on stock holdings, ignoring cash and derivatives, and 
+assuming no leverage.  
+3 Active Share stems from decomposing a fund into a 100% position in the benchmark index plus a zero-net-investment long-short portfolio. 
+The long-short portfolio reflects all the fund’s active bets (under-weights and over-weights). For hedge funds or any fund using margin, 
+Active Share can exceed 100%.  
+4 Of course fund risk by any measure may differ from index risk, but evaluation of stock-picking generally attempts to adjust for differences in 
+risk, which depend on factors such as beta, market capitalization, or industry. 
+5 In this note we are not interested in factor-timing as it relates to overall portfolio asset allocation decisions, such as whether to overweight 
+large cap equities, whether to adopt a “value tilt,” whether to overweight energy stocks via ETF-investing, etc. We are only interested in  
+factor-timing issues within the mandate of a single fund manager. 
+                                          
+                                                                                                                                         The Active Share Measure 
+3   
+index, it nicely reflects differences in systematic factor exposures.6 Note that TE measures the volatility of a 
+fund’s excess returns, but it is not the case that higher TE necessarily implies higher risk as measured by total 
+portfolio volatility or beta; neither is it the case that higher TE implies higher absolute or excess returns.7 
+ 
+Cremers and Petajisto propose using Active Share and Tracking Error as measures of the two key dimensions of 
+active management8  and show how the two measures pair up for broad categories of active management style 
+in the following graph:  
+ 
+Figure 1: Active Management in Two Dimensions
+High
+Diversified
+Concentrated
+Stock Picks
+Stock Picks
+Low
+Closet Indexing
+Factor Bets
+Pure
+0 Indexing
+0
+Low
+High
+Tracking Error
+Active Share
+ 
+ 
+What might we gain from using this framework? First of all, it is another way of characterizing or categorizing 
+funds or managers. In much the same way we use value-growth style boxes to describe and distinguish among 
+value and growth managers, we might use the “active management box” to describe them in active-passive 
+dimensions. Neither of these boxes is rocket science nor does either tell us which manager to select—each is a 
+single tool among many that can help in sorting and selecting managers. That being said, is there other evidence 
+that would motivate us to look to Active Share for more than simple categorization?  In the next section we 
+summarize C&P’s general findings about Active Share and, most interesting, their finding that managers with the 
+highest Active Shares have the highest levels of outperformance.  
+ 
+Empirical Results  
+ 
+How Large are Mutual Fund “Active Shares”?  
+ 
+Data and Methodology: C&P investigate sizes and trends in Active Share and the relationship between Active 
+Share and excess returns relative to a benchmark. Their data include the stock holdings of all-equity mutual 
+funds in the Thomson Financial’s CDA/Spectrum database, stock and mutual fund returns from CRSP, and 
+constituent data and returns on 19 indexes. Indexes include those used by the funds and are provided by 
+S&P/Barra, Russell, and Wilshire.  
+ 
+                                                 
+6 If we express Tracking Error (TE) in matrix notation, we can see the role of weight differences (active bets) and factor returns: TE is the 
+square root of Relative Portfolio Risk, var(a): 
+ var(a) = w’(a) * V * w(a) 
+where   w(a) = active weights, that is, the difference between the portfolio’s and the benchmark’s weighting  of a particular factor 
+            w’(a) = transposed active weights 
+                 V = variance-covariance matrix of factor returns.  
+7 A familiar example is The GMO U.S. Quality Fund, which for the first three years of its history had a Tracking Error of about 4.3% and an 
+excess return of about -4.6%. In the most recent three years, it had a Tracking Error of about 6.5% and an excess return of +5.9%. Over 
+each three year period, it had a beta below one and total volatility significantly lower than that of its stated S&P 500 benchmark.  
+8 CP suggest that these two measures are reasonable proxies for the two major dimensions of active management, but there are many more 
+elaborate approaches to quantifying them. Certainly returns-based multifactor regression models can be designed to yield further 
+quantification of both dimensions, but not without adding layers of complexity in terms of computation and interpretation.  
+                                          
+                                                                                                                                         The Active Share Measure 
+4   
+After numerous screens, cleaning, etc., C&P obtain a sample consisting of 2,647 funds during the time period 
+from 1980 to 2003. For each year and each fund, there is an average of three fund holding report dates and a 
+total number of observations of 48,354. 
+ 
+C&P select what they determine is the most appropriate benchmark for each fund rather than accept the Fund’s 
+stated benchmark index. They do this by computing Active Share for each fund against each of the 19 indexes 
+and selecting the index for which the fund has the lowest Active Share. This suggests another use for Active 
+Share in our regular evaluation of funds and managers. How many times, for example, do we argue about a style 
+index being a more appropriate benchmark than a manager’s stated core index? Or whether a manager “cheats” 
+to beat his stated index or picks an index that is easier to beat? We will visit some examples later, in Part II. 
+ 
+Size of Active Shares of All-Equity Mutual Funds: C&P provide numerous summaries of Active Share by 
+number of funds, type and size of fund, expense ratio, turnover, and time period. We reproduce one summary 
+table for 2002 (the most recent year for which they had full-year data): 
+ 
+ 
+Table 1: Number of Mutual Funds (2002)
+Tracking Error (% per year)
+Active Share (%)
+0-2
+2-4
+4-6
+6-8
+8-10
+10-12
+12-14
+>14
+All
+90-100
+66
+125
+77
+41
+22
+26
+358
+80-90
+17
+100
+120
+54
+24
+10
+10
+336
+70-80
+26
+124
+83
+27
+5
+7
+10
+281
+60-70
+75
+115
+41
+12
+1
+247
+50-60
+3
+102
+55
+15
+3
+179
+40-50
+9
+66
+20
+98
+30-40
+15
+27
+3
+47
+20-30
+11
+4
+14
+10-20
+8
+10
+0-10
+104
+4
+109
+All
+150
+323
+482
+388
+174
+73
+41
+48
+1678
+ 
+ 
+ 
+ 
+ 
+As Table 1 shows, there is a broad array of active manager types. Note that of the 1,678 funds, 1,222 (about 
+73%) had Active Shares of 60% or above but only 118 of these had TE below 4%.9 There is also an obvious 
+relationship between active share and TE (higher Active Share generally means higher TE), relatively few funds 
+with above average Active Share and low TE, and no funds exhibiting low Active Share paired with high TE.  
+ 
+A multitude of questions emerge about who these managers are, where “our” managers fall, whether the 
+distribution is stable over time, whether Active Share is stable for individual managers, and whether some 
+combination of Active Share and Tracking Error predicts superior relative performance. C&P address many such 
+questions, but we will summarize only a few.  
+   
+Of particular interest is the fact that Active Share for long-only equity mutual funds and the industry as a whole 
+has fallen over time, as shown in the following graph: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                                 
+9  We found some minor differences in row and column sums in Table 1 but have not yet received a corrected version from C&P. 
+                                          
+                                                                                                                                         The Active Share Measure 
+5   
+ 
+Figure 2: Active Shares over Time (Active funds with S&P 500 Benchmarks) 
+ 
+ 
+ 
+Referencing their graph above, C&P note how the levels of active management for individual funds in the 
+universe and for the industry as a whole have declined since the 1980’s. To calculate the aggregate Active 
+Share, C&P simply treated the whole mutual fund industry as a single fund and summed all weights for all funds. 
+So, in 2003 the industry as a whole had an active share of only 30%, meaning that 1) funds were largely 
+cancelling out each others’ bets and 2) the industry was basically 70% passive. They conjecture (reasonably, we 
+think) that this reflects the responses of active fund managers and fund providers to investors’ increased interest 
+in indexing and concern with Tracking Error.  
+ 
+We summarize some additional noteworthy relationships found by C&P: 
+• 
+The Active Shares of individual funds are quite consistent over time, meaning that current Active Share 
+is a good predictor of a fund’s Active Share next year. 
+• 
+Active Share is negatively correlated with the size of the fund; smaller funds tend to be more active. 
+• 
+Funds with the highest Active Shares appear to have slightly higher expense ratios, but there is no 
+meaningful relationship with expense ratios for intermediate ranges of Active Share. 
+• 
+There is basically no correlation between Active Share and portfolio turnover.  
+• 
+C&P estimate the Active Share of a marginal dollar in funds and find that it is roughly 70% for funds 
+managing up to $1 billion, falls to 60% at $10 billion, and to about 50% for the largest funds. 
+• 
+C&P calculate Active Share on an industry level and find it to be relatively constant within a TE group, 
+whereas it varies from 50% to almost 100% on a stock level. They believe this supports their conjecture 
+that active bets on industries increase TE while stock-picking in a relatively industry-neutral setting does 
+not. 
+• 
+Active Share is not easy to explain with other variables, so it is a new dimension of active management 
+that should be measured and viewed separately. 
+ 
+Does Active Share Predict Excess Returns?  
+ 
+Of course the result everyone jumps to the Conclusions for is whether or not funds/managers with higher Active 
+Shares are more likely than those with lower Active Shares to beat their benchmarks. C&P conclude that they do.  
+ 
+                                          
+                                                                                                                                         The Active Share Measure 
+6   
+Data and Analysis: Using active fund data from 1990-2003, C&P calculate index-relative excess returns, Active 
+Share, and TE for each fund in their sample.10 They then sort the funds into Active Share quintiles and into TE 
+quintiles, thus obtaining twenty-five groups of Active Share/TE paired funds. Using regression analysis, they 
+investigate the relationship between excess returns and the twenty-five active fund groups. They analyze funds 
+within each Active Share quintile to discern the effect of TE on excess return and funds within each TE quintile to 
+uncover any impact of differences in Active Share on excess return. They then “drill down” to isolate other 
+characteristics of the funds that outperform and underperform, that is, to further identify winners and losers. 
+ 
+Key Results and Conclusions: Tracking Error does not help in selecting outperforming funds. In fact, going 
+from low to high tracking error generally hurts performance within an Active Share quintile, especially for the 
+lowest Active Share quintile. On the other hand, increasing Active Share within a TE quintile improves relative 
+performance. The highest quintile of Active Share returns 2.55% more than the lowest quintile (t =3.47). The 
+difference in net excess returns within each TE quintile is positive and significant.   
+ 
+We summarize C&P’s findings about the relationship between different types of active managers and their 
+abilities to generate excess net returns: 
+ 
+• 
+Low Active Share and high Tracking Error managers (factor bets are taken) do the worst. 
+• 
+Low Active Share and low Tracking Error managers (closet indexers) tend to lose money after fees and 
+trading costs. 
+• 
+High Active Share and low Tracking Error managers (diversified stock-pickers) can earn positive excess 
+returns. 
+• 
+High Active Share and high Tracking Error managers (concentrated stock-pickers) earn the highest 
+positive excess returns. 
+• 
+The most successful outperforming funds have high Active Share, high Tracking Error and low assets 
+under management (below $1 billion). Of these, the best in any one-year period exhibited strong 
+outperformance in the preceding one-year period. 
+ 
+C&P strongly recommend that  
+ 
+ 
+An investor should clearly avoid the lowest three Active Share Quintiles and instead pick from the highest Active 
+Share quintile. Funds in the highest Active Share quintile beat their benchmarks by 1.13% (t=1.60)…. 
+ 
+and 
+ 
+From an investor’s point of view, funds with the highest Active Share, smallest assets, and best one-year 
+performance seem very attractive, outperforming their benchmarks by 6.5% per year net of fees and expenses. 
+ 
+Part II 
+ 
+Applications of Active Share to HA Manager Research and Selection Efforts 
+ 
+We calculated Active Share for a number of long-only domestic equity managers that Hammond Associates 
+Research Group follows.11 Given the absence of a large database and programming, our initial objectives were 
+basic: How simple is Active Share to calculate and what does it tell us? Does it measure a dimension of active 
+management that is useful and logical? Does it yield rankings that are consistent with the less quantitative 
+approaches we employ to assess degrees of active management? Does it provide any new insights or prompt 
+useful new questions as we engage in our manager selection process?    
+                                                 
+10 C&P do not use the typical TE calculation in this analysis. They estimate TE after adjusting for adjusting excess returns for differences in 
+fund betas.  
+11 We calculated Active Share using C&P’s equation. MorningStar calculates Active Share differently: 1 minus the % of the fund that is 
+invested in names that are also in the index, thus allowing over- and under-weights to cancel each other out and, in our opinion, lose a 
+large amount of information and discrimination value. 
+                                          
+                                                                                                                                         The Active Share Measure 
+7   
+ 
+ 
+Categorizing Active Managers 
+ 
+Exercise 1: Use Active Share to quantify total holding bets (under-weights and over-weights) against 
+an index benchmark and to compare managers. 
+ 
+U.S. Large-cap growth managers: We included Stralem and Jensen because both assert that they can be 
+benchmarked against either the Russell 1000 Growth index or the S&P 500 index. 
+ 
+Table 2: Active Share of Large-cap Growth Managers
+Manager
+12/31/2007
+12/31/2008
+3/31/2009
+DSM
+85.7%
+87.3%
+84.1%
+Jensen
+84.8%
+81.8%
+82.8%
+Stralem
+84.7%
+79.2%
+85.3%
+Atalanta Sosnoff
+74.6%
+74.1%
+69.8%
+Neuberger Berman
+68.5%
+60.6%
+54.3%
+INTECH
+61.5%
+50.1%
+55.0%
+BGI R1G Alpha Tilts
+53.4%
+34.9%
+31.6%
+Active Share: Benchmark = Russell 1000 Growth
+ 
+ 
+Key observations are that, given our familiarity with these managers, the Active Share measure does a good 
+job in terms of ranking the degree of active management. For the first four obvious large-cap growth managers 
+it produces a ranking that is consistent with ordinal ranks we would have assigned. If this is true for managers 
+we know well, Active Share would seem to be valuable in screening and sorting managers we know less well.  
+The declines in INTECH and BGI’s Active Share over calendar year 2008 also make sense based on what 
+each of those managers has told us. INTECH in late 2007 began implementing tighter index-relative weight 
+controls on individual stocks, clearly indicating a reduction in under- and over-weights was forthcoming. BGI’s 
+story is more complicated. First, we view them as enhanced indexers, so expect them to exhibit a low Active 
+Share.  But, in 2007 they reweighted their three thematic models, with the most obvious change being a 
+reduction in the role played by the relative valuation model in forecasting alpha. Our sense at the time  was that 
+the sum of their modifications was to reduce their active index-relative risk and TE after disappointing returns in 
+2007—and the change in Active Share is consistent with this view. The general insight of this limited exercise 
+is that Active Share seems to quantitatively reflect certain types of management information and may therefore 
+serve as a useful check. Along the same vein, an unexpected, noticeable change in Active Share should 
+prompt a conference call with the manager.  
+Let us look at Neuberger Berman, a manager we were reviewing when the first signs of trouble emanated from 
+Lehman Brothers, the parent of Neuberger at the time. Since Neuberger emerged from the Lehman debacle as 
+a privately held firm, we decided to revisit their large-cap growth strategy, and included the mutual fund vehicle 
+in our preliminary Active Share study. Low and behold, the Active Share of the strategy appeared to be 
+shrinking over time. It did not take long to find that in late 2007 the lead manager departed and was replaced 
+by three others, and a fourth manager joined the team in mid-2008. In this case, Active Share led us to ask a 
+question and discover that a manager had been replaced by a team of managers who may have “closet 
+indexing” tendencies.  
+Regarding the numbers for Stralem and Jensen, the Active Share numbers set us thinking: We included them 
+in this sample because their claims of dual benchmarking were not unreasonable. Yet we were skeptical, 
+based on the fact that large-cap growth had performed well relative to core and value in 2007, and we all know 
+how marketing goes. While their Active Shares against the Russell 1000 Growth index do not surprise us, we 
+don’t want to jump to the conclusion that they are more active growth managers than, for example, Atalanta 
+Sosnoff, whose Active Share is lower. It would be frivolous to look for, say, a “really” active growth manager by 
+maximizing Active Share relative to the Russell 1000 Growth index. (We can pretty much guarantee that any 
+Emerging Market manager would come up at the top of the list, so common sense and qualitative assessment 
+of the manager’s strategy/approach is the first screen.) The interesting question here is whether the S&P 500 
+is the more appropriate benchmark and brings up the potential application we mentioned earlier: calculate 
+                                          
+                                                                                                                                         The Active Share Measure 
+8   
+Active Share against both suggested benchmarks and opt for using the reasonable benchmark which 
+generates the lower Active Share for the manager. We will return to this question in Exercise 3 below. 
+ 
+Exercise 2: Combine Active Share and Tracking Error to characterize managers in two dimensions: 
+ 
+In Figure 3, below, we plot Active Share and Tracking Error12 for the large-cap growth managers included in 
+Exercise 1 for two points in time, the end of 2007 and the end of 2008. 
+ 
+Figure 3: Active Share and Tracking Error of Large-Cap Growth Managers Change from 
+2007 to 2008
+0%
+10%
+20%
+30%
+40%
+50%
+60%
+70%
+80%
+90%
+100%
+0%
+2%
+4%
+6%
+8%
+10%
+12%
+14%
+Tracking Error (Trailing one year, %)
+Active Share
+BGI α Tilts
+Atalanta Sosnoff
+DSM
+Neuberger Berman
+Stralem
+Jensen
+INTECH
+Diversified 
+Stock Picks
+Closet
+Indexing
+Concentrated
+Stock Picks
+Factor Bets
+       12/31/2007
+       12/31/2008
+ 
+U.S. Large-cap growth managers: 
+ 
+In Figure 3, the arrows simply indicate the direction in which the Active Share, Tracking Error point moved from 
+2007 to 2008. Why did we plot these data points? First, we wanted to determine if the manager plots meshed 
+with C&P’s labeling and our own. The answer is “yes.” BGI has always billed their Alpha Tilts strategies as 
+enhanced indexing, which is the honest equivalent of “closet indexing” in the scheme C&P set forth in Figure 1. 
+We have always viewed INTECH as somewhere in the middle of enhanced indexing and active, recognizing 
+that it expects to add value by trading volatility while not losing in the longer run by holding underperforming 
+stocks. Atalanta Sosnoff holds more names and makes smaller industry and sector bets than DSM, so its lower 
+Active Share isn’t a big surprise. Stralem and Jensen employ above-average concentration and clearly make 
+large factor bets, so their location in the graph is again not surprising. The small-sample conclusion is that 
+Active Share is consistent with the assessments we arrived at on the basis of other measures and types of 
+information. The larger conclusion is that Active Share may save us time in the future with less-well-known 
+managers in terms of figuring out what they probably do and then zeroing in on more probing questions. 
+ 
+ 
+ 
+                                                 
+12 For these exercises, we calculated Tracking Error in the traditional way using the preceding twelve months of returns. We do not have a 
+database of daily returns, and without them we cannot duplicate C&P’s estimation of Tracking Error. Our unproved but reasonable 
+assertion is that monthly returns should provide a meaningful measure of Tracking Error for distinguishing between active managers, 
+assuming that their betas to the index are relatively close to 1.0. 
+                                          
+                                                                                                                                         The Active Share Measure 
+9   
+ 
+U.S. Large-cap Value Managers: 
+ 
+We also calculated Active Share and Tracking Error for a familiar group of U.S. large-cap value managers. 
+ 
+Figure 4: Active Share and Tracking Error of Large-Cap Value 
+Managers: Change from 2007 to 2008
+0%
+10%
+20%
+30%
+40%
+50%
+60%
+70%
+80%
+90%
+100%
+0%
+2%
+4%
+6%
+8%
+10%
+12%
+Tracking Error (Trailing one year, %)
+Active Share
+12/31/2007
+12/31/2008
+LSV
+Dodge&Cox
+Cooke&Bieler
+CS McKee
+Davis
+Pzena
+Boston Co.
+ 
+ 
+Figure 4 shows that these large-cap value managers had Active Shares between 57% and 87% in the last two 
+years. While Tracking Error increased for all managers during this highly volatile period for equity markets, the 
+Active Shares changed little.  Again, the overall ranking provided by Active Share seems about right based on 
+voluminous information we have gathered about these managers over many years. The only surprise is that 
+Davis, with 100 names in the portfolio, had Active Share higher than C.S. McKee, who typically holds about 50 
+stocks, and almost as high as Pzena, who was holding 35 to 40 names during this period. We continue in 
+another research effort to investigate the myths and realities of concentrated portfolios.  
+ 
+Using Active Share to Evaluate Manager Benchmarks 
+ 
+Exercise 3: Determine appropriate benchmark by finding lowest active share. 
+a) Using Active Share to choose between two benchmarks. 
+We have always considered Stralem’s strategy to be “large-cap core” and used the S&P 500 as its 
+benchmark. In 2007 Stralem suggested that the strategy could also be considered “quality growth” 
+and benchmarked to the Russell 1000 Growth index. On qualitative grounds we disagreed and 
+maintained the S&P 500 benchmark. C&P suggest that the appropriate benchmark for a portfolio is 
+the one which results in the lowest Active Share—that is, the one which the portfolio most closely 
+resembles in terms of holdings. We apply that principle and calculate active share for each of the 
+two benchmarks at four points in time.  We also show the tracking error and R-squared values for 
+each benchmark (TE should generally be lower against the appropriate benchmark and R-squared 
+should be higher) in the table below:  
+ 
+ 
+                                          
+                                                                                                                                         The Active Share Measure 
+10   
+ 
+ 
+ 
+Table 3: Stralem’s Active Share against Two Different Indexes. 
+Stralem
+S&P 500
+Russell 
+1000 
+Growth
+S&P 500
+Russell 
+1000 
+Growth
+S&P 500
+Russell 
+1000 
+Growth
+S&P 500
+Russell 
+1000 
+Growth
+Active Share =
+82.3%
+83.8%
+82.2%
+84.7%
+77.1%
+79.2%
+81.3%
+85.3%
+ 1-yr TE =
+3.4%
+4.4%
+4.3%
+4.8%
+6.8%
+8.5%
+6.9%
+9.6%
+R-squared =
+75.5%
+63.5%
+85.3%
+75.1%
+93.1%
+92.3%
+94.4%
+87.6%
+12/31/2006
+12/31/2007
+12/31/2008
+3/31/2009
+ 
+As the Table 3 shows, Stralem’s portfolio has a lower Active Share relative to the S&P 500 than 
+the Russell 1000 Growth index. It also has a lower tracking error and a higher R-squared with S&P 
+500. In this case, Active Share is simply another measure that confirms an assessment made on 
+the basis of other information.  
+b) Using Active Share to choose an index that differs from the manager’s stated benchmark. 
+We often encounter a domestic large-cap manager who sounds like a value (or growth) manager 
+but has an S&P 500 benchmark. The dilemma is then whether to use the official benchmark or a 
+different one. Dodge & Cox Stock (DODGX) is one such example. We have always benchmarked 
+this large-cap product to the Russell 1000 Value while Dodge & Cox benchmarks performance to 
+the S&P 500. In the table below we calculate Active Share and the trailing one-year tracking error 
+and R-squared for both indexes at four points in time. The measures do not provide a clear 
+answer. Active Share weighs slightly in favor of the Russell 1000 Value, but since the beginning of 
+2008, DODGX has been more closely tracking the S&P 500.  
+ 
+             Table 4: Dodge & Cox’s Active Share against Two Different Indexes. 
+Dodge & Cox Stock
+S&P 500
+Russell 
+1000 Value
+S&P 500
+Russell 
+1000 Value
+S&P 500
+Russell 
+1000 Value
+S&P 500
+Russell 
+1000 Value
+Active Share =
+77.23%
+81.59%
+78.16%
+76.98%
+80.78%
+78.68%
+81.49%
+78.93%
+ 1-yr TE=
+2.91%
+2.87%
+3.94%
+3.77%
+7.45%
+8.16%
+7.50%
+7.81%
+R-squared =
+76.4%
+78.3%
+86.3%
+88.0%
+94.7%
+92.8%
+97.3%
+94.3%
+12/31/2006
+12/31/2007
+12/31/2008
+3/31/2009
+ 
+Exercise 4: Can an Index Fund actually be Active?  
+Hammond Associates has recommended an allocation to U.S. Large-cap Quality equities for about three 
+years, and one of the funds recommended for this mandate is the Vanguard Dividend Appreciation Index Fund 
+(VDAIX). VDAIX is an index fund, but the index is constructed so as to be over weighted to firms with a history 
+of consistent, increasing dividend payments, which is generally a strong indication of quality earnings and 
+                                          
+                                                                                                                                         The Active Share Measure 
+11   
+balance sheets. The classification issue here is a double-edged sword: On the one hand, VDAIX is clearly 
+passive with respect to the Mergent Dividend Achievers Select Index, which was constructed specifically by 
+Mergent for Vanguard. On the other hand, VDAIX is undeniably active relative to the S&P 500 index, as we 
+intended.13 Investors who prefer passively managed funds, pick up on the “index” part of the name and choose 
+VDAIX. Others, who prefer actively managed funds, reject it for that very same reason. In fact both are 
+probably making their choices for the wrong reasons. For those who reject VDAIX because it is “not active,” we 
+should first be sure they understand what the allocation to quality actually means. Then we could show them 
+the Active Share of VDAIX relative to the S&P 500, which demonstrates that VDAIX is, indeed, very actively 
+managed relative to the S&P 500. The following table provides all the data necessary: 
+ 
+ 
+Table 5: The Active Share of Vanguard Dividend Appreciation Index Fund (VDAIX)  
+  with the S&P 500 as its Benchmark 
+12/31/2007
+12/31/2008
+3/31/2009
+Active Share =
+70.70%
+64.89%
+71.04%
+ 1-yr TE =
+3.49%
+7.70%
+7.22%
+R-Squared =
+88.83%
+91.82%
+94.37%
+Beta =
+0.76
+0.82
+0.84
+ 
+Concluding Remarks 
+ 
+With respect to traditional equity manager research, search, and selection, we should all be familiar with Active 
+Share. It is a measure that investors, consultants, and managers are using more frequently. We have recently 
+been receiving manager marketing materials that present Active Shares for their products and proclaim them 
+to be highly actively managed—with Active Shares in the 50% to 60% range. Without knowledge of the 
+measure and a frame of reference, these numbers hold no meaning. Only after a little homework do we know 
+how to assess such marketing efforts.  
+The most obvious shortcoming of the C&P paper is the timeframe over which benchmark-relative performance 
+is investigated and evaluated. Because the analysis is performed for the period 1990 to 2003, we are naturally 
+suspicious of its predictive powers—especially given the short-term inadequacies of quantitative models 
+developed with much longer historical perspectives during the recent credit crisis. We expect that Cremers and 
+Petajisto are hard at work updating their data and results, but also expect that others are taking aim at 
+disputing their initial findings related to performance. Nonetheless, Active Share provides a simple way to add 
+insight into what active managers do or do not do in their efforts to beat a benchmark and win over investors.    
+In our opinion, Active Share is a concise way to describe and measure one aspect of active management. If 
+Active Share and Tracking Error correctly capture and measure the essence of the two “dimensions,” their 
+simplicity recommends them—both in terms of ease of computation and interpretation. The pairing of Active 
+Share and Tracking Error for managers provides a method for distinguishing among them in a new way and 
+may uncover something we didn’t know or hadn’t thought to consider. Active Share has promise as a tool for 
+monitoring strategy changes, manager changes, and style shifts.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Pat Little, Ph.D. 
+                                                 
+13 If we follow the aforementioned approach of selecting the index against which a fund has the lowest Active Share, the hands-down 
+winner is the Mergent Dividend Achievers Select Index, and we declare VDAIX passive. But—and this is the tricky part—we have believed 
+that quality factors would generate returns at least as great as the S&P 500. Hence, the S&P 500 was chosen as the benchmark on the 
+basis of its return being the minimum acceptable rate of return and because there is no simple “quality” index for this factor-timing strategy.    
+ 
+                                          
+                                                                                                                                         The Active Share Measure 
+12   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Opinions included herein constitute Hammond Associates’ judgment as of the date indicated and are subject to change without notice.  The 
+sources of information used in this report are believed to be reliable.  Hammond Associates has not independently verified all of the 
+information contained herein.  Any such information may be incomplete or condensed.  This report is for information purposes only and is not 
+intended as an offer or solicitation with respect to the purchase or sale of any security.  This report does not constitute either investment 
+advice or a recommendation on the part of Hammond Associates and does not take into account the particular investment objectives, 
+financial situations, or needs of individual clients. 
+ 
