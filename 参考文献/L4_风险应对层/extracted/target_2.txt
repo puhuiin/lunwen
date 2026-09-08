@@ -1,0 +1,1139 @@
+
+--- Page 1 ---
+ 
+1
+The Impact of Experience on Risk Taking, 
+Overconfidence, and Herding of Fund Managers: 
+Complementary Survey Evidence* 
+ 
+ 
+Lukas Menkhoff a, Ulrich Schmidt† a, and Torsten Brozynski a, b 
+ 
+ 
+a University of Hannover, Germany 
+ 
+b HypoVereinsbank Frankfurt, Germany 
+ 
+ 
+ 
+University of Hannover 
+Discussion Paper No. 292 
+First Version: January 2004 
+Current Version: April 2005 
+ISSN 0949-9962 
+ 
+Abstract 
+Empirical research has shown that inexperienced fund managers yield significantly higher 
+returns than their more experienced colleagues. If the portfolios of inexperienced are not more 
+risky, this result would contradict the hypothesis of market efficiency. Therefore, it is an 
+important question whether inexperienced fund managers tend to taker higher risks. Higher 
+risk taking may be explained by a higher degree of overconfidence, less herding behavior, or a 
+lower degree of risk aversion. Since the results concerning the relationship between 
+experience and risk taking in previous studies are rather contradictory we provide 
+complementary survey evidence of 117 German fund managers which can improve our 
+understanding in this field. In line with the results of previous studies, we find that herding is 
+decreasing with experience while the evidence concerning risk taking and overconfidence is 
+mixed. Nevertheless, our results provide some support for the hypothesis that inexperienced 
+managers do indeed take higher risks.  
+ 
+JEL-Classification: G 23, G 14 
+ 
+Key words: overconfidence, herding, fund managers 
+ 
+                                                 
+* We thank Dorothea Kübler, Thomas Lux and two anonymous referees for helpful comments. 
+†  Corresponding author: Ulrich Schmidt, Lehrstuhl für Finanzmarkttheorie, Universität Hannover, 
+Königsworther Platz 1, 30167 Hannover, Germany, Telefon: (+49) (511) 762-5117, Telefax: (+49) 
+(511) 762-5240, e-mail: u.schmidt@mbox.vwl.uni-hannover.de 
+
+--- Page 2 ---
+ 
+2
+1 Introduction 
+Recent empirical studies have shown that young and inexperienced fund managers earn 
+significantly higher returns than their older and more experienced colleagues [see e.g. 
+Chevalier and Ellison (1999a), Liang (1999), and Edwards and Caglayan (2001)]. This 
+systematic difference challenges the hypothesis of market efficiency in two respects. First, 
+consumers buying shares of older fund managers may not act rational. Second, young 
+managers may be able to identify undervalued stocks which would contradict pricing 
+efficiency. If the portfolios of young managers are, however, more risky, the difference in 
+returns can be regarded as risk premium consistent with the hypothesis of market efficiency. 
+Several empirical studies analyzed the question whether risk taking in the financial sector 
+does indeed decrease with experience and/or age of managers. The evidence is, however, 
+contradictory. Whereas some studies observe a negative relation between risk taking and 
+experience [cf. Graham (1999), Li (2002), Boyson (2003)] other studies come to opposite 
+results [cf. Chevalier and Ellison (1999b), Hong et al (2000), and Lamont (2002)]. Also from 
+a theoretical viewpoint it is not clear whether managers should increase [as suggested by the 
+work of Avery and Chevalier (1999)] or decrease [see Prendergast and Stole (1996)] risk 
+taking during the career. 
+ 
+This discussion has raised some general interest into the question how fund managers´ 
+behavior changes during the career. One finding in this context is that young managers tend to 
+exhibit a higher degree of herding [cf. Chevalier and Ellison (1999b)]. The discussion of 
+herding provides a link to the behavioral economics literature which is also concerned with 
+the impact of experience. It has been observed that some behavioral irregularities disappear or 
+at least weaken with sufficient experience of the subjects. A well-known example in this 
+context is the fact that a substantial disparity between maximal buying prices and minimal 
+selling prices contradicting standard utility theory can be observed in the first rounds of 
+experiments. In later rounds this disparity, however, disappears [cf. Shogren et al. (2001), 
+Loomes et al. (2003)]. Another example, somewhat more related to the present paper, is given 
+by the study of Fox et al. (1996) which shows that experienced option traders do not exhibit 
+probability distortions in the case of risk usually observed in experiments with student 
+subjects. However, also here the evidence is somewhat mixed as some irregularities (such as 
+overbidding in first-price auctions or probability distortions in the Fox et al. study if 
+uncertainty instead of risk is considered) remain persistent even with experienced subjects. 
+Behavioral irregularities particularly relevant for the investigation of fund managers are those 
+
+--- Page 3 ---
+ 
+3
+reported in the behavioral finance literature. Besides the above mentioned herding behavior, 
+one main topic in this literature is the phenomenon of overconfidence. Odean (1998) has 
+shown that investors with a higher degree of overconfidence choose in general more risky 
+portfolios than those with a lower degree of overconfidence. Suppose that, analogously to the 
+other behavioral irregularities, also overconfidence would decrease with experience. In this 
+case young inexperienced funds mangers would be more overconfident and would choose, 
+therefore, riskier portfolios, what could explain their higher returns mentioned above. There is 
+some empirical evidence that overconfidence of investors indeed decreases with experience 
+[see Locke and Mann (2001), Christoffersen and Sarkissian (2002)]. However, some 
+psychological studies show that experts are more likely to be overconfident than relatively 
+inexperienced subjects [see e.g. Heath and Tversky (1991) and Frascara (1999)]. This result is 
+confirmed by the analysis of experimental asset markets of Maciejovsky and Kirchler (2003) 
+where the degree of overconfidence increases during the experiment. Also the study of Glaser 
+et al. (2003) has somewhat similar results since in their experiments professional traders have 
+a higher degree of overconfidence than students in the two tasks analyzed, namely trend 
+recognition and forecasting of stock price movements. A rather comprehensive comparison of 
+various measures of overconfidence between professional and lay men is reported in Glaser et 
+al. (2004a). Again, professionals are significantly more overconfident for most of the tasks 
+and not for any task significantly less overconfident. While this result is very unambiguous, it 
+does not necessarily justify to draw conclusions about the comparison between less and more 
+experienced professionals. 
+ 
+In summary, the evidence concerning the impact of experience on the behavior of fund 
+managers is not very clear-cut. One reason for these mixed results may be the fact that the 
+concepts of risk taking, overconfidence, and herding are defined heterogeneously in the single 
+studies. The motivating question of the present paper is whether complementary survey data 
+can improve our understanding in this field. Therefore, we conducted a questionnaire survey 
+concerning risk taking, overconfidence and herding with 117 German fund managers. As fund 
+managers are a rather influential investor group on many financial markets, studying their 
+behavior is particularly interesting, at least compared to studies among lay men or students 
+[see e.g. Haigh and List (2004)]. The next section gives some information on our survey. 
+Section 3 presents the hypotheses and contains the results. Finally, some concluding 
+observations appear in section 4. 
+ 
+
+--- Page 4 ---
+ 
+4
+2 Survey 
+This survey addresses all fund management companies in Germany that were believed to 
+manage equity and/or bond funds. In total, 64 companies were approached between August 15 
+and December 12, 2002. Of this total, five companies declared that they did not belong to our 
+target group. Of the remaining 59 companies, 35 participated in the survey, with at least one 
+appropriate questionnaire each. This resulted in a response rate of 59% concerning 
+participating fund management companies. Altogether, we received 117 usable questionnaires 
+which means that on average three to four managers participated from each company.  
+ 
+It is important to formulate appropriate questions in the language of fund managers. We thus 
+conducted several intensive interviews with fund managers in advance of the survey. 
+Moreover, in later stages the questionnaire was used in a pretest with several fund managers 
+as a final check of its acceptance and appropriateness. In summary, the feedback indicates that 
+the response was useful for our research purposes. 
+ 
+Table 1: Descriptive statistics on the survey respondents 
+ 
+ 
+Item asked 
+ 
+Reponses (in per cent) 
+Age (in years) 
+< 35: 
+50.9%  
+35-45: 46.5% 
+ > 45: 
+2.6% 
+Profess. experience < 5: 
+22.3%  
+5-15: 
+59.8% 
+ > 15: 
+17.9% 
+Gender 
+male: 
+92.1%  
+female: 
+7.9% 
+Share of variable 
+compensation 
+mean: 25.8%  
+std. dev.: 14.5 
+University degree 
+yes: 
+84.8%  
+no: 
+15.2% 
+Superior position 
+yes: 
+36.9%  
+no: 
+63.1% 
+Kind of fund 
+management* 
+active: 93.7%  
+passive: 
+6.3% 
+Kind of securities 
+managed** 
+stocks: 66.5%  
+bonds: 
+33.5% 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+* The question asks for the primarily conducted kind of fund management. 
+**4.2% of the respondents managed stocks and bonds to the same degree. These respondents 
+were added with half weight to stocks as well as bonds, so that the sum adds up to 100%. 
+ 
+ 
+
+--- Page 5 ---
+ 
+5
+The descriptive statistics in Table 1 provides more information on the fund managers. A 
+superior position was defined as being a supervisor of other fund managers where the precise 
+number of supervised managers was left open. From Table 1 we can infer that the typical fund 
+manager is about 35 years old, has 10 years of professional experience, is male, receives a 
+bonus of 25%, holds a university degree, works in a non-superior position in active fund 
+management and manages stocks rather than bonds. This data is largely consistent with the 
+information from similar surveys in Germany such as Arnswald (2001) or Gehrig and 
+Menkhoff (2004).  
+ 
+ 
+3 Results 
+At the beginning of the questionnaire we asked for tenure and professional experience in fund 
+management with the possible response categories “less than 5 years”, “5-15 years”, and 
+“over 15 years”. Consequently, we can split our respondents into three groups which will be 
+referred to as “inexperienced”, “experienced”, and “very experienced” fund managers in the 
+following. Our goal is to analyze differences between these groups with respect to risk taking, 
+overconfidence, and herding behavior. Therefore, we will analyze 10 selected questions from 
+our questionnaire which are presented in Table 2.  
+ 
+Table 2: The questions 
+no. 
+Question 
+Categories1) 
+1 
+How do you evaluate your own performance compared to other 
+fund managers? 
+5 categories: from “much better” 
+(coded as 1) to “much worse” (coded 
+as 5) 
+2 
+The majority of economic news is not surprising for me. 
+6 
+categories: 
+from 
+“complete 
+approval” (coded as 1) to “complete 
+contradiction” (coded as 6) 
+3 
+Give an estimation of the DAX in one month. Determine a 
+lower and an upper bound such that the quote of the DAX in 
+one month from now will be inside the resulting interval with a 
+probability of 90%.  
+lower and upper bound in points of 
+the DAX  
+4 
+How important are colleagues (from your own company) for 
+you as source of information?  
+6 categories: from “very important” 
+(coded as 1) to “not important at all” 
+(coded as 6)  
+5 
+How important are other market participants (not from your 
+own company) for you as source of information?  
+see no. 4 
+6 
+How intensive do you use the momentum strategy? 
+amount in percent 
+7 
+How intensive do you use other strategies different to the 
+strategies momentum, contrarian, and buy-and-hold? 
+amount in percent 
+8 
+Also fund managers exhibit herding behavior. 
+see no. 2 
+9 
+After profitable investments fund managers tend to take on 
+additional positions. 
+see no. 2 
+10 
+Imagine someone offers you a bet and the odds are fifty-fifty. 
+You will have to pay € 100, if you lose. What would be the 
+minimum amount to win to lure you into accepting the bet? 
+monetary amount in € 
+
+--- Page 6 ---
+ 
+6
+1) For qualitative questions we use in general six categories in order to force respondents to go into one 
+direction. However, for question 1 we use five categories only in order to allow respondents to 
+evaluate their abilities precisely as average. 
+ 
+The second column in Table 2 gives the precise wording of each question, whereas the 
+response categories and our coding can be taken from the third column.  
+ 
+The results for each question are given in Table 3. The number and content of the single 
+questions are recalled in the first two columns. The third and fourth columns report the overall 
+means and medians of responses whereas columns 5-7 give the means among the 
+inexperienced, experienced, and very experienced fund managers, respectively. For each 
+question we ran an ordered probit or tobit regression with professional experience as 
+independent variable. The coefficients of these regressions are reported in the eighth column 
+where the stars indicate the significance level (see note at the bottom of the table). The ninth 
+and tenth columns finally report the adjusted measure of determination and the number of 
+usable responses for each regression.  
+ 
+Table 3: Results 
+ 
+1)  The table gives the univariate coefficients of ordered probit regressions with level of experience 
+(no. 1, 2, 3b, 4, 5, 8, and 9) and – in case of censored variables – of tobit regressions with level of 
+experience (no. 3a, 6, 7, 10). Stars refer to level of significance: *** 1%, ** 5%, * 10%. 
+No. Content 
+Mean Median
+Inexpe-
+rienced 
+Expe-
+rienced
+Very 
+expe-
+rienced 
+Regression 
+coefficient1) 
+R² 
+N2) 
+1 
+Own 
+performance 
+2.34 
+2.00 
+2.67 
+2.28 
+2.11 
+-0.233***  0.032 
+108 
+2 
+News not 
+surprising 
+3.20 
+3.00 
+3.48 
+3.17 
+2.93 
+-0.157***  0.012 
+111 
+3a Relative size of 
+DAX interval 
+0.29 
+0.22 
+0.25 
+0.29 
+0.32 
+0.017***  0.002 
+107 
+3b DAX interval 
+too small3) 
+0.47 
+0.00 
+0.58 
+0.46 
+0.35 
+-0.144***  0.015 
+90 
+4 
+Colleagues 
+3.18 
+3.00 
+2.72 
+3.18 
+3.85 
+0.226***  0.023 
+112 
+5 
+Market 
+participants  
+3.73 
+4.00 
+3.40 
+3.78 
+4.10 
+0.161***  0.012 
+112 
+6 
+Momentum 
+strategy 
+26.27 
+25.00 
+31.66 
+24.50 
+26.20 
+-1.771***  -0.007
+104 
+7 
+Other strategies 
+13.69 
+0.00 
+4.57 
+13.34 
+24.07 
+12.953***  0.050 
+104 
+8 
+Herding 
+2.02 
+2.00 
+2.36 
+1.99 
+1.85 
+-0.115***  0.007 
+112 
+9 
+Additional 
+positions 
+2.92 
+3.00 
+3.56 
+2.88 
+2.40 
+-0.293***  0.096 
+112 
+10 Minimal gain 
+182.38 105.00 
+183.67 
+167.29 
+229.82 
+9.569    *  -0.002
+105 
+
+--- Page 7 ---
+ 
+7
+2) The number of usable responses differs from question to question as some managers did not fill 
+out the questionnaire completely. On some questionnaires the date was missing which means that 
+we could not analyze whether the real quote of the DAX one month later is within the stated 
+interval. This explains the comparatively low number of usable responses for question 3b. 
+3) We analyze the relative frequency of managers for whom the actual quote of the DAX one month 
+later was not contained in their stated interval. 
+ 
+Of course we are also interested in the impact of the other explanatory variables listed in 
+Table 1. Therefore we also ran multivariate regressions (see Table 4) where insignificant 
+variables were excluded in order to increase the number of usable responses for each 
+regression. Table 4 shows that experience is overall the most influential explanatory variable. 
+In particular, experience has a more robust impact than age although both variables are cleary 
+correlated (the correlation coefficient equals 0.617 and is highly significant). Due to this high 
+correlation, we show in Table 4 regressions where the age variable is defined as residuals of 
+the regression with experience. 
+ 
+The qualitative results with respect to experience are rather similar in the multivariate and in 
+the univariate regressions. In the following discussions we therefore restrict attention mostly 
+to the results presented in Table 3. Let us now comment on the single results. Since risk 
+taking is related to overconfidence and herding we will investigate risk taking at the end and 
+start with overconfidence and herding.  
+ 
+(i) overconfidence 
+Overconfidence is a rather robust phenomenon in the psychology of judgment [see Odean 
+(1998) and, more recently, Glaser et al. (2004b) for a broad overview over the relevant 
+literature]. In the finance literature, overconfidence is usually modeled as a systematic 
+overestimation of the precision of own knowledge which leads to an underestimation of the 
+variance of random variables. This type of overconfidence is often referred to as 
+miscalibration [Lichtenstein et al. (1982)]. An additional manifestation of overconfidence is 
+given by unrealistically positive self-evaluations [Greenwald (1980)]. A well-known example 
+is the study of Svenson (1981) who asked a sample of students to assess their own driving 
+safety: 82% of the students judged themselves to be in the top 30% of the group. A third 
+stream of literature regards overconfidence as illusion of control [Langer (1975)] and 
+unrealistic optimism which means that people overestimate personal success probabilities. 
+ 
+
+--- Page 8 ---
+ 
+8
+In the context of financial markets, overconfidence is one of the most prominent explanations 
+for the excess trading volume [DeBondt and Thaler (1985)] since overconfident investors tend 
+to trade too much [Odean (1999), Barber and Odean (2000)]. This latter conclusion has been 
+challenged by the empirical study of Glaser and Weber (2004) and the experiment of Biais et 
+al. (2004) which both show that trading volume and overconfidence defined as miscalibration 
+are unrelated. However, if overconfidence is regarded as unrealistically positive self-
+evaluation, Glaser and Weber (2004) find a positive correlation between overconfidence and 
+trading volume.  
+
+--- Page 9 ---
+ 
+9
+ 
+Table 4: Multivariate Analyses 
+Table note: The table gives the coefficients of the ordered probit and tobit regressions (see footnote to Table 3) with the p-values in parentheses – 
+the respective dependent variables are listed in the first column. Due to high correlation between experience and age, we define here the age variable 
+as residuals of the regression with experience. Stars refer to level of significance: *** 1%, ** 5%, * 10%. 
+ 
+ 
+ 
+More 
+experienced 
+Higher age 
+Female 
+Higher 
+bonus 
+No 
+university 
+degree 
+No superior 
+position 
+Passive 
+management
+Managing 
+bonds 
+Constant 
+R² 
+N 
+Own perfor-
+mance  
+-0.141*** 
+(0.007) 
+ 
+ 
+ 
+ 
+ 
+0.508* 
+(0.070) 
+ 
+2.193*** 
+(0.000) 
+0.068 
+104 
+News not 
+surprising  
+-0.186** 
+(0.046) 
+ 
+ 
+0.014* 
+(0.097) 
+ 
+0.543** 
+(0.039) 
+ 
+ 
+3.470*** 
+(0.000) 
+0.049 
+77 
+DAX interval 
+too small 
+-0.152* 
+(0.063) 
+ 
+ 
+ 
+0.591* 
+(0.060) 
+0.548** 
+(0.011) 
+ 
+ 
+-0.462 
+(0.218) 
+0.066 
+80 
+Colleagues 
+0.278*** 
+(0.003) 
+ 
+-1.329*** 
+(0.010) 
+ 
+ 
+ 
+1.060** 
+(0.038) 
+ 
+2.660*** 
+(0.000) 
+0.099 
+106 
+Market 
+participants 
+0.188** 
+(0.017) 
+0.225* 
+(0.056) 
+-1.493*** 
+(0.001) 
+ 
+ 
+ 
+1.177*** 
+(0.006) 
+ 
+3.552*** 
+(0.000) 
+0.151 
+105 
+Momentum 
+strategy 
+ 
+ 
+ 
+ 
+ 
+ 
+-18.192** 
+(0.033) 
+ 
+45.159***
+(0.000) 
+0.016 
+103 
+Other 
+strategies 
+12.953*** 
+(0.010) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+-55.929***
+(0.002) 
+0.050 
+104 
+Herding  
+ 
+ 
+ 
+ 
+-0.593** 
+(0.027) 
+0.495** 
+(0.024) 
+ 
+ 
+2.745*** 
+(0.000) 
+0.052 
+100 
+Additional 
+positions 
+-0.252*** 
+(0.001) 
+ 
+ 
+ 
+-0.790*** 
+(0.005) 
+ 
+ 
+ 
+4.573*** 
+(0.000) 
+0.145 
+110 
+Minimal gain 
+ 
+ 
+141.125* 
+(0.072) 
+ 
+ 
+ 
+141.375* 
+(0.072) 
+ 
+-120.582 
+(0.231) 
+0.050 
+101 
+
+--- Page 10 ---
+ 
+10
+As mentioned in the introduction, the evidence concerning the impact of experience on 
+overconfidence is rather ambiguous. Since there are different methods to measure the degree 
+of overconfidence, this issue was addressed in our questionnaire with different items, namely 
+with questions no. 1, 2, and 3. We are aware of the fact that three questions are by far not 
+sufficient for a comprehensive measurement of overconfidence. A comprehensive 
+measurement of overconfidence for both, professionals and lay men, has been exerted by 
+Glaser et al. (2004b). In this study, each definition of overconfidence is tackled by different 
+tasks which allows for robustness checks and, building upon psychological research of e.g. 
+Stanovich and West (1998), (2000) and Parker and Fischhoff (2001), the identification of 
+individual differences in overconfidence. However, the focus of our work is not a 
+comprehensive measurement of overconfidence but just its dependence on experience. 
+Moreover, since our survey is not devoted to overconfidence alone and fund managers have a 
+very tight time budget, we had to content ourselves with a limited number of questions in 
+order to ensure a satisfactory response rate. 
+ 
+Let us first regard overconfidence as unrealistically positive self-evaluation analyzed with 
+question 1. In the absence of overconfidence one would expect that the respondents judge 
+their own performance compared to that of other fund managers on average as “equally good” 
+which is coded as three. The overall mean of 2.34 (see Table 3) indicates that fund managers 
+tend to evaluate themselves as above average and, hence, that overconfidence can be well 
+observed within our sample. Moreover, Table 3 shows that the response to question 1 is 
+significantly decreasing with experience which means that overconfidence is significantly 
+increasing with experience. Since experience may indeed lead to better fund management 
+abilities we included as control variables the question whether the respondent holds a superior 
+position and the relative size of variable salary into the regression which are, however, both 
+insignificant (see also Table 4). A similar picture arises from the analysis of question 2 which 
+can be related to illusion of control: more experienced fund managers find the majority of 
+economic news significantly less surprising than their less experienced colleagues. Thus, we 
+can confirm the results of Heath and Tversky (1991), Frascara (1999) and Maciejovsky and 
+Kirchler (2003) if overconfidence is regarded as unrealistically positive self-evaluation or 
+illusion of control.  
+ 
+Let us now analyze overconfidence with respect to miscalibration. Miscalibration is usually 
+identified by too narrow subjective confidence intervals. Although psychological research has 
+
+--- Page 11 ---
+ 
+11
+shown that the extent of miscalibration depends on the way in which these intervals are 
+elicited and also on the domain of knowledge they refer to [Klayman et al. (1999) and Soll 
+and Klayman (2004)], we tackled miscalibration for reasons outlined above with only one 
+question. In question 3 respondents had to state a 90% confidence interval for the quote of the 
+DAX (the major German stock index) one month later. We first analyzed the relative size of 
+this interval given by (upper bound – lower bound) / actual quote. Table 3 (no. 3a) shows that 
+the relative size is on average 29% of the actual quote. Although the relative size is 
+monotonously increasing with experience the regression is not significant. However, a t-test 
+confirms that the value for the very experienced fund managers is significantly higher than the 
+value for the inexperienced fund managers at a significance level of 5%. Thus, the degree of 
+overconfidence seems to decrease with experience. This impression is reinforced if we 
+consider the relative frequency of fund managers who stated too small DAX intervals, i.e. the 
+real quote of the DAX after one month was actually outside the stated interval. Table 3 (no. 
+3b) shows that 47% of the managers stated too small intervals which has to be regarded as a 
+high degree of overconfidence since one would expect only a value of 10% for 90% 
+confidence intervals. The relative frequency of too small intervals is monotonously decreasing 
+with experience and in the multivarate regression this influence is significant at the 10% level. 
+Additionally, according to a t-test, the relative frequency among the very experienced fund 
+managers is significantly lower at the 10% level than the relative frequency among the 
+inexperienced managers. Obviously, our results concerning question 3 may have been 
+influenced by the volatility and the trend of the DAX during the period of data collection. 
+However, several regressions confirmed that neither past realized or expected volatility 
+(modeled by various GARCH specifications) nor trend have a robust impact. Finally, let us 
+mention that for both analyses concerning the DAX interval we did not observe a significant 
+difference between managers who focus on stocks and those who focus on bonds. 
+ 
+In summary, we get mixed results concerning the impact of experience on overconfidence: if 
+overconfidence is interpreted as unrealistically positive self-evaluation or illusion of control, 
+it is significantly increasing with experience whereas overconfidence is decreasing with 
+experience if it is defined in terms of miscalibration, as commonly done in financial models.  
+ 
+Let us finally analyze whether the measures of overconfidence are correlated. Corresponding 
+information is given by Table 5 which reports correlations in pairs, their significance levels 
+(in parentheses), as well as the underlying number of observations (N). For calculating the 
+
+--- Page 12 ---
+ 
+12
+correlations we have multiplied the responses to questions 1, 2, and 3a with minus one such 
+that a higher value in all four cases corresponds to a higher degree of overconfidence. 
+ 
+It is clear that both variables derived from the DAX interval are positively correlated since a 
+smaller interval obviously implies a higher frequency of actual quotes falling outside this 
+interval. Apart from this, there is only a significant correlation between the responses to 
+questions 1 and 2. This means that miscalibration is unrelated to the other measures of 
+overconfidence. Since identical results were obtained by related studies, e.g. Deaves et al. 
+(2003), Oberlechner and Osler (2003), Glaser and Weber (2004), Glaser et al. (2004a), and 
+Régner et al. (2004), we think that our measurement of overconfidence is, despite the small 
+number of questions, rather robust. 
+ 
+Table 5: Correlation of Overconfidence Measures 
+ 
+ 
+Own 
+performance 
+News 
+not 
+surprising 
+Relative size of 
+DAX interval 
+DAX 
+interval 
+too small 
+1 
+Own 
+performance 
+1 
+ 
+ 
+ 
+2 
+News not 
+surprising 
+0.210** 
+(0.027) 
+[N=110] 
+1 
+ 
+ 
+3a Relative size of 
+DAX interval 
+-0.015 
+(0.880) 
+[N=107] 
+0.041 
+(0.669) 
+[N=109] 
+1 
+ 
+3b DAX interval 
+too small 
+-0.079 
+(0.412) 
+[N=111] 
+-0.098 
+(0.298) 
+[N=115] 
+0.381*** 
+(0.000) 
+[N=111] 
+1 
+Table note: p-values in parentheses;  ***:  significance level of 1%, **: 5%, *: 10%, no star: insignificant. 
+ 
+ 
+(ii) herding 
+Herding behavior occurs if market participants base their trading decisions on observed 
+aggregate market activity leading to a major shift into or out of a particular asset. In many 
+circumstance such herding behavior can be regarded as rational in financial markets [see e.g. 
+Devenow and Welch (1996) for an overview]. From a theoretical perspective, fund managers, 
+or more generally institutional investors, may have an incentive to herd due to the following 
+reasons: (i) reputational risk of acting differently from other managers [Scharfstein and Stein 
+(1990), Trueman (1994), Zwiebel (1995), Prendergast and Stole (1996), Avery and Chevalier 
+(1999), and Effinger and Polborn (2001)], (ii) receipt of correlated private information [Froot 
+et al. (1992)], (iii) following the prior trade of better-informed investors [Bikhchandani et al. 
+
+--- Page 13 ---
+ 
+13
+(1992)], (iv) shared aversion to stocks with certain characteristics such as lower liquidity 
+[Falkenstein (1996)], and/or reward schemes based on relative performance [Eichberger et al. 
+(1999)]. In particular point (i) is related to experience since reputational risk usually changes 
+during the career. For instance, the model of Avery and Chevalier (1999) shows that more 
+experienced fund managers have a lower incentive to herd. This conclusion is empirically 
+confirmed not only for fund managers [Chevalier and Ellison (1999b)] but also for security 
+analysts [Hong et al. (2000)] and macroeconomic forecasters [Lamont (2002)]. In contrast, the 
+model of Prendergast and Stole (1996) implies that herding will increase with experience. 
+Empirical evidence in favour of this implication has not yet been reported for fund managers 
+but for security analysts [Li (2002)] and investment newsletters [Graham (1999)].  
+ 
+In our questionnaire we addressed herding with questions no. 4-8. Herding obviously implies 
+that colleagues and other market participants are important sources of information. Table 3 
+(no. 4 and 5) shows that both sources become significantly less important with increasing 
+experience at a significance level of 1% and 5%, respectively. Thus, herding seems to 
+decrease with experience. One reason for observed herding of funds may be the joint use of 
+momentum strategies [see e.g. Grinblatt et al. (1995)]. Table 3 (no. 6) does not show a 
+significant relationship between experience and use of the momentum strategy, although 
+inexperienced fund managers rely clearly most on this strategy. The lack of a significant 
+relationship may have been caused by the fact that we did not give a precise definition of what 
+a momentum strategy actually is with respect to the length of the period for which positive 
+returns are identified. However, we left the length of this period open on purpose, as 
+otherwise one has to ask for the use of different types of momentum strategies which may be 
+too complicated and time-consuming.  
+ 
+The use of other strategies, i.e. strategies different to momentum, contrarian, and buy-and-
+hold, is significantly increasing with experience (see no. 7) which also supports our 
+conclusion that herding decreases with experience. Finally, our respondents had to evaluate in 
+question no. 8 the statement that herding behavior is observable among fund managers. 
+Approval of this statement is increasing with experience, though not significantly. This result 
+may be interpreted as follows: experienced fund managers tend to be more aware of and, 
+therefore, tend to be less prone to herding. Altogether, our analysis provides relatively strong 
+support for the conclusion of Avery and Chevalier (1999) and Chevalier and Ellison (1999b), 
+namely that experienced fund managers herd less than their inexperienced colleagues. 
+
+--- Page 14 ---
+ 
+14
+ 
+(iii) risk taking 
+In the empirical literature risk taking of funds is usually measured in two ways, either by the 
+standard deviation of returns or by the degree of herding behavior. In this context a higher 
+degree of herding is interpreted as lower risk taking behavior. Based on theoretical 
+justifications of e.g. Diamond (1991) and Hirshleifer and Thakor (1992), this interpretation 
+has been used in the empirical studies of Graham (1999) and Hong et al. (2000). For our 
+results concerning herding, this interpretation would imply that – due to less herding – risk 
+taking is increasing with experience. However, the identification of risk taking by the degree 
+of herding should, in our view, be adopted only with some caution since the relation of 
+herding and experience is relatively unambiguous whereas the relation between experience 
+and risk taking seems to be more complicated. For instance, the results concerning question 
+no. 3 (discussed in the subsection on overconfidence) show that experienced fund managers 
+are more aware of risk which should result in portfolios with lower risk. This point is further 
+supported by question no. 9: more experienced fund managers are at a significance level of 
+1% more aware of the danger of increased risk taking due to the well-known house money 
+effect. 
+ 
+Additionally we tried to get an impression of the relation between experience and the degree 
+of risk and/or loss aversion. There exist sophisticated techniques for the elicitation of utility 
+functions [e.g. Wakker and Deneffe (1996)] as well as for the degree of loss aversion 
+[Abdellaoui and Bleichrodt (2004] which would allow for a rather precise comparison of risk 
+and loss aversion of respondents. However, these techniques involve by far too many 
+questions for our purposes. Therefore, we analyzed risk and loss aversion by the responses to 
+question no. 10 (the response of one outlier who answered 10000 was excluded). The results 
+show that the degree of risk aversion is tentatively but not significantly increasing with 
+experience (see also Table 4). Table 4 reveals moreover that female fund managers and those 
+applying a passive kind of fund management show higher risk aversion. The result concerning 
+female managers is in line with other studies which have shown that women often have a 
+higher degree of risk and loss aversion than men [cf. Brachinger et al. (1999) and Schmidt and 
+Traub (2002)]. 
+ 
+
+--- Page 15 ---
+ 
+15
+Altogether, if risk taking is not identified with herding behavior, we tend to conclude from our 
+results that the degree of risk taking is, in line with the studies of Graham (1999), Li (2002), 
+Boyson (2003), decreasing with experience.  
+ 
+4 Conclusions 
+Our study presents survey evidence concerning the impact of experience on overconfidence, 
+herding and risk taking of fund managers. With respect to herding, our evidence is rather 
+clear-cut and supports the result of other studies that herding is decreasing with experience. In 
+contrast, our results concerning overconfidence are, similarly to the preceding literature, 
+somewhat contradictory as overconfidence is decreasing with experience for some tasks while 
+it is decreasing for others. However, if we define overconfidence as miscalibration, as 
+commonly done in the finance literature, overconfidence is decreasing with experience. In 
+other words, experienced fund managers are more aware of the true volatility of asset prices 
+which might lead to better investment decisions. If the decisions of experienced managers are 
+indeed better than those of their less experienced colleagues, the more positive self-
+evaluations of experienced managers might in fact not be interpreted as overconfidence. 
+However, the question whether experienced managers are better than less experienced ones 
+can be answered unambiguously only with market data and not with our questionnaire 
+approach.  
+ 
+Concerning risk taking we found some evidence in our data that the degree of risk taking is 
+decreasing with experience. However, the opposite result holds if risk taking is derived from 
+herding behavior. 
+ 
+A possible conclusion from our results might be based on the importance of learning: 
+Experience gained from a learning process helps to better estimate the true volatility in asset 
+prices which may lead to a comparatively more risk averse behavior. In this sense, 
+experienced fund managers are less overconfident and take lower risks. If individuals "learn" 
+from this experience that their advantage is due to their personal competence, they may regard 
+their own performance as superior and may feel competent to deviate from the herd. 
+ 
+Altogether, our data provide some support to the hypothesis that risk taking of fund managers 
+is indeed decreasing with experience which could explain the higher returns of less 
+experienced managers. However, for a final answer on the question whether the higher returns 
+
+--- Page 16 ---
+ 
+16
+of inexperienced managers are compatible with market efficiency and rational financial 
+market theory additional research based on market data is required. 
+ 
+ 
+References 
+ 
+Abdellaoui, M. and H. Bleichrodt (2004), “Measuring Loss Aversion under Prospect Theory: 
+A Parameter-Free Approach”, Working Paper. 
+ 
+Avery, C.N. and J.A. Chevalier (1999), “Herding Over the Career”, Economics Letters, 53, 
+327-333. 
+ 
+Arnswald, T. (2001), “Investment Behaviour of German Equity Fund Managers, An 
+Exploratory Analysis of Survey Data”, Deutsche Bundesbank Discussion Paper 08/01, 
+Frankfurt. 
+ 
+Barber, B.M. and T. Odean (2000), “Trading is Hazardous to Your Wealth: Common Stock 
+Investment Performance of Individual Investors”, Journal of Finance, 55, 773-806. 
+ 
+Biais, B., D. Hilton, K. Mazurier and S. Pouget (2004), “Judgmental Overconfidence, Self-
+Monitoring and Trading Performance in an Experimental Financial Market”, Review of 
+Economic Studies, forthcoming. 
+ 
+Bikhchandani, S., D. Hirshleifer, and I. Welch (1992), “A Theory of Fads, Fashion, Custom 
+and Cultural Change as Informational Cascades”, Journal of Political Economy, 100, 992-
+1026. 
+ 
+Boyson, N.M. (2003), “Why Do Experienced Hedge Fund Managers Have Lower Returns?”, 
+Working Paper, Purdue University. 
+ 
+Brachinger, H.W., R. Schubert, M. Brown, and M. Gysler (1999), “Financial Decision 
+Making: Are Women Really More Risk Averse?”, American Economic Review, 89, 381-385.  
+ 
+Chevalier, J. and G. Ellison (1999a), “Are Some Mutual Fund Managers Better than Others?”, 
+Journal of Finance, 54, 875-899. 
+ 
+Chevalier, J. and G. Ellison, (1999b), “Career Concerns of Mutual Fund Managers”, 
+Quarterly Journal of Economics, 114, 389-432. 
+ 
+Christoffersen, S. and S. Sarkissian (2002), “Location Overconfidence”, Working Paper, 
+McGill University. 
+ 
+Deaves, R., E. Lüders, and R. Luo (2003), “An Experimental Test of the Impact of 
+Overconfidence and Gender on Trading Activity”, Working Paper, McMaster University. 
+ 
+DeBondt, W. and R. Thaler, (1985), “Does the Stock Market Overreact?”, Journal of Finance, 
+40, 793-807. 
+ 
+
+--- Page 17 ---
+ 
+17
+Devenow, A. and I. Welch (1996), “Rational Herding in Financial Economics”, European 
+Economic Review, 40, 603-615. 
+ 
+Diamond, D. (1991), “Reputation Acquisition in Debt Markets”, Journal of Political 
+Economy, 97, 828-862. 
+ 
+Edwards, F.R. and M. Caglayan (2001), “Hedge Fund Performance and Manager Skill”, 
+Journal of Futures Markets, 21, 1003-1028. 
+ 
+Effinger, M.R. and M.K. Polborn (2001), “Herding and Anti-Herding: A Model of 
+Reputational Differentiation”, European Economic Review, 45, 385-403. 
+ 
+Eichberger, J., S. Grant, and S.P. King (1999), “On Relative Performance Contracts and Fund 
+Manager´s Incentives”, European Economic Review, 43, 135-161. 
+ 
+Falkenstein, E. (1996), “Preferences for Stock Characteristics as Revealed by Mutual Fund 
+Portfolio Holdings”, Journal of Finance, 51, 111-135. 
+ 
+Fox, C.R., B.A. Rogers, and A. Tversky (1996), “Options Traders Exhibit Subadditive 
+Decision Weights”, Journal of Risk and Uncertainty, 13, 5-17. 
+ 
+Frascara, J. (1999), “Cognition, Emotion and Other Inescapable Dimensions of Human 
+Experience”, Visible Language, 33, 74-87.  
+ 
+Froot, K., D. Scharfstein, and J. Stein (1992), “Herd on the Street: Informational Efficiencies 
+in a Market with Short-term Speculation”, Journal of Finance, 47, 1461-84. 
+ 
+Gehrig, Thomas and Lukas Menkhoff (2004), “The Use of Flow Analysis in Foreign 
+Exchange: Exploratory Evidence”, Journal of International Money and Finance, 23, 573-594. 
+ 
+Glaser, M., T. Langer, and M. Weber (2003), “On the Trend Recognition and Forecasting 
+Ability of Professional Traders”, University of Mannheim, CEPR Discussion Paper DP 3904. 
+ 
+Glaser, M., T. Langer, and M. Weber (2004a), “Overconfidence of Professionals and Lay 
+Men: Individual Differences Within and Between Tasks?”, Working Paper, University of 
+Mannheim. 
+ 
+Glaser, M., M. Nöth, and M. Weber (2004b), “Behavioral Finance”, in: D.J. Koehler, and N. 
+Harvey (ed.), Blackwell Handbook of Judgment and Decision Making, Blackwell, 527-546. 
+ 
+Glaser, M. and M. Weber (2004), “Overconfidence and Trading Volume”, Working Paper, 
+University of Mannheim. 
+ 
+Graham, J.R. (1999), “Herding Among Investment Newsletters: Theory and Evidence”, 
+Journal of Finance, 54, 237-268. 
+ 
+Greenwald, A. (1980), “The Totalitarian Ego: Fabrication and Revision of Personal History”, 
+American Psychologist, 35, 603-618. 
+ 
+
+--- Page 18 ---
+ 
+18
+Grinblatt, M., S. Titman and R. Wermers (1995), “Momentum Investment Strategies, 
+Portfolio Performance, and Herding: A Study of Mutual Fund Behavior”, American 
+Economic Review, 85, 1088-1105. 
+ 
+Haigh, M. and J.A. List (2004), “Do Professional Traders Exhibit Myopic Loss Aversion, 
+Journal of Finance”, forthcoming 
+ 
+Heath, C. and A. Tversky (1991), “Preference and Belief: Ambiguity and Competence in 
+Choice under Uncertainty”, Journal of Risk and Uncertainty, 4, 5-28. 
+ 
+Hilton, D.J. (2001), “The Psychology of Financial Decision-Making: Applications to Trading, 
+Dealing, and Investment Analysis”, Journal of Psychology and Financial Markets, 2, 37-53. 
+ 
+Hirshleifer, D. and A.V. Thakor (1992), “Managerial Conservatism, Project Choice, and 
+Debt,” Review of Financial Studies, 5, 437-470. 
+ 
+Hong, H., J.D. Kubik and A. Solomon (2000), “Security Analysts’ Career Concerns and 
+Herding of Earnings Forecasts”, RAND Journal of Economics, 31, 121-144. 
+ 
+Klayman, J., J.B. Soll, C. Gonzáles-Vallejo, and S. Barlas (1999), “Overconfidence: It 
+Depends on How, What, and Whom You Ask”, Organizational Behavior and Human 
+Decision Processes, 79, 216-247. 
+ 
+Lamont, O. (2002), “Macroeconomic Forecasts and Microeconomic Forecasters”, Journal of 
+Economic Behavior and Organization, 48, 265-280. 
+ 
+Langer, E.J. (1975), “The Illusion of Control”, Journal of Personality and Social Psychology, 
+32, 311-328. 
+ 
+Li, X. (2002), “Performance, Herding, and Career Concerns of Individual Financial 
+Analysts”, Working Paper, Vanderbilt University. 
+ 
+Liang, B. (1999), “On the Performance of Hedge Funds”, Financial Analysts Journal, 55, 72-
+85. 
+ 
+Lichtenstein, S., B. Fischhoff, and L.D. Phillips (1982), “Calibration of Probabilities: The 
+State of the Art to 1980”, in D. Kahneman, P. Slovic, and A. Tversky (ed.), Judgment under 
+Uncertainty: Heuristics and Biases, Cambridge University Press, 306-334. 
+ 
+Locke, P.R., and S.C. Mann (2001), “House Money and Overconfidence on the Trading 
+Floor”, Working Paper, George Washington University.  
+ 
+Loomes, G. C. Starmer, and R. Sugden (2003), “Do Anomalies Disappear in Repeated 
+Markets”, Economic Journal, 113, 153-166. 
+ 
+Maciejovsky, B. and E. Kirchler (2003), “Simultaneous Over- and Underconfidence: 
+Evidence from Experimental Asset Markets”, Journal of Risk and Uncertainty, forthcoming. 
+ 
+Oberlechner, T. and C.L. Osler (2003), “Overconfidence in Currency Markets”, Working 
+Paper, Brandeis University. 
+ 
+
+--- Page 19 ---
+ 
+19
+Odean, T. (1998), “Volume, Volatility, Price, and Profit When All Traders Are above 
+Average”, Journal of Finance, 53, 1887-1934. 
+ 
+Odean, T. (1999), “Do Investors Trade too Much?”, American Economic Review, 89, 1279-
+1298. 
+ 
+Parker, A.M. and B. Fischhoff (2001), “Decision-Making Competence: An Individual-
+Differences Approach”, Working Paper. 
+ 
+Prendergast, C. and L. Stole (1996), “Impetuous Youngsters and Jaded Old-Timers: 
+Acquiring a Reputation for Learning”, Journal of Political Economy, 194, 1105-1134. 
+ 
+Régner, I., D. Hilton, L. Cabantous, and S. Vautier (2004), “Overconfidence, Miscalibration 
+and Positive Illusions”, Working paper, University of Toulouse. 
+ 
+Scharfstein, D. and J. Stein (1990), “Herd Behavior and Investment”, American Economic 
+Review, 80, 465-479. 
+ 
+Schmidt, U. and S. Traub (2002), “An Experimental Test of Loss Aversion”, in: Journal of 
+Risk and Uncertainty, 25, 233-249. 
+ 
+Shogren, J., S. Cho, C. Koo, J. List, C. Park, P. Polo, and R. Wilhelmi (2001), “Auction 
+Mechanisms and the Measurement of WTP and WTA”, Resource and Energy Economics, 23, 
+97-109.  
+ 
+Soll, J.B. and J. Klayman (2004), “Overconfidence in Interval Estimates”, Journal of 
+Experimental Psychology: Learning, Memory, and Cognition, 30, 299-314. 
+ 
+Stanovich, K.E. and R.F.West (1998), “Individual Differences in Rational Thought”, Journal 
+of Experimental Psychology, 127, 161-188. 
+ 
+Stanovich, K.E. and R.F. West (2000), “Individual Differences in Reasoning: Implications for 
+the Rationality Debate”, Behavioral and Brain Sciences, 23, 645-726. 
+ 
+Svenson, 0. (1981), “Are We All Less Risky and More Skillful Than Our Fellow Drivers?”, 
+Acta Psychologica, 47, 143-148. 
+ 
+Trueman, B. (1994), “Analyst Forecasts and Herding Behavior”, Review of Financial Studies, 
+7, 97-124. 
+ 
+Wakker, P.P. and D. Deneffe (1996), “Eliciting von Neumann-Morgenstern Utilities when 
+Probabilities Are Distorted or Unknown”, Management Science, 42, 1131-1150. 
+ 
+Zwiebel, J. (1995), “Corporate Conservatism and Relative Compensation”, Journal of 
+Political Economy, 103, 1-25. 
+ 
