@@ -1,0 +1,33 @@
+﻿item,June  2026,Last 3  Months,Last 12  Months
+Fama/French 3 Research Factors,-,-,-
+Rm-Rf,-1.07,14.20,18.33
+SMB,3.58,2.39,7.08
+HML,3.34,0.20,20.33
+Fama/French 5 Research Factors (2x3),-,-,-
+Rm-Rf,-1.07,14.20,18.33
+SMB,4.58,2.49,11.87
+HML,3.34,0.20,20.33
+RMW,-4.64,-20.13,-29.03
+CMA,3.46,-1.49,-0.33
+Fama/French Research Portfolios,-,-,-
+Size and Book-to-Market Portfolios,-,-,-
+Small Value,3.17 8.71 5.80 6.20 3.83 -3.10 5.11 6.24 6.75 -3.33 2.79 4.32 5.32 6.82 6.10 4.40 0.94 -3.30,13.86 23.85 23.82 24.18 16.34 13.83 11.99 16.68 26.90 12.61 12.76 37.95 23.96 17.96 22.24 11.50 13.46 16.19,40.46 48.91 28.94 46.63 32.94 17.49 20.07 31.17 58.02 19.65 21.82 39.75 41.47 36.48 46.89 23.79 24.53 19.03
+Small Neutral,-,-,-
+Big Neutral,-,-,-
+Small Growth,,,
+Big Value,,,
+Big Growth,,,
+Size and Operating Profitability Portfolios,,,
+Small Robust,,,
+Small Neutral,,,
+Small Weak,,,
+Big Robust,,,
+Big Neutral,,,
+Big Weak,,,
+Size and Investment Portfolios,,,
+Small Conservative,,,
+Small Neutral,,,
+Small Aggressive,,,
+Big Conservative,,,
+Big Neutral,,,
+Big Aggressive,,,

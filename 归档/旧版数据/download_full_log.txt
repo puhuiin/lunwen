@@ -1,0 +1,68 @@
+======================================================================
+Step 1: 下载新200基金全持仓（半年报/年报）
+======================================================================
+  已处理 20/200，累计 15294 条持仓
+  已处理 40/200，累计 33968 条持仓
+  已处理 60/200，累计 56473 条持仓
+  已处理 80/200，累计 77122 条持仓
+  已处理 100/200，累计 93848 条持仓
+  已处理 120/200，累计 111728 条持仓
+  已处理 140/200，累计 125806 条持仓
+  已处理 160/200，累计 144712 条持仓
+  已处理 180/200，累计 157747 条持仓
+  已处理 200/200，累计 176492 条持仓
+  完成: 176492 条全持仓
+  保存: fund_holdings_new200_full.csv (176492 条, 200 只基金)
+
+======================================================================
+Step 2: 合并400基金全持仓
+======================================================================
+原200基金: 185144 条, 200 只
+合并: 361636 条, 400 只基金
+
+======================================================================
+Step 3: 统一计算Active Share (全持仓)
+======================================================================
+Traceback (most recent call last):
+  File "C:\Users\26955\AppData\Roaming\WPS 灵犀\python-env\Lib\site-packages\pandas\core\ops\array_ops.py", line 220, in _na_arithmetic_op
+    result = func(left, right)
+             ^^^^^^^^^^^^^^^^^
+  File "C:\Users\26955\AppData\Roaming\WPS 灵犀\python-env\Lib\site-packages\pandas\core\computation\expressions.py", line 252, in evaluate
+    return _evaluate(op, op_str, left_op, right_op)  # type: ignore[misc]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\26955\AppData\Roaming\WPS 灵犀\python-env\Lib\site-packages\pandas\core\computation\expressions.py", line 83, in _evaluate_standard
+    return op(left_op, right_op)
+           ^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for /: 'str' and 'float'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Desktop\基金经理行为分析研究\代码\download_full_and_mvp.py", line 164, in <module>
+    as_all = calc_active_share(hold_all)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Desktop\基金经理行为分析研究\代码\download_full_and_mvp.py", line 130, in calc_active_share
+    fund_weights = grp['hold_ratio'].dropna() / 100.0  # 转为比例
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~
+  File "C:\Users\26955\AppData\Roaming\WPS 灵犀\python-env\Lib\site-packages\pandas\core\ops\common.py", line 85, in new_method
+    return method(self, other)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\26955\AppData\Roaming\WPS 灵犀\python-env\Lib\site-packages\pandas\core\arraylike.py", line 214, in __truediv__
+    return self._arith_method(other, operator.truediv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\26955\AppData\Roaming\WPS 灵犀\python-env\Lib\site-packages\pandas\core\series.py", line 6751, in _arith_method
+    return base.IndexOpsMixin._arith_method(self, other, op)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\26955\AppData\Roaming\WPS 灵犀\python-env\Lib\site-packages\pandas\core\base.py", line 1644, in _arith_method
+    result = ops.arithmetic_op(lvalues, rvalues, op)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\26955\AppData\Roaming\WPS 灵犀\python-env\Lib\site-packages\pandas\core\ops\array_ops.py", line 289, in arithmetic_op
+    res_values = _na_arithmetic_op(left, right, op)  # type: ignore[arg-type]
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\26955\AppData\Roaming\WPS 灵犀\python-env\Lib\site-packages\pandas\core\ops\array_ops.py", line 229, in _na_arithmetic_op
+    result = _masked_arith_op(left, right, op)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\26955\AppData\Roaming\WPS 灵犀\python-env\Lib\site-packages\pandas\core\ops\array_ops.py", line 184, in _masked_arith_op
+    result[mask] = op(xrav[mask], y)
+                   ^^^^^^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for /: 'str' and 'float'
