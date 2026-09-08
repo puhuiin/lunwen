@@ -1,0 +1,17 @@
+{
+ "base": "FF5月度因子.csv (375 rows, 1995-01~2026-03)",
+ "patched_file": "FF5月度因子_补2026Q2_2026-09-10.csv (378 rows)",
+ "added": "BetaPlus经典算法月收益率截至20260630.csv 的2026-04/05/06三行",
+ "verify": "375个月重叠逐格完全一致(corr=1,maxdiff=0); 2026Q2超额按管线惯例rf=0.0025常数",
+ "source_url": "https://www.factorwar.com/data/factor-models/",
+ "method": "BetaPlus_FactorModels_MethodologyNote_20230911.pdf",
+ "q2026Q2": {
+  "MKT": 0.069835,
+  "SMB": -0.081153,
+  "HML": -0.23998,
+  "RMW": -0.073634,
+  "CMA": -0.166671,
+  "RF": 0.00235
+ },
+ "date": "2026-09-10"
+}
