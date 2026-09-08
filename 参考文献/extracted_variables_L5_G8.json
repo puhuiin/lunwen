@@ -1,0 +1,416 @@
+[
+  {
+    "file": "我国基金投资者存在处置效应吗_——基于国内某大型开放式基金交易的研究.pdf",
+    "title": "我国基金投资者存在处置效应吗？——基于国内某大型开放式基金交易的研究",
+    "authors_year": "周铭山,周开国,张金华,刘玉珍(2011), 金融研究/经济学期刊",
+    "layer": "L5",
+    "topic": "利用国内某大型基金公司账户级交易数据，采用威布尔生存模型检验我国基金投资者的处置效应及其人群差异与非理性影响",
+    "independent_variables": [
+      {
+        "name": "TLI（亏损指示变量）",
+        "definition": "基金被买入后第t天时投资者的盈利状况，投资亏损时TLI=1，其他情况等于0",
+        "formula": "TLIt = I(亏损状态)",
+        "data_source": "基金交易账户数据+Wind日收益率"
+      },
+      {
+        "name": "Return[t-30,t-1]",
+        "definition": "基金过去30天到过去1天之间的复权收益",
+        "formula": "复权净值收益率",
+        "data_source": "Wind金融数据库"
+      },
+      {
+        "name": "Gender（性别）",
+        "definition": "投资者性别指示变量，男性=1，女性=0",
+        "formula": "Gender ∈ {0,1}",
+        "data_source": "基金公司客户个人信息数据"
+      },
+      {
+        "name": "Age分组 / Buynum分组",
+        "definition": "年龄和投资经验分组变量",
+        "formula": "Age_group, Buynum_group",
+        "data_source": "客户个人信息+交易记录"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "h(t) 危险函数/赎回概率",
+        "definition": "Weibull条件赎回概率",
+        "formula": "h(t,TLIt)=pλt^(p-1)exp(βTLIt+εt)",
+        "data_source": "基金交易账户赎回记录"
+      }
+    ],
+    "control_variables": "Gender, Age<=35, Age>55, Buynum<=10, Buynum>30, 参数p",
+    "data_source": {
+      "sample_period": "2002年11月—2008年11月",
+      "source": "国内某大型基金管理公司十万名投资者账户级数据+Wind",
+      "sample_size": "约10万名投资者账户"
+    },
+    "descriptive_stats": "TLI系数=-1.3959***(Reg1), -0.4798***(Reg2); 亏损状态赎回概率降25%-75%; 男性/经验丰富者处置效应更弱",
+    "key_formulas": "Weibull: h(t,X)=pλt^(p-1)exp(Xβ+Ztγ+εt); hazard_ratio=exp(β)",
+    "notes": "核心发现：基金投资者存在显著处置效应；男性/经验丰富者处置效应更弱；处置效应非理性(延迟卖出盈利可多获0.7-4.65%收益)"
+  },
+  {
+    "file": "我国基金投资者的处置效应——基于交易帐户数据的持续期模型研究.pdf",
+    "title": "我国基金投资者的处置效应——基于交易帐户数据的持续期模型研究",
+    "authors_year": "王美今(2005), 中山大学学报(社会科学版)",
+    "layer": "L5",
+    "topic": "建立考虑内在时间和审查问题的Weibull持续期模型，采用4只基金31万多账户数据检验处置效应及前景理论/均值回复效应分解",
+    "independent_variables": [
+      {
+        "name": "Rtn（累计收益率）",
+        "definition": "相对于认购/申购成本的累计收益率",
+        "formula": "Rtn = (当前净值-成本)/成本",
+        "data_source": "4只开放式基金账户数据"
+      },
+      {
+        "name": "Rtn10（2周收益率）",
+        "definition": "10个交易日短期收益率，反映均值回复",
+        "formula": "Rtn10 = (净值_t-净值_{t-10})/净值_{t-10}",
+        "data_source": "基金净值数据"
+      },
+      {
+        "name": "投资者类型/年龄组",
+        "definition": "按持仓金额分5类+年龄3组",
+        "formula": "分类变量",
+        "data_source": "基金账户数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "h(t|Xi) 条件卖出概率",
+        "definition": "Weibull比例险函数",
+        "formula": "h(t)=λ0(t,p)exp(-X'β), λi=exp(-(β0+β1·Rtn+β2·Rtn10))",
+        "data_source": "SAS最大似然估计"
+      }
+    ],
+    "control_variables": "基金固定效应(4只)、审查指示变量δ",
+    "data_source": {
+      "sample_period": "约2001-2005年(基金A 44个月, B 32个月, C 24个月, D 12个月)",
+      "source": "国内某基金公司4只开放式基金全部账户交易数据",
+      "sample_size": "总311,586账户(认购292,660+申购14,326)"
+    },
+    "descriptive_stats": "p^=0.627***(<1,负持续期依赖); β1^均<0**(前景理论效应); β2^大多<0**(均值回复效应); 机构β1=-1.563** < 个人β1=-9.361***",
+    "key_formulas": "Weibull: f(t)=λp(λt)^(p-1)exp(-(λt)^p); h(t)=λp(λt)^(p-1); AFT: pln(t)=X'β+u; λi=exp(-(β0+β1·Rtni+β2·Rtni,10))",
+    "notes": "基金投资者存在明显处置效应(p<1); 可分解为前景理论效应+均值回复效应; 机构处置效应弱于个人; 年龄越大处置效应越明显"
+  },
+  {
+    "file": "我国开放式证券投资基金与QFII处置效应比较——基于买卖周期时间统计量视角的实证研究.pdf",
+    "title": "我国开放式证券投资基金与QFII处置效应比较——基于买卖周期时间统计量视角的实证研究",
+    "authors_year": "李学峰,何林泽,沈宁(2010), 证券市场导报(基金研究)",
+    "layer": "L5",
+    "topic": "修改买卖周期时间统计量指标，对2005-2008年我国开放式基金与QFII的处置效应进行实证比较",
+    "independent_variables": [
+      {
+        "name": "盈亏状态",
+        "definition": "卖出期内收益率vs市场判断盈亏",
+        "formula": "盈亏判断",
+        "data_source": "Wind数据库半年报/季度报"
+      },
+      {
+        "name": "机构类型(基金/QFII)",
+        "definition": "区分开放式基金与QFII",
+        "formula": "Institution_type",
+        "data_source": "Wind数据库"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "Si,n(买卖周期时间)",
+        "definition": "第n次买卖周期时间(单位年)",
+        "formula": "Si,n=Σ(Qit×t)/Q (公式1)",
+        "data_source": "Wind基金及QFII持股变动数据"
+      },
+      {
+        "name": "Mi(处置效应程度)",
+        "definition": "Mi=FIL-FiW, 正值=存在处置效应",
+        "formula": "Mi=FIL-FiW (公式4), Fi=加权平均持有时间差",
+        "data_source": "由Si计算得到"
+      }
+    ],
+    "control_variables": "股票市值、行业固定效应、时期固定效应",
+    "data_source": {
+      "sample_period": "2005.1.1—2008.12.31",
+      "source": "Wind数据库(30只开放式基金+14家QFII样本机构半年报/季度报)",
+      "sample_size": "30只开放式基金+14家QFII; 沪深前20大重仓股"
+    },
+    "descriptive_stats": "开放式基金: 盈利持有时间0.532<亏损0.496, Mi均值0.0932(>0, 处置效应显著); QFII: 盈利0.364≈亏损0.366, Mi均值-0.00125(≈0, 无显著处置效应)",
+    "key_formulas": "(1) Si,n=Σ(Qit×t)/Q; (2) Si,w=Σ[(Pt,j-Pt,j-)×t]/Σ(Pt,j--Pt,j-); (3) Fi=Σ[(VL盈利-VL亏损)×Si]/Σ(VL盈利-VL亏损); (4) Mi=FIL-FiW",
+    "notes": "开放式基金存在显著处置效应(Mi>0, t检验90%置信通过); QFII不存在显著处置效应; 开放式基金持有盈利时间短于亏损时间0.03-0.4年"
+  },
+  {
+    "file": "我国证券投资基金处置效应行为研究.pdf",
+    "title": "我国证券投资基金\"处置效应\"行为研究",
+    "authors_year": "赵彦志,王庆石(2005), 厦门大学学报(哲学社会科学版)",
+    "layer": "L5",
+    "topic": "运用买卖周期时间统计量和实际卖出比例统计量两种方法，基于2000-2004年基金半年度公告数据检验证券投资基金是否具有处置效应",
+    "independent_variables": [
+      {
+        "name": "盈亏状态",
+        "definition": "以买入期平均价格为参照点判断",
+        "formula": "盈利: 买入价<卖出价且高低价匹配; 亏损反之",
+        "data_source": "大通证券数据库(基金半年报/年报+个股复权数据)"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "Cin(买卖周期时间)",
+        "definition": "第n次买卖周期时间(单位年, 半年=0.5)",
+        "formula": "Cin=Σ(Qit×t)/Qi (公式2)",
+        "data_source": "基金投资组合公告数据"
+      },
+      {
+        "name": "PGR/PLR(卖出比例)",
+        "definition": "PGR=RG/(RG+PG)(公式3); PLR=RL/(RL+PL)",
+        "formula": "PGR=实际卖出盈利股票数/纸面盈利总数; PLR同理",
+        "data_source": "基金投资组合公告数据"
+      }
+    ],
+    "control_variables": "市场整体趋势(隐含)、股票流动性(剔除未交易股票)",
+    "data_source": {
+      "sample_period": "2000.6.30—2004.6.30(9期半年报/年报)",
+      "source": "大通证券数据库(基金组合公告+1991-2004沪深全股票复权日线)",
+      "sample_size": "基金25→105只; 股票330-1064只/期; 总交易14,992笔(盈利40%, 亏损60%)"
+    },
+    "descriptive_stats": "总体: 盈利卖出40% < 亏损卖出60%(反向特征); 平均持有: 盈利0.68年 vs 亏损0.70年(t=0.95不显著); 仅0.5-1年区间微弱处置效应(t=1.99*); 长期持有不支持处置效应",
+    "key_formulas": "(1) Pi_buy=Σ(Witb×Pitb) 加权平均买入价; (2) Cin=Σ(Qit×t)/Qi; (3) PGR=RG/(RG+PG); (4) PLR=RL/(RL+PL)",
+    "notes": "我国证券投资基金整体不具备显著处置效应特征, 反而更愿卖出亏损股票(60%>40%); 仅在0.5-1年持有区间微弱显著; 两种方法结论一致具有稳健性"
+  },
+  {
+    "file": "我国证券投资基金羊群行为的实证研究.pdf",
+    "title": "我国证券投资基金羊群行为的实证研究",
+    "authors_year": "祁斌,袁克,胡倩,周春生(2006), 证券市场导报",
+    "layer": "L5",
+    "topic": "使用LSV-Wermers方法对2000-2005年我国证券投资基金羊群行为进行全面实证检验并分析其特征与成因",
+    "independent_variables": [
+      {
+        "name": "Bi,t/Si,t/Ni,t/pi,t",
+        "definition": "LSV方法基础变量: 净买入/卖出基金数/总数/比例",
+        "formula": "pi,t=Bi,t/(Bi,t+Si,t); pt̄=ΣBi,t/Σ(Bi,t+Si,t)",
+        "data_source": "基金半年度投资组合披露报告"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "HM(整体羊群指标)",
+        "definition": "单边市场基金数超出预期的百分比",
+        "formula": "HM i,t=|pi,t-E[pi,t]|-AF, AF=E|pi,t-pt̄|",
+        "data_source": "LSV方法计算"
+      },
+      {
+        "name": "BHM/SHM(买方/卖方羊群)",
+        "definition": "Wermers扩展的买卖方向羊群指标",
+        "formula": "BHM i,t=HM i,t|pi,t>pt̄; SHM i,t=HM i,t|pi,t<pt̄",
+        "data_source": "Wermers扩展方法"
+      }
+    ],
+    "control_variables": "流通盘规模(CV1-CV5)、基金风格(成长/价值/混合)、历史收益率等级(R1-R6)、市场状态",
+    "data_source": {
+      "sample_period": "2000H1—2005H1(11个半年度时段)",
+      "source": "所有证券投资基金公开半年度投资组合报告",
+      "sample_size": "有效样本3,453条; 54-105只基金/期"
+    },
+    "descriptive_stats": "HM=8.1%(远高于美国2.5-3.4); BHM>SHM(买入羊群强于卖出); U型关系(大小盘两端HM最高达10.5/9.5, 中盘7.1); 成长型最显著, 价值型几乎无羊群; 正反馈策略为主兼有负反馈",
+    "key_formulas": "HM i,t=|pi,t-pt̄|-AF; BHM i,t=HM i,t|pi,t>pt̄; SHM i,t=HM i,t|pi,t<pt̄; Bi,t~B(Ni,t,pt̄)",
+    "notes": "中国投资基金间存在显著羊群行为(HM=8.1%), 远超美国; 同时使用正负反馈策略(正反馈为主); 与流通盘呈U型关系; 成长型羊群最显著; 成因: 理念一致/模仿/评价短期化"
+  },
+  {
+    "file": "投资者的非理性行为偏差与止损策略——处置效应、参考价格角度的实证研究.pdf",
+    "title": "投资者的非理性行为偏差与止损策略——处置效应、参考价格角度的实证研究",
+    "authors_year": "池丽旭,庄新田(2011), 管理科学学报",
+    "layer": "L5",
+    "topic": "应用前景理论思想，以中国市场公开数据检验处置效应及其与参考价格的关联，提出并验证止损策略",
+    "independent_variables": [
+      {
+        "name": "Ri,t(股票收益率)",
+        "definition": "年度平均收益率(处置效应核心变量)",
+        "formula": "Ri,t = mean(日收益率)",
+        "data_source": "国泰安/锐思数据库"
+      },
+      {
+        "name": "Cap/Vol/Tur",
+        "definition": "流通市值/收益波动率/换手率控制变量",
+        "formula": "标准财务指标",
+        "data_source": "股票公开交易数据"
+      },
+      {
+        "name": "动态参考价格/历史最高价",
+        "definition": "FIFO规则基金持股成本 + 历史最高价作为备选参考点",
+        "formula": "RefPrice=最近增持价; HighPrice=max(收盘价序列)",
+        "data_source": "基金季度重仓股数据+股票日线"
+      },
+      {
+        "name": "私房钱效应指标",
+        "definition": "前期盈利状态对当期处置效应强度的调节",
+        "formula": "HouseMoney=I(前期收益>0)×TLI",
+        "data_source": "基金持股收益数据构造"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "HPi,t(年平均持有期)",
+        "definition": "基于成交量/流通股计算的年持有天数",
+        "formula": "HPi,t=Σ(SOi,t,d/Volui,t,d)/N (Visaltanachoti方法, 公式1)",
+        "data_source": "股票公开交易数据计算"
+      },
+      {
+        "name": "止损策略收益",
+        "definition": "执行止损策略相对买入持有的超额收益",
+        "formula": "StopLoss_Return - BuyHold_Return",
+        "data_source": "模拟回测"
+      }
+    ],
+    "control_variables": "年份固定效应、行业固定效应、A股/B股分样本",
+    "data_source": {
+      "sample_period": "2004.1—2008.12",
+      "source": "CSMAR + RESSET数据库",
+      "sample_size": "1,121-1,362家公司/年, 约6000+公司年观测值"
+    },
+    "descriptive_stats": "持有期: 25.43→98.08天(2006最短71.11); 收益率: 04-05年为负, 06-07转正, 08为负; 回归: R系数04-05负(***)支持处置效应, 06-08转正(***)显示行为转变(股改后风险喜好); Cap后期显著正; Vol多负; Tur始终显著负",
+    "key_formulas": "(1) HPi,t=Σ(SO/Vol)/N Visaltanachoti方法; (2) HPi,t=α+β1·Cap+β2·R+β3·Vol+β4·Tur+ε 简化回归(公式2); 参考价格情绪回归: Sentiment=γ0+γ1·RefPriceDev+γ2·HighPriceDev+Controls+ν",
+    "notes": "股改前(04-05): 存在传统处置效应(R<0***, 亏损股持有更长); 股改后(06-08): 行为转变(R>0***, 更愿持盈售亏呈现风险喜好); 私房钱效应削弱处置效应强度; 历史最高价也是重要参考点; 止损策略优于买入持有"
+  },
+  {
+    "file": "抱团取暖_基金团体与季末股价拉升.pdf",
+    "title": "抱团取暖：基金团体与季末股价拉升",
+    "authors_year": "王春峰,李彤,姚守宇,房振明(2024), 系统管理学报",
+    "layer": "L5",
+    "topic": "基于2005-2021年主动管理公募基金持仓数据识别基金团体，探究季末业绩粉饰(股价拉升)行为及其职业忧虑动机",
+    "independent_variables": [
+      {
+        "name": "FundClique(基金团体持股指标)",
+        "definition": "基于Crane et al.的团体持股集中度",
+        "formula": "FundClique=Σ(Fund_j∈Clique·Shareholding_j)/TotalShares",
+        "data_source": "Wind/聚源基金季度持仓明细(2005-2021)"
+      },
+      {
+        "name": "EndQuarter(季末窗口)",
+        "definition": "季末最后两天虚拟变量",
+        "formula": "EndQuarter_d=I(交易日=季末最后d天), d∈{1,2}",
+        "data_source": "交易日历"
+      },
+      {
+        "name": "LargeOrderNetBuy(大单净买入压力)",
+        "definition": "季末大单净买入额/流通市值(机制检验)",
+        "formula": "(大单买入-大单卖出)/流通市值",
+        "data_source": "高频订单流量数据"
+      },
+      {
+        "name": "FundFlow/KeyRankProp/EcoDownturn",
+        "definition": "基金净流量/关键排名位置基金比例/经济下行虚拟变量(动机检验)",
+        "formula": "分类变量",
+        "data_source": "基金报告+业绩排名+宏观数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "CAR(累积超额收益)",
+        "definition": "抱团股季末前后窗口期累积超额收益",
+        "formula": "CAR[t1,t2]=Σ(Ri,t-Rm,t), 关注[-2,0]窗口",
+        "data_source": "个股日收益率+市场指数(CSMAR/Wind)"
+      }
+    ],
+    "control_variables": "流动性(Amihud指标)、估值(BM比率)、波动率、规模(log市值)、动量、换手率、基金/行业/季度FE",
+    "data_source": {
+      "sample_period": "2005—2021年(68个季度)",
+      "source": "主动管理公募基金(股票型+偏股混合)季度持仓明细(Wind/聚源)+高频订单+CSMAR",
+      "sample_size": "约1000+只基金/年末; 团体-股票-季度观测值大量"
+    },
+    "descriptive_stats": "主回归: 基金团体对季末最后两天CAR显著为正; 按流动性: 高流动性拉升更强; 按估值: 高估值拉升更强; 机制: 大单净买入压力显著高于正常日(验证真实买入); 动机: KeyRankProp系数正(职业忧虑支持), FundFlow不显著(薪酬激励不支持); 经济下行交互项正(进一步支持职业忧虑)",
+    "key_formulas": "主回归: CAR=α+β1·FC×EQ+β2·Controls+μ+λ+ε; 机制: LargeOrderNetBuy=γ0+γ1·FC×EQd+Γ·Controls+υ; 动机: CAR=δ0+δ1·FC×EQ+δ2·FC×EQ×KeyRank+δ3·FC×EQ×Flow+Ψ·Controls+ξ",
+    "notes": "基金团体对季末最后两天股价存在显著拉升作用(稳健性检验成立); 偏好高流动性+高估值股票拉升; 通过大单净买入验证真实拉升行为; 主要动机是职业忧虑(掩饰糟糕业绩)而非薪酬激励; 经济下行期加剧拉升; 政策启示: 完善监管/信息披露/绩效评价体系"
+  },
+  {
+    "file": "机构投资者与个人投资者羊群行为的差异.pdf",
+    "title": "机构投资者与个人投资者羊群行为的差异",
+    "authors_year": "李志文,余佩琨,杨靖(2010), 金融研究(总第365期)",
+    "layer": "L5",
+    "topic": "利用TopView仓位/账户变化数据定义羊群行为标准差指标，系统比较中国资本市场机构与个人投资者羊群行为差异",
+    "independent_variables": [
+      {
+        "name": "ΔInstitution(机构仓位变化)",
+        "definition": "机构投资者日度仓位变化(%)",
+        "formula": "ΔInstj,t=Instj,t-Instj,t-1",
+        "data_source": "TopView沪市数据"
+      },
+      {
+        "name": "ΔIndividual(个人仓位变化)",
+        "definition": "个人投资者日度仓位变化(%)",
+        "formula": "ΔIndj,t=Indj,t-Indj,t-1",
+        "data_source": "TopView沪市数据"
+      },
+      {
+        "name": "Size(公司规模)",
+        "definition": "2007年底总市值对数",
+        "formula": "Size=log(总市值_2007)",
+        "data_source": "上市公司财务数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "Institution_Herd(机构羊群程度)",
+        "definition": "机构投资者各股票仓位变化的标准差(越小=羊群越严重)",
+        "formula": "Inst_Herd_t=√[Σ(ΔInstj,t-ΔInst̄_t)²/(N-1)] (公式1)",
+        "data_source": "TopView数据计算"
+      },
+      {
+        "name": "Individual_Herd(个人羊群程度)",
+        "definition": "个人投资者各股票仓位变化的标准差",
+        "formula": "Ind_Herd_t=√[Σ(ΔIndj,t-ΔInd̄_t)²/(N-1)] (公式2)",
+        "data_source": "TopView数据计算"
+      },
+      {
+        "name": "ΔIndividual/ΔIndividual_n(因变量版本)",
+        "definition": "用于检验个人是否模仿机构的回归因变量",
+        "formula": "方程(3)(4): ΔInd=c+Σαk·ARk+Σβl·ΔInst_lag+ε",
+        "data_source": "TopView数据"
+      }
+    ],
+    "control_variables": "AR(滞后1-5期经市场调整收益)、Size、行业FE、月份FE",
+    "data_source": {
+      "sample_period": "2007.6.1—2009.1.1(TopView存续期)",
+      "source": "TopView软件沪市投资者仓位/账户数日度数据(含机构/法人/个人分类)",
+      "sample_size": "沪市844家A股公司, 394个交易日, 最大332,536观测值(实际略少因缺失)"
+    },
+    "descriptive_stats": "表2: Inst均值13.358(std19.73), Corp均值14.638(std12.84), Ind均值72.001(std23.73); ΔInst均值-0.005(std0.62), ΔInd均值-0.023(std1.20). 表3(规模分组): 所有样本Inst_Herd=0.3959 < Ind_Herd=0.9256(***1%显著); 大/中/小公司组均满足Inst_Herd<Ind_Herd。表4(涨跌分组): 涨跌均满足。表5: ADF平稳。表6(方程3): ΔInst滞后1-5期系数均负显著(-0.115***至-0.010**) → 个人不模仿机构(H2得证)",
+    "key_formulas": "(1) Institution_Herd_t=√[Σ(ΔInstitution_j,t-ΔInstitution̄_t)²/(N-1)]; (2) Individual_Herd_t=√[Σ(ΔIndividual_j,t-ΔIndividual̄_t)²/(N-1)]; (3) ΔIndividual_j,t=c+Σαk·AR_j,t-k+Σβl·ΔInstitution_j,t-l+ε1(lag5); (4) 同理用ΔInstitution_n",
+    "notes": "中国资本市场上机构投资者羊群行为比个人投资者更明显(Inst_Herd=0.3959 << Ind_Herd=0.9256, 1%***); 在公司规模分组和市场涨跌分组下均成立; 个人交易行为难以模仿机构(滞后项系数均负显著); 机构因信息优势和专业能力导致更强趋同; 政策含义: 培养机构理性投资、规范信息披露、提高透明度"
+  },
+  {
+    "file": "机构投资者信息竞争会引发羊群行为吗——基于中国股票市场的证据.pdf",
+    "title": "机构投资者信息竞争会引发羊群行为吗——基于中国股票市场的证据",
+    "authors_year": "王典,薛宏刚(2018), 当代财经",
+    "layer": "L5",
+    "topic": "打破信息不对称框架定式，从信息竞争视角研究机构投资者羊群行为生成机理，甄别真伪羊群行为经济后果",
+    "independent_variables": [
+      {
+        "name": "HHI(赫芬达尔指数/信息竞争逆向指标)",
+        "definition": "机构持股份额赫芬达尔指数, HHI越大=股权越集中=信息竞争越弱",
+        "formula": "HHIi,t=Σ(Investorij/Investori_total)², j=1..N (公式1)",
+        "data_source": "Wind机构投资者详细持仓数据(2005-2017)"
+      },
+      {
+        "name": "Inst/Analfore/Size/MB/Age/Lev/Turnoer",
+        "definition": "机构持股比例/分析师预测/规模/账面比/上市年龄/杠杆率/换手率",
+        "formula": "标准财务指标",
+        "data_source": "Wind+CSMAR数据库"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "HM/BHM/SHM(羊群行为指标)",
+        "definition": "LSV-Wermers方法度量整体/买方/卖方羊群程度",
+        "formula": "HM i,t=|Pi,t-E(Pi,t)|-E|Pi,t-E(Pi,t)|; Pi,t=Bi,t/(Bi,t+Si,t) (公式3-6)",
+        "data_source": "Wind机构持仓季度变动数据计算"
+      }
+    ],
+    "control_variables": "Inst, Analfore, Size, MB, Age, Lev, Turnoer, Industry FE, Year FE",
+    "data_source": {
+      "sample_period": "2005—2017年(52个季度)",
+      "source": "Wind资讯终端(机构持仓)+CSMAR(财务数据)",
+      "sample_size": "1328只股票 × ~39季度 ≈ 51,808季度观测值(Winsorize 1%/99%处理后)"
+    },
+    "descriptive_stats": "描述性: HHI均值0.470(std0.370, max1); HM均值0.211(std0.139)→机构羊群明显存在; BHM均值>SHM均值→买方羊群更高(缺乏做空机制)。回归模型I: HM对HHI=-2.207***; BHM对HHI=-2.775***; SHM对HHI=-1.662***。模型II(加控制): HM对HHI=-1.863***仍高度显著; BHM系数更负(信息竞争对买方羊群影响尤甚); Turnoer 0.707***; Inst 0.177*; Analfore 0.007*",
+    "key_formulas": "(1) HHIi,t=Σ(Investorij/Investori_total)² 信息竞争逆向指标; (2) Pi,t=Bi,t/(Bi,t+Si,t); (3) P̄i,t=ΣBi,t/Σ(Bi,t+Si,t); (4) HM i,t=|Pi,t-P̄i,t|-E|Pi,t-P̄i,t| LSV指标; (5) BHM i,t=HM i,t|Pi,t>P̄i,t; (6) SHM i,t=HM i,t|Pi,t<P̄i,t; 回归: Herd_i,t=β0+β1·HHIi,t+β2·Controls+εi,t (模型II)",
+    "notes": "机构投资者信息竞争确实引发羊群行为(HHI系数显著负, 竞争越激烈→羊群越高); 对买方羊群影响尤甚; 属于伪羊群行为(非刻意模仿, 同质信息一致反应); 有助于完善股价信息传递、抑制股价同步(与传统真羊群负面影响相反); 政策启示: 区分真伪羊群, 鼓励基于信息效率的同质交易"
+  }
+]

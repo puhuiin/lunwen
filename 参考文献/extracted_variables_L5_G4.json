@@ -1,0 +1,518 @@
+[
+  {
+    "file": "QFII与境内机构投资者羊群行为的实证研究.pdf",
+    "title": "QFII与境内机构投资者羊群行为的实证研究",
+    "authors_year": "程天笑, 刘莉亚, 关益众 (2014), 管理科学",
+    "layer": "L5",
+    "topic": "区分群体内与群体间羊群行为，在个股与行业层面比较QFII与境内基金羊群行为强度差异，并检验QFII羊群行为的成因（声誉/激励、信息不对称、行业基本面）。",
+    "independent_variables": [
+      {
+        "name": "行业市值（行业规模）",
+        "definition": "半年度日均行业市值的对数，代表行业规模因素",
+        "formula": "ln(行业日均市值)",
+        "data_source": "Wind数据库行业分类整理"
+      },
+      {
+        "name": "行业换手率（流动性）",
+        "definition": "半年度日均行业换手率，代表行业流动性因素",
+        "formula": "日均行业换手率",
+        "data_source": "Wind数据库"
+      },
+      {
+        "name": "行业市盈率",
+        "definition": "半年度行业日均市盈率（个股市盈率按行业日流通市值占比加权）",
+        "formula": "加权行业市盈率",
+        "data_source": "Wind数据库"
+      },
+      {
+        "name": "行业收益率",
+        "definition": "半年度行业日收益率的加权平均",
+        "formula": "加权行业收益率",
+        "data_source": "Wind数据库"
+      },
+      {
+        "name": "行业收益率波动",
+        "definition": "行业日收益率的半年度标准差，代表风险",
+        "formula": "std(行业日收益率)",
+        "data_source": "Wind数据库"
+      },
+      {
+        "name": "声誉/激励机制、信息不对称",
+        "definition": "解释QFII追随境内机构的理论因素（定性）",
+        "formula": "",
+        "data_source": "理论研究/文献"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "静态羊群行为测度 H（FHW测度）",
+        "definition": "基于二阶矩的群体内静态羊群行为强度，对市场中所有资产算术平均得市场平均Ht",
+        "formula": "Hs,t=(bs,t-ns,t·τt)^2 - ns,t·τt(1-τt) / [ns,t(ns,t-1)]；τt=∑bs,t/∑ns,t；Ht=(1/st)∑Hs,t",
+        "data_source": "Wind机构持股半年报/年报"
+      },
+      {
+        "name": "动态羊群行为（跨期相关系数分解）",
+        "definition": "将QFII/基金当期需求与全体机构前期需求的跨期相关系数βt分解为追随自身、追随同类机构、追随其他类机构三部分",
+        "formula": "βt=ρ(dP_{s,t-1}, dQ_{s,t})；分解为三项之和（自身/同类/其他类）",
+        "data_source": "Wind机构持股数据"
+      }
+    ],
+    "control_variables": "行业基本面因素集（行业规模、行业市盈率、行业收益率、行业收益率波动、行业换手率）在Fama-Macbeth回归中标准化后作为控制变量",
+    "data_source": {
+      "sample_period": "2005年下半年至2012年上半年（半年报/年报）",
+      "source": "Wind数据库（基金、QFII、券商、保险、财务公司等机构季度/半年度持股）；个股月度价格来自CSMAR",
+      "sample_size": "QFII与基金在各期交易的个股数量（QFII均值约229只、基金约1422只）及行业数量；行业分类含Wind四级与申万三级"
+    },
+    "descriptive_stats": "表3-5给出资产数量、交易机构数量、资产供需的描述性统计：QFII个股交易均值229.85只、基金1422.31只；个股层面每股约2个QFII、29个基金交易；行业层面QFII供给/需求远低于基金。",
+    "key_formulas": "FHW静态测度 Hs,t=(bs,t-ns,t·τt)^2-ns,t·τt(1-τt)/[ns,t(ns,t-1)]；跨期相关系数 βt=1/δt·∑[∑(Dn,s,t-DQ_s,t/qs,t)(Dm,s,t-1-DP_s,t-1/ps,t-1)]；Fama-Macbeth回归 dQ_t=dP_{t-1}+control_{t-1}+εt",
+    "notes": "使用FHW（修正LSV的二阶矩测度）与Sias跨期相关系数分解；结论：QFII群体内静态羊群行为低于基金，群体间QFII在买入/卖出均追随基金（从羊地位），境内基金为领头羊；行业市值与换手率显著正向影响QFII供需。"
+  },
+  {
+    "file": "QFII在中国证券市场的“羊群行为”研究.pdf",
+    "title": "QFII在中国证券市场的“羊群行为”研究",
+    "authors_year": "汤敏, 薛彤 (2014), 商业时代（原名《商业经济研究》）",
+    "layer": "L5",
+    "topic": "以LSV模型为基础、引入时间维度（PCM方法），对30家QFII机构2004Q4-2012Q3持股明细进行实证，测度其动态羊群行为度并分析成因。",
+    "independent_variables": [
+      {
+        "name": "时间因素（研究时期）",
+        "definition": "以季度为单位的考察期，引入时间维度考察羊群行为度的动态变化",
+        "formula": "",
+        "data_source": "Wind资讯数据库"
+      },
+      {
+        "name": "QFII机构",
+        "definition": "选取的30家进入中国早、注册资本大的QFII投资机构（截面样本）",
+        "formula": "",
+        "data_source": "Wind资讯数据库"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "羊群行为度 HM",
+        "definition": "t时段内股票i的羊群行为度，指标越大羊群行为越明显，为零则不存在",
+        "formula": "HMi,t=|Pi,t-E[Pi,t]|-AFi,t；Pi,t=Bi,t/(Bi,t+Si,t)；AFi,t=E[|Pi,t-E[Pi,t]|]；ni,t=Bi,t+Si,t",
+        "data_source": "QFII投资组合明细"
+      },
+      {
+        "name": "买方/卖方羊群行为度 BHM、SHM",
+        "definition": "买入比例大于/小于其平均值的股票的买方/卖方羊群行为度",
+        "formula": "BHMi,t、SHMi,t 由HMi,t按Pi,t与E[Pi,t]大小划分",
+        "data_source": "QFII投资组合明细"
+      }
+    ],
+    "control_variables": "无（描述性/单变量时间序列分析）",
+    "data_source": {
+      "sample_period": "2004年第四季度至2012年第三季度（32个考察期，以季度为单位）",
+      "source": "Wind资讯数据库（QFII季报、半年报及年报显示的投资组合前十大重仓股）",
+      "sample_size": "30家QFII机构；如2011Q1参与交易股票236只（其中买方羊群特征90只、卖方136只）"
+    },
+    "descriptive_stats": "整体平均羊群行为度约0.2以上；平均卖方羊群行为度0.281高于买方0.226；各期羊群行为度在0.197（2005Q4）至0.263（2007Q3）间波动，总体平稳上扬。",
+    "key_formulas": "HMi,t=|Pi,t-E[Pi,t]|-AFi,t；Pi,t=Bi,t/(Bi,t+Si,t)；AFi,t=E[|Pi,t-E[Pi,t]|]；ni,t=Bi,t+Si,t；BHM/SHM由Pi,t与E[Pi,t]比较得到",
+    "notes": "在LSV基础上引入时间维度，用PCM的BHM/SHM表示买卖方羊群行为度并可动态研究；结论：QFII自进入中国市场以来具有较显著羊群行为，买方羊群度在前期低于卖方且差距逐步缩小；股市强势时羊群行为度上升。"
+  },
+  {
+    "file": "中国VC和PE投资市场羊群效应的博弈分析.pdf",
+    "title": "中国VC和PE投资市场羊群效应的博弈分析",
+    "authors_year": "田增瑞 (2012), 复旦学报（自然科学版）",
+    "layer": "L5",
+    "topic": "建立不完全信息静态博弈模型与效用函数，讨论纳什均衡与非纳什均衡下VC/PE市场发生羊群效应的前提、后果及现实解释。",
+    "independent_variables": [
+      {
+        "name": "市场需求状态概率 P",
+        "definition": "投资机构甲认为未来股票市场投资者需求状态为旺盛(D1)的概率",
+        "formula": "P = Pr(状态D1)",
+        "data_source": "博弈模型设定"
+      },
+      {
+        "name": "竞争对手行动概率 P2",
+        "definition": "投资机构甲认为乙选择高市盈率投资(行动a1)的概率",
+        "formula": "P2 = Pr(乙选a1)",
+        "data_source": "博弈模型设定"
+      },
+      {
+        "name": "盈利能力参数 u1、u2",
+        "definition": "竞争双方盈利能力大小的变量：u1为盈利少（可负）、u2为盈利多；假设u2/u1≈0",
+        "formula": "u2/u1≈0",
+        "data_source": "模型假定"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "期望效用差 E(f1)-E(f2)",
+        "definition": "甲选择高市盈率(a1)与低市盈率(a2)的期望效用之差，决定其投资阶段（PE化/VC化）选择，差值越大越倾向a1；其随P2增大而增大表征羊群倾向",
+        "formula": "E(f1)-E(f2)=u1-(u1+u2)P2+(u2-u1)P = -u1(P+P2-1)",
+        "data_source": "模型推导"
+      },
+      {
+        "name": "羊群效应（决策趋同）",
+        "definition": "当存在需求风险、竞争压力下投资者决策趋同/共振的现象（定性结果变量）",
+        "formula": "",
+        "data_source": "模型结论"
+      }
+    ],
+    "control_variables": "无（纯理论博弈模型）",
+    "data_source": {
+      "sample_period": "无实证样本期；引用案例数据2006-2010年",
+      "source": "ChinaVenture投中集团、清科研究中心数据库（VC/PE市场投资规模案例数据）",
+      "sample_size": "案例数据：2006-2008年PE投资案例数/金额；2010年PE募资82支276.21亿美元等"
+    },
+    "descriptive_stats": "表2给出2006-2008年中国PE投资规模案例数据（案例数、投资金额、平均单笔金额），仅作现实佐证，非回归样本。",
+    "key_formulas": "效用函数 f = {u1<0 (盈利小于对方), 0 (相等), u2>0 (盈利大于对方)}；E(f1)=(1-P2)u2P+u1(1-P)；E(f2)=P(2u1P+u2(1-P))；E(f1)-E(f2)=-u1(P+P2-1)",
+    "notes": "纯理论博弈分析（不完全信息静态博弈）；无需求风险时存在占优战略均衡（纳什均衡）且不发羊群效应，存在需求风险时在业绩压力下出现羊群效应；羊群效应来源：相互观察、对需求错误预计、业绩压力。"
+  },
+  {
+    "file": "中国基金业业绩持续性问题研究_基于羊群行为的分析.pdf",
+    "title": "中国基金业业绩持续性问题研究——基于羊群行为的分析",
+    "authors_year": "刘翔, 于瑾 (2013), 财经理论与实践",
+    "layer": "L5",
+    "topic": "从羊群行为角度（LSV法、CH法、CSAD法）考量开放式股票型基金业绩持续性，分析赢者/输者组合在不同维度下的羊群行为差异。",
+    "independent_variables": [
+      {
+        "name": "上期业绩",
+        "definition": "按前期6个月累计净值收益率升序十等分，P1为输者、P10为赢者组合",
+        "formula": "",
+        "data_source": "CSMAR"
+      },
+      {
+        "name": "当期规模",
+        "definition": "按基金资产总额三等分（S1为最小组合）",
+        "formula": "",
+        "data_source": "CSMAR"
+      },
+      {
+        "name": "当期基金业绩",
+        "definition": "按当期业绩十等分分组",
+        "formula": "",
+        "data_source": "CSMAR"
+      },
+      {
+        "name": "股价涨跌",
+        "definition": "按股票当期涨跌分组",
+        "formula": "",
+        "data_source": "CSMAR（A股收盘价）"
+      },
+      {
+        "name": "市场环境（牛/熊市）",
+        "definition": "2006年定义为牛市、2008年定义为熊市",
+        "formula": "",
+        "data_source": "市场行情划分"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "羊群行为测度 HM、BHM、SHM（LSV法）",
+        "definition": "HM衡量总体羊群行为，BHM/SHM分别为买方/卖方羊群行为",
+        "formula": "HM(i,t)=B(i,t)/(B(i,t)+S(i,t))-p(t)-AF(t)；BHM(i,t)=H(i,t)·(B/N>p(t))；SHM(i,t)=H(i,t)·(B/N<p(t))",
+        "data_source": "CSMAR基金持股明细"
+      },
+      {
+        "name": "收益率分散度 S（CH法）",
+        "definition": "横截面收益率标准差，用于检验羊群行为",
+        "formula": "S_t=∑(ri-r̄)^2/n；回归 S_t=α+β1·D_Lt+β2·D_Ut+εt",
+        "data_source": "CSMAR日数据"
+      },
+      {
+        "name": "CSAD（CSAD法）",
+        "definition": "横截面收益绝对差和，牛市/熊市非线性回归",
+        "formula": "CSAD_t=∑|rit-r̄|/n；CSAD_UP=α+γ1·r_m+γ2·r_m^2+εt",
+        "data_source": "CSMAR日数据"
+      },
+      {
+        "name": "业绩持续性（赢者-输者收益差）",
+        "definition": "6月/6月持有策略下赢者组合与输者组合收益差",
+        "formula": "收益差=RP10-RP1",
+        "data_source": "CSMAR累计净值收益率"
+      }
+    ],
+    "control_variables": "无明确回归控制变量（采用分组与描述性检验）",
+    "data_source": {
+      "sample_period": "2005年至2010年上半年",
+      "source": "国泰安（CSMAR）数据库：开放式股票型基金股票投资明细、资产总额、累计净值收益率、A股收盘价",
+      "sample_size": "开放式股票型基金；使用SAS 9.1处理；LSV用半年明细，CH/CSAD用日数据"
+    },
+    "descriptive_stats": "整体HM=12.1%显著；SHM=26.82%>BHM=8.98%（卖出羊群更强）；赢者组合HM=9.42%、输者9.18%；6月/6月策略赢者-输者收益差2.98%(p=0.065)；CH法S均值约0.5%-0.68%。",
+    "key_formulas": "LSV: HM=B/(B+S)-p-AF；CH: S=∑(ri-r̄)^2/n，回归含D_L/D_U虚拟变量；CSAD: CSAD=∑|rit-r̄|/n，牛市/熊市二次项回归",
+    "notes": "结论：基金卖出羊群强于买入，无联手坐庄证据；赢者组合在卖下跌股时羊群更强且受行情影响小；羊群行为随规模增大而增强；羊群行为部分导致业绩持续性。"
+  },
+  {
+    "file": "中国基金羊群行为水平的上下界估计及其影响因素研究.pdf",
+    "title": "中国基金羊群行为水平的上下界估计及其影响因素研究",
+    "authors_year": "汤长安, 彭耿, 中国软科学",
+    "layer": "L5",
+    "topic": "同时利用LSV与FHW模型估计中国基金羊群行为水平的上下界，并采用回归模型分析影响基金羊群行为的因素。",
+    "independent_variables": [
+      {
+        "name": "交易股票的基金数目",
+        "definition": "参与某只股票交易的基金数量，取对数进入模型",
+        "formula": "ln(交易基金数目)",
+        "data_source": "聚源数据库"
+      },
+      {
+        "name": "股票规模",
+        "definition": "以流通股数量衡量股票规模，取对数进入模型",
+        "formula": "ln(流通股数量)",
+        "data_source": "聚源数据库"
+      },
+      {
+        "name": "股票收益",
+        "definition": "股票收益率（前复权价格计算，自然对数收益率）",
+        "formula": "r_t=ln(P_t/P_{t-1})",
+        "data_source": "聚源数据库"
+      },
+      {
+        "name": "流通股比例",
+        "definition": "流通股占全部股份的比例（股权分置改革相关因素）",
+        "formula": "",
+        "data_source": "聚源数据库"
+      },
+      {
+        "name": "股票所属行业",
+        "definition": "聚源行业一级分类虚拟变量（避免虚拟变量陷阱，模型无截距）",
+        "formula": "行业虚拟变量（不含截距）",
+        "data_source": "聚源数据库"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "基金羊群行为水平（LSV值 HM）",
+        "definition": "经典LSV模型测度的羊群行为，作为真实水平的下界",
+        "formula": "HM(i,t)=|P(i,t)-E[P(i,t)]|-AF(i,t)",
+        "data_source": "聚源数据库"
+      },
+      {
+        "name": "基金羊群行为水平（FHW值 H）",
+        "definition": "基于二阶矩的FHW模型测度，作为真实水平的上界（卖方/买方不对称时上偏）",
+        "formula": "H_s,t=(b_s,t-n_s,t·τ_t)^2 - n_s,t·τ_t(1-τ_t)/[n_s,t(n_s,t-1)]",
+        "data_source": "聚源数据库"
+      }
+    ],
+    "control_variables": "行业（以虚拟变量形式纳入模型，控制行业板块效应）",
+    "data_source": {
+      "sample_period": "2004年至2010年（月度/季度，含牛熊样本）",
+      "source": "聚源数据库（开放式基金交易股票数据）",
+      "sample_size": "最终获得若干只股票观测样本（计量分析样本量达到数千至上万个季度观测）；限于成立满半年、上市满一定月份的基金与股票"
+    },
+    "descriptive_stats": "变量描述性统计（均值/标准差/最小/最大）：交易股票基金数目（个）、股票规模（万股）、股票收益、流通股比例；结果显示至少有3只基金交易的股票数量逐年增加，交易基金平均数目约若干只。",
+    "key_formulas": "LSV: HM=|P-E[P]|-AF；FHW: H=(b-nτ)^2-nτ(1-τ)/[n(n-1)]；影响因素回归（无截距） H=β1·ln(N)+β2·ln(size)+β3·return+β4·tradable_ratio+Σ行业虚拟+ε",
+    "notes": "真实羊群行为水平位于[LSV值, FHW值]区间内（如整体约某区间）；参与交易基金数目越多羊群越强（系数为正），股票规模越大羊群越弱（系数为负），股票收益与流通股比例不显著，行业间存在差异化羊群行为（板块效应）。"
+  },
+  {
+    "file": "中国开放式基金羊群行为分析.pdf",
+    "title": "中国开放式基金羊群行为分析",
+    "authors_year": "伍旭川, 何鹏 (2005), 金融研究",
+    "layer": "L5",
+    "topic": "测度中国开放式基金在股票市场的羊群行为程度，按流通股本、行业、上季度表现分组讨论，并分析羊群行为导致的超额需求与股价波动关系。",
+    "independent_variables": [
+      {
+        "name": "流通股本大小",
+        "definition": "按流通股本四组划分（3000-11730、11730-18720、18720-32465、32465-474100万股）",
+        "formula": "",
+        "data_source": "基金投资组合数据"
+      },
+      {
+        "name": "股票所属行业",
+        "definition": "按行业分组（交通运输、电力能源、医药、电信通讯等）",
+        "formula": "",
+        "data_source": "基金投资组合数据"
+      },
+      {
+        "name": "股票上季度表现",
+        "definition": "按上季度涨跌幅度分表现最差、一般、最好三组",
+        "formula": "",
+        "data_source": "基金投资组合数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "羊群行为度 H(i,t)",
+        "definition": "买卖股票i的所有基金中采取相同买卖行为的基金比例，值越大羊群行为越显著",
+        "formula": "H(i,t)=max(Hb_i,t, Hs_i,t)/(Hb_i,t+Hs_i,t)；Hb=买入基金数，Hs=卖出基金数",
+        "data_source": "基金季度投资组合"
+      },
+      {
+        "name": "超额需求 V(i,t)",
+        "definition": "基金买入减卖出数量，衡量羊群行为对股价的作用渠道",
+        "formula": "V(i,t)=Vb(i,t)-Vs(i,t)",
+        "data_source": "基金季度投资组合"
+      },
+      {
+        "name": "股票价格变化",
+        "definition": "组合变化季度及下一季度股票涨跌幅",
+        "formula": "",
+        "data_source": "股票季度价格（季度平均价）"
+      }
+    ],
+    "control_variables": "无",
+    "data_source": {
+      "sample_period": "2001年第四季度至2004年第一季度",
+      "source": "40家中国开放式基金（剔除货币型与偏债型）季度投资组合报告（前十大重仓股）",
+      "sample_size": "40家开放式基金；统计3家及以上、4家及以上基金买卖的股票"
+    },
+    "descriptive_stats": "3家基金买卖H均值0.7931、4家0.7900（均>0.5显著）；流通股本分组H：1组0.8141、2组0.8091、3组0.6905、4组0.7688；行业H最高交通运输0.8960；上季度表现H：一般0.8329>最好0.8024>最差0.8144；超额需求V>0组下一季涨4.40%，V<0组下一季跌1.84%。",
+    "key_formulas": "H(i,t)=max(Hb,Hs)/(Hb+Hs)；V(i,t)=Vb-Vs",
+    "notes": "结论：开放式基金存在较强羊群行为（约78%以上基金位于买卖同一方向），小股票、行业层面、上季度表现一般的股票羊群更明显；基金超额买入/卖出股票带动下一季价格相应涨跌。"
+  },
+  {
+    "file": "中国开放式基金羊群行为的实证分析.pdf",
+    "title": "中国开放式基金羊群行为的实证分析",
+    "authors_year": "魏立波 (2010), 重庆大学学报（社会科学版）",
+    "layer": "L5",
+    "topic": "采用经Wermers修正的LSV模型，实证分析中国开放式基金2006Q1-2009Q1羊群行为及其与参与交易基金数目、股票规模、行业、市场阶段的关系。",
+    "independent_variables": [
+      {
+        "name": "参与交易基金数目",
+        "definition": "按被交易基金数目分3组：3≤N<5、5≤N<10、N≥10",
+        "formula": "",
+        "data_source": "金融界网站基金投资明细"
+      },
+      {
+        "name": "股票规模（流通市值）",
+        "definition": "按2009年7月流通市值五组划分（≤100亿、100-200亿、200-400亿、400-1000亿、>1000亿）",
+        "formula": "",
+        "data_source": "金融界网站"
+      },
+      {
+        "name": "行业类别",
+        "definition": "按证监会行业分类（22个行业类别）",
+        "formula": "",
+        "data_source": "金融界网站"
+      },
+      {
+        "name": "市场阶段（沪深300指数）",
+        "definition": "按大盘走势划分为上涨阶段与下跌阶段",
+        "formula": "",
+        "data_source": "沪深300指数"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "羊群行为测度 HM(i,t)",
+        "definition": "LSV模型羊群行为度，值越大羊群程度越严重",
+        "formula": "HM(i,t)=|P(i,t)-E(P(i,t))|-AF；P(i,t)=B(i,t)/(B(i,t)+S(i,t))",
+        "data_source": "金融界网站基金明细"
+      },
+      {
+        "name": "买方/卖方羊群行为 BHM、SHM",
+        "definition": "净买入比例大于/小于期望值的股票的买方/卖方羊群行为",
+        "formula": "BHM(i,t)=HM(i,t)|P(i,t)>E(P(i,t))；SHM(i,t)=HM(i,t)|P(i,t)<E(P(i,t))",
+        "data_source": "金融界网站基金明细"
+      }
+    ],
+    "control_variables": "无",
+    "data_source": {
+      "sample_period": "2006年第一季度至2009年第一季度",
+      "source": "金融界网站公布的各开放式基金投资明细资料",
+      "sample_size": "139只成立一年以上的偏股型基金；参与交易基金数量限制在3只以上"
+    },
+    "descriptive_stats": "整体HM均值16.77%（2006年17.56%、2007年15.75%、2008年17.42%）；买方BHM均值19.46%>卖方SHM均值15.18%；按基金数目分组HM：3-5只0.1811、5-10只0.1610、≥10只0.1496；流通市值≤100亿组HM最高0.1921、>1000亿组最低0.1164。",
+    "key_formulas": "HM=|P-E[P]|-AF（AF由二项分布求出）；BHM=HM|P>E[P]；SHM=HM|P<E[P]",
+    "notes": "结论：开放式基金存在显著羊群行为，买入羊群高于卖出；羊群行为与参与交易基金数目、股票规模呈负相关；下跌阶段卖方羊群更显著，上涨阶段买方羊群更显著。"
+  },
+  {
+    "file": "中国投资基金羊群行为的经验研究.pdf",
+    "title": "中国投资基金羊群行为的经验研究",
+    "authors_year": "甄红线 (2009), 金融理论与实践",
+    "layer": "L5",
+    "topic": "采用LSV方法对1999-2002年中国封闭式投资基金的羊群行为进行经验研究，考察总体及买/卖羊群行为与股票规模的关系。",
+    "independent_variables": [
+      {
+        "name": "股票规模",
+        "definition": "按流通股本四层划分：小盘股≤6000万股、较小盘股6000万-1亿、中盘股1亿-2亿、大盘股>2亿股",
+        "formula": "",
+        "data_source": "深交所巨潮资讯"
+      },
+      {
+        "name": "买卖股票基金数 n",
+        "definition": "按参与交易基金数目分n≥4、n≥5、n≥6、n≥8组",
+        "formula": "",
+        "data_source": "深交所巨潮资讯"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "羊群行为度 H(i,t)",
+        "definition": "LSV方法测度的总体羊群行为度",
+        "formula": "H(i,t)=|p(i,t)-p(t)|-AF(i,t)；p(i,t)=B(i,t)/(B(i,t)+S(i,t))",
+        "data_source": "深交所巨潮资讯"
+      },
+      {
+        "name": "买入羊群行为度 BH(i,t)",
+        "definition": "p(i,t)>p(t)时的羊群行为度",
+        "formula": "BH(i,t)=H(i,t)|p(i,t)>p(t)",
+        "data_source": "深交所巨潮资讯"
+      },
+      {
+        "name": "卖出羊群行为度 SH(i,t)",
+        "definition": "p(i,t)<p(t)时的羊群行为度",
+        "formula": "SH(i,t)=H(i,t)|p(i,t)<p(t)",
+        "data_source": "深交所巨潮资讯"
+      }
+    ],
+    "control_variables": "无",
+    "data_source": {
+      "sample_period": "1999年第一季度至2002年第四季度",
+      "source": "深圳证券交易所巨潮资讯网站（封闭式基金季度报告前十大重仓股）",
+      "sample_size": "54只封闭式基金（剔除基金银丰后使用53只）；仅以前十大重仓股为研究对象"
+    },
+    "descriptive_stats": "总体H(i,t)=6.97%(n≥4)，是美英成熟市场2-3倍；小盘股羊群最强（小盘0.0921、较小盘0.0603、中盘0.0526、大盘0.0528）；1999-2001买入羊群>卖出羊群，2002年相反（卖出>买入）。",
+    "key_formulas": "H=|p-p(t)|-AF；AF=∑_{k=0}^{N} |p-p(t)|·C(N,k)·p(t)^k·(1-p(t))^{N-k}；BH=H|p>p(t)；SH=H|p<p(t)",
+    "notes": "结论：封闭式基金存在显著羊群行为，程度为成熟市场2-3倍；小盘股更易羊群；1999-2001买入更易羊群，2002年卖出更易羊群（追涨杀跌+展望理论）。"
+  },
+  {
+    "file": "中国投资者的股票出售行为画像——处置效应研究新进展.pdf",
+    "title": "中国投资者的股票出售行为画像——处置效应研究新进展",
+    "authors_year": "陆蓉, 李金龙, 陈实 (2022), 管理世界",
+    "layer": "L5",
+    "topic": "利用大样本账户数据系统刻画中国投资者股票出售行为，验证处置效应存在性、形状（不对称V形）及成因（扳本偏好+盈亏敏感性差异），并与公募基金对比。",
+    "independent_variables": [
+      {
+        "name": "持股收益 Ret",
+        "definition": "卖出价（或持仓收盘价）相对成交量加权平均买入价的变动百分比；分解为Ret+（盈利）与Ret-（亏损）",
+        "formula": "Ret=(P_sell-P_buy)/P_buy；Ret+=Ret·I(Ret>0)，Ret-=Ret·I(Ret<0)",
+        "data_source": "券商交易账户数据"
+      },
+      {
+        "name": "是否盈利 Gain / 是否为零 Zero",
+        "definition": "虚拟变量：Gain=1当Ret>0，Zero=1当Ret=0，Loss当Ret<0",
+        "formula": "Gain=I(Ret>0)，Zero=I(Ret=0)",
+        "data_source": "券商交易账户数据"
+      },
+      {
+        "name": "持股时间 Holding_Days",
+        "definition": "投资者从买入到卖出的交易日天数",
+        "formula": "",
+        "data_source": "券商交易账户数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "股票卖出概率 Sell（处置效应）",
+        "definition": "投资者—股票—交易日观测的卖出指示变量；Gain系数β1衡量处置效应强度（盈利比亏损多卖出的概率增量）",
+        "formula": "Sell=β0+β1·Gain+Controls+ε（OLS）；或断点回归/Probit",
+        "data_source": "券商交易账户数据"
+      },
+      {
+        "name": "扳本偏好（断点）",
+        "definition": "持股收益由负变正时卖出概率跃升，即处置效应在参考点处陡增，约占总体处置效应13%",
+        "formula": "断点回归：Sell=β0+β1·Gain+β2·Zero+β3·Holding_Days+Controls+ε（β1>0表扳本偏好）",
+        "data_source": "券商交易账户数据"
+      },
+      {
+        "name": "盈亏敏感性差异",
+        "definition": "卖出决策对盈利敏感度大于对亏损敏感度（不对称V形），个人投资者盈利敏感度是亏损的6.03倍",
+        "formula": "Probit: Sell=β0+β1·Ret-+β2·Ret-·HD+β3·Ret++...+Controls",
+        "data_source": "券商交易账户数据"
+      }
+    ],
+    "control_variables": "log(Buy_Price)买入价格自然对数、Volatility股票近250日收益率标准差、Rm近20日上证综指收益率、Rm_Volatility其标准差、投资者情绪（稳健性）",
+    "data_source": {
+      "sample_period": "2011年1月4日至2017年12月29日",
+      "source": "国内一家大型券商提供的个人投资者A股交易数据（普通账户日交易与持仓记录）；主动型公募基金数据作对比",
+      "sample_size": "随机抽取20万名个人投资者，筛选后保留14.76万个A股账户、约2687.21万条“投资者—股票—交易日”观测；公募基金对比样本约758.8万条(1~20天)"
+    },
+    "descriptive_stats": "表2：各持股时间子样本变量均值/标准差（如1~5天Sell=0.246、Gain=0.427、Ret=-0.006、Ret+=-0.017、Ret-=0.012、Holding_Days=1.504）；表3：卖出频率p(Sell)24.44%(1~5天)→0.47%(250+天)，处置效应p(Sell|Gain)-p(Sell|Loss)=15.54%→1.76%；约90%持股不超过20个交易日。",
+    "key_formulas": "处置效应度量(OLS): Sell=β0+β1Gain+Controls+ε；断点回归: Sell=β0+β1Gain+β2Zero+β3Holding_Days+Controls+ε；Probit敏感性: Sell=β0+β1Ret-+β2Ret-·HD+β3Ret++β4Ret+·HD+β5Gain+...+β13Rm++β14Rm-+ε",
+    "notes": "处置效应源于两点：①扳本偏好（参考点处陡增，约占13%，随持股时间减弱）；②盈亏敏感性不对称（盈利敏感度是亏损6.03倍，美国仅1.05倍）。公募基金不存在处置效应（Gain系数近0且多显著为负），对盈利敏感度仅为个人投资者的16.39%，更理性“往前看”。"
+  }
+]

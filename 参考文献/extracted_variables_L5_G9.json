@@ -1,0 +1,295 @@
+[
+  {
+    "file": "机构投资者的羊群行为能降低投资风险吗_——来自中国上市公司的证据.pdf",
+    "title": "机构投资者的羊群行为能降低投资风险吗——来自中国上市公司的证据",
+    "authors_year": "申尊焕、龙建成，2012（《财贸研究》2012年第2期）",
+    "layer": "L5",
+    "topic": "检验机构投资者买入/卖出羊群行为对股票系统性风险（投资风险）与投资回报率的影响",
+    "independent_variables": [
+      "DHB（买入羊群行为程度）：前十大流通股股东中机构投资者数量≥5时，等于机构数减5；否则为0",
+      "DHS（卖出羊群行为程度）：前十大流通股股东中机构投资者数量<5时，等于5减机构数；否则为0"
+    ],
+    "dependent_variables": [
+      "BETA（股票系统性风险，衡量投资风险）",
+      "RIR（考虑现金分红再投资时的投资回报率）"
+    ],
+    "control_variables": [
+      "SCA（公司总资产，取log10）",
+      "RDA（公司负债/股东权益）",
+      "SBD（董事会规模）",
+      "SBID（独立董事规模）",
+      "SBM（监事会规模）",
+      "CR1（第一大股东持股比例）",
+      "CR5（前五大股东持股比例之和）",
+      "CR10（前十大股东持股比例之和）"
+    ],
+    "data_source": "CCER（色诺芬）经济金融数据库；样本为2001-2009年深交所非金融类、非ST上市公司；共2722个观测；使用SPSS处理",
+    "descriptive_stats": "BETA均值1.09494，RIR均值0.363797，DHB均值约1.00，DHS均值约2.64，SCA均值约9.34（均来自文中描述性统计表）",
+    "key_formulas": [
+      "模型(1)（买入羊群对风险）：BETA = a0 + a1·DHB + a2·SCA + a3·RDA + a4·SBD + a5·SBID + a6·SBM + a7·CR1 + a8·CR5 + a9·CR10 + ε",
+      "模型(2)（卖出羊群对风险）：以DHS替代DHB，其余同模型(1)",
+      "模型(3)(4)（羊群对回报率）：RIR = a0 + a1·DHB(或DHS) + a2·SCA + a3·RDA + a4·SBD + a5·SBID + a6·SBM + a7·CR1 + a8·CR5 + a9·CR10 + ε",
+      "DHB = max(机构数−5, 0)；DHS = max(5−机构数, 0)"
+    ],
+    "notes": "实证结论：卖出羊群行为程度大于买入；卖出羊群加大投资风险、降低回报率，买入羊群减少风险、提高回报率。采用OLS回归，分买入/卖出两个羊群指标分别建模。"
+  },
+  {
+    "file": "羊群效应理论及其对中国股市的现实意义.pdf",
+    "title": "羊群效应理论及其对中国股市的现实意义",
+    "authors_year": "吴福龙等，2003（《预测》2003年）",
+    "layer": "L5",
+    "topic": "羊群效应（羊群行为）理论的文献综述及其对中国股市的现实意义",
+    "independent_variables": [],
+    "dependent_variables": [],
+    "control_variables": [],
+    "data_source": "文献综述，无实证数据来源（英文摘要与参考文献可读，正文中文存在编码乱码）",
+    "descriptive_stats": "",
+    "key_formulas": [
+      "文中提及LSV方法、CSSD方法等理论公式，但作为综述引用，无本文独立估计"
+    ],
+    "notes": "本篇为纯理论/文献综述文章，无实证变量、数据来源、描述性统计或独立估计公式。中文正文存在GBK/编码乱码，英文摘要与参考文献可读。JSON中变量字段留空，仅保留综述性说明。"
+  },
+  {
+    "file": "羊群行为、股价波动与投资收益——基于中国证券投资基金的实证研究.pdf",
+    "title": "羊群行为、股价波动与投资收益——基于中国证券投资基金的实证研究",
+    "authors_year": "张红飞、娄伟，2007（《经济理论与经济管理》2007年）",
+    "layer": "L5",
+    "topic": "基于LSV、CSSD、CSAD方法测度基金羊群行为，并考察其与股价波动、投资收益的关系",
+    "independent_variables": [
+      "Pt（基金平均收益率）",
+      "Rt（市场（股指）前期平均收益率）",
+      "Dt-1（基金在t-1期持股数量哑变量，取值0-3，反映持仓变化）"
+    ],
+    "dependent_variables": [
+      "Ht（基金羊群行为程度，由CSAD回归或LSV法得到）",
+      "CSSD（横截面标准差，衡量个股收益偏离市场收益的程度）",
+      "CSADt（横截面收益绝对偏差，衡量市场羊群程度）"
+    ],
+    "control_variables": [],
+    "data_source": "CSMAR数据库、Wind资讯；样本为1999-2006年中国证券投资基金，共307只基金",
+    "descriptive_stats": "文中给出CSSD、CSAD、Ht等指标的统计描述（具体数值见原文统计表），用于判断羊群行为是否存在及强弱",
+    "key_formulas": [
+      "CSSD = (1/N)·Σ(Rit − Rmt)²（Rit为个股i在t期收益，Rmt为市场组合收益）",
+      "CSADt = (1/N)·Σ|Rit − Rmt|",
+      "CSADt = α + γ1·RMt + γ2·RMt² + ε（γ2显著为负且不等于0表明存在羊群行为）",
+      "羊群程度回归模型：Ht = α + β1·Pt + β2·Rt + β3·Dt-1（检验收益与持仓因素对羊群行为的影响）"
+    ],
+    "notes": "采用LSV、CSSD、CSAD三种方法相互印证基金羊群行为；CSAD二次项系数为负是判定羊群行为的关键依据。"
+  },
+  {
+    "file": "羊群行为_机构投资者的非理性.pdf",
+    "title": "羊群行为：机构投资者的非理性",
+    "authors_year": "王冠群，2007（《开放导报》2007年）",
+    "layer": "L5",
+    "topic": "运用LSV方法测度单个基金的买方/卖方羊群行为，揭示机构投资者的非理性特征",
+    "independent_variables": [
+      "B(i,t)（基金i在t期净买入股票的数量/金额）",
+      "S(i,t)（基金i在t期净卖出股票的数量/金额）",
+      "E[Pi,t]（所有基金买卖该股票比例的期望值/基准比例）"
+    ],
+    "dependent_variables": [
+      "HMi,t（整体羊群行为指标）",
+      "BHMi,t（买方（买入）羊群行为指标）",
+      "SHMi,t（卖方（卖出）羊群行为指标）"
+    ],
+    "control_variables": [],
+    "data_source": "华安基金公司网站公布的基金持仓与交易数据；样本为沪市26只基金、32支大盘股；期间2004.12.31-2006.12.31",
+    "descriptive_stats": "HM（羊群行为）均值约9.279%；BHM（买方羊群）均值约8.83%；SHM（卖方羊群）均值约11.99%",
+    "key_formulas": [
+      "Pi,t = B(i,t) / (B(i,t) + S(i,t))（基金i在t期买卖该股票中买入占比）",
+      "HMi,t = |Pi,t − E[Pi,t]| − E|Pi,t − E[Pi,t]|（LSV羊群指标）",
+      "BHMi,t = HMi,t ，当 Pi,t > E[Pi,t] 时（买方羊群），否则为0",
+      "SHMi,t = HMi,t ，当 Pi,t < E[Pi,t] 时（卖方羊群），否则为0"
+    ],
+    "notes": "基于Wermers(1999)改进的LSV方法，分别刻画买方与卖方羊群行为；样本来自单一基金公司（华安）持仓披露数据。"
+  },
+  {
+    "file": "羊群行为的叠加及其市场影响——基于证券分析师与机构投资者行为的实证研究.pdf",
+    "title": "羊群行为的叠加及其市场影响——基于证券分析师与机构投资者行为的实证研究",
+    "authors_year": "蔡庆丰、宋友勇、郭奕鹏，2011（《中国工业经济》2011年）",
+    "layer": "L5",
+    "topic": "构建修正羊群指标（AdjustHM），检验证券分析师评级调整/分歧与机构投资者羊群行为叠加及其市场影响",
+    "independent_variables": [
+      "Revisioni,t（分析师评级调整）",
+      "Dispersioni,t（分析师评级调整的分歧度）",
+      "Dummy（区分买方/卖方的虚拟变量）",
+      "Reti,t（股票i在t期收益率）",
+      "Stdi,t（股票收益波动率）",
+      "Turni,t（股票换手率）",
+      "Lag_AdjustHMi,t-1（滞后一期的修正羊群指标）"
+    ],
+    "dependent_variables": [
+      "AdjustHMi,t（修正羊群指标）：BHMi,t − min(BHM)，或 −[SHMi,t − min(SHM)]（标准化后的羊群行为）"
+    ],
+    "control_variables": [
+      "Reti,t、Stdi,t、Turni,t、Lag_AdjustHMi,t-1（作为控制/动态项进入回归）"
+    ],
+    "data_source": "Wind资讯数据库；样本期间2005年1月至2010年6月；有效样本3222个（分析师-股票-时期观测）",
+    "descriptive_stats": "文中报告AdjustHM、Revision、Dispersion等变量的描述性统计（均值、标准差等见原表）",
+    "key_formulas": [
+      "AdjustHMi,t = β0 + β1·Revisioni,t + β2·Dispersioni,t + β3·Dummy×Revision + β4·Ret + β5·Std + β6·Turn + β7·Lag_AdjustHM + ε",
+      "AdjustHMi,t = BHMi,t − min(BHM)（买方）；AdjustHMi,t = −[SHMi,t − min(SHM)]（卖方）"
+    ],
+    "notes": "将分析师行为与机构投资者行为纳入同一框架，考察二者羊群行为的叠加效应；引入交互项（Dummy×Revision）区分买卖方向。"
+  },
+  {
+    "file": "股票型基金信息互动对其泡沫骑乘行为的影响.pdf",
+    "title": "股票型基金信息互动对其泡沫骑乘行为的影响",
+    "authors_year": "韩宁远、尹中立，2024（《南方金融》2024年）",
+    "layer": "L5",
+    "topic": "考察基金网络信息互动（网络中心度）对基金泡沫骑乘行为的影响及选股/择时能力机制",
+    "independent_variables": [
+      "Degree（基金网络度中心度）",
+      "Closeness（基金网络接近中心度）",
+      "Eigenvector（基金网络特征向量中心度）"
+    ],
+    "dependent_variables": [
+      "NB_Bubble（基金泡沫骑乘强度/程度）"
+    ],
+    "control_variables": [
+      "FSize（基金规模）",
+      "Size（基金管理公司规模）",
+      "Comp（公司综合排名/竞争力）",
+      "Std（基金收益波动率）",
+      "Phd（基金经理学历是否为博士）",
+      "Worktime（基金经理任职年限）",
+      "Holdtime（基金成立/存续时间）",
+      "StockPe（持股组合市盈率）",
+      "StockPb（持股组合市净率）"
+    ],
+    "mechanism_variables": [
+      "Stock_s（选股能力）",
+      "time_c（择时能力，基于T-M模型）"
+    ],
+    "data_source": "CSMAR数据库 + Wind资讯；样本为2005-2023年股票型开放式基金",
+    "descriptive_stats": "文中报告NB_Bubble、各中心度指标及控制变量的描述性统计（均值、标准差、最值等见原表）",
+    "key_formulas": [
+      "NB_Bubblei,t = α + β·Centralityi,t + γ·Controls + Fund + Time + ε（Fund、Time为基金与时间固定效应）",
+      "T-M模型：Ri,t − Rf = α + β1·(Rm,t − Rf) + β2·(Rm,t − Rf)² + ε（β2>0表示具备择时能力）"
+    ],
+    "notes": "以基金信息网络（中心度）刻画信息互动；泡沫骑乘行为为因变量，选股能力（Stock_s）与择时能力（time_c）作为中介机制变量。"
+  },
+  {
+    "file": "行业风格漂移对基金业绩的影响及其机制检验.pdf",
+    "title": "行业风格漂移对基金业绩的影响及其机制检验",
+    "authors_year": "徐步、李仲飞等，2025（《统计与决策》2025年）",
+    "layer": "L5",
+    "topic": "检验行业风格漂移对基金业绩的影响，并考察估值（PE_fund、PCF_fund）等机制",
+    "independent_variables": [
+      "Drift（行业风格漂移程度）：Drift = max(80% − 规定行业持仓占比, 0)（衡量实际持仓相对合同约定的行业偏离）"
+    ],
+    "dependent_variables": [
+      "Return（基金累计净值增长率，业绩代理变量）",
+      "Alpha_5（五因子模型选股能力）",
+      "Alpha_4（四因子模型选股能力）",
+      "Alpha_3（三因子模型选股能力）"
+    ],
+    "control_variables": [
+      "F_size（基金规模）",
+      "F_age（基金成立年限）",
+      "F_comanage（是否多位基金经理共同管理）",
+      "F_sds（基金收益标准差）",
+      "M_gender（基金经理性别）",
+      "M_degree（基金经理学历）",
+      "M_tenure（基金经理任期）",
+      "C_size（管理公司规模）",
+      "C_stockcount（公司旗下股票型基金数量）",
+      "C_stockscale（公司股票型基金管理规模）",
+      "C_incentive（公司是否实施激励）",
+      "Market_up（市场上涨期哑变量）",
+      "Market_down（市场下跌期哑变量）"
+    ],
+    "data_source": "CSMAR数据库 + Wind资讯；样本为2016-2022年消费行业与医药行业主题基金，共219只",
+    "descriptive_stats": "文中给出Return、Drift、Alpha_5/4/3及控制变量的描述性统计（见原表）",
+    "key_formulas": [
+      "Returni,t = β0 + β1·Drifti,t-1 + Σβk·Controls + θt + μi + ε（θt时间固定效应，μi基金个体效应）",
+      "Alpha/PE_fund等类似回归：以Fama-French多因子模型估计Alpha作为选股能力代理"
+    ],
+    "notes": "采用面板固定效应模型；行业风格漂移用合同约定行业持仓占比与实际偏离（max(80%−占比,0)）测度；机制检验涉及估值水平（PE_fund、PCF_fund）。"
+  },
+  {
+    "file": "证券投资基金羊群行为的研究趋向.pdf",
+    "title": "证券投资基金羊群行为的研究趋向",
+    "authors_year": "王英英、潘爱玲，2008（《经济经纬》2008年）",
+    "layer": "L5",
+    "topic": "证券投资基金羊群行为研究的文献综述与研究趋向评述",
+    "independent_variables": [],
+    "dependent_variables": [],
+    "control_variables": [],
+    "data_source": "文献综述，无实证数据来源",
+    "descriptive_stats": "",
+    "key_formulas": [
+      "综述中提及LSV、CSSD、CSAD等方法，但作为文献引用，无本文独立估计"
+    ],
+    "notes": "本篇为文献综述文章，无实证变量、数据来源、描述性统计或独立估计公式。JSON中变量字段留空，仅保留综述性说明。"
+  },
+  {
+    "file": "资本市场开放与伪羊群行为-基于沪深港通的证据.pdf",
+    "title": "资本市场开放与伪羊群行为——基于沪深港通的证据",
+    "authors_year": "李沁洋、石玉阶、何丽萍、刘向强，2024（《管理科学》2024年第3期）",
+    "layer": "L5",
+    "topic": "以沪深港通作为外生冲击，用多时点DID检验资本市场开放对机构投资者（伪）羊群行为的影响，并辨析真伪羊群",
+    "independent_variables": [
+      "Tre（沪深港通标的公司虚拟变量）",
+      "Pos（沪深港通启动时间虚拟变量）",
+      "Tre·Pos（标的×启动时间交互项，核心解释变量）",
+      "Lhe（羊群行为滞后一期）"
+    ],
+    "dependent_variables": [
+      "Her（机构投资者羊群行为指标）：Her = |pi,t − E(pi,t)| − E|pi,t − E(pi,t)|（LSV法，pi,t为机构买卖占比）"
+    ],
+    "control_variables": [
+      "Dua（是否为双重上市公司）",
+      "Dis（信息披露质量）",
+      "Pay（是否分红）",
+      "MB（市值账面比）",
+      "Lev（资产负债率）",
+      "Roa（总资产收益率）",
+      "Siz（公司规模）",
+      "Tur（换手率）",
+      "Soe（是否国有控股）"
+    ],
+    "data_source": "国泰安（CSMAR）数据库；样本期间2008-2020年（沪市A股2008-2020，深市A股2012-2020）；有效样本9190个",
+    "descriptive_stats": "文中报告Her、Tre、Pos、各控制变量的描述性统计（均值、标准差等见原表）",
+    "key_formulas": [
+      "H（LSV羊群指标）：H i,t = |pi,t − E(pi,t)| − E|pi,t − E(pi,t)|，pi,t为机构净买入占比",
+      "多时点DID：Heri,t = α + β1·Tre + β2·Pos + β3·Tre·Pos + Σβl·Con + Ind + Yea + ε（Ind行业固定效应，Yea年份固定效应）"
+    ],
+    "notes": "采用Staggered DID（多时点双重差分）；通过考察羊群行为与股价错误定价/滞后性的关系，论证该羊群属于基于共同信息驱动的'伪羊群行为'（信息驱动而非盲目模仿），有助于提升定价效率。"
+  },
+  {
+    "file": "隐性激励对基金经理羊群行为的影响因素研究.pdf",
+    "title": "隐性激励对基金经理羊群行为的影响因素研究",
+    "authors_year": "曹兴、杨梁、聂雁威，2011（《中国软科学》2011年）",
+    "layer": "L5",
+    "topic": "研究隐性激励（相对业绩排序等）对基金经理羊群行为的影响，并考察经验、学历等的调节作用",
+    "independent_variables": [
+      "RP（相对业绩排序，基金经理相对同业业绩排名）",
+      "ME（行业经验年限）",
+      "MX（学历）",
+      "MAGE（年龄）",
+      "FS（基金规模）",
+      "FA（基金成立年限）",
+      "CS（基金管理公司规模）",
+      "CP（公司业绩）",
+      "ST（投资风格：1成长型，0其他）",
+      "RP·(ME−10)（相对业绩与经验的调节交互项）"
+    ],
+    "dependent_variables": [
+      "YJ（隐性激励效应：1表示升职或留任原职，0表示降职或离职，Probit模型因变量）",
+      "SD（重仓股选择偏离度，衡量羊群程度：与同业平均持仓的偏离）",
+      "BD（系统性风险偏离度，衡量羊群程度）",
+      "UD（非系统性风险偏离度，衡量羊群程度）"
+    ],
+    "control_variables": [
+      "FS、FA、CS、CP、ST等（同时作为羊群程度OLS模型的控制变量）"
+    ],
+    "data_source": "Wind资讯；样本为220个基金经理/基金观测，期间2007-2010年",
+    "descriptive_stats": "文中报告YJ、SD、BD、UD、RP、ME等变量的描述性统计（见原表）",
+    "key_formulas": [
+      "Probit模型：YJ = c0 + c1·RP + c2·ME + c3·RP·(ME−10) + … + ε（隐性激励与经验的交互影响职业前景）",
+      "OLS模型：SDi = g0 + g1·RP + g2·FS + g3·CS + g4·CP + g5·ST + … + ε（BD、UD模型类似）"
+    ],
+    "notes": "采用Probit模型测度隐性激励（职业前景YJ）的影响因素，并用OLS模型以风险/持仓偏离度（SD/BD/UD）反向衡量基金经理羊群行为强弱；相对业绩排序（RP）为核心解释变量，行业经验（ME）起调节作用。"
+  }
+]

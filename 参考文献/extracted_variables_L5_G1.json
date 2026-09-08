@@ -1,0 +1,398 @@
+[
+  {
+    "file": "“与众不同”的价值_中国公募基金家族反羊群行为与投资能力的关系.pdf",
+    "title": "“与众不同”的价值：中国公募基金家族反羊群行为与投资能力的关系",
+    "authors_year": "唐棠、张自力、赵学军 (2019), 《南方金融》",
+    "layer": "L5",
+    "topic": "构建跨期羊群行为指标DFH，检验中国公募基金家族的反羊群行为与投资能力（未来超额收益、行业基本面盈利）的关系，并用换手率/波动率区分真实投资能力与委托代理博弈动机。",
+    "independent_variables": [
+      {
+        "name": "DFH（Dynamic Fund Herding，跨期羊群行为指标）",
+        "definition": "基金家族i在t期行业持仓比例调整，与其他所有公募基金在t-1期行业持仓比例调整的跨期相关性；β_i,t越高表示越模仿（羊群），越低表示越反羊群。按过去四期观测平滑得到DFH。分申万(DFH_SW)、中信(DFH_ZX)、证监会(DFH_ZJH)三类行业分类，及季度/半年两种调仓频率。",
+        "formula": "Trade_i,j,t = α + β·Trade_all,j,t-1 + γ·Mom_j,t-1 + δ·MC_j,t-1 + θ·BM_j,t-1 + ε；DFH为β_i,t的过去四期平滑值（排序反权重）",
+        "data_source": "国泰安CSMAR公募基金研究数据库、股票交易数据库；行业收益/动量/市值/BM来自中国资产管理研究中心"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "超额收益 α（Alphat+1）",
+        "definition": "基金家族i在t+1期的因子模型alpha，由前12个月月度收益对FF3/Carhart4/FF5回归系数估算；亦用分组（按DFH五分组）年化超额收益衡量。",
+        "formula": "α_i,t+1 = γ·DFH_i,t + α_i,t + log(TNA)_i,t + log(TNA²)_i,t + log(Year)_i,t + Flow_i,t + SN_i,t + SN²_i,t + log(TO)_i,t + ε（固定效应）",
+        "data_source": "CSMAR基金季度收益与持仓"
+      },
+      {
+        "name": "IAWSUE（行业调整加权标准化非预期盈利）",
+        "definition": "衡量公募基金家族每期行业配置带来的未来基本面盈利提升程度，用于检验行业基本面投资能力。DFH对IAWSUE回归，β1显著为负表示反羊群具有更高行业基本面投资能力。",
+        "formula": "SUE_j,t+1 = 行业j盈利同比变化 / 过去8期同比变化标准差；IAWSUE = Σ_j Trade_i,j,t × SUE_j,t+1（行业调整加权标准化）",
+        "data_source": "CSMAR、中国资产管理研究中心（行业每股盈利eps）"
+      }
+    ],
+    "control_variables": "α_i,t, log(TNA), log(TNA)², log(Year), Flow（资金流）, SN（持股数量）, SN², log(TO)（年换手率对数）；IAWSUE回归中另控 IAWSUE_t, IAWSUE_t-1, IAWSUE_t-2",
+    "data_source": {
+      "sample_period": "2009-2017年（季度/半年调仓）",
+      "source": "国泰安CSMAR公募基金研究数据库、股票交易数据库；中国资产管理研究中心（市场收益、无风险收益、因子收益）",
+      "sample_size": "基金家族83家（2009年56家→2017年92家）；基金1124只（普通股票型135、偏股混合型429、灵活配置型560）；观测2277（季度）/1113（半年）"
+    },
+    "descriptive_stats": "表1（n=2277）：收益均值3.02%/季(方差12.40,min-38.96,max63.14)；超额收益1.17%；规模175.84亿(方差177.60)；成立年限8.19年(方差3.22)；换手率8.56倍/年(方差7.18)；资金流1.31%；平均持股151.22；DFH_SW均值-0.06(范围-4.27~4.32)、DFH_ZX均值-0.02、DFH_ZJH均值0.02(范围-5.38~5.55)。DFH表现出较高异质性。",
+    "key_formulas": "FF3/Carhart4/FF5因子模型（式3-5）；回归式（6）α_i,t+1对DFH及控制变量；回归式（9）IAWSUE对DFH；SUE/IAWSUE定义式（7）（8）；换手率×DFH、波动率×DFH交叉项检验委托代理动机。",
+    "notes": "反羊群=DFH最低组（第1组），羊群=DFH最高组（第5组）。低换手率/低波动率的反羊群基金家族收益显著更高，说明委托代理问题解决较好时反羊群策略带来更好业绩。剔除量化类与特定行业基金、生存者偏差、规模最小2%等。"
+  },
+  {
+    "file": "01_Cohen_Lu_Nguyen_2026_MimickingFinance_NBERw34849.pdf",
+    "title": "Mimicking Finance",
+    "authors_year": "Cohen, Lu, Nguyen (2026), NBER Working Paper 34849",
+    "layer": "L5",
+    "topic": "用LSTM等机器学习模型预测/模仿主动权益基金经理的买卖持有交易方向，检验交易行为可预测性（mimicability）与基金管理人/基金特征及未来业绩的关系。",
+    "independent_variables": [
+      {
+        "name": "基金层面特征（特征变量）",
+        "definition": "滞后收益（前一季度及多季度）、季度净资金流、基金规模、基于持仓的价值与动量指标。",
+        "formula": "（滞后特征，预测时全部可观测）",
+        "data_source": "Morningstar Direct、CRSP Mutual Fund Database"
+      },
+      {
+        "name": "证券层面特征",
+        "definition": "对数市值、账面市值比、历史收益动量、对共同风险因子（市场、规模、价值、盈利、投资、短期反转）的敞口。",
+        "formula": "（permno-month层面因子，对齐至季度）",
+        "data_source": "JKP Global Factor Database"
+      },
+      {
+        "name": "同行行为（Peer behavior）",
+        "definition": "同一Morningstar风格类别内同行基金的增持、减持、不变频率及其滞后项，刻画相似授权管理人的同期行为。",
+        "formula": "（类别内买卖/持有频率）",
+        "data_source": "Morningstar Direct"
+      },
+      {
+        "name": "宏观变量",
+        "definition": "收益率曲线水平与斜率、信用利差（BAA-Treasury）、期限利差、违约利差等（名义与实际）。",
+        "formula": "（季度滞后宏观指标）",
+        "data_source": "Federal Reserve FRED"
+      },
+      {
+        "name": "管理人/基金横截面特征（用于可预测性决定因素分析）",
+        "definition": "Manager Tenure（任职年限）、管理基金数、管理风格类别数、管理人持股比例、基金年龄、类别内竞争、基金家族内基金数、基金规模、换手率、资金流、费率、管理团队规模等。",
+        "formula": "（横截面回归自变量）",
+        "data_source": "Morningstar、CRSP"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "交易方向可预测性 / 预测精度（Prediction Precision）",
+        "definition": "目标变量为基金-证券-季度的交易方向Y_i,t∈{-1,0,+1}（卖出/持有/买入），由持仓份额变化Δsh按±1%阈值分类；因变量为LSTM模型（及朴素基准）对该三类方向的预测精度。",
+        "formula": "Δsh_i,t = (sh_i,t+1 − sh_i,t)/(sh_i,t + 1)；Y_i,t = -1 若Δsh≤−0.01, 0 若|Δsh|<0.01, +1 若Δsh≥0.01",
+        "data_source": "Morningstar Direct持仓"
+      },
+      {
+        "name": "未来业绩（Performance implications）",
+        "definition": "未来alpha、同业超额收益、以及按交易可预测性分组的Q1（最不可预测）减Q5（最可预测）组合收益差。",
+        "formula": "Q1−Q5下季度年化收益差（组合收益经因子模型调整alpha）",
+        "data_source": "CRSP"
+      }
+    ],
+    "control_variables": "业绩检验中控制已知风险决定因素（known risk determinants）；横截面回归（表IV）含基金类别固定效应、时间固定效应",
+    "data_source": {
+      "sample_period": "1990-2023年",
+      "source": "Morningstar Direct（SEC N-30D/N-CSR/N-Q/N-PORT持仓）、CRSP Mutual Fund Database、JKP Global Factor Database、FRED",
+      "sample_size": "1,706只主动管理美国权益共同基金；5,434,702个基金-证券-季度观测"
+    },
+    "descriptive_stats": "表I：Manager Tenure均值>13年（Max~15年），平均管理2.83只基金、跨2个投资风格类别。表II：朴素预测精度均值0.52（即52%准确预测买卖持有），AI(LSTM)精度0.71（+36.5%, p<0.0001）；平均基金规模~7亿美元（最大>380亿），季度平均资金流529万美元，95%季度开放申购；基金年龄~14年，平均每基金3.6名经理，类别内平均75个竞争者，家族内平均4.79只基金。",
+    "key_formulas": "LSTM门控：遗忘门f(t)=φ(wfx·Xt+wfh·h(t−1)+bf)、输入门i(t)、候选eC(t)=tanh(...)、细胞状态C(t)=f(t)⊙C(t−1)+i(t)⊙eC(t)、输出门o(t)、隐状态h(t)=o(t)⊙tanh(C(t))（式11-16）；损失为加权分类交叉熵 L = −Σ_{c∈{−1,0,+1}} w_c·y_c·log p_c；滚动窗口28季（前20季训练、后8季测试），8季序列输入。",
+    "notes": "平均71%的基金经理交易方向可被预测（Mid-cap Blend最高75%）。管理人持股比例越高越不可预测；任职越久、管理基金/策略越多越可预测；竞争越激烈越不可预测。可预测性低的管理人显著跑赢，Q1−Q5下季度年化收益差424bp(t=5.74)。"
+  },
+  {
+    "file": "02_Kahneman_Tversky_1979_ProspectTheory_Econometrica.pdf",
+    "title": "Prospect Theory: An Analysis of Decision under Risk",
+    "authors_year": "Kahneman, Tversky (1979), Econometrica",
+    "layer": "L5",
+    "topic": "提出前景理论，以价值函数与决策权重函数刻画人们在风险下的决策，解释确定性效应、反射效应、概率保险、孤立效应等行为异象（行为金融的理论基石）。",
+    "independent_variables": [
+      {
+        "name": "参考点（Reference Point）",
+        "definition": "价值函数的零点，收益与损失均相对于参考点定义；反射效应指围绕0反射前景会反转偏好顺序。",
+        "formula": "v(x) defined on deviations from reference point (gains/losses)",
+        "data_source": "实验设计（前景选择题）"
+      },
+      {
+        "name": "决策权重 π(p)",
+        "definition": "反映概率p对整体价值的影响，非概率本身；π(0)=0, π(1)=1，单调递增；小概率高估(π(p)>p)、大概率低估(π(p)<p)；次可加 π(p)+π(1−p)<1。",
+        "formula": "π(p) = p^γ / [(p^γ+(1−p)^γ)^(1/γ)] （假设形式）",
+        "data_source": "实验数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "前景价值 V（Prospect Value）",
+        "definition": "两结果前景的总体主观价值，为各结果价值乘以决策权重之和。",
+        "formula": "V(x,p;y,q) = π(p)·v(x) + π(q)·v(y)，其中v(0)=0, π(0)=0, π(1)=1",
+        "data_source": "实验测量"
+      }
+    ],
+    "control_variables": "不适用（理论模型）",
+    "data_source": {
+      "sample_period": "1970年代实验",
+      "source": "被试实验（含100名专业人士样本等）",
+      "sample_size": "多组实验被试，含一组n=100专业人士"
+    },
+    "descriptive_stats": "无（理论/实验论文，未列表述性统计）",
+    "key_formulas": "价值函数性质：收益段凹(v″(x)<0 for x>0)、损失段凸(v″(x)>0 for x<0)、损失厌恶（损失段斜率陡于收益段）；假设形式 v(x)=x^α (x>0), v(x)=−λ(−x)^β (x<0)。前景价值 V=π(p)v(x)+π(q)v(y)。",
+    "notes": "本文为L5认知行为层的理论基础文献，无基金实证数据；变量为行为金融理论构念（价值函数、决策权重、损失厌恶、反射效应），被后续基金行为研究（处置效应、过度自信、羊群等）广泛引用。"
+  },
+  {
+    "file": "03_Barberis_Thaler_2002_BehavioralFinance_Survey.pdf",
+    "title": "A Survey of Behavioral Finance",
+    "authors_year": "Barberis, Thaler (2002), Handbook of the Economics of Finance (Elsevier)",
+    "layer": "L5",
+    "topic": "系统综述行为金融学：投资者心理（启发式与偏差、前景理论）、行为对资产定价（股权溢价、波动率、封闭式基金折价、动量/反转）及公司金融的影响。",
+    "independent_variables": [
+      {
+        "name": "行为偏差构念（理论变量）",
+        "definition": "代表性(representativeness)、保守性(conservatism)、锚定(anchoring)、过度自信(overconfidence)、前景理论价值函数v(x)、决策权重π(p)、心理账户(mental accounting)、损失厌恶。",
+        "formula": "（综述，无统一公式；引用Kahneman-Tversky前景理论）",
+        "data_source": "文献综述"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "资产价格/行为异象（综述对象）",
+        "definition": "股权溢价之谜、波动率、封闭式基金折价、动量效应、长期反转、公司金融中的行为偏差等被解释现象。",
+        "formula": "（综述）",
+        "data_source": "文献综述"
+      }
+    ],
+    "control_variables": "不适用（综述）",
+    "data_source": {
+      "sample_period": "NA",
+      "source": "综述文章",
+      "sample_size": "NA"
+    },
+    "descriptive_stats": "无",
+    "key_formulas": "前景理论：V=π(p)v(x)+π(q)v(y)；v(x)关于参考点定义、收益凹损失凸、损失厌恶；决策权重π(p)次可加。",
+    "notes": "属L5认知行为层理论/综述文献，无实证数据集与变量定义表；为后续基金行为（羊群、处置效应、过度自信、风格漂移等）研究提供理论框架。"
+  },
+  {
+    "file": "04_Kaniel_2022_ML_Skill_NBERw29723.pdf",
+    "title": "Machine-Learning the Skill of Mutual Fund Managers",
+    "authors_year": "Kaniel, Lin, Pelger, Van Nieuwerburgh (2022), NBER Working Paper 29723",
+    "layer": "L5",
+    "topic": "用机器学习（单隐层神经网络等）基于59个基金/股票特征加投资者情绪，实时预测共同基金异常收益，识别基金经理能力与择时skill。",
+    "independent_variables": [
+      {
+        "name": "基金与股票特征（59个预测变量）",
+        "definition": "46个股票层面特征（Chen-Pelger-Zhu 2020所列举，具横截面收益预测力，分6个子组）；13个基金层面特征：基金动量(r2_1, r12_2)、基金特征、基金家族特征（Family r12_2, Family flow, Family age, Fund no）。全部按横截面排序归一化至[-0.5,0.5]。",
+        "formula": "（特征经持仓加权、横截面归一化）",
+        "data_source": "CRSP Survivor Bias-Free Mutual Fund DB；Thomson Financial Mutual Fund Holdings；股票特征来自Chen-Pelger-Zhu(2020)"
+      },
+      {
+        "name": "宏观经济变量（投资者情绪）",
+        "definition": "投资者情绪（Baker-Wurgler sentiment）等宏观状态变量，与基金特征交互提升预测。",
+        "formula": "（宏观变量z_t）",
+        "data_source": "文献标准宏观/情绪数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "基金异常收益 R^abn_i,t（Abnormal Return）",
+        "definition": "基金i在t月相对Carhart(1997)四因子模型的异常收益（扣除系统风险补偿后的业绩/技能度量）。",
+        "formula": "Ri,t−36:t−1 = α_i + F_{t−36:t−1}·β̂_i,t−1 + η（滚动36月估计载荷）；R^abn_i,t = Ri,t − F_t·β̂_i,t−1（Ri,t为超出1月T-bill的总收益）",
+        "data_source": "CRSP（基金收益、TNA）；Thomson（持仓）"
+      }
+    ],
+    "control_variables": "（ML模型自动纳入非线性与交互；稳健性用八因子模型异常收益）",
+    "data_source": {
+      "sample_period": "1980年1月 - 2019年1月",
+      "source": "CRSP Survivor Bias-Free Mutual Fund Database；Thomson Financial Mutual Fund Holdings（持仓链接）",
+      "sample_size": "3,275只主动管理国内权益共同基金；407,158个基金-月观测（其中332,294个具完整基金特征）"
+    },
+    "descriptive_stats": "异常收益均值/中位数均为-0.03%/月，标准差2.00%；样本基金平均成立13.7年，平均管理资产11.53亿美元。",
+    "key_formulas": "滚动窗口因子载荷估计（式1）；异常收益计算（式2）R^abn_i,t = Ri,t − F_t·β̂_i,t−1；单隐层神经网络 y=f(x) 组合原始预测变量与宏观变量（含非线性变换）；变量重要性用敏感性分析。",
+    "notes": "基金动量(fund momentum)与资金流(flow)结合情绪是最关键预测变量。买入预测最差10%基金、卖出最好10%基金的组合样本期内年化异常收益72%。实时可预测性持续约三年。缺失特征用潜因子模型插补。"
+  },
+  {
+    "file": "05_Puetz_Ruenzi_2008_Overconfidence_CFR.pdf",
+    "title": "Overconfidence among Professional Investment Managers",
+    "authors_year": "Puetz, Ruenzi (2008), CFR (Center for Financial Research) Working Paper",
+    "layer": "L5",
+    "topic": "以换手率作为过度自信的代理变量，检验基金经理过去业绩（尤其是优异业绩）是否会因自我归因偏差引发过度自信，并考察市场收益与管理结构（单/团队）的作用。",
+    "independent_variables": [
+      {
+        "name": "过去业绩 Perf_i,t-1（Past Performance）",
+        "definition": "基金i在t-1年的年度业绩排名（0-1之间，最佳=1，最差=0），基于三种业绩度量：原始收益、Jensen(1968)单因子alpha、Carhart(1997)四因子alpha。用排名而非绝对值，因经理关注相对排名。",
+        "formula": "Perf_i,t-1 = 年度业绩在同行中的排名（等距分布于[0,1]）",
+        "data_source": "CRSP Mutual Fund Database（收益、因子alpha）"
+      },
+      {
+        "name": "市场收益（绝对）",
+        "definition": "作为附加自变量，检验经理行为由自身业绩还是广泛市场变动驱动。",
+        "formula": "（年度市场收益绝对值）",
+        "data_source": "CRSP/市场指数"
+      },
+      {
+        "name": "团队管理哑变量 TeamDummy",
+        "definition": "若基金为团队管理（CRSP报多名经理或标明团队）取1，否则（单经理）取0。",
+        "formula": "TeamDummy_i,t ∈ {0,1}",
+        "data_source": "CRSP（经理姓名/结构）"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "换手率 TR_i,t（Turnover Ratio，过度自信代理）",
+        "definition": "基金i在t年的换手率，作为基金经理过度自信（self-attribution bias后交易更频繁）的代理变量。剔除最高1%极端值（>724%）。",
+        "formula": "TR_i,t = f(Perf_i,t-1, Controls)（式2）",
+        "data_source": "CRSP Mutual Fund Database"
+      }
+    ],
+    "control_variables": "资金流（Flow，同期/滞后/四季度）、基金规模(TNA)、基金年龄、费率(expense ratio)、Lipper目标类别（6大类）、管理结构（团队/单经理）、市场波动率（市场收益绝对变化）",
+    "data_source": {
+      "sample_period": "1999-2008年",
+      "source": "CRSP Mutual Fund Database（Center for Research in Security Prices, University of Chicago）",
+      "sample_size": "17,486个基金-年观测；基金数由1999年1,528只增至2008年1,669只（合并同一基金多份额类别）"
+    },
+    "descriptive_stats": "平均换手率90.55%（各年介于2005年82.89%至2001年105.09%）；平均基金规模>9亿美元（2002年最低约6亿，2007年>11亿）；平均基金年龄约12年。",
+    "key_formulas": "基础模型 TR_i,t = f(Perf_i,t-1, Controls)（式2）；业绩用排名（原始收益、Jensen alpha、Carhart alpha）；面板回归聚类标准误（按基金聚类）、基金固定效应、含滞后因变量等稳健性。",
+    "notes": "核心假设：优异过去业绩→自我归因偏差→过度自信→高换手。非线性设定以捕捉顶尖业绩经理才显著更过度自信。团队管理可能弱化业绩-过度自信关系。排除替代解释（策略变化、理性学习）。"
+  },
+  {
+    "file": "06_Xu_Yan_Zi_2025_ML_China_SAIF.pdf",
+    "title": "Predicting Mutual Fund Performance in China: A Machine Learning Approach",
+    "authors_year": "Xu, Yan, Zi (2025), SAIF/Shanghai Jiao Tong University",
+    "layer": "L5",
+    "topic": "用机器学习基于132个基金层面特征（4类信息集）加2个宏观变量，持续预测中国主动管理权益共同基金业绩，并识别关键预测因子与交互效应。",
+    "independent_variables": [
+      {
+        "name": "份额信息集 SIS（Share Information Set）",
+        "definition": "33个在美国市场具基金业绩预测力的基金特征（文献搜集），作为基准预测信号。",
+        "formula": "（33个基金特征）",
+        "data_source": "WIND、CSMAR"
+      },
+      {
+        "name": "经理信息集 MIS（Manager Information Set）",
+        "definition": "对同一经理管理的兄弟基金，按TNA加权平均各信号值，构造额外33个基金层面特征。",
+        "formula": "MIS信号 = Σ 兄弟基金信号×TNA权重",
+        "data_source": "WIND、CSMAR"
+      },
+      {
+        "name": "家族信息集 FIS（Family Information Set）",
+        "definition": "对同一基金家族内权益基金，按TNA加权平均各信号值，构造33个特征。",
+        "formula": "FIS信号 = Σ 家族基金信号×TNA权重",
+        "data_source": "WIND、CSMAR"
+      },
+      {
+        "name": "持仓信息集 HIS（Holding Information Set）",
+        "definition": "选取夏普比率最高的33个股票特征，按基金持股相对权重价值加权平均，构造33个基金暴露特征。",
+        "formula": "HIS = Σ 持股股票特征×组合权重",
+        "data_source": "WIND、CSMAR（持仓）；股票特征经行业中性化"
+      },
+      {
+        "name": "宏观经济变量",
+        "definition": "投资者情绪（Baker-Wurgler 2006）与领先经济指标综合指数CILEI（含12项经济指标）。二者相关性低(ρ=0.05)。",
+        "formula": "sentiment, CILEI",
+        "data_source": "文献标准宏观/情绪数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "基金业绩预测目标（Predicting Target）",
+        "definition": "月度基金超额收益（超出1月无风险利率）的横截面排名，归一化映射至[-1,1]，缺失置中位数0。不同于Kaniel等用alpha，本文直接用超额收益排名以避免基准因子模型选择偏误。",
+        "formula": "Target = rank-cross-section(fund excess return_t+1) mapped to [-1,1]",
+        "data_source": "WIND、CSMAR（基金收益）；无风险利率来自Factorwar.com（3月定存/央票/SHIBOR）"
+      }
+    ],
+    "control_variables": "（ML方法：LASSO、PLS、神经网络NN3、随机森林、梯度提升等；所有特征横截面排名归一化至[-1,1]）",
+    "data_source": {
+      "sample_period": "2003年1月 - 2022年1月",
+      "source": "WIND、CSMAR（中国金融研究数据库），份额层面(share-class level)",
+      "sample_size": "3,153只唯一份额类别；131,846个份额-月观测"
+    },
+    "descriptive_stats": "中国主动权益基金平均月度Carhart(1997) alpha为43个基点（显著为正，远高于美国近0/-3bp）；平均年化换手率高达300%（美国82.6%），即约每4个月调仓一次；53.3%观测有兄弟基金，97.5%有家族基金。",
+    "key_formulas": "目标=超额收益横截面排名映射[-1,1]；变量重要性 SSD_j = 平均平方梯度（式，基于拟合模型g与参数θ对输入z_j）；交互效应分析（NN3黑箱模型，固定其余变量中位、扫两个特征支撑区间[-1,1]）。",
+    "notes": "投资者情绪是最重要变量，其次为家族特征、前月超额收益。基金主动程度(activeness)与过去业绩是重要预测因子；基金持仓股票特征不具预测力。高/低业绩基金差异大且持续超一年。特征经行业中性化、避免前视偏差（月度t、季度t-4、年度t-6）。"
+  },
+  {
+    "file": "07_Chu_2022_DeepLearning_LSTM_GRU.pdf",
+    "title": "Predicting Mutual Funds’ Performance using Deep Learning and Ensemble Techniques",
+    "authors_year": "Chu, Dao, Pham, Nguyen, Tran (2022)",
+    "layer": "L5",
+    "topic": "以过去夏普比率为输入，使用LSTM、GRU等深度学习与传统统计/集成方法，预测美国大盘股主动权益共同基金的未来夏普比率（多步预测）。",
+    "independent_variables": [
+      {
+        "name": "历史夏普比率（Past Sharpe Ratios，模型输入）",
+        "definition": "各基金滚动计算的年化夏普比率时间序列，作为预测未来夏普比率的唯一输入（区别于Wang-Huang用动量/羊群行为作输入）。经对数变换与差分去趋势/季节性后输入。",
+        "formula": "Sharpe_i,t = 滚动年化 (基金收益均值/标准差)；输入为历史Sharpe序列",
+        "data_source": "Morningstar Direct（美国大盘股权益基金月度收益）"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "未来夏普比率（Future Sharpe Ratio，预测目标）",
+        "definition": "基金未来多个预测期限（5个horizon）的年化夏普比率，作为模型输出/预测对象；以多种精度指标（MAAPE等）评估。",
+        "formula": "预测 Ŝharpe_i,t+h (h=1..5步)",
+        "data_source": "Morningstar Direct"
+      }
+    ],
+    "control_variables": "（时间序列交叉验证：滚动原点rolling origin分为6组训练/验证；对数变换+差分为预处理）",
+    "data_source": {
+      "sample_period": "至2021年10月，要求至少20年数据",
+      "source": "Morningstar Direct（美国domiciled大盘股权益共同基金月度收益；无日度收益）",
+      "sample_size": "634只基金（初始>1200只筛选后；覆盖growth/value/blend三子策略）"
+    },
+    "descriptive_stats": "表1：整体(Overall)年化收益均值8.226%（标准差23.272，min-176.22，max126.32）；整体夏普比率均值0.290（标准差0.556，min-2.446，max4.768）；无风险利率为3个月美国国债收益率（均值1.464%）。示例五基金夏普均值介于0.213~0.304。",
+    "key_formulas": "Sharpe = 年化收益/年化波动率；预处理：对数变换（负夏普加offset使其为正）+差分去趋势；LSTM/GRU门控循环网络；评估指标MAAPE等（式 pt=100·et/Xt）。",
+    "notes": "对比方法含ETS、ARIMA、Theta、Naive及深度学习(LSTM/GRU)、集成。基金相对同质（同大盘股策略、美国注册）。本文用过去夏普预测未来夏普，而非用经理动量/羊群行为。"
+  },
+  {
+    "file": "08_Menkhoff_2006_Experience_Behavior_JEBO.pdf",
+    "title": "Experience and Behavior of Institutional Investors: A Complementary Survey Evidence",
+    "authors_year": "Menkhoff (2006), Journal of Economic Behavior & Organization (JEBO)",
+    "layer": "L5",
+    "topic": "通过对德国基金经理的问卷调查，检验从业经验（任职年限）是否影响其行为偏差：风险承担、过度自信与羊群行为。",
+    "independent_variables": [
+      {
+        "name": "从业经验 / 任职年限（Experience）",
+        "definition": "按基金管理的专业经验分为三组：’inexperienced’(<5年)、’experienced’(5-15年)、’very experienced’(>15年)，用于组间行为差异分析。",
+        "formula": "Experience group ∈ {<5年, 5-15年, >15年}",
+        "data_source": "问卷调查（自报任职/专业经验）"
+      },
+      {
+        "name": "人口统计/背景变量（Table 1）",
+        "definition": "年龄、性别、可变薪酬占比（variable compensation）、是否大学学历、是否管理岗位、主动/被动管理、管理证券类型（股票/债券）。",
+        "formula": "（分类/连续变量）",
+        "data_source": "问卷调查"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "风险承担（Risk taking）",
+        "definition": "Q10：50-50赌局中愿接受的最小获胜金额（€），越高表示风险承担越强。",
+        "formula": "（最小获胜金额，€）",
+        "data_source": "问卷调查Q10"
+      },
+      {
+        "name": "过度自信（Overconfidence）",
+        "definition": "Q1自评相对同行业绩（5类，1=远好于至5=远差于）、Q2’多数经济新闻不令我意外’（6类认同度）、Q3对DAX一个月的90%置信区间校准（上下界宽度，越窄越过度自信）。",
+        "formula": "（序数评分 / DAX区间宽度）",
+        "data_source": "问卷调查Q1-Q3"
+      },
+      {
+        "name": "羊群行为（Herding behavior）",
+        "definition": "Q4同事（同公司）作为信息源重要性、Q5其他市场参与者作为信息源重要性（6类）、Q8’基金经理也存在羊群行为’认同度。",
+        "formula": "（6类序数评分）",
+        "data_source": "问卷调查Q4,Q5,Q8"
+      },
+      {
+        "name": "策略使用",
+        "definition": "Q6动量策略使用强度(%)、Q7其他策略（非动量/反向/买入持有）使用强度(%)。",
+        "formula": "（使用强度百分比）",
+        "data_source": "问卷调查Q6,Q7"
+      }
+    ],
+    "control_variables": "年龄、性别、可变薪酬占比、学历、管理岗位、主动/被动、证券类型（作为受访者描述性背景）",
+    "data_source": {
+      "sample_period": "2002年8月15日-12月12日",
+      "source": "德国基金管理公司问卷调查（ Questionnaire survey）",
+      "sample_size": "64家公司联系，35家参与（公司响应率59%），回收117份有效问卷（平均每公司3-4名经理）"
+    },
+    "descriptive_stats": "表1：年龄<35岁占50.9%、35-45占46.5%、>45占2.6%；专业经验<5年22.3%、5-15年59.8%、>15年17.9%；男性92.1%；可变薪酬占比均值25.8%(std14.5)；大学学历84.8%；管理岗位36.9%；主动管理93.7%；管理股票66.5%/债券33.5%。典型经理约35岁、10年经验、男性、奖金25%、有学位、非管理岗、主动管理、管股票。",
+    "key_formulas": "（调查序数编码：Q1用5类、其余多用6类强制方向；Q3为DAX 90%置信区间上下界点数；Q10为最小获胜金额€）",
+    "notes": "核心结论方向：经验越丰富，过度自信与羊群行为可能减弱、风险承担改变。问卷经前期访谈与预测试以保证对基金经理语言恰当。样本为德国市场，偏年轻化（>45岁仅2.6%）。"
+  }
+]

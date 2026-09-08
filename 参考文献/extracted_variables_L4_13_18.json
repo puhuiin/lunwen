@@ -1,0 +1,234 @@
+[
+  {
+    "file": "基金业绩排名与期末业绩拉升.pdf",
+    "title": "基金业绩排名与期末业绩拉升",
+    "authors_year": "李祥文, 吴文锋 (2018), 《管理世界》",
+    "layer": "L4_风险应对层",
+    "topic": "基金业绩排名对期末业绩拉升行为的影响，从关键排名对薪酬影响和提高排名难易程度两个新视角",
+    "independent_variables": [
+      {"name": "Fund_Winner", "description": "赢家基金哑变量，基金业绩排在第96~100组取1，否则取0"},
+      {"name": "Fund_Loser", "description": "输家基金哑变量，基金业绩排在第1~5组取1，否则取0"},
+      {"name": "Fund_1/2", "description": "1/2排名处基金哑变量，基金业绩排在第48~53组取1，否则取0"},
+      {"name": "Fund_2/3", "description": "2/3排名处基金哑变量，基金业绩排在第64~69组取1，否则取0"},
+      {"name": "Fund_9/10", "description": "9/10排名处基金哑变量，基金业绩排在第88~93组取1，否则取0"},
+      {"name": "PerfDif", "description": "相邻排名基金业绩差异代理变量(%)，排名第n位基金与其前后排名基金年初至今累计收益率差异的平均值"}
+    ],
+    "dependent_variables": [
+      {"name": "FundRt_Exc", "description": "基金普通超额收益率(基点)，FundRt - MarketRt"},
+      {"name": "FundRt_FF", "description": "基金Fama-French三因子调整超额收益率(基点)"},
+      {"name": "Pumping", "description": "基金期末3个交易日平均超额收益率(基点)"},
+      {"name": "Reversing", "description": "基金期初3个交易日平均超额收益率(基点)"},
+      {"name": "Blip", "description": "期末业绩拉升代理变量(基点)，Blip=(Pumping-Reversing)/2"}
+    ],
+    "control_variables": [
+      {"name": "Flow", "description": "基金资金净流量，取Flow1和Flow2的平均值"},
+      {"name": "Size", "description": "基金季度末净资产规模(亿元)的自然对数"},
+      {"name": "Age", "description": "基金年龄(月)"},
+      {"name": "Male", "description": "基金经理性别哑变量，男性取1"},
+      {"name": "Master", "description": "基金经理学历哑变量，硕士取1"},
+      {"name": "Doctor", "description": "基金经理学历哑变量，博士取1"},
+      {"name": "Fundm", "description": "基金固定效应哑变量"},
+      {"name": "Yearn", "description": "年份固定效应哑变量"}
+    ],
+    "data_source": "WIND数据库(基金单位净值、季末重仓股票); CSMAR数据库(基金净资产规模、分红拆分、股票收益率、市场综合收益率、Fama-French三因子数据); RESSET数据库(无风险收益率)。样本期2005-2016年，开放式股票型基金和偏股混合型基金，844730个观测值",
+    "descriptive_stats": "FundRt_Exc均值-0.1025基点; Pumping_ExcRt均值5.6241基点; Reversing_ExcRt均值-7.7517基点; Blip_ExcRt均值6.6876基点; Pumping_FF均值6.4658基点; Reversing_FF均值-4.1747基点; Blip_FF均值5.3195基点",
+    "key_formulas": [
+      "FundRt_Exc = FundRt - MarketRt",
+      "FundRt_FF = FundRt - RFRt - β_RMRF*RMRF - β_SMB*SMB - β_HML*HML",
+      "Pumping = Σ(k=0~2) FundPerf(T, lastday-k) / 3",
+      "Reversing = Σ(k=0~2) FundPerf(T+1, firstday+k) / 3",
+      "Blip = (Pumping - Reversing) / 2",
+      "PerfDif = ((FundRt_YTD(n-1) - FundRt_YTD(n)) + (FundRt_YTD(n) - FundRt_YTD(n+1))) / 2",
+      "Flow = (Flow1 + Flow2) / 2, Flow1 = (TNA_T - TNA_{T-1}*(1+FundRt_T))/TNA_{T-1}"
+    ],
+    "notes": "研究发现2/3和9/10关键排名处基金存在比其他基金更为明显的期末业绩拉升行为；相邻排名基金业绩差异越小，期末业绩拉升程度越大。采用两阶段回归检验期末拉升和期初反转模式，年末最为显著。关键排名1/2、2/3、9/10分别对应基金经理年终奖金的重要参考排名(前1/2、前1/3、前1/10)"
+  },
+  {
+    "file": "基金业绩排名压力与赌博式交易倾向——基于中国开放式股票型基金的实证检验.pdf",
+    "title": "基金业绩排名压力与赌博式交易倾向——基于中国开放式股票型基金的实证检验",
+    "authors_year": "王志强, 吴思璠 (2023), 《财经问题研究》",
+    "layer": "L4_风险应对层",
+    "topic": "基金业绩排名压力对赌博式交易倾向的影响，及基金经理持基和基金经理变更的调节机制",
+    "independent_variables": [
+      {"name": "perpsinyear", "description": "年中业绩下滑指数，perpsinyear = rankhalfyear(t) - rankyear(t-1)，归一化至(0,1)"},
+      {"name": "perpsyear", "description": "年度业绩下滑指数，perpsyear = rankyear(t-1) - rankyear(t-2)，归一化至(0,1)"},
+      {"name": "Δr", "description": "收益率水平变动，替代业绩下滑指数进行补充分析"},
+      {"name": "HD", "description": "基金经理持基哑变量，基金经理持有自己管理基金份额取1，否则取0"},
+      {"name": "TD", "description": "基金经理变更哑变量，t年4-10月期间存在经理人变更取1，否则取0"},
+      {"name": "HD×perps", "description": "基金经理持基与业绩排名压力的交互项"},
+      {"name": "TD×perps", "description": "基金经理变更与业绩排名压力的交互项"}
+    ],
+    "dependent_variables": [
+      {"name": "gamid", "description": "下半年收益率偏度变动，gamid = gamid2 - gamid1，衡量赌博式交易倾向。值越大表示彩票型股票偏好越强"}
+    ],
+    "control_variables": [
+      {"name": "Δσ", "description": "基金风险水平变动，Δσ = σ(7,12) - σ(1,6)，下半年与上半年月度收益率标准差之差"},
+      {"name": "cflow", "description": "现金流水平，cflow = tna_t/tna_{t-1} - (1-r_t)"},
+      {"name": "trdp", "description": "股票换手率，调整资产组合所需最小股票交易额/期初净资产"},
+      {"name": "size", "description": "基金规模，基金净资产的自然对数"},
+      {"name": "age", "description": "基金年龄，基金自成立日起到t年年末的年数"},
+      {"name": "gamid(t-1)", "description": "被解释变量滞后一期，控制基金习惯性交易策略"}
+    ],
+    "data_source": "WIND数据库、CSMAR数据库及基金半年报和年报。样本期2004-2021年，开放式股票型基金，剔除存续期低于5年的基金，拆分基金归入母基金",
+    "descriptive_stats": "gamid均值0.102, 标准差0.121, 中位数0.073; perpsinyear均值0.148, 标准差0.072; perpsyear均值0.108, 标准差0.136; Δr均值0.058, 标准差0.094; HD均值0.617, 标准差0.210; TD均值0.193, 标准差0.035; Δσ均值0.021, 标准差0.011; cflow均值0.156, 标准差0.421; trdp均值0.879, 标准差0.231; size均值5.131, 标准差0.756; age均值6.345, 标准差2.775",
+    "key_formulas": [
+      "gamid1 = 1/(6-1)σ³_{(1,6)} × Σ(k=1~6) (r_itk - r̄_{(1,6)})³  (上半年收益率偏度)",
+      "gamid2 = 1/(6-1)σ³_{(7,12)} × Σ(k=7~12) (r_itk - r̄_{(7,12)})³  (下半年收益率偏度)",
+      "gamid = gamid2 - gamid1  (归一化后)",
+      "perpsinyear = rankhalfyear(t) - rankyear(t-1)",
+      "perpsyear = rankyear(t-1) - rankyear(t-2)",
+      "Δσ = σ_{(7,12)} - σ_{(1,6)}",
+      "cflow = tna_t/tna_{t-1} - (1-r_t)"
+    ],
+    "notes": "使用DGMM和IV+2SLS控制内生性，工具变量为基金经理从业经验和是否具有海外教育背景。研究发现：H1业绩排名压力正向影响赌博式交易倾向；H2基金经理持基能抑制赌博式交易倾向；H3基金经理变更影响不显著。机构投资者赌博式交易倾向源于代理人约束不足导致的机会主义行为和业绩排名压力下的理性选择"
+  },
+  {
+    "file": "基金经理社会网络、业绩排名与净值暴跌风险.pdf",
+    "title": "基金经理社会网络、业绩排名与净值暴跌风险",
+    "authors_year": "许林, 张晓华, 钱崇秀 (2020)",
+    "layer": "L4_风险应对层",
+    "topic": "基金经理社会网络和业绩排名通过羊群效应对基金净值暴跌风险的影响",
+    "independent_variables": [
+      {"name": "Orth-Nrm_Degree", "description": "正交化社会网络指标，剔除业绩排名影响后的基金重仓股相对点中心度，衡量基金经理社会网络特征"},
+      {"name": "Rank", "description": "基金业绩排名，基金季末复权净值回报率排名并剔除基金数量影响得到的相对排名"},
+      {"name": "CSAD", "description": "羊群效应(中介变量)，横截面收益绝对偏差，CSAD = 1/N × Σ|ri,t - rm,t|"}
+    ],
+    "dependent_variables": [
+      {"name": "NCSKEW", "description": "负收益偏态系数，衡量基金净值暴跌风险。值越大表示暴跌风险越大"},
+      {"name": "DUVOL", "description": "收益上下波动比率，衡量基金净值暴跌风险。值越大表示暴跌风险越大"},
+      {"name": "Stdcha", "description": "基金净值波动率变化量，本期与上一期净值收益率标准差的差值"}
+    ],
+    "control_variables": [
+      {"name": "LFTNA", "description": "基金家族规模，基金公司过去一期期末旗下基金总净值规模的自然对数"},
+      {"name": "LTNA", "description": "基金规模，基金过去一期期末净值的自然对数"},
+      {"name": "LAge", "description": "基金成立年限，基金过去一期期末成立天数的自然对数"},
+      {"name": "Flow", "description": "基金资金净流入，基金过去一期的资金净流入"},
+      {"name": "Fee", "description": "管理费率，基金管理费与基金资产净值的比例"}
+    ],
+    "data_source": "国泰安金融数据库。样本期2010年1月至2017年12月，1312只开放式股票型基金和混合型基金(剔除指数型基金及成立不足24个月的基金)，9247个观测值",
+    "descriptive_stats": "NCSKEW均值1.713, 中位数1.692, 标准差0.170, 极小值1.286, 极大值2.576; DUVOL均值2.040, 中位数1.999, 标准差0.413, 极小值0.831, 极大值5.110; CSAD均值0.013, 中位数0.012, 标准差0.005; Nrm_Degree均值0.767, 中位数0.282, 标准差3.237; Orth-Nrm_Degree均值-0.286, 中位数-1.568, 标准差36.363; LFTNA均值6.280, 标准差1.354; LAge均值6.931, 标准差0.920; LTNA均值1.896",
+    "key_formulas": [
+      "R_i,t = α1 + β1*R_m,t-2 + β2*R_m,t-1 + β3*R_m,t + β4*R_m,t+1 + β5*R_m,t+2 + ε_i,t  (市场模型)",
+      "W_i,t = Ln(1 + ε_i,t)  (特有收益率)",
+      "NCSKEW = -[n(n-1)^(3/2) × ΣW³] / [(n-1)(n-2)(ΣW²)^(3/2)]",
+      "DUVOL = log[(nu-1)×Σdown W²] / [(nd-1)×Σup W²]",
+      "CSAD = 1/N × Σ|ri,t - rm,t|",
+      "Nrm_Degree = Σfri,j / (M-1)  (相对点中心度)",
+      "Orth-Nrm_Degree = Nrm_Degree模型回归残差(剔除Rank影响)"
+    ],
+    "notes": "羊群效应(CSAD)作为中介变量。采用正交化方法剔除业绩排名对社会网络指标的影响。研究发现：H1业绩排名与十大重仓股比例负相关; H2/H3社会网络信息增加和排名下降显著提升净值波动率和暴跌风险; H4社会网络传递信息引发投资趋同行为(羊群效应)进而导致净值暴跌风险。排名越靠后、社会网络越丰富，暴跌风险越大"
+  },
+  {
+    "file": "基金行业锦标赛及其激励效应研究——来自开放式基金的经验证据.pdf",
+    "title": "基金行业锦标赛及其激励效应研究——来自开放式基金的经验证据",
+    "authors_year": "肖继辉 (2012), 《南开管理评论》",
+    "layer": "L4_风险应对层",
+    "topic": "基金行业锦标赛对基金经理投资行为(投资风格、资产配置、风险调整)的激励效应及经济后果",
+    "independent_variables": [
+      {"name": "△RNTPERC", "description": "相对业绩排名百分位变动，第i只基金以6月为分割点前后半期在同类型基金中排名百分位的变动。△RNTPERC>0表示业绩提升"},
+      {"name": "RTN", "description": "考虑分红的复权基金净值增长率"}
+    ],
+    "dependent_variables": [
+      {"name": "RAR", "description": "风险调整比率，评定月M后至年底月度回报标准差除以M月前至年初月度回报标准差。RAR>1表示提高风险"},
+      {"name": "Smb", "description": "大/小盘投资风格，值越大代表倾向选择小市值股票"},
+      {"name": "Smbtrad", "description": "流通市值大/小盘投资风格"},
+      {"name": "Hml", "description": "价值/成长投资风格，值越大代表倾向选择低市净率股票"},
+      {"name": "Mom", "description": "动量/反向投资风格，值越大代表倾向选择历史股价表现好的股票"},
+      {"name": "Turnover", "description": "股票周转率，股票成交量/2 / 年平均股票投资市值"},
+      {"name": "Stockperc", "description": "仓位控制，所持股票占基金资产的比例"},
+      {"name": "Industry", "description": "行业分散程度，所持股票各行业市值占基金股票总市值比重的平方和的平方根"}
+    ],
+    "control_variables": [
+      {"name": "Lnasset", "description": "基金规模，年末基金资产(元)的对数"},
+      {"name": "Fundyear", "description": "基金成立年限，截至年末基金成立的年数(四舍五入取整)"}
+    ],
+    "data_source": "国泰安数据库(基金复权单位净值及投资组合数据)和色诺芬数据库(沪深个股数据)。样本期2005年6月至2008年12月，125只股票型基金和97只混合型基金",
+    "descriptive_stats": "各半年时点基金样本数：2005.6股票型32只/混合型40只，2005.12股票型32只/混合型40只，2006.6股票型50只/混合型57只，2006.12股票型50只/混合型57只，2007.6股票型88只/混合型80只，2007.12股票型88只/混合型80只，2008.6股票型125只/混合型97只，2008.12股票型125只/混合型97只",
+    "key_formulas": [
+      "RTN = Na/Nb × Π(1+Di/Ni) - 1  (考虑分红的复权净值增长率)",
+      "△RNTPERC = 后半年排名百分位 - 前半年排名百分位",
+      "RAR = σ(评定月后至年底) / σ(年初至评定月)  (月度回报标准差之比)",
+      "RAR(6,6): 取6月为评定期; RAR(8,4): 取8月为评定期",
+      "Turnover = (股票成交量/2) / 年平均股票投资市值",
+      "Industry = Σ(各行业股票市值占比)² 的平方根"
+    ],
+    "notes": "采用三分法将基金分为输家、中家、赢家。研究贡献：(1)从投资风格、仓位控制、行业分散、股票周转、组合风险五个维度衡量行为转变; (2)使用三分法全面观察输赢中三者投资行为; (3)检查投资行为改变的经济后果。研究发现锦标赛机制有效性受股市周期影响(时区效应); 输家与中等基金行为调整方向一致，与赢家相反(主要体现在动量/反向、价值/成长投资风格); 输家通过投资风格改变使期末排名大幅改善，赢家出现大幅下滑"
+  },
+  {
+    "file": "基金行业锦标赛激励效应研究_新的证据和解释.pdf",
+    "title": "基金行业锦标赛激励效应研究: 新的证据和解释",
+    "authors_year": "管睿, 肖继辉 (2013), 《软科学》",
+    "layer": "L4_风险应对层",
+    "topic": "股市周期、输赢家业绩差距、基金经理个人特征和基金公司内部治理对锦标赛风险调整行为的影响",
+    "independent_variables": [
+      {"name": "Rtnperc", "description": "期中业绩排名百分位，复权净值增长率排名百分位，最好基金取1，最差取0。Z为竞赛压力变量"},
+      {"name": "△Rtnperc", "description": "相对业绩排名百分位变动，第i只基金以6月或7月为分割点前后半期排名百分位变动。△Rtnperc>0表示业绩提升"}
+    ],
+    "dependent_variables": [
+      {"name": "RAR", "description": "风险调整系数(基于日度回报)，评定日前后各期日度净值增长率标准差之比。RAR>1表示下半期提高风险"}
+    ],
+    "control_variables": [
+      {"name": "Asset", "description": "基金规模，基金总资产金额(元)的对数"},
+      {"name": "Fyear", "description": "基金成立年限，基金成立至样本年度的年数取整"},
+      {"name": "Age", "description": "基金经理年龄"},
+      {"name": "SAT", "description": "经理毕业学校排名哑变量，毕业于排名前10高校或第1科研院取1，否则取0"},
+      {"name": "Edu", "description": "教育程度，硕士=1，博士=2，其他=0"},
+      {"name": "Funexp", "description": "从业年限，在基金管理公司工作的年数"},
+      {"name": "Doubmaj", "description": "理工财经双专业背景哑变量，同时具有理工和财经类教育背景取1"},
+      {"name": "Major", "description": "财经专业背景哑变量，毕业专业为财经类取1"},
+      {"name": "Ovseaexp", "description": "海外背景哑变量，具有海外教育或海外证券资产管理工作经历取1"},
+      {"name": "CPACFA", "description": "专业技术资格证书哑变量，取得CPA或CFA取1"},
+      {"name": "Direct", "description": "董事会人数"},
+      {"name": "Indircperc", "description": "独立董事比例，独立董事人数占董事会人数比例"},
+      {"name": "Supervis", "description": "监事会人数"},
+      {"name": "Invest", "description": "投资决策委员会人数"},
+      {"name": "Capsupervis", "description": "监事长性质，不在基金公司担任职务取1"},
+      {"name": "Capinspect", "description": "督察长设置哑变量，设立督察长取1"},
+      {"name": "Corpnatur", "description": "公司性质，外资或合资企业取1，中资企业取0"}
+    ],
+    "data_source": "国泰安数据库(基金公司特征、业绩指标); 基金公司治理和经理特征数据通过查阅基金年报及中国基金网、金融界等手工收集。样本期2005-2008年(完整牛熊市周期)，符合条件基金2005年73只、2006年107只、2007年167只、2008年217只",
+    "descriptive_stats": "基金数量：2005年73只，2006年107只，2007年167只，2008年217只。采用三分法和五分法对输中赢各组别风险调整进行列联表分析",
+    "key_formulas": [
+      "RTN = Na/Nb × Π(1+Di/Ni) - 1  (考虑分红的复权净值增长率)",
+      "Rtnperc = 期中复权净值增长率排名百分位(0~1)",
+      "△Rtnperc = 后半年排名百分位 - 前半年排名百分位",
+      "RAR = [1/(Dy-D) × Σ(r-r̄)²]^(1/2) / [1/(D-1) × Σ(r-r̄)²]^(1/2)  (日度回报标准差之比)",
+      "模型(1): RAR = a0 + a1 + αM + βN + γZ + ρM×Z + φN×Z + μ  (检查经理特征与排名交互)",
+      "模型(2): RAR = b0 + b1 + ηM + λG + ωZ + ψG×Z + μ  (检查公司治理与排名交互)",
+      "模型(3): △Rtnperc = c0 + c1 + δM + θRAR + σM×RAR + μ  (检查经济后果)"
+    ],
+    "notes": "风险调整系数基于日度回报，克服已有研究采用月度数据可能掩盖日度回报大幅波动的不足。研究发现在完整牛熊周期内：(1)输赢家业绩差距影响竞赛中风险调整行为; (2)基金经理个人特征和基金内部治理依赖股市周期影响风险调整; (3)熊市阶段基金内部治理与业绩排名对风险调整的交互影响减弱。M为基金特征(Asset, Fyear)，N为经理特征(Age, SAT, Edu, Funexp, Doubmaj, Major, Ovseaexp, CPACFA)，G为公司治理(Direct, Indircperc, Supervis, Invest, Capsupervis, Capinspect, Corpnatur)，Z为竞赛压力(Rtnperc)"
+  },
+  {
+    "file": "基金锦标赛、基金持股与股票收益.pdf",
+    "title": "基金锦标赛、基金持股与股票收益",
+    "authors_year": "夏翊, 李科, 冯联雷, 刘沛 (2018), 《上海金融》",
+    "layer": "L4_风险应对层",
+    "topic": "基金锦标赛机制对基金持股策略(独持股vs共持股)和股票收益的影响，锦标赛机制扭曲基金持股收益",
+    "independent_variables": [
+      {"name": "IsSolo", "description": "独享股指示变量，当期独持股中被上期收益排名前30%基金持有的独享股取1，否则取0"},
+      {"name": "IsComp", "description": "争优股指示变量，当期共持股中被两只以上上期排名前30%基金持有的争优股取1，否则取0"},
+      {"name": "IsHold", "description": "基金持股概率指示变量"}
+    ],
+    "dependent_variables": [
+      {"name": "Return", "description": "股票日度收益率，基金期末持股在每年最后一个季度的日度收益"},
+      {"name": "Return_CAPM", "description": "CAPM模型调整后的股票超额收益"},
+      {"name": "Return_FF3", "description": "Fama-French三因子模型调整后的股票超额收益"}
+    ],
+    "control_variables": [
+      {"name": "SUE", "description": "未预期盈余，本期每股收益与上期每股收益的差除以上期每股收益，SUE=(EPS_t - EPS_{t-1})/EPS_{t-1}"},
+      {"name": "MarketReturn", "description": "市场收益率"},
+      {"name": "Log(Asset/1000)", "description": "股票市场价值的对数值(千元为单位)"},
+      {"name": "EPS", "description": "每股收益"}
+    ],
+    "data_source": "CSMAR数据库。样本期2008-2015年，积极型股票基金持仓数据，458117个观测值",
+    "descriptive_stats": "Return均值0.002, 中位数0.001, 标准差0.034, 25%分位-0.015, 75%分位0.018; Return_CAPM均值0.002, 标准差0.029; Return_FF3均值0.001, 标准差0.026; MarketReturn均值0.000, 标准差0.017; Log(Asset/1000)均值16.480, 中位数16.321, 标准差1.127; EPS均值0.572, 中位数0.405, 标准差0.748; SUE均值0.685, 中位数0.422, 标准差4.801。独享独持股比争优共持股日均收益率低0.19%(年化48.45%)",
+    "key_formulas": [
+      "IsSolo = 1 当股票为当期独持股中被上期排名前30%基金持有的独享股",
+      "IsComp = 1 当股票为当期共持股中被两只以上上期排名前30%基金持有的争优股",
+      "SUE = (EPS_t - EPS_{t-1}) / EPS_{t-1}",
+      "分组：独持股→独享股(前30%基金持有)+后进股(后70%基金持有); 共持股→争优股(2+只前30%基金持有)+独享股(1只前30%基金持有)+后进股(全后70%基金持有)"
+    ],
+    "notes": "将基金持股按持有基金数量分为独持股和共持股，再按上期基金收益排名进一步分组。研究发现锦标赛机制促使排名靠前基金采取抱团策略：持有争优共持股、抛弃独享独持股，造成独享股收益率下降而争优股收益率更高。独享独持股比争优共持股日均收益率低0.19%(年化48.45%)。扩展了锦标赛理论(排名考核压力扭曲基金持股收益)、羊群效应理论(锦标赛机制诱发领头羊内部抱团)和基金持股理论(基金投资行为具有外部效应)"
+  }
+]

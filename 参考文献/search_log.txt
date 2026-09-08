@@ -1,0 +1,44 @@
+
+===== tenure  (kws=['tenure', '从业', '任职年限']) =====
+   11  p3    L1_背景特征层\基金经理从业经验对我国公募基金业绩的影响研究.pdf
+    9  p3    L1_背景特征层\07_赵秀娟_2010_个人特征实证.pdf
+    9  p4    L1_背景特征层\13_基金经理个人特征与基金投资风格.pdf
+    9  p3    L1_背景特征层\14_基金经理在多大程度上影响了基金业绩_——业绩与个人特征的实证检验.pdf
+    9  p7    L1_背景特征层\基金经理从业经验对我国公募基金业绩的影响研究.pdf
+
+===== fund_age  (kws=['fund age', '基金年龄', 'age of the fund']) =====
+    9  p4    L1_背景特征层\20_基金业绩与资金流量_明星效应与垫底效应.pdf
+    4  p5    L1_背景特征层\23_01_基金业绩与资金流量_我国基金市场存在“赎回异象”吗_.pdf
+    4  p10   L1_背景特征层\25_股市周期与基金投资者的选择.pdf
+    4  p11   L4_风险应对层\业绩排名对基金风格漂移的影响研究.pdf
+    4  p6    其他文献\“和而不群”还是“卓尔不群”_——基于基金网络信息使用的视角.pdf
+
+===== education  (kws=['education', '学历', 'degree', '学士', '硕士']) =====
+   18  p6    L1_背景特征层\07_赵秀娟_2010_个人特征实证.pdf
+   18  p6    L1_背景特征层\14_基金经理在多大程度上影响了基金业绩_——业绩与个人特征的实证检验.pdf
+   16  p20   M_方法论与识别检验\02_Oster_2019_UnobservableSelection_JBES.pdf
+   12  p4    M_方法论与识别检验\03_Cinelli_Hazlett_OVB_for_IV.pdf
+   11  p10   L1_背景特征层\04_Li_Li_2018_China_Manager_Characteristics.pdf
+
+===== age  (kws=['manager age', '经理年龄', 'age of the manager']) =====
+    5  p4    L1_背景特征层\13_基金经理个人特征与基金投资风格.pdf
+    4  p4    L1_背景特征层\业绩评价、职业声誉和基金经理行为异化.pdf
+    4  p4    L1_背景特征层\我国基金经理投资行为实证研究.pdf
+    3  p3    L1_背景特征层\13_基金经理个人特征与基金投资风格.pdf
+    3  p4    L1_背景特征层\职业忧虑影响基金经理投资行为的经验分析.pdf
+
+===== cert  (kws=['CFA', 'MBA', 'certification', '资质']) =====
+   11  p2    L1_背景特征层\06_于静_2013_个性特征与盈利能力.pdf
+   11  p5    L1_背景特征层\07_赵秀娟_2010_个人特征实证.pdf
+   11  p5    L1_背景特征层\14_基金经理在多大程度上影响了基金业绩_——业绩与个人特征的实证检验.pdf
+   10  p6    L1_背景特征层\07_赵秀娟_2010_个人特征实证.pdf
+   10  p6    L1_背景特征层\14_基金经理在多大程度上影响了基金业绩_——业绩与个人特征的实证检验.pdf
+
+===== active_share  (kws=['active share']) =====
+   22  p6    L2_持仓偏离层\02_Cremers_Petajisto_2009_ActiveShare_技术说明.pdf
+   17  p7    L2_持仓偏离层\02_Cremers_Petajisto_2009_ActiveShare_技术说明.pdf
+   16  p14   L2_持仓偏离层\01_Cremers_Petajisto_2009_ActiveShare_RFS.pdf
+   15  p27   L2_持仓偏离层\01_Cremers_Petajisto_2009_ActiveShare_RFS.pdf
+   15  p5    L2_持仓偏离层\02_Cremers_Petajisto_2009_ActiveShare_技术说明.pdf
+
+===== ici  (kws=['industry concentration', 'ICI', '行业集中度']) =====

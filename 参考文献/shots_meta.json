@@ -1,0 +1,128 @@
+{
+  "tenure": {
+    "status": "OK",
+    "rel": "L1_背景特征层/04_Li_Li_2018_China_Manager_Characteristics.pdf",
+    "page": 3,
+    "term": "tenure",
+    "score": 7,
+    "png": "tenure.png",
+    "snippet": " otherwise it takes a value of 0.  Work experience includes tenure, experience and turnover rate. Among them, \"tenure\" measures the fund manager’s  time spent in the management of the fund; “experience” refers to the fund manager’s years working in investment  and related industr"
+  },
+  "fund_age": {
+    "status": "OK",
+    "rel": "L1_背景特征层/04_Li_Li_2018_China_Manager_Characteristics.pdf",
+    "page": 5,
+    "term": "age of fund",
+    "score": 2,
+    "png": "fund_age.png",
+    "snippet": " men and the majority of fund managers are men. The average age of fund managers is 38.924 years old. The  minimum and maximum is 27 and 54, respectively. Li et al. (2011) pointed out that the average age of hedge fund  managers in the United States was 45.43 years old; Chevalier"
+  },
+  "education": {
+    "status": "OK",
+    "rel": "L1_背景特征层/05_吴栩_2017_个人特征与业绩.pdf",
+    "page": 2,
+    "term": "硕士",
+    "score": 6,
+    "png": "education.png",
+    "snippet": "2016） 发现，基金经理的校友关系广度和深度有利于提升 基金业绩。Fang 和Wang（2015）指出，具有工商管理 硕士或特许金融分析师资格的基金经理较之不具有 以上资格的基金经理股票选择能力更强。Xiao（2015） 的研究表明，基金经理的投资经验未必与基金业绩 正相关。Cuthbertson 等（2016）研究表明，缺乏经验 的基金经理会降低收益率。 综上所述，尽管研究基金经理个人特征与基金 业绩关系的文献众多，但目前并未得到较为一致的 结论，从而基金经理个人特征与基金业绩的关系难 以定论。同时，现有研究对基金经理个人特征的考察 也不够全面。另外"
+  },
+  "age": {
+    "status": "OK",
+    "rel": "L1_背景特征层/04_Li_Li_2018_China_Manager_Characteristics.pdf",
+    "page": 5,
+    "term": "age",
+    "score": 38,
+    "png": "age.png",
+    "snippet": "93  1,008  72.36    The variables that characterize fund manager’s physiology are gender and age. Among 1,393 fund managers, 1,163  are men and the majority of fund managers are men. The average age of fund managers is 38.924 years old. The  minimum and maximum is 27 and 54, resp"
+  },
+  "cert": {
+    "status": "OK",
+    "rel": "L1_背景特征层/05_吴栩_2017_个人特征与业绩.pdf",
+    "page": 2,
+    "term": "CFA",
+    "score": 4,
+    "png": "cert.png",
+    "snippet": "将之作为自变量。10 个自 变量包括：是否为硕士、是否为博士及以上、毕业院 校、是否具有MBA教育背景、是否拥有CPA或CFA 证书、是否有理工科背景、性别、任期天数、从业年 限、管理基金数，并分别用X1 ~ X10表示。 为研究基金经理个人特征与基金业绩的关系， 结合上述变量，本文将基金经理拥有硕士学位、博士 学位、毕业于985 院校、具有MBA 教育背景、拥有 CPA 或CFA 证书、拥有理工科背景、性别为男性时 分别用｛Xi=1｝ 表示，否则用｛Xi=0｝ 表示。在此 基础上，采用多元回归计量模型Y=b0 +∑ i = 1 10 biXi +ε进行"
+  },
+  "active_share": {
+    "status": "OK",
+    "rel": "L2_持仓偏离层/01_Cremers_Petajisto_2009_ActiveShare_RFS.pdf",
+    "page": 14,
+    "term": "Active Share",
+    "score": 32,
+    "png": "active_share.png",
+    "snippet": "tion of all funds in our sample along the two dimensions of Active Share and tracking error, and then investigate how various fund characteristics are related to this distribution. The most recent year for which we have complete data is 2002, so we start our analysis with a snaps"
+  },
+  "ici": {
+    "status": "OK",
+    "rel": "L2_持仓偏离层/03_Kacperczyk_2005_ICI_JF.pdf",
+    "page": 5,
+    "term": "Industry Concentration Index",
+    "score": 15,
+    "png": "ici.png",
+    "snippet": "relations between the main variables used in the paper. The Industry Concentration Index is defined as ICI = \u0001 (w j −¯w j )2, where wj is the weight of the mutual fund holdings in industry j and ¯w j is the weight of the market in industry j. Panel A: Fund Characteristics Mean Me"
+  },
+  "hhi": {
+    "status": "OK",
+    "rel": "L2_持仓偏离层/03_Kacperczyk_2005_ICI_JF.pdf",
+    "page": 5,
+    "term": "Herfindahl",
+    "score": 10,
+    "png": "hhi.png",
+    "snippet": "ustries. The Industry Concentration Index is related to the Herfindahl Index, which is commonly used in Industrial Organization to measure the concentration of companies in an industry.4 The Industry Concentration Index can be thought of as a market-adjusted Herfindahl Index. In "
+  },
+  "turnover": {
+    "status": "OK",
+    "rel": "L3_交易行为层/01_Kacperczyk_2008_UnobservedActions_RFS.pdf",
+    "page": 27,
+    "term": "turnover",
+    "score": 10,
+    "png": "turnover.png",
+    "snippet": "rable importance. The low correlation can  result from high turnover and from window dressing, which is a fairly common practice in the  mutual fund sector, as described by Meier and Schaumburg (2004). If the low correlation is due  to agency problems, then we should observe low-"
+  },
+  "oci": {
+    "status": "OK",
+    "rel": "L4_风险应对层/02_The_impact_of_experience_on_risk_taking,_overconfidence,_and_herding_of_fund_man_2006.pdf",
+    "page": 3,
+    "term": "overconfidence",
+    "score": 14,
+    "png": "oci.png",
+    "snippet": "or,  one main topic in this literature is the phenomenon of overconfidence. Odean (1998) has  shown that investors with a higher degree of overconfidence choose in general more risky  portfolios than those with a lower degree of overconfidence. Suppose that, analogously to the  o"
+  },
+  "style_drift": {
+    "status": "OK",
+    "rel": "L4_风险应对层/01_寇宗来_2020_风格漂移_金融学季刊.pdf",
+    "page": 2,
+    "term": "风格漂移",
+    "score": 22,
+    "png": "style_drift.png",
+    "snippet": "2020 年第9 期 基金业绩如何影响风格漂移和经理离职? 173 基金风格是破解这种“富有窘困”的重要方式。给定每个基金在成立之初都预先设 定了自己的投资理念或基金风格，普通投资者就可以只关注那些与自己投资理念类似的 基金。但对照现实却可以发现，许多基金往往“挂羊头卖狗肉”，在实际操作中显著违背 其在募集资金时预先设定的投资风格，即存在“风格漂移”现象( 曾晓洁等，2004; 孟庆斌 等，2015) 。投资永远牵涉到收益与风险的权衡，基金风格漂移固然有可能为投资者带来 更"
+  },
+  "return_gap": {
+    "status": "OK",
+    "rel": "L3_交易行为层/01_Kacperczyk_2008_UnobservedActions_RFS.pdf",
+    "page": 16,
+    "term": "return gap",
+    "score": 34,
+    "png": "return_gap.png",
+    "snippet": "hidden costs. The opposite is true for  funds with negative return gaps.12  To provide evidence on long-term stability of the observed patterns, we also track the  persistence of the return gap over the subsequent five years and compute the respective average  monthly return gap."
+  },
+  "arg": {
+    "status": "OK",
+    "rel": "L3_交易行为层/02_申宇_2013_隐形交易_管理世界.pdf",
+    "page": 12,
+    "term": "隐形交易",
+    "score": 27,
+    "png": "arg.png",
+    "snippet": "为1，其余在（0，1）区间均匀分布。以序数收益率 的结果重复前文的回归分析，结果列于表8。可以 看出，与前文的结果相同，隐形交易与基金业绩呈 显著的正相关关系，说明本文的结果是稳健的。 六、结论及启示 为了厘清我国基金市场中的隐形交易与投资 业绩的现象，本文首先修正Kacperczyk 等（2008）的 隐形交易指标，选取2005~2010 年间328 只开放式 基金的数据，采用Carhart（1997）四因子模型计算风 险调整后的基金组合收益，研究发现隐形交易最高 的基金每年可以获得7%的超额收益率。横截面分 析结果也显示，隐形交易与基金未来业绩呈显著"
+  },
+  "return_vol": {
+    "status": "OK",
+    "rel": "L4_风险应对层/04_Ang_Chen_Xing_2006_DownsideRisk_RFS.pdf",
+    "page": 31,
+    "term": "volatility",
+    "score": 20,
+    "png": "return_vol.png",
+    "snippet": " 9 shows that past β−poorly predicts future β−only for high volatility stocks. In Panel A, we report selected summary statistics of portfolios sorted by volatility, measured using daily continuously compounded returns over the previous 12 months. For the overall sample and for ea"
+  }
+}

@@ -1,0 +1,422 @@
+[
+  {
+    "file": "基于行为金融理论的中国证券投资基金羊群行为研究.pdf",
+    "title": "基于行为金融理论的中国证券投资基金羊群行为研究",
+    "authors_year": "胡凌斌 (2007), 《商场现代化》",
+    "layer": "L5",
+    "topic": "从委托代理、声誉关注与同质化投资角度理论分析中国证券投资基金羊群行为的成因",
+    "independent_variables": [
+      {
+        "name": "委托代理冲突",
+        "definition": "基金持有人与基金管理人之间的委托代理关系导致的激励不相容，是羊群行为的制度根源",
+        "formula": "",
+        "data_source": "纯理论分析，无实证数据"
+      },
+      {
+        "name": "声誉关注",
+        "definition": "基金经理为规避业绩落后同业所带来的职业声誉损失，倾向于模仿同行投资决策",
+        "formula": "",
+        "data_source": "纯理论分析，无实证数据"
+      },
+      {
+        "name": "同质化投资",
+        "definition": "基金在信息来源、投资理念与选股标准上的趋同，放大了集体性羊群行为",
+        "formula": "",
+        "data_source": "纯理论分析，无实证数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "羊群行为 (Herding)",
+        "definition": "基金在投资决策上放弃私有信息、追随市场或同业平均持仓的现象",
+        "formula": "",
+        "data_source": "纯理论分析，无实证测度"
+      }
+    ],
+    "control_variables": "",
+    "data_source": {
+      "sample_period": "无（理论综述）",
+      "source": "无实证数据",
+      "sample_size": "无"
+    },
+    "descriptive_stats": "无实证描述性统计",
+    "key_formulas": "无实证模型公式，仅作理论阐述",
+    "notes": "本文为纯理论综述，未构建实证模型，无自变量/因变量的具体度量公式与数据来源，变量信息以理论机制形式列出"
+  },
+  {
+    "file": "基金业绩如何影响风格漂移和经理离职_——理论与经验分析.pdf",
+    "title": "基金业绩如何影响风格漂移和经理离职——理论与经验分析",
+    "authors_year": "寇宗来、徐瑜青、周厂 (2020), 《金融研究》第9期",
+    "layer": "L5",
+    "topic": "考察基金历史业绩排名对风格漂移与基金经理离职的影响及作用机制",
+    "independent_variables": [
+      {
+        "name": "基金排名 Frk",
+        "definition": "基金上一期相对业绩排名，按同类基金标准化至[0,1]区间（值越高排名越靠前）",
+        "formula": "Frk ∈ [0,1]，由基金相对业绩排名标准化得到",
+        "data_source": "Wind 数据库基金业绩与净值数据"
+      },
+      {
+        "name": "基金排名平方 Frk²",
+        "definition": "用于捕捉业绩排名对风格漂移与离职的非线性（U形或倒U形）影响",
+        "formula": "Frk²",
+        "data_source": "由 Frk 计算得到"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "风格漂移 Fsds1",
+        "definition": "基于 Sharpe 强式模型估计基金风格权重后，相邻两期风格权重向量的曼哈顿距离（绝对变化之和）",
+        "formula": "Fsds1_i,t = Σ_m |w*_imt − w*_im(t-1)|",
+        "data_source": "Wind 持仓与净值数据 + Sharpe 强式模型估计"
+      },
+      {
+        "name": "风格漂移 Fsds2",
+        "definition": "另一口径的风格漂移度量（基于另一组风格权重估计），相邻两期风格权重向量的曼哈顿距离",
+        "formula": "Fsds2_i,t = Σ_m |w**_imt − w**_im(t-1)|",
+        "data_source": "同上"
+      },
+      {
+        "name": "基金经理变更 Fchgm",
+        "definition": "基金经理是否发生变更的哑变量（发生变更=1，否则=0）",
+        "formula": "Fchgm ∈ {0,1}",
+        "data_source": "Wind 基金经理任职变更数据"
+      },
+      {
+        "name": "风格切换 Schg",
+        "definition": "基金是否发生显著风格切换的哑变量",
+        "formula": "Schg ∈ {0,1}",
+        "data_source": "由 Fsds 是否超过阈值判定"
+      }
+    ],
+    "control_variables": "基金经理特征：Mtenure(任期)、Mexp(经验)、Msize(管理规模)、Mfnum(管理基金数)、Mgender(性别)、Mdoc(学历)；基金特征：Fage(成立年限)、Fsize(资产规模)；公司特征：Cage(公司年龄)、Csize(公司规模)",
+    "data_source": {
+      "sample_period": "2008—2017年，季度数据",
+      "source": "Wind 数据库",
+      "sample_size": "21,624 个基金-季度观测，覆盖 1,579 只基金"
+    },
+    "descriptive_stats": "面板非平衡数据，21,624 观测；具体均值未列示，含 Frk(标准化排名)、Fsds1/Fsds2(风格漂移)、Fchgm(变更率) 等变量的季度面板描述",
+    "key_formulas": "Fsds1_i,t = α + β1·Frk_i,t-1 + β2·Frk²_i,t-1 + θ1·M' + θ2·F' + θ3·C' + φ_i + η_t + ε；logit(Fchgm_i,t) = α + γ1·Frk_i,t + γ2·Frk_i,t-1 + γ3·Schg_t + ...",
+    "notes": "采用 Sharpe 强式模型估计风格权重，曼哈顿距离度量漂移；含基金个体固定效应 φ_i 与季度固定效应 η_t；离职方程用 logit 模型"
+  },
+  {
+    "file": "基金投资者处置效应的个体差异.pdf",
+    "title": "基金投资者处置效应的个体差异",
+    "authors_year": "伍燕然、韩立岩、陈康 (2016), 《国际金融研究》第3期",
+    "layer": "L5",
+    "topic": "基于依时 COX 生存模型，研究基金投资者处置效应及其在投资者个体特征上的差异",
+    "independent_variables": [
+      {
+        "name": "亏损指示变量 TLI (时变)",
+        "definition": "随时间变化的指示变量，标记投资者当前持仓是否处于亏损状态，是触发处置效应的核心变量",
+        "formula": "TLI_t = 1 若当前收益<0，否则 0（时变）",
+        "data_source": "某公募基金公司账户交易数据"
+      },
+      {
+        "name": "性别 Gen",
+        "definition": "投资者性别哑变量，男性=1",
+        "formula": "Gen = 1 男，0 女",
+        "data_source": "基金账户开户信息"
+      },
+      {
+        "name": "年龄 Age",
+        "definition": "投资者年龄分组哑变量，35岁以下=1",
+        "formula": "Age = 1 若<35岁，否则 0",
+        "data_source": "基金账户开户信息"
+      },
+      {
+        "name": "渠道 Sale",
+        "definition": "开户渠道哑变量，通过券商开户=1",
+        "formula": "Sale = 1 券商开户，否则 0",
+        "data_source": "基金账户开户信息"
+      },
+      {
+        "name": "城市 Loc",
+        "definition": "投资者所在城市层级哑变量，一线城市=1",
+        "formula": "Loc = 1 一线城市，否则 0",
+        "data_source": "基金账户开户信息"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "基金赎回 (生存分析死亡事件)",
+        "definition": "投资者赎回基金的行为，在生存分析框架下作为'死亡'事件，未赎回则视为截尾（生存）",
+        "formula": "赎回事件 = 1 若发生赎回，否则截尾",
+        "data_source": "某公募基金公司账户交易数据"
+      }
+    ],
+    "control_variables": "Gen(性别)、Age(年龄)、Sale(渠道)、Loc(城市)；R10/R20/R60(不同窗口期均值回复指标，用于控制价格均值回复对赎回的影响)",
+    "data_source": {
+      "sample_period": "2005年9月—2011年12月",
+      "source": "某公募基金公司 5 只股票型开放式基金账户数据（同花顺提供）",
+      "sample_size": "437,874 个投资者账户"
+    },
+    "descriptive_stats": "账户数 437,874 户；盈利状态下赎回占比约 66%—79%（不同基金区间），反映明显的处置效应（盈利更易赎回、亏损更惜售）",
+    "key_formulas": "h(t, X, Z_t) = h0(t)·exp(β0 + β1·X1 + … + γ1·Z1t + …)，其中 h0(t) 为基线风险，X 为固定协变量，Z_t 为时变协变量（如 TLI）",
+    "notes": "采用依时 COX 比例风险模型（time-dependent Cox），核心识别处置效应随投资者个体特征（性别/年龄/渠道/城市）的差异"
+  },
+  {
+    "file": "基金抱团的成因、演化与经济后果研究——基于网络社区的方法.pdf",
+    "title": "基金抱团的成因、演化与经济后果研究——基于网络社区的方法",
+    "authors_year": "田正磊、张峥、高皓 (2025), 《管理世界》第6期",
+    "layer": "L5",
+    "topic": "用网络社区方法刻画基金抱团，分析私有信息互补等成因及其对基金业绩的经济后果",
+    "independent_variables": [
+      {
+        "name": "社区内其他基金平均交易 HComuTrade",
+        "definition": "同一网络社区内其他基金的平均持仓交易行为，衡量同伴交易压力",
+        "formula": "HComuTrade = 社区内其他基金交易均值",
+        "data_source": "万得(Wind)+国泰安(CSMAR) 持仓数据"
+      },
+      {
+        "name": "标准化未预期盈余 SUE",
+        "definition": "个股标准化未预期盈余，衡量基本面信息的私有程度",
+        "formula": "SUE = (X_i,t − X_i,t-4) / P_i,t",
+        "data_source": "国泰安(CSMAR) 财报数据"
+      },
+      {
+        "name": "股票受私有信息互补影响 StockBT",
+        "definition": "个股层面受私有信息互补影响的程度，由社区内基金互补交易加权得到",
+        "formula": "StockBT = Σ_j I_j,t-1 × |Shareschange| / OutstandingShares",
+        "data_source": "Wind 持仓变化 + 总股本数据"
+      },
+      {
+        "name": "基金互补程度 FundBTRscore / FundBTTvalue",
+        "definition": "基金层面的私有信息互补程度（score 为方向符号、value 为交易金额）",
+        "formula": "FundBTRscore = sign(β3)（基于 HComuTrade×SUE 交互项系数符号）",
+        "data_source": "由回归交互项估计得到"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "持仓变化 Trade",
+        "definition": "基金对个股的持仓变动（比例）",
+        "formula": "Trade = 基金持仓变化比例",
+        "data_source": "Wind 持仓数据"
+      },
+      {
+        "name": "羊群效应 Herding",
+        "definition": "基金抱团程度的三种测度：HM(羊群指数)、BHM(买方羊群)、SHM(卖方羊群)",
+        "formula": "基于社区内持仓变化离散度构造 HM/BHM/SHM",
+        "data_source": "Wind 持仓数据计算"
+      },
+      {
+        "name": "基金业绩 Alpha",
+        "definition": "基于 Carhart 四因子模型计算的超额收益（含动量因子）",
+        "formula": "Alpha (Carhart 四因子)",
+        "data_source": "Wind 基金收益 + 四因子数据"
+      }
+    ],
+    "control_variables": "股票层面：Size(市值)、BM(账面市值比)、Mom(动量)、PSI(私有信息)；基金层面：LogTNA(资产规模对数)、LogAge(成立年限对数)、LogFamilySize(公司规模对数)、Turnover(换手率)、ExpenseRatio(费率)、Flow(资金流)",
+    "data_source": {
+      "sample_period": "2005年1月—2021年12月，半年度数据",
+      "source": "万得(Wind) + 国泰安(CSMAR)",
+      "sample_size": "1,049 只基金、4,665 只股票，初始 1,129,512 个观测"
+    },
+    "descriptive_stats": "SUE 均值 0.0187；Trade 均值 −0.5823%（平均小幅减仓）；Alpha 月均 0.2953%",
+    "key_formulas": "Trade = α + β1·SUE + β2·HComuTrade + β3·HComuTrade×SUE + γ·Controls + ε；d_ij = 2(1 − ρ_ij)（极大平面过滤图边权，ρ 为收益相关系数）；FundBTRscore = sign(β3)；StockBT = Σ_j I_j,t-1 × |Shareschange| / OutstandingShares",
+    "notes": "网络社区划分采用极大平面过滤图(Planar Maximally Filtered Graph, PMFG) + 鲁汶算法(Louvain)聚类；以私有信息互补解释抱团成因"
+  },
+  {
+    "file": "基金新闻文本情绪、风格漂移与基金业绩.pdf",
+    "title": "基金新闻文本情绪、风格漂移与基金业绩",
+    "authors_year": "李振东、张兵、胡永青 (2025), 《贵州财经大学学报》第4期",
+    "layer": "L5",
+    "topic": "以基金新闻文本情绪为自变量，通过风格漂移的中介效应研究其对基金业绩的影响",
+    "independent_variables": [
+      {
+        "name": "基金新闻文本情绪 fmsen",
+        "definition": "基于金融情感词典结合 BERT/Word2Vec 扩展方法，从基金相关新闻文本中构建的情绪指数（滞后一期）",
+        "formula": "fmsen(t-1)（文本情绪指数，数值越高情绪越正面）",
+        "data_source": "基金新闻文本（金融情感词典 + BERT/Word2Vec 扩展）"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "基金业绩 freturn3",
+        "definition": "基于 Fama-French 三因子模型计算的基金超额收益",
+        "formula": "freturn3（FF 三因子 alpha）",
+        "data_source": "锐思(RESSET) + Wind 基金收益与因子数据"
+      },
+      {
+        "name": "基金业绩 freturn5",
+        "definition": "基于 Fama-French 五因子模型计算的基金超额收益",
+        "formula": "freturn5（FF 五因子 alpha）",
+        "data_source": "同上"
+      }
+    ],
+    "control_variables": "con(常数项/基准控制)、fscale(基金规模)、cscale(公司规模)、turn(换手率)、funfree(费率)、funage(基金成立年限)",
+    "data_source": {
+      "sample_period": "2014—2021年，半年度数据",
+      "source": "锐思(RESSET) + 万得(Wind)",
+      "sample_size": "475 只基金"
+    },
+    "descriptive_stats": "基金收益率均值 6.889；文本情绪均值 0.496；风格漂移 SDS 得分均值 0.594",
+    "key_formulas": "freturn3 = α1 + λ·fmsen(t-1) + β1·Control + e1（总效应）；fdrift = α2 + η·fmsen(t-1) + β2·Control + e2（中介方程）；freturn3 = α3 + θ·fdrift + β3·Control + e3（直接效应）",
+    "notes": "采用中介效应模型，风格漂移 fdrift 为中介变量（以 SDS 得分度量）；文本情绪为滞后一期自变量"
+  },
+  {
+    "file": "基金监管为何不能一刀切？——两类基金风格漂移的证据.pdf",
+    "title": "基金监管为何不能一刀切？——两类基金风格漂移的证据",
+    "authors_year": "李科、陈遥知 (2025), 《财经研究》第4期",
+    "layer": "L5",
+    "topic": "区分高/低投资能力两类基金，考察风格漂移对基金业绩的异质性影响以论证监管不应一刀切",
+    "independent_variables": [
+      {
+        "name": "风格漂移 SD",
+        "definition": "基金实际持仓与业绩比较基准之间的欧氏距离，度量风格漂移程度（滞后一期）",
+        "formula": "SD_F,t = √[Σ_j (w_F,j,t − w_M,j,t)²]",
+        "data_source": "Wind + RESSET 持仓与基准权重数据"
+      },
+      {
+        "name": "投资能力 Ability",
+        "definition": "基金投资能力高低分组哑变量（高能力=1），用于分组回归识别异质性",
+        "formula": "Ability ∈ {0,1}",
+        "data_source": "由历史选股/择时能力划分"
+      },
+      {
+        "name": "追热点程度 Chasing",
+        "definition": "基金追逐市场热点板块的投资行为程度",
+        "formula": "Chasing（热点板块持仓占比或变动度量）",
+        "data_source": "Wind 持仓行业/板块数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "基金业绩 (多因子 Alpha)",
+        "definition": "基金业绩的多种度量：原始超额收益、CAPM alpha、FF 三因子 alpha、四因子 alpha、五因子 alpha",
+        "formula": "α_it（分别对应 CAPM/三因子/四因子/五因子模型）",
+        "data_source": "Wind + RESSET 收益与因子数据"
+      }
+    ],
+    "control_variables": "Size(规模)、Lev(杠杆)、Divid(分红)、Fee(费率)、Fundage(成立年限)、Conc(持股集中度)、Change(经理变更)、Gender(经理性别)、Edu(学历)、Work(从业年限)、Serv(任职期限)、Age(经理年龄)",
+    "data_source": {
+      "sample_period": "2005—2022年，季度数据",
+      "source": "万得(Wind) + 锐思(RESSET)",
+      "sample_size": "1,834 只基金，20,414 个观测"
+    },
+    "descriptive_stats": "面板数据 20,414 观测；含 SD(漂移欧氏距离)、各因子 alpha 等变量的描述，按 Ability 分组对比",
+    "key_formulas": "α_it = β0 + β1·SD_it-1 + β2·Controls + Quarter + Fund + ε；SD_new = Σ_j |w_F,j,t − w_M,j,t|（替代漂移度量：曼哈顿距离）",
+    "notes": "以欧氏距离 SD 为主度量、曼哈顿距离 SD_new 为稳健性度量；控制基金与季度双向固定效应，按投资能力 Ability 分组论证监管异质性"
+  },
+  {
+    "file": "处置效应与反处置效应对基金投资绩效的影响.pdf",
+    "title": "处置效应与反处置效应对基金投资绩效的影响",
+    "authors_year": "李学峰、苏伟 (2013), 《证券市场导报》第11期",
+    "layer": "L5",
+    "topic": "测度开放式基金的处置效应与反处置效应，并检验其对基金 Sharpe 投资绩效的影响",
+    "independent_variables": [
+      {
+        "name": "处置效应度 Di,t",
+        "definition": "以卖出盈利比例 PGR 减去卖出亏损比例 PLR 度量投资者处置效应程度；D>0 为处置效应，D<0 为反处置效应",
+        "formula": "Di,t = PGR − PLR，其中 PGR = RG/(RG+PG)，PLR = RL/(RL+PL)（RG/PG 为盈利卖出/持有，RL/PL 为亏损卖出/持有）",
+        "data_source": "Wind 基金申购赎回与份额变动数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "Sharpe 指数",
+        "definition": "基金风险调整后收益（Sharpe 比率），作为投资绩效的度量",
+        "formula": "Sharpe = (R_p − R_f) / σ_p",
+        "data_source": "Wind 基金收益与无风险利率数据"
+      }
+    ],
+    "control_variables": "Value(基金资产净值)、Share(基金总份额)",
+    "data_source": {
+      "sample_period": "2007年第一季度—2012年第二季度",
+      "source": "万得(Wind) 数据库",
+      "sample_size": "69 只开放式基金（季度面板）"
+    },
+    "descriptive_stats": "实证结果显示：处置效应项系数 β = −0.0447 且在统计上显著（**），表明处置效应显著负向影响绩效；反处置效应项系数不显著",
+    "key_formulas": "Sharpe_i,t = β0 + β1·Di,t·I(D>0) + β2·Di,t-1·I(D>0) + β3·Di,t·I(D<0) + β4·Di,t-1·I(D<0) + β5·Value + β6·Share + ε",
+    "notes": "通过指示函数 I(D>0)/I(D<0) 将处置效应与反处置效应分组回归；结论为处置效应显著损害绩效，反处置效应影响不显著"
+  },
+  {
+    "file": "处置效应与风险投资机构_来自IPO公司的证据.pdf",
+    "title": "处置效应与风险投资机构——来自IPO公司的证据",
+    "authors_year": "罗炜、岳衡、王玥 (2017), 《经济研究》第4期",
+    "layer": "L5",
+    "topic": "以 VC 减持行为为对象，检验风险投资机构的处置效应（盈利/亏损持仓的差异化减持）",
+    "independent_variables": [
+      {
+        "name": "亏损指示 Loss1",
+        "definition": "VC 减持均价低于上市首日收盘价时=1，标记处于'账面亏损'状态",
+        "formula": "Loss1 = 1 若 减持均价 < 首日收盘价，否则 0",
+        "data_source": "CVSource + CSMAR 减持与价格数据"
+      },
+      {
+        "name": "亏损指示 Loss20",
+        "definition": "VC 减持均价低于上市后第20个交易日收盘价时=1",
+        "formula": "Loss20 = 1 若 减持均价 < 第20交易日收盘价，否则 0",
+        "data_source": "同上"
+      },
+      {
+        "name": "信息不对称 Same / Board",
+        "definition": "Same=VC 与公司在同一省份（地理邻近降低信息不对称）；Board=VC 在董事会拥有席位（治理参与降低信息不对称）",
+        "formula": "Same ∈ {0,1}，Board ∈ {0,1}",
+        "data_source": "CVSource + CSMAR 机构与公司治理数据"
+      },
+      {
+        "name": "VC 经验 IpoSum / InvestVol",
+        "definition": "IpoSum=VC 累计 IPO 支持次数；InvestVol=VC 投资活跃度，衡量投资经验",
+        "formula": "IpoSum（计数）、InvestVol（投资金额/数量）",
+        "data_source": "CVSource 机构档案数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "是否减持 Position",
+        "definition": "风险投资机构在特定时点是否减持上市公司股份的事件（生存分析'死亡'事件）",
+        "formula": "Position_i,t = 1 若减持，否则 0（或截尾）",
+        "data_source": "CVSource + CSMAR 减持公告数据"
+      }
+    ],
+    "control_variables": "MV(市值)、Stdprice(股价标准差)、Age(上市年限)、Vcshare(VC 持股比例)、Duration(锁定期)、Fnumber(股东数)、Top10(前十大股东集中度)",
+    "data_source": {
+      "sample_period": "2004—2011年",
+      "source": "CVSource(投中) + 国泰安(CSMAR)",
+      "sample_size": "270 家中小板/创业板公司、285 家 VC、4,797 个观测"
+    },
+    "descriptive_stats": "Position(减持) 均值 0.587；Loss1(低于首日收盘价) 均值 0.487",
+    "key_formulas": "H(t, X, Z_t) = p·λ·t^(p-1)·exp(Xβ + Z_tγ + ε_t)（Weibull 模型）；Position_i,t = p·λ·t^(p-1)·exp(γ0·Loss + Σγ_j·Control + …)",
+    "notes": "同时采用 Weibull 参数生存模型与 Cox 半参数模型；以 Loss1/Loss20 识别处置效应，信息不对称与经验为调节/控制变量"
+  },
+  {
+    "file": "开放式基金投资者的处置效应——基于中国面板数据的门限回归分析.pdf",
+    "title": "开放式基金投资者的处置效应——基于中国面板数据的门限回归分析",
+    "authors_year": "冯金余 (2009), 《统计与信息论坛》第7期",
+    "layer": "L5",
+    "topic": "基于面板门限回归，考察基金收益率与分红在不同区间下对投资者赎回率（处置效应）的非线性影响",
+    "independent_variables": [
+      {
+        "name": "基金收益率 r (门限变量)",
+        "definition": "基金季度收益率，作为门限变量，用于识别赎回行为在不同收益区间的非线性变化",
+        "formula": "r（季度收益率，门限变量）",
+        "data_source": "Wind + 腾讯基金 收益数据"
+      },
+      {
+        "name": "分红 fenhong (门限变量)",
+        "definition": "基金分红金额，作为门限变量，考察分红对赎回的门限效应",
+        "formula": "fenhong（单位分红，门限变量）",
+        "data_source": "Wind + 腾讯基金 分红数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "赎回率 shl",
+        "definition": "基金季度赎回总额除以期初总份额，反映投资者赎回强度（处置效应的代理）",
+        "formula": "shl = 季度赎回总额 / 期初总份额",
+        "data_source": "Wind + 腾讯基金 份额变动数据"
+      }
+    ],
+    "control_variables": "fhs(分红次数)、rm(市场收益，以沪深300指数收益率度量)",
+    "data_source": {
+      "sample_period": "2004—2007年",
+      "source": "万得(Wind) + 腾讯基金",
+      "sample_size": "16 个季度 × 22 只基金 的平衡面板（352 个基金-季度观测）"
+    },
+    "descriptive_stats": "赎回率 shl 均值 0.4043；基金收益率 r 均值 −0.0022；门限值 τ = −0.0239（收益低于此阈值与高于此区间赎回行为显著不同）",
+    "key_formulas": "shl = β0 + β1·fhs + β2·rm + β3·r×I(r<τ) + β4·r×I(r≥τ) + β5·fenhong×I(r<τ) + β6·fenhong×I(r≥τ) + v_i + ε",
+    "notes": "采用 Hansen 面板门限回归，以收益率 r 为门限变量得到门限值 τ=−0.0239，揭示处置效应在不同收益区间的非线性特征；含基金个体效应 v_i"
+  }
+]

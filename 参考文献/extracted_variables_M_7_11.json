@@ -1,0 +1,264 @@
+[
+  {
+    "file": "07_Fama_MacBeth_1973_JPE.pdf",
+    "title": "Risk, Return, and Equilibrium: Empirical Tests",
+    "authors_year": "Fama, Eugene F.; MacBeth, James D. (1973), Journal of Political Economy",
+    "layer": "M",
+    "topic": "提出Fama-MacBeth两步回归法：先做时间序列回归估计beta，再做横截面回归检验风险-收益关系，并采用滚动窗口按月估计的标准误修正来解决残差横截面相关性问题",
+    "independent_variables": [
+      {
+        "name": "beta_p,t-1",
+        "definition": "组合p的CAPM beta估计值，由前5年月度收益数据按市场模型 r_it = a_i + beta_i * r_mt + e_it 估计得到，每月更新",
+        "formula": "beta_p = cov(R_p, R_m) / var(R_m)",
+        "data_source": "CRSP月度收益数据"
+      },
+      {
+        "name": "beta_p^2",
+        "definition": "beta的平方项，用于检验风险-收益关系的线性性（C1条件）",
+        "formula": "(beta_p)^2",
+        "data_source": ""
+      },
+      {
+        "name": "s(e_i) 非beta风险",
+        "definition": "市场模型残差的标准差，衡量非系统性（idiosyncratic）风险，用于检验是否除beta外还有其他风险因子被定价（C2条件）",
+        "formula": "s(e_i) = std(residual from market model)",
+        "data_source": "CRSP月度收益数据"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "R_pt 组合月度收益率",
+        "definition": "等权重组合的月度百分比收益率（含股息和资本增值，经拆股调整）",
+        "formula": "R_pt = equally-weighted average of component security returns",
+        "data_source": "CRSP NYSE所有普通股"
+      }
+    ],
+    "control_variables": "无额外控制变量（FM两步法本身就是处理横截面相关性的方法）",
+    "data_source": {
+      "sample_period": "1926年1月至1968年6月",
+      "source": "CRSP数据库，纽约证券交易所所有普通股",
+      "sample_size": "约400-850只证券不等（按不同测试期变化）"
+    },
+    "descriptive_stats": "20个beta排序组合，beta范围约0.4-1.5；组合beta的标准误约为个股的1/3-1/7；R^2在0.6-0.95之间",
+    "key_formulas": "核心回归方程: R_pt = gamma_0t + gamma_1t * beta_p,t-1 + gamma_2t * beta_p,t-1^2 + gamma_3t * s_p,t-1(e_i) + eta_pt\n关键检验: (1) 对每月gamma系数的均值做t检验: t(gamma_bar) = gamma_bar / [s(gamma) / sqrt(n)]\n(2) 使用gamma_1的均值检验风险溢价(C3), gamma_2均值检验线性性(C1), gamma_3均值检验非beta风险(C2)",
+    "notes": "在基金经理研究中的应用场景：FM两步法是检验基金alpha显著性（如CAPM、三因子、四因子alpha）的标准方法。第一步时间序列回归估计基金对各因子的暴露(beta)，第二步横截面回归估计因子风险溢价并检验alpha均值是否为0。该方法通过月度FM回归的系数时间序列均值及其标准误来修正残差在截面上相关的问题。在基金经理研究中，常用FM回归来检验某个基金经理特征（如学历、经验）是否与alpha显著相关"
+  },
+  {
+    "file": "08_Jegadeesh_Titman_1993_Momentum_JF.pdf",
+    "title": "Returns to Buying Winners and Selling Losers: Implications for Stock Market Efficiency",
+    "authors_year": "Jegadeesh, Narasimhan; Titman, Sheridan (1993), Journal of Finance",
+    "layer": "M",
+    "topic": "提出动量因子构建方法——基于过去J个月收益率排序、持有K个月的动量策略，发现买入赢家卖出输家可获得显著超额收益，并证明收益来源于对公司层面信息的反应不足而非系统性风险",
+    "independent_variables": [
+      {
+        "name": "J-month lagged return 形成期收益",
+        "definition": "股票在过去J个月（1-4个季度）的累计收益率，用于排序形成赢家/输家组合",
+        "formula": "Cumulative return over past J months",
+        "data_source": "CRSP日度收益文件"
+      },
+      {
+        "name": "beta 市场beta",
+        "definition": "根据Scholes-Williams方法估计的beta值，用于风险调整检验",
+        "formula": "从形成期前一年的日收益数据估计",
+        "data_source": "CRSP"
+      },
+      {
+        "name": "Size 公司规模",
+        "definition": "按市值将股票分为小、中、大三组，检验动量效应是否集中于小盘股",
+        "formula": "Market capitalization",
+        "data_source": ""
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "K-month holding period return 持有期收益",
+        "definition": "在形成期之后持有K个月的组合收益率，采用重叠持有期方法（每月形成新组合并持有K个月，月均1/K仓位更新）",
+        "formula": "r_p,t = equal-weight average of component stock returns over holding period",
+        "data_source": "CRSP NYSE和AMEX所有股票"
+      },
+      {
+        "name": "Winner-minus-Loser zero-cost portfolio return 动量因子收益",
+        "definition": "买入过去表现最好的十分之一股票、卖出表现最差的十分之一股票，持有K个月的零成本组合收益",
+        "formula": "PR1YR = Equal-weight avg of top 30% 11-month returns (lagged 1 month) minus equal-weight avg of bottom 30%",
+        "data_source": ""
+      }
+    ],
+    "control_variables": "系统性风险（beta）、公司规模、一月效应（日历月固定效应）",
+    "data_source": {
+      "sample_period": "1965年1月至1989年12月（主检验期），回测1927-1964年",
+      "source": "CRSP日度收益文件（NYSE和AMEX）",
+      "sample_size": "全部CRSP NYSE/AMEX股票，约1610只"
+    },
+    "descriptive_stats": "最优策略为12个月形成期/3个月持有期，月均收益1.49%（有1周跳过）；6个月/6个月策略年化收益约12.01%；赢家减输家组合beta为负值（-0.06左右）；1月份动量收益为负（约-7%），非1月为正（约1.66%/月）",
+    "key_formulas": "J-month/K-month策略：每月对J个月历史收益排序形成十等分组，买入top decile（赢家），卖出bottom decile（输家），持有K个月\n\n动量收益分解：E[(r_it-1 - r_bar_t-1)(r_it - r_bar_t)] = sigma^2_mu + sigma^2_b * Cov(f_t, f_t-1) + avg(Cov(e_it-1, e_it))\n- 第一项：预期收益横截面差异\n- 第二项：因子择时\n- 第三项：公司层面收益序列相关性（动量核心来源）\n\nPR1YR因子构建：equal-weight average of firms with highest 30% 11-month returns lagged 1 month minus equal-weight average of firms with lowest 30% 11-month returns",
+    "notes": "在基金经理研究中的应用场景：(1) 动量因子(PR1YR)作为Carhart四因子模型的核心因子之一，用于基金业绩归因；(2) 检验基金是否具有动量投资风格，计算基金对PR1YR的因子载荷；(3) 判断基金收益是否来源于真正的选股能力还是被动跟随动量策略；(4) 在基金业绩持续性分析中，动量因子可解释'热手效应'(hot hands)——表现好的基金可能只是恰好持有过去一年的赢家股票"
+  },
+  {
+    "file": "09_Carhart_1997_Persistence_JF.pdf",
+    "title": "On Persistence in Mutual Fund Performance",
+    "authors_year": "Carhart, Mark M. (1997), Journal of Finance",
+    "layer": "M",
+    "topic": "构建四因子模型（市场、规模、价值、动量），证明共同因子和投资费用几乎完全解释了共同基金业绩的持续性，否定了基金经理选股能力的存在",
+    "independent_variables": [
+      {
+        "name": "RMRF 市场超额收益",
+        "definition": "Fama-French市场因子（价值加权市场组合收益减无风险利率）",
+        "formula": "RMRF = R_m - R_f",
+        "data_source": "CRSP NYSE/AMEX/Nasdaq价值加权组合"
+      },
+      {
+        "name": "SMB 规模因子",
+        "definition": "Fama-French规模因子（小市值组合减大市值组合收益）",
+        "formula": "SMB = Small minus Big",
+        "data_source": "来自Fama和French"
+      },
+      {
+        "name": "HML 价值因子",
+        "definition": "Fama-French价值因子（高账面市值比组合减低账面市值比组合收益）",
+        "formula": "HML = High minus Low B/M",
+        "data_source": "来自Fama和French"
+      },
+      {
+        "name": "PR1YR 动量因子",
+        "definition": "Carhart新增的一年期动量因子（过去11个月收益率最高的30%股票等权均值减最低的30%股票等权均值，滞后1个月）",
+        "formula": "PR1YR = equal-weight avg of top 30% 11-month returns (lagged 1 month) minus bottom 30%",
+        "data_source": "CRSP所有NYSE/AMEX/Nasdaq股票"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "r_it 基金超额收益",
+        "definition": "基金i在t月的收益率减一个月国债收益率（净收益，已扣除费用）",
+        "formula": "r_it = R_fund,it - R_f,t",
+        "data_source": "ICDI/Micropal及其他来源的基金月度净收益"
+      },
+      {
+        "name": "alpha (四因子alpha)",
+        "definition": "四因子模型截距项，衡量基金在控制四个因子后的超额收益（基金经理技能指标）",
+        "formula": "alpha_i = intercept from 4-factor time-series regression",
+        "data_source": ""
+      }
+    ],
+    "control_variables": "费用率(expense ratio)、换手率(turnover/Mturn)、基金规模(TNA)、销售费用(load fees)、基金年龄",
+    "data_source": {
+      "sample_period": "1962年1月至1993年12月（共1892只多元化股票基金、16109基金-年）",
+      "source": "ICDI/Micropal、FundScope、United Babson Reports、Wiesenberger、WSJ",
+      "sample_size": "年均约509只基金，共1892只基金（包括582只已清盘基金，无幸存者偏差）"
+    },
+    "descriptive_stats": "基金年均费用率1.14%，修正换手率77.3%，64.5%的基金收取销售费用（平均7.33%）；按过去一年收益排序的十分位组合年化收益差约8%；四因子alpha在top decile约为+0.02%/月，bottom decile约为-0.43%/月；费用率与alpha负相关（系数-1.54），换手率与alpha负相关（系数-0.95）",
+    "key_formulas": "四因子模型: r_it = alpha_iT + b_iT * RMRF_t + s_iT * SMB_t + h_iT * HML_t + p_iT * PR1YR_t + e_it\n\nFama-MacBeth横截面回归: alpha_it = f(expense_ratio, turnover, ln(TNA), load_fees) + error\n\n风险调整收益（扣除费用后）: adjusted_alpha = 4-factor alpha + (1/12)*expense_ratio + (1/12)*turnover*roundtrip_cost\n\n动量因子(PR1YR)构建方法: equal-weight avg of firms with highest 30% 11-month returns lagged 1 month minus equal-weight avg of firms with lowest 30% 11-month returns, re-formed monthly",
+    "notes": "在基金经理研究中的应用场景：(1) 四因子模型是基金业绩评价的标准基准模型，通过alpha判断基金经理是否具有选股能力；(2) 动量因子(PR1YR)的载荷可以识别基金的投资风格（动量型vs.逆向型）；(3) 通过四因子模型分解基金收益，可区分收益来源于因子暴露还是经理技能；(4) 费用率和换手率的负系数（-1.54和-0.95）说明费用直接侵蚀收益，这一发现对基金经理行为分析至关重要；(5) 用过去alpha排序形成组合的方法可直接用于检验基金经理特征是否预示未来业绩"
+  },
+  {
+    "file": "10_Koenker_Bassett_1978_RegressionQuantiles.pdf",
+    "title": "Regression Quantiles",
+    "authors_year": "Koenker, Roger; Bassett, Gilbert Jr. (1978), Econometrica",
+    "layer": "M",
+    "topic": "提出分位数回归（Quantile Regression）方法，通过最小化加权绝对偏差来估计条件分位数函数，为分析变量间关系的分布异质性提供了系统框架",
+    "independent_variables": [
+      {
+        "name": "X 自变量矩阵",
+        "definition": "标准线性回归中的自变量矩阵，包括截距项",
+        "formula": "Standard linear model: y_i = x_i' * beta + epsilon_i",
+        "data_source": ""
+      },
+      {
+        "name": "tau 分位数参数",
+        "definition": "分位数水平参数，0 < tau < 1，如tau=0.5对应中位数回归（LAD），tau=0.1对应第10百分位回归",
+        "formula": "tau in (0, 1)",
+        "data_source": "由研究者设定"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "y 因变量",
+        "definition": "需要分析条件分位数的连续或离散因变量",
+        "formula": "",
+        "data_source": ""
+      },
+      {
+        "name": "Q_tau(y|X) 条件分位数函数",
+        "definition": "在给定X条件下y的第tau分位数，表示为X的线性函数",
+        "formula": "Q_tau(y_i | x_i) = x_i' * beta(tau)",
+        "data_source": ""
+      }
+    ],
+    "control_variables": "不适用（方法论论文，框架本身不预设控制变量）",
+    "data_source": {
+      "sample_period": "方法论论文，无特定样本期",
+      "source": "方法论论文",
+      "sample_size": "方法论论文"
+    },
+    "descriptive_stats": "方法论论文，不适用",
+    "key_formulas": "分位数回归优化问题: min_{beta} sum_{i=1}^n rho_tau(y_i - x_i' * beta)\n其中 rho_tau(u) = u * (tau - I(u < 0)) 是check function(检验函数)\n\n等价线性规划: min_{(beta, u, v)} tau * 1' * u + (1-tau) * 1' * v\ns.t. y = X * beta + u - v\n     u >= 0, v >= 0\n\n核心性质:\n1. 等变性(equivariance): 对y的单调变换、X的重新参数化具有等变性\n2. 稳健性: 相对OLS对异常值不敏感（特别是中位数回归tau=0.5对应LAD估计）\n3. 线性规划可解性: 通过单纯形法或内点法高效求解\n4. 渐近性质: beta_hat(tau) ~ N(beta(tau), tau*(1-tau)*[f(F^{-1}(tau))]^{-2} * (X'X)^{-1})",
+    "notes": "在基金经理研究中的应用场景：(1) 分析基金经理特征（如学历、经验）对不同分位数业绩的影响——高分位数基金经理可能面临不同的激励机制；(2) 研究管理费率如何影响不同分位数的基金alpha；(3) 在基金业绩持续性研究中，分析'赢家'和'输家'群体的不同行为模式；(4) 条件分位数回归可用于检验基金的因子暴露（如beta暴露）在不同市场状态下的异质性；(5) 相比均值回归，分位数回归对基金极端收益（如'爆仓'事件）更稳健"
+  },
+  {
+    "file": "11_Cinelli_Hazlett_2020_Sensitivity_JRSSB.pdf",
+    "title": "Making Sense of Sensitivity: Extending Omitted Variable Bias",
+    "authors_year": "Cinelli, Carlos; Hazlett, Chad (2020), Journal of the Royal Statistical Society, Series B (Statistical Methodology)",
+    "layer": "M",
+    "topic": "提出基于偏R^2参数化的OLS遗漏变量偏误敏感性分析框架，引入鲁棒性值(Robustness Value)和偏R^2指标，实现无需对混杂因素分布假设的多维敏感性分析，并配套R包sensemakr",
+    "independent_variables": [
+      {
+        "name": "D 处理变量",
+        "definition": "研究所关注的处理变量（连续或二值），如受暴力伤害的虚拟变量",
+        "formula": "",
+        "data_source": ""
+      },
+      {
+        "name": "X 已观测协变量",
+        "definition": "回归中已控制的协变量矩阵（含截距），用于'偏出'已解释部分",
+        "formula": "n x p 矩阵",
+        "data_source": ""
+      },
+      {
+        "name": "Z 未观测混杂因素",
+        "definition": "敏感性分析中的假设性未观测混杂因素（可为单变量或多变量），可能与其他变量存在非线性关系",
+        "formula": "",
+        "data_source": "假设性变量，由研究者根据领域知识设定"
+      },
+      {
+        "name": "R^2_{D~Z|X} 混杂-处理偏R^2",
+        "definition": "在控制X后，混杂因素Z对处理变量D的解释力（偏R^2），衡量混杂因素在条件意义上与处理的关联强度",
+        "formula": "R^2_{D~Z|X} = 1 - var(D_perp_X,Z) / var(D_perp_X) = cor(D_perp_X, Z_perp_X)^2",
+        "data_source": "敏感性参数，由研究者设定"
+      },
+      {
+        "name": "R^2_{Y~Z|D,X} 混杂-结果偏R^2",
+        "definition": "在控制X和D后，混杂因素Z对结果变量Y的解释力（偏R^2），衡量混杂因素对结果的'影响'",
+        "formula": "R^2_{Y~Z|D,X} = cor(Y_perp_X,D, Z_perp_X,D)^2",
+        "data_source": "敏感性参数，由研究者设定"
+      }
+    ],
+    "dependent_variables": [
+      {
+        "name": "Y 结果变量",
+        "definition": "回归模型的因变量，如和平态度指数（0-1）",
+        "formula": "",
+        "data_source": ""
+      },
+      {
+        "name": "bias (调整后效应估计的变化量)",
+        "definition": "加入假设混杂因素前后处理效应估计的差值",
+        "formula": "bias = tau_hat_restricted - tau_hat_full = gamma_hat * delta_hat",
+        "data_source": ""
+      },
+      {
+        "name": "adjusted estimate 调整后效应估计",
+        "definition": "如果控制了设定强度的混杂因素后应得到的处理效应估计",
+        "formula": "tau_hat = tau_hat_res - bias",
+        "data_source": ""
+      }
+    ],
+    "control_variables": "已观测协变量X已通过FWL定理'部分化出'，不需要额外列出",
+    "data_source": {
+      "sample_period": "方法论论文（示例数据来自达尔富尔暴力对和平态度影响的调查）",
+      "source": "方法论论文",
+      "sample_size": "方法论论文"
+    },
+    "descriptive_stats": "方法论论文；示例中处理效应估计为0.097，标准误由df和t值确定；R包sensemakr提供自动化计算",
+    "key_formulas": "核心OVB偏误用偏R^2表示:\n|bias| = sqrt(R^2_{Y~Z|D,X} * R^2_{D~Z|X} / (1 - R^2_{D~Z|X})) * sd(Y_perp_X,D) / sd(D_perp_X)\n\n相对偏误(relative bias):\n|bias/tau_res| = |RY~Z|D,X * fD~Z|X| / |fY~D|X|  = BF / |fY~D|X|\n其中 BF = |RY~Z|D,X * fD~Z|X| 为偏误因子\nfY~D|X = t_tau_res / sqrt(df) 为处理变量的偏Cohen's f\n\n标准误调整:\nse(tau) = se(tau_res) * sqrt((1-R^2_{Y~Z|D,X})/(1-R^2_{D~Z|X}) * df/(df-1))\n\n鲁棒性值(Robustness Value):\n当 R^2_{Y~Z|X,D} = R^2_{D~Z|X} = RV_q 时:\nRV_q = 1/2 * (sqrt(f_q^4 + 4*f_q^2) - f_q^2)\n其中 f_q = q * |fY~D|X| (q为欲减少的效应比例)\n\n偏R^2_{Y~D|X}（处理对结果独特解释力）:\nR^2_{Y~D|X} = t^2 / (t^2 + df)\n\n混杂因素强度界限（bounding）:\nmax R^2_{D~Z|X} 可由与已观测协变量的比较导出",
+    "notes": "在基金经理研究中的应用场景：(1) 检验'基金经理学历与基金业绩'的回归结果对未观测混杂因素的敏感度——如果遗漏了基金经理的社交网络或家庭背景等变量，结论是否仍成立；(2) 计算鲁棒性值(RV)来评估基金特征-业绩关系的最低稳健性；(3) 设定未观测混杂因素（如基金经理天赋）与处理和结果的最小关联强度，通过敏感度等高线图可视；(4) 利用已观测协变量（如基金经理经验）作为基准（benchmarking），估计未观测因素强度的上界；(5) 可处理多维非线性混杂，适用于基金经理研究中常见的高维特征变量"
+  }
+]

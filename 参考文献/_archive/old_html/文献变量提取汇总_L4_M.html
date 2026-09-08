@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基金经理行为分析 · 文献变量提取汇总（L4 + M）</title>
+<style>
+  :root {
+    --bg: #0f1115; --panel: #181b22; --panel2: #1f232c; --border: #2a2f3a;
+    --text: #e6e8ec; --muted: #8b93a1; --accent: #4f9dff; --accent2: #ffb454;
+    --L4: #5eb3ff; --M: #ffb454;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", Roboto, sans-serif;
+    line-height: 1.6; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 24px 80px; }
+  header h1 { font-size: 26px; margin: 0 0 8px; }
+  header p { color: var(--muted); margin: 4px 0; }
+  .stats { display:flex; gap:16px; flex-wrap:wrap; margin: 24px 0; }
+  .stat { background: var(--panel); border:1px solid var(--border); border-radius:12px;
+    padding: 16px 24px; min-width: 120px; }
+  .stat-num { font-size: 30px; font-weight: 700; color: var(--accent); }
+  .stat-label { color: var(--muted); font-size: 13px; }
+  .toolbar { display:flex; gap:12px; margin: 20px 0; flex-wrap:wrap; align-items:center; }
+  .toolbar input, .toolbar select { background: var(--panel2); border:1px solid var(--border);
+    color: var(--text); padding: 8px 12px; border-radius: 8px; font-size: 14px; }
+  .toolbar input { flex: 1; min-width: 220px; }
+  .card { background: var(--panel); border:1px solid var(--border); border-radius:14px;
+    margin-bottom: 18px; overflow:hidden; }
+  .card-head { padding: 18px 20px 12px; border-bottom:1px solid var(--border);
+    background: linear-gradient(180deg, var(--panel2), var(--panel)); }
+  .card-meta { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .badge { font-size:12px; font-weight:600; padding:2px 10px; border-radius:20px; }
+  .badge-L4 { background: rgba(94,179,255,.15); color: var(--L4); border:1px solid rgba(94,179,255,.3); }
+  .badge-M { background: rgba(255,180,84,.15); color: var(--M); border:1px solid rgba(255,180,84,.3); }
+  .idx { color: var(--muted); font-size:13px; }
+  .card-title { font-size: 18px; margin: 2px 0 4px; }
+  .card-sub { color: var(--muted); font-size: 13px; }
+  .fname { font-family: Consolas, monospace; font-size:12px; color:#9fb0c8; }
+  .card-topic { color: var(--accent2); font-size: 13px; margin-top:6px; }
+  .card-body { padding: 16px 20px 20px; }
+  .section { margin-bottom: 14px; }
+  .sec-label { font-size: 13px; font-weight:600; color: var(--accent);
+    text-transform: uppercase; letter-spacing:.5px; margin-bottom:8px; }
+  .vlist { display:flex; flex-direction:column; gap:8px; }
+  .vitem { background: var(--panel2); border:1px solid var(--border); border-radius:8px; padding:10px 12px; }
+  .vname { font-weight:600; color: #fff; }
+  .vdef { color: var(--muted); font-size:14px; }
+  .vformula code, .card-body code { background:#0c0e12; color:#9fe6a0; padding:2px 6px;
+    border-radius:5px; font-family: Consolas, monospace; font-size:13px; }
+  .vds { color:#7fa8d6; font-size:12px; margin-top:2px; }
+  .kv-wrap { display:flex; flex-direction:column; gap:6px; }
+  .kv { display:flex; gap:12px; }
+  .kv .k { color: var(--muted); min-width:80px; font-size:13px; }
+  .kv .v { color: var(--text); }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:700px) { .two-col { grid-template-columns:1fr; } }
+  .muted { color: var(--muted); }
+  footer { margin-top:40px; color: var(--muted); font-size:13px; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>基金经理行为分析 · 文献变量提取汇总</h1>
+    <p>层级范围：<strong>L4 风险应对层</strong> + <strong>M 方法论与识别检验</strong></p>
+    <p>生成时间：2026-08-11 12:26 ｜ 共 34 篇文献</p>
+  </header>
+  <div class="stats"><div class="stat"><div class="stat-num">17</div><div class="stat-label">L4 层</div></div><div class="stat"><div class="stat-num">6</div><div class="stat-label">L4_风险应对层 层</div></div><div class="stat"><div class="stat-num">11</div><div class="stat-label">M 层</div></div>
+    <div class="stat"><div class="stat-num">34</div><div class="stat-label">合计</div></div>
+  </div>
+  <div class="toolbar">
+    <input id="search" type="text" placeholder="搜索文件名 / 标题 / 主题 / 作者…">
+    <select id="filter">
+      <option value="">全部层级</option>
+      <option value="L4">L4 风险应对层</option>
+      <option value="M">M 方法论与识别检验</option>
+    </select>
+  </div>
+  <div id="results">
+    <div class="card" data-layer="L4" data-search=" 开放式基金竞争激励机制的效率分析——基于竞争锦标赛的视角 锦标赛竞争/基金经理努力程度/积极投资战略 ">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#1</span></div>
+        <h3 class="card-title">开放式基金竞争激励机制的效率分析——基于竞争锦标赛的视角</h3>
+        <div class="card-sub"> · <span class="fname"></span></div>
+        <div class="card-topic">锦标赛竞争/基金经理努力程度/积极投资战略</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">基金公司管理基金数量(Nfunds)</div><div class="vdef">基金管理公司管理的基金数量，衡量基金公司内部竞争强度</div><div class="vformula"><code>N/A</code></div><div class="vds">数据来源：CSMAR数据库</div></div><div class="vitem"><div class="vname">累计更换基金经理数(Nmanagers)</div><div class="vdef">基金自成立后累计更换基金经理的数量，衡量职业压力</div><div class="vformula"><code>N/A</code></div><div class="vds">数据来源：CSMAR数据库</div></div><div class="vitem"><div class="vname">新任基金经理哑变量(New)</div><div class="vdef">基金经理任职是否未满一个报告期，新任取1</div><div class="vformula"><code>N/A</code></div><div class="vds">数据来源：CSMAR数据库</div></div><div class="vitem"><div class="vname">基金上季度报酬率(Rt-1)</div><div class="vdef">基金历史报酬率</div><div class="vformula"><code>N/A</code></div><div class="vds">数据来源：CSMAR数据库</div></div><div class="vitem"><div class="vname">机构投资者持有比率(Institute)</div><div class="vdef">机构投资者持有该基金的比率，衡量赎回压力</div><div class="vformula"><code>N/A</code></div><div class="vds">数据来源：CSMAR数据库</div></div><div class="vitem"><div class="vname">管理人报酬占基金收入比(Pay/income)</div><div class="vdef">基金经理的边际贡献率，度量激励强度</div><div class="vformula"><code>管理人报酬/基金收入</code></div><div class="vds">数据来源：CSMAR数据库</div></div><div class="vitem"><div class="vname">管理人报酬占基金费用比(Pay/expense)</div><div class="vdef">投资者支付的激励成本占比</div><div class="vformula"><code>管理人报酬/基金总费用</code></div><div class="vds">数据来源：CSMAR数据库</div></div><div class="vitem"><div class="vname">总费用率(Expense)</div><div class="vdef">投资者支付的总费用占基金净资产的比率</div><div class="vformula"><code>总费用/基金净资产</code></div><div class="vds">数据来源：CSMAR数据库</div></div><div class="vitem"><div class="vname">盈利哑变量(Pay/+income)</div><div class="vdef">基金盈利时取1，亏损时取0</div><div class="vformula"><code>N/A</code></div><div class="vds">数据来源：CSMAR数据库</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">市场偏离度</div><div class="vdef">基金股票资产组合偏离市场组合的程度</div><div class="vformula"><code>Σ(i=1到N) |Wi,j - Wi,m|，Wi,j=股票i在基金j权重，Wi,m=股票i市场权重</code></div><div class="vds">数据来源：CSMAR基金持股明细</div></div><div class="vitem"><div class="vname">重仓股集中度</div><div class="vdef">基金前十大重仓股价值占基金股票资产组合净值的比率</div><div class="vformula"><code>前十大重仓股价值/基金股票资产组合净值</code></div><div class="vds">数据来源：CSMAR基金持股明细</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">基金规模(Logsize)</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2004年1月至2009年6月</span></div><div class="kv"><span class="k">数据来源</span><span class="v">CSMAR数据库</span></div><div class="kv"><span class="k">样本量</span><span class="v">141只基金，565个半年报观测值</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">市场偏离度均值0.634(中位数0.643,σ=0.119); 重仓股比率均值0.370(σ=0.095); 基金更换经理数均值1.984(σ=1.211); 机构持有比率均值0.205(σ=0.236); 管理人报酬占收入比均值0.012(σ=0.130); 管理人报酬占费用比均值0.560(σ=0.145); 总费用占净值比均值0.021(σ=0.013)</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>市场偏离度 = Σ|Wi,j - Wi,m|; 重仓股集中度 = 前十大重仓股市值/股票组合净值; effort回归模型含Nfunds, Nmanagers, New, Rt-1, Institute, Pay/income, Pay/expense, Expense</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">使用半年报持股明细数据。研究发现竞争压力和激励强度都影响基金经理努力程度，但激励水平影响更大。历史报酬率与偏离度显著负相关。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search=" 报酬激励、解职风险与基金锦标赛效应研究——新的证据与解释 报酬激励/解职风险/锦标赛效应/风险调整/股市周期 ">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#2</span></div>
+        <h3 class="card-title">报酬激励、解职风险与基金锦标赛效应研究——新的证据与解释</h3>
+        <div class="card-sub"> · <span class="fname"></span></div>
+        <div class="card-topic">报酬激励/解职风险/锦标赛效应/风险调整/股市周期</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">期中业绩排名(Rank)</div><div class="vdef">复权净值增长率排名百分位，业绩越好越大</div><div class="vformula"><code>同类型基金排名百分位</code></div><div class="vds">数据来源：国泰安/Wind</div></div><div class="vitem"><div class="vname">牛熊市虚拟变量</div><div class="vdef">牛市=1，熊市=0</div><div class="vformula"><code>上证综指增长率&gt;0为牛市</code></div><div class="vds">数据来源：上证综指收益率</div></div><div class="vitem"><div class="vname">牛熊市×排名交互项</div><div class="vdef">检验股市周期调节效应</div><div class="vformula"><code>Bull×Rank</code></div><div class="vds">数据来源：计算所得</div></div><div class="vitem"><div class="vname">输赢家×RAR×牛熊市交互项</div><div class="vdef">不同市场状态输赢家风险调整对排名变动的影响</div><div class="vformula"><code>Win×RAR×Bull等</code></div><div class="vds">数据来源：计算所得</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">风险调整比率RAR(6,6)</div><div class="vdef">6月末分割下半期/上半期风险比值，&gt;1提高风险</div><div class="vformula"><code>RAR = [下半期方差/(上半期方差)]^(1/2) - 1</code></div><div class="vds">数据来源：Wind基金复权单位净值</div></div><div class="vitem"><div class="vname">风险调整比率RAR(7,5)</div><div class="vdef">7月末分割点计算</div><div class="vformula"><code>同RAR，分割点改为7月</code></div><div class="vds">数据来源：Wind基金复权单位净值</div></div><div class="vitem"><div class="vname">相对业绩排名变动(ΔRank)</div><div class="vdef">前后半期排名百分位变动</div><div class="vformula"><code>下半期排名百分位 - 上半期排名百分位</code></div><div class="vds">数据来源：计算所得</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">基金类型、资产规模(Lnasset)、费率(Expense)、资产周转率(Turnover)、成立年限(Fundyear)</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2005-2011年</span></div><div class="kv"><span class="k">数据来源</span><span class="v">国泰安+Wind，部分基金经理特征手工收集</span></div><div class="kv"><span class="k">样本量</span><span class="v">约1526个观测值(71~357只基金/年)</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">Asset均值48.9亿(σ=68.5); Expense均值0.029(σ=0.021); Turnover均值4.524(σ=2.096); Fundyear均值3.6年; RAR(6,6)均值1.226(σ=2.446); RAR(7,5)均值1.056(σ=0.701)</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>RAR(j,y) = [下半期方差/上半期方差]^(1/2); ΔRank = 下半期排名 - 上半期排名; 回归含Rank,Bull,Bull×Rank,RAR交互项</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">报酬激励是锦标赛发挥作用的主要基础。牛市输家更冒险，熊市证据较弱。输家年末实现排名反转。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search=" 锦标赛制度下基金经理人风险调整行为 锦标赛制度/风险调整行为/文献综述 ">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#3</span></div>
+        <h3 class="card-title">锦标赛制度下基金经理人风险调整行为</h3>
+        <div class="card-sub"> · <span class="fname"></span></div>
+        <div class="card-topic">锦标赛制度/风险调整行为/文献综述</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><span class="muted">—</span></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><span class="muted">—</span></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef"><span class="muted">—</span></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">N/A</span></div><div class="kv"><span class="k">数据来源</span><span class="v">N/A（文献综述）</span></div><div class="kv"><span class="k">样本量</span><span class="v">N/A</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef"><span class="muted">—</span></div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>—</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">纯文献综述，无原创实证。回顾了锦标赛行为成因（制度设计/收入/职业发展）、表现（输赢家策略）、研究发展（双重标准模型/家族内部锦标赛）及稳健性检验。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search=" 锦标赛制度与基金风险调整: 理论拓展与经验证据 锦标赛/风险调整/股市周期/投资风格/风险资产质量 ">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#4</span></div>
+        <h3 class="card-title">锦标赛制度与基金风险调整: 理论拓展与经验证据</h3>
+        <div class="card-sub"> · <span class="fname"></span></div>
+        <div class="card-topic">锦标赛/风险调整/股市周期/投资风格/风险资产质量</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">业绩排名百分位(Rtnperc)</div><div class="vdef">年中同类型基金业绩排名百分位，最高1最低0</div><div class="vformula"><code>复权净值增长率同类型基金排名</code></div><div class="vds">数据来源：国泰安</div></div><div class="vitem"><div class="vname">牛熊市虚拟变量</div><div class="vdef">牛市=1熊市=0</div><div class="vformula"><code>上证综指增长率&gt;0为牛市</code></div><div class="vds">数据来源：色诺芬(上证综指)</div></div><div class="vitem"><div class="vname">投资风格(Stockperc)</div><div class="vdef">基金股票持仓比例，分积极型和保守型</div><div class="vformula"><code>股票持仓比例二分法</code></div><div class="vds">数据来源：国泰安基金资产组合</div></div><div class="vitem"><div class="vname">风险资产质量(Mom)</div><div class="vdef">基金所持股票的股价动力(动量)</div><div class="vformula"><code>重仓股相对权重×股票动力系数加权平均</code></div><div class="vds">数据来源：色诺芬(市值/市净率/股价)</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">风险调整比率(RAR)</div><div class="vdef">6月末分割下半期/上半期风险比值</div><div class="vformula"><code>[下半期方差/上半期方差]^(1/2)</code></div><div class="vds">数据来源：国泰安基金复权单位净值</div></div><div class="vitem"><div class="vname">业绩排名变动(ΔRtnperc)</div><div class="vdef">前后半期排名百分位差</div><div class="vformula"><code>下半期排名 - 上半期排名</code></div><div class="vds">数据来源：计算所得</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">资产规模(Lnasset)、成立年限(Fndyear)、基金类型(Type)</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2005-2010年</span></div><div class="kv"><span class="k">数据来源</span><span class="v">国泰安(净值/资产组合)+色诺芬(市场/个股数据)</span></div><div class="kv"><span class="k">样本量</span><span class="v">73~252只/年，股票型与混合型开放式基金</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">分组均值比较：牛市优质资产输家RAR二分法均值1.029(N=107); 牛市优质资产赢家二分法1.051(N=128)。未报告统一描述性统计表，以交叉分组均值为主。</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>RAR = [下半期方差/上半期方差]^(1/2); Mom = Σ(重仓股权重×动力系数); 理论模型含效用函数U及最优条件M&#x27;(g)推导; 按股市×资产质量分组回归</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">推论1-3获实证支持(牛市优质资产输家排名越低RAR越大;赢家反向;熊市保守型输家排名越低RAR越小)。推论4未获支持。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search=" 锦标赛制度对基金风险偏好的影响 锦标赛制度/风险偏好/比较标准/混同均衡博弈 ">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#5</span></div>
+        <h3 class="card-title">锦标赛制度对基金风险偏好的影响</h3>
+        <div class="card-sub"> · <span class="fname"></span></div>
+        <div class="card-topic">锦标赛制度/风险偏好/比较标准/混同均衡博弈</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">期中业绩排名(获胜者/失败者)</div><div class="vdef">年中收益率中位数以上为获胜者</div><div class="vformula"><code>年中收益率排序取中位数</code></div><div class="vds">数据来源：国泰安</div></div><div class="vitem"><div class="vname">基金类型(封闭式/开放式)</div><div class="vdef">不同激励制度</div><div class="vformula"><code>分类变量</code></div><div class="vds">数据来源：国泰安</div></div><div class="vitem"><div class="vname">市场状态(牛市/熊市)</div><div class="vdef">不同市场对应不同博弈模型</div><div class="vformula"><code>分类变量</code></div><div class="vds">数据来源：市场数据</div></div><div class="vitem"><div class="vname">比较标准类型</div><div class="vdef">外生/内生/混同均衡三类</div><div class="vformula"><code>理论模型分类</code></div><div class="vds">数据来源：理论构建</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">风险偏好增加量</div><div class="vdef">年底与年中风险标准差的差值</div><div class="vformula"><code>年底σ - 年中σ</code></div><div class="vds">数据来源：国泰安</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef"><span class="muted">—</span></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2007-2010年</span></div><div class="kv"><span class="k">数据来源</span><span class="v">国泰安数据库</span></div><div class="kv"><span class="k">样本量</span><span class="v">封闭式31-33只/年;开放式266-584只/年</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">封闭式2010: 获胜者Δσ=0.096, 失败者Δσ=0.041; 开放式2010: 获胜者Δσ=-0.389, 失败者Δσ=0.054。牛市获胜者倾向减风险，熊市失败者增风险。</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>U = α×ln[(1-θ)E(r)+θ(E(r)-c)] - β×ln[k(σ,c)]; 外生比较标准最优σ含∂σ/∂g&gt;0; 混同均衡博弈含ψ×Πi(σi,σj)项</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">基于Falk(2004)效用模型。外生比较标准下前期表现差基金更激进(∂σ/∂g&gt;0)。封闭式+牛市开放基金支持外生比较标准；熊市开放基金支持混同均衡。理论为主+简单实证。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search="01_寇宗来_2020_风格漂移_金融学季刊.pdf 基金业绩会影响基金经理风格漂移与离职吗——来自中国开放式基金的证据 基金业绩对基金经理风格漂移和离职行为的影响 寇宗来、张剑丽、谢迟(2020)">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#6</span></div>
+        <h3 class="card-title">基金业绩会影响基金经理风格漂移与离职吗——来自中国开放式基金的证据</h3>
+        <div class="card-sub">寇宗来、张剑丽、谢迟(2020) · <span class="fname">01_寇宗来_2020_风格漂移_金融学季刊.pdf</span></div>
+        <div class="card-topic">基金业绩对基金经理风格漂移和离职行为的影响</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Frk(业绩排名)</div><div class="vdef">年中标准化至[0,1]区间，基于夏普比率排序</div><div class="vds">数据来源：Wind</div></div><div class="vitem"><div class="vname">Schg(市场真实风格切换)</div><div class="vdef">Sharpe强式模型估算的市场真实风格</div><div class="vds">数据来源：Wind</div></div><div class="vitem"><div class="vname">Frk×Schg</div><div class="vdef">交互项</div><div class="vds">数据来源：Wind</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Fsds1(风格漂移)</div><div class="vdef">基于Sharpe强式模型的曼哈顿距离</div><div class="vformula"><code>Σ|w*_imt - w*_im(t-1)|</code></div><div class="vds">数据来源：Wind</div></div><div class="vitem"><div class="vname">Fsds2(风格漂移)</div><div class="vdef">基于Sharpe简单模型的曼哈顿距离</div><div class="vformula"><code>Σ|w_imt - w_im(t-1)|</code></div><div class="vds">数据来源：Wind</div></div><div class="vitem"><div class="vname">Fchgm(经理变更)</div><div class="vdef">虚拟变量,1=变更</div><div class="vformula"><code>logit回归</code></div><div class="vds">数据来源：Wind</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">Mtenure(任期), Mexp(从业经验), Msize(所管基金规模), Mfnum(管理基金数), Mgender, Mdoc(学历), Fage(基金年限), Fsize(基金规模), Cage(公司年限), Csize(公司规模)</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2008年1月-2017年12月</span></div><div class="kv"><span class="k">数据来源</span><span class="v">Wind数据库</span></div><div class="kv"><span class="k">样本量</span><span class="v">21624个基金-季度观测, 1579只开放式股票型基金, 332位基金经理</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">Fsds1均值0.298(σ=0.191); Fsds2均值0.512(σ=0.267); Frk均值0.512; Fchgm均值0.084</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>Fsds1 = Σ|w*_imt - w*_im(t-1)|(Sharpe强式); logit(Fchgm)含Frk×Schg交互项</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">业绩排名越差风格漂移越大; 市场真实风格切换具有调节作用; 排名靠后经理更可能离职。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search="02_the_impact_of_experience_on_risk_taking_overconfidence_and_herding_of_fund_man_2006.pdf the impact of experience on risk taking, overconfidence, and herding of fund managers 基金经理经验对风险承担、过度自信和羊群行为的影响 menkhoff, schmidt, brozynski(2006)">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#7</span></div>
+        <h3 class="card-title">The Impact of Experience on Risk Taking, Overconfidence, and Herding of Fund Managers</h3>
+        <div class="card-sub">Menkhoff, Schmidt, Brozynski(2006) · <span class="fname">02_The_impact_of_experience_on_risk_taking_overconfidence_and_herding_of_fund_man_2006.pdf</span></div>
+        <div class="card-topic">基金经理经验对风险承担、过度自信和羊群行为的影响</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">经验水平inex/exp/veryexp</div><div class="vdef">≤5年/5-15年/&gt;15年三组</div><div class="vds">数据来源：问卷调查</div></div><div class="vitem"><div class="vname">基金类型</div><div class="vdef">股票型/混合型/债券型/货币型</div><div class="vds">数据来源：问卷调查</div></div><div class="vitem"><div class="vname">个人特征(年龄/性别等)</div><div class="vds">数据来源：问卷调查</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RISK(风险承担)</div><div class="vdef">基于最小收益赌注实验的赌注金额</div><div class="vds">数据来源：激励实验</div></div><div class="vitem"><div class="vname">OC(过度自信)</div><div class="vdef">三维度均值(PERF+NEWS+DAX_est)/3</div><div class="vformula"><code>OC = (PERF+NEWS+DAX_est)/3</code></div><div class="vds">数据来源：认知测试</div></div><div class="vitem"><div class="vname">HERD(羊群行为)</div><div class="vdef">同事重要性HERDc+市场重要性HERDm+动量策略MOM</div><div class="vformula"><code>HERD=α·HERDc+β·HERDm+γ·MOM</code></div><div class="vds">数据来源：问卷调查</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">基金规模, 年龄, 性别</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2002年8-12月</span></div><div class="kv"><span class="k">数据来源</span><span class="v">德国117位基金经理问卷调查(含激励实验和认知测试)</span></div><div class="kv"><span class="k">样本量</span><span class="v">59家基金公司中35家参与, 117位基金经理</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">inexperienced≈34%, experienced≈50%, very experienced≈16%; RISK均值≈基金资产25%-30%</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>OC=(PERF+NEWS+DAX_est)/3; Ordered Probit回归: RISK/OC/HERD = f(经验组+控制变量)</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">经验与风险承担呈倒U型; 过度自信随经验上升; 羊群行为随经验下降。方法论特色：问卷+实验+认知测试三合一。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search="03_brown_harlow_starks_1996_tournaments_jf.pdf of tournaments and temptations: an analysis of managerial incentives in the mutual fund industry 锦标赛激励对基金经理风险调整行为的影响——年中输家是否增加风险 brown, harlow, starks(1996), jf">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#8</span></div>
+        <h3 class="card-title">Of Tournaments and Temptations: An Analysis of Managerial Incentives in the Mutual Fund Industry</h3>
+        <div class="card-sub">Brown, Harlow, Starks(1996), JF · <span class="fname">03_Brown_Harlow_Starks_1996_Tournaments_JF.pdf</span></div>
+        <div class="card-topic">锦标赛激励对基金经理风险调整行为的影响——年中输家是否增加风险</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">LOSER/WINNER</div><div class="vdef">年中业绩前后50%分位</div><div class="vds">数据来源：Wiesenberger/CRSP</div></div><div class="vitem"><div class="vname">评估期阶段</div><div class="vdef">前6月vs后6月</div><div class="vds">数据来源：CRSP</div></div><div class="vitem"><div class="vname">时间趋势(1976-86前期/1987-91后期)</div><div class="vds">数据来源：CRSP</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">基金波动率σ</div><div class="vdef">收益率标准差</div><div class="vformula"><code>σ²=(1/T)Σ(R_it-R̄_i)²</code></div><div class="vds">数据来源：CRSP月度收益率</div></div><div class="vitem"><div class="vname">风险调整比率σ2/σ1</div><div class="vdef">后半期/前半期波动率</div><div class="vformula"><code>(σ2_L/σ1_L)&gt;(σ2_W/σ1_W)</code></div><div class="vds">数据来源：CRSP</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">基金年龄, 市场波动, 评估期固定效应, 投资风格固定效应, 12月窗口修饰效应</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">1976-1991年(16年)</span></div><div class="kv"><span class="k">数据来源</span><span class="v">Wiesenberger Investment Companies Service及CRSP</span></div><div class="kv"><span class="k">样本量</span><span class="v">334只成长型共同基金</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">前后期(1976-86 vs 1987-91)子样本; newer vs well-established子样本; 按年中业绩分输赢组</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>锦标赛假说: (σ2_L/σ1_L) &gt; (σ2_W/σ1_W); 回归: Δσ_it = β0+β1·LOSER_i+β2·POST_t+β3·LOSER×POST+Controls+ε</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">扫描版PDF，通过图像渲染+视觉读取。锦标赛理论在共同基金的经典实证: 年中输家在年度后半年显著增加波动率; 1987-91年效应更强; 新基金更显著。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search="04_ang_chen_xing_2006_downsiderisk_rfs.pdf downside risk and the cross-section of asset returns 下行风险在横截面资产定价中的作用——下行beta是否为定价因子 ang, chen, xing(2006), rfs">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#9</span></div>
+        <h3 class="card-title">Downside Risk and the Cross-Section of Asset Returns</h3>
+        <div class="card-sub">Ang, Chen, Xing(2006), RFS · <span class="fname">04_Ang_Chen_Xing_2006_DownsideRisk_RFS.pdf</span></div>
+        <div class="card-topic">下行风险在横截面资产定价中的作用——下行beta是否为定价因子</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">β⁻(下行beta)</div><div class="vdef">市场下行时协方差/下行方差</div><div class="vformula"><code>β⁻=cov(r_i,r_m|r_m&lt;μ_m)/var(r_m|r_m&lt;μ_m)</code></div><div class="vds">数据来源：CRSP</div></div><div class="vitem"><div class="vname">β⁺(上行beta)</div><div class="vdef">市场上行时协方差/上行方差</div><div class="vformula"><code>β⁺=cov(r_i,r_m|r_m&gt;μ_m)/var(r_m|r_m&gt;μ_m)</code></div><div class="vds">数据来源：CRSP</div></div><div class="vitem"><div class="vname">β(无条件beta)</div><div class="vdef">常规CAPM beta</div><div class="vformula"><code>β=cov(r_i,r_m)/var(r_m)</code></div><div class="vds">数据来源：CRSP</div></div><div class="vitem"><div class="vname">β⁻-β(相对下行beta)</div><div class="vdef">非对称性度量</div><div class="vds">数据来源：CRSP</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">横截面超额收益</div><div class="vdef">月度/年度超额回报</div><div class="vds">数据来源：CRSP</div></div><div class="vitem"><div class="vname">FF3/FF4 alpha</div><div class="vdef">Fama-French/Carhart四因子alpha</div><div class="vds">数据来源：CRSP</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">市值(logME), B/M, MOM(12月回报), SMB, HML, coskewness</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">1963年7月-2001年12月(38年)</span></div><div class="kv"><span class="k">数据来源</span><span class="v">CRSP NYSE股票月度数据</span></div><div class="kv"><span class="k">样本量</span><span class="v">约2000-3000只NYSE股票</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">β⁻均值0.6-0.8, β⁺均值1.0-1.2; 下行beta十分位组合alpha月均差异0.3%-0.5%</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>β⁻=cov(r_i,r_m|r_m&lt;μ)/var(r_m|r_m&lt;μ); Fama-MacBeth: R=γ0+γ1β⁻+γ2β⁺+γ3SIZE+γ4B/M+γ5MOM+ε</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">下行beta显著正定价(高β⁻获正超额收益)，不能被规模/价值/动量/常规beta解释。为风险应对研究提供下行风险量化方法基础。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search="不进则退：基金锦标赛中基金经理的选股信息来源.pdf 不进则退：基金锦标赛中基金经理的选股信息来源 基金业绩排名对基金经理选股信息来源(公开vs私有)的影响 张乾、薛健(2019)">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#10</span></div>
+        <h3 class="card-title">不进则退：基金锦标赛中基金经理的选股信息来源</h3>
+        <div class="card-sub">张乾、薛健(2019) · <span class="fname">不进则退：基金锦标赛中基金经理的选股信息来源.pdf</span></div>
+        <div class="card-topic">基金业绩排名对基金经理选股信息来源(公开vs私有)的影响</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">%RTN</div><div class="vdef">同类基金年度收益率排名百分位</div><div class="vds">数据来源：RESSET/Wind/CSMAR</div></div><div class="vitem"><div class="vname">%ALPHA</div><div class="vdef">基于alpha而非raw return的排名</div><div class="vds">数据来源：RESSET/Wind/CSMAR</div></div><div class="vitem"><div class="vname">dFLOW</div><div class="vdef">净资金流变化</div><div class="vds">数据来源：RESSET/Wind/CSMAR</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RPI(公开信息依赖度)</div><div class="vdef">对公开信息依赖程度[0,1]</div><div class="vformula"><code>公开信息相关交易占比</code></div><div class="vds">数据来源：RESSET/Wind/CSMAR</div></div><div class="vitem"><div class="vname">dRPI(信息来源切换)</div><div class="vdef">上下半年RPI差值</div><div class="vformula"><code>RPI_it - RPI_i(t-1)</code></div><div class="vds">数据来源：计算</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">AGE(从业年限), lnTNA(规模), %FEE(管理费率), %IH(机构持有比), GENDER, EDU, EXP</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2007-2017年</span></div><div class="kv"><span class="k">数据来源</span><span class="v">RESSET+Wind+CSMAR</span></div><div class="kv"><span class="k">样本量</span><span class="v">97家基金公司1762只基金, 7088个dRPI观测值</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">RPI均值0.5-0.6(σ=0.15-0.20); dRPI均值≈0; %RTN均值≈0.5</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>RPI_it∈[0,1](公开信息交易占比); dRPI=RPI_it-RPI_i(t-1); 回归: dRPI=f(%RTN,%ALPHA,dFLOW,Controls)</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">赢家更依赖公开信息，输家转向私有信息以获差异化优势。拓展了Brown-Harlow-Starks(1996)框架。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search="业绩排名与预期风险调整——考虑报酬激励与解职风险交互影响的新证据.pdf 业绩排名与预期风险调整——考虑报酬激励与解职风险交互影响的新证据 业绩排名对预期风险调整的影响(报酬激励+解职风险交互) 肖继辉、彭文平(2016)">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#11</span></div>
+        <h3 class="card-title">业绩排名与预期风险调整——考虑报酬激励与解职风险交互影响的新证据</h3>
+        <div class="card-sub">肖继辉、彭文平(2016) · <span class="fname">业绩排名与预期风险调整——考虑报酬激励与解职风险交互影响的新证据.pdf</span></div>
+        <div class="card-topic">业绩排名对预期风险调整的影响(报酬激励+解职风险交互)</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RNT(相对业绩排名)</div><div class="vdef">同类基金年度业绩排名</div><div class="vds">数据来源：国泰安</div></div><div class="vitem"><div class="vname">St(市场强度)</div><div class="vdef">牛市/熊市分类</div><div class="vds">数据来源：Wind</div></div><div class="vitem"><div class="vname">σ(1)(已实现风险)</div><div class="vdef">前6月波动率</div><div class="vds">数据来源：国泰安</div></div><div class="vitem"><div class="vname">Winner×DCI/DEI交互项</div><div class="vdef">赢家×报酬激励/解职风险</div><div class="vds">数据来源：计算</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RARjy(风险调整系数)</div><div class="vdef">后半期预期波动率/前半期已实现波动率</div><div class="vformula"><code>RAR=√[(后方差)/(前方差)]</code></div><div class="vds">数据来源：Wind+国泰安</div></div><div class="vitem"><div class="vname">ΔRtnperc(业绩排名变动)</div><div class="vdef">前后半期排名百分位差</div><div class="vds">数据来源：计算</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">Lnasset, Fndyear, Type(股票/混合), stockperc(股票持仓比例), mom(股价动力前12月加权)</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2006-2012年</span></div><div class="kv"><span class="k">数据来源</span><span class="v">Wind+国泰安</span></div><div class="kv"><span class="k">样本量</span><span class="v">987个基金-年度观测, 偏股型开放式基金</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">牛市: 2006/2007/2009; 熊市: 2005/2008/2010; RAR均值1.0-1.5; 按输赢家×市场周期×投资风格×持股动量多维分组</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>RTN_t = Ne/(Nb×∏(1+Di/Ni))-1(复权净值增长); RAR基于日度数据; 假设: 熊市赢家更冒险/牛市输家更冒险; 排名连续影响</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">牛市输家排名越低RAR越大，牛市赢家排名越高RAR越小; 熊市反向。输家排名大幅改善，赢家大幅下滑。加入市场周期/投资风格/资产质量三维度拓展BHS(1996)。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search="业绩排名对基金情绪风险调整行为的影响.pdf 业绩排名对基金情绪风险调整行为的影响 业绩排名对基金情绪风险调整行为的影响 易力、王娟、王序东(2022)">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#12</span></div>
+        <h3 class="card-title">业绩排名对基金情绪风险调整行为的影响</h3>
+        <div class="card-sub">易力、王娟、王序东(2022) · <span class="fname">业绩排名对基金情绪风险调整行为的影响.pdf</span></div>
+        <div class="card-topic">业绩排名对基金情绪风险调整行为的影响</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Rank</div><div class="vdef">基金累积收益率RTN排序百分位(0最差,1最好)</div><div class="vformula"><code>RTN_{p,m,y} = ∏(1+r_{p,d,y}) - 1</code></div><div class="vds">数据来源：锐思金融数据库</div></div><div class="vitem"><div class="vname">Loser</div><div class="vdef">累积收益率RTN排在后50%的输家0-1虚拟变量</div><div class="vds">数据来源：锐思金融数据库</div></div><div class="vitem"><div class="vname">Bull/Bear</div><div class="vdef">牛熊市0-1虚拟变量</div><div class="vformula"><code>沪深300指数增长率&gt;0为牛市</code></div><div class="vds">数据来源：市场数据</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">SRAC</div><div class="vdef">情绪风险调整系数，基金m月后情绪β值减去m月前情绪β值</div><div class="vformula"><code>SRAC_{p,m,y} = β_{p,(D_y-D),y} - β_{p,D,y}</code></div><div class="vds">数据来源：锐思+国泰安(五因子)</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">基金规模、年龄、家族规模、净资金流入率、换手率、费用率</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2005-2019年</span></div><div class="kv"><span class="k">数据来源</span><span class="v">锐思(净值/净资产)+和讯网(公司资产)+国泰安(五因子)</span></div><div class="kv"><span class="k">样本量</span><span class="v">5084个观测，基金数16~882只/年</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">非平衡面板; 年初净值总额330.49亿→9612.23亿元</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>扩展FF5含情绪因子: r_p-r_f = α + β_1△ISI + β_2MKT + β_3SMB + β_4HML + β_5RMW + β_6CMA + ε; ISI = 0.227TN + 0.416AD + 0.244PE + 0.286TV (主成分)</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">输家提高情绪风险，赢家降低; 牛熊市无显著差异; 明星基金降低幅度&gt;垫底基金提高幅度</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search="业绩排名对基金风格漂移的影响研究.pdf 业绩排名对基金风格漂移的影响研究 业绩排名对基金风格漂移的影响 易力、盛冰心(2021)">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#13</span></div>
+        <h3 class="card-title">业绩排名对基金风格漂移的影响研究</h3>
+        <div class="card-sub">易力、盛冰心(2021) · <span class="fname">业绩排名对基金风格漂移的影响研究.pdf</span></div>
+        <div class="card-topic">业绩排名对基金风格漂移的影响</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Rank</div><div class="vdef">排序期m=5月前的基金排名百分位数</div><div class="vds">数据来源：锐思</div></div><div class="vitem"><div class="vname">Bull/Bear</div><div class="vdef">牛熊市0-1虚拟变量</div><div class="vformula"><code>沪深300指数收益率划分</code></div><div class="vds">数据来源：市场数据</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">SDAR_T/SDAR_S/SDAR_V</div><div class="vdef">总体/规模/价值风格漂移调整比率(SDS2/SDS1)</div><div class="vformula"><code>SDS = √(ΣVar(w_i)); SDAR = SDS2/SDS1</code></div><div class="vds">数据来源：锐思+中信标普A股风格指数</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">基金规模、年龄、基金公司规模、资金流、换手率、费用率</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2006-2019年</span></div><div class="kv"><span class="k">数据来源</span><span class="v">锐思+中信标普A股风格指数</span></div><div class="kv"><span class="k">样本量</span><span class="v">5068个观测，35~882只基金/年</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">主动管理型开放式股票+混合基金</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>Sharpe多因素: R_t = Σ(w_i S_i_t) + ε, Σw_i=1, w_i≥0; SDS = √(ΣVar(w_i)); SDAR = SDS2/SDS1(&gt;1=漂移上升)</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">输家提高风格漂移，赢家降低; 熊市显著牛市不显著; 小基金偏好价值漂移; 明星基金规模漂移&gt;垫底基金</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search="业绩排名对投资风格影响研究——来自开放式基金的证据.pdf 业绩排名对投资风格影响研究——来自开放式基金的证据 业绩排名对基金投资风格改变的影响（锦标赛检验） 彭文平、肖继辉(2013)">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#14</span></div>
+        <h3 class="card-title">业绩排名对投资风格影响研究——来自开放式基金的证据</h3>
+        <div class="card-sub">彭文平、肖继辉(2013) · <span class="fname">业绩排名对投资风格影响研究——来自开放式基金的证据.pdf</span></div>
+        <div class="card-topic">业绩排名对基金投资风格改变的影响（锦标赛检验）</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RNTperc</div><div class="vdef">期中业绩排名百分位(t=6月分割)</div><div class="vds">数据来源：国泰安</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">△smb/△hml/△mom</div><div class="vdef">大/小盘、价值/成长、动量/反向风格改变指标</div><div class="vformula"><code>流通市值/市净率/股价动力加权值变动</code></div><div class="vds">数据来源：国泰安+色诺芬</div></div><div class="vitem"><div class="vname">△RNTperc</div><div class="vdef">业绩排名变动</div><div class="vds">数据来源：计算</div></div><div class="vitem"><div class="vname">△CLa</div><div class="vdef">选股能力变化(C-L模型alpha)</div><div class="vformula"><code>r_it - r_ft = α_i + λ_1i·min(0,r_mt-r_ft) + λ_2i·max(0,r_mt-r_ft) + ε</code></div><div class="vds">数据来源：国泰安</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">lnasset(基金规模), fundyear, type(股票型/混合型)</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2005-2010年</span></div><div class="kv"><span class="k">数据来源</span><span class="v">国泰安+色诺芬</span></div><div class="kv"><span class="k">样本量</span><span class="v">73~240只/年，股票型+混合型开放式基金</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">参照Chan等(2002)风格分析法</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>风格评分: 流通市值/市净率中位数比; 股价动力=(前12月回报率-中位数)/|中位数|; C-L模型alpha; Flow = (Tna_t - Tna_{t-1}·(1+r))/Tna_{t-1}</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">锦标赛效应证据较弱，主要集中在牛市(2006年); 羊群效应是缺乏锦标赛效应的主因; 价值/成长和动量/反向风格改变对业绩排名有显著正影响</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search="业绩排序对基金投资风险水平变化的影响.pdf 业绩排序对基金投资风险水平变化的影响 业绩排序对基金风险调整行为的影响（竞赛假说检验） 李学峰、苏伟、李荣霞、王兆宇(2010)">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#15</span></div>
+        <h3 class="card-title">业绩排序对基金投资风险水平变化的影响</h3>
+        <div class="card-sub">李学峰、苏伟、李荣霞、王兆宇(2010) · <span class="fname">业绩排序对基金投资风险水平变化的影响.pdf</span></div>
+        <div class="card-topic">业绩排序对基金风险调整行为的影响（竞赛假说检验）</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RTN</div><div class="vdef">前期累积收益率，用于划分输赢家</div><div class="vformula"><code>RTN_{jMy} = ∏(1+r_{jmy}) - 1</code></div><div class="vds">数据来源：净值数据(未说明具体数据库)</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RAR</div><div class="vdef">风险调整比率，后期/前期收益率标准差</div><div class="vformula"><code>RAR = 后期方差/(前期方差)</code></div><div class="vds">数据来源：净值数据</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">无明确控制变量(列联表+Spearman检验)</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2003-2008年</span></div><div class="kv"><span class="k">数据来源</span><span class="v">未明确说明</span></div><div class="kv"><span class="k">样本量</span><span class="v">13~119只/年，开放式股票型(剔除指数型)</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">M=3/6/9月排序期; 新基金2004年后成立，老基金2003年前</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>竞赛假说: (σ_t^L/σ_{t-1}^L) &gt; (σ_t^W/σ_{t-1}^W); RAR_{jy} = 后期方差/(前期方差); &gt;1=加大风险</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">总体竞赛假说不明显; 新基金比老基金更典型; 过度自信导致赢家加大风险; Spearman检验新基金策略更稳健</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search="基于隐性交易的证券投资基金锦标赛研究.pdf 基于隐性交易的证券投资基金锦标赛研究 基于隐性交易的基金锦标赛检验与风险调整分解 汪敏、魏哲海(2017)">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#16</span></div>
+        <h3 class="card-title">基于隐性交易的证券投资基金锦标赛研究</h3>
+        <div class="card-sub">汪敏、魏哲海(2017) · <span class="fname">基于隐性交易的证券投资基金锦标赛研究.pdf</span></div>
+        <div class="card-topic">基于隐性交易的基金锦标赛检验与风险调整分解</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">R[1,6]</div><div class="vdef">基金上半年月度平均收益率</div><div class="vds">数据来源：CCER</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">总体风险调整(σ[7,12]-σ[1,6])</div><div class="vdef">下半年与上半年标准差差</div><div class="vds">数据来源：CCER</div></div><div class="vitem"><div class="vname">投资组合自身风险调整</div><div class="vdef">σ^BH_{0,[7,12]} - σ^BH_{0,[1,6]}</div><div class="vds">数据来源：CCER</div></div><div class="vitem"><div class="vname">显性风险调整</div><div class="vdef">σ^BH_{6,[7,12]} - σ^BH_{0,[7,12]}</div><div class="vds">数据来源：CCER</div></div><div class="vitem"><div class="vname">隐性风险调整(VG差值)</div><div class="vdef">VG[7,12] - VG[1,6]</div><div class="vformula"><code>VG = σ_actual - σ_BH</code></div><div class="vds">数据来源：CCER</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">上半年风险承担水平(σ[1,6]或σ^BH或VG)</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2002-2015年</span></div><div class="kv"><span class="k">数据来源</span><span class="v">CCER经济金融数据库+Wind</span></div><div class="kv"><span class="k">样本量</span><span class="v">1461观测(上涨367+下跌1094)，偏股型开放式基金</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">剔除QDII和指数基金</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>Brown模型: σ差 = α + α1·R[1,6] + α2·σ[1,6] + ε (α1&lt;0=锦标赛); 分解: σ差 = 组合自身风险调整 + 隐性风险调整 + 显性风险调整; VG = σ_actual - σ_BH</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">构建二元博弈模型; 传统观点牛市无锦标赛、熊市存在; 分解后发现锦标赛现象源于投资组合自身风险波动假象，非主动操作; 基金经理偏好稳定风险承担</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4" data-search="基金业绩排名与基金经理的冒险行为.pdf 基金业绩排名与基金经理的冒险行为 年度业绩排名对基金经理冒险行为的影响 山立威、王鹏(2012)">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4">L4</span><span class="idx">#17</span></div>
+        <h3 class="card-title">基金业绩排名与基金经理的冒险行为</h3>
+        <div class="card-sub">山立威、王鹏(2012) · <span class="fname">基金业绩排名与基金经理的冒险行为.pdf</span></div>
+        <div class="card-topic">年度业绩排名对基金经理冒险行为的影响</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Rank1</div><div class="vdef">上半年相对业绩排名(0=最差,1=最好)</div><div class="vds">数据来源：CSMAR+RESSET</div></div><div class="vitem"><div class="vname">Loser1</div><div class="vdef">输家0-1虚拟变量(上半年业绩&lt;中位数)</div><div class="vds">数据来源：CSMAR+RESSET</div></div><div class="vitem"><div class="vname">Q1/Q2/Q3/Q4</div><div class="vdef">四分位虚拟变量</div><div class="vds">数据来源：CSMAR+RESSET</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RAR</div><div class="vdef">风险调整比率(后期/前期标准差)</div><div class="vformula"><code>RAR = Sd2/Sd1</code></div><div class="vds">数据来源：RESSET(日复权单位净值)</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">Sd1(上半年风险), lnage, lntna, fdtype, 年度固定效应</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">2005-2010年</span></div><div class="kv"><span class="k">数据来源</span><span class="v">CSMAR(代码类型)+RESSET(净值/规模)</span></div><div class="kv"><span class="k">样本量</span><span class="v">862个基金年度，股票型+混合型开放式基金</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">平均年龄4.15年，平均净值57.57亿元，RTN均值11.48%</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>RTN_{iMy} = ∏(1+Ret_{imy}) - 1; Ret_{imy} = Nav_{imy}/Nav_{i(m-1)y} - 1; RAR = Sd2/Sd1; flow = (Tna结尾 - Tna期初·(1+Ret))/Tna期初</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">输家提高风险程度&gt;赢家(Rank1系数显著为负,Loser1显著为正); 冒险不能显著提高下半年业绩，熊市中反而降低; 薪酬激励为主要机制(就业激励弱)</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4_风险应对层" data-search="基金业绩排名与期末业绩拉升.pdf 基金业绩排名与期末业绩拉升 基金业绩排名对期末业绩拉升行为的影响，从关键排名对薪酬影响和提高排名难易程度两个新视角 李祥文, 吴文锋 (2018), 《管理世界》">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4_风险应对层">L4_风险应对层</span><span class="idx">#18</span></div>
+        <h3 class="card-title">基金业绩排名与期末业绩拉升</h3>
+        <div class="card-sub">李祥文, 吴文锋 (2018), 《管理世界》 · <span class="fname">基金业绩排名与期末业绩拉升.pdf</span></div>
+        <div class="card-topic">基金业绩排名对期末业绩拉升行为的影响，从关键排名对薪酬影响和提高排名难易程度两个新视角</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Fund_Winner</div></div><div class="vitem"><div class="vname">Fund_Loser</div></div><div class="vitem"><div class="vname">Fund_1/2</div></div><div class="vitem"><div class="vname">Fund_2/3</div></div><div class="vitem"><div class="vname">Fund_9/10</div></div><div class="vitem"><div class="vname">PerfDif</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">FundRt_Exc</div></div><div class="vitem"><div class="vname">FundRt_FF</div></div><div class="vitem"><div class="vname">Pumping</div></div><div class="vitem"><div class="vname">Reversing</div></div><div class="vitem"><div class="vname">Blip</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">[{&#x27;name&#x27;: &#x27;Flow&#x27;, &#x27;description&#x27;: &#x27;基金资金净流量，取Flow1和Flow2的平均值&#x27;}, {&#x27;name&#x27;: &#x27;Size&#x27;, &#x27;description&#x27;: &#x27;基金季度末净资产规模(亿元)的自然对数&#x27;}, {&#x27;name&#x27;: &#x27;Age&#x27;, &#x27;description&#x27;: &#x27;基金年龄(月)&#x27;}, {&#x27;name&#x27;: &#x27;Male&#x27;, &#x27;description&#x27;: &#x27;基金经理性别哑变量，男性取1&#x27;}, {&#x27;name&#x27;: &#x27;Master&#x27;, &#x27;description&#x27;: &#x27;基金经理学历哑变量，硕士取1&#x27;}, {&#x27;name&#x27;: &#x27;Doctor&#x27;, &#x27;description&#x27;: &#x27;基金经理学历哑变量，博士取1&#x27;}, {&#x27;name&#x27;: &#x27;Fundm&#x27;, &#x27;description&#x27;: &#x27;基金固定效应哑变量&#x27;}, {&#x27;name&#x27;: &#x27;Yearn&#x27;, &#x27;description&#x27;: &#x27;年份固定效应哑变量&#x27;}]</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="vdef">WIND数据库(基金单位净值、季末重仓股票); CSMAR数据库(基金净资产规模、分红拆分、股票收益率、市场综合收益率、Fama-French三因子数据); RESSET数据库(无风险收益率)。样本期2005-2016年，开放式股票型基金和偏股混合型基金，844730个观测值</div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">FundRt_Exc均值-0.1025基点; Pumping_ExcRt均值5.6241基点; Reversing_ExcRt均值-7.7517基点; Blip_ExcRt均值6.6876基点; Pumping_FF均值6.4658基点; Reversing_FF均值-4.1747基点; Blip_FF均值5.3195基点</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>[&#x27;FundRt_Exc = FundRt - MarketRt&#x27;, &#x27;FundRt_FF = FundRt - RFRt - β_RMRF*RMRF - β_SMB*SMB - β_HML*HML&#x27;, &#x27;Pumping = Σ(k=0~2) FundPerf(T, lastday-k) / 3&#x27;, &#x27;Reversing = Σ(k=0~2) FundPerf(T+1, firstday+k) / 3&#x27;, &#x27;Blip = (Pumping - Reversing) / 2&#x27;, &#x27;PerfDif = ((FundRt_YTD(n-1) - FundRt_YTD(n)) + (FundRt_YTD(n) - FundRt_YTD(n+1))) / 2&#x27;, &#x27;Flow = (Flow1 + Flow2) / 2, Flow1 = (TNA_T - TNA_{T-1}*(1+FundRt_T))/TNA_{T-1}&#x27;]</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">研究发现2/3和9/10关键排名处基金存在比其他基金更为明显的期末业绩拉升行为；相邻排名基金业绩差异越小，期末业绩拉升程度越大。采用两阶段回归检验期末拉升和期初反转模式，年末最为显著。关键排名1/2、2/3、9/10分别对应基金经理年终奖金的重要参考排名(前1/2、前1/3、前1/10)</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4_风险应对层" data-search="基金业绩排名压力与赌博式交易倾向——基于中国开放式股票型基金的实证检验.pdf 基金业绩排名压力与赌博式交易倾向——基于中国开放式股票型基金的实证检验 基金业绩排名压力对赌博式交易倾向的影响，及基金经理持基和基金经理变更的调节机制 王志强, 吴思璠 (2023), 《财经问题研究》">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4_风险应对层">L4_风险应对层</span><span class="idx">#19</span></div>
+        <h3 class="card-title">基金业绩排名压力与赌博式交易倾向——基于中国开放式股票型基金的实证检验</h3>
+        <div class="card-sub">王志强, 吴思璠 (2023), 《财经问题研究》 · <span class="fname">基金业绩排名压力与赌博式交易倾向——基于中国开放式股票型基金的实证检验.pdf</span></div>
+        <div class="card-topic">基金业绩排名压力对赌博式交易倾向的影响，及基金经理持基和基金经理变更的调节机制</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">perpsinyear</div></div><div class="vitem"><div class="vname">perpsyear</div></div><div class="vitem"><div class="vname">Δr</div></div><div class="vitem"><div class="vname">HD</div></div><div class="vitem"><div class="vname">TD</div></div><div class="vitem"><div class="vname">HD×perps</div></div><div class="vitem"><div class="vname">TD×perps</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">gamid</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">[{&#x27;name&#x27;: &#x27;Δσ&#x27;, &#x27;description&#x27;: &#x27;基金风险水平变动，Δσ = σ(7,12) - σ(1,6)，下半年与上半年月度收益率标准差之差&#x27;}, {&#x27;name&#x27;: &#x27;cflow&#x27;, &#x27;description&#x27;: &#x27;现金流水平，cflow = tna_t/tna_{t-1} - (1-r_t)&#x27;}, {&#x27;name&#x27;: &#x27;trdp&#x27;, &#x27;description&#x27;: &#x27;股票换手率，调整资产组合所需最小股票交易额/期初净资产&#x27;}, {&#x27;name&#x27;: &#x27;size&#x27;, &#x27;description&#x27;: &#x27;基金规模，基金净资产的自然对数&#x27;}, {&#x27;name&#x27;: &#x27;age&#x27;, &#x27;description&#x27;: &#x27;基金年龄，基金自成立日起到t年年末的年数&#x27;}, {&#x27;name&#x27;: &#x27;gamid(t-1)&#x27;, &#x27;description&#x27;: &#x27;被解释变量滞后一期，控制基金习惯性交易策略&#x27;}]</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="vdef">WIND数据库、CSMAR数据库及基金半年报和年报。样本期2004-2021年，开放式股票型基金，剔除存续期低于5年的基金，拆分基金归入母基金</div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">gamid均值0.102, 标准差0.121, 中位数0.073; perpsinyear均值0.148, 标准差0.072; perpsyear均值0.108, 标准差0.136; Δr均值0.058, 标准差0.094; HD均值0.617, 标准差0.210; TD均值0.193, 标准差0.035; Δσ均值0.021, 标准差0.011; cflow均值0.156, 标准差0.421; trdp均值0.879, 标准差0.231; size均值5.131, 标准差0.756; age均值6.345, 标准差2.775</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>[&#x27;gamid1 = 1/(6-1)σ³_{(1,6)} × Σ(k=1~6) (r_itk - r̄_{(1,6)})³  (上半年收益率偏度)&#x27;, &#x27;gamid2 = 1/(6-1)σ³_{(7,12)} × Σ(k=7~12) (r_itk - r̄_{(7,12)})³  (下半年收益率偏度)&#x27;, &#x27;gamid = gamid2 - gamid1  (归一化后)&#x27;, &#x27;perpsinyear = rankhalfyear(t) - rankyear(t-1)&#x27;, &#x27;perpsyear = rankyear(t-1) - rankyear(t-2)&#x27;, &#x27;Δσ = σ_{(7,12)} - σ_{(1,6)}&#x27;, &#x27;cflow = tna_t/tna_{t-1} - (1-r_t)&#x27;]</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">使用DGMM和IV+2SLS控制内生性，工具变量为基金经理从业经验和是否具有海外教育背景。研究发现：H1业绩排名压力正向影响赌博式交易倾向；H2基金经理持基能抑制赌博式交易倾向；H3基金经理变更影响不显著。机构投资者赌博式交易倾向源于代理人约束不足导致的机会主义行为和业绩排名压力下的理性选择</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4_风险应对层" data-search="基金经理社会网络、业绩排名与净值暴跌风险.pdf 基金经理社会网络、业绩排名与净值暴跌风险 基金经理社会网络和业绩排名通过羊群效应对基金净值暴跌风险的影响 许林, 张晓华, 钱崇秀 (2020)">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4_风险应对层">L4_风险应对层</span><span class="idx">#20</span></div>
+        <h3 class="card-title">基金经理社会网络、业绩排名与净值暴跌风险</h3>
+        <div class="card-sub">许林, 张晓华, 钱崇秀 (2020) · <span class="fname">基金经理社会网络、业绩排名与净值暴跌风险.pdf</span></div>
+        <div class="card-topic">基金经理社会网络和业绩排名通过羊群效应对基金净值暴跌风险的影响</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Orth-Nrm_Degree</div></div><div class="vitem"><div class="vname">Rank</div></div><div class="vitem"><div class="vname">CSAD</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">NCSKEW</div></div><div class="vitem"><div class="vname">DUVOL</div></div><div class="vitem"><div class="vname">Stdcha</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">[{&#x27;name&#x27;: &#x27;LFTNA&#x27;, &#x27;description&#x27;: &#x27;基金家族规模，基金公司过去一期期末旗下基金总净值规模的自然对数&#x27;}, {&#x27;name&#x27;: &#x27;LTNA&#x27;, &#x27;description&#x27;: &#x27;基金规模，基金过去一期期末净值的自然对数&#x27;}, {&#x27;name&#x27;: &#x27;LAge&#x27;, &#x27;description&#x27;: &#x27;基金成立年限，基金过去一期期末成立天数的自然对数&#x27;}, {&#x27;name&#x27;: &#x27;Flow&#x27;, &#x27;description&#x27;: &#x27;基金资金净流入，基金过去一期的资金净流入&#x27;}, {&#x27;name&#x27;: &#x27;Fee&#x27;, &#x27;description&#x27;: &#x27;管理费率，基金管理费与基金资产净值的比例&#x27;}]</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="vdef">国泰安金融数据库。样本期2010年1月至2017年12月，1312只开放式股票型基金和混合型基金(剔除指数型基金及成立不足24个月的基金)，9247个观测值</div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">NCSKEW均值1.713, 中位数1.692, 标准差0.170, 极小值1.286, 极大值2.576; DUVOL均值2.040, 中位数1.999, 标准差0.413, 极小值0.831, 极大值5.110; CSAD均值0.013, 中位数0.012, 标准差0.005; Nrm_Degree均值0.767, 中位数0.282, 标准差3.237; Orth-Nrm_Degree均值-0.286, 中位数-1.568, 标准差36.363; LFTNA均值6.280, 标准差1.354; LAge均值6.931, 标准差0.920; LTNA均值1.896</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>[&#x27;R_i,t = α1 + β1*R_m,t-2 + β2*R_m,t-1 + β3*R_m,t + β4*R_m,t+1 + β5*R_m,t+2 + ε_i,t  (市场模型)&#x27;, &#x27;W_i,t = Ln(1 + ε_i,t)  (特有收益率)&#x27;, &#x27;NCSKEW = -[n(n-1)^(3/2) × ΣW³] / [(n-1)(n-2)(ΣW²)^(3/2)]&#x27;, &#x27;DUVOL = log[(nu-1)×Σdown W²] / [(nd-1)×Σup W²]&#x27;, &#x27;CSAD = 1/N × Σ|ri,t - rm,t|&#x27;, &#x27;Nrm_Degree = Σfri,j / (M-1)  (相对点中心度)&#x27;, &#x27;Orth-Nrm_Degree = Nrm_Degree模型回归残差(剔除Rank影响)&#x27;]</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">羊群效应(CSAD)作为中介变量。采用正交化方法剔除业绩排名对社会网络指标的影响。研究发现：H1业绩排名与十大重仓股比例负相关; H2/H3社会网络信息增加和排名下降显著提升净值波动率和暴跌风险; H4社会网络传递信息引发投资趋同行为(羊群效应)进而导致净值暴跌风险。排名越靠后、社会网络越丰富，暴跌风险越大</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4_风险应对层" data-search="基金行业锦标赛及其激励效应研究——来自开放式基金的经验证据.pdf 基金行业锦标赛及其激励效应研究——来自开放式基金的经验证据 基金行业锦标赛对基金经理投资行为(投资风格、资产配置、风险调整)的激励效应及经济后果 肖继辉 (2012), 《南开管理评论》">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4_风险应对层">L4_风险应对层</span><span class="idx">#21</span></div>
+        <h3 class="card-title">基金行业锦标赛及其激励效应研究——来自开放式基金的经验证据</h3>
+        <div class="card-sub">肖继辉 (2012), 《南开管理评论》 · <span class="fname">基金行业锦标赛及其激励效应研究——来自开放式基金的经验证据.pdf</span></div>
+        <div class="card-topic">基金行业锦标赛对基金经理投资行为(投资风格、资产配置、风险调整)的激励效应及经济后果</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">△RNTPERC</div></div><div class="vitem"><div class="vname">RTN</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RAR</div></div><div class="vitem"><div class="vname">Smb</div></div><div class="vitem"><div class="vname">Smbtrad</div></div><div class="vitem"><div class="vname">Hml</div></div><div class="vitem"><div class="vname">Mom</div></div><div class="vitem"><div class="vname">Turnover</div></div><div class="vitem"><div class="vname">Stockperc</div></div><div class="vitem"><div class="vname">Industry</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">[{&#x27;name&#x27;: &#x27;Lnasset&#x27;, &#x27;description&#x27;: &#x27;基金规模，年末基金资产(元)的对数&#x27;}, {&#x27;name&#x27;: &#x27;Fundyear&#x27;, &#x27;description&#x27;: &#x27;基金成立年限，截至年末基金成立的年数(四舍五入取整)&#x27;}]</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="vdef">国泰安数据库(基金复权单位净值及投资组合数据)和色诺芬数据库(沪深个股数据)。样本期2005年6月至2008年12月，125只股票型基金和97只混合型基金</div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">各半年时点基金样本数：2005.6股票型32只/混合型40只，2005.12股票型32只/混合型40只，2006.6股票型50只/混合型57只，2006.12股票型50只/混合型57只，2007.6股票型88只/混合型80只，2007.12股票型88只/混合型80只，2008.6股票型125只/混合型97只，2008.12股票型125只/混合型97只</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>[&#x27;RTN = Na/Nb × Π(1+Di/Ni) - 1  (考虑分红的复权净值增长率)&#x27;, &#x27;△RNTPERC = 后半年排名百分位 - 前半年排名百分位&#x27;, &#x27;RAR = σ(评定月后至年底) / σ(年初至评定月)  (月度回报标准差之比)&#x27;, &#x27;RAR(6,6): 取6月为评定期; RAR(8,4): 取8月为评定期&#x27;, &#x27;Turnover = (股票成交量/2) / 年平均股票投资市值&#x27;, &#x27;Industry = Σ(各行业股票市值占比)² 的平方根&#x27;]</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">采用三分法将基金分为输家、中家、赢家。研究贡献：(1)从投资风格、仓位控制、行业分散、股票周转、组合风险五个维度衡量行为转变; (2)使用三分法全面观察输赢中三者投资行为; (3)检查投资行为改变的经济后果。研究发现锦标赛机制有效性受股市周期影响(时区效应); 输家与中等基金行为调整方向一致，与赢家相反(主要体现在动量/反向、价值/成长投资风格); 输家通过投资风格改变使期末排名大幅改善，赢家出现大幅下滑</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4_风险应对层" data-search="基金行业锦标赛激励效应研究_新的证据和解释.pdf 基金行业锦标赛激励效应研究: 新的证据和解释 股市周期、输赢家业绩差距、基金经理个人特征和基金公司内部治理对锦标赛风险调整行为的影响 管睿, 肖继辉 (2013), 《软科学》">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4_风险应对层">L4_风险应对层</span><span class="idx">#22</span></div>
+        <h3 class="card-title">基金行业锦标赛激励效应研究: 新的证据和解释</h3>
+        <div class="card-sub">管睿, 肖继辉 (2013), 《软科学》 · <span class="fname">基金行业锦标赛激励效应研究_新的证据和解释.pdf</span></div>
+        <div class="card-topic">股市周期、输赢家业绩差距、基金经理个人特征和基金公司内部治理对锦标赛风险调整行为的影响</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Rtnperc</div></div><div class="vitem"><div class="vname">△Rtnperc</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RAR</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">[{&#x27;name&#x27;: &#x27;Asset&#x27;, &#x27;description&#x27;: &#x27;基金规模，基金总资产金额(元)的对数&#x27;}, {&#x27;name&#x27;: &#x27;Fyear&#x27;, &#x27;description&#x27;: &#x27;基金成立年限，基金成立至样本年度的年数取整&#x27;}, {&#x27;name&#x27;: &#x27;Age&#x27;, &#x27;description&#x27;: &#x27;基金经理年龄&#x27;}, {&#x27;name&#x27;: &#x27;SAT&#x27;, &#x27;description&#x27;: &#x27;经理毕业学校排名哑变量，毕业于排名前10高校或第1科研院取1，否则取0&#x27;}, {&#x27;name&#x27;: &#x27;Edu&#x27;, &#x27;description&#x27;: &#x27;教育程度，硕士=1，博士=2，其他=0&#x27;}, {&#x27;name&#x27;: &#x27;Funexp&#x27;, &#x27;description&#x27;: &#x27;从业年限，在基金管理公司工作的年数&#x27;}, {&#x27;name&#x27;: &#x27;Doubmaj&#x27;, &#x27;description&#x27;: &#x27;理工财经双专业背景哑变量，同时具有理工和财经类教育背景取1&#x27;}, {&#x27;name&#x27;: &#x27;Major&#x27;, &#x27;description&#x27;: &#x27;财经专业背景哑变量，毕业专业为财经类取1&#x27;}, {&#x27;name&#x27;: &#x27;Ovseaexp&#x27;, &#x27;description&#x27;: &#x27;海外背景哑变量，具有海外教育或海外证券资产管理工作经历取1&#x27;}, {&#x27;name&#x27;: &#x27;CPACFA&#x27;, &#x27;description&#x27;: &#x27;专业技术资格证书哑变量，取得CPA或CFA取1&#x27;}, {&#x27;name&#x27;: &#x27;Direct&#x27;, &#x27;description&#x27;: &#x27;董事会人数&#x27;}, {&#x27;name&#x27;: &#x27;Indircperc&#x27;, &#x27;description&#x27;: &#x27;独立董事比例，独立董事人数占董事会人数比例&#x27;}, {&#x27;name&#x27;: &#x27;Supervis&#x27;, &#x27;description&#x27;: &#x27;监事会人数&#x27;}, {&#x27;name&#x27;: &#x27;Invest&#x27;, &#x27;description&#x27;: &#x27;投资决策委员会人数&#x27;}, {&#x27;name&#x27;: &#x27;Capsupervis&#x27;, &#x27;description&#x27;: &#x27;监事长性质，不在基金公司担任职务取1&#x27;}, {&#x27;name&#x27;: &#x27;Capinspect&#x27;, &#x27;description&#x27;: &#x27;督察长设置哑变量，设立督察长取1&#x27;}, {&#x27;name&#x27;: &#x27;Corpnatur&#x27;, &#x27;description&#x27;: &#x27;公司性质，外资或合资企业取1，中资企业取0&#x27;}]</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="vdef">国泰安数据库(基金公司特征、业绩指标); 基金公司治理和经理特征数据通过查阅基金年报及中国基金网、金融界等手工收集。样本期2005-2008年(完整牛熊市周期)，符合条件基金2005年73只、2006年107只、2007年167只、2008年217只</div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">基金数量：2005年73只，2006年107只，2007年167只，2008年217只。采用三分法和五分法对输中赢各组别风险调整进行列联表分析</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>[&#x27;RTN = Na/Nb × Π(1+Di/Ni) - 1  (考虑分红的复权净值增长率)&#x27;, &#x27;Rtnperc = 期中复权净值增长率排名百分位(0~1)&#x27;, &#x27;△Rtnperc = 后半年排名百分位 - 前半年排名百分位&#x27;, &#x27;RAR = [1/(Dy-D) × Σ(r-r̄)²]^(1/2) / [1/(D-1) × Σ(r-r̄)²]^(1/2)  (日度回报标准差之比)&#x27;, &#x27;模型(1): RAR = a0 + a1 + αM + βN + γZ + ρM×Z + φN×Z + μ  (检查经理特征与排名交互)&#x27;, &#x27;模型(2): RAR = b0 + b1 + ηM + λG + ωZ + ψG×Z + μ  (检查公司治理与排名交互)&#x27;, &#x27;模型(3): △Rtnperc = c0 + c1 + δM + θRAR + σM×RAR + μ  (检查经济后果)&#x27;]</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">风险调整系数基于日度回报，克服已有研究采用月度数据可能掩盖日度回报大幅波动的不足。研究发现在完整牛熊周期内：(1)输赢家业绩差距影响竞赛中风险调整行为; (2)基金经理个人特征和基金内部治理依赖股市周期影响风险调整; (3)熊市阶段基金内部治理与业绩排名对风险调整的交互影响减弱。M为基金特征(Asset, Fyear)，N为经理特征(Age, SAT, Edu, Funexp, Doubmaj, Major, Ovseaexp, CPACFA)，G为公司治理(Direct, Indircperc, Supervis, Invest, Capsupervis, Capinspect, Corpnatur)，Z为竞赛压力(Rtnperc)</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="L4_风险应对层" data-search="基金锦标赛、基金持股与股票收益.pdf 基金锦标赛、基金持股与股票收益 基金锦标赛机制对基金持股策略(独持股vs共持股)和股票收益的影响，锦标赛机制扭曲基金持股收益 夏翊, 李科, 冯联雷, 刘沛 (2018), 《上海金融》">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-L4_风险应对层">L4_风险应对层</span><span class="idx">#23</span></div>
+        <h3 class="card-title">基金锦标赛、基金持股与股票收益</h3>
+        <div class="card-sub">夏翊, 李科, 冯联雷, 刘沛 (2018), 《上海金融》 · <span class="fname">基金锦标赛、基金持股与股票收益.pdf</span></div>
+        <div class="card-topic">基金锦标赛机制对基金持股策略(独持股vs共持股)和股票收益的影响，锦标赛机制扭曲基金持股收益</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">IsSolo</div></div><div class="vitem"><div class="vname">IsComp</div></div><div class="vitem"><div class="vname">IsHold</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Return</div></div><div class="vitem"><div class="vname">Return_CAPM</div></div><div class="vitem"><div class="vname">Return_FF3</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">[{&#x27;name&#x27;: &#x27;SUE&#x27;, &#x27;description&#x27;: &#x27;未预期盈余，本期每股收益与上期每股收益的差除以上期每股收益，SUE=(EPS_t - EPS_{t-1})/EPS_{t-1}&#x27;}, {&#x27;name&#x27;: &#x27;MarketReturn&#x27;, &#x27;description&#x27;: &#x27;市场收益率&#x27;}, {&#x27;name&#x27;: &#x27;Log(Asset/1000)&#x27;, &#x27;description&#x27;: &#x27;股票市场价值的对数值(千元为单位)&#x27;}, {&#x27;name&#x27;: &#x27;EPS&#x27;, &#x27;description&#x27;: &#x27;每股收益&#x27;}]</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="vdef">CSMAR数据库。样本期2008-2015年，积极型股票基金持仓数据，458117个观测值</div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">Return均值0.002, 中位数0.001, 标准差0.034, 25%分位-0.015, 75%分位0.018; Return_CAPM均值0.002, 标准差0.029; Return_FF3均值0.001, 标准差0.026; MarketReturn均值0.000, 标准差0.017; Log(Asset/1000)均值16.480, 中位数16.321, 标准差1.127; EPS均值0.572, 中位数0.405, 标准差0.748; SUE均值0.685, 中位数0.422, 标准差4.801。独享独持股比争优共持股日均收益率低0.19%(年化48.45%)</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>[&#x27;IsSolo = 1 当股票为当期独持股中被上期排名前30%基金持有的独享股&#x27;, &#x27;IsComp = 1 当股票为当期共持股中被两只以上上期排名前30%基金持有的争优股&#x27;, &#x27;SUE = (EPS_t - EPS_{t-1}) / EPS_{t-1}&#x27;, &#x27;分组：独持股→独享股(前30%基金持有)+后进股(后70%基金持有); 共持股→争优股(2+只前30%基金持有)+独享股(1只前30%基金持有)+后进股(全后70%基金持有)&#x27;]</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">将基金持股按持有基金数量分为独持股和共持股，再按上期基金收益排名进一步分组。研究发现锦标赛机制促使排名靠前基金采取抱团策略：持有争优共持股、抛弃独享独持股，造成独享股收益率下降而争优股收益率更高。独享独持股比争优共持股日均收益率低0.19%(年化48.45%)。扩展了锦标赛理论(排名考核压力扭曲基金持股收益)、羊群效应理论(锦标赛机制诱发领头羊内部抱团)和基金持股理论(基金投资行为具有外部效应)</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="M" data-search="01_cameron_gelbach_miller_2011_multiway_clustering_jbes.pdf robust inference with multi-way clustering 多向聚类稳健标准误 cameron, gelbach &amp; miller (2011), jbes">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-M">M</span><span class="idx">#24</span></div>
+        <h3 class="card-title">Robust Inference with Multi-way Clustering</h3>
+        <div class="card-sub">Cameron, Gelbach &amp; Miller (2011), JBES · <span class="fname">01_Cameron_Gelbach_Miller_2011_Multiway_Clustering_JBES.pdf</span></div>
+        <div class="card-topic">多向聚类稳健标准误</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><span class="muted">—</span></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><span class="muted">—</span></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef"><span class="muted">—</span></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">Monte Carlo模拟; 实证: Hersch(1998)工资-工伤OLS; Gruber-Madrian(1995)probit</span></div><div class="kv"><span class="k">数据来源</span><span class="v">Monte Carlo + 实证示例数据</span></div><div class="kv"><span class="k">样本量</span><span class="v">N/A</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">Monte Carlo显示忽略双向聚类可致标准误严重低估</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>单向: V_hat(β) = (X&#x27;X)^(-1)[Σ_g X&#x27;_g û_g û&#x27;_g X_g](X&#x27;X)^(-1); 双向: S_GH = S_G+S_H-S_{G∩H}; M向: V = (X&#x27;X)^(-1)X&#x27;(ûû&#x27;.*S_{G1..GM})X(X&#x27;X)^(-1)</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">方法论，无实证因变量。将Liang-Zeger(1986)单向聚类扩展至多向非嵌套聚类。金融应用：firm+time双维聚类。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="M" data-search="02_oster_2019_unobservableselection_jbes.pdf unobservable selection and coefficient stability 不可观测选择偏差与系数稳定性（有界ovb） oster (2019), jbes">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-M">M</span><span class="idx">#25</span></div>
+        <h3 class="card-title">Unobservable Selection and Coefficient Stability</h3>
+        <div class="card-sub">Oster (2019), JBES · <span class="fname">02_Oster_2019_UnobservableSelection_JBES.pdf</span></div>
+        <div class="card-topic">不可观测选择偏差与系数稳定性（有界OVB）</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">X(处理变量)</div><div class="vdef">标量，如教育年限</div><div class="vds">数据来源：NLSY-79</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Y(结果变量)</div><div class="vdef">如工资对数</div><div class="vds">数据来源：NLSY-79</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">ω_o(观测控制变量); W2(不可观测，通过δ和R_max参数化)</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">NLSY-79</span></div><div class="kv"><span class="k">数据来源</span><span class="v">NLSY-79; 27篇顶刊76个结果; 母亲行为-儿童结果(随机实验)</span></div><div class="kv"><span class="k">样本量</span><span class="v">76个结果(2008-2013 AER/QJE/JPE/Econometrica)</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">样本R²范围0.029-0.992平均0.403; 仅30%在δ=1,R_max=1下稳健; NLSY验证89%的界包含真实效应(vs 62%传统CI)</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>Y=βX+Ψω_o+W2+ε; δ=σ_1X/σ²_1=σ_2X/σ²_2; β*=β̃-δ(β̊-β̃)(R_max-R̃)/(R̃-R̊); 建议R_max=1.3R̃; Stata: psacalc</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">核心创新: (1)不要求R_max=1; (2)可计算偏差调整估计量识别集; (3)基于随机实验的R_max经验校准(Π=1.3)。拓展了Altonji-Elder-Taber(2005)方法。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="M" data-search="03_cinelli_hazlett_ovb_for_iv.pdf an omitted variable bias framework for sensitivity analysis of instrumental variables iv敏感性分析的ovb框架(偏r²参数化) cinelli &amp; hazlett (forthcoming), biometrika">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-M">M</span><span class="idx">#26</span></div>
+        <h3 class="card-title">An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables</h3>
+        <div class="card-sub">Cinelli &amp; Hazlett (forthcoming), Biometrika · <span class="fname">03_Cinelli_Hazlett_OVB_for_IV.pdf</span></div>
+        <div class="card-topic">IV敏感性分析的OVB框架(偏R²参数化)</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Z(工具变量)</div><div class="vdef">如大学距离</div><div class="vds">数据来源：Card(1993)示例</div></div><div class="vitem"><div class="vname">D(处理变量)</div><div class="vdef">如教育年限</div><div class="vds">数据来源：Card(1993)示例</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Y(结果变量)</div><div class="vdef">如收入对数</div><div class="vds">数据来源：Card(1993)示例</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">X(观测协变量); W(不可观测混淆变量,偏R²参数化)</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">Card(1993)教育回报率</span></div><div class="kv"><span class="k">数据来源</span><span class="v">NLSY</span></div><div class="kv"><span class="k">样本量</span><span class="v">N/A</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">IV τ̂_res≈0.132(vs OLS 7.5%); 第一阶段θ̂_res≈0.319; 简化式λ̂_res≈0.042; 极端稳健值XRV=0.05%</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>第一阶段: D=θ̂Z+Xψ̂+ε; 简化式: Y=λ̂Z+Xβ̂+ε; IV: τ̂=λ̂/θ̂; BF=√(R²_{Y~W|Z,X}·R²_{Z~W|X}/(1-R²_{Z~W|X})); XRV_IV=min(XRV_λ, XRV_θ); R包: sensemakr</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">核心贡献: 将OVB敏感性分析从OLS扩展到IV，统一处理混淆变量(违反外生性)和副作用(违反排他性)。BF和SEF不依赖观测数据(仅依赖自由度)。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="M" data-search="04_fama_french_2015_fivefactor_jfe.pdf a five-factor asset pricing model 五因子资产定价模型(market+size+value+profitability+investment) fama &amp; french (2015), jfe">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-M">M</span><span class="idx">#27</span></div>
+        <h3 class="card-title">A Five-Factor Asset Pricing Model</h3>
+        <div class="card-sub">Fama &amp; French (2015), JFE · <span class="fname">04_Fama_French_2015_FiveFactor_JFE.pdf</span></div>
+        <div class="card-topic">五因子资产定价模型(Market+Size+Value+Profitability+Investment)</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RM-RF</div><div class="vdef">市场超额收益(市值加权市场组合-无风险利率)</div><div class="vds">数据来源：CRSP</div></div><div class="vitem"><div class="vname">SMB</div><div class="vdef">规模因子(小盘减大盘)</div><div class="vformula"><code>小盘六组合等权均值-大盘六组合等权均值</code></div><div class="vds">数据来源：CRSP+Compustat</div></div><div class="vitem"><div class="vname">HML</div><div class="vdef">价值因子(高B/M减低B/M)</div><div class="vds">数据来源：CRSP+Compustat</div></div><div class="vitem"><div class="vname">RMW</div><div class="vdef">盈利因子(高盈利减弱盈利)</div><div class="vds">数据来源：CRSP+Compustat</div></div><div class="vitem"><div class="vname">CMA</div><div class="vdef">投资因子(保守减激进)</div><div class="vds">数据来源：CRSP+Compustat</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">R_it-RF_t</div><div class="vdef">资产i超额收益</div><div class="vds">数据来源：CRSP</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef"><span class="muted">—</span></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">1963年7月-2013年12月(606个月)</span></div><div class="kv"><span class="k">数据来源</span><span class="v">CRSP+Compustat; NYSE/AMEX/NASDAQ</span></div><div class="kv"><span class="k">样本量</span><span class="v">N/A</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">五因子优于三因子; 加入RMW+CMA后HML对平均收益描述冗余; 主要缺陷: 无法解释低盈利高投资小盘股低收益</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>R_it-RF_t = a_i+b_i(RM-RF)+s_i·SMB+h_i·HML+r_i·RMW+c_i·CMA+e_it; DDM: m_t=ΣE(d_{t+τ})/(1+r)^τ; OP=营收-销货成本-销售管理研发-利息/账面权益; Inv=总资产增长率; 2×3排序(Size×B/M, Size×OP, Size×Inv)</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">理论基础: DDM。Size断点=NYSE中位数; B/M/OP/Inv断点=NYSE 30/70分位数。因子按月更新。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="M" data-search="05_merton_1981_markettiming_jb.pdf on market timing and investment performance 市场择时能力检验方法论(择时vs选股分离) merton (1981), jb">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-M">M</span><span class="idx">#28</span></div>
+        <h3 class="card-title">On Market Timing and Investment Performance</h3>
+        <div class="card-sub">Merton (1981), JB · <span class="fname">05_Merton_1981_MarketTiming_JB.pdf</span></div>
+        <div class="card-topic">市场择时能力检验方法论(择时vs选股分离)</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Z_M(t)-R(t)</div><div class="vdef">市场组合超额收益</div></div><div class="vitem"><div class="vname">R(t)</div><div class="vdef">无风险利率</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">R_j(t)</div><div class="vdef">基金/组合收益</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">R(t)(基准收益)</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">N/A</span></div><div class="kv"><span class="k">数据来源</span><span class="v">理论模型论文，无实证数据</span></div><div class="kv"><span class="k">样本量</span><span class="v">N/A</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">无(理论模型)</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>Z_j(t)=R(t)+β_j[Z_M(t)-R(t)]+ε_j(t); β_j=f[E(R_M)]允许β随市场状态变化; Henrisson-Merton检验: R_j-R=α+β[R_M-R]+γ·max(0,R-R_M)+ε</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">PDF扫描版(45页全图)。核心: CAPM扩展允许β随市场预期收益变化，分离择时(timing)与选股(selectivity)。若经理能预测市场，β应在牛市前增大、熊市前减小。Henrisson-Merton(1981)引入看跌期权形式β变化。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="M" data-search="06_fama_french_1993_commonriskfactors_jfe.pdf common risk factors in the returns on stocks and bonds 三因子+债券因子模型(market+size+value+term+default) fama &amp; french (1993), jfe">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-M">M</span><span class="idx">#29</span></div>
+        <h3 class="card-title">Common Risk Factors in the Returns on Stocks and Bonds</h3>
+        <div class="card-sub">Fama &amp; French (1993), JFE · <span class="fname">06_Fama_French_1993_CommonRiskFactors_JFE.pdf</span></div>
+        <div class="card-topic">三因子+债券因子模型(Market+Size+Value+Term+Default)</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RM-RF</div><div class="vdef">市场因子(市值加权市场-无风险)</div><div class="vds">数据来源：CRSP</div></div><div class="vitem"><div class="vname">SMB</div><div class="vdef">规模因子</div><div class="vformula"><code>(S/L+S/M+S/H)/3-(B/L+B/M+B/H)/3</code></div><div class="vds">数据来源：CRSP+Compustat</div></div><div class="vitem"><div class="vname">HML</div><div class="vdef">价值因子</div><div class="vformula"><code>(S/H+B/H)/2-(S/L+B/L)/2</code></div><div class="vds">数据来源：CRSP+Compustat</div></div><div class="vitem"><div class="vname">TERM</div><div class="vdef">期限因子(长期国债-1月T-bill)</div><div class="vds">数据来源：Ibbotson</div></div><div class="vitem"><div class="vname">DEF</div><div class="vdef">违约因子(公司债-长期国债)</div><div class="vds">数据来源：Ibbotson</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">R_it-RF_t</div><div class="vdef">股票超额收益</div><div class="vds">数据来源：CRSP</div></div><div class="vitem"><div class="vname">债券超额收益</div><div class="vds">数据来源：Ibbotson</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef"><span class="muted">—</span></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">1963年7月-1991年12月</span></div><div class="kv"><span class="k">数据来源</span><span class="v">CRSP+Compustat(股票); Ibbotson(债券)</span></div><div class="kv"><span class="k">样本量</span><span class="v">N/A</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">三因子显著优于CAPM; SMB/HML截距多数不显著; TERM和DEF捕捉债券共同变异及股债联动</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>三因子: R_it-RF_t = a_i+b_i(RM-RF)+s_i·SMB+h_i·HML+e_it; SMB=小盘组均值-大盘组均值; HML=高B/M组-低B/M组; Size断点=NYSE中位数; B/M断点=NYSE 30/70分位; BE=Compustat账面普通股权益</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">每年6月底按Size×B/M 2×3分组，持有12个月(7月至次年6月)。五因子(三股票+两债券)共同解释股票和债券平均收益。后续FF(2015)五因子在此基础加入RMW和CMA。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="M" data-search="07_fama_macbeth_1973_jpe.pdf risk, return, and equilibrium: empirical tests 提出fama-macbeth两步回归法：先做时间序列回归估计beta，再做横截面回归检验风险-收益关系，并采用滚动窗口按月估计的标准误修正来解决残差横截面相关性问题 fama, eugene f.; macbeth, james d. (1973), journal of political economy">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-M">M</span><span class="idx">#30</span></div>
+        <h3 class="card-title">Risk, Return, and Equilibrium: Empirical Tests</h3>
+        <div class="card-sub">Fama, Eugene F.; MacBeth, James D. (1973), Journal of Political Economy · <span class="fname">07_Fama_MacBeth_1973_JPE.pdf</span></div>
+        <div class="card-topic">提出Fama-MacBeth两步回归法：先做时间序列回归估计beta，再做横截面回归检验风险-收益关系，并采用滚动窗口按月估计的标准误修正来解决残差横截面相关性问题</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">beta_p,t-1</div><div class="vdef">组合p的CAPM beta估计值，由前5年月度收益数据按市场模型 r_it = a_i + beta_i * r_mt + e_it 估计得到，每月更新</div><div class="vformula"><code>beta_p = cov(R_p, R_m) / var(R_m)</code></div><div class="vds">数据来源：CRSP月度收益数据</div></div><div class="vitem"><div class="vname">beta_p^2</div><div class="vdef">beta的平方项，用于检验风险-收益关系的线性性（C1条件）</div><div class="vformula"><code>(beta_p)^2</code></div></div><div class="vitem"><div class="vname">s(e_i) 非beta风险</div><div class="vdef">市场模型残差的标准差，衡量非系统性（idiosyncratic）风险，用于检验是否除beta外还有其他风险因子被定价（C2条件）</div><div class="vformula"><code>s(e_i) = std(residual from market model)</code></div><div class="vds">数据来源：CRSP月度收益数据</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">R_pt 组合月度收益率</div><div class="vdef">等权重组合的月度百分比收益率（含股息和资本增值，经拆股调整）</div><div class="vformula"><code>R_pt = equally-weighted average of component security returns</code></div><div class="vds">数据来源：CRSP NYSE所有普通股</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">无额外控制变量（FM两步法本身就是处理横截面相关性的方法）</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">1926年1月至1968年6月</span></div><div class="kv"><span class="k">数据来源</span><span class="v">CRSP数据库，纽约证券交易所所有普通股</span></div><div class="kv"><span class="k">样本量</span><span class="v">约400-850只证券不等（按不同测试期变化）</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">20个beta排序组合，beta范围约0.4-1.5；组合beta的标准误约为个股的1/3-1/7；R^2在0.6-0.95之间</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>核心回归方程: R_pt = gamma_0t + gamma_1t * beta_p,t-1 + gamma_2t * beta_p,t-1^2 + gamma_3t * s_p,t-1(e_i) + eta_pt
+关键检验: (1) 对每月gamma系数的均值做t检验: t(gamma_bar) = gamma_bar / [s(gamma) / sqrt(n)]
+(2) 使用gamma_1的均值检验风险溢价(C3), gamma_2均值检验线性性(C1), gamma_3均值检验非beta风险(C2)</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">在基金经理研究中的应用场景：FM两步法是检验基金alpha显著性（如CAPM、三因子、四因子alpha）的标准方法。第一步时间序列回归估计基金对各因子的暴露(beta)，第二步横截面回归估计因子风险溢价并检验alpha均值是否为0。该方法通过月度FM回归的系数时间序列均值及其标准误来修正残差在截面上相关的问题。在基金经理研究中，常用FM回归来检验某个基金经理特征（如学历、经验）是否与alpha显著相关</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="M" data-search="08_jegadeesh_titman_1993_momentum_jf.pdf returns to buying winners and selling losers: implications for stock market efficiency 提出动量因子构建方法——基于过去j个月收益率排序、持有k个月的动量策略，发现买入赢家卖出输家可获得显著超额收益，并证明收益来源于对公司层面信息的反应不足而非系统性风险 jegadeesh, narasimhan; titman, sheridan (1993), journal of finance">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-M">M</span><span class="idx">#31</span></div>
+        <h3 class="card-title">Returns to Buying Winners and Selling Losers: Implications for Stock Market Efficiency</h3>
+        <div class="card-sub">Jegadeesh, Narasimhan; Titman, Sheridan (1993), Journal of Finance · <span class="fname">08_Jegadeesh_Titman_1993_Momentum_JF.pdf</span></div>
+        <div class="card-topic">提出动量因子构建方法——基于过去J个月收益率排序、持有K个月的动量策略，发现买入赢家卖出输家可获得显著超额收益，并证明收益来源于对公司层面信息的反应不足而非系统性风险</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">J-month lagged return 形成期收益</div><div class="vdef">股票在过去J个月（1-4个季度）的累计收益率，用于排序形成赢家/输家组合</div><div class="vformula"><code>Cumulative return over past J months</code></div><div class="vds">数据来源：CRSP日度收益文件</div></div><div class="vitem"><div class="vname">beta 市场beta</div><div class="vdef">根据Scholes-Williams方法估计的beta值，用于风险调整检验</div><div class="vformula"><code>从形成期前一年的日收益数据估计</code></div><div class="vds">数据来源：CRSP</div></div><div class="vitem"><div class="vname">Size 公司规模</div><div class="vdef">按市值将股票分为小、中、大三组，检验动量效应是否集中于小盘股</div><div class="vformula"><code>Market capitalization</code></div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">K-month holding period return 持有期收益</div><div class="vdef">在形成期之后持有K个月的组合收益率，采用重叠持有期方法（每月形成新组合并持有K个月，月均1/K仓位更新）</div><div class="vformula"><code>r_p,t = equal-weight average of component stock returns over holding period</code></div><div class="vds">数据来源：CRSP NYSE和AMEX所有股票</div></div><div class="vitem"><div class="vname">Winner-minus-Loser zero-cost portfolio return 动量因子收益</div><div class="vdef">买入过去表现最好的十分之一股票、卖出表现最差的十分之一股票，持有K个月的零成本组合收益</div><div class="vformula"><code>PR1YR = Equal-weight avg of top 30% 11-month returns (lagged 1 month) minus equal-weight avg of bottom 30%</code></div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">系统性风险（beta）、公司规模、一月效应（日历月固定效应）</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">1965年1月至1989年12月（主检验期），回测1927-1964年</span></div><div class="kv"><span class="k">数据来源</span><span class="v">CRSP日度收益文件（NYSE和AMEX）</span></div><div class="kv"><span class="k">样本量</span><span class="v">全部CRSP NYSE/AMEX股票，约1610只</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">最优策略为12个月形成期/3个月持有期，月均收益1.49%（有1周跳过）；6个月/6个月策略年化收益约12.01%；赢家减输家组合beta为负值（-0.06左右）；1月份动量收益为负（约-7%），非1月为正（约1.66%/月）</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>J-month/K-month策略：每月对J个月历史收益排序形成十等分组，买入top decile（赢家），卖出bottom decile（输家），持有K个月
+
+动量收益分解：E[(r_it-1 - r_bar_t-1)(r_it - r_bar_t)] = sigma^2_mu + sigma^2_b * Cov(f_t, f_t-1) + avg(Cov(e_it-1, e_it))
+- 第一项：预期收益横截面差异
+- 第二项：因子择时
+- 第三项：公司层面收益序列相关性（动量核心来源）
+
+PR1YR因子构建：equal-weight average of firms with highest 30% 11-month returns lagged 1 month minus equal-weight average of firms with lowest 30% 11-month returns</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">在基金经理研究中的应用场景：(1) 动量因子(PR1YR)作为Carhart四因子模型的核心因子之一，用于基金业绩归因；(2) 检验基金是否具有动量投资风格，计算基金对PR1YR的因子载荷；(3) 判断基金收益是否来源于真正的选股能力还是被动跟随动量策略；(4) 在基金业绩持续性分析中，动量因子可解释&#x27;热手效应&#x27;(hot hands)——表现好的基金可能只是恰好持有过去一年的赢家股票</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="M" data-search="09_carhart_1997_persistence_jf.pdf on persistence in mutual fund performance 构建四因子模型（市场、规模、价值、动量），证明共同因子和投资费用几乎完全解释了共同基金业绩的持续性，否定了基金经理选股能力的存在 carhart, mark m. (1997), journal of finance">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-M">M</span><span class="idx">#32</span></div>
+        <h3 class="card-title">On Persistence in Mutual Fund Performance</h3>
+        <div class="card-sub">Carhart, Mark M. (1997), Journal of Finance · <span class="fname">09_Carhart_1997_Persistence_JF.pdf</span></div>
+        <div class="card-topic">构建四因子模型（市场、规模、价值、动量），证明共同因子和投资费用几乎完全解释了共同基金业绩的持续性，否定了基金经理选股能力的存在</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">RMRF 市场超额收益</div><div class="vdef">Fama-French市场因子（价值加权市场组合收益减无风险利率）</div><div class="vformula"><code>RMRF = R_m - R_f</code></div><div class="vds">数据来源：CRSP NYSE/AMEX/Nasdaq价值加权组合</div></div><div class="vitem"><div class="vname">SMB 规模因子</div><div class="vdef">Fama-French规模因子（小市值组合减大市值组合收益）</div><div class="vformula"><code>SMB = Small minus Big</code></div><div class="vds">数据来源：来自Fama和French</div></div><div class="vitem"><div class="vname">HML 价值因子</div><div class="vdef">Fama-French价值因子（高账面市值比组合减低账面市值比组合收益）</div><div class="vformula"><code>HML = High minus Low B/M</code></div><div class="vds">数据来源：来自Fama和French</div></div><div class="vitem"><div class="vname">PR1YR 动量因子</div><div class="vdef">Carhart新增的一年期动量因子（过去11个月收益率最高的30%股票等权均值减最低的30%股票等权均值，滞后1个月）</div><div class="vformula"><code>PR1YR = equal-weight avg of top 30% 11-month returns (lagged 1 month) minus bottom 30%</code></div><div class="vds">数据来源：CRSP所有NYSE/AMEX/Nasdaq股票</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">r_it 基金超额收益</div><div class="vdef">基金i在t月的收益率减一个月国债收益率（净收益，已扣除费用）</div><div class="vformula"><code>r_it = R_fund,it - R_f,t</code></div><div class="vds">数据来源：ICDI/Micropal及其他来源的基金月度净收益</div></div><div class="vitem"><div class="vname">alpha (四因子alpha)</div><div class="vdef">四因子模型截距项，衡量基金在控制四个因子后的超额收益（基金经理技能指标）</div><div class="vformula"><code>alpha_i = intercept from 4-factor time-series regression</code></div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">费用率(expense ratio)、换手率(turnover/Mturn)、基金规模(TNA)、销售费用(load fees)、基金年龄</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">1962年1月至1993年12月（共1892只多元化股票基金、16109基金-年）</span></div><div class="kv"><span class="k">数据来源</span><span class="v">ICDI/Micropal、FundScope、United Babson Reports、Wiesenberger、WSJ</span></div><div class="kv"><span class="k">样本量</span><span class="v">年均约509只基金，共1892只基金（包括582只已清盘基金，无幸存者偏差）</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">基金年均费用率1.14%，修正换手率77.3%，64.5%的基金收取销售费用（平均7.33%）；按过去一年收益排序的十分位组合年化收益差约8%；四因子alpha在top decile约为+0.02%/月，bottom decile约为-0.43%/月；费用率与alpha负相关（系数-1.54），换手率与alpha负相关（系数-0.95）</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>四因子模型: r_it = alpha_iT + b_iT * RMRF_t + s_iT * SMB_t + h_iT * HML_t + p_iT * PR1YR_t + e_it
+
+Fama-MacBeth横截面回归: alpha_it = f(expense_ratio, turnover, ln(TNA), load_fees) + error
+
+风险调整收益（扣除费用后）: adjusted_alpha = 4-factor alpha + (1/12)*expense_ratio + (1/12)*turnover*roundtrip_cost
+
+动量因子(PR1YR)构建方法: equal-weight avg of firms with highest 30% 11-month returns lagged 1 month minus equal-weight avg of firms with lowest 30% 11-month returns, re-formed monthly</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">在基金经理研究中的应用场景：(1) 四因子模型是基金业绩评价的标准基准模型，通过alpha判断基金经理是否具有选股能力；(2) 动量因子(PR1YR)的载荷可以识别基金的投资风格（动量型vs.逆向型）；(3) 通过四因子模型分解基金收益，可区分收益来源于因子暴露还是经理技能；(4) 费用率和换手率的负系数（-1.54和-0.95）说明费用直接侵蚀收益，这一发现对基金经理行为分析至关重要；(5) 用过去alpha排序形成组合的方法可直接用于检验基金经理特征是否预示未来业绩</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="M" data-search="10_koenker_bassett_1978_regressionquantiles.pdf regression quantiles 提出分位数回归（quantile regression）方法，通过最小化加权绝对偏差来估计条件分位数函数，为分析变量间关系的分布异质性提供了系统框架 koenker, roger; bassett, gilbert jr. (1978), econometrica">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-M">M</span><span class="idx">#33</span></div>
+        <h3 class="card-title">Regression Quantiles</h3>
+        <div class="card-sub">Koenker, Roger; Bassett, Gilbert Jr. (1978), Econometrica · <span class="fname">10_Koenker_Bassett_1978_RegressionQuantiles.pdf</span></div>
+        <div class="card-topic">提出分位数回归（Quantile Regression）方法，通过最小化加权绝对偏差来估计条件分位数函数，为分析变量间关系的分布异质性提供了系统框架</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">X 自变量矩阵</div><div class="vdef">标准线性回归中的自变量矩阵，包括截距项</div><div class="vformula"><code>Standard linear model: y_i = x_i&#x27; * beta + epsilon_i</code></div></div><div class="vitem"><div class="vname">tau 分位数参数</div><div class="vdef">分位数水平参数，0 &lt; tau &lt; 1，如tau=0.5对应中位数回归（LAD），tau=0.1对应第10百分位回归</div><div class="vformula"><code>tau in (0, 1)</code></div><div class="vds">数据来源：由研究者设定</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">y 因变量</div><div class="vdef">需要分析条件分位数的连续或离散因变量</div></div><div class="vitem"><div class="vname">Q_tau(y|X) 条件分位数函数</div><div class="vdef">在给定X条件下y的第tau分位数，表示为X的线性函数</div><div class="vformula"><code>Q_tau(y_i | x_i) = x_i&#x27; * beta(tau)</code></div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">不适用（方法论论文，框架本身不预设控制变量）</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">方法论论文，无特定样本期</span></div><div class="kv"><span class="k">数据来源</span><span class="v">方法论论文</span></div><div class="kv"><span class="k">样本量</span><span class="v">方法论论文</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">方法论论文，不适用</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>分位数回归优化问题: min_{beta} sum_{i=1}^n rho_tau(y_i - x_i&#x27; * beta)
+其中 rho_tau(u) = u * (tau - I(u &lt; 0)) 是check function(检验函数)
+
+等价线性规划: min_{(beta, u, v)} tau * 1&#x27; * u + (1-tau) * 1&#x27; * v
+s.t. y = X * beta + u - v
+     u &gt;= 0, v &gt;= 0
+
+核心性质:
+1. 等变性(equivariance): 对y的单调变换、X的重新参数化具有等变性
+2. 稳健性: 相对OLS对异常值不敏感（特别是中位数回归tau=0.5对应LAD估计）
+3. 线性规划可解性: 通过单纯形法或内点法高效求解
+4. 渐近性质: beta_hat(tau) ~ N(beta(tau), tau*(1-tau)*[f(F^{-1}(tau))]^{-2} * (X&#x27;X)^{-1})</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">在基金经理研究中的应用场景：(1) 分析基金经理特征（如学历、经验）对不同分位数业绩的影响——高分位数基金经理可能面临不同的激励机制；(2) 研究管理费率如何影响不同分位数的基金alpha；(3) 在基金业绩持续性研究中，分析&#x27;赢家&#x27;和&#x27;输家&#x27;群体的不同行为模式；(4) 条件分位数回归可用于检验基金的因子暴露（如beta暴露）在不同市场状态下的异质性；(5) 相比均值回归，分位数回归对基金极端收益（如&#x27;爆仓&#x27;事件）更稳健</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-layer="M" data-search="11_cinelli_hazlett_2020_sensitivity_jrssb.pdf making sense of sensitivity: extending omitted variable bias 提出基于偏r^2参数化的ols遗漏变量偏误敏感性分析框架，引入鲁棒性值(robustness value)和偏r^2指标，实现无需对混杂因素分布假设的多维敏感性分析，并配套r包sensemakr cinelli, carlos; hazlett, chad (2020), journal of the royal statistical society, series b (statistical methodology)">
+      <div class="card-head">
+        <div class="card-meta"><span class="badge badge-M">M</span><span class="idx">#34</span></div>
+        <h3 class="card-title">Making Sense of Sensitivity: Extending Omitted Variable Bias</h3>
+        <div class="card-sub">Cinelli, Carlos; Hazlett, Chad (2020), Journal of the Royal Statistical Society, Series B (Statistical Methodology) · <span class="fname">11_Cinelli_Hazlett_2020_Sensitivity_JRSSB.pdf</span></div>
+        <div class="card-topic">提出基于偏R^2参数化的OLS遗漏变量偏误敏感性分析框架，引入鲁棒性值(Robustness Value)和偏R^2指标，实现无需对混杂因素分布假设的多维敏感性分析，并配套R包sensemakr</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="sec-label">自变量 (Independent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">D 处理变量</div><div class="vdef">研究所关注的处理变量（连续或二值），如受暴力伤害的虚拟变量</div></div><div class="vitem"><div class="vname">X 已观测协变量</div><div class="vdef">回归中已控制的协变量矩阵（含截距），用于&#x27;偏出&#x27;已解释部分</div><div class="vformula"><code>n x p 矩阵</code></div></div><div class="vitem"><div class="vname">Z 未观测混杂因素</div><div class="vdef">敏感性分析中的假设性未观测混杂因素（可为单变量或多变量），可能与其他变量存在非线性关系</div><div class="vds">数据来源：假设性变量，由研究者根据领域知识设定</div></div><div class="vitem"><div class="vname">R^2_{D~Z|X} 混杂-处理偏R^2</div><div class="vdef">在控制X后，混杂因素Z对处理变量D的解释力（偏R^2），衡量混杂因素在条件意义上与处理的关联强度</div><div class="vformula"><code>R^2_{D~Z|X} = 1 - var(D_perp_X,Z) / var(D_perp_X) = cor(D_perp_X, Z_perp_X)^2</code></div><div class="vds">数据来源：敏感性参数，由研究者设定</div></div><div class="vitem"><div class="vname">R^2_{Y~Z|D,X} 混杂-结果偏R^2</div><div class="vdef">在控制X和D后，混杂因素Z对结果变量Y的解释力（偏R^2），衡量混杂因素对结果的&#x27;影响&#x27;</div><div class="vformula"><code>R^2_{Y~Z|D,X} = cor(Y_perp_X,D, Z_perp_X,D)^2</code></div><div class="vds">数据来源：敏感性参数，由研究者设定</div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">因变量 (Dependent Variables)</div>
+          <div class="vlist"><div class="vitem"><div class="vname">Y 结果变量</div><div class="vdef">回归模型的因变量，如和平态度指数（0-1）</div></div><div class="vitem"><div class="vname">bias (调整后效应估计的变化量)</div><div class="vdef">加入假设混杂因素前后处理效应估计的差值</div><div class="vformula"><code>bias = tau_hat_restricted - tau_hat_full = gamma_hat * delta_hat</code></div></div><div class="vitem"><div class="vname">adjusted estimate 调整后效应估计</div><div class="vdef">如果控制了设定强度的混杂因素后应得到的处理效应估计</div><div class="vformula"><code>tau_hat = tau_hat_res - bias</code></div></div></div>
+        </div>
+        <div class="section">
+          <div class="sec-label">控制变量</div>
+          <div class="vdef">已观测协变量X已通过FWL定理&#x27;部分化出&#x27;，不需要额外列出</div>
+        </div>
+        <div class="section">
+          <div class="sec-label">数据来源</div>
+          <div class="kv-wrap"><div class="kv"><span class="k">样本期</span><span class="v">方法论论文（示例数据来自达尔富尔暴力对和平态度影响的调查）</span></div><div class="kv"><span class="k">数据来源</span><span class="v">方法论论文</span></div><div class="kv"><span class="k">样本量</span><span class="v">方法论论文</span></div></div>
+        </div>
+        <div class="section two-col">
+          <div>
+            <div class="sec-label">描述性统计</div>
+            <div class="vdef">方法论论文；示例中处理效应估计为0.097，标准误由df和t值确定；R包sensemakr提供自动化计算</div>
+          </div>
+          <div>
+            <div class="sec-label">核心公式</div>
+            <div class="vdef"><code>核心OVB偏误用偏R^2表示:
+|bias| = sqrt(R^2_{Y~Z|D,X} * R^2_{D~Z|X} / (1 - R^2_{D~Z|X})) * sd(Y_perp_X,D) / sd(D_perp_X)
+
+相对偏误(relative bias):
+|bias/tau_res| = |RY~Z|D,X * fD~Z|X| / |fY~D|X|  = BF / |fY~D|X|
+其中 BF = |RY~Z|D,X * fD~Z|X| 为偏误因子
+fY~D|X = t_tau_res / sqrt(df) 为处理变量的偏Cohen&#x27;s f
+
+标准误调整:
+se(tau) = se(tau_res) * sqrt((1-R^2_{Y~Z|D,X})/(1-R^2_{D~Z|X}) * df/(df-1))
+
+鲁棒性值(Robustness Value):
+当 R^2_{Y~Z|X,D} = R^2_{D~Z|X} = RV_q 时:
+RV_q = 1/2 * (sqrt(f_q^4 + 4*f_q^2) - f_q^2)
+其中 f_q = q * |fY~D|X| (q为欲减少的效应比例)
+
+偏R^2_{Y~D|X}（处理对结果独特解释力）:
+R^2_{Y~D|X} = t^2 / (t^2 + df)
+
+混杂因素强度界限（bounding）:
+max R^2_{D~Z|X} 可由与已观测协变量的比较导出</code></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-label">备注</div>
+          <div class="vdef">在基金经理研究中的应用场景：(1) 检验&#x27;基金经理学历与基金业绩&#x27;的回归结果对未观测混杂因素的敏感度——如果遗漏了基金经理的社交网络或家庭背景等变量，结论是否仍成立；(2) 计算鲁棒性值(RV)来评估基金特征-业绩关系的最低稳健性；(3) 设定未观测混杂因素（如基金经理天赋）与处理和结果的最小关联强度，通过敏感度等高线图可视；(4) 利用已观测协变量（如基金经理经验）作为基准（benchmarking），估计未观测因素强度的上界；(5) 可处理多维非线性混杂，适用于基金经理研究中常见的高维特征变量</div>
+        </div>
+      </div>
+    </div></div>
+  <footer>数据来源于各文献正文提取，公式与数据来源以原文为准。本表用于研究变量梳理，不构成投资建议。</footer>
+</div>
+<script>
+  const search = document.getElementById('search');
+  const filter = document.getElementById('filter');
+  const cards = Array.from(document.querySelectorAll('.card'));
+  function apply() {
+    const q = search.value.trim().toLowerCase();
+    const f = filter.value;
+    let shown = 0;
+    cards.forEach(c => {
+      const layer = c.getAttribute('data-layer');
+      const hay = c.getAttribute('data-search') || '';
+      const okLayer = !f || layer === f;
+      const okQ = !q || hay.includes(q);
+      const vis = okLayer && okQ;
+      c.style.display = vis ? '' : 'none';
+      if (vis) shown++;
+    });
+  }
+  search.addEventListener('input', apply);
+  filter.addEventListener('change', apply);
+</script>
+</body>
+</html>

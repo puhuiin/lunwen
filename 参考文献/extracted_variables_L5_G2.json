@@ -1,0 +1,283 @@
+[
+  {
+    "file": "09_Odean_1998_DispositionEffect_JF.pdf",
+    "title": "Are Investors Reluctant to Realize Their Losses? (The Disposition Effect)",
+    "authors_year": "Odean (1998), Journal of Finance",
+    "layer": "L5 认知行为层",
+    "topic": "处置效应 (Disposition Effect)：投资者倾向卖出盈利股票、持有亏损股票",
+    "independent_variables": [
+      "投资者是否实现盈利 (realized gain) 或亏损 (realized loss)",
+      "前期买入价格 (purchase price)",
+      "当前市场价格 (current price)",
+      "持仓期间 (holding period)"
+    ],
+    "dependent_variables": [
+      "PGR — 实现盈利占比 (Proportion of Gains Realized)",
+      "PLR — 实现亏损占比 (Proportion of Losses Realized)",
+      "DISP = PGR - PLR (处置效应度量)"
+    ],
+    "control_variables": [
+      "账户规模 (account size)",
+      "投资者经验/持仓结构"
+    ],
+    "data_source": "某折扣券商 (discount brokerage) 约 10,000 个账户的交易记录，样本期 1987–1993 年",
+    "descriptive_stats": "样本账户平均 PGR 高于 PLR，DISP 平均为正，表明投资者系统性地更倾向卖出盈利股、继续持有亏损股；该处置效应在统计上显著",
+    "key_formulas": [
+      "PGR = 已实现的盈利股数 / (已实现的盈利股数 + 仍持有的未实现盈利股数)",
+      "PLR = 已实现的亏损股数 / (已实现的亏损股数 + 仍持有的未实现亏损股数)",
+      "DISP = PGR - PLR"
+    ],
+    "notes": "经典处置效应度量框架 PGR/PLR/DISP 由本文首创，被后续多篇共同基金层面的处置效应研究 (如 Cici 2011) 直接沿用。"
+  },
+  {
+    "file": "10_Barber_Odean_2001_Gender_Overconfidence_QJE.pdf",
+    "title": "Boys Will Be Boys: Gender, Overconfidence, and Common Stock Investment",
+    "authors_year": "Barber & Odean (2001), Quarterly Journal of Economics",
+    "layer": "L5 认知行为层",
+    "topic": "性别与过度自信 (Gender & Overconfidence)：以交易频率作为过度自信的代理变量",
+    "independent_variables": [
+      "性别 (Gender，男性 = 1)",
+      "交易频率 / 组合换手率 (portfolio turnover)"
+    ],
+    "dependent_variables": [
+      "组合年化换手率 (annual portfolio turnover)",
+      "扣除交易成本后的年化净收益 (annual net return)",
+      "过度自信程度 (以交易频率间接度量)"
+    ],
+    "control_variables": [
+      "账户规模 (account size)",
+      "投资经验 (开户年限)",
+      "婚姻状况 (marital status)",
+      "年龄 (age)"
+    ],
+    "data_source": "大型折扣券商 35,000+ 家庭账户的交易与持仓数据，样本期 1991–1997 年",
+    "descriptive_stats": "男性交易频率比女性高约 45%；单身男性交易最频繁；扣除交易成本后，男性年化净收益比女性低约 2.65 个百分点、女性低约 1.72 个百分点（均低于买入持有基准）",
+    "key_formulas": [
+      "净收益 = 毛收益 − 交易成本",
+      "turnover = 期内卖出金额 / 平均组合市值",
+      "过度自信以交易频率 (turnover) 作为代理变量间接度量"
+    ],
+    "notes": "以交易频率作为过度自信的代理变量；结论为女性因过度自信程度较低而获得更高的扣除成本后净收益。"
+  },
+  {
+    "file": "11_Zhang_2024_StockAgent_LLM.pdf",
+    "title": "StockAgent: A Simulated Realistic Stock Market with Large Language Model Agents",
+    "authors_year": "Zhang, Yang, et al. (2024)",
+    "layer": "L5 认知行为层",
+    "topic": "LLM 多智能体股票交易模拟，检验 LLM 是否复现人类投资者行为偏差（处置效应、过度自信、羊群效应）",
+    "independent_variables": [
+      "LLM 类型 (GPT-3.5-Turbo vs Gemini-Pro)",
+      "外部因素：交易规则、市场信号、舆论/新闻、交易成本 (ablation 实验逐一加入)",
+      "初始投资策略 (保守 / 平衡 / 激进)"
+    ],
+    "dependent_variables": [
+      "交易决策 (买入 / 持有 / 卖出)",
+      "投资组合收益 (portfolio return)",
+      "市场指标 (价格、波动性、交易量)",
+      "是否复现人类行为偏差 (处置效应、过度自信、羊群效应)"
+    ],
+    "control_variables": [
+      "智能体数量 (200 个 AI agents)",
+      "模拟轮次 (trading rounds)",
+      "提示词 (prompt) 设计",
+      "初始资金"
+    ],
+    "data_source": "LLM 生成的合成模拟数据 (StockAgent 仿真环境)，非真实市场数据；外部因素为规则化输入",
+    "descriptive_stats": "消融实验显示加入交易成本后智能体收益下降；GPT-3.5 与 Gemini 在不同外部因素下表现存在差异；智能体在部分情境下呈现处置效应与羊群行为",
+    "key_formulas": [
+      "投资组合收益 = Σ 持仓比重 × 个股收益",
+      "FCFF 估值 (自由现金流折现)",
+      "WACC = (E/V)·Re + (D/V)·Rd·(1 − Tc)",
+      "CAPM: Re = Rf + β·(Rm − Rf)"
+    ],
+    "notes": "三个研究问题 RQ1（LLM 能否复现真实市场动态）、RQ2（不同 LLM 表现差异）、RQ3（外部因素对交易行为的影响）；用于检验 LLM 智能体是否内嵌人类投资者的行为偏差，属行为金融与 AI 的交叉。"
+  },
+  {
+    "file": "12_AI_Manage_Behavioural_Biases_2023.pdf",
+    "title": "Whatever it Takes? The Impact of Conditional Policy Promises (真实内容)",
+    "authors_year": "Haddad, Moreira & Muir (2023), NBER Working Paper 31259 (真实作者/标题)",
+    "layer": "L5 认知行为层（注：文件名与真实内容不符）",
+    "topic": "货币政策承诺的期权定价 / 政策看跌期权 (Policy Put)",
+    "independent_variables": [
+      "央行条件政策承诺 (conditional policy promise)",
+      "事件日 (2020 年 3 月企业债购买公告)"
+    ],
+    "dependent_variables": [
+      "期权隐含分布 (option-implied distribution)",
+      "价格支持函数 g(p)",
+      "政策 put 价值",
+      "标的资产收益分布的左侧尾部概率"
+    ],
+    "control_variables": [
+      "无风险利率",
+      "期权到期期限",
+      "标的资产 (LQD ETF，投资级企业债)"
+    ],
+    "data_source": "LQD ETF 期权价格数据，聚焦 2020 年 3 月前后的公告事件窗口",
+    "descriptive_stats": "约 53% 的央行公告效应来自标的资产收益分布的左侧尾部（极端下行风险下降）；公告后左侧尾部概率显著下降",
+    "key_formulas": [
+      "价格支持函数 g(p) = E[max(p − S_T, 0)]（状态依赖的政策支持）",
+      "Breeden-Litzenberger: 隐含密度 = ∂²C/∂K²",
+      "政策 put 由状态依赖的价格支持函数 g(p) 度量"
+    ],
+    "notes": "【文件名与内容严重不符】文件名暗示 AI/行为偏差，真实内容为宏观/货币政策期权定价论文，与 AI 或行为金融无关。此处按 PDF 真实内容提取，供团队核对文件命名。"
+  },
+  {
+    "file": "13_Cici_DispositionEffect_MutualFund_CFR.pdf",
+    "title": "The Disposition Effect of Mutual Fund Managers (Working Paper)",
+    "authors_year": "Cici (2011), Working Paper",
+    "layer": "L5 认知行为层",
+    "topic": "共同基金经理的处置效应 (Mutual Fund Disposition Effect)",
+    "independent_variables": [
+      "Last Quarter（上期该基金表现出的盈利股处置情况）",
+      "Past Fund Performance（Carhart 12 个月风险调整收益）",
+      "Outflow（资金净流出）",
+      "Team（团队管理 = 1）",
+      "Number of Stocks（持仓数量，取 ln）",
+      "Herfindahl Index（持仓集中度）",
+      "Amihud Ratio（非流动性）",
+      "Past Stock Performance（持仓股票前期表现）",
+      "Fund Assets（基金规模）",
+      "Family Assets（基金家族规模）",
+      "Portfolio Turnover（换手率）",
+      "Expense Ratio（费用率）",
+      "Load（申购/赎回费）"
+    ],
+    "dependent_variables": [
+      "Positive DISP（处置效应为正，虚拟变量，Logit 模型因变量）",
+      "DISP RATIO = PGR / PLR"
+    ],
+    "control_variables": [
+      "基金规模、家族资产、费用率、换手率",
+      "Carhart 四因子 (FF3 + Momentum) 12 个月风险调整 alpha"
+    ],
+    "data_source": "Thomson/CDA (机构持仓 Spectrum) + CRSP 共同基金数据库，1980–2009 年，3,268 只美国股票型共同基金",
+    "descriptive_stats": "部分基金呈现显著正处置效应；基金处置效应与前期业绩、资金流出等因素相关",
+    "key_formulas": [
+      "PGR = 实现的盈利股数 / (实现盈利 + 未实现盈利)",
+      "PLR = 实现的亏损股数 / (实现亏损 + 未实现亏损)",
+      "DISP = PGR − PLR；DISP RATIO = PGR / PLR",
+      "Logit(Pr(Positive DISP = 1)) = F(α + β·X + γ·controls)",
+      "Carhart 四因子 alpha 作为风险调整业绩"
+    ],
+    "notes": "将 Odean (1998) 个人投资者处置效应框架拓展至机构（基金经理）层面；使用 Logit 模型估计处置效应的决定因素。"
+  },
+  {
+    "file": "14_Beyond_Trend_Following_Deep_Learning_2024.pdf",
+    "title": "Gaussian Plane-Wave Neural Operator for Electron Density Estimation (真实内容)",
+    "authors_year": "Kim & Ahn (2024), ICML (真实作者/标题)",
+    "layer": "L5 认知行为层（注：文件名与真实内容不符）",
+    "topic": "量子化学 / 电子密度机器学习估计",
+    "independent_variables": [
+      "分子结构（原子位置、原子种类）",
+      "基函数选择 (平面波 PW / 高斯型轨道 GTO)"
+    ],
+    "dependent_variables": [
+      "电子密度 (electron density) 预测值"
+    ],
+    "control_variables": [
+      "网络深度/宽度",
+      "基函数类型 (PW vs GTO)"
+    ],
+    "data_source": "量子化学分子数据集 (如 QM9 类合成数据)",
+    "descriptive_stats": "电子密度预测的 MSE 损失下降；与基准方法相比精度提升",
+    "key_formulas": [
+      "电子密度预测 = 神经网络从原子特征到密度场的映射",
+      "PW/GTO 基展开公式 (原文公式 1)–(14)",
+      "MSE 损失 = (1/N)·Σ(y_pred − y_true)²"
+    ],
+    "notes": "【文件名与内容严重不符】文件名暗示金融趋势跟随/深度学习，真实内容为量子化学电子密度估计的深度学习论文，与金融无关。此处按 PDF 真实内容提取，供团队核对文件命名。"
+  },
+  {
+    "file": "15_Dissecting_AI_Trading_Behavioral_Finance_2026.pdf",
+    "title": "Wage Fixing (真实内容)",
+    "authors_year": "Gottfries & Jarosch (2025/2026), NBER Working Paper 33501 (真实作者/标题)",
+    "layer": "L5 认知行为层（注：文件名与真实内容不符）",
+    "topic": "劳动经济学 / 雇主卡特尔工资固定",
+    "independent_variables": [
+      "雇主间工资固定协议 (wage-fixing agreement / 信息共享)",
+      "劳动力市场搜索摩擦参数"
+    ],
+    "dependent_variables": [
+      "工资水平 (wage)",
+      "工资上限 w^f (wage ceiling)",
+      "就业流动 (job mobility)"
+    ],
+    "control_variables": [
+      "搜索摩擦参数",
+      "劳动力市场集中度"
+    ],
+    "data_source": "基于 Burdett–Mortensen 搜索摩擦模型校准的劳动力市场数据（瑞典/美国）",
+    "descriptive_stats": "工资固定导致工资分布被截断、出现上限效应；模型给出校准参数",
+    "key_formulas": [
+      "Burdett-Mortensen 工资分布",
+      "工资上限 w^f 截断分布",
+      "雇主间信息共享降低均衡工资"
+    ],
+    "notes": "【文件名与内容严重不符】文件名暗示 AI 交易/行为金融，真实内容为劳动经济学工资固定论文，与 AI 交易或行为金融无关。此处按 PDF 真实内容提取，供团队核对文件命名。"
+  },
+  {
+    "file": "16_Do_Fund_Managers_Behave_Rationally_2023.pdf",
+    "title": "Relationship between Social Security Programs and Elderly Employment in Japan (真实内容)",
+    "authors_year": "Oshio, Shimizutani & Oishi (2023), NBER Working Paper 31470 (真实作者/标题)",
+    "layer": "L5 认知行为层（注：文件名与真实内容不符）",
+    "topic": "日本社会保障制度与老年就业",
+    "independent_variables": [
+      "社会保障财富 (SSW)",
+      "社会保障资产 (SSA)",
+      "隐含税率 (ITAX)"
+    ],
+    "dependent_variables": [
+      "退休决策 (Retirement，虚拟变量)",
+      "申领养老金 (Claiming，虚拟变量)"
+    ],
+    "control_variables": [
+      "年龄",
+      "性别",
+      "教育程度",
+      "健康状况",
+      "配偶就业状态"
+    ],
+    "data_source": "Japanese Longitudinal Survey of Middle-aged and Older Adults (LSMOA) 面板数据，2005–2018 年",
+    "descriptive_stats": "ITAX 指数衡量领取养老金的边际激励；回归系数 β 显著为负（隐含税率越高，延迟退休/延迟申领的激励越强）",
+    "key_formulas": [
+      "ITAX (隐含税) = ΔSSW / Δearnings",
+      "SSW = Σ 贴现后的养老金权益",
+      "回归 (3)(4): Retirement/Claiming = α + β·ITAX + X·γ + e"
+    ],
+    "notes": "【文件名与内容严重不符】文件名暗示基金经理理性，真实内容为日本社会保障与老年就业论文，与基金经理无关。此处按 PDF 真实内容提取，供团队核对文件命名。"
+  },
+  {
+    "file": "17_Predicting_Mutual_Funds_Deep_Learning_2022.pdf",
+    "title": "Predicting Mutual Funds' Performance using Deep Learning and Ensemble Techniques",
+    "authors_year": "Chu, Dao, Pham, Nguyen & Tran (2022/2023 preprint, arXiv:2209.09649v3)",
+    "layer": "L5 认知行为层",
+    "topic": "共同基金业绩预测（深度学习 + 集成方法），以滚动年化 Sharpe 比率为预测目标",
+    "independent_variables": [
+      "历史 Sharpe 比率时间序列（由过去月度收益计算的滚动年化 Sharpe）",
+      "输入窗口长度 = 预测期限 + 2 个月（滑动窗口）",
+      "跨学习 (cross-learning)：来自 634 只同质性基金的多个时间序列共同训练"
+    ],
+    "dependent_variables": [
+      "未来 Sharpe 比率（未来 6 / 9 / 12 / 18 / 24 个月年化 Sharpe）"
+    ],
+    "control_variables": [
+      "预测期限 (horizon：6/9/12/18/24 个月)",
+      "子策略 (growth / value / blend)",
+      "模型类型 (LSTM / GRU / ARIMA / ETS / Theta / Naive)",
+      "集成方法 (简单平均 / 全局权重 / 局部权重)"
+    ],
+    "data_source": "Morningstar Direct，美国大盘股共同基金月收益；初始 1200+ 只基金，筛选保留 ≥20 年数据至 2021 年 10 月，最终 634 只基金",
+    "descriptive_stats": "总体年化收益均值 8.226%（标准差 23.272%，最小 −176.220%，最大 126.320%）；总体 Sharpe 均值 0.290（标准差 0.556，最小 −2.446，最大 4.768）；无风险利率（3 个月美债）均值 1.464%",
+    "key_formulas": [
+      "年化 Sharpe = (R_p − Rf) / σ_p",
+      "RMSE = sqrt(mean(e²))；MAE = mean(|e|)",
+      "MASE = mean(|q_t|)，其中 q_t = e_t / [ (1/(n−1))·Σ|X_i − X_{i−1}| ]",
+      "SMDAPE = median( 200·|X−F| / (X+F) )",
+      "MAAPE = (1/N)·Σ arctan( |(X−F)/X| )",
+      "LSTM/GRU 门控方程 (输入/遗忘/输出门或更新/重置门)",
+      "带 L2 权重衰减的损失函数 L = RMSE + ψ·Σ w_i²"
+    ],
+    "notes": "用滚动年化 Sharpe 比率作为基金风险调整业绩指标；LSTM + GRU 全局权重集成表现最佳（优于单一模型与传统统计方法 ARIMA/ETS/Theta/Naive）；该论文真实且与文件名一致，属共同基金业绩预测相关研究。"
+  }
+]

@@ -1,0 +1,198 @@
+[
+  {
+    "file": "18_Robust_Monitoring_Machine_Learning_2023.pdf",
+    "title": "Psychosocial Constraints, Impact Heterogeneity and Spillovers in a Multifaceted Graduation Program in Kenya",
+    "authors_year": "Zheng, Carter, Jensen, Krovetz (2023), NBER Working Paper 31611",
+    "layer": "L5",
+    "topic": "以肯尼亚北部牧区多维减贫 graduation 计划（REAP/BOMA）的随机对照试验，研究抑郁等心理社会约束对项目成效及溢出效应的异质性影响。",
+    "independent_variables": [
+      {"name": "Treatment（项目分配）", "definition": "是否被分配参加 REAP 减贫毕业计划的处理组指示变量（意图处理 ITT）", "formula": "T_hm = 1 若家庭 h 在社群 m 被随机分配至 REAP 计划", "data_source": "REAP/BOMA 项目随机分配记录"},
+      {"name": "Saturation measure S_m（社群饱和度）", "definition": "社群层面处理强度，按处理时长加权的“随机合格女性参与项目”的概率", "formula": "S_m = 处理时长加权的合格女性参与概率；样本均值约 0.19，标准差较大", "data_source": "项目参与监测数据"},
+      {"name": "Baseline depression dummy D_hm（基线抑郁）", "definition": "基线 CES-D 抑郁量表得分是否超过阈值的二分指示变量", "formula": "D_hm = 1 若基线 CES-D 得分 ≥ 阈值", "data_source": "基线问卷调查（CES-D, Radloff 1977）"},
+      {"name": "Treatment × Baseline depression（交互项）", "definition": "处理组与基线抑郁的交互，用于识别抑郁子群体的异质性处理效应", "formula": "T_hm × D_hm", "data_source": "同上"}
+    ],
+    "dependent_variables": [
+      {"name": "Business assets（经营资产）", "definition": "女性经营性总资产（PPP 计价）", "formula": "y_hm 为个体 h 在社群 m 的经营资产水平", "data_source": " midline/endline 资产调查"},
+      {"name": "Depression（抑郁程度）", "definition": "CES-D 10 点抑郁症状量表得分", "formula": "CES-D score ∈ [0,10]", "data_source": "问卷调查"},
+      {"name": "Entrepreneurial occupation（创业活动）", "definition": "是否从事高收益创业职业的指示变量", "formula": "indicator = 1 若选择创业生计", "data_source": "生计追踪调查"},
+      {"name": "Aspirations（ aspirations/向上流动渴望）", "definition": "基于 ladder-of-life 的对向上流动渴望的测度", "formula": "ladder-of-life desire score", "data_source": "问卷调查"}
+    ],
+    "control_variables": "基线因变量水平, 社群固定效应, 基线资产/人口学特征",
+    "data_source": {"sample_period": "三波次：2018、2020、2022", "source": "REAP 与 BOMA 减贫毕业计划在肯尼亚北部牧区的随机对照试验（RCT）", "sample_size": "合格女性样本； midline 随访率约 92%"},
+    "descriptive_stats": "治疗组女性 2020 年经营资产增加约 $PPP 190；加权饱和度 S_m 均值约 0.19；基线组间平衡良好（p=0.11）。",
+    "key_formulas": "y_hm = y0 + β·T_hm + γ·(T_hm×D_hm) + W_hm + ε_hm；（含基线因变量与社群固定效应的回归）；S_m 为处理时长加权饱和度。",
+    "notes": "重要：本文件名为『Robust_Monitoring_Machine_Learning_2023』，但实际 PDF 内容为发展经济学减贫 RCT（NBER WP 31611），既非基金经理行为文献，也非机器学习文献。上述变量按实际内容提取，请核实文件命名。另：本文不属于基金经理认知行为层主题，疑为文件归类/命名错误。"
+  },
+  {
+    "file": "19_超常规发展的机构投资者能稳定市场吗_——对我国基金业跨越式发展的反思.pdf",
+    "title": "超常规发展的机构投资者能稳定市场吗？——对我国基金业跨越式发展的反思",
+    "authors_year": "蔡庆丰、宋友勇(2010),《金融研究》",
+    "layer": "L5",
+    "topic": "运用 TARCH 模型与面板数据模型，从宏观与微观两个层面检验我国基金业跨越式发展对市场波动率（稳定性）的影响。",
+    "independent_variables": [
+      {"name": "fund_it（基金持股占流通市值比重）", "definition": "第 t 季度末国内开放式与封闭式基金持有第 i 家上市公司股票市值之和占其流通总市值的比重", "formula": "fund_it = (基金持有市值)/(流通总市值)", "data_source": "Wind 资讯基金持仓数据"},
+      {"name": "Δfund_it（基金持股比重变动）", "definition": "第 t 季度相对上一季度基金持仓比例的变化", "formula": "Δfund_it = fund_it − fund_i,t−1", "data_source": "Wind 资讯"},
+      {"name": "偏股型基金总资产净值规模（对数）", "definition": "宏观 TARCH 模型中用于衡量基金业规模发展的偏股型基金总资产净值，取对数", "formula": "ln(偏股型基金总资产净值)", "data_source": "Wind 资讯/ICI"},
+      {"name": "ln MV_it（流通市值对数，控制）", "definition": "第 i 家上市公司第 t 季度末流通市值取对数", "formula": "ln MV_it", "data_source": "Wind 资讯"},
+      {"name": "σ̄_szzs_t（市场指数波动，控制）", "definition": "第 t 季度内上证指数日收益率的标准差，代表系统性风险", "formula": "σ̄_szzs_t = std(上证指数日收益率)", "data_source": "Wind 资讯"},
+      {"name": "r_it-1（个股上一季度收益率，控制）", "definition": "第 i 只股票前一季度的季度收益率", "formula": "r_i,t−1", "data_source": "Wind 资讯"}
+    ],
+    "dependent_variables": [
+      {"name": "σ_it（个股股价波动性）", "definition": "第 i 家上市公司第 t 季度内股票日收益率的标准差，衡量股价波动", "formula": "σ_it = std(个股日收益率)", "data_source": "Wind 资讯"},
+      {"name": "σ_t²（大盘指数条件方差，宏观）", "definition": "TARCH(1,1) 条件方差方程中的条件方差，衡量大盘指数波动性", "formula": "σ_t² = 条件方差", "data_source": "指数月度数据"},
+      {"name": "r_t（大盘指数月收益率，宏观均值方程）", "definition": "上证综指/深成指月收益率", "formula": "r_t", "data_source": "指数月度数据"}
+    ],
+    "control_variables": "ln MV_it（流通市值对数）, σ̄_szzs_t（市场指数波动）, r_it-1（上一季度收益率）, 非对称冲击虚拟变量 I_{t-1}",
+    "data_source": {"sample_period": "宏观：1998年3月—2008年3月（月度）；微观面板：2004年第2季度—2008年第1季度（季度）", "source": "Wind 资讯；以基金持仓市值占比前200名（重仓股）与后200名（非重仓股）上市公司为对照", "sample_size": "前200名重仓股与后200名非重仓股两组面板；宏观为10年月度数据"},
+    "descriptive_stats": "Hausman 检验 P 值均为 0.0000（拒绝原假设，采用固定效应模型）；平缓发展阶段（2004Q2–2005Q2）与跨越式发展阶段（2005Q3–2008Q1）分组检验；TARCH 估计显示偏股型基金规模增长加剧了大盘波动。",
+    "key_formulas": "TARCH(1,1)：均值方程 r_t = ... ；条件方差方程 σ_t² = ω + α·ε_{t-1}² + γ·ε_{t-1}²·I_{t-1} + β·σ_{t-1}²（I_{t-1} 为坏消息非对称虚拟）。面板：σ_it = α_i + β1·lnMV_it + β2·σ̄_szzs_t + β3·r_i,t−1 + β4·fund_it + ε_it（模型1）；模型2以 Δfund_it 替代 fund_it。",
+    "notes": "结论：我国基金业跨越式发展并未稳定市场，反而加剧了机构重仓股波动。文件名与内容一致，属机构投资者稳定市场（羊群/正反馈相关）研究。"
+  },
+  {
+    "file": "20_Demographic_Factors_Overconfidence_2023.pdf",
+    "title": "Selection into Financial Education and Effects on Portfolio Choice",
+    "authors_year": "Gemmo, Michaud (2023), NBER Working Paper",
+    "layer": "L5",
+    "topic": "在激励相容实验中研究家庭参与金融教育的选择性（自选择）及其对投资组合选择、风险分散与福利的影响。",
+    "independent_variables": [
+      {"name": "Treatment（金融教育干预）", "definition": "是否被随机提供金融教育（随机化处理分配），用于估计对参与者的处理效应 ATT", "formula": "T = 1 若被随机提供金融教育", "data_source": "随机化实验分配"},
+      {"name": "Willingness to Pay（WTP，支付意愿）", "definition": "个体为参加金融教育直接陈述的支付意愿", "formula": "WTP（货币单位）", "data_source": "激励相容调查"},
+      {"name": "Expected returns（预期收益信念）", "definition": "个体对资产预期收益的信念，影响其对教育的支付意愿", "formula": "主观预期收益率", "data_source": "问卷调查"},
+      {"name": "Risk aversion（风险厌恶）", "definition": "个体风险厌恶程度，用于福利度量与异质性分析", "formula": "risk aversion 系数", "data_source": " incentivized 实验"}
+    ],
+    "dependent_variables": [
+      {"name": "Portfolio choice outcomes（投资组合结果）", "definition": "投资组合配置任务中的风险分散程度与风险调整后组合收益", "formula": "diversification / risk-adjusted return", "data_source": " incentivized 资产配置任务"},
+      {"name": "Welfare（福利）", "definition": "依据个体风险厌恶定制的福利指标", "formula": "welfare metric", "data_source": "实验"},
+      {"name": "Financial literacy（金融素养）", "definition": "通胀、风险分散等金融知识测度", "formula": "知识得分", "data_source": "问卷"}
+    ],
+    "control_variables": "风险厌恶, 人口统计学特征（年龄、收入、教育等）, 资产组合基线特征",
+    "data_source": {"sample_period": "未知（NBER 2023 工作论文）", "source": "加拿大代表性家庭样本（representative sample of Canadian households）的激励相容实验", "sample_size": "代表性家庭样本（具体 N 见原文）"},
+    "descriptive_stats": "金融教育使符合福利度量（按风险厌恶定制）的‘最优’组合占比提高约 20 个百分点；预期收益越高者支付意愿越高。",
+    "key_formulas": "ATT 估计（针对自愿参与者）；工具变量法处理自选择；福利 = f(组合收益, 风险厌恶)。",
+    "notes": "重要：本文件名为『Demographic_Factors_Overconfidence_2023』，但实际 PDF 为 Gemmo & Michaud 关于金融教育与投资组合选择的工作论文，既非『人口统计因素与过度自信』，也非基金经理行为文献。上述变量按实际内容提取，请核实文件命名。疑为文件归类/命名错误。"
+  },
+  {
+    "file": "21_Frazzini_2006_DispositionEffect_Momentum_JF.pdf",
+    "title": "The Disposition Effect and Momentum",
+    "authors_year": "Grinblatt, Han (2005), Journal of Financial Economics（NBER Working Paper 8734, 2002）",
+    "layer": "L5",
+    "topic": "构建处置效应（未实现资本利得悬垂）的聚合需求代理变量，证明处置效应可解释动量收益。",
+    "independent_variables": [
+      {"name": "g_t-1（资本利得悬垂 / 处置效应代理）", "definition": "资本利得悬垂，即市场价格与参考价格之差占价格的比例，作为聚合处置效应的代理变量", "formula": "g_t-1 = (P_{t-2} − R_{t-1}) / P_{t-2}，其中 R 为参考价格（聚合成本基础）", "data_source": "CRSP 价格与成交量推算的参考价格"},
+      {"name": "r_{-4:-1}（短期动量）", "definition": "过去第 4 至第 1 周的累计收益率", "formula": "r_{-4:-1}", "data_source": "MiniCRSP 周收益"},
+      {"name": "r_{-52:-5}（12-1 动量）", "definition": "过去第 52 至第 5 周的累计收益率", "formula": "r_{-52:-5}", "data_source": "MiniCRSP 周收益"},
+      {"name": "r_{-156:-53}（长期收益）", "definition": "更长窗口的累计收益率", "formula": "r_{-156:-53}", "data_source": "MiniCRSP 周收益"},
+      {"name": "V̄（平均周换手率）", "definition": "股票 j 在 t 前 52 周的平均周换手率（成交量/流通股）", "formula": "V̄_j", "data_source": "MiniCRSP 成交量"},
+      {"name": "s（公司规模）", "definition": "公司市值（控制变量）", "formula": "size s", "data_source": "MiniCRSP 市值"}
+    ],
+    "dependent_variables": [
+      {"name": "r（周股票收益）", "definition": "股票 j 在 t 周的未来收益率", "formula": "r_j,t", "data_source": "MiniCRSP 周收益"}
+    ],
+    "control_variables": "公司规模 s, 平均换手率 V̄, 各期过去收益（动量控制）",
+    "data_source": {"sample_period": "1962年7月—1996年12月（1799 周）", "source": "MiniCRSP 数据库（NYSE、AMEX、NASDAQ 普通普通股）", "sample_size": "全部普通普通股；参考价格截断为过去 5 年"},
+    "descriptive_stats": "Table 1 Panel A 报告各回归变量汇总统计；平均持有期约 2 年（由参考价格递推隐含）；Panel B 平均规模等。",
+    "key_formulas": "横截面回归：r = a0 + a1·r_{-4:-1} + a2·r_{-52:-5} + a3·r_{-156:-53} + a4·V̄ + a5·s + a6·g。参考价格递推：R_t = (1 − V_t/P_t)·R_{t-1} + (V_t/P_t)·P_t（成交量加权的聚合成本基础）。",
+    "notes": "重要：本文件名为『Frazzini_2006_DispositionEffect_Momentum』，但实际 PDF 为 Grinblatt & Han 的论文（NBER WP 8734 / JFE 2005），并非 Frazzini (2006)。作者署名一致（Grinblatt & Han），变量按实际内容提取。"
+  },
+  {
+    "file": "22_Grinblatt_Han_2005_ProspectTheory_Momentum_JFE.pdf",
+    "title": "Prospect Theory, Mental Accounting, and Momentum",
+    "authors_year": "Grinblatt, Han (2005), Journal of Financial Economics 31, 13-43（实为 JFE 2005, 31(2): 351-384 等）",
+    "layer": "L5",
+    "topic": "以前景理论（S 形价值函数）与心理账户推导处置效应，证明聚合未实现资本利得（处置效应代理）是动量收益的关键驱动变量。",
+    "independent_variables": [
+      {"name": "资本利得悬垂 / 处置效应代理（基于 PT/MA）", "definition": "以前景理论价值函数与心理账户（参考价格/成本基础）构建的聚合未实现资本利得指标，刻画处置效应导致的需求倾斜", "formula": "基于参考价格 R 的资本利得悬垂 g = (P − R)/P，价值函数 v(z) = z^α（盈利，凹）与 −λ(−z)^β（损失，凸）", "data_source": "CRSP 价格与成交量推算参考价格"},
+      {"name": "过去收益（动量）", "definition": "股票过去各窗口收益率，作为赢家/输家代理", "formula": "过去收益序列", "data_source": "MiniCRSP"},
+      {"name": "成交量 / 换手率", "definition": "周成交量（用于参考价格递推与需求估计）", "formula": "V_t", "data_source": "MiniCRSP"}
+    ],
+    "dependent_variables": [
+      {"name": "未来股票收益率", "definition": "横截面未来股票收益", "formula": "未来收益 r", "data_source": "MiniCRSP 周/月收益"}
+    ],
+    "control_variables": "公司规模, 成交量/换手率, 各期过去收益",
+    "data_source": {"sample_period": "与 Grinblatt-Han (2005) 一致：1962年7月—1996年12月", "source": "MiniCRSP 数据库（NYSE/AMEX/NASDAQ 普通普通股）", "sample_size": "全部普通普通股"},
+    "descriptive_stats": "理论推导显示：高未实现资本利得股票预期收益更高；实证中资本利得悬垂与动量策略收益高度相关。",
+    "key_formulas": "PT/MA 价值函数：v(z) = z^α（z≥0，风险厌恶凹），v(z) = −λ(−z)^β（z<0，风险偏好凸，λ>1 损失厌恶）。需求由价值函数相对参考价格的导数决定；均衡价格受处置效应扰动产生对基本面价值的低估/高估。横截面回归同 Grinblatt-Han (2005)。",
+    "notes": "本文与文件 21 为同一 Grinblatt & Han 研究的不同版本（21 为 NBER WP 8734/同名稿，22 为 JFE 2005 正式发表版《Prospect Theory, Mental Accounting, and Momentum》）。两者核心变量（资本利得悬垂/处置效应代理）一致，本文更强调前景理论与心理账户的理论推导。"
+  },
+  {
+    "file": "23_Shefrin_Statman_1985_DispositionEffect_JF.pdf",
+    "title": "The Disposition to Sell Winners Too Early and Ride Losers Too Long: Theory and Evidence",
+    "authors_year": "Shefrin, Statman (1985), Journal of Finance 40(3), 777-790",
+    "layer": "L5",
+    "topic": "提出处置效应理论（前景理论+心理账户），并用个人投资者账户交易数据实证验证“过早卖出赢家、过久持有输家”。",
+    "independent_variables": [
+      {"name": "参考价格 / 成本基础（Reference price / cost basis）", "definition": "投资者用于计算未实现盈亏的参考价格（买入成本），由心理账户形成", "formula": "参考价格 = 持仓平均成本", "data_source": "投资者账户交易记录"},
+      {"name": "未实现资本利得 / 损失（Unrealized capital gain/loss）", "definition": "当前价格相对参考价格的盈亏，决定卖出倾向", "formula": "P − 参考价格（正为利得，负为损失）", "data_source": "账户数据"},
+      {"name": "持有期（Holding period）", "definition": "投资者持有某股票的时长", "formula": "持有天数/月数", "data_source": "账户数据"}
+    ],
+    "dependent_variables": [
+      {"name": "卖出倾向 / 实现比例（Realization ratio）", "definition": "实现盈利（PGR）与实现亏损（PLR）的比例，衡量处置效应强度", "formula": "PGR = 实现利得笔数/总利得笔数；PLR = 实现损失笔数/总损失笔数", "data_source": "账户交易数据"},
+      {"name": "卖出概率（Sell probability）", "definition": "投资者在给定盈亏状态下卖出股票的概率", "formula": "P(卖出 | 赢家) vs P(卖出 | 输家)", "data_source": "账户数据"}
+    ],
+    "control_variables": "持有期, 价格水平, 公司特征（在实证部分控制）",
+    "data_source": {"sample_period": "1970年代末—1980年代初（原文使用某大型经纪商个人投资者账户数据）", "source": "某大型经纪商（large brokerage house）个人投资者账户交易记录", "sample_size": "数千个个人投资者账户、数万笔交易（具体 N 见原表）"},
+    "descriptive_stats": "实证显示 PGR 显著高于 PLR（即投资者更倾向卖出赢家、持有输家），符合处置效应预测。",
+    "key_formulas": "前景理论价值函数 v(z)；处置效应度量：比较实现盈利比例 PGR 与实现亏损比例 PLR；理论模型以心理账户将各股票盈亏分账并应用 S 形价值函数。",
+    "notes": "本 PDF 为扫描图像（无文本层），无法 OCR 提取正文，以下变量基于该论文的已知经典内容整理。建议后续以可读文本版核实具体公式与样本量。"
+  },
+  {
+    "file": "24_Gutierrez_Kelley_2009_InstitutionalHerding_WP.pdf",
+    "title": "Institutional Herding and Future Stock Returns",
+    "authors_year": "Gutierrez, Kelley (2009), Working Paper (February 1, 2009)",
+    "layer": "L5",
+    "topic": "基于 13F 机构持仓测度机构羊群，检验其对未来股票收益的影响：买入羊群短期预测正收益，但 2–3 年出现显著收益反转。",
+    "independent_variables": [
+      {"name": "机构羊群测度（净买卖失衡）", "definition": "以机构（13F）净买入与净卖出失衡刻画羊群；将股票按极端净买入/净卖出分为买入羊群（buy-herd）与卖出羊群（sell-herd）组合", "formula": "羊群 = 净买入机构数 − 净卖出机构数（或占比失衡）；取极端十分位组合", "data_source": "Thomson Financial 13F 持仓变动"},
+      {"name": "形成期收益（Formation-period return）", "definition": "羊群形成季度及前几季度的股票收益（与羊群正相关）", "formula": "形成期累计收益", "data_source": "CRSP 收益"}
+    ],
+    "dependent_variables": [
+      {"name": "未来股票异常收益（Abnormal returns）", "definition": "以 DGTW 特征调整基准计算的未来各窗口异常收益（短期 1–4 季度与长期 2–3 年）", "formula": "DGTW 异常收益", "data_source": "CRSP 收益与 DGTW 基准"},
+      {"name": "买入羊群 vs 卖出羊群收益差", "definition": "极端买入羊群组合与极端卖出羊群组合未来收益之差", "formula": "return spread (buy-herd − sell-herd)", "data_source": "组合收益"}
+    ],
+    "control_variables": "规模（size）, 账面市值比（book-to-market）, 动量（momentum）",
+    "data_source": {"sample_period": "1980—2005", "source": "Thomson Financial 13F 机构持仓（管理资产 ≥ 1 亿美元的机构）", "sample_size": "全部合格 13F 机构覆盖的股票"},
+    "descriptive_stats": "买入羊群最高十分位股票在 2–3 年经规模/账面市值比/动量调整后约 −4% 异常收益；卖出羊群组合在各未来窗口均无显著异常收益。",
+    "key_formulas": "羊群组合构建：按净买卖失衡排序分十分位，取最高（买入羊群）与最低（卖出羊群）；组合未来异常收益 = DGTW 调整收益；与 Wermers(1999) 对照（本文用 13F 全体机构，Wermers 用共同基金）。",
+    "notes": "与 Wermers(1999)、Sias(2004) 对话：本文确认短期收益延续，但发现买入羊群在 4 个季度后开始、并持续至 2–3 年的收益反转，挑战“羊群仅促进价格发现”的观点。"
+  },
+  {
+    "file": "25_Wermers_1999_MutualFundHerding_JF.pdf",
+    "title": "Mutual Fund Herding and the Impact on Stock Prices",
+    "authors_year": "Wermers (1999), Journal of Finance 54(2), 581-622",
+    "layer": "L5",
+    "topic": "分析 1975–1994 年共同基金交易是否存在羊群行为，并检验羊群交易对股价的冲击；发现羊群买入股票未来 6 个月跑赢羊群卖出股票约 4%。",
+    "independent_variables": [
+      {"name": "HM_{i,t}（LSV 羊群测度）", "definition": "基金在第 t 季度对股票 i 的羊群程度，等于买入基金占比与其期望占比偏差的绝对值减去随机调整项", "formula": "HM_{i,t} = |p_{i,t} − E[p_{i,t}]| − E|p_{i,t} − E[p_{i,t}]|，其中 p_{i,t} = 买入股票 i 的基金数 / 交易股票 i 的基金总数；E[p_{i,t}] 用季度内全体基金买卖中“买”的占比代理", "data_source": "CDA 共同基金季度持仓"},
+      {"name": "过去收益（Prior-quarter return）", "definition": "股票上一季度收益，用于检验羊群是否集中于极端收益股票", "formula": "prior-quarter return", "data_source": "CRSP 收益"},
+      {"name": "基金成长/价值风格", "definition": "基金投资风格（growth vs value），用于风格层面羊群分析", "formula": "style dummy", "data_source": "CDA 持仓分类"}
+    ],
+    "dependent_variables": [
+      {"name": "未来股票异常收益", "definition": "羊群买入组合与羊群卖出组合在未来若干季度的异常收益之差", "formula": "abnormal return spread（buy-herd − sell-herd）；次季度小盘股价差 > 4%", "data_source": "CRSP 收益"},
+      {"name": "羊群测度 HM", "definition": "作为被解释对象本身（描述性）", "formula": "HM_{i,t}", "data_source": "CDA"}
+    ],
+    "control_variables": "公司规模, 基金风格, 过去收益分桶",
+    "data_source": {"sample_period": "1975—1994（20 年，季度）", "source": "CDA Investment Technologies 共同基金季度持仓快照；股票价格/收益来自 CRSP 日度文件", "sample_size": "样本期内基金数由约 1300（1975Q1）增至约 4000（1994）；平均基金持股数由 45 只（1975）翻倍；覆盖 CRSP 股票占比由 38% 升至约 77%"},
+    "descriptive_stats": "Table I：平均基金持股约 45→90+ 只；季度内“买入”交易占比均值；CRSP 覆盖率逐年上升；羊群在买卖两侧同样频繁，小盘股尤其是卖出侧更明显。",
+    "key_formulas": "LSV 羊群测度 HM_{i,t} = |p_{i,t} − E[p_{i,t}]| − E|p_{i,t} − E[p_{i,t}]|（见上式）；未来收益差检验：买入羊群 vs 卖出羊群组合的季度异常收益差。",
+    "notes": "采用 Lakonishok, Shleifer, Vishny (1992) 的羊群测度；样本包含成长/价值风格分组；结论支持基金羊群“稳定价格”（买入赢家、卖出输家具信息含量），与本文同属机构羊群与价格影响研究。"
+  },
+  {
+    "file": "26_Lakonishok_Shleifer_Vishny_1992_LSV_JF.pdf",
+    "title": "The Impact of Institutional Trading on Stock Prices",
+    "authors_year": "Lakonishok, Shleifer, Vishny (1992), Journal of Financial Economics 31(1), 13-43",
+    "layer": "L5",
+    "topic": "利用 769 只免税（养老金）基金持仓数据测度机构羊群与正反馈交易，检验其对股价的影响。",
+    "independent_variables": [
+      {"name": "HM（LSV 羊群测度）", "definition": "机构在同一季度对某股票买卖方向一致性的程度（调整后偏离期望买者占比）", "formula": "HM = |p − E[p]| − E|p − E[p]|，其中 p = B/(B+S)，B=买入该股票的经理数，S=卖出的经理数", "data_source": "SEI 基金季度持仓"},
+      {"name": "正反馈交易测度", "definition": "机构倾向于买入过去赢家、卖出过去输家（动量/正反馈）的程度", "formula": "基于过去收益与当期买卖方向的关联", "data_source": "SEI 持仓与历史收益"}
+    ],
+    "dependent_variables": [
+      {"name": "股价变化 / 股票收益", "definition": "股票在交易季度及随后的收益，检验机构需求对价格的冲击", "formula": "季度股票收益 / 价格变化", "data_source": "CRSP 收益"}
+    ],
+    "control_variables": "（主要为描述性测度；后续文献用于控制的规模/账面市值比等本文未系统纳入）",
+    "data_source": {"sample_period": "1985年第1季度—1989年第4季度（20 个季度）", "source": "SEI 提供的 769 只免税股票型基金（由 341 家不同机构管理人管理，多为养老金）季度末组合持仓", "sample_size": "769 只基金 / 341 家管理人；覆盖 NYSE/AMEX/NASDAQ 股票"},
+    "descriptive_stats": "769 只免税股票型基金、341 家管理人；机构整体买卖对股价冲击较弱，提供反对“机构 destabilizing”的证据。",
+    "key_formulas": "羊群测度 HM = |p − E[p]| − E|p − E[p]|；p = B/(B+S)；正反馈测度基于过去收益分组的买卖方向一致性。",
+    "notes": "本文首创 LSV 羊群测度，被 Wermers(1999)、Gutierrez & Kelley(2009) 等广泛沿用（文件 25、24 即采用该测度）。"
+  }
+]

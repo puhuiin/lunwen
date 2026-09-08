@@ -1,0 +1,132 @@
+[
+  {
+    "file": "01_寇宗来_2020_风格漂移_金融学季刊.pdf",
+    "title": "基金业绩会影响基金经理风格漂移与离职吗——来自中国开放式基金的证据",
+    "authors_year": "寇宗来、张剑丽、谢迟(2020)",
+    "layer": "L4",
+    "topic": "基金业绩对基金经理风格漂移和离职行为的影响",
+    "independent_variables": [
+      {"name": "Frk(业绩排名)", "definition": "年中标准化至[0,1]区间，基于夏普比率排序", "formula": "", "data_source": "Wind"},
+      {"name": "Schg(市场真实风格切换)", "definition": "Sharpe强式模型估算的市场真实风格", "formula": "", "data_source": "Wind"},
+      {"name": "Frk×Schg", "definition": "交互项", "formula": "", "data_source": "Wind"}
+    ],
+    "dependent_variables": [
+      {"name": "Fsds1(风格漂移)", "definition": "基于Sharpe强式模型的曼哈顿距离", "formula": "Σ|w*_imt - w*_im(t-1)|", "data_source": "Wind"},
+      {"name": "Fsds2(风格漂移)", "definition": "基于Sharpe简单模型的曼哈顿距离", "formula": "Σ|w_imt - w_im(t-1)|", "data_source": "Wind"},
+      {"name": "Fchgm(经理变更)", "definition": "虚拟变量,1=变更", "formula": "logit回归", "data_source": "Wind"}
+    ],
+    "control_variables": "Mtenure(任期), Mexp(从业经验), Msize(所管基金规模), Mfnum(管理基金数), Mgender, Mdoc(学历), Fage(基金年限), Fsize(基金规模), Cage(公司年限), Csize(公司规模)",
+    "data_source": {"sample_period": "2008年1月-2017年12月", "source": "Wind数据库", "sample_size": "21624个基金-季度观测, 1579只开放式股票型基金, 332位基金经理"},
+    "descriptive_stats": "Fsds1均值0.298(σ=0.191); Fsds2均值0.512(σ=0.267); Frk均值0.512; Fchgm均值0.084",
+    "key_formulas": "Fsds1 = Σ|w*_imt - w*_im(t-1)|(Sharpe强式); logit(Fchgm)含Frk×Schg交互项",
+    "notes": "业绩排名越差风格漂移越大; 市场真实风格切换具有调节作用; 排名靠后经理更可能离职。"
+  },
+  {
+    "file": "02_The_impact_of_experience_on_risk_taking_overconfidence_and_herding_of_fund_man_2006.pdf",
+    "title": "The Impact of Experience on Risk Taking, Overconfidence, and Herding of Fund Managers",
+    "authors_year": "Menkhoff, Schmidt, Brozynski(2006)",
+    "layer": "L4",
+    "topic": "基金经理经验对风险承担、过度自信和羊群行为的影响",
+    "independent_variables": [
+      {"name": "经验水平inex/exp/veryexp", "definition": "≤5年/5-15年/>15年三组", "formula": "", "data_source": "问卷调查"},
+      {"name": "基金类型", "definition": "股票型/混合型/债券型/货币型", "formula": "", "data_source": "问卷调查"},
+      {"name": "个人特征(年龄/性别等)", "definition": "", "formula": "", "data_source": "问卷调查"}
+    ],
+    "dependent_variables": [
+      {"name": "RISK(风险承担)", "definition": "基于最小收益赌注实验的赌注金额", "formula": "", "data_source": "激励实验"},
+      {"name": "OC(过度自信)", "definition": "三维度均值(PERF+NEWS+DAX_est)/3", "formula": "OC = (PERF+NEWS+DAX_est)/3", "data_source": "认知测试"},
+      {"name": "HERD(羊群行为)", "definition": "同事重要性HERDc+市场重要性HERDm+动量策略MOM", "formula": "HERD=α·HERDc+β·HERDm+γ·MOM", "data_source": "问卷调查"}
+    ],
+    "control_variables": "基金规模, 年龄, 性别",
+    "data_source": {"sample_period": "2002年8-12月", "source": "德国117位基金经理问卷调查(含激励实验和认知测试)", "sample_size": "59家基金公司中35家参与, 117位基金经理"},
+    "descriptive_stats": "inexperienced≈34%, experienced≈50%, very experienced≈16%; RISK均值≈基金资产25%-30%",
+    "key_formulas": "OC=(PERF+NEWS+DAX_est)/3; Ordered Probit回归: RISK/OC/HERD = f(经验组+控制变量)",
+    "notes": "经验与风险承担呈倒U型; 过度自信随经验上升; 羊群行为随经验下降。方法论特色：问卷+实验+认知测试三合一。"
+  },
+  {
+    "file": "03_Brown_Harlow_Starks_1996_Tournaments_JF.pdf",
+    "title": "Of Tournaments and Temptations: An Analysis of Managerial Incentives in the Mutual Fund Industry",
+    "authors_year": "Brown, Harlow, Starks(1996), JF",
+    "layer": "L4",
+    "topic": "锦标赛激励对基金经理风险调整行为的影响——年中输家是否增加风险",
+    "independent_variables": [
+      {"name": "LOSER/WINNER", "definition": "年中业绩前后50%分位", "formula": "", "data_source": "Wiesenberger/CRSP"},
+      {"name": "评估期阶段", "definition": "前6月vs后6月", "formula": "", "data_source": "CRSP"},
+      {"name": "时间趋势(1976-86前期/1987-91后期)", "definition": "", "formula": "", "data_source": "CRSP"}
+    ],
+    "dependent_variables": [
+      {"name": "基金波动率σ", "definition": "收益率标准差", "formula": "σ²=(1/T)Σ(R_it-R̄_i)²", "data_source": "CRSP月度收益率"},
+      {"name": "风险调整比率σ2/σ1", "definition": "后半期/前半期波动率", "formula": "(σ2_L/σ1_L)>(σ2_W/σ1_W)", "data_source": "CRSP"}
+    ],
+    "control_variables": "基金年龄, 市场波动, 评估期固定效应, 投资风格固定效应, 12月窗口修饰效应",
+    "data_source": {"sample_period": "1976-1991年(16年)", "source": "Wiesenberger Investment Companies Service及CRSP", "sample_size": "334只成长型共同基金"},
+    "descriptive_stats": "前后期(1976-86 vs 1987-91)子样本; newer vs well-established子样本; 按年中业绩分输赢组",
+    "key_formulas": "锦标赛假说: (σ2_L/σ1_L) > (σ2_W/σ1_W); 回归: Δσ_it = β0+β1·LOSER_i+β2·POST_t+β3·LOSER×POST+Controls+ε",
+    "notes": "扫描版PDF，通过图像渲染+视觉读取。锦标赛理论在共同基金的经典实证: 年中输家在年度后半年显著增加波动率; 1987-91年效应更强; 新基金更显著。"
+  },
+  {
+    "file": "04_Ang_Chen_Xing_2006_DownsideRisk_RFS.pdf",
+    "title": "Downside Risk and the Cross-Section of Asset Returns",
+    "authors_year": "Ang, Chen, Xing(2006), RFS",
+    "layer": "L4",
+    "topic": "下行风险在横截面资产定价中的作用——下行beta是否为定价因子",
+    "independent_variables": [
+      {"name": "β⁻(下行beta)", "definition": "市场下行时协方差/下行方差", "formula": "β⁻=cov(r_i,r_m|r_m<μ_m)/var(r_m|r_m<μ_m)", "data_source": "CRSP"},
+      {"name": "β⁺(上行beta)", "definition": "市场上行时协方差/上行方差", "formula": "β⁺=cov(r_i,r_m|r_m>μ_m)/var(r_m|r_m>μ_m)", "data_source": "CRSP"},
+      {"name": "β(无条件beta)", "definition": "常规CAPM beta", "formula": "β=cov(r_i,r_m)/var(r_m)", "data_source": "CRSP"},
+      {"name": "β⁻-β(相对下行beta)", "definition": "非对称性度量", "formula": "", "data_source": "CRSP"}
+    ],
+    "dependent_variables": [
+      {"name": "横截面超额收益", "definition": "月度/年度超额回报", "formula": "", "data_source": "CRSP"},
+      {"name": "FF3/FF4 alpha", "definition": "Fama-French/Carhart四因子alpha", "formula": "", "data_source": "CRSP"}
+    ],
+    "control_variables": "市值(logME), B/M, MOM(12月回报), SMB, HML, coskewness",
+    "data_source": {"sample_period": "1963年7月-2001年12月(38年)", "source": "CRSP NYSE股票月度数据", "sample_size": "约2000-3000只NYSE股票"},
+    "descriptive_stats": "β⁻均值0.6-0.8, β⁺均值1.0-1.2; 下行beta十分位组合alpha月均差异0.3%-0.5%",
+    "key_formulas": "β⁻=cov(r_i,r_m|r_m<μ)/var(r_m|r_m<μ); Fama-MacBeth: R=γ0+γ1β⁻+γ2β⁺+γ3SIZE+γ4B/M+γ5MOM+ε",
+    "notes": "下行beta显著正定价(高β⁻获正超额收益)，不能被规模/价值/动量/常规beta解释。为风险应对研究提供下行风险量化方法基础。"
+  },
+  {
+    "file": "不进则退：基金锦标赛中基金经理的选股信息来源.pdf",
+    "title": "不进则退：基金锦标赛中基金经理的选股信息来源",
+    "authors_year": "张乾、薛健(2019)",
+    "layer": "L4",
+    "topic": "基金业绩排名对基金经理选股信息来源(公开vs私有)的影响",
+    "independent_variables": [
+      {"name": "%RTN", "definition": "同类基金年度收益率排名百分位", "formula": "", "data_source": "RESSET/Wind/CSMAR"},
+      {"name": "%ALPHA", "definition": "基于alpha而非raw return的排名", "formula": "", "data_source": "RESSET/Wind/CSMAR"},
+      {"name": "dFLOW", "definition": "净资金流变化", "formula": "", "data_source": "RESSET/Wind/CSMAR"}
+    ],
+    "dependent_variables": [
+      {"name": "RPI(公开信息依赖度)", "definition": "对公开信息依赖程度[0,1]", "formula": "公开信息相关交易占比", "data_source": "RESSET/Wind/CSMAR"},
+      {"name": "dRPI(信息来源切换)", "definition": "上下半年RPI差值", "formula": "RPI_it - RPI_i(t-1)", "data_source": "计算"}
+    ],
+    "control_variables": "AGE(从业年限), lnTNA(规模), %FEE(管理费率), %IH(机构持有比), GENDER, EDU, EXP",
+    "data_source": {"sample_period": "2007-2017年", "source": "RESSET+Wind+CSMAR", "sample_size": "97家基金公司1762只基金, 7088个dRPI观测值"},
+    "descriptive_stats": "RPI均值0.5-0.6(σ=0.15-0.20); dRPI均值≈0; %RTN均值≈0.5",
+    "key_formulas": "RPI_it∈[0,1](公开信息交易占比); dRPI=RPI_it-RPI_i(t-1); 回归: dRPI=f(%RTN,%ALPHA,dFLOW,Controls)",
+    "notes": "赢家更依赖公开信息，输家转向私有信息以获差异化优势。拓展了Brown-Harlow-Starks(1996)框架。"
+  },
+  {
+    "file": "业绩排名与预期风险调整——考虑报酬激励与解职风险交互影响的新证据.pdf",
+    "title": "业绩排名与预期风险调整——考虑报酬激励与解职风险交互影响的新证据",
+    "authors_year": "肖继辉、彭文平(2016)",
+    "layer": "L4",
+    "topic": "业绩排名对预期风险调整的影响(报酬激励+解职风险交互)",
+    "independent_variables": [
+      {"name": "RNT(相对业绩排名)", "definition": "同类基金年度业绩排名", "formula": "", "data_source": "国泰安"},
+      {"name": "St(市场强度)", "definition": "牛市/熊市分类", "formula": "", "data_source": "Wind"},
+      {"name": "σ(1)(已实现风险)", "definition": "前6月波动率", "formula": "", "data_source": "国泰安"},
+      {"name": "Winner×DCI/DEI交互项", "definition": "赢家×报酬激励/解职风险", "formula": "", "data_source": "计算"}
+    ],
+    "dependent_variables": [
+      {"name": "RARjy(风险调整系数)", "definition": "后半期预期波动率/前半期已实现波动率", "formula": "RAR=√[(后方差)/(前方差)]", "data_source": "Wind+国泰安"},
+      {"name": "ΔRtnperc(业绩排名变动)", "definition": "前后半期排名百分位差", "formula": "", "data_source": "计算"}
+    ],
+    "control_variables": "Lnasset, Fndyear, Type(股票/混合), stockperc(股票持仓比例), mom(股价动力前12月加权)",
+    "data_source": {"sample_period": "2006-2012年", "source": "Wind+国泰安", "sample_size": "987个基金-年度观测, 偏股型开放式基金"},
+    "descriptive_stats": "牛市: 2006/2007/2009; 熊市: 2005/2008/2010; RAR均值1.0-1.5; 按输赢家×市场周期×投资风格×持股动量多维分组",
+    "key_formulas": "RTN_t = Ne/(Nb×∏(1+Di/Ni))-1(复权净值增长); RAR基于日度数据; 假设: 熊市赢家更冒险/牛市输家更冒险; 排名连续影响",
+    "notes": "牛市输家排名越低RAR越大，牛市赢家排名越高RAR越小; 熊市反向。输家排名大幅改善，赢家大幅下滑。加入市场周期/投资风格/资产质量三维度拓展BHS(1996)。"
+  }
+]

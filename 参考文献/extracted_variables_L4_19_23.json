@@ -1,0 +1,118 @@
+[
+  {
+    "file_name": "开放式基金竞争激励机制的效率分析——基于竞争锦标赛的视角.pdf",
+    "title": "开放式基金竞争激励机制的效率分析——基于竞争锦标赛的视角",
+    "authors": "束景虹",
+    "year": 2013,
+    "journal": "北京理工大学学报（社会科学版）",
+    "layer": "L4",
+    "topic": "锦标赛竞争/基金经理努力程度/积极投资战略",
+    "independent_variables": [
+      {"name": "基金公司管理基金数量(Nfunds)", "definition": "基金管理公司管理的基金数量，衡量基金公司内部竞争强度", "formula": "N/A", "data_source": "CSMAR数据库"},
+      {"name": "累计更换基金经理数(Nmanagers)", "definition": "基金自成立后累计更换基金经理的数量，衡量职业压力", "formula": "N/A", "data_source": "CSMAR数据库"},
+      {"name": "新任基金经理哑变量(New)", "definition": "基金经理任职是否未满一个报告期，新任取1", "formula": "N/A", "data_source": "CSMAR数据库"},
+      {"name": "基金上季度报酬率(Rt-1)", "definition": "基金历史报酬率", "formula": "N/A", "data_source": "CSMAR数据库"},
+      {"name": "机构投资者持有比率(Institute)", "definition": "机构投资者持有该基金的比率，衡量赎回压力", "formula": "N/A", "data_source": "CSMAR数据库"},
+      {"name": "管理人报酬占基金收入比(Pay/income)", "definition": "基金经理的边际贡献率，度量激励强度", "formula": "管理人报酬/基金收入", "data_source": "CSMAR数据库"},
+      {"name": "管理人报酬占基金费用比(Pay/expense)", "definition": "投资者支付的激励成本占比", "formula": "管理人报酬/基金总费用", "data_source": "CSMAR数据库"},
+      {"name": "总费用率(Expense)", "definition": "投资者支付的总费用占基金净资产的比率", "formula": "总费用/基金净资产", "data_source": "CSMAR数据库"},
+      {"name": "盈利哑变量(Pay/+income)", "definition": "基金盈利时取1，亏损时取0", "formula": "N/A", "data_source": "CSMAR数据库"}
+    ],
+    "dependent_variables": [
+      {"name": "市场偏离度", "definition": "基金股票资产组合偏离市场组合的程度", "formula": "Σ(i=1到N) |Wi,j - Wi,m|，Wi,j=股票i在基金j权重，Wi,m=股票i市场权重", "data_source": "CSMAR基金持股明细"},
+      {"name": "重仓股集中度", "definition": "基金前十大重仓股价值占基金股票资产组合净值的比率", "formula": "前十大重仓股价值/基金股票资产组合净值", "data_source": "CSMAR基金持股明细"}
+    ],
+    "control_variables": "基金规模(Logsize)",
+    "data_source": {"sample_period": "2004年1月至2009年6月", "source": "CSMAR数据库", "sample_size": "141只基金，565个半年报观测值"},
+    "descriptive_stats": "市场偏离度均值0.634(中位数0.643,σ=0.119); 重仓股比率均值0.370(σ=0.095); 基金更换经理数均值1.984(σ=1.211); 机构持有比率均值0.205(σ=0.236); 管理人报酬占收入比均值0.012(σ=0.130); 管理人报酬占费用比均值0.560(σ=0.145); 总费用占净值比均值0.021(σ=0.013)",
+    "key_formulas": "市场偏离度 = Σ|Wi,j - Wi,m|; 重仓股集中度 = 前十大重仓股市值/股票组合净值; effort回归模型含Nfunds, Nmanagers, New, Rt-1, Institute, Pay/income, Pay/expense, Expense",
+    "notes": "使用半年报持股明细数据。研究发现竞争压力和激励强度都影响基金经理努力程度，但激励水平影响更大。历史报酬率与偏离度显著负相关。"
+  },
+  {
+    "file_name": "报酬激励、解职风险与基金锦标赛效应研究——新的证据与解释.pdf",
+    "title": "报酬激励、解职风险与基金锦标赛效应研究——新的证据与解释",
+    "authors": "肖继辉、曹莎莎",
+    "year": 2014,
+    "journal": "上海金融",
+    "layer": "L4",
+    "topic": "报酬激励/解职风险/锦标赛效应/风险调整/股市周期",
+    "independent_variables": [
+      {"name": "期中业绩排名(Rank)", "definition": "复权净值增长率排名百分位，业绩越好越大", "formula": "同类型基金排名百分位", "data_source": "国泰安/Wind"},
+      {"name": "牛熊市虚拟变量", "definition": "牛市=1，熊市=0", "formula": "上证综指增长率>0为牛市", "data_source": "上证综指收益率"},
+      {"name": "牛熊市×排名交互项", "definition": "检验股市周期调节效应", "formula": "Bull×Rank", "data_source": "计算所得"},
+      {"name": "输赢家×RAR×牛熊市交互项", "definition": "不同市场状态输赢家风险调整对排名变动的影响", "formula": "Win×RAR×Bull等", "data_source": "计算所得"}
+    ],
+    "dependent_variables": [
+      {"name": "风险调整比率RAR(6,6)", "definition": "6月末分割下半期/上半期风险比值，>1提高风险", "formula": "RAR = [下半期方差/(上半期方差)]^(1/2) - 1", "data_source": "Wind基金复权单位净值"},
+      {"name": "风险调整比率RAR(7,5)", "definition": "7月末分割点计算", "formula": "同RAR，分割点改为7月", "data_source": "Wind基金复权单位净值"},
+      {"name": "相对业绩排名变动(ΔRank)", "definition": "前后半期排名百分位变动", "formula": "下半期排名百分位 - 上半期排名百分位", "data_source": "计算所得"}
+    ],
+    "control_variables": "基金类型、资产规模(Lnasset)、费率(Expense)、资产周转率(Turnover)、成立年限(Fundyear)",
+    "data_source": {"sample_period": "2005-2011年", "source": "国泰安+Wind，部分基金经理特征手工收集", "sample_size": "约1526个观测值(71~357只基金/年)"},
+    "descriptive_stats": "Asset均值48.9亿(σ=68.5); Expense均值0.029(σ=0.021); Turnover均值4.524(σ=2.096); Fundyear均值3.6年; RAR(6,6)均值1.226(σ=2.446); RAR(7,5)均值1.056(σ=0.701)",
+    "key_formulas": "RAR(j,y) = [下半期方差/上半期方差]^(1/2); ΔRank = 下半期排名 - 上半期排名; 回归含Rank,Bull,Bull×Rank,RAR交互项",
+    "notes": "报酬激励是锦标赛发挥作用的主要基础。牛市输家更冒险，熊市证据较弱。输家年末实现排名反转。"
+  },
+  {
+    "file_name": "锦标赛制度下基金经理人风险调整行为.pdf",
+    "title": "锦标赛制度下基金经理人风险调整行为",
+    "authors": "张婷",
+    "year": 2010,
+    "journal": "经济导刊",
+    "layer": "L4",
+    "topic": "锦标赛制度/风险调整行为/文献综述",
+    "independent_variables": [],
+    "dependent_variables": [],
+    "control_variables": "",
+    "data_source": {"sample_period": "N/A", "source": "N/A（文献综述）", "sample_size": "N/A"},
+    "descriptive_stats": "",
+    "key_formulas": "",
+    "notes": "纯文献综述，无原创实证。回顾了锦标赛行为成因（制度设计/收入/职业发展）、表现（输赢家策略）、研究发展（双重标准模型/家族内部锦标赛）及稳健性检验。"
+  },
+  {
+    "file_name": "锦标赛制度与基金风险调整_理论拓展与经验证据.pdf",
+    "title": "锦标赛制度与基金风险调整: 理论拓展与经验证据",
+    "authors": "肖继辉、彭文平",
+    "year": 2015,
+    "journal": "管理科学学报",
+    "layer": "L4",
+    "topic": "锦标赛/风险调整/股市周期/投资风格/风险资产质量",
+    "independent_variables": [
+      {"name": "业绩排名百分位(Rtnperc)", "definition": "年中同类型基金业绩排名百分位，最高1最低0", "formula": "复权净值增长率同类型基金排名", "data_source": "国泰安"},
+      {"name": "牛熊市虚拟变量", "definition": "牛市=1熊市=0", "formula": "上证综指增长率>0为牛市", "data_source": "色诺芬(上证综指)"},
+      {"name": "投资风格(Stockperc)", "definition": "基金股票持仓比例，分积极型和保守型", "formula": "股票持仓比例二分法", "data_source": "国泰安基金资产组合"},
+      {"name": "风险资产质量(Mom)", "definition": "基金所持股票的股价动力(动量)", "formula": "重仓股相对权重×股票动力系数加权平均", "data_source": "色诺芬(市值/市净率/股价)"}
+    ],
+    "dependent_variables": [
+      {"name": "风险调整比率(RAR)", "definition": "6月末分割下半期/上半期风险比值", "formula": "[下半期方差/上半期方差]^(1/2)", "data_source": "国泰安基金复权单位净值"},
+      {"name": "业绩排名变动(ΔRtnperc)", "definition": "前后半期排名百分位差", "formula": "下半期排名 - 上半期排名", "data_source": "计算所得"}
+    ],
+    "control_variables": "资产规模(Lnasset)、成立年限(Fndyear)、基金类型(Type)",
+    "data_source": {"sample_period": "2005-2010年", "source": "国泰安(净值/资产组合)+色诺芬(市场/个股数据)", "sample_size": "73~252只/年，股票型与混合型开放式基金"},
+    "descriptive_stats": "分组均值比较：牛市优质资产输家RAR二分法均值1.029(N=107); 牛市优质资产赢家二分法1.051(N=128)。未报告统一描述性统计表，以交叉分组均值为主。",
+    "key_formulas": "RAR = [下半期方差/上半期方差]^(1/2); Mom = Σ(重仓股权重×动力系数); 理论模型含效用函数U及最优条件M'(g)推导; 按股市×资产质量分组回归",
+    "notes": "推论1-3获实证支持(牛市优质资产输家排名越低RAR越大;赢家反向;熊市保守型输家排名越低RAR越小)。推论4未获支持。"
+  },
+  {
+    "file_name": "锦标赛制度对基金风险偏好的影响.pdf",
+    "title": "锦标赛制度对基金风险偏好的影响",
+    "authors": "刘磊",
+    "year": 2011,
+    "journal": "上海经济研究",
+    "layer": "L4",
+    "topic": "锦标赛制度/风险偏好/比较标准/混同均衡博弈",
+    "independent_variables": [
+      {"name": "期中业绩排名(获胜者/失败者)", "definition": "年中收益率中位数以上为获胜者", "formula": "年中收益率排序取中位数", "data_source": "国泰安"},
+      {"name": "基金类型(封闭式/开放式)", "definition": "不同激励制度", "formula": "分类变量", "data_source": "国泰安"},
+      {"name": "市场状态(牛市/熊市)", "definition": "不同市场对应不同博弈模型", "formula": "分类变量", "data_source": "市场数据"},
+      {"name": "比较标准类型", "definition": "外生/内生/混同均衡三类", "formula": "理论模型分类", "data_source": "理论构建"}
+    ],
+    "dependent_variables": [
+      {"name": "风险偏好增加量", "definition": "年底与年中风险标准差的差值", "formula": "年底σ - 年中σ", "data_source": "国泰安"}
+    ],
+    "control_variables": "",
+    "data_source": {"sample_period": "2007-2010年", "source": "国泰安数据库", "sample_size": "封闭式31-33只/年;开放式266-584只/年"},
+    "descriptive_stats": "封闭式2010: 获胜者Δσ=0.096, 失败者Δσ=0.041; 开放式2010: 获胜者Δσ=-0.389, 失败者Δσ=0.054。牛市获胜者倾向减风险，熊市失败者增风险。",
+    "key_formulas": "U = α×ln[(1-θ)E(r)+θ(E(r)-c)] - β×ln[k(σ,c)]; 外生比较标准最优σ含∂σ/∂g>0; 混同均衡博弈含ψ×Πi(σi,σj)项",
+    "notes": "基于Falk(2004)效用模型。外生比较标准下前期表现差基金更激进(∂σ/∂g>0)。封闭式+牛市开放基金支持外生比较标准；熊市开放基金支持混同均衡。理论为主+简单实证。"}
+]

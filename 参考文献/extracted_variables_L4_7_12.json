@@ -1,0 +1,120 @@
+[
+  {
+    "file": "业绩排名对基金情绪风险调整行为的影响.pdf",
+    "title": "业绩排名对基金情绪风险调整行为的影响",
+    "authors_year": "易力、王娟、王序东(2022)",
+    "layer": "L4",
+    "topic": "业绩排名对基金情绪风险调整行为的影响",
+    "independent_variables": [
+      {"name": "Rank", "definition": "基金累积收益率RTN排序百分位(0最差,1最好)", "formula": "RTN_{p,m,y} = ∏(1+r_{p,d,y}) - 1", "data_source": "锐思金融数据库"},
+      {"name": "Loser", "definition": "累积收益率RTN排在后50%的输家0-1虚拟变量", "formula": "", "data_source": "锐思金融数据库"},
+      {"name": "Bull/Bear", "definition": "牛熊市0-1虚拟变量", "formula": "沪深300指数增长率>0为牛市", "data_source": "市场数据"}
+    ],
+    "dependent_variables": [
+      {"name": "SRAC", "definition": "情绪风险调整系数，基金m月后情绪β值减去m月前情绪β值", "formula": "SRAC_{p,m,y} = β_{p,(D_y-D),y} - β_{p,D,y}", "data_source": "锐思+国泰安(五因子)"}
+    ],
+    "control_variables": "基金规模、年龄、家族规模、净资金流入率、换手率、费用率",
+    "data_source": {"sample_period": "2005-2019年", "source": "锐思(净值/净资产)+和讯网(公司资产)+国泰安(五因子)", "sample_size": "5084个观测，基金数16~882只/年"},
+    "descriptive_stats": "非平衡面板; 年初净值总额330.49亿→9612.23亿元",
+    "key_formulas": "扩展FF5含情绪因子: r_p-r_f = α + β_1△ISI + β_2MKT + β_3SMB + β_4HML + β_5RMW + β_6CMA + ε; ISI = 0.227TN + 0.416AD + 0.244PE + 0.286TV (主成分)",
+    "notes": "输家提高情绪风险，赢家降低; 牛熊市无显著差异; 明星基金降低幅度>垫底基金提高幅度"
+  },
+  {
+    "file": "业绩排名对基金风格漂移的影响研究.pdf",
+    "title": "业绩排名对基金风格漂移的影响研究",
+    "authors_year": "易力、盛冰心(2021)",
+    "layer": "L4",
+    "topic": "业绩排名对基金风格漂移的影响",
+    "independent_variables": [
+      {"name": "Rank", "definition": "排序期m=5月前的基金排名百分位数", "formula": "", "data_source": "锐思"},
+      {"name": "Bull/Bear", "definition": "牛熊市0-1虚拟变量", "formula": "沪深300指数收益率划分", "data_source": "市场数据"}
+    ],
+    "dependent_variables": [
+      {"name": "SDAR_T/SDAR_S/SDAR_V", "definition": "总体/规模/价值风格漂移调整比率(SDS2/SDS1)", "formula": "SDS = √(ΣVar(w_i)); SDAR = SDS2/SDS1", "data_source": "锐思+中信标普A股风格指数"}
+    ],
+    "control_variables": "基金规模、年龄、基金公司规模、资金流、换手率、费用率",
+    "data_source": {"sample_period": "2006-2019年", "source": "锐思+中信标普A股风格指数", "sample_size": "5068个观测，35~882只基金/年"},
+    "descriptive_stats": "主动管理型开放式股票+混合基金",
+    "key_formulas": "Sharpe多因素: R_t = Σ(w_i S_i_t) + ε, Σw_i=1, w_i≥0; SDS = √(ΣVar(w_i)); SDAR = SDS2/SDS1(>1=漂移上升)",
+    "notes": "输家提高风格漂移，赢家降低; 熊市显著牛市不显著; 小基金偏好价值漂移; 明星基金规模漂移>垫底基金"
+  },
+  {
+    "file": "业绩排名对投资风格影响研究——来自开放式基金的证据.pdf",
+    "title": "业绩排名对投资风格影响研究——来自开放式基金的证据",
+    "authors_year": "彭文平、肖继辉(2013)",
+    "layer": "L4",
+    "topic": "业绩排名对基金投资风格改变的影响（锦标赛检验）",
+    "independent_variables": [
+      {"name": "RNTperc", "definition": "期中业绩排名百分位(t=6月分割)", "formula": "", "data_source": "国泰安"}
+    ],
+    "dependent_variables": [
+      {"name": "△smb/△hml/△mom", "definition": "大/小盘、价值/成长、动量/反向风格改变指标", "formula": "流通市值/市净率/股价动力加权值变动", "data_source": "国泰安+色诺芬"},
+      {"name": "△RNTperc", "definition": "业绩排名变动", "formula": "", "data_source": "计算"},
+      {"name": "△CLa", "definition": "选股能力变化(C-L模型alpha)", "formula": "r_it - r_ft = α_i + λ_1i·min(0,r_mt-r_ft) + λ_2i·max(0,r_mt-r_ft) + ε", "data_source": "国泰安"}
+    ],
+    "control_variables": "lnasset(基金规模), fundyear, type(股票型/混合型)",
+    "data_source": {"sample_period": "2005-2010年", "source": "国泰安+色诺芬", "sample_size": "73~240只/年，股票型+混合型开放式基金"},
+    "descriptive_stats": "参照Chan等(2002)风格分析法",
+    "key_formulas": "风格评分: 流通市值/市净率中位数比; 股价动力=(前12月回报率-中位数)/|中位数|; C-L模型alpha; Flow = (Tna_t - Tna_{t-1}·(1+r))/Tna_{t-1}",
+    "notes": "锦标赛效应证据较弱，主要集中在牛市(2006年); 羊群效应是缺乏锦标赛效应的主因; 价值/成长和动量/反向风格改变对业绩排名有显著正影响"
+  },
+  {
+    "file": "业绩排序对基金投资风险水平变化的影响.pdf",
+    "title": "业绩排序对基金投资风险水平变化的影响",
+    "authors_year": "李学峰、苏伟、李荣霞、王兆宇(2010)",
+    "layer": "L4",
+    "topic": "业绩排序对基金风险调整行为的影响（竞赛假说检验）",
+    "independent_variables": [
+      {"name": "RTN", "definition": "前期累积收益率，用于划分输赢家", "formula": "RTN_{jMy} = ∏(1+r_{jmy}) - 1", "data_source": "净值数据(未说明具体数据库)"}
+    ],
+    "dependent_variables": [
+      {"name": "RAR", "definition": "风险调整比率，后期/前期收益率标准差", "formula": "RAR = 后期方差/(前期方差)", "data_source": "净值数据"}
+    ],
+    "control_variables": "无明确控制变量(列联表+Spearman检验)",
+    "data_source": {"sample_period": "2003-2008年", "source": "未明确说明", "sample_size": "13~119只/年，开放式股票型(剔除指数型)"},
+    "descriptive_stats": "M=3/6/9月排序期; 新基金2004年后成立，老基金2003年前",
+    "key_formulas": "竞赛假说: (σ_t^L/σ_{t-1}^L) > (σ_t^W/σ_{t-1}^W); RAR_{jy} = 后期方差/(前期方差); >1=加大风险",
+    "notes": "总体竞赛假说不明显; 新基金比老基金更典型; 过度自信导致赢家加大风险; Spearman检验新基金策略更稳健"
+  },
+  {
+    "file": "基于隐性交易的证券投资基金锦标赛研究.pdf",
+    "title": "基于隐性交易的证券投资基金锦标赛研究",
+    "authors_year": "汪敏、魏哲海(2017)",
+    "layer": "L4",
+    "topic": "基于隐性交易的基金锦标赛检验与风险调整分解",
+    "independent_variables": [
+      {"name": "R[1,6]", "definition": "基金上半年月度平均收益率", "formula": "", "data_source": "CCER"}
+    ],
+    "dependent_variables": [
+      {"name": "总体风险调整(σ[7,12]-σ[1,6])", "definition": "下半年与上半年标准差差", "formula": "", "data_source": "CCER"},
+      {"name": "投资组合自身风险调整", "definition": "σ^BH_{0,[7,12]} - σ^BH_{0,[1,6]}", "formula": "", "data_source": "CCER"},
+      {"name": "显性风险调整", "definition": "σ^BH_{6,[7,12]} - σ^BH_{0,[7,12]}", "formula": "", "data_source": "CCER"},
+      {"name": "隐性风险调整(VG差值)", "definition": "VG[7,12] - VG[1,6]", "formula": "VG = σ_actual - σ_BH", "data_source": "CCER"}
+    ],
+    "control_variables": "上半年风险承担水平(σ[1,6]或σ^BH或VG)",
+    "data_source": {"sample_period": "2002-2015年", "source": "CCER经济金融数据库+Wind", "sample_size": "1461观测(上涨367+下跌1094)，偏股型开放式基金"},
+    "descriptive_stats": "剔除QDII和指数基金",
+    "key_formulas": "Brown模型: σ差 = α + α1·R[1,6] + α2·σ[1,6] + ε (α1<0=锦标赛); 分解: σ差 = 组合自身风险调整 + 隐性风险调整 + 显性风险调整; VG = σ_actual - σ_BH",
+    "notes": "构建二元博弈模型; 传统观点牛市无锦标赛、熊市存在; 分解后发现锦标赛现象源于投资组合自身风险波动假象，非主动操作; 基金经理偏好稳定风险承担"
+  },
+  {
+    "file": "基金业绩排名与基金经理的冒险行为.pdf",
+    "title": "基金业绩排名与基金经理的冒险行为",
+    "authors_year": "山立威、王鹏(2012)",
+    "layer": "L4",
+    "topic": "年度业绩排名对基金经理冒险行为的影响",
+    "independent_variables": [
+      {"name": "Rank1", "definition": "上半年相对业绩排名(0=最差,1=最好)", "formula": "", "data_source": "CSMAR+RESSET"},
+      {"name": "Loser1", "definition": "输家0-1虚拟变量(上半年业绩<中位数)", "formula": "", "data_source": "CSMAR+RESSET"},
+      {"name": "Q1/Q2/Q3/Q4", "definition": "四分位虚拟变量", "formula": "", "data_source": "CSMAR+RESSET"}
+    ],
+    "dependent_variables": [
+      {"name": "RAR", "definition": "风险调整比率(后期/前期标准差)", "formula": "RAR = Sd2/Sd1", "data_source": "RESSET(日复权单位净值)"}
+    ],
+    "control_variables": "Sd1(上半年风险), lnage, lntna, fdtype, 年度固定效应",
+    "data_source": {"sample_period": "2005-2010年", "source": "CSMAR(代码类型)+RESSET(净值/规模)", "sample_size": "862个基金年度，股票型+混合型开放式基金"},
+    "descriptive_stats": "平均年龄4.15年，平均净值57.57亿元，RTN均值11.48%",
+    "key_formulas": "RTN_{iMy} = ∏(1+Ret_{imy}) - 1; Ret_{imy} = Nav_{imy}/Nav_{i(m-1)y} - 1; RAR = Sd2/Sd1; flow = (Tna结尾 - Tna期初·(1+Ret))/Tna期初",
+    "notes": "输家提高风险程度>赢家(Rank1系数显著为负,Loser1显著为正); 冒险不能显著提高下半年业绩，熊市中反而降低; 薪酬激励为主要机制(就业激励弱)"
+  }
+]

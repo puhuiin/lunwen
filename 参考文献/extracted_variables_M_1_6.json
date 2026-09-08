@@ -1,0 +1,107 @@
+[
+  {
+    "file": "01_Cameron_Gelbach_Miller_2011_Multiway_Clustering_JBES.pdf",
+    "title": "Robust Inference with Multi-way Clustering",
+    "authors_year": "Cameron, Gelbach & Miller (2011), JBES",
+    "layer": "M",
+    "topic": "多向聚类稳健标准误",
+    "independent_variables": [],
+    "dependent_variables": [],
+    "control_variables": "",
+    "data_source": {"sample_period": "Monte Carlo模拟; 实证: Hersch(1998)工资-工伤OLS; Gruber-Madrian(1995)probit", "source": "Monte Carlo + 实证示例数据", "sample_size": "N/A"},
+    "descriptive_stats": "Monte Carlo显示忽略双向聚类可致标准误严重低估",
+    "key_formulas": "单向: V_hat(β) = (X'X)^(-1)[Σ_g X'_g û_g û'_g X_g](X'X)^(-1); 双向: S_GH = S_G+S_H-S_{G∩H}; M向: V = (X'X)^(-1)X'(ûû'.*S_{G1..GM})X(X'X)^(-1)",
+    "notes": "方法论，无实证因变量。将Liang-Zeger(1986)单向聚类扩展至多向非嵌套聚类。金融应用：firm+time双维聚类。"
+  },
+  {
+    "file": "02_Oster_2019_UnobservableSelection_JBES.pdf",
+    "title": "Unobservable Selection and Coefficient Stability",
+    "authors_year": "Oster (2019), JBES",
+    "layer": "M",
+    "topic": "不可观测选择偏差与系数稳定性（有界OVB）",
+    "independent_variables": [{"name": "X(处理变量)", "definition": "标量，如教育年限", "formula": "", "data_source": "NLSY-79"}],
+    "dependent_variables": [{"name": "Y(结果变量)", "definition": "如工资对数", "formula": "", "data_source": "NLSY-79"}],
+    "control_variables": "ω_o(观测控制变量); W2(不可观测，通过δ和R_max参数化)",
+    "data_source": {"sample_period": "NLSY-79", "source": "NLSY-79; 27篇顶刊76个结果; 母亲行为-儿童结果(随机实验)", "sample_size": "76个结果(2008-2013 AER/QJE/JPE/Econometrica)"},
+    "descriptive_stats": "样本R²范围0.029-0.992平均0.403; 仅30%在δ=1,R_max=1下稳健; NLSY验证89%的界包含真实效应(vs 62%传统CI)",
+    "key_formulas": "Y=βX+Ψω_o+W2+ε; δ=σ_1X/σ²_1=σ_2X/σ²_2; β*=β̃-δ(β̊-β̃)(R_max-R̃)/(R̃-R̊); 建议R_max=1.3R̃; Stata: psacalc",
+    "notes": "核心创新: (1)不要求R_max=1; (2)可计算偏差调整估计量识别集; (3)基于随机实验的R_max经验校准(Π=1.3)。拓展了Altonji-Elder-Taber(2005)方法。"
+  },
+  {
+    "file": "03_Cinelli_Hazlett_OVB_for_IV.pdf",
+    "title": "An Omitted Variable Bias Framework for Sensitivity Analysis of Instrumental Variables",
+    "authors_year": "Cinelli & Hazlett (forthcoming), Biometrika",
+    "layer": "M",
+    "topic": "IV敏感性分析的OVB框架(偏R²参数化)",
+    "independent_variables": [
+      {"name": "Z(工具变量)", "definition": "如大学距离", "formula": "", "data_source": "Card(1993)示例"},
+      {"name": "D(处理变量)", "definition": "如教育年限", "formula": "", "data_source": "Card(1993)示例"}
+    ],
+    "dependent_variables": [{"name": "Y(结果变量)", "definition": "如收入对数", "formula": "", "data_source": "Card(1993)示例"}],
+    "control_variables": "X(观测协变量); W(不可观测混淆变量,偏R²参数化)",
+    "data_source": {"sample_period": "Card(1993)教育回报率", "source": "NLSY", "sample_size": "N/A"},
+    "descriptive_stats": "IV τ̂_res≈0.132(vs OLS 7.5%); 第一阶段θ̂_res≈0.319; 简化式λ̂_res≈0.042; 极端稳健值XRV=0.05%",
+    "key_formulas": "第一阶段: D=θ̂Z+Xψ̂+ε; 简化式: Y=λ̂Z+Xβ̂+ε; IV: τ̂=λ̂/θ̂; BF=√(R²_{Y~W|Z,X}·R²_{Z~W|X}/(1-R²_{Z~W|X})); XRV_IV=min(XRV_λ, XRV_θ); R包: sensemakr",
+    "notes": "核心贡献: 将OVB敏感性分析从OLS扩展到IV，统一处理混淆变量(违反外生性)和副作用(违反排他性)。BF和SEF不依赖观测数据(仅依赖自由度)。"
+  },
+  {
+    "file": "04_Fama_French_2015_FiveFactor_JFE.pdf",
+    "title": "A Five-Factor Asset Pricing Model",
+    "authors_year": "Fama & French (2015), JFE",
+    "layer": "M",
+    "topic": "五因子资产定价模型(Market+Size+Value+Profitability+Investment)",
+    "independent_variables": [
+      {"name": "RM-RF", "definition": "市场超额收益(市值加权市场组合-无风险利率)", "formula": "", "data_source": "CRSP"},
+      {"name": "SMB", "definition": "规模因子(小盘减大盘)", "formula": "小盘六组合等权均值-大盘六组合等权均值", "data_source": "CRSP+Compustat"},
+      {"name": "HML", "definition": "价值因子(高B/M减低B/M)", "formula": "", "data_source": "CRSP+Compustat"},
+      {"name": "RMW", "definition": "盈利因子(高盈利减弱盈利)", "formula": "", "data_source": "CRSP+Compustat"},
+      {"name": "CMA", "definition": "投资因子(保守减激进)", "formula": "", "data_source": "CRSP+Compustat"}
+    ],
+    "dependent_variables": [{"name": "R_it-RF_t", "definition": "资产i超额收益", "formula": "", "data_source": "CRSP"}],
+    "control_variables": "",
+    "data_source": {"sample_period": "1963年7月-2013年12月(606个月)", "source": "CRSP+Compustat; NYSE/AMEX/NASDAQ", "sample_size": "N/A"},
+    "descriptive_stats": "五因子优于三因子; 加入RMW+CMA后HML对平均收益描述冗余; 主要缺陷: 无法解释低盈利高投资小盘股低收益",
+    "key_formulas": "R_it-RF_t = a_i+b_i(RM-RF)+s_i·SMB+h_i·HML+r_i·RMW+c_i·CMA+e_it; DDM: m_t=ΣE(d_{t+τ})/(1+r)^τ; OP=营收-销货成本-销售管理研发-利息/账面权益; Inv=总资产增长率; 2×3排序(Size×B/M, Size×OP, Size×Inv)",
+    "notes": "理论基础: DDM。Size断点=NYSE中位数; B/M/OP/Inv断点=NYSE 30/70分位数。因子按月更新。"
+  },
+  {
+    "file": "05_Merton_1981_MarketTiming_JB.pdf",
+    "title": "On Market Timing and Investment Performance",
+    "authors_year": "Merton (1981), JB",
+    "layer": "M",
+    "topic": "市场择时能力检验方法论(择时vs选股分离)",
+    "independent_variables": [
+      {"name": "Z_M(t)-R(t)", "definition": "市场组合超额收益", "formula": "", "data_source": ""},
+      {"name": "R(t)", "definition": "无风险利率", "formula": "", "data_source": ""}
+    ],
+    "dependent_variables": [{"name": "R_j(t)", "definition": "基金/组合收益", "formula": "", "data_source": ""}],
+    "control_variables": "R(t)(基准收益)",
+    "data_source": {"sample_period": "N/A", "source": "理论模型论文，无实证数据", "sample_size": "N/A"},
+    "descriptive_stats": "无(理论模型)",
+    "key_formulas": "Z_j(t)=R(t)+β_j[Z_M(t)-R(t)]+ε_j(t); β_j=f[E(R_M)]允许β随市场状态变化; Henrisson-Merton检验: R_j-R=α+β[R_M-R]+γ·max(0,R-R_M)+ε",
+    "notes": "PDF扫描版(45页全图)。核心: CAPM扩展允许β随市场预期收益变化，分离择时(timing)与选股(selectivity)。若经理能预测市场，β应在牛市前增大、熊市前减小。Henrisson-Merton(1981)引入看跌期权形式β变化。"
+  },
+  {
+    "file": "06_Fama_French_1993_CommonRiskFactors_JFE.pdf",
+    "title": "Common Risk Factors in the Returns on Stocks and Bonds",
+    "authors_year": "Fama & French (1993), JFE",
+    "layer": "M",
+    "topic": "三因子+债券因子模型(Market+Size+Value+Term+Default)",
+    "independent_variables": [
+      {"name": "RM-RF", "definition": "市场因子(市值加权市场-无风险)", "formula": "", "data_source": "CRSP"},
+      {"name": "SMB", "definition": "规模因子", "formula": "(S/L+S/M+S/H)/3-(B/L+B/M+B/H)/3", "data_source": "CRSP+Compustat"},
+      {"name": "HML", "definition": "价值因子", "formula": "(S/H+B/H)/2-(S/L+B/L)/2", "data_source": "CRSP+Compustat"},
+      {"name": "TERM", "definition": "期限因子(长期国债-1月T-bill)", "formula": "", "data_source": "Ibbotson"},
+      {"name": "DEF", "definition": "违约因子(公司债-长期国债)", "formula": "", "data_source": "Ibbotson"}
+    ],
+    "dependent_variables": [
+      {"name": "R_it-RF_t", "definition": "股票超额收益", "formula": "", "data_source": "CRSP"},
+      {"name": "债券超额收益", "definition": "", "formula": "", "data_source": "Ibbotson"}
+    ],
+    "control_variables": "",
+    "data_source": {"sample_period": "1963年7月-1991年12月", "source": "CRSP+Compustat(股票); Ibbotson(债券)", "sample_size": "N/A"},
+    "descriptive_stats": "三因子显著优于CAPM; SMB/HML截距多数不显著; TERM和DEF捕捉债券共同变异及股债联动",
+    "key_formulas": "三因子: R_it-RF_t = a_i+b_i(RM-RF)+s_i·SMB+h_i·HML+e_it; SMB=小盘组均值-大盘组均值; HML=高B/M组-低B/M组; Size断点=NYSE中位数; B/M断点=NYSE 30/70分位; BE=Compustat账面普通股权益",
+    "notes": "每年6月底按Size×B/M 2×3分组，持有12个月(7月至次年6月)。五因子(三股票+两债券)共同解释股票和债券平均收益。后续FF(2015)五因子在此基础加入RMW和CMA。"
+  }
+]
