@@ -1,0 +1,4 @@
+fit done {'de': -2.994, 'lsv': 0.77, 'risk_asym': 3.568}
+perm done {'de': 0.0467, 'lsv': 0.5067, 'risk_asym': 0.02}
+wcb done {'de': 0.5611, 'lsv': 0.7595, 'risk_asym': 0.9078}
+FINAL ok=True

@@ -1,0 +1,49 @@
+{
+  "生成时间": "2026-08-30",
+  "设计": "按基金规模（小/中/大）+ 市场状态（牛/熊）分组，比较各组综合能力 5 等分 Q5−Q1",
+  "规模_3分位": {
+    "小": {
+      "n": 121,
+      "avg_aum_mean": 2.0,
+      "Q5_minus_Q1": 0.0412,
+      "t_top_vs_bottom": 7.43,
+      "spearman_rho": 0.598,
+      "spearman_p": 0.0
+    },
+    "中": {
+      "n": 120,
+      "avg_aum_mean": 7.0,
+      "Q5_minus_Q1": 0.0272,
+      "t_top_vs_bottom": 5.95,
+      "spearman_rho": 0.477,
+      "spearman_p": 0.0
+    },
+    "大": {
+      "n": 121,
+      "avg_aum_mean": 36.0,
+      "Q5_minus_Q1": 0.0319,
+      "t_top_vs_bottom": 8.28,
+      "spearman_rho": 0.645,
+      "spearman_p": 0.0
+    }
+  },
+  "市场状态_牛熊": {
+    "牛": {
+      "n_fund": 362,
+      "n_obs": 5570,
+      "Q5_minus_Q1": 0.0313,
+      "t_top_vs_bottom": 10.28,
+      "spearman_rho": 0.517,
+      "spearman_p": 0.0
+    },
+    "熊": {
+      "n_fund": 362,
+      "n_obs": 4128,
+      "Q5_minus_Q1": 0.0313,
+      "t_top_vs_bottom": 10.28,
+      "spearman_rho": 0.517,
+      "spearman_p": 0.0
+    }
+  },
+  "结论": "画像在所有规模子样本中均稳健（Q5−Q1 方向一致）"
+}

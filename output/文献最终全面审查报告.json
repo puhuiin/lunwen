@@ -1,0 +1,423 @@
+[
+  {
+    "id": "1",
+    "citation": "Chevalier & Ellison (1999)",
+    "full_bib": "Chevalier, J., & Ellison, G. (1999). Career concerns of mutual fund managers. The Quarterly Journal of Economics, 114(2), 389-432.",
+    "where": "引言 / 一、投资经理画像的指标体系 / 表1 (任职年限、学历、院校)",
+    "expected_kw": [
+      "chevalier",
+      "ellison"
+    ],
+    "matched_paths": [
+      "./参考文献/L1_背景特征层/01_Chevalier_Ellison_1999_Career_Concerns_QJE.pdf",
+      "./参考文献/L1_背景特征层/1-Chevalier_Ellison_1998_Career_Concerns_NBERw5852.pdf"
+    ]
+  },
+  {
+    "id": "2",
+    "citation": "Berk & Green (2004)",
+    "full_bib": "Berk, J. B., & Green, R. C. (2004). Mutual fund flows and performance in rational markets. Journal of Political Economy, 112(5), 1269-1295.",
+    "where": "一、投资经理画像的指标体系 (规模不经济) / 表1 (基金年龄、基金规模)",
+    "expected_kw": [
+      "berk",
+      "green"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "3",
+    "citation": "Chen, Hong, Huang & Kubik (2004)",
+    "full_bib": "Chen, J., Hong, H., Huang, M., & Kubik, J. D. (2004). Does fund size erode mutual fund performance? The role of liquidity and organization. American Economic Review, 94(5), 1276-1302.",
+    "where": "一、投资经理画像的指标体系 (规模推高交易冲击成本)",
+    "expected_kw": [
+      "chen",
+      "hong",
+      "size"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "4",
+    "citation": "Barber & Odean (2001)",
+    "full_bib": "Barber, B. M., & Odean, T. (2001). Boys will be boys: Gender, overconfidence, and common stock investment. The Quarterly Journal of Economics, 116(1), 261-292.",
+    "where": "表1 (性别指标理论来源)",
+    "expected_kw": [
+      "barber",
+      "odean",
+      "2001"
+    ],
+    "matched_paths": [
+      "./参考文献/L5_认知行为层/10_Barber_Odean_2001_Gender_Overconfidence_QJE.pdf",
+      "./参考文献/L5_认知行为层/extracted_txt/10_Barber_Odean_2001_Gender_Overconfidence_QJE.txt",
+      "./归档/文献原始大集合/literature/L1/L1_Barber_Odean_2001_Boys_Will_Be_Boys_Berkeley.pdf",
+      "./归档/文献原始大集合/literature/L3/L3_Barber_Odean_1999_FAJ_NovDec99_Berkeley.pdf",
+      "./归档/文献原始大集合/literature/L3/L3_Barber_Odean_2000_Individual_Investor_Performance_Berkeley.pdf",
+      "./归档/文献原始大集合/literature/L3/L3_Barber_Odean_Behavior_Individual_Investors_Berkeley.pdf",
+      "./归档/文献原始大集合/literature/L4/L4_Barber_Odean_2001_Boys_Will_Be_Boys_Gender_Overconfidence_UCSD.pdf"
+    ]
+  },
+  {
+    "id": "5",
+    "citation": "Kahneman & Tversky (1979)",
+    "full_bib": "Kahneman, D., & Tversky, A. (1979). Prospect theory: An analysis of decision under risk. Econometrica, 47(2), 263-292.",
+    "where": "一、投资经理画像的指标体系 (前景理论) / 表1 (风险偏好不对称 risk_asym)",
+    "expected_kw": [
+      "kahneman",
+      "tversky",
+      "1979"
+    ],
+    "matched_paths": [
+      "./参考文献/L5_认知行为层/02_Kahneman_Tversky_1979_ProspectTheory_Econometrica.pdf",
+      "./归档/文献原始大集合/literature/L4/L4_Kahneman_Tversky_1979_Prospect_Theory.pdf"
+    ]
+  },
+  {
+    "id": "6",
+    "citation": "Ang, Chen & Xing (2006)",
+    "full_bib": "Ang, A., Chen, J., & Xing, Y. (2006). Downside risk. The Review of Financial Studies, 19(4), 1217-1251.",
+    "where": "表1 (风险偏好不对称 下行风险理论依据)",
+    "expected_kw": [
+      "ang",
+      "downside"
+    ],
+    "matched_paths": [
+      "./参考文献/L4_风险应对层/04_Ang_Chen_Xing_2006_DownsideRisk_RFS.pdf"
+    ]
+  },
+  {
+    "id": "7",
+    "citation": "Shefrin & Statman (1985)",
+    "full_bib": "Shefrin, H., & Statman, M. (1985). The disposition to sell winners too early and ride losers too long: Theory and evidence. The Journal of Finance, 40(3), 777-790.",
+    "where": "一、投资经理画像的指标体系 (处置效应理论) / 表1 (处置效应 de)",
+    "expected_kw": [
+      "shefrin",
+      "statman"
+    ],
+    "matched_paths": [
+      "./参考文献/L5_认知行为层/23_Shefrin_Statman_1985_DispositionEffect_JF.pdf"
+    ]
+  },
+  {
+    "id": "8",
+    "citation": "Odean (1998)",
+    "full_bib": "Odean, T. (1998). Are investors reluctant to realize their losses? The Journal of Finance, 53(5), 1775-1798.",
+    "where": "一、投资经理画像的指标体系 / 表1 (处置效应 PGR-PLR 测度公式)",
+    "expected_kw": [
+      "odean",
+      "1998"
+    ],
+    "matched_paths": [
+      "./参考文献/L5_认知行为层/09_Odean_1998_DispositionEffect_JF.pdf",
+      "./参考文献/L5_认知行为层/extracted_txt/09_Odean_1998_DispositionEffect_JF.txt",
+      "./归档/文献原始大集合/literature/L3/L3_Odean_1998_Are_Investors_Reluctant_Berkeley.pdf",
+      "./归档/文献原始大集合/literature/L4/L4_Odean_1998_Are_Investors_Reluctant_Berkeley.pdf",
+      "./归档/重复文献/Odean_1998_DispositionEffect_重复副本.pdf"
+    ]
+  },
+  {
+    "id": "9",
+    "citation": "Gervais & Odean (2001)",
+    "full_bib": "Gervais, S., & Odean, T. (2001). Learning to be overconfident. The Review of Financial Studies, 14(1), 1-27.",
+    "where": "表1 (过度自信 oc_conf 学习机制理论来源)",
+    "expected_kw": [
+      "gervais",
+      "odean"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "10",
+    "citation": "Puetz & Ruenzi (2011)",
+    "full_bib": "Puetz, A., & Ruenzi, S. (2011). Overconfidence among professional investors: Evidence from mutual fund managers. Journal of Business Finance & Accounting, 38(5-6), 684-712. (亦含 2008 CFR 工作论文版)",
+    "where": "表1 (过度自信 oc_conf 与换手率 TO 测度依据)",
+    "expected_kw": [
+      "puetz",
+      "ruenzi"
+    ],
+    "matched_paths": [
+      "./参考文献/L5_认知行为层/05_Puetz_Ruenzi_2008_Overconfidence_CFR.pdf",
+      "./归档/文献原始大集合/literature/L4/L4_Puetz_Ruenzi_2008_Overconfidence_Professional_Investors_CFR.pdf"
+    ]
+  },
+  {
+    "id": "11",
+    "citation": "Greenwood & Shleifer (2014)",
+    "full_bib": "Greenwood, R., & Shleifer, A. (2014). Expectations and returns. The Review of Financial Studies, 27(3), 714-746.",
+    "where": "表1 (追涨杀跌 rc_mom 预期外推理论来源)",
+    "expected_kw": [
+      "greenwood",
+      "shleifer"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "12",
+    "citation": "Grinblatt & Han (2005)",
+    "full_bib": "Grinblatt, M., & Han, B. (2005). Prospect theory, mental accounting, and momentum. Journal of Financial Economics, 78(2), 311-339.",
+    "where": "一、投资经理画像的指标体系 (心理账户与锚定) / 表1 (锚定效应 anchor_high)",
+    "expected_kw": [
+      "grinblatt",
+      "han",
+      "2005"
+    ],
+    "matched_paths": [
+      "./参考文献/L5_认知行为层/22_Grinblatt_Han_2005_ProspectTheory_Momentum_JFE.pdf"
+    ]
+  },
+  {
+    "id": "13",
+    "citation": "池丽旭, 庄新田 (2011)",
+    "full_bib": "池丽旭, 庄新田. (2011). 参考点、锚定效应与处置效应——基于投资者交易数据的实证分析. 南开管理评论, 14(3), 114-120.",
+    "where": "一、投资经理画像的指标体系 / 表1 (高位锚定心理账户)",
+    "expected_kw": [
+      "池丽旭",
+      "庄新田"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "14",
+    "citation": "Kacperczyk, Sialm & Zheng (2005)",
+    "full_bib": "Kacperczyk, M., Sialm, C., & Zheng, L. (2005). On the industry concentration of actively managed equity mutual funds. The Journal of Finance, 60(4), 1983-2011.",
+    "where": "一、投资经理画像的指标体系 (行业集中度理论) / 表1 (行业集中度 ICI)",
+    "expected_kw": [
+      "kacperczyk",
+      "2005"
+    ],
+    "matched_paths": [
+      "./参考文献/L2_持仓偏离层/03_Kacperczyk_2005_ICI_JF.pdf",
+      "./参考文献/L3_交易行为层/10_L3_Kacperczyk_Sialm_Zheng_2005_Unobserved_Actions_NBERw11363.pdf"
+    ]
+  },
+  {
+    "id": "15",
+    "citation": "Wermers (2000)",
+    "full_bib": "Wermers, R. (2000). Mutual fund performance: An empirical decomposition of returns, costs, and risk. The Journal of Finance, 55(4), 1655-1695.",
+    "where": "一、投资经理画像的指标体系 (风格漂移与噪声交易)",
+    "expected_kw": [
+      "wermers",
+      "2000"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "16",
+    "citation": "Chen & Wei (2025)",
+    "full_bib": "Chen, Y., & Wei, H. (2025). Fund style drift and fund performance: Evidence from China. PLoS ONE, 20(2), e0316932.",
+    "where": "表1 (行业风格漂移 ISDI 测度来源)",
+    "expected_kw": [
+      "chen",
+      "wei",
+      "2025"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "17",
+    "citation": "Cremers & Petajisto (2009)",
+    "full_bib": "Cremers, K. J. M., & Petajisto, A. (2009). How active is your fund manager? A new measure that predicts performance. The Review of Financial Studies, 22(9), 3841-3880.",
+    "where": "表1 (改进主动份额 AS_improved 来源)",
+    "expected_kw": [
+      "cremers",
+      "petajisto"
+    ],
+    "matched_paths": [
+      "./参考文献/L2_持仓偏离层/01_Cremers_Petajisto_2009_ActiveShare_RFS.pdf",
+      "./参考文献/L2_持仓偏离层/02_Cremers_Petajisto_2009_ActiveShare_技术说明.pdf",
+      "./参考文献/L2_持仓偏离层/09_L2_Cremers_Petajisto_Zitzewitz_2013_Index_Alphas_CFR.pdf",
+      "./参考文献/文献/研读卡片_AI/_extracted_text/L2_持仓偏离层_01_Cremers_Petajisto_2009_ActiveShare_RFS.txt",
+      "./参考文献/文献/研读卡片_AI/_extracted_text/L2_持仓偏离层_02_Cremers_Petajisto_2009_ActiveShare_技术说明.txt",
+      "./归档/文献原始大集合/literature/L2/L2_Cremers_Petajisto_2009_Active_Share_Petajisto_website.pdf",
+      "./归档/文献原始大集合/literature/L2/L2_Cremers_Petajisto_2009_How_Active_Is_Your_Fund_Manager_Yale.pdf"
+    ]
+  },
+  {
+    "id": "18",
+    "citation": "Frazzini, Friedman & Pomorski (2016)",
+    "full_bib": "Frazzini, A., Friedman, J., & Pomorski, L. (2016). Deactivating active share. Financial Analysts Journal, 72(2), 14-21.",
+    "where": "表1 / 表8 / 二(四) (AS 证伪剔除检验依据)",
+    "expected_kw": [
+      "frazzini",
+      "deactivating"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "19",
+    "citation": "Kacperczyk, Sialm & Zheng (2008)",
+    "full_bib": "Kacperczyk, M., Sialm, C., & Zheng, L. (2008). Unobserved actions of mutual funds. The Review of Financial Studies, 21(6), 2379-2416.",
+    "where": "表1 (调仓幅度 ARG 来源)",
+    "expected_kw": [
+      "unobserved actions"
+    ],
+    "matched_paths": [
+      "./归档/重复文献/UNOBSERVED ACTIONS OF MUTUAL FUND.pdf"
+    ]
+  },
+  {
+    "id": "20",
+    "citation": "Ungeheuer & Weber (2021)",
+    "full_bib": "Ungeheuer, M., & Weber, M. (2021). The role of return and volume in mutual fund trades. Journal of Financial and Quantitative Analysis, 56(4), 1361-1393.",
+    "where": "一、投资经理画像的指标体系 (定期报告外的日间调仓能力)",
+    "expected_kw": [
+      "ungeheuer",
+      "weber"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "21",
+    "citation": "Henriksson & Merton (1981)",
+    "full_bib": "Henriksson, R. D., & Merton, R. C. (1981). On market timing and investment performance. II. Statistical procedures for evaluating forecasting skills. The Journal of Business, 54(4), 513-533.",
+    "where": "一、投资经理画像的指标体系 / 表1 (下行保护 timing HM模型)",
+    "expected_kw": [
+      "merton_1981",
+      "henriksson"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "22",
+    "citation": "Treynor & Mazuy (1966)",
+    "full_bib": "Treynor, J. L., & Mazuy, K. K. (1966). Can mutual funds outguess the market? Harvard Business Review, 44(4), 131-136.",
+    "where": "表1 (下行保护 timing 对照模型 TM模型)",
+    "expected_kw": [
+      "treynor",
+      "mazuy"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "23",
+    "citation": "Brown, Harlow & Starks (1996)",
+    "full_bib": "Brown, K. C., Harlow, W. V., & Starks, L. T. (1996). Of tournaments, temptations, and risk-taking in the mutual fund industry. The Journal of Finance, 51(5), 1807-1831.",
+    "where": "表1 (收益波动率与风险稳定性来源)",
+    "expected_kw": [
+      "brown_harlow_starks",
+      "tournaments"
+    ],
+    "matched_paths": [
+      "./参考文献/L4_风险应对层/03_Brown_Harlow_Starks_1996_Tournaments_JF.pdf"
+    ]
+  },
+  {
+    "id": "24",
+    "citation": "Sharpe (1966)",
+    "full_bib": "Sharpe, W. F. (1966). Mutual fund performance. The Journal of Business, 39(1), 119-138.",
+    "where": "一、投资经理画像的指标体系 / 表1 (Sharpe 比率)",
+    "expected_kw": [
+      "sharpe_1966",
+      "sharpe (1966)"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "25",
+    "citation": "Sortino & Price (1994)",
+    "full_bib": "Sortino, F. A., & Price, L. N. (1994). Performance measurement in a downside risk framework. The Journal of Investing, 3(3), 59-64.",
+    "where": "表1 (Sortino 比率来源)",
+    "expected_kw": [
+      "sortino",
+      "price"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "26",
+    "citation": "Sortino & van der Meer (1991)",
+    "full_bib": "Sortino, F. A., & van der Meer, R. (1991). Downside risk: Capturing what's at stake in investment choices. The Journal of Portfolio Management, 17(4), 27-31.",
+    "where": "一、投资经理画像的指标体系 (下行风险转化比率)",
+    "expected_kw": [
+      "sortino",
+      "meer"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "27",
+    "citation": "Goetzmann, Ingersoll, Spiegel & Welch (2007)",
+    "full_bib": "Goetzmann, W. N., Ingersoll, J., Spiegel, M., & Welch, I. (2007). Portfolio performance manipulation and manipulation-proof performance measures. The Review of Financial Studies, 20(5), 1503-1546.",
+    "where": "一、投资经理画像的指标体系 / 表1 (抗操纵绩效测度 MPPM)",
+    "expected_kw": [
+      "manipulation",
+      "mppm",
+      "goetzmann_2007"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "28",
+    "citation": "Brown & Goetzmann (1997)",
+    "full_bib": "Brown, S. J., & Goetzmann, W. N. (1997). Mutual fund styles. The Journal of Finance, 52(1), 371-399.",
+    "where": "一、投资经理画像的指标体系 (策略偏离指数 SDI 理论)",
+    "expected_kw": [
+      "brown",
+      "goetzmann",
+      "styles"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "29",
+    "citation": "Wermers (2012)",
+    "full_bib": "Wermers, R. (2012). A matter of style: The causes and consequences of style drift in institutional portfolios. Working Paper, University of Maryland.",
+    "where": "表1 (策略偏离指数 SDI 测度来源)",
+    "expected_kw": [
+      "wermers_2012",
+      "matter of style"
+    ],
+    "matched_paths": []
+  },
+  {
+    "id": "30",
+    "citation": "Lakonishok, Shleifer & Vishny (1992)",
+    "full_bib": "Lakonishok, J., Shleifer, A., & Vishny, R. W. (1992). The impact of institutional trading on stock prices. Journal of Financial Economics, 32(1), 23-43.",
+    "where": "一、投资经理画像的指标体系 / 表1 (交易趋同度 LSV 模型)",
+    "expected_kw": [
+      "lakonishok",
+      "shleifer",
+      "1992"
+    ],
+    "matched_paths": [
+      "./参考文献/L5_认知行为层/26_Lakonishok_Shleifer_Vishny_1992_LSV_JF.pdf"
+    ]
+  },
+  {
+    "id": "31",
+    "citation": "Wermers (1999)",
+    "full_bib": "Wermers, R. (1999). Mutual fund herding and the impact on stock prices. The Journal of Finance, 54(2), 585-622.",
+    "where": "表1 (交易趋同度 LSV 羊群效应来源)",
+    "expected_kw": [
+      "wermers_1999",
+      "herding"
+    ],
+    "matched_paths": [
+      "./参考文献/L5_认知行为层/25_Wermers_1999_MutualFundHerding_JF.pdf"
+    ]
+  },
+  {
+    "id": "32",
+    "citation": "Fama & French (2015)",
+    "full_bib": "Fama, E. F., & French, K. R. (2015). A five-factor asset pricing model. Journal of Financial Economics, 116(1), 1-22.",
+    "where": "二(一) / 附注 (FF5 五因子基准模型)",
+    "expected_kw": [
+      "fama_french_2015",
+      "fivefactor"
+    ],
+    "matched_paths": [
+      "./参考文献/M_方法论与识别检验/04_Fama_French_2015_FiveFactor_JFE.pdf",
+      "./参考文献/M_方法论与识别检验/04_Fama_French_2015_FiveFactor_JFE.txt"
+    ]
+  },
+  {
+    "id": "33",
+    "citation": "李志冰等 (2017)",
+    "full_bib": "李志冰, 杨光艺, 冯永昌, 景亮. (2017). Fama-French五因子模型在中国股票市场的实证检验. 金融研究, (6), 191-206.",
+    "where": "二(一) / 附注 (FF5 中国股票市场适用性)",
+    "expected_kw": [
+      "李志冰",
+      "五因子"
+    ],
+    "matched_paths": []
+  }
+]

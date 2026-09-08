@@ -1,0 +1,7 @@
+div_open=45 div_close=44 diff=1
+len=20568
+svg_open=2 svg_close=2
+has_gA=True has_gC=True
+has_FOREST_label=True
+has_cross_grid=True
+has_mechanism=True

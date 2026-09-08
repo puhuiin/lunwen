@@ -1,0 +1,115 @@
+{
+  "Q1_L1": {
+    "五维_不含L1": {
+      "Q5_Q1": 0.03351,
+      "t": 11.87,
+      "单调": true
+    },
+    "六维_含L1": {
+      "Q5_Q1": 0.03131,
+      "t": 10.28,
+      "单调": true
+    },
+    "OOS_五维_不含L1": {
+      "Q5_Q1": 0.02489,
+      "t": 6.81,
+      "单调": true
+    },
+    "OOS_六维_含L1": {
+      "Q5_Q1": 0.02497,
+      "t": 7.07,
+      "单调": true
+    },
+    "OOS_嵌套F": {
+      "r2_五维": 0.325,
+      "r2_六维": 0.3358,
+      "F": 5.17,
+      "p": 0.0236
+    }
+  },
+  "Q2_TO_vs_OC": {
+    "pearson": -0.152,
+    "spearman": -0.135,
+    "corr_TO_alpha": 0.063,
+    "corr_OC_alpha": -0.197,
+    "TO_净t": 2.1
+  },
+  "Q3_ARG_timing": {
+    "pearson": -0.062,
+    "spearman": -0.033,
+    "n": 355,
+    "vif": 1.0,
+    "ARG_净t": 5.46,
+    "timing_净t": 5.85
+  },
+  "Q4_trio": {
+    "pearson": {
+      "sharpe8_lag": {
+        "sharpe8_lag": 1.0,
+        "sortino8_lag": 0.526,
+        "mppm8_lag": 0.868
+      },
+      "sortino8_lag": {
+        "sharpe8_lag": 0.526,
+        "sortino8_lag": 1.0,
+        "mppm8_lag": 0.606
+      },
+      "mppm8_lag": {
+        "sharpe8_lag": 0.868,
+        "sortino8_lag": 0.606,
+        "mppm8_lag": 1.0
+      }
+    },
+    "spearman": {
+      "sharpe8_lag": {
+        "sharpe8_lag": 1.0,
+        "sortino8_lag": 0.452,
+        "mppm8_lag": 0.894
+      },
+      "sortino8_lag": {
+        "sharpe8_lag": 0.452,
+        "sortino8_lag": 1.0,
+        "mppm8_lag": 0.4
+      },
+      "mppm8_lag": {
+        "sharpe8_lag": 0.894,
+        "sortino8_lag": 0.4,
+        "mppm8_lag": 1.0
+      }
+    },
+    "vif_if_separate": {
+      "sharpe8_lag": 4.1,
+      "sortino8_lag": 1.6,
+      "mppm8_lag": 4.7
+    },
+    "单成分vs复合相关": {
+      "sharpe8_lag": {
+        "corr_with_dim3": 0.9093
+      },
+      "sortino8_lag": {
+        "corr_with_dim3": 0.8281
+      },
+      "mppm8_lag": {
+        "corr_with_dim3": 0.944
+      }
+    },
+    "单维解释力": {
+      "仅sharpe8": {
+        "t": 6.76,
+        "r2": 0.1678
+      },
+      "仅sortino8": {
+        "t": 4.46,
+        "r2": 0.0967
+      },
+      "仅mppm8": {
+        "t": 9.42,
+        "r2": 0.196
+      },
+      "三成分复合": {
+        "t": 7.44,
+        "r2": 0.2092
+      }
+    }
+  }
+}

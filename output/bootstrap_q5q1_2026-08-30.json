@@ -1,0 +1,29 @@
+{
+  "生成时间": "2026-08-30",
+  "设计": "基金层整簇 Bootstrap（有放回重抽 362 只基金），重算 Q5−Q1 ff5_alpha 差",
+  "样本基础": "画像_全样本能力表_2026-08-26.csv（362 只基金）",
+  "Bootstrap 次数": 1000,
+  "观测值": {
+    "Q5_minus_Q1_ff5_alpha": 0.0313,
+    "Q5_minus_Q1_quarter_return": 0.0545
+  },
+  "ff5_alpha_bootstrap": {
+    "n_valid": 1000,
+    "mean": 0.0318,
+    "median": 0.0318,
+    "se": 0.0032,
+    "ci_lo": 0.0253,
+    "ci_hi": 0.0383,
+    "p_le_zero": 0.0
+  },
+  "quarter_return_bootstrap": {
+    "n_valid": 1000,
+    "mean": 0.0552,
+    "median": 0.0551,
+    "se": 0.0047,
+    "ci_lo": 0.0462,
+    "ci_hi": 0.0643,
+    "p_le_zero": 0.0
+  },
+  "结论": "实力主导：Q5−Q1 经验 95% CI 不含 0 且 p<0.01，样本内五等分区分度不能被截面运气解释。"
+}

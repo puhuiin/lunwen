@@ -1,0 +1,192 @@
+{
+ "ff3_a": {
+  "N": 366,
+  "alpha_mean": 0.01202,
+  "linear_log": {
+   "b": 0.00172,
+   "t": 3.15,
+   "p": 0.0016,
+   "r2": 0.0321
+  },
+  "quadratic_log": {
+   "b1": 0.00332,
+   "t1": 4.86,
+   "b2": -0.00089,
+   "t2": -4.27,
+   "r2": 0.0744
+  },
+  "linear_level": {
+   "b": 3.891e-05,
+   "t": 1.04,
+   "p": 0.2975,
+   "r2": 0.0023
+  },
+  "decile": [
+   {
+    "dec": 0,
+    "n": 37,
+    "avg_aum_亿": 32.02,
+    "alpha_mean": 0.27,
+    "alpha_med": 0.774
+   },
+   {
+    "dec": 1,
+    "n": 37,
+    "avg_aum_亿": 116.65,
+    "alpha_mean": 0.881,
+    "alpha_med": 1.127
+   },
+   {
+    "dec": 2,
+    "n": 36,
+    "avg_aum_亿": 217.13,
+    "alpha_mean": 1.417,
+    "alpha_med": 1.57
+   },
+   {
+    "dec": 3,
+    "n": 37,
+    "avg_aum_亿": 328.76,
+    "alpha_mean": 1.135,
+    "alpha_med": 1.518
+   },
+   {
+    "dec": 4,
+    "n": 36,
+    "avg_aum_亿": 504.86,
+    "alpha_mean": 1.106,
+    "alpha_med": 1.158
+   },
+   {
+    "dec": 5,
+    "n": 37,
+    "avg_aum_亿": 732.39,
+    "alpha_mean": 1.461,
+    "alpha_med": 1.567
+   },
+   {
+    "dec": 6,
+    "n": 36,
+    "avg_aum_亿": 1022.35,
+    "alpha_mean": 1.277,
+    "alpha_med": 1.322
+   },
+   {
+    "dec": 7,
+    "n": 37,
+    "avg_aum_亿": 1466.27,
+    "alpha_mean": 1.773,
+    "alpha_med": 1.794
+   },
+   {
+    "dec": 8,
+    "n": 36,
+    "avg_aum_亿": 2654.46,
+    "alpha_mean": 1.693,
+    "alpha_med": 1.616
+   },
+   {
+    "dec": 9,
+    "n": 37,
+    "avg_aum_亿": 6202.68,
+    "alpha_mean": 1.026,
+    "alpha_med": 0.973
+   }
+  ]
+ },
+ "ff5_a": {
+  "N": 358,
+  "alpha_mean": 0.00368,
+  "linear_log": {
+   "b": 0.00378,
+   "t": 5.6,
+   "p": 0.0,
+   "r2": 0.0928
+  },
+  "quadratic_log": {
+   "b1": 0.00573,
+   "t1": 6.39,
+   "b2": -0.00107,
+   "t2": -3.94,
+   "r2": 0.1296
+  },
+  "linear_level": {
+   "b": 0.00011152,
+   "t": 2.26,
+   "p": 0.0237,
+   "r2": 0.0118
+  },
+  "decile": [
+   {
+    "dec": 0,
+    "n": 36,
+    "avg_aum_亿": 33.77,
+    "alpha_mean": -1.186,
+    "alpha_med": -0.352
+   },
+   {
+    "dec": 1,
+    "n": 36,
+    "avg_aum_亿": 121.13,
+    "alpha_mean": -0.196,
+    "alpha_med": -0.07
+   },
+   {
+    "dec": 2,
+    "n": 36,
+    "avg_aum_亿": 226.42,
+    "alpha_mean": 0.439,
+    "alpha_med": 0.555
+   },
+   {
+    "dec": 3,
+    "n": 35,
+    "avg_aum_亿": 340.32,
+    "alpha_mean": 0.26,
+    "alpha_med": 0.653
+   },
+   {
+    "dec": 4,
+    "n": 36,
+    "avg_aum_亿": 520.86,
+    "alpha_mean": -0.014,
+    "alpha_med": 0.55
+   },
+   {
+    "dec": 5,
+    "n": 36,
+    "avg_aum_亿": 750.35,
+    "alpha_mean": 1.086,
+    "alpha_med": 1.256
+   },
+   {
+    "dec": 6,
+    "n": 35,
+    "avg_aum_亿": 1041.16,
+    "alpha_mean": 0.713,
+    "alpha_med": 0.863
+   },
+   {
+    "dec": 7,
+    "n": 36,
+    "avg_aum_亿": 1494.28,
+    "alpha_mean": 1.41,
+    "alpha_med": 1.445
+   },
+   {
+    "dec": 8,
+    "n": 36,
+    "avg_aum_亿": 2699.56,
+    "alpha_mean": 0.504,
+    "alpha_med": 0.712
+   },
+   {
+    "dec": 9,
+    "n": 36,
+    "avg_aum_亿": 6276.61,
+    "alpha_mean": 0.672,
+    "alpha_med": 0.712
+   }
+  ]
+ }
+}

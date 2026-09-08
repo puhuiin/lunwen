@@ -1,0 +1,152 @@
+<svg viewBox="0 0 680 470" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,PingFang SC,Microsoft YaHei,sans-serif">
+<polygon points="120.0,105.2 131.1,111.6 131.1,124.4 120.0,130.8 108.9,124.4 108.9,111.6" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="120.0,92.4 142.2,105.2 142.2,130.8 120.0,143.6 97.8,130.8 97.8,105.2" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="120.0,79.6 153.3,98.8 153.3,137.2 120.0,156.4 86.7,137.2 86.7,98.8" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="120.0,66.8 164.3,92.4 164.3,143.6 120.0,169.2 75.7,143.6 75.7,92.4" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="120.0,54.0 175.4,86.0 175.4,150.0 120.0,182.0 64.6,150.0 64.6,86.0" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="120" y1="118" x2="120.0" y2="54.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="120.0" y="34.0" font-size="10.5" fill="#5b6b7b" text-anchor="middle" dominant-baseline="auto">集中度</text>
+<line x1="120" y1="118" x2="175.4" y2="86.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="193.3" y="78.0" font-size="10.5" fill="#5b6b7b" text-anchor="start" dominant-baseline="auto">行业偏离</text>
+<line x1="120" y1="118" x2="175.4" y2="150.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="193.3" y="158.0" font-size="10.5" fill="#5b6b7b" text-anchor="start" dominant-baseline="auto">主动份额</text>
+<line x1="120" y1="118" x2="120.0" y2="182.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="120.0" y="212.0" font-size="10.5" fill="#5b6b7b" text-anchor="middle" dominant-baseline="auto">换手率</text>
+<line x1="120" y1="118" x2="64.6" y2="150.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="46.7" y="158.0" font-size="10.5" fill="#5b6b7b" text-anchor="end" dominant-baseline="auto">持股周期</text>
+<line x1="120" y1="118" x2="64.6" y2="86.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="46.7" y="78.0" font-size="10.5" fill="#5b6b7b" text-anchor="end" dominant-baseline="auto">风险偏好</text>
+<polygon points="120.0,66.8 164.3,92.4 164.3,143.6 120.0,143.6 64.6,150.0 75.7,92.4" fill="#2e7d8a33" stroke="#2e7d8a" stroke-width="2"/>
+<circle cx="120.0" cy="66.8" r="2.6" fill="#2e7d8a"/>
+<circle cx="164.3" cy="92.4" r="2.6" fill="#2e7d8a"/>
+<circle cx="164.3" cy="143.6" r="2.6" fill="#2e7d8a"/>
+<circle cx="120.0" cy="143.6" r="2.6" fill="#2e7d8a"/>
+<circle cx="64.6" cy="150.0" r="2.6" fill="#2e7d8a"/>
+<circle cx="75.7" cy="92.4" r="2.6" fill="#2e7d8a"/>
+<text x="120" y="24.0" font-size="13.5" font-weight="700" fill="#2e7d8a" text-anchor="middle">[张坤]</text>
+<polygon points="340.0,105.2 351.1,111.6 351.1,124.4 340.0,130.8 328.9,124.4 328.9,111.6" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="340.0,92.4 362.2,105.2 362.2,130.8 340.0,143.6 317.8,130.8 317.8,105.2" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="340.0,79.6 373.3,98.8 373.3,137.2 340.0,156.4 306.7,137.2 306.7,98.8" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="340.0,66.8 384.3,92.4 384.3,143.6 340.0,169.2 295.7,143.6 295.7,92.4" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="340.0,54.0 395.4,86.0 395.4,150.0 340.0,182.0 284.6,150.0 284.6,86.0" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="340" y1="118" x2="340.0" y2="54.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="340.0" y="34.0" font-size="10.5" fill="#5b6b7b" text-anchor="middle" dominant-baseline="auto">集中度</text>
+<line x1="340" y1="118" x2="395.4" y2="86.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="413.3" y="78.0" font-size="10.5" fill="#5b6b7b" text-anchor="start" dominant-baseline="auto">行业偏离</text>
+<line x1="340" y1="118" x2="395.4" y2="150.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="413.3" y="158.0" font-size="10.5" fill="#5b6b7b" text-anchor="start" dominant-baseline="auto">主动份额</text>
+<line x1="340" y1="118" x2="340.0" y2="182.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="340.0" y="212.0" font-size="10.5" fill="#5b6b7b" text-anchor="middle" dominant-baseline="auto">换手率</text>
+<line x1="340" y1="118" x2="284.6" y2="150.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="266.7" y="158.0" font-size="10.5" fill="#5b6b7b" text-anchor="end" dominant-baseline="auto">持股周期</text>
+<line x1="340" y1="118" x2="284.6" y2="86.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="266.7" y="78.0" font-size="10.5" fill="#5b6b7b" text-anchor="end" dominant-baseline="auto">风险偏好</text>
+<polygon points="340.0,79.6 362.2,105.2 395.4,150.0 340.0,130.8 284.6,150.0 306.7,98.8" fill="#1f6b3a33" stroke="#1f6b3a" stroke-width="2"/>
+<circle cx="340.0" cy="79.6" r="2.6" fill="#1f6b3a"/>
+<circle cx="362.2" cy="105.2" r="2.6" fill="#1f6b3a"/>
+<circle cx="395.4" cy="150.0" r="2.6" fill="#1f6b3a"/>
+<circle cx="340.0" cy="130.8" r="2.6" fill="#1f6b3a"/>
+<circle cx="284.6" cy="150.0" r="2.6" fill="#1f6b3a"/>
+<circle cx="306.7" cy="98.8" r="2.6" fill="#1f6b3a"/>
+<text x="340" y="24.0" font-size="13.5" font-weight="700" fill="#1f6b3a" text-anchor="middle">[朱少醒]</text>
+<polygon points="560.0,105.2 571.1,111.6 571.1,124.4 560.0,130.8 548.9,124.4 548.9,111.6" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="560.0,92.4 582.2,105.2 582.2,130.8 560.0,143.6 537.8,130.8 537.8,105.2" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="560.0,79.6 593.3,98.8 593.3,137.2 560.0,156.4 526.7,137.2 526.7,98.8" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="560.0,66.8 604.3,92.4 604.3,143.6 560.0,169.2 515.7,143.6 515.7,92.4" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="560.0,54.0 615.4,86.0 615.4,150.0 560.0,182.0 504.6,150.0 504.6,86.0" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="560" y1="118" x2="560.0" y2="54.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="560.0" y="34.0" font-size="10.5" fill="#5b6b7b" text-anchor="middle" dominant-baseline="auto">集中度</text>
+<line x1="560" y1="118" x2="615.4" y2="86.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="633.3" y="78.0" font-size="10.5" fill="#5b6b7b" text-anchor="start" dominant-baseline="auto">行业偏离</text>
+<line x1="560" y1="118" x2="615.4" y2="150.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="633.3" y="158.0" font-size="10.5" fill="#5b6b7b" text-anchor="start" dominant-baseline="auto">主动份额</text>
+<line x1="560" y1="118" x2="560.0" y2="182.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="560.0" y="212.0" font-size="10.5" fill="#5b6b7b" text-anchor="middle" dominant-baseline="auto">换手率</text>
+<line x1="560" y1="118" x2="504.6" y2="150.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="486.7" y="158.0" font-size="10.5" fill="#5b6b7b" text-anchor="end" dominant-baseline="auto">持股周期</text>
+<line x1="560" y1="118" x2="504.6" y2="86.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="486.7" y="78.0" font-size="10.5" fill="#5b6b7b" text-anchor="end" dominant-baseline="auto">风险偏好</text>
+<polygon points="560.0,54.0 615.4,86.0 615.4,150.0 560.0,156.4 526.7,137.2 504.6,86.0" fill="#9a341233" stroke="#9a3412" stroke-width="2"/>
+<circle cx="560.0" cy="54.0" r="2.6" fill="#9a3412"/>
+<circle cx="615.4" cy="86.0" r="2.6" fill="#9a3412"/>
+<circle cx="615.4" cy="150.0" r="2.6" fill="#9a3412"/>
+<circle cx="560.0" cy="156.4" r="2.6" fill="#9a3412"/>
+<circle cx="526.7" cy="137.2" r="2.6" fill="#9a3412"/>
+<circle cx="504.6" cy="86.0" r="2.6" fill="#9a3412"/>
+<text x="560" y="24.0" font-size="13.5" font-weight="700" fill="#9a3412" text-anchor="middle">[葛兰]</text>
+<polygon points="120.0,340.2 131.1,346.6 131.1,359.4 120.0,365.8 108.9,359.4 108.9,346.6" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="120.0,327.4 142.2,340.2 142.2,365.8 120.0,378.6 97.8,365.8 97.8,340.2" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="120.0,314.6 153.3,333.8 153.3,372.2 120.0,391.4 86.7,372.2 86.7,333.8" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="120.0,301.8 164.3,327.4 164.3,378.6 120.0,404.2 75.7,378.6 75.7,327.4" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="120.0,289.0 175.4,321.0 175.4,385.0 120.0,417.0 64.6,385.0 64.6,321.0" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="120" y1="353" x2="120.0" y2="289.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="120.0" y="269.0" font-size="10.5" fill="#5b6b7b" text-anchor="middle" dominant-baseline="auto">集中度</text>
+<line x1="120" y1="353" x2="175.4" y2="321.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="193.3" y="313.0" font-size="10.5" fill="#5b6b7b" text-anchor="start" dominant-baseline="auto">行业偏离</text>
+<line x1="120" y1="353" x2="175.4" y2="385.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="193.3" y="393.0" font-size="10.5" fill="#5b6b7b" text-anchor="start" dominant-baseline="auto">主动份额</text>
+<line x1="120" y1="353" x2="120.0" y2="417.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="120.0" y="447.0" font-size="10.5" fill="#5b6b7b" text-anchor="middle" dominant-baseline="auto">换手率</text>
+<line x1="120" y1="353" x2="64.6" y2="385.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="46.7" y="393.0" font-size="10.5" fill="#5b6b7b" text-anchor="end" dominant-baseline="auto">持股周期</text>
+<line x1="120" y1="353" x2="64.6" y2="321.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="46.7" y="313.0" font-size="10.5" fill="#5b6b7b" text-anchor="end" dominant-baseline="auto">风险偏好</text>
+<polygon points="120.0,301.8 175.4,321.0 175.4,385.0 120.0,417.0 97.8,365.8 64.6,321.0" fill="#7c3aed33" stroke="#7c3aed" stroke-width="2"/>
+<circle cx="120.0" cy="301.8" r="2.6" fill="#7c3aed"/>
+<circle cx="175.4" cy="321.0" r="2.6" fill="#7c3aed"/>
+<circle cx="175.4" cy="385.0" r="2.6" fill="#7c3aed"/>
+<circle cx="120.0" cy="417.0" r="2.6" fill="#7c3aed"/>
+<circle cx="97.8" cy="365.8" r="2.6" fill="#7c3aed"/>
+<circle cx="64.6" cy="321.0" r="2.6" fill="#7c3aed"/>
+<text x="120" y="259.0" font-size="13.5" font-weight="700" fill="#7c3aed" text-anchor="middle">[蔡嵩松]</text>
+<polygon points="340.0,340.2 351.1,346.6 351.1,359.4 340.0,365.8 328.9,359.4 328.9,346.6" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="340.0,327.4 362.2,340.2 362.2,365.8 340.0,378.6 317.8,365.8 317.8,340.2" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="340.0,314.6 373.3,333.8 373.3,372.2 340.0,391.4 306.7,372.2 306.7,333.8" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="340.0,301.8 384.3,327.4 384.3,378.6 340.0,404.2 295.7,378.6 295.7,327.4" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="340.0,289.0 395.4,321.0 395.4,385.0 340.0,417.0 284.6,385.0 284.6,321.0" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="340" y1="353" x2="340.0" y2="289.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="340.0" y="269.0" font-size="10.5" fill="#5b6b7b" text-anchor="middle" dominant-baseline="auto">集中度</text>
+<line x1="340" y1="353" x2="395.4" y2="321.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="413.3" y="313.0" font-size="10.5" fill="#5b6b7b" text-anchor="start" dominant-baseline="auto">行业偏离</text>
+<line x1="340" y1="353" x2="395.4" y2="385.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="413.3" y="393.0" font-size="10.5" fill="#5b6b7b" text-anchor="start" dominant-baseline="auto">主动份额</text>
+<line x1="340" y1="353" x2="340.0" y2="417.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="340.0" y="447.0" font-size="10.5" fill="#5b6b7b" text-anchor="middle" dominant-baseline="auto">换手率</text>
+<line x1="340" y1="353" x2="284.6" y2="385.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="266.7" y="393.0" font-size="10.5" fill="#5b6b7b" text-anchor="end" dominant-baseline="auto">持股周期</text>
+<line x1="340" y1="353" x2="284.6" y2="321.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="266.7" y="313.0" font-size="10.5" fill="#5b6b7b" text-anchor="end" dominant-baseline="auto">风险偏好</text>
+<polygon points="340.0,289.0 373.3,333.8 395.4,385.0 340.0,365.8 284.6,385.0 317.8,340.2" fill="#1f4e7933" stroke="#1f4e79" stroke-width="2"/>
+<circle cx="340.0" cy="289.0" r="2.6" fill="#1f4e79"/>
+<circle cx="373.3" cy="333.8" r="2.6" fill="#1f4e79"/>
+<circle cx="395.4" cy="385.0" r="2.6" fill="#1f4e79"/>
+<circle cx="340.0" cy="365.8" r="2.6" fill="#1f4e79"/>
+<circle cx="284.6" cy="385.0" r="2.6" fill="#1f4e79"/>
+<circle cx="317.8" cy="340.2" r="2.6" fill="#1f4e79"/>
+<text x="340" y="259.0" font-size="13.5" font-weight="700" fill="#1f4e79" text-anchor="middle">[巴菲特]</text>
+<polygon points="560.0,340.2 571.1,346.6 571.1,359.4 560.0,365.8 548.9,359.4 548.9,346.6" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="560.0,327.4 582.2,340.2 582.2,365.8 560.0,378.6 537.8,365.8 537.8,340.2" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="560.0,314.6 593.3,333.8 593.3,372.2 560.0,391.4 526.7,372.2 526.7,333.8" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="560.0,301.8 604.3,327.4 604.3,378.6 560.0,404.2 515.7,378.6 515.7,327.4" fill="none" stroke="#e3e8ef" stroke-width="1"/>
+<polygon points="560.0,289.0 615.4,321.0 615.4,385.0 560.0,417.0 504.6,385.0 504.6,321.0" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="560" y1="353" x2="560.0" y2="289.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="560.0" y="269.0" font-size="10.5" fill="#5b6b7b" text-anchor="middle" dominant-baseline="auto">集中度</text>
+<line x1="560" y1="353" x2="615.4" y2="321.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="633.3" y="313.0" font-size="10.5" fill="#5b6b7b" text-anchor="start" dominant-baseline="auto">行业偏离</text>
+<line x1="560" y1="353" x2="615.4" y2="385.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="633.3" y="393.0" font-size="10.5" fill="#5b6b7b" text-anchor="start" dominant-baseline="auto">主动份额</text>
+<line x1="560" y1="353" x2="560.0" y2="417.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="560.0" y="447.0" font-size="10.5" fill="#5b6b7b" text-anchor="middle" dominant-baseline="auto">换手率</text>
+<line x1="560" y1="353" x2="504.6" y2="385.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="486.7" y="393.0" font-size="10.5" fill="#5b6b7b" text-anchor="end" dominant-baseline="auto">持股周期</text>
+<line x1="560" y1="353" x2="504.6" y2="321.0" stroke="#dde3ea" stroke-width="1"/>
+<text x="486.7" y="313.0" font-size="10.5" fill="#5b6b7b" text-anchor="end" dominant-baseline="auto">风险偏好</text>
+<polygon points="560.0,340.2 571.1,346.6 571.1,359.4 560.0,404.2 537.8,365.8 515.7,327.4" fill="#be123c33" stroke="#be123c" stroke-width="2"/>
+<circle cx="560.0" cy="340.2" r="2.6" fill="#be123c"/>
+<circle cx="571.1" cy="346.6" r="2.6" fill="#be123c"/>
+<circle cx="571.1" cy="359.4" r="2.6" fill="#be123c"/>
+<circle cx="560.0" cy="404.2" r="2.6" fill="#be123c"/>
+<circle cx="537.8" cy="365.8" r="2.6" fill="#be123c"/>
+<circle cx="515.7" cy="327.4" r="2.6" fill="#be123c"/>
+<text x="560" y="259.0" font-size="13.5" font-weight="700" fill="#be123c" text-anchor="middle">[林奇]</text>
+</svg>

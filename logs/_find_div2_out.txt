@@ -1,0 +1,5 @@
+line 190: STRAY <div (no proper tag): ['<div'] | <div class="cv-row-lab">处置效应 DE<br><span style="color:#08976b;font-size:11px">预期负向</span></div><div
+
+substring '<div' count = 45
+proper '<div...>' count = 0
+'</div>' count = 44

@@ -1,0 +1,185 @@
+{
+  "checks": {
+    "N": 2264,
+    "funds": 348,
+    "R2": 0.129
+  },
+  "coefs_L5": {
+    "de": {
+      "beta": -0.00606,
+      "t": -2.5
+    },
+    "lsv": {
+      "beta": 0.01548,
+      "t": 1.23
+    },
+    "risk_asym": {
+      "beta": 0.07311,
+      "t": 4.53
+    }
+  },
+  "H_ps": {
+    "N": 2264,
+    "funds": 348,
+    "ps_mean": -0.0,
+    "ps_std": 0.0739,
+    "ps_min": -0.327,
+    "ps_max": 0.692,
+    "weights": {
+      "de": 0.00606,
+      "lsv": 0.01548,
+      "risk_asym": 0.07311
+    }
+  },
+  "quintiles": {
+    "Q1": {
+      "n": 453,
+      "alpha_mean": 0.0151,
+      "alpha_median": 0.0169,
+      "alpha_std": 0.0161,
+      "ps_mean": -0.0922
+    },
+    "Q2": {
+      "n": 453,
+      "alpha_mean": 0.0178,
+      "alpha_median": 0.0176,
+      "alpha_std": 0.0165,
+      "ps_mean": -0.0398
+    },
+    "Q3": {
+      "n": 452,
+      "alpha_mean": 0.0198,
+      "alpha_median": 0.0187,
+      "alpha_std": 0.0179,
+      "ps_mean": -0.006
+    },
+    "Q4": {
+      "n": 453,
+      "alpha_mean": 0.0215,
+      "alpha_median": 0.0202,
+      "alpha_std": 0.0173,
+      "ps_mean": 0.028
+    },
+    "Q5": {
+      "n": 453,
+      "alpha_mean": 0.0253,
+      "alpha_median": 0.0236,
+      "alpha_std": 0.0177,
+      "ps_mean": 0.1101
+    }
+  },
+  "monotonicity": {
+    "q5_q1_spread": 0.0102,
+    "spread_t": 9.07,
+    "spread_p": 7.252315458863653e-19,
+    "spearman_rho": 1.0,
+    "spearman_p": 1.4042654220543602e-24,
+    "trend_slope": 0.0024,
+    "trend_t": 12.59,
+    "trend_p": 0.0010800901109977257
+  },
+  "correlation": {
+    "pearson_r": 0.2128,
+    "pearson_p": 1.3344328466992495e-24,
+    "reg_beta": 0.0502,
+    "reg_t": 10.36,
+    "reg_r2": 0.0453
+  },
+  "logistic": {
+    "pseudo_r2": 0.0268,
+    "accuracy": 0.568,
+    "auc": 0.6067,
+    "coef": {
+      "const": {
+        "coef": -0.398,
+        "z": -3.5,
+        "p": 0.0004572274682616865
+      },
+      "de_w": {
+        "coef": -0.689,
+        "z": -2.79,
+        "p": 0.005223920384926311
+      },
+      "lsv_w": {
+        "coef": 3.527,
+        "z": 3.3,
+        "p": 0.000973432270102229
+      },
+      "risk_asym_w": {
+        "coef": 9.052,
+        "z": 8.06,
+        "p": 7.516291013693536e-16
+      },
+      "log_aum_w": {
+        "coef": 0.016,
+        "z": 0.64,
+        "p": 0.5217894245836707
+      }
+    }
+  },
+  "profiles": {
+    "profiles": {
+      "理性止损型": {
+        "n": 248,
+        "pct": 11.0,
+        "alpha_mean": 0.0167,
+        "alpha_median": 0.0169,
+        "ps_mean": -0.0635
+      },
+      "自信止损型": {
+        "n": 321,
+        "pct": 14.2,
+        "alpha_mean": 0.0217,
+        "alpha_median": 0.0195,
+        "ps_mean": 0.0552
+      },
+      "从众止损型": {
+        "n": 309,
+        "pct": 13.6,
+        "alpha_mean": 0.0194,
+        "alpha_median": 0.0186,
+        "ps_mean": -0.0382
+      },
+      "自信从众型": {
+        "n": 254,
+        "pct": 11.2,
+        "alpha_mean": 0.0245,
+        "alpha_median": 0.0223,
+        "ps_mean": 0.0716
+      },
+      "固执独立型": {
+        "n": 270,
+        "pct": 11.9,
+        "alpha_mean": 0.0152,
+        "alpha_median": 0.014,
+        "ps_mean": -0.0699
+      },
+      "过度自信型": {
+        "n": 293,
+        "pct": 12.9,
+        "alpha_mean": 0.0221,
+        "alpha_median": 0.0202,
+        "ps_mean": 0.0359
+      },
+      "固执从众型": {
+        "n": 305,
+        "pct": 13.5,
+        "alpha_mean": 0.0165,
+        "alpha_median": 0.0181,
+        "ps_mean": -0.048
+      },
+      "冲动型": {
+        "n": 264,
+        "pct": 11.7,
+        "alpha_mean": 0.0233,
+        "alpha_median": 0.0208,
+        "ps_mean": 0.0555
+      }
+    },
+    "best": "自信从众型",
+    "worst": "固执独立型",
+    "spread": 0.0093,
+    "t": 6.25,
+    "p": 8.725994255672198e-10
+  }
+}

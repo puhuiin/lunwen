@@ -1,0 +1,50 @@
+{
+  "N": 2264,
+  "funds": 348,
+  "VIF_max_behavioral": 1.833,
+  "VIF_max_var": "return_volatility",
+  "sign_flips_M4_to_FE": [
+    "log_fund_age",
+    "AS_improved",
+    "ICI",
+    "TO_wind",
+    "ARG",
+    "return_volatility",
+    "lsv"
+  ],
+  "M4_significant": [
+    "log_fund_age",
+    "AS_improved",
+    "ICI",
+    "ARG",
+    "de",
+    "risk_asym"
+  ],
+  "FE_significant": [
+    "risk_asym"
+  ],
+  "both_significant": [
+    "risk_asym"
+  ],
+  "lsv_iso": {
+    "beta": 0.011405697790556179,
+    "t": 1.0256318196085903,
+    "p": 0.30506516301219366,
+    "N": 2264,
+    "funds": 348
+  },
+  "de_iso": {
+    "beta": -0.005246843558388308,
+    "t": -2.4174260059543,
+    "p": 0.015630711604973636,
+    "N": 2264,
+    "funds": 348
+  },
+  "ra_iso": {
+    "beta": 0.06506272570357555,
+    "t": 5.656461493738903,
+    "p": 1.545256267417219e-08,
+    "N": 2264,
+    "funds": 348
+  }
+}

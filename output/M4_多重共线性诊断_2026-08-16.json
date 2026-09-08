@@ -1,0 +1,43 @@
+{
+  "N": 2264,
+  "K_rhs": 18,
+  "max_VIF": 10.5308,
+  "max_VIF_var": "ff5_CMA",
+  "moderate": [
+    "ff5_SMB",
+    "ff5_HML",
+    "ff5_RMW"
+  ],
+  "severe": [
+    "ff5_CMA"
+  ],
+  "condition_number": 7.42,
+  "verdict": "存在严重共线（VIF≥10）：['ff5_CMA']",
+  "strong_pairs_abs_r_gt_0.5": [
+    [
+      "ff5_MKT_excess",
+      "ff5_HML",
+      -0.552
+    ],
+    [
+      "ff5_SMB",
+      "ff5_RMW",
+      -0.871
+    ],
+    [
+      "ff5_SMB",
+      "ff5_CMA",
+      0.671
+    ],
+    [
+      "ff5_HML",
+      "ff5_CMA",
+      0.647
+    ],
+    [
+      "ff5_RMW",
+      "ff5_CMA",
+      -0.634
+    ]
+  ]
+}

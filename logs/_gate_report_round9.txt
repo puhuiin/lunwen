@@ -1,0 +1,8 @@
+﻿_xref_check.py EXITCODE=0
+_struct_check.py EXITCODE=0
+_ref_check.py EXITCODE=0
+_arith_check.py EXITCODE=0
+_consistency_check.py EXITCODE=0
+_deepcheck.py EXITCODE=0
+_gate8_check.py EXITCODE=0
+_gate9_check.py EXITCODE=0
