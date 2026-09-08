@@ -1,0 +1,3461 @@
+An Omitted Variable Bias Framework for Sensitivity
+Analysis of Instrumental Variables
+BY CARLOS CINELLI
+Department of Statistics, University of Washington, Seattle.
+cinelli@uw.edu
+5
+AND CHAD HAZLETT
+Department of Statistics and Data Science, University of California, Los Angeles.
+chazlett@ucla.edu
+ABSTRACT
+We develop an omitted variable bias framework for sensitivity analysis of instru-
+10
+mental variable estimates that naturally handles multiple side-effects (violations of
+the exclusion restriction assumption) and confounders (violations of the ignorabil-
+ity of the instrument assumption) of the instrument, exploits expert knowledge to
+bound sensitivity parameters, and can be easily implemented with standard soft-
+ware. Speciﬁcally, we introduce sensitivity statistics for routine reporting, such as
+15
+(extreme) robustness values for instrumental variables, describing the minimum
+strength that omitted variables need to have to change the conclusions of a study.
+Next we provide visual displays that fully characterize the sensitivity of point es-
+timates and conﬁdence intervals to violations of the standard instrumental variable
+assumptions. Finally, we offer formal bounds on the worst possible bias under the
+20
+assumption that the maximum explanatory power of omitted variables is no stronger
+than a multiple of the explanatory power of observed variables. Conveniently, many
+pivotal conclusions regarding the sensitivity of the instrumental variable estimate
+(e.g. tests against the null hypothesis of zero causal effect) can be reached simply
+through separate sensitivity analyses of the effect of the instrument on the treatment
+25
+(the ﬁrst stage) and the effect of the instrument on the outcome (the reduced form).
+We apply our methods in a running example that uses proximity to college as an
+instrumental variable to estimate the returns to schooling.
+Some key words: Instrumental Variables; Omitted Variable Bias; Sensitivity Analysis; Robustness Values.
+1.
+INTRODUCTION
+30
+Unobserved confounding often complicates efforts to make causal claims from observational
+data (e.g. Pearl, 2009; Imbens and Rubin, 2015). Instrumental variable (IV) regression offers
+a powerful and widely used tool to address unobserved confounding, by exploiting exogenous
+sources of variation of the treatment (e.g. Angrist et al., 1996; Angrist and Pischke, 2009). IV
+methods are “a central part of the econometrics canon since the ﬁrst half of the twentieth cen-
+35
+tury” (Imbens, 2014, p.324), and, beyond economics, are now prominent tools in the arsenal of
+Forthcoming in Biometrika
+2
+CINELLI & HAZLETT
+investigators seeking to make causal claims across the social sciences, epidemiology, medicine,
+genetics, and other ﬁelds (see e.g. Hern´an and Robins, 2006; Burgess and Thompson, 2015).
+Yet, instrumental variable methods carry their own set of demanding assumptions. Principally,
+conditionally on certain observed covariates, an instrumental variable must not be confounded
+40
+with the outcome, and it should inﬂuence the outcome only by affecting uptake of the treatment.
+In recent literature, the ﬁrst assumption is usually called exogeneity, ignorability, or unconfound-
+edness of the instrument, whereas the second assumption is called the exclusion restriction (An-
+grist and Pischke, 2009; Imbens and Rubin, 2015). These assumptions can be violated by omitted
+confounders of the instrument-outcome association, and by omitted side-effects of the instrument
+45
+that inﬂuence the outcome via paths other than through the treatment. Although in certain cases
+such assumptions may entail testable implications (Pearl, 1995; Gunsilius, 2020; K´edagni and
+Mouriﬁ´e, 2020), they are often unveriﬁable and must be defended by appealing to domain knowl-
+edge. Whether a given IV study identiﬁes the causal effect of interest, then, turns on debates as
+to whether these assumptions hold.
+50
+Particularly in recent years, economists and other scholars have adopted a more skeptical pos-
+ture towards instrumental variable methods, emphasizing the importance of both defending the
+credibility of these assumptions as well as assessing the consequences of their failures (e.g.,
+Deaton, 2009; Heckman and Urzua, 2010). Extensive reviews of many widely-used instrumental
+variables have catalogued several plausible violations of the exclusion restriction for such instru-
+55
+ments (e.g Gallen, 2020; Mellon, 2020). More worrisome, if traditional assumptions fail to hold,
+it is well known that the bias of the IV estimate may be worse than the original confounding bias
+of the simple regression estimate (Bound et al., 1995). Therefore, researchers are also advised to
+perform sensitivity analyses to assess the degree of violation of the IV assumptions that would
+be required to alter the conclusions of a study.
+60
+While a number of sensitivity analyses for instrumental variables have been proposed (e.g.,
+Small, 2007; Small and Rosenbaum, 2008; Conley et al., 2012; Wang et al., 2018; Cinelli et al.,
+2019; Masten and Poirier, 2021), they have rarely been employed in practice. For example, in
+economics, only 1 out of 27 papers using instrumental variables, published in the American
+Economic Review in 2020, performed formal sensitivity analysis to unobserved variables. In
+65
+political science, this number was 1 out of 12 papers across the top three general interest journals
+in 2019 (Cinelli and Hazlett, 2020). In Sociology, none of the 34 papers published between
+2004 and 2022 in the American Journal of Sociology and the American Sociology Review did so
+(Felton and Stewart, 2022). Note that sensitivity to unobserved variables is distinct from (though
+related to) sensitivity to analytical choices of the investigator, which is more commonly found in
+70
+the applied literature; these include, for example, sensitivity to different estimators, the presence
+of outliers, effect heterogeneity, or covariate selection (see, Blundell et al., 2001; Belzil and
+Hansen, 2002; Jaeger and Parys, 2009 for examples applied to returns to education).
+We suggest several reasons for this slow uptake. First, the traditional approach for sensitivity
+analysis of instrumental variable estimates has focused on parameterizing violations of the IV
+75
+assumptions with a single parameter summarizing the overall bias in the association of the in-
+strument with the outcome. While this parameterization may be well-suited when the bias is only
+due to the direct effect of the instrument on the outcome (not through the treatment), it is not as
+straightforward to use when reasoning about multiple side-effects or confounders of the instru-
+ment, in which case that sensitivity parameter is a complicated composite of many sources of
+80
+bias (see Supplementary Material for a comparison of our proposal with traditional approaches).
+Second, while users of IV methods are instructed to routinely report quantities to diagnose cer-
+tain inferential problems such as “weak instruments” (e.g. the F-statistic, Stock and Yogo, 2002),
+we lack sensitivity statistics that can quickly communicate how robust a study is to violations in
+Omitted Variable Bias for Instrumental Variables
+3
+the form of omitted confounders or side-effects of the instrument. Additionally, it is often difﬁ-
+85
+cult to connect the formal results of a sensitivity analysis to a cogent argument about what types
+of biases can be ruled out by expert knowledge.
+In this paper, we develop an omitted variable bias (OVB) framework for assessing the sen-
+sitivity of IV estimates that aims to address these challenges. Building on the Anderson-Rubin
+approach (Anderson and Rubin, 1949) and on recent developments of OVB for ordinary least
+90
+squares (OLS) (Cinelli and Hazlett, 2020), we develop a simple suite of sensitivity analysis tools
+for IV that: (i) naturally handles violations due to multiple side-effects and confounders, possibly
+acting non-linearly; (ii) is well suited for routine reporting; and (iii) exploits expert knowledge to
+bound sensitivity parameters. (Here we focus on the just-identiﬁed case of one treatment and one
+instrument for two reasons. First, examining violations of identiﬁcation assumptions is already
+95
+challenging enough with a single instrument (Angrist and Pischke, 2009). Second, most applied
+work falls into this category: for instance, Young (2022) ﬁnds that 80% of instrumental variable
+regressions in the American Economic Review and 15 other journals of the American Economic
+Association used a single instrument. Even in multiple-instrument studies, it is not uncommon
+for researchers to report and give special focus to their best single instrument.)
+100
+Speciﬁcally, we introduce two main sensitivity statistics for instrumental variable estimates:
+(i) the robustness value describes the minimum strength of association (in terms of partial R2)
+that omitted variables (side-effects or confounders) need to have, both with the instrument and
+with the outcome, in order to change the conclusions of the study; and (ii) the extreme robust-
+ness value, which describes the minimal strength of association that omitted variables need to
+105
+have with the instrument alone in order to be problematic. Routine reporting of these quantities
+provides a quick and simple way to improve the transparency and facilitate the assessment of
+the credibility of IV studies. Next, we offer intuitive graphical tools for investigators to assess
+how postulated confounding of any degree would alter hypothesis tests, as well as lower or up-
+per limits of conﬁdence intervals. These tools can be supplemented with formal bounds on the
+110
+worst possible bias that side-effects or confounders could cause, under the assumption that the
+maximum explanatory power of these omitted variables is no stronger than a chosen multiple of
+the explanatory power of observed variables.
+A ﬁnal contribution of this paper is the proposal of a novel bias-adjusted critical value that
+accounts for a postulated degree of omitted variable bias. Notably, this correction on the critical
+115
+value does not depend on the observed data, and can be computed by simply postulating a hy-
+pothetical partial R2 of the omitted variables with the dependent and independent variables of
+the regression. Applied researchers can thus quickly and easily perform sensitivity analysis by
+simply substituting traditional thresholds with bias-adjusted thresholds, when testing a particular
+null hypothesis, or when constructing conﬁdence intervals. All proofs and details can be found
+120
+in the Supplementary Material. Open-source software for R implements the methods discussed
+in this paper: https://github.com/carloscinelli/iv.sensemakr.
+2.
+BACKGROUND AND RUNNING EXAMPLE
+2.1.
+Ordinary least squares and the omitted variable bias problem
+Many observational studies have established a positive and large association between educa-
+125
+tional achievement and earnings using regression analysis. Here we consider the work of Card
+(1993), which employed a sample of n = 3, 010 individuals from the National Longitudinal Sur-
+vey of Young Men.
+Considering the following multiple linear regression Y = ˆτOLS,resD + X ˆβOLS,res + ˆεOLS,res,
+where Y denotes Earnings and measures the log transformed hourly wages of the individual, D
+130
+4
+CINELLI & HAZLETT
+denotes Education and consists of an integer-valued variable indicating the completed years of
+education of the individual, and the matrix X comprises race, experience, and a set of regional
+factors, Card concluded that each additional year of schooling was associated with approximately
+7.5% higher wages.
+Educational achievement, however, is not randomly assigned; perhaps individuals who obtain
+135
+more education have higher wages for other reasons, such as family background, or higher levels
+of some other unobserved characteristic such as Ability or Motivation. If data on these variables
+were available, then further adjustment for such variables would capture the causal effect of ed-
+ucational attainment on schooling, as in Y = ˆτOLSD + X ˆβOLS + U ˆγOLS + ˆεOLS, where U is a
+set of variables that, along with X, eliminates confounding concerns (if the treatment effect is
+140
+heterogeneous, this may affect the causal interpretation of τOLS, see, e.g. Angrist and Pischke,
+2009). Unfortunately, such detailed information on individuals is not available, and researchers
+may not agree on which variables U are needed. Regression estimates that adjust for only a
+partial list of characteristics (such as X) may suffer from omitted variable bias, likely overesti-
+mating the true returns to schooling.
+145
+2.2.
+Instrumental variables as a solution to the omitted variable bias problem
+Instrumental variable methods offer an alternative route to estimate the causal effect of school-
+ing on earnings without having data on the unobserved variables U. The key for such methods
+to work is to ﬁnd a new variable (the instrument) that changes the incentives to educational
+achievement, but is associated with earnings only through its effect on education. To that end,
+150
+Card (1993) proposed exploiting the role of geographic differences in college accessibility. In
+particular, consider the variable Proximity, encoding an indicator of whether the individual grew
+up in an area with a nearby accredited 4-year college, which we denote by Z. Students who
+grow up far from the nearest college may face higher educational costs, discouraging them from
+pursuing higher level studies. Next, and most importantly, Card (1993) argues that, conditional
+155
+on the set of observed variables X, whether one lives near a college is not itself confounded
+with earnings, nor does proximity to college affect earnings apart from its effect on years of
+education. If we believe such assumptions hold it is possible to recover a valid estimate of the
+(weigthed average of local) average treatment effect(s) of Education on Earnings by simply tak-
+ing the ratio of two OLS coefﬁcients, one measuring the effect of Proximity on Earnings, and
+160
+another measuring the effect of Proximity on Education, as in the two regression models
+First Stage:
+D = ˆθresZ + X ˆψres + ˆεd,res,
+(1)
+Reduced Form:
+Y = ˆλresZ + X ˆβres + ˆεy,res.
+(2)
+Throughout the paper we refer to these equations as the ﬁrst stage (1) and the reduced form (2),
+as these are now common usage (Angrist and Pischke, 2009; Imbens and Rubin, 2015; Andrews
+165
+et al., 2019). The coefﬁcient for Proximity (Z) on the ﬁrst-stage regression reveals that those
+who grew up near a college indeed have higher educational attainment, having completed an
+additional 0.32 years of education, on average. Likewise, the coefﬁcient for Proximity (Z) on
+the reduced-form regression suggests that those who grew up near a college have 4.2% higher
+earnings. The IV estimate is then given by the ratio, ˆτres := ˆλres/ˆθres ≈0.042/0.319 ≈0.132.
+170
+The value of ˆτres ≈0.132 suggests that, contrary to the OLS estimate of 7.5%, and perhaps sur-
+prisingly, each additional year of schooling instead raises wages by much more—13.2%. (Con-
+ditions that allow a causal interpretation of the traditional IV estimand are extensively discussed
+elsewhere and will not be reviewed here, see Angrist et al. (1996); Angrist and Pischke (2009);
+Swanson et al. (2018); Słoczy´nski (2020) and Blandhol et al. (2022). See also Section 6.)
+175
+Omitted Variable Bias for Instrumental Variables
+5
+The ratio ˆλres/ˆθres is sometimes called the indirect least squares estimator. Inference in this
+framework is usually performed using the delta-method. A closely related approach is denoted
+by two-stage least squares, in which one saves the predictions of the ﬁrst-stage regression, and
+then regress the outcome on these ﬁtted values. By the Frisch-Waugh-Lovell (FWL) theorem
+(Frisch and Waugh, 1933; Lovell, 1963) one can readily show that two-stage least squares and
+180
+indirect least squares yield numerically identical estimates and standard errors.
+2.3.
+Anderson-Rubin regression, Fieller’s theorem and weak instruments
+Inference using the previous methods may prove unreliable when the ﬁrst-stage coefﬁcient is
+too close to zero relative to the sampling variability of its estimator. This is known as the “weak
+instrument” problem. The Anderson-Rubin regression (Anderson and Rubin, 1949) provides one
+185
+approach to constructing conﬁdence intervals with correct coverage, regardless of the strength of
+the ﬁrst stage. Additionally, it also yields the uniformly most powerful unbiased test under this
+setup (Moreira, 2009).
+The approach starts by creating the random variable Yτ0 := Y −τ0D in which we subtract
+from Y a putative causal effect of D, namely, τ0. If Z is a valid instrument, under the null
+190
+hypothesis H0 : τ = τ0, we should not see an association between Yτ0 and Z, conditional on X.
+In other words, if we run the regression
+Anderson-Rubin:
+Yτ0 = ˆφτ0,resZ + X ˆβτ0,res + ˆετ0,res,
+(3)
+we should ﬁnd that ˆφτ0,res is equal to zero, but for sampling variation. To test the null hypothesis
+H0 : φτ0,res = 0 in the Anderson-Rubin regression is thus equivalent to test the null hypothesis
+195
+H0 : τ = τ0. The 1 −α conﬁdence interval is constructed by collecting all values τ0 such that the
+null hypothesis H0 : φτ0,res = 0 is not rejected at the chosen signiﬁcance level α. This approach
+is numerically identical to Fieller’s theorem (Fieller, 1954). It is convenient to deﬁne the point
+estimate ˆτAR,res as the value τ0 which makes ˆφτ0,res exactly equal to zero. By the FWL theorem,
+we can easily show that ˆτAR,res is also numerically identical to the indirect least squares and
+200
+two-stage least squares estimates.
+The literature on weak instruments is extensive (see, e.g., Nelson and Startz, 1990; Staiger and
+Stock, 1994; Kleibergen, 2002; Moreira, 2003, 2009; Andrews et al., 2019), and users are rou-
+tinely advised to report diagnostic measures (e.g. the F-statistic of the ﬁrst stage). It is important
+to note, however, that sensitivity to unobserved confounders or side-effects is distinct from issues
+205
+posed by weak instruments. In particular, the latter depends on sample size, whereas the former
+does not. Thus, instruments deemed “strong” by conventional statistics may still be fragile in the
+face of unobserved variables—see Remark 4.
+2.4.
+The instrumental variable estimate may still suffer from omitted variable bias
+The previous instrumental variable estimate relies on the assumption that, conditional on X,
+210
+Proximity and Earnings are unconfounded, and the effect of Proximity on Earnings must go en-
+tirely through Education. As is often the case, neither assumption is easy to defend. First, the
+same factors that might confound the relationship between Education and Earnings could sim-
+ilarly confound the relationship of Proximity and Earnings (e.g. family wealth or connections).
+Second, as argued in Card (1993), the presence of a college nearby may be associated with high
+215
+school quality, which in turn also affects earnings. Finally, other geographic confounders can
+make some localities likely to both have colleges nearby and lead to higher earnings. These are
+only coarsely conditioned on by the observed regional indicators, and residual biases may still
+remain.
+6
+CINELLI & HAZLETT
+Therefore, instead of adjusting for X only, as in the previous regressions, we should have
+220
+adjusted for both the observed covariates X and unobserved covariates W as in
+First Stage:
+D = ˆθZ + X ˆψ + W ˆδ + ˆεd,
+(4)
+Reduced Form:
+Y = ˆλZ + X ˆβ + W ˆγ + ˆεy,
+(5)
+Anderson-Rubin:
+Yτ0 = ˆφτ0Z + X ˆβτ0 + W ˆγτ0 + ˆετ0,
+(6)
+where W stands for all unobserved factors necessary to make Proximity a valid instrument for
+225
+the effect of Education on Earnings. See Supplementary Material for canonical causal diagrams
+illustrating settings in which {X, W } renders Z a valid instrument for the effect of D and Y ;
+equivalent assumptions can be articulated in the potential outcomes framework (Angrist et al.,
+1996; Pearl, 2009; Swanson et al., 2018).
+2.5.
+Problem statement
+230
+Our task is to characterize how instrumental variable estimates, as given by the OLS regres-
+sions in (4)-(6), would have changed due to the inclusion of omitted variables W . As such, we
+should be able to leverage sensitivity analysis tools for OLS to examine the sensitivity of IV. The
+next section thus extends and reﬁnes several results for the sensitivity analysis of arbitrary OLS
+estimates. These results are not only useful on their own right, but, importantly, they will later
+235
+be applied to the development of a suite sensitivity analysis tools for instrumental variables in
+Section 4. Finally, throughout the paper, we impose the following regularity condition.
+Assumption 1 (Full Rank). The matrices of independent variables in (4)-(6) have full rank.
+This ensures all relevant quantities discussed below are ﬁnite.
+3.
+EXTENSIONS TO THE OMITTED VARIABLE BIAS FRAMEWORK FOR OLS
+240
+3.1.
+Preliminaries
+We start by brieﬂy establishing key ideas, formulae, and notation from prior work (Cinelli and
+Hazlett, 2020). For concreteness, in this section we discuss the omitted variable bias framework
+in the context of the reduced-form regression. Readers should keep in mind, however, that all
+results presented here hold for arbitrary OLS estimates—including, but not limited to, the ﬁrst
+245
+stage and the Anderson-Rubin regression. The logical implications of the sensitivity of these
+auxiliary regressions for the sensitivity of IV itself are deferred to Section 4.
+Consider the regression coefﬁcient estimate ˆλ and the classical (i.e, homoskedastic) standard
+error estimate bse(ˆλ) of Equation (5), namely, the regression of the outcome Y on the instrument
+Z, adjusting for a set of observed covariates X and (for now) a single unobserved covariate W
+250
+(we generalize to multivariate W below). Here Y , Z and W are (n × 1) vectors, X is an (n × p)
+matrix (including a constant), with n observations; ˆλ, ˆβ and ˆγ are the regression coefﬁcient esti-
+mates and ˆεy the corresponding residuals. As W is unobserved, the investigator instead estimates
+the restricted model of Equation (2) where ˆλres and ˆβres are the coefﬁcients adjusting for Z and
+X alone, and ˆεy,res the corresponding residuals. The omitted variable bias framework seeks to
+255
+answer the following question: how do the estimates from the restricted model compare with the
+estimates from the full model?
+Let R2
+Y ∼W|Z,X denote the (sample) partial R2 of W with Y , after controlling for Z and X,
+and let R2
+Z∼W|X denote the partial R2 of W with Z after adjusting for X. It is also useful to
+Omitted Variable Bias for Instrumental Variables
+7
+deﬁne Cohen’s partial f2, e.g, f2
+Z∼W|X :=
+R2
+Z∼W |X
+1−R2
+Z∼W |X which will appear frequently through-
+260
+out derivations. Given the point estimate and (estimated) standard error of the restricted model
+actually run, ˆλres and bse(ˆλres), these two R2 values are sufﬁcient to recover ˆλ and bse(ˆλ).
+THEOREM 1 (OVB IN THE PARTIAL R2 PARAMETERIZATION). Under Assumption 1, the
+absolute difference between the restricted and full OLS estimates is given by,
+|ˆλres −ˆλ| =
+q
+R2
+Y ∼W|Z,Xf2
+Z∼W|X
+|
+{z
+}
+BF
+×sd(Y ⊥X,Z)
+sd(Z⊥X) ;
+(7)
+265
+moreover, the (classical) standard error of the full OLS estimate is given by
+bse(ˆλ) =
+v
+u
+u
+t1 −R2
+Y ∼W|Z,X
+1 −R2
+Z∼W|X
+|
+{z
+}
+SEF
+×sd(Y ⊥X,Z)
+sd(Z⊥X) ×
+r
+1
+df −1,
+(8)
+where sd(Y ⊥X,Z) is the (sample) residual standard deviation of Y after removing the part lin-
+early explained by {X, Z}, sd(Z⊥X) is the (sample) residual standard deviation of Z after
+removing the part linearly explained by X, and df = n −p −1 is the residual degrees of free-
+270
+dom from the restricted model (2). To aid interpretation, we call the term BF in (7) the “bias
+factor” of W, and the term SEF in (8) the “standard error factor” of W.
+For simplicity of exposition, throughout the text we usually refer to a single omitted vari-
+able W. These results, however, can be used for performing sensitivity analyses considering
+multiple omitted variables W = [W1, W2, . . . , Wl], and thus also non-linearities and functional
+275
+form misspeciﬁcation of observed variables. In such cases, barring an adjustment in the degrees
+of freedom, the equations are conservative, and reveal the maximum bias a multivariate W with
+such pair of partial R2 values could cause (Cinelli and Hazlett, 2020, Sec. 4.5).
+Note Theorem 1 is stated in terms of sample estimates. All results presented in this paper are of
+this type: they are exact algebraic results of how traditional OLS coefﬁcients and standard error
+280
+estimates change due to the inclusion of omitted variables. Conditions under which traditional
+estimates yield valid inferences are well-known and thus omitted.
+3.2.
+Bias-adjusted critical values
+We now introduce a novel correction to traditional critical values that researchers can use to
+account for omitted variable bias. Let t∗
+α,df −1 > 0 denote the (absolute value of) the critical value
+285
+for a standard t-test with signiﬁcance level α and df −1 degrees of freedom. Now let LL1−α(λ)
+be the lower limit and UL1−α(λ) be the upper limit of a 1 −α conﬁdence interval for λ in the
+full model, i.e.,
+LL1−α(λ) := ˆλ −t∗
+α,df −1 × bse(ˆλ),
+UL1−α(λ) := ˆλ + t∗
+α,df −1 × bse(ˆλ).
+(9)
+Considering the worst-case direction of the bias that further reduces the lower limit (or increases
+290
+the upper limit) in (9), Equations (7) and (8) of Theorem 1 imply that both quantities can be
+written as a function of the restricted estimates and a new multiplier.
+8
+CINELLI & HAZLETT
+THEOREM 2 (BIAS ADJUSTED CRITICAL VALUE). Under Assumption 1, for given R2 =
+{R2
+Y ∼W|Z,X, R2
+Z∼W|X}, and α, consider the direction of the bias that reduces LL1−α(λ). Then
+LL1−α(λ) = ˆλres −t†
+α,df −1,R2 × bse(ˆλres).
+(10)
+295
+Conversely, considering the direction of the bias that increases UL1−α(λ), we have
+UL1−α(λ) = ˆλres + t†
+α,df −1,R2 × bse(ˆλres).
+(11)
+Here t†
+α,df −1,R2 denotes the bias-adjusted critical value
+t†
+α,df −1,R2 := SEF
+p
+df /(df −1) × t∗
+α,df −1 + BF
+√
+df,
+(12)
+where BF and SEF are the bias and standard error factors of Theorem 1.
+300
+As the subscript R2 = {R2
+Y ∼W|Z,X, R2
+Z∼W|X} conveys, t†
+α,df −1,R2 depends on both sensitivity
+parameters. Notably, this correction does not depend on the observed data, but for the degrees
+of freedom. In other words, the bias correction is a function of the strength of unobserved con-
+founding and the sample size alone. This allows one to quickly assess the robustness of reported
+ﬁndings to omitted variables of any postulated strength R2, by simply comparing the reported
+305
+t-statistic with the desired adjusted critical value, even without access to the original data.
+Example 1. It is instructive to consider the case in which the omitted variable W has equal
+strength of association with Y and Z, i.e, R2
+Y ∼W|Z,X = R2
+Z∼W|X = R2. We then have that
+SEF = 1 and BF = R2/
+√
+1 −R2 resulting in a very simple correction formula,
+t†
+α,df −1,R2 ≈t∗
+α,df −1 +
+R2
+√
+1 −R2
+√
+df,
+(13)
+310
+where we employ the approximation
+p
+df/(df −1) ≈1. Table 1 shows the adjusted critical val-
+ues for this case, considering different strengths of the omitted variable and various sample sizes.
+R2
+Degrees of Freedom (sample size)
+100
+1,000
+10,000
+100,000
+1,000,000
+0.00
+1.98
+1.96
+1.96
+1.96
+1.96
+0.01
+2.08
+2.28
+2.97
+5.14
+12.01
+0.02
+2.19
+2.60
+3.98
+8.35
+22.16
+0.03
+2.29
+2.92
+5.01
+11.59
+32.42
+0.04
+2.39
+3.25
+6.04
+14.87
+42.78
+0.05
+2.50
+3.58
+7.09
+18.18
+53.26
+Table 1: Bias-adjusted critical values, t†
+α,df −1,R2,R2, for different strengths of the omitted vari-
+able W (with R2
+Y ∼W|Z,X = R2
+Z∼W|X = R2) and various sample sizes; α = 5%.
+Tests using these new critical values account both for sampling uncertainty and residual biases
+with the postulated strength. Note t†
+α,df −1,R2 increases the larger the sample size. This behaviour
+is simply a consequence of the well-known, but often overlooked fact that in large samples any
+315
+signal will eventually be detected, even if it is spurious. Thus, as the sample size grows, a higher
+threshold is needed in order to protect inferences against systematic biases.
+Omitted Variable Bias for Instrumental Variables
+9
+We note Table 1 picks R2
+Y ∼W|Z,X = R2
+Z∼W|X = R2 for illustrative purposes only. Re-
+searchers can construct bias-adjusted critical values for any arbitrary pair of R2 values—see, e.g,
+Supplementary Material for 2 × 2 tables of t†
+α,df −1,R2 where both R2
+Y ∼W|Z,X and R2
+Z∼W|X are
+320
+varied simultaneously.
+Remark 1. Sensitivity analysis cannot reveal the strength of confounding present, only the
+strength of confounding required to alter a research conclusion. For instance, Table 1 reveals that
+in a study with 1 million observations, one needs a t-value of at least 12 in order to guarantee
+that the results are robust to latent variables that explain 1% of the residual variation both of the
+325
+dependent and independent variables. The table also tells us that any study with a t-value less
+than 12 is vulnerable to such biases. The table does not tell us whether latent variables with such
+strength do exist in any particular study—this needs to be adjudicated using expert knowledge.
+Note, however, that knowing what one needs to know is useful, and represents an improvement
+over conventional analysis, which assumes R2 = 0. See Section 6 for additional discussion.
+330
+3.3.
+Compatible inferences given bounds on partial R2
+Given hypothetical values for R2
+Y ∼W|Z,X and R2
+Z∼W|X, the previous results allow us to de-
+termine exactly how the inclusion of W with such strength would change inference regarding
+the parameter of interest. Often, however, the analyst does not know the exact strength of omit-
+ted variables, and wishes to investigate the worst possible inferences that could be induced by
+335
+a W with bounded strength, for instance, R2
+Y ∼W|Z,X ≤R2 max
+Y ∼W|Z,X and R2
+Z∼W|X ≤R2 max
+Z∼W|X.
+Writing t†
+α,df −1,R2 as a function of the sensitivity parameters R2
+Y ∼W|Z,X and R2
+Z∼W|X, we then
+solve the maximization problem,
+max
+R2
+Y ∼W |Z,X,R2
+Z∼W |X
+t†
+α,df −1,R2
+s.t.
+R2
+Y ∼W|Z,X ≤R2 max
+Y ∼W|Z,X, R2
+Z∼W|X ≤R2 max
+Z∼W|X. (14)
+Denoting the solution to the optimization problem in expression (14) as t† max
+α,df −1,R2, we obtain
+340
+the maximum bias-adjusted critical value.
+THEOREM 3 (MAXIMUM BIAS-ADJUSTED CRITICAL VALUE). Fix
+α,
+R2 max
+Y ∼W|Z,X
+and
+R2 max
+Z∼W|X < 1 in the optimization problem (14). Then,
+t† max
+α,df −1,R2 = t†
+α,df −1,R2∗,
+with
+R2∗= {R2 max
+Y ∼W|Z,X,
+R2 max
+Z∼W|X}
+if
+R2 max
+Z∼W|X ≥f∗2
+α,df−1f2 max
+Y ∼W|Z,X,
+and
+345
+R2∗
+=
+{R2 max
+Z∼W|X/(f∗2
+α,df−1 + R2 max
+Z∼W|X),
+R2 max
+Z∼W|X} otherwise, where here we deﬁne
+f∗
+α,df −1 := t∗
+α,df −1/
+√
+df −1.
+Once in possession of t† max
+α,df −1,R2, the most extreme possible lower and upper limits of conﬁ-
+dence intervals after adjusting for W are then given by
+LLmax
+1−α,R2(λ) = ˆλres −t† max
+α,df −1,R2 × bse(ˆλres),
+ULmax
+1−α,R2 = ˆλres + t† max
+α,df −1,R2 × bse(ˆλres).
+350
+The interval composed of such limits,
+CImax
+1−α,R2(λ) :=
+h
+LLmax
+1−α,R2(λ),
+ULmax
+1−α,R2(λ)
+i
+,
+(15)
+retrieves the union of all conﬁdence intervals for λ that are compatible with an omitted variable
+with such strengths.
+10
+CINELLI & HAZLETT
+Widespread adoption of sensitivity analysis beneﬁts from simple and interpretable statistics
+355
+that quickly convey the overall robustness of an estimate. To that end, Cinelli and Hazlett (2020)
+proposed two sensitivity statistics for routine reporting: (i) the partial R2 of Z with Y , R2
+Y ∼Z|X;
+and, (ii) the robustness value (RV). In what follows, we generalize the notion of a partial R2 as a
+measure of robustness to extreme scenarios, by introducing the extreme robustness value (XRV),
+for which the partial R2 is a special case. We also recast these sensitivity statistics as a solution to
+360
+an “inverse” question regarding the interval CImax
+1−α,R2(λ). This framework facilitates extending
+these metrics to other contexts, in particular to the IV setting in Section 4.
+3.4.
+The extreme robustness value
+Our ﬁrst inverse question is: what is the bare minimum strength of association of the omitted
+variable W with Z that could bring its estimated coefﬁcient to a region where it is no longer
+365
+statistically different than zero (or another threshold of interest)? To answer this question, we
+can see CImax
+1−α,R2(λ) as a function of the bound R2 max
+Z∼W|X alone, obtained from maximizing the
+adjusted critical value in expression (14) where: (i) the parameter R2
+Y ∼W|Z,X is left completely
+unconstrained (i.e, R2
+Y ∼W|Z,X ≤1); and, (ii) the parameter R2
+Z∼W|X is bounded by XRV (i.e,
+R2 max
+Z∼W|X ≤XRV). The Extreme Robustness Value XRVq∗,α(λ) is deﬁned as the greatest lower
+370
+bound XRV such that the null hypothesis that a change of (100 × q∗)% of the original estimate,
+H0 : λ = (1 −q∗)ˆλres, is not rejected at the α level,
+XRVq∗,α(λ) := inf
+n
+XRV; (1 −q∗)ˆλres ∈CImax
+1−α,1,XRV(λ)
+o
+.
+(16)
+The solution to this problem gives the following result.
+THEOREM 4 (EXTREME ROBUSTNESS VALUE—OLS). Under Assumption 1, for given q∗
+375
+and α, the extreme robustness value equals
+XRVq∗,α(λ) =
+
+
+
+
+
+0,
+if fq∗(λ) ≤f∗
+α,df−1,
+f2
+q∗(λ) −f∗2
+α,df−1
+1 + f2
+q∗(λ)
+, otherwise,
+where fq∗(λ) := q∗|fY ∼Z|X|, and f∗
+α,df −1 := t∗
+α,df −1/
+√
+df −1.
+Remark 2. Beyond its procedural interpretation, XRVq∗,α(λ) can also be interpreted as an
+“adjusted partial R2” of Z with Y . To see why, consider the case of the minimal strength to
+380
+bring the point estimate (α = 1) to exactly zero (q∗= 1). We then have that f∗
+α=1,df −1 = 0
+and f2
+q∗=1(λ) = f2
+Y ∼Z|X, resulting in XRVq∗=1,α=1(λ) =
+f2
+Y ∼Z|X
+1+f2
+Y ∼Z|X = R2
+Y ∼Z|X. For the gen-
+eral case, we simply perform two adjustments that dampens the “raw” partial R2 of Z
+with Y . First we adjust it by the proportion of reduction deemed to be problematic q∗through
+fq∗= q∗|fY ∼Z|X|; next, we subtract the threshold for which statistical signiﬁcance is lost.
+385
+3.5.
+The robustness value
+An alternative measure of robustness of the OLS estimate is to consider the minimal strength
+of association that the omitted variable needs to have, both with Z and Y , so that a 1 −α conﬁ-
+dence interval for λ will include a change of (100 × q∗)% of the current restricted estimate. Write
+CImax
+1−α,R2(λ) as a function of both bounds varying simultaneously, CImax
+1−α,RV,RV(λ), by maximiz-
+390
+ing the adjusted critical value with bounds given by R2
+Y ∼W|Z,X ≤RV and R2
+Z∼W|X ≤RV.
+Omitted Variable Bias for Instrumental Variables
+11
+The Robustness Value RVq∗,α(λ) for not rejecting the null hypothesis that H0 : λ = (1 −q∗)ˆλres,
+at the signiﬁcance level α, is deﬁned as
+RVq∗,α(λ) := inf
+n
+RV; (1 −q∗)ˆλres ∈CImax
+1−α,RV,RV(λ)
+o
+.
+(17)
+The RV of OLS estimates has then the following characterization.
+395
+THEOREM 5 (ROBUSTNESS VALUE—OLS). Under Assumption 1, for given q∗and α, the
+robustness value equals
+RVq∗,α(λ) =
+
+
+
+
+
+
+
+0,
+if fq∗(λ) ≤f∗
+α,df−1,
+1
+2
+q
+f4
+q∗,α(λ) + 4f2
+q∗,α(λ) −f2
+q∗,α(λ)
+
+, if f∗
+α,df−1 < fq∗(λ) < f∗−1
+α,df−1,
+XRVq∗,α(λ),
+otherwise,
+where fq∗,α(λ) := q∗|fY ∼Z|X| −f∗
+α,df −1, and f∗
+α,df −1 := t∗
+α,df −1/
+√
+df −1.
+The ﬁrst case occurs when the conﬁdence interval already includes (1 −q∗)ˆλres or the mere
+400
+change of one degree of freedom achieves this. In the second case, both associations of W reach
+the bound (here, when the f statistic is very large, it may be numerically convenient to use the
+equivalent expression 2/
+
+1 +
+q
+1 + 4/f2
+q∗,α(λ)
+
+which avoids catastrophic cancellations). The
+last case is an interior point solution—when the constraint on the partial R2 with the outcome is
+not binding, the RV reduces to the XRV.
+405
+3.6.
+Bounding the plausible strength of omitted variables
+One ﬁnal result is required before turning to the sensitivity of instrumental variables. Let Xj
+be a speciﬁc covariate of the set X, and deﬁne
+kZ :=
+R2
+Z∼W|X−j
+R2
+Z∼Xj|X−j
+,
+kY :=
+R2
+Y ∼W|Z,X−j
+R2
+Y ∼Xj|ZX−j
+,
+(18)
+where X−j represents the vector of covariates X excluding Xj. These new parameters, kZ and
+410
+kY , stand for how much “stronger” W is relatively to the observed covariate Xj in terms of
+residual variation explained of Z and Y . Our goal in this section is to re-express (or bound)
+the sensitivity parameters R2
+Z∼W|X and R2
+Y ∼W|Z,X in terms of the relative strength parameters
+kZ and kY . Cinelli and Hazlett (2020) derived bounds considering the part of W not linearly
+explained by X. These are particularly useful when contemplating Xj and W both confounders
+415
+of Z (violations of the ignorability of the instrument). In the IV setting, however, W and Xj may
+be side-effects of Z, instead of causes of Z. In such cases, it may be more natural to reason about
+the orthogonality of X and W after conditioning on Z. Therefore, here we additionally provide
+bounds under the condition R2
+W∼Xj|Z,X−j = 0.
+THEOREM 6 (RELATIVE BOUNDS ON THE STRENGTH OF W ). Under Assumption 1, for
+420
+ﬁxed kZ and kY as deﬁned in (18), if R2
+W∼Xj|Z,X−j = 0 then
+R2
+Z∼W|X ≤η2f2
+Z∼Xj|X−j,
+R2
+Y ∼W|Z,X = kY f2
+Y ∼Xj|Z,X−j,
+(19)
+where, η =
+
+
+√kZ+
+R3
+Z∼Xj|X−j
+
+q
+1−kZR4
+Z∼Xj|X−j
+
+.
+12
+CINELLI & HAZLETT
+These results allow investigators to leverage knowledge of relative importance of variables
+(Kruskal and Majors, 1989) when making plausibility judgments regarding sensitivity param-
+425
+eters, by setting R2 max
+Y ∼W|Z,X = kY f2
+Y ∼Xj|Z,X−j, R2 max
+Z∼W|X = ηf2
+Z∼Xj|X−j in CImax
+1−α,R2(λ).
+4.
+AN OMITTED VARIABLE BIAS FRAMEWORK FOR THE SENSITIVITY OF IV
+4.1.
+A suite of sensitivity analysis tools for instrumental variables
+We are now ready to develop a suite of sensitivity analysis tools for instrumental variable
+regression. In what follows, we ﬁrst show how separate sensitivity analysis of the reduced form
+430
+and ﬁrst stage is sufﬁcient to draw many valuable conclusions regarding the sensitivity of the
+instrumental variable estimate. We then construct a complete omitted variable bias framework
+for sensitivity analysis of instrumental variables within the Anderson-Rubin approach.
+4.2.
+What can be learned from the reduced form and ﬁrst stage?
+The critical examination of the ﬁrst stage and the reduced form plays an important role for
+435
+supporting the causal story behind a particular instrumental variable (Angrist and Krueger, 2001;
+Angrist and Pischke, 2009; Imbens, 2014). While investigating these separate regressions, all
+sensitivity analysis results discussed in the previous section can be readily deployed. Fortunately,
+such sensitivity analyses also answer many pivotal questions regarding the IV estimate itself.
+First, if the investigator is interested in assessing the strength of confounders or side-effects
+440
+needed to bring the effect estimate to zero, or to not reject the null hypothesis of zero effect, the
+results of the sensitivity analysis of the reduced form is all that is needed. Second, the sensitivity
+of the ﬁrst stage (to confounding that could change its sign) reveals whether the IV estimate
+could be arbitrarily large in either direction (in the context of randomization inference, similar
+observations have been noted by Imbens and Rosenbaum, 2005; Small and Rosenbaum, 2008;
+445
+Keele et al., 2017). We elaborate on these claims below.
+Starting with the point estimate, all estimators under consideration here equal to the ratio of
+the reduced-form and the ﬁrst-stage regression coefﬁcients, ˆτ := ˆλ/ˆθ. This simple algebraic fact
+leads to two immediate and practically important conclusions regarding the sensitivity of ˆτ from
+the sensitivity of ˆλ and ˆθ alone. First, residual biases can bring the IV point estimate to zero
+450
+if and only if they can bring the reduced-form point estimate to zero. Therefore, if sensitivity
+analysis of the reduced form reveals that omitted variables are not strong enough to explain away
+ˆλ, then they also cannot explain away ˆτ. Or, more worrisome, if analysis reveals that it takes
+weak confounding or side-effects to explain away ˆλ, the same holds for ˆτ. Second, if we cannot
+rule out confounders or side-effects able to change the sign of the ﬁrst stage, we cannot rule out
+455
+that ˆτ could be arbitrarily large in either direction. This can be immediately seen by letting ˆθ
+approach zero on either side of the limit. Thus, whenever we are interested in biases as large or
+larger than a certain amount, the robustness of the ﬁrst stage to the zero null puts an upper bound
+on the robustness of the IV point estimate.
+Moving to inferential concerns, the Anderson-Rubin test for the null hypothesis H0 : τ = τ0 is
+460
+based on the test of H0 : φτ0 = 0. By the FWL theorem, the point estimate and (estimated) stan-
+dard error for ˆφτ0 can be expressed in terms of the ﬁrst-stage and reduced-form estimates, namely,
+ˆφτ0 = ˆλ −τ0ˆθ and, bse(ˆφτ0) =
+q
+c
+var(ˆλ) + τ 2
+0 c
+var(ˆθ) −2τ0d
+cov(ˆλ, ˆθ). Testing H0 : φτ0 = 0 re-
+quires comparing the t-value for ˆφτ0 with a critical threshold t∗
+α,df −1, and the null hypothesis is
+not rejected if |tˆφτ0| ≤t∗
+α,df −1. Squaring and rearranging terms we obtain the quadratic inequal-
+465
+Omitted Variable Bias for Instrumental Variables
+13
+ity,
+(ˆθ2 −c
+var(ˆθ)t∗2
+α,df −1)
+|
+{z
+}
+a
+τ 2
+0 + 2(d
+cov(ˆλ, ˆθ)t∗2
+α,df −1 −ˆλˆθ)
+|
+{z
+}
+b
+τ0 + (ˆλ2 −c
+var(ˆλ)t∗2
+α,df −1)
+|
+{z
+}
+c
+≤0.
+(20)
+When considering the null hypothesis H0 : τ0 = 0, only the term c remains, and c is less or
+equal to zero if and only if one cannot reject the null hypothesis H0 : λ = 0 in the reduced-form
+regression. Also note that arbitrarily large values for τ0 will satisfy the inequality in Equation (20)
+470
+if, and only if, a < 0, meaning that we cannot reject the null hypothesis H0 : θ = 0 in the ﬁrst-
+stage regression. Within the Anderson-Rubin framework, we thus reach analogous conclusions
+regarding hypothesis testing as those regarding the point estimate: (i) when interest lies in the
+zero null hypothesis, the sensitivity of the reduced form is exactly the sensitivity of the IV—no
+other analyses are needed; and, (ii) if one is interested in biases of a certain amount, or larger,
+475
+then the sensitivity of the ﬁrst stage to the zero null hypothesis needs also to be assessed.
+4.3.
+Sensitivity analysis for a speciﬁc null hypothesis
+Within the Anderson-Rubin approach, a sensitivity analysis for the null hypothesis
+H0 : τ = τ0, for any arbitrary value τ0 can be performed as follows.
+Algorithm 1. Sensitivity analysis for a speciﬁc null hypothesis.
+480
+(1) Set H0 : τ = τ0, α, and R2 = {R2
+Z∼W|X, R2
+Yτ0∼W|Z,X};
+(2) Construct Yτ0 = Y −τ0D;
+(3) Fit the Anderson-Rubin regression Yτ0 = ˆφres,τ0Z + X ˆβres,τ0 + ˆετ0,res;
+(4) Compare the t-value for testing H0 : φres,τ0 = 0 against the critical value t† max
+α,df −1,R2;
+(5) Compute XRVq∗=1,α(φτ0) and RVq∗=1,α(φτ0);
+(6) Report the results of (4) and (5).
+The
+procedure
+above
+tells
+us
+how
+omitted
+variables
+no
+worse
+than
+R2 =
+{R2
+Z∼W|X, R2
+Yτ0∼W|Z,X} would alter inferences regarding the null H0 : τ = τ0, as well
+as the minimal strength of R2 required to not reject the null H0 : τ = τ0, as given by the
+RV or XRV. Note the bounds on R2 can be chosen to reﬂect the assumption that the omitted
+variables are no stronger than certain observed covariates, as per Section 3.6.
+485
+4.4.
+Compatible inferences for IV given bounds on partial R2
+More broadly, analysts can recover the set of inferences compatible with plausibility judg-
+ments on the maximum strength of W. For a critical threshold t∗
+α,df −1, the conﬁdence interval
+for τ in the Anderson-Rubin framework is given by CI1−α(τ) = {τ0; t2
+φτ0 ≤t∗2
+α,df −1}. Thus,
+consider bounds on sensitivity parameters R2
+Yτ0∼W|Z,X ≤R2 max
+Y0∼W|Z,X (which should be judged
+490
+to hold regardless of the value of τ0) and R2
+Z∼W|X ≤R2 max
+Z∼W|X. Let t† max
+α,df −1,R2 denote the max-
+imum bias-adjusted critical value under the posited bounds on the strength of W. The set of
+compatible inferences for the IV estimate CImax
+1−α,R2(τ) is then deﬁned as
+CImax
+1−α,R2(τ) :=
+
+τ0; t2
+ˆφres,τ0 ≤
+
+t† max
+α,df −1,R2
+2
+.
+(21)
+This interval can be found analytically using the same inequality as in Equation (20), but now
+495
+with the parameters of the restricted regression actually run, and t∗
+α,df −1 replaced by t† max
+α,df −1,R2.
+Note that users can easily obtain CImax
+1−α,R2(τ) with any software that computes Anderson-Rubin
+14
+CINELLI & HAZLETT
+or Fieller’s conﬁdence intervals by simply providing the modiﬁed critical threshold t† max
+α,df −1,R2.
+Armed with the notion of a set of compatible inferences for IV, CImax
+1−α,R2(τ), we are now able to
+formally deﬁne and derive (extreme) robustness values for instrumental variable estimates.
+500
+4.5.
+Extreme robustness values for IV
+The extreme robustness value XRVq∗,α(τ) for the instrumental variable estimate is deﬁned as
+the minimum strength of association of omitted variables with the instrument so that we cannot
+reject a reduction of (100 × q∗)% of the original estimate; that is,
+XRVq∗,α(τ) := inf
+
+XRV; (1 −q∗)ˆτres ∈CImax
+1−α,1,XRV(τ)
+	
+.
+(22)
+505
+The XRVq∗,α(τ) computes the minimal strength of W required to not reject a particular null
+hypothesis of interest. However, we might be interested, instead, in asking about the minimal
+strength of omitted variables to not reject a speciﬁc value or worse. When conﬁdence intervals
+are connected, such as the case of standard OLS, the two notions coincide. But in the Anderson-
+Rubin case, conﬁdence intervals can sometimes consist of disjoint intervals. Therefore, let the
+510
+upper and lower limits of CImax
+1−α,R2(τ) be LLmax
+1−α,R2(τ) and ULmax
+1−α,R2(τ) respectively. The
+extreme robustness value XRV≥q∗,α(τ) for the IV estimate is deﬁned as the minimum strength
+of association that confounders or side-effects need to have with the instrument so that we cannot
+reject a change of (100 × q∗)% or worse of the original estimate,
+XRV≥q∗,α(τ) := inf
+
+XRV; (1 −q∗)ˆτres ∈
+
+LLmax
+1−α,1,XRV(τ),
+ULmax
+1−α,1,XRV(τ)
+	
+.
+(23)
+515
+Both quantities can be obtained via the Anderson-Rubin and ﬁrst-stage regressions as follows.
+THEOREM 7 (EXTREME ROBUSTNESS VALUE—IV). Under Assumption 1, for given q∗
+and α, the extreme robustness values for IV are given by
+XRVq∗,α(τ) = XRV1,α(φτ ∗),
+and,
+(24)
+XRV≥q∗,α(τ) = min{XRV1,α(φτ ∗),
+XRV1,α(θ)},
+(25)
+520
+where τ ∗= (1 −q∗)ˆτres.
+Remark 3. Theorem 7 corroborates the discussion of Section 4.2. The robustness of IV esti-
+mates against biases as large or larger than a certain amount is bounded by the robustness of the
+ﬁrst stage assessed at the zero null. Moreover, for the special case of the null hypothesis of zero
+effect, H0 : τ = 0, we obtain XRV≥1,α(τ) = min{XRV1,α(λ),
+XRV1,α(θ)}, that is, the XRV
+525
+of the IV estimate, against biases that bring it to zero or worse, is equal to the minimum of the
+XRV of the ﬁrst stage and the reduced form, both evaluated at the zero null (q∗= 1).
+Remark 4. Note that the XRV of the ﬁrst stage XRV1,α(θ) can be arbitrarily different from tra-
+ditional metrics of instrument strength. For a simple numerical example, consider df = 100, 000
+and suppose the ﬁrst stage F statistic is F = t2 ≈100, which could be considered a strong in-
+530
+strument for statistical inference purposes. In this case, we still have XRV1,α(θ) ≈0.001.
+4.6.
+Robustness values for IV
+The deﬁnitions of the robustness value for instrumental variables follow the same logic dis-
+cussed above, but now considering both bounds on CImax
+1−α,R2(τ) varying simultaneously. That
+is, the RV for not rejecting a bias of exactly q∗is deﬁned as
+535
+RVq∗,α(τ) := inf
+
+RV; (1 −q∗)ˆτres ∈CImax
+1−α,RV,RV(τ)
+	
+,
+(26)
+Omitted Variable Bias for Instrumental Variables
+15
+and the RV for not rejecting the null of a reduction of (100 × q∗)% or worse is deﬁned as,
+RV≥q∗,α(τ) := inf
+
+RV; (1 −q∗)ˆτres ∈
+
+LLmax
+1−α,RV,RV(τ),
+ULmax
+1−α,RV,RV(τ)
+	
+.
+(27)
+We then have analogous results for robustness values, and similar discussion applies.
+THEOREM 8 (ROBUSTNESS VALUE—IV). Under Assumption 1, for given q∗and α, the ro-
+540
+bustness values for IV are given by
+RVq∗,α(τ) = RV1,α(φτ ∗),
+and,
+(28)
+RV≥q∗,α(τ) = min{RV1,α(φτ ∗),
+RV1,α(θ)},
+(29)
+where τ ∗= (1 −q∗)ˆτres.
+4.7.
+Conservative bounds on the strength of omitted variables
+545
+When testing a speciﬁc null hypothesis H0 : τ = τ0 in the Anderson-Rubin regres-
+sion,
+we
+have
+kZ
+as
+in
+Section
+3.6,
+and
+instead
+of
+kY
+we
+now
+have
+kYτ0 :=
+R2
+Yτ0∼W|Z,X−j/R2
+Yτ0∼Xj|ZX−j. The plausibility judgment one is making here is thus under the
+null H0 : τ = τ0. Since the judgment is made under a speciﬁc null, the bounds will be differ-
+ent when testing different hypotheses. Therefore, it is useful to compute bounds under a slightly
+550
+more conservative assumption. We can posit that the omitted variables are no stronger than (a
+multiple of) the maximum explanatory power of an observed covariate, regardless of the value of
+τ0, i.e, kmax
+Yτ0
+:=
+maxτ0 R2
+Yτ0 ∼W |Z,X−j
+maxτ0 R2
+Yτ0 ∼Xj|ZX−j
+. This has the useful property of providing a unique bound
+for any null hypothesis, and can be used to place bounds on the sensitivity contours of the lower
+and upper limit of the Anderson-Rubin conﬁdence intervals, as we show next.
+555
+5.
+USING THE OMITTED VARIABLE BIAS FRAMEWORK FOR THE SENSITIVITY OF IV
+We return to our running example of Section 2 and show how the tools developed here can
+be deployed to assess the robustness of the original ﬁndings to violations of the IV assumptions.
+Throughout, we focus the discussion on violations of the ignorability of the instrument due to
+confounders, as this is the main threat of the study under investigation. Readers should keep in
+560
+mind, however, that mathematically all analyses performed here can be equally interpreted as
+assessing violations of the exclusion restriction (or both).
+Table 2 shows our proposed minimal sensitivity reporting for IV estimates. It starts by replicat-
+ing the usual statistics, such as the point estimate (0.132), as well as the lower and upper limits
+of the Anderson-Rubin conﬁdence interval [0.025, 0.285], and the t-value against the null hy-
+565
+pothesis of zero effect (2.33). Next, we propose researchers report the extreme robustness value
+(XRV≥q∗,α = 0.05%) and the robustness value (RV≥q∗,α = 0.67%) required to bring the lower
+limit of the conﬁdence interval to or beyond zero (or another meaningful threshold), at the 5%
+signiﬁcance level. We also show these same statistics for the ﬁrst stage and reduced form. As
+derived in Theorems 7 and 8, the (extreme) robustness value of the IV estimate required to bring
+570
+the lower limit of the conﬁdence interval to zero or below is the minimum of the (extreme) ro-
+bustness value of the reduced form and the (extreme) robustness value of the ﬁrst stage evaluated
+at the zero null. In our running example, the reduced form is more fragile, thus the sensitivity of
+the IV hinges critically on the sensitivity of the reduced form (see Supplementary Material for
+separate detailed analyses of the robustness of the reduced form and ﬁrst stage).
+575
+The RV reveals that confounders explaining 0.67% of the residual variation both of prox-
+imity and of (log) Earnings are already sufﬁcient to make the instrumental variable estimate
+16
+CINELLI & HAZLETT
+Model
+Param.
+Estimate
+LL1−α
+UL1−α
+t-value
+XRV≥q∗,α
+RV≥q∗,α
+Inst. Variable
+τ
+0.132
+0.025
+0.285
+2.33
+0.05%
+0.67%
+First Stage
+θ
+0.320
+0.148
+0.492
+3.64
+0.31%
+3.02%
+Reduced Form
+λ
+0.042
+0.007
+0.078
+2.33
+0.05%
+0.67%
+Bound (1x SMSA): R2
+Y ∼W |Z,X = 2%, R2
+W ∼Z|X = 0.6%, t† max
+α,df −1,R2 = 2.55.
+Note: df = 2994,
+q∗= 1,
+α = 0.05.
+Table 2: Minimal sensitivity reporting.
+statistically insigniﬁcant. Further, the XRV shows that, if we are not willing to impose con-
+straints on the partial R2 of confounders with the outcome, they need only explain 0.05% of
+the residual variation of the instrument to be problematic. To aid users in making plausibility
+580
+judgments, the note of the table provides bounds on the maximum strength of unobserved con-
+founding if it were as strong as SMSA (an indicator variable for whether the individual lived
+in a metropolitan region) along with the bias-adjusted critical value for a confounder with such
+strength, t† max
+α,df −1,R2 = 2.55. Since the observed t-value (2.33) is less than the adjusted critical
+threshold of 2.55, this immediately reveals that confounding as strong as SMSA (e.g. residual
+585
+geographic confounding) is already sufﬁciently strong to be problematic.
+It will often be valuable to assess the sensitivity of the instrumental variable estimate against
+hypothesis other than zero. To that end, investigators may wish to examine sensitivity contour
+plots showing the whole range of adjusted lower and upper limits of the Anderson-Rubin conﬁ-
+dence interval against various strengths of the omitted variables W. These contours are shown in
+590
+Figure 1. Here the horizontal axis indicates the bounds on R2
+Z∼W|X and the vertical axis indicates
+the bounds on R2
+Yτ0∼W|Z,X. Under a constant treatment effects model, R2
+Yτ0∼W|Z,X has a simple
+interpretation—it stands for how much residual variation confounders explain of the untreated
+potential outcome. For simplicity, of exposition, we adopt this interpretation here. The contour
+lines show the worst lower (or upper) limit of the CImax
+1−α,R2(τ), with omitted variables bounded
+595
+by such strength. Red dashed lines shows a critical contour line of interest (such as zero) as
+well as the boundary beyond conﬁdence intervals become unbounded. The red diamonds places
+bounds on strength of W as strong as Black (an indicator for race) and, again, SMSA, as per Sec-
+tion 4.7. As the plot reveals, both confounding as strong as SMSA, or as strong as black, could
+lead to an interval for the target parameter of CImax
+1−α,R2(τ) = [−0.02, 0.40], which includes not
+600
+only implausibly high values (40%), but also negative values (-2%), and is thus too wide for any
+meaningful conclusions. Since it is not very difﬁcult to imagine residual confounders as strong
+or stronger than those (e.g., parental income, ﬁner grained geographic location, etc), these results
+call into question the strength of evidence provided by this study.
+6.
+DISCUSSION
+605
+Sensitivity analysis tools, such as those introduced in this paper, provide logical deductions
+aimed at: (i) revealing the consequences of varying degrees of violation of identifying assump-
+tions (e.g., via bias-adjusted critical values), and (ii) determining the minimal degree of viola-
+tion of those assumptions necessary to overturn certain conclusions (e.g., via robustness values).
+This shifts the scientiﬁc debate from arguing whether, say, latent confounders of an instrumental
+610
+variable have exactly zero strength—an indefensible claim in most settings—to a more realistic
+discussion about whether we can conﬁdently rule out strengths that are shown to be problematic.
+Omitted Variable Bias for Instrumental Variables
+17
+Partial R2 of confounder(s) with the instrument
+Partial R2 of confounder(s) with the pot. outcome
+ −0.093 
+ −0.035 
+ 0 
+ 0.022 
+0.00
+0.02
+0.04
+0.06
+0.08
+0.00
+0.02
+0.04
+0.06
+0.08
+ −Inf 
+Unadjusted
+(0.025)
+1x black
+(−0.0212)
+1x smsa
+(−0.0192)
+(a) Sensitivity contours for the lower limit.
+Partial R2 of confounder(s) with the instrument
+Partial R2 of confounder(s) with the pot. outcome
+ 0.29 
+ 0.448 
+ 0.758 
+0.00
+0.02
+0.04
+0.06
+0.08
+0.00
+0.02
+0.04
+0.06
+0.08
+ Inf 
+Unadjusted
+(0.28)
+1x black
+(0.4019)
+1x smsa
+(0.3958)
+(b) Sensitivity contours for the upper limit.
+Figure 1: Sensitivity contours of the Anderson-Rubin conﬁdence interval.
+The results of sensitivity analyses are not always self-evident and can often be surprising.
+They may reveal that certain studies are highly sensitive to plausible perturbations of identifying
+assumptions, while others remain robust despite such perturbations. Even when results fall in
+615
+between these two extremes, sensitivity analyses still represent an improvement over simply as-
+suming away the problem. They clarify what one needs to know, by transparently revealing how
+vulnerable the results are to violations of the exclusion and independence restrictions. This pro-
+vides policymakers a better understanding of what remains unknown about an estimated effect,
+and offers researchers a roadmap for improving their analyses in future inquiries.
+620
+It is important to emphasize that plausibility judgments on the maximum strength of latent
+variables inevitably depend on expert knowledge and can thus vary substantially across scientiﬁc
+disciplines, ﬁelds of study, and the quality of the research design. For that reason, we do not
+propose any universal thresholds for the sensitivity statistics we propose here. For instance, in
+an observational study without randomization nor a rich set of measured confounders, it would
+625
+be hard to rule out latent confounders that explain, say, 1% of the residual variation of the in-
+strument. This indeed seems to be the case in our running example (Card, 1993), where residual
+geographic confounders could plausibly attain such strength. In other scientiﬁc contexts, how-
+ever, a value of 1% may in fact be large. For example, in a Mendelian randomization study where
+the main concern is pleiotropy, it may be defensible to argue against genetic variants explaining
+630
+1% of the variation of a latent complex pleiotropic trait (Cinelli et al., 2022).
+Finally, in this paper we focused on the traditional instrumental variable estimand, consist-
+ing of the ratio of two regression coefﬁcients. We chose to do so because this reﬂects current
+practices for IV analysis and encompasses the vast majority of applied work. These tools can
+thus be immediately put to use to improve the robustness of current research, without requiring
+635
+any additional assumptions, beyond those that already justiﬁed the traditional IV analysis in the
+ﬁrst place. Recent papers, however, have usefully questioned the causal interpretation of this es-
+timand, as it relies on strong parametric assumptions (Słoczy´nski, 2020; Blandhol et al., 2022).
+Extending the sensitivity tools we present here to the nonparametric case is possible by lever-
+18
+CINELLI & HAZLETT
+aging recent results in Chernozhukov et al. (2022), and offers an interesting direction for future
+640
+work.
+ACKNOWLEDGEMENT
+The authors thank the editor, associated editor, and reviewers for helpful comments. Cinelli’s
+research was supported in part by the Royalty Research Fund at the University of Washington,
+and by the National Science Foundation under Grant No. MMS-2417955.
+645
+SUPPLEMENTARY MATERIAL
+The Supplementary Material provides proofs for all results, compares our proposal with alter-
+native approaches, and includes additional analyses of the empirical example.
+BIBLIOGRAPHY
+Anderson, T. W. and Rubin, H. (1949). Estimation of the parameters of a single equation in a complete system of
+650
+stochastic equations. The Annals of Mathematical Statistics, 20(1):46–63.
+Andrews, I., Stock, J. H., and Sun, L. (2019). Weak instruments in instrumental variables regression: Theory and
+practice. Annual Review of Economics, 11:727–753.
+Angrist, J. D., Imbens, G. W., and Rubin, D. B. (1996). Identiﬁcation of causal effects using instrumental variables.
+Journal of the American statistical Association, 91(434):444–455.
+655
+Angrist, J. D. and Krueger, A. B. (2001). Instrumental variables and the search for identiﬁcation: From supply and
+demand to natural experiments. Journal of Economic perspectives, 15(4):69–85.
+Angrist, J. D. and Pischke, J.-S. (2009).
+Mostly harmless econometrics: An empiricist’s companion.
+Princeton
+university press.
+Belzil, C. and Hansen, J. (2002). Unobserved ability and the return to schooling. Econometrica, 70(5):2075–2091.
+660
+Blandhol, C., Bonney, J., Mogstad, M., and Torgovitsky, A. (2022). When is TSLS actually late? Technical report,
+National Bureau of Economic Research.
+Blundell, R., Dearden, L., and Sianesi, B. (2001). Estimating the returns to education: Models, methods and results.
+Bound, J., Jaeger, D. A., and Baker, R. M. (1995). Problems with instrumental variables estimation when the correla-
+tion between the instruments and the endogenous explanatory variable is weak. Journal of the American statistical
+665
+association, 90(430):443–450.
+Burgess, S. and Thompson, S. G. (2015). Mendelian randomization: methods for using genetic variants in causal
+estimation. CRC Press.
+Card, D. (1993). Using geographic variation in college proximity to estimate the return to schooling. Technical report,
+National Bureau of Economic Research.
+670
+Chernozhukov, V., Cinelli, C., Newey, W., Sharma, A., and Syrgkanis, V. (2022). Long story short: Omitted variable
+bias in causal machine learning. Technical report, National Bureau of Economic Research.
+Cinelli, C. and Hazlett, C. (2020). Making sense of sensitivity: Extending omitted variable bias. Journal of the Royal
+Statistical Society: Series B (Statistical Methodology).
+Cinelli, C., Kumor, D., Chen, B., Pearl, J., and Bareinboim, E. (2019). Sensitivity analysis of linear structural causal
+675
+models. International Conference on Machine Learning.
+Cinelli, C., LaPierre, N., Hill, B. L., Sankararaman, S., and Eskin, E. (2022). Robust mendelian randomization in
+the presence of residual population stratiﬁcation, batch effects and horizontal pleiotropy. Nature communications,
+13(1):1–13.
+Conley, T. G., Hansen, C. B., and Rossi, P. E. (2012). Plausibly exogenous. Review of Economics and Statistics,
+680
+94(1):260–272.
+Deaton, A. S. (2009). Instruments of development: Randomization in the tropics, and the search for the elusive keys
+to economic development. Technical report, National bureau of economic research.
+Felton, C. and Stewart, B. M. (2022). Handle with care: A sociologist’s guide to causal inference with instrumental
+variables.
+685
+Fieller, E. C. (1954).
+Some problems in interval estimation.
+Journal of the Royal Statistical Society: Series B
+(Methodological), 16(2):175–185.
+Frisch, R. and Waugh, F. V. (1933). Partial time regressions as compared with individual trends. Econometrica:
+Journal of the Econometric Society, pages 387–401.
+Gallen, T. (2020). Broken instruments. Available at SSRN.
+690
+Omitted Variable Bias for Instrumental Variables
+19
+Gunsilius, F. (2020). Non-testability of instrument validity under continuous treatments. Biometrika.
+Heckman, J. J. and Urzua, S. (2010). Comparing IV with structural models: What simple IV can and cannot identify.
+Journal of Econometrics, 156(1):27–37.
+Hern´an, M. A. and Robins, J. M. (2006). Instruments for causal inference: an epidemiologist’s dream? Epidemiology,
+pages 360–372.
+695
+Imbens, G. (2014). Instrumental variables: An econometrician’s perspective. Technical report, National Bureau of
+Economic Research.
+Imbens, G. W. and Rosenbaum, P. R. (2005). Robust, accurate conﬁdence intervals with a weak instrument: quarter
+of birth and education. Journal of the Royal Statistical Society: Series A (Statistics in Society), 168(1):109–126.
+Imbens, G. W. and Rubin, D. B. (2015). Causal inference in statistics, social, and biomedical sciences. Cambridge
+700
+University Press.
+Jaeger, D. A. and Parys, J. (2009). On the sensitivity of return to schooling estimates to estimation methods, model
+speciﬁcation, and inﬂuential outliers if identiﬁcation is weak.
+K´edagni, D. and Mouriﬁ´e, I. (2020). Generalized instrumental inequalities: testing the instrumental variable indepen-
+dence assumption. Biometrika.
+705
+Keele, L., Small, D., and Grieve, R. (2017). Randomization-based instrumental variables methods for binary outcomes
+with an application to the ‘improve’trial. Journal of the Royal Statistical Society: Series A (Statistics in Society),
+180(2):569–586.
+Kleibergen, F. (2002). Pivotal statistics for testing structural parameters in instrumental variables regression. Econo-
+metrica, 70(5):1781–1803.
+710
+Kruskal, W. and Majors, R. (1989). Concepts of relative importance in recent scientiﬁc literature. The American
+Statistician, 43(1):2–6.
+Lovell, M. C. (1963). Seasonal adjustment of economic time series and multiple regression analysis. Journal of the
+American Statistical Association, 58(304):993–1010.
+Masten, M. A. and Poirier, A. (2021). Salvaging falsiﬁed instrumental variable models. Econometrica, 89(3):1449–
+715
+1469.
+Mellon, J. (2020). Rain, rain, go away: 137 potential exclusion-restriction violations for studies using weather as an
+instrumental variable. Available at SSRN.
+Moreira, M. J. (2003). A conditional likelihood ratio test for structural models. Econometrica, 71(4):1027–1048.
+Moreira, M. J. (2009). Tests with correct size when instruments can be arbitrarily weak. Journal of Econometrics,
+720
+152(2):131–140.
+Nelson, C. and Startz, R. (1990). Some further results on the exact small sample properties of the instrumental variable
+estimator.
+Pearl, J. (1995). On the testability of causal models with latent and instrumental variables. In Proceedings of the
+Eleventh conference on Uncertainty in artiﬁcial intelligence, pages 435–443. Morgan Kaufmann Publishers Inc.
+725
+Pearl, J. (2009). Causality. Cambridge university press.
+Słoczy´nski, T. (2020). When should we (not) interpret linear iv estimands as late? arXiv preprint arXiv:2011.06695.
+Small, D. S. (2007). Sensitivity analysis for instrumental variables regression with overidentifying restrictions. Jour-
+nal of the American Statistical Association, 102(479):1049–1058.
+Small, D. S. and Rosenbaum, P. R. (2008). War and wages: the strength of instrumental variables and their sensitivity
+730
+to unobserved biases. Journal of the American Statistical Association, 103(483):924–933.
+Staiger, D. O. and Stock, J. H. (1994). Instrumental variables regression with weak instruments.
+Stock, J. H. and Yogo, M. (2002). Testing for weak instruments in linear iv regression.
+Swanson, S. A., Hern´an, M. A., Miller, M., Robins, J. M., and Richardson, T. S. (2018). Partial identiﬁcation of the
+average treatment effect using instrumental variables: review of methods for binary instruments, treatments, and
+735
+outcomes. Journal of the American Statistical Association, 113(522):933–947.
+Wang, X., Jiang, Y., Zhang, N. R., and Small, D. S. (2018). Sensitivity analysis and power for instrumental variable
+studies. Biometrics.
+Young, A. (2022). Consistency without inference: Instrumental variables in practical application. European Economic
+Review, page 104112.
+740
+Supplementary Materials for
+“An Omitted Variable Bias Framework for Sensitivity Analysis of
+Instrumental Variables”
+Carlos Cinelli & Chad Hazlett
+A
+The mechanics of IV estimation
+For ease of reference, in this section we show in detail some of the algebraic identities (and diﬀerences) of
+the main approaches to IV estimation.
+Notation.
+We denote by Y the (n × 1) vector of the outcome of interest with n observations; by D the
+(n × 1) treatment vector; by Z the (n × 1) vector of the instrument; by X an (n × p) matrix of observed
+covariates (including a constant), and by W an (n × l) matrix of unobserved covariates. We use Y ⊥X to
+denote the part of Y not linearly explained by X, that is, Y ⊥X := Y −X(X′X)−1X′Y . Throughout, we
+assume that the relevant matrices have full rank. In this section df := n −p −l −1.
+A.1
+Indirect Least Squares (ILS)
+ILS is perhaps the most straightforward approach to instrumental variable estimation. We start with two
+OLS models, one capturing the eﬀect of the instrument on the treatment (ﬁrst stage) and another the eﬀect
+of the instrument on the outcome (reduced form),
+First stage:
+D = ˆθZ + X ˆψ + W ˆδ + ˆεd,
+(1)
+Reduced form:
+Y = ˆλZ + X ˆβ + W ˆγ + ˆεy,
+(2)
+where ˆθ, ˆψ and ˆδ are the OLS estimates of the regression of D on Z, X and W , and ˆεd its corresponding
+residuals; analogously, ˆλ, ˆβ and ˆγ are the OLS estimates of the regression of Y on Z, X and W , and ˆεy its
+corresponding residuals.
+Point Estimate.
+The estimator for τ is constructed by simply using the plug-in principle and taking the
+ratio of ˆλ and ˆθ,
+ˆτILS :=
+ˆλ
+ˆθ
+.
+(3)
+Inference.
+Inference in the ILS framework is usually performed using the delta-method, with estimated
+variance
+c
+var(ˆτILS) := 1
+ˆθ2
+
+c
+var(ˆλ) + ˆτ 2
+ILS c
+var(ˆθ) −2ˆτILSd
+cov(ˆλ, ˆθ)
+
+(4)
+where, using the FWL formulation,
+c
+var(ˆλ) = var(Y ⊥Z,X,W )
+var(Z⊥X,W ) × df−1,
+c
+var(ˆθ) = var(D⊥Z,X,W )
+var(Z⊥X,W ) × df−1
+(5)
+are the estimated variances of the reduced form and ﬁrst stage, and
+1
+d
+cov(ˆλ, ˆθ) = cov(Y ⊥Z,X,W , D⊥Z,X,W )
+var(Z⊥X,W )
+× df−1
+(6)
+is the estimated covariance of ˆλ and ˆθ. Here var(·) and cov(·) denote sample variances of covariances.
+A.2
+Two-Stage Least Squares (2SLS)
+A closely related approach for instrumental variable estimation is denoted by “two-stage least squares”
+(2SLS). As its name suggests, this involves two nested steps of OLS estimation: a ﬁrst-stage regression given
+by Equation (1) to produce ﬁtted values for the treatment ( bD), then regressing the outcome on these ﬁtted
+values,
+Second stage:
+Y = ˆτ2SLS bD + X ˆβ2SLS + W ˆγ2SLS + ˆε2SLS.
+(7)
+The 2SLS estimate corresponds to the coeﬃcient ˆτ2SLS in Equation (7), called the “second-stage” regression.
+Point Estimate.
+By the FWL theorem, the 2SLS point estimate can be written as
+ˆτ2SLS = cov(Y ⊥X,W , bD⊥X,W )
+var( bD⊥X,W )
+.
+(8)
+In the just-identiﬁed case, the ILS and 2SLS point estimates are numerically identical. Expanding bD and
+partialling out {X, W } we have that
+ˆτ2SLS = cov(Y ⊥X,W , bD⊥X,W )
+var( bD⊥X,W )
+= cov(Y ⊥X,W , ˆθZ⊥X,W )
+var(ˆθZ⊥X,W )
+=
+ˆθ × cov(Y ⊥X,W , Z⊥X,W )
+ˆθ2 × var(Z⊥X,W )
+=
+ˆλ
+ˆθ
+,
+(9)
+which establishes the equality ˆτ2SLS = ˆτILS =: ˆτ.
+Inference.
+By the FWL theorem, the standard two-stage least squares estimate of the variance of ˆτ2SLS
+can be written as
+c
+var(ˆτ2SLS) := var(Y ⊥X,W −ˆτD⊥X,W )
+var( bD⊥X,W )
+× df−1 .
+(10)
+As with the point estimate, for the just-identiﬁed case, the estimated variance of ILS and 2SLS are numeri-
+cally identical. To see why, note the denominator of Equation (10) can be expanded to
+var( bD⊥X,W ) = var(ˆθZ⊥X,W ) = ˆθ2 var(Z⊥X,W ).
+(11)
+Finally, the numerator can be written as,
+var(Y ⊥X,W −ˆτD⊥X,W ) = var(Y ⊥X,W −ˆτ(ˆθZX,W + D⊥Z,X,W ))
+(12)
+= var((Y ⊥X,W −ˆλZX,W ) −ˆτD⊥Z,X,W )
+(13)
+= var(Y ⊥Z,X,W −ˆτD⊥Z,X,W )
+(14)
+= var(Y ⊥Z,X,W ) + ˆτ 2 var(D⊥Z,X,W ) −2ˆτ cov(Y ⊥Z,X,W , D⊥Z,X,W ).
+(15)
+2
+Plugging in Equations (15) and (11) back in Equation (10), then using Equations (5) and (6) establishes the
+desired equality.
+A.3
+Anderson-Rubin (AR)
+The Anderson-Rubin approach (Anderson and Rubin, 1949) starts by creating the random variable Yτ0 :=
+Y −τ0D in which we subtract from Y a “putative” causal eﬀect of D, namely, τ0. If Z is a valid instrument,
+under the null hypothesis H0 : τ = τ0, we should not see an association between Yτ0 and Z, conditional on
+X and W . In other words, if we run the OLS model
+Anderson-Rubin:
+Yτ0 = ˆφτ0Z + X ˆβτ0 + W ˆγτ0 + ˆετ0,
+(16)
+we should ﬁnd that ˆφτ0 is equal to zero, but for sampling variation. This forms the basis for the point
+estimate and conﬁdence interval in the AR approach.
+Point Estimate.
+We deﬁne the Anderson-Rubin point estimate to be the value of τ0 that makes ˆφ = 0,
+ie,
+ˆτAR = {τ0; ˆφτ0 = 0}.
+(17)
+Resorting again to the FWL theorem, we can write the regression coeﬃcient of the AR regression, ˆφτ0, as a
+function of the regression coeﬃcients of the ﬁrst stage and reduced form,
+ˆφτ0 = cov(Y ⊥X,W −τ0D⊥X,W , Z⊥X,W )
+var(Z⊥X,W )
+(18)
+= cov(Y ⊥X,W , Z⊥X,W )
+var(Z⊥X,W )
+−τ0
+cov(D⊥X,W , Z⊥X,W )
+var(Z⊥X,W )
+(19)
+= ˆλ −τ0ˆθ.
+(20)
+Thus solving for the condition ˆφτ0 = 0 gives us
+ˆτAR =
+ˆλ
+ˆθ
+,
+(21)
+which establishes the equality ˆτAR = ˆτILS. Therefore, all the point estimates of ILS, 2SLS and AR are
+numerically identical.
+Inference.
+The AR conﬁdence interval with signiﬁcance level α is deﬁned as all values of τ0 such that we
+cannot reject the null hypothesis H0 : φτ0 = 0 at the chosen signiﬁcance level
+CI1−α(τ) = {τ0; t2
+ˆφτ0 ≤t∗2
+α,df}.
+(22)
+This conﬁdence interval can be obtained analytically as functions of the estimates of the ﬁrst-stage and
+reduced form regressions. As shown in Equation (20), ˆφτ0 can be written as the linear combination
+ˆφτ0 = ˆλ −τ0ˆθ.
+(23)
+3
+Likewise, by the FWL theorem, the estimated variance of ˆφτ0 is given by
+c
+var(ˆφτ0) = var(Y ⊥Z,X,W −τ0D⊥Z,X,W )
+var(Z⊥X,W )
+× df−1
+(24)
+=
+var(Y ⊥Z,X,W )
+var(Z⊥X,W ) + τ 2
+0
+var(D⊥Z,X,W )
+var(Z⊥X,W ) −2τ0
+cov(Y ⊥Z,X,W , D⊥Z,X,W )
+var(Z⊥X,W )
+
+× df−1
+(25)
+= c
+var(ˆλ) + τ 2
+0 c
+var(ˆθ) −2τ0d
+cov(ˆλ, ˆθ).
+(26)
+Thus, we obtain that the t-value tˆφτ0 for testing the null hypothesis H0 : φτ0 = 0 equals to
+tˆφτ0 =
+ˆλ −τ0ˆθ
+q
+c
+var(ˆλ) + τ 2
+0 c
+var(ˆθ) −2τ0d
+cov(ˆλ, ˆθ)
+.
+(27)
+And our task is to ﬁnd all values of τ0 such that the following inequality holds
+(ˆλ −τ0ˆθ)2
+c
+var(ˆλ) + τ 2
+0 c
+var(ˆθ) −2τ0d
+cov(ˆλ, ˆθ)
+≤t
+∗2
+α,df.
+(28)
+First, note that the empty set is not possible here. If we pick τ0 = ˆτAR, then the numerator in Equation (28)
+is zero, and the inequality trivially holds—therefore, the point-estimate is always included in the conﬁdence
+interval. Now squaring and rearranging terms we obtain
+
+ˆθ2 −c
+var(ˆθ) × t∗2
+α,df
+
+|
+{z
+}
+a
+τ 2
+0 + 2
+
+d
+cov(ˆλ, ˆθ) × t∗2
+α,df −ˆλˆθ
+
+|
+{z
+}
+b
+τ0 +
+
+ˆλ2 −c
+var(ˆλ) × t∗2
+α,df
+
+|
+{z
+}
+c
+≤0.
+(29)
+Our task has simpliﬁed to ﬁnd all values of τ0 that makes the above quadratic equation, with coeﬃcients a,
+b and c, non-positive. As discussed in Section F.1, this conﬁdence intervals can take three diﬀerent forms,
+depending on the instrument strength: (i) ﬁnite and connected, (ii) the union two disjoint half lines; or, (iii)
+the whole real line.
+A.4
+Fieller’s theorem
+Fieller’s proposal to test the null hypothesis H0 : τ = τ0 is to construct the linear combination ˆφτ0 = ˆλ−τ0ˆθ,
+and to test the null hypothesis H0 : φτ0 = 0. The standard estimated variance for ˆφτ0 equals Equation (26),
+resulting in a test statistic equal to Equation (27), and thus numerically identical to the AR approach.
+B
+OVB with the partial R2 parameterization
+As in the main text, we use the reduced form as an example, with the understanding that all results here
+hold for arbitrary OLS estimates.
+B.1
+Proof of Theorem 1
+Theorem 1 was derived in Cinelli and Hazlett (2020). For completeness, we reproduce the proof here. As
+before var(·), sd(·), cov(·), cor(·) denote sample variances, standard deviations, covariances and correlations
+4
+respectively. By the FWL theorem,
+|ˆλres −ˆλ| =
+cov(Z⊥X, W ⊥X)
+var(Z⊥X)
+ cov(Y ⊥X,Z, W ⊥X,Z)
+var(W ⊥X,Z)
+
+=
+cor(Z⊥X, W ⊥X)sd(W ⊥X)
+sd(Z⊥X)
+ cor(Y ⊥X,Z, W ⊥X,D)sd(Y ⊥X,Z)
+sd(W ⊥X,D)
+
+=
+
+cor(Y ⊥X,Z, W ⊥X,Z)cor(Z⊥X, W ⊥X)
+sd(W ⊥X,Z)
+sd(W ⊥X)
+
+
+sd(Y ⊥X,Z)
+sd(Z⊥X)
+
+.
+(30)
+Noting that cor(Y ⊥X,Z, W ⊥X,Z)2 = R2
+Y ∼W|Z,X, that cor(W ⊥X, Z⊥X)2 = R2
+D∼W|X, and that var(W ⊥X,Z)
+var(W ⊥X) =
+1 −R2
+W∼D|X = 1 −R2
+D∼W|X, we can write (30) as
+|ˆλres −ˆλ| =
+v
+u
+u
+tR2
+Y ∼W|Z,X R2
+D∼W|X
+1 −R2
+D∼W|X
+× sd(Y ⊥X,Z)
+sd(Z⊥X)
+=
+q
+R2
+Y ∼W|Z,X f2
+D∼W|X × sd(Y ⊥X,Z)
+sd(Z⊥X) .
+(31)
+Note this is a general bias result for linear projections, and it holds both in the sample as well as in the
+population, by simply replacing sample quantities with the analogous population quantities.
+As for the classical standard errors, recall that, again by the FWL theorem, they can be written as:
+bse(ˆλres) = sd(Y ⊥X,Z)
+sd(Z⊥X)
+r
+1
+df,
+bse(ˆλ) = sd(Y ⊥X,Z,W )
+sd(Z⊥X,W )
+r
+1
+df −1.
+(32)
+Where here df = n −p −1. Taking the ratio we obtain
+bse(ˆλ)
+bse(ˆλres)
+=
+sd(Y ⊥X,Z,W )
+sd(Y ⊥X,Z)
+  sd(Z⊥X)
+sd(Z⊥X,W )
+ r
+df
+df −1.
+(33)
+Using the same partial R2 identities as before, we have
+bse(ˆλ) =
+v
+u
+u
+t1 −R2
+Y ∼W|Z,X
+1 −R2
+Z∼W|X
+× bse(ˆλres) ×
+r
+df
+df −1 =
+v
+u
+u
+t1 −R2
+Y ∼W|Z,X
+1 −R2
+Z∼W|X
+× sd(Y ⊥X,Z)
+sd(Z⊥X) ×
+r
+1
+df −1.
+(34)
+To aid interpretation, we deﬁne BF :=
+r
+R2
+Y ∼W |Z,XR2
+Z∼W |X
+1−R2
+Z∼W |X
+as the “bias factor” of W, which is the part of
+the bias solely determined by R2
+Y ∼W|Z,X and R2
+Z∼W|X, and SEF :=
+r
+1−R2
+Y ∼W |Z,X
+1−R2
+Z∼W |X
+as the “standard error
+factor” of W, summarizing the factor of the standard error which is solely determined by the sensitivity
+parameters R2
+Y ∼W|Z,X and R2
+Z∼W|X.
+C
+Bias-adjusted critical values
+As in the main text, we use the reduced form as an example, with the understanding that all results here
+hold for arbitrary OLS estimates. Here df = n −p −1.
+5
+C.1
+Proof of Theorem 2
+Let LL1−α(λ) := ˆλ −t∗
+α,df −1 × bse(ˆλ) be the lower limit of a 1 −α level conﬁdence interval of the full reduced
+form regression, where t∗
+α,df −1 denotes the critical α-level threshold of the t-distribution with df −1 degrees
+of freedom. Considering the direction of the bias that reduces the lower limit we obtain,
+LL1−α(λ) := ˆλ −t∗
+α,df −1 × bse(ˆλ)
+(35)
+= ˆλres −BF
+√
+df × bse(ˆλres) −t∗
+α,df −1 × SEF
+p
+df /(df −1) × bse(ˆλres)
+(36)
+= ˆλres −
+
+SEF
+p
+df /(df −1) × t∗
+α,df −1 + BF
+√
+df
+
+× bse(ˆλres).
+(37)
+Similarly, now let UL1−α(λ) the upper limit of the conﬁdence interval and consider the direction of the bias
+that increases the upper limit. By the same algebraic manipulations, we obtain
+UL1−α(λ) = ˆλres +
+
+SEF
+p
+df /(df −1) × t∗
+α,df −1 + BF
+√
+df
+
+× bse(ˆλres).
+(38)
+Note that, in both Equations (37) and (38), the only part that depends on the omitted variable W is the
+common multiple of the observed standard error, which deﬁnes the new bias-adjusted critical value,
+t†
+α,df −1,R2 := SEF
+p
+df /(df −1) × t∗
+α,df −1 + BF
+√
+df.
+(39)
+C.2
+Proof of Theorem 3
+Now suppose the analyst wishes to investigate the worst possible lower (or upper) limits of the conﬁdence
+intervals induced by a confounder with strength no stronger than certain bounds, for instance, R2
+Y ∼W|Z,X ≤
+R2 max
+Y ∼W|Z,X and R2
+Z∼W|X ≤R2 max
+Z∼W|X. As per the last section, this amounts to ﬁnding the largest bias-
+adjusted critical value induced by an omitted variable W with at most such strength. That is, we need to
+solve the following maximization problem
+max
+R2
+Y ∼W |Z,X,R2
+Z∼W |X
+t†
+α,df −1,R2
+s.t.
+R2
+Y ∼W|Z,X ≤R2 max
+Y ∼W|Z,X,
+R2
+Z∼W|X ≤R2 max
+Z∼W|X.
+(40)
+Dividing t†
+α,df −1,R2 by
+√
+df and letting f∗
+α,df −1 := t∗
+α,df −1/
+√
+df −1, we see that the derivative of t†
+α,df −1,R2
+with respect to R2
+Z∼W|X is always increasing, since
+∂(t†
+α,df −1,R2/
+√
+df)
+∂R2
+Z∼W|X
+=
+∂BF
+∂R2
+Z∼W|X
++ f∗
+α,df −1 ×
+∂SEF
+∂R2
+Z∼W|X
+(41)
+=
+(R2
+Y ∼W|Z,X)1/2
+2(1 −R2
+Z∼W|X)3/2(R2
+Z∼W|X)1/2 + f∗
+α,df −1
+(1 −R2
+Y ∼W|Z,X)1/2
+2(1 −R2
+Z∼W|X)3/2
+(42)
+=
+(R2
+Y ∼W|Z,X)1/2 + f∗
+α,df −1(1 −R2
+Y ∼W|Z,X)1/2(R2
+Z∼W|X)1/2
+2(1 −R2
+Z∼W|X)3/2(R2
+Z∼W|X)1/2
+≥0.
+(43)
+Therefore, the optimal R2∗
+Z∼W|X (the one the minimizes (maximizes) the lower (upper) limit of the conﬁ-
+dence interval) always reaches the bound. However, the same is not true for the derivative with respect to
+6
+R2
+Y ∼W|Z,X. To see that, write,
+∂(t†
+α,df −1,R2/
+√
+df)
+∂R2
+Y ∼W|Z,X
+=
+∂BF
+∂R2
+Y ∼W|Z,X
++ f∗
+α,df −1 ×
+∂SEF
+∂R2
+Y ∼W|Z,X
+(44)
+=
+(R2
+Z∼W|X)1/2
+2(1 −R2
+Z∼W|X)1/2(R2
+Y ∼W|Z,X)1/2 +
+−f∗
+α,df −1
+2(1 −R2
+Y ∼W|Z,X)1/2(1 −R2
+Z∼W|X)1/2
+(45)
+=
+(R2
+Z∼W|X)1/2(1 −R2
+Y ∼W|Z,X)1/2 −f∗
+α,df −1(R2
+Y ∼W|Z,X)1/2
+2(R2
+Y ∼W|Z,X)1/2(1 −R2
+Y ∼W|Z,X)1/2(1 −R2
+Z∼W|X)1/2
+.
+(46)
+That is, due to the variance reduction factor of the omitted variable, it could be the case that increasing
+R2
+Y ∼W|Z,X reduces the standard error more than enough to compensate for the increase in bias, resulting in
+tighter conﬁdence intervals.
+We have, thus, two cases. First, consider the case in which the optimal point reaches both bounds. In
+that case, the numerator of Equation (46) must be positive when evaluated at the solution. Rearranging
+and squaring, we see that this happens when
+R2 max
+Z∼W|X ≥f∗2
+α,df −1 × f2 max
+Y ∼W|Z,X.
+(47)
+Clearly, when considering the sensitivity of the point estimate, we have f∗
+α,df −1 = 0, and the condition always
+holds. If condition of Equation (47) fails, then the optimal R2∗
+Y ∼W|Z,X will be an interior point. This will
+happen when the numerator of Equation (46) equals zero. Since we know R2
+Z∼W|X reaches its maximum,
+the optimal R2∗
+Y ∼W|Z,X will be,
+R2∗
+Y ∼W|Z,X =
+R2 max
+Z∼W|X
+f∗2
+α,df −1 + R2 max
+Z∼W|X
+.
+(48)
+D
+(Extreme) Robustness Values for OLS
+As in the main text, we use the reduced form as an example, with the understanding that all results here
+hold for arbitrary OLS estimates.
+D.1
+Proof of Theorem 4
+The Extreme Robustness Value XRVq∗,α(λ) is deﬁned as the greatest lower bound XRV on the sensitivity
+parameter R2
+Z∼W|X, while keeping the parameter R2
+Y ∼W|Z,X unconstrained, such that the null hypothesis
+that a change of (100 × q)% of the original estimate, H0 : λ = (1 −q∗)ˆλres, is not rejected at the α level:
+XRVq∗,α(λ) := inf
+n
+XRV; (1 −q∗)ˆλres ∈CImax
+1−α,1,XRV(λ)
+o
+.
+(49)
+First, consider the case where fq∗(λ) < f∗
+α,df −1. Note the XRV will be zero, since we already cannot reject
+the null hypothesis H0 : λ = (1 −q∗)ˆλres even assuming zero omitted variable bias. Next, note that, when
+f∗
+α,df −1 > 0, we can always pick a large enough value for R2
+Y ∼W|Z,X until condition (47) fails (since f2
+Y ∼W|Z,X
+is unbounded). Therefore, XRV will be given by an interior point solution. Using Equation (48) to express
+t† max
+α,df −1,R2 solely in terms of the optimal R2
+Z∼W|X, and solving for the value that gives us (1 −q∗)ˆλres, we
+7
+obtain
+XRVq∗,α(λ) =
+
+
+
+
+
+
+
+0,
+if fq∗(λ) ≤f∗
+α,df−1,
+f2
+q∗(λ) −f∗2
+α,df−1
+1 + f2
+q∗(λ)
+, otherwise.
+(50)
+D.2
+Proof of Theorem 5
+The Robustness Value RVq∗,α(λ) for not rejecting the null hypothesis that H0 : λ = (1 −q∗)ˆλres, at the
+signiﬁcance level α, is deﬁned as
+RVq∗,α(λ) := inf
+n
+RV; (1 −q∗)ˆλres ∈CImax
+1−α,RV,RV(λ)
+o
+,
+(51)
+where now we consider both sensitivity parameters bounded by RV. Again, consider the case where fq∗(λ) <
+f∗
+α,df −1. The RV then must be zero, since we already cannot reject the null hypothesis H0 : λ = (1 −q∗)ˆλres
+given the current data. Next, let’s consider the case when the bound on R2
+Y ∼W|Z,X is not biding—here our
+optimization problem reduces to the XRV case. Finally, we have the solution in which both coordinates
+achieve the bound, resulting in a quadratic equation as solved in Cinelli and Hazlett (2020). We thus have,
+RVq∗,α(λ) =
+
+
+
+
+
+
+
+
+
+0,
+if fq∗(λ) ≤f∗
+α,df−1,
+1
+2
+q
+f4
+q∗,α(λ) + 4f2
+q∗,α(λ) −f2
+q∗,α(λ)
+
+, if f∗
+α,df−1 < fq∗(λ) < f∗−1
+α,df−1,
+XRVq∗,α(λ),
+otherwise.
+(52)
+The condition fq∗(λ) < f∗−1
+α,df−1, stems from the fact that the XRV solution cannot satisfy Equation (47).
+We now show that this is equivalent to the condition RVq∗,α(λ) > 1 −1/f2
+q∗(λ) that Cinelli and Hazlett
+(2020) had previously established. If fq∗(λ) < 1/f∗
+α,df−1 then,
+RVq∗,α(λ) = 1
+2
+q
+f4
+q∗,α(λ) + 4f2
+q∗,α(λ) −f2
+q∗,α(λ)
+
+(53)
+= 1
+2
+q
+(fq∗(λ) −f∗
+α,df−1)4 + 4(fq∗(λ) −f∗
+α,df−1)2 −(fq∗(λ) −f∗
+α,df−1)2
+(54)
+> 1
+2
+q
+(fq∗(λ) −1/fq∗(λ))4 + 4(fq∗(λ) −1/fq∗(λ))2 −(fq∗(λ) −1/fq∗(λ))2
+
+(55)
+= 1
+2
+
+
+
+v
+u
+u
+t
+f2q (λ) −1
+fq∗(λ)
+4
++ 4
+ 
+f2
+q∗(λ) −1
+fq∗(λ)
+!2
+−
+ 
+f2
+q∗(λ) −1
+fq∗(λ)
+!2
+
+
+
+(56)
+=
+1
+2
+ 
+f2
+q∗(λ) −1
+f2
+q∗(λ)
+! q
+(f2q (λ) −1)2 + 4f2
+q∗(λ) −f2
+q∗(λ) + 1
+
+(57)
+=
+1
+2
+  1 −1/f2
+q∗(λ)
+ q
+f4q (λ) + 1 −2f2
+q∗(λ) + 4f2
+q∗(λ) −f2
+q∗(λ) + 1
+
+(58)
+=
+1
+2
+  1 −1/f2
+q∗(λ)
+ q
+f4q (λ) + 1 + 2f2
+q∗(λ) −f2
+q∗(λ) + 1
+
+(59)
+=
+1
+2
+  1 −1/f2
+q∗(λ)
+  f2
+q∗(λ) + 1 −f2
+q∗(λ) + 1
+
+(60)
+= 1 −1/f2
+q∗(λ)
+(61)
+8
+Therefore, fq∗(λ) < 1/f∗
+α,df−1
+=⇒RVq∗,α(λ) > 1 −1/f2
+q∗(λ). By the same argument one can derive
+RVq∗,α(λ) > 1 −1/f2
+q∗(λ) =⇒fq(λ) > 1/f∗
+α,df−1. Hence, both conditions are equivalent.
+E
+Bounds on the strength of W
+As in the main text, we use the reduced form as an example, with the understanding that all results here
+hold for arbitrary OLS estimates.
+E.1
+Proof of Theorem 6
+Let Xj be a speciﬁc covariate of the set X. Now deﬁne
+kZ :=
+R2
+Z∼W|X−j
+R2
+Z∼Xj|X−j
+,
+kY :=
+R2
+Y ∼W|Z,X−j
+R2
+Y ∼Xj|ZX−j
+.
+(62)
+Where X−j is the set X excluding covariate Xj. Our goal in this section is to re-express (or bound) both
+sensitivity parameters as a function of the new parameters kZ and kY and the observed data.
+We can thus start by re-expressing R2
+Y ∼W|Z,X in terms of kY , which in this case is straightforward.
+Using the recursive deﬁnition of partial correlations, and considering our two conditions R2
+W∼Xj|Z,X−j = 0
+and R2
+Y ∼W|Z,X−j = kY R2
+Y ∼Xj|ZX−j, we obtain
+RY ∼W|Z,X
+ =
+
+RY ∼W|Z,X−j −RY ∼Xj|Z,X−jRW∼Xj|Z,X−j
+q
+1 −R2
+Y ∼Xj|Z,X−j
+q
+1 −R2
+W∼Xj|Z,X−j
+
+(63)
+=
+
+RY ∼W|Z,X−j
+q
+1 −R2
+Y ∼Xj|Z,X−j
+
+(64)
+=
+
+√kY RY ∼Xj|Z,X−j
+q
+1 −R2
+Y ∼Xj|Z,X−j
+
+(65)
+=
+p
+kY
+fY ∼Xj|Z,X−j
+ .
+(66)
+Hence,
+R2
+Y ∼W|Z,X = kY × f2
+Y ∼Xj|Z,X−j.
+(67)
+Moving to bound R2
+Z∼W|X, it is useful to ﬁrst note that the conditions R2
+W∼Xj|Z,X−j = 0 and R2
+Z∼W|X−j =
+kZR2
+Z∼Xj|X−j allow us to re-express RW∼Xj|X−j as a function of kZ
+RW∼Xj|Z,X−j = 0 =⇒
+RW∼Xj|X−j −RW∼Z|X−jRXj∼Z|X−j
+q
+1 −R2
+W∼Z|X−j
+q
+1 −R2
+Xj∼Z|X−j
+= 0
+(68)
+=⇒RW∼Xj|X−j −RW∼Z|X−jRXj∼Z|X−j = 0
+(69)
+=⇒RW∼Xj|X−j = RW∼Z|X−jRXj∼Z|X−j
+(70)
+=⇒RW∼Xj|X−j = RZ∼W|X−jRZ∼Xj|X−j
+(71)
+=⇒|RW∼Xj|X−j| =
+p
+kZR2
+Z∼Xj|X−j.
+(72)
+9
+Now we can re-write R2
+Z∼W|X using the recursive deﬁnition of partial correlations
+RZ∼W|X
+ =
+
+RZ∼W|X−j −RZ∼Xj|X−jRW∼Xj|X−j
+q
+1 −R2
+Z∼Xj|X−j
+q
+1 −R2
+W∼Xj|X−j
+
+(73)
+≤
+RZ∼W|X−j
+ +
+RZ∼Xj|X−jRW∼Xj|X−j
+
+q
+1 −R2
+Z∼Xj|X−j
+q
+1 −R2
+W∼Xj|X−j
+(74)
+=
+
+√kZRZ∼Xj|X−j
+ +
+
+√kZR3
+Z∼Xj|X−j
+
+q
+1 −R2
+Z∼Xj|X−j
+q
+1 −kZR4
+Z∼Xj|X−j
+(75)
+=
+
+
+√kZ +
+R3
+Z∼Xj|X−j
+
+q
+1 −kZR4
+Z∼Xj|X−j
+
+×
+
+
+RZ∼Xj|X−j
+
+q
+1 −R2
+Z∼Xj|X−j
+
+
+(76)
+= η|fZ∼Xj|X−j|.
+(77)
+Hence we have that
+R2
+Z∼W|X ≤η2f2
+Z∼Xj|X−j,
+(78)
+where η =
+
+
+√kZ+
+R3
+Z∼Xj|X−j
+
+q
+1−kZR4
+Z∼Xj|X−j
+
+.
+F
+(Extreme) Robustness Values for IV
+F.1
+Proof of Theorems 7 and 8
+Recall that in the AR framework, testing the null hypothesis H0 : τ = τ0 is equivalent to the testing the
+null hypothesis H0 : φτ0 = 0. Therefore, by the deﬁnition of (X)RVq∗,α(τ), it immediately follows that
+XRVq∗,α(τ) = XRV1,α(φτ ∗) and that RVq∗,α(τ) = RV1,α(φτ ∗), where τ ∗= (1−q∗)ˆτres. We now have to show
+that:
+XRV≥q∗,α(τ) = min{XRV1,α(φτ ∗),
+XRV1,α(θ)},
+(79)
+RV≥q∗,α(τ) = min{RV1,α(φτ ∗),
+RV1,α(θ)}.
+(80)
+That is, in words, that when we are interested in biases as large or larger than a certain amount, the (X)RV
+of the IV estimate is bounded by the the (X)RV of the ﬁrst stage evaluated at the zero null.
+To see why this is the case, consider the possible shapes of the adjusted AR conﬁdence interval CImax
+1−α,R2(τ).
+The interval is obtained by solving the following quadratic equation,
+
+ˆθ2
+res −c
+var(ˆθres) ×
+
+t† max
+α,df −1,R2
+2
+|
+{z
+}
+a
+τ 2
+0 + 2
+
+d
+cov(ˆλres, ˆθres) ×
+
+t† max
+α,df −1,R2
+2
+−ˆλresˆθres
+
+|
+{z
+}
+b
+τ0
++
+
+ˆλ2
+res −c
+var(ˆλres) ×
+
+t† max
+α,df −1,R2
+2
+|
+{z
+}
+c
+≤0.
+(81)
+10
+Here df = n −p −1. Now let r = {rmin, rmax} denote the roots of the quadratic equation, which can be
+written as r = −b ±
+√
+∆/2a, with ∆= b2 −4ac. If a > 0, the quadratic equation will be convex, and
+thus only the values between the roots will be non-positive. This leads to the connected conﬁdence interval
+CImax
+1−α,R2(τ) = [rmin, rmax].
+When a < 0, the curve is concave and this leads to unbounded conﬁdence
+intervals. Here we have two sub-cases: (i) when ∆< 0, the quadratic curve never touches zero, and thus
+the conﬁdence interval is simply the whole real line CImax
+1−α,R2(τ) = (−∞, +∞); and, (ii) when ∆> 0 the
+conﬁdence interval will be union of two disjoint intervals CImax
+1−α,R2(τ) = (−∞, rmin] ∪[rmax, +∞).1 In both
+cases, arbitrarily large negative or positive values are part of the conﬁdence interval, which is important for
+our discussion.
+Thus we have the following conclusion: whenever CImax
+1−α,df −1(τ) is connected, we must have the same
+solution as before, namely, that the (X)RV of the IV estimate equals the (X)RV of the AR regression
+evaluated at the zero null with the appropriate outcome transformation.
+However, as discussed above,
+biases arbitrary larger than q∗can happen when the AR conﬁdence interval is unbounded. Unbounded
+intervals occur if and only if a < 0, which is equivalent to t2
+ˆθres ≤(t† max
+α,df −1,R2)2. This is precisely the same
+condition for the (extreme) robustness value of the ﬁrst stage evaluated at the zero null. Therefore, the
+(X)RV for IV, considering biases as large or larger than a certain amount, must be the minimum of these
+two values.
+G
+Comparison with traditional approaches
+Traditional approaches for the sensitivity of IV have focused on parameterizing the bias of the IV estimate
+with a single coeﬃcient that summarizes how strongly the instrument relates to the outcome “not through”
+the treatment. For example, Conley et al. (2012) considers the model (for simplicity, we omit covariates X):
+Yi = τDi + ηZi + εi,
+(82)
+where τ is the parameter of interest, and cov(Zi, εi) = 0. Here, the coeﬃcient η is a sensitivity parameter
+that directly summarizes violations of instrument validity. To recover the target parameter τ, it thus suﬃces
+to subtract η from the reduced-form regression coeﬃcient λ,
+τ = λ −η
+θ
+.
+(83)
+Inference for the above estimand can be done in numerous ways. At a given choice of η, one could simply
+subtract the postulated bias from the reduced form estimate; similarly, conﬁdence intervals can be obtained
+using the delta-method. Another popular, and computationally simpler alternative is to construct an auxil-
+iary outcome Yη := Y −ηZ, and then proceed with any of the estimation methods discussed here (e.g, 2SLS
+or Anderson-Rubin regression) using the auxiliary variable Yη instead of Y .
+Applying this approach to our running example we reach the correct, but perhaps trivial conclusion that,
+in order to bring the causal eﬀect estimate to zero (τ = 0), all of the reduced-form estimate (4.2%) must
+be due to the eﬀects of proximity to college on income, not through its eﬀect on years of schooling, i.e.
+η = 4.2%. Other approaches, although diﬀerent in details, can be understood in similar terms. For instance,
+starting from a potential outcomes framework, Wang et al. (2018) obtains a similar sensitivity model as
+Equation (82), and derive the distribution of the Anderson-Rubin statistic for a given postulated value of η.
+In contexts where researchers can make direct plausibility judgments about the coeﬃcient η, these
+approaches oﬀer a simple and useful sensitivity analysis. In many cases, however, such as in our running
+example, violations of instrument validity arise due to many possible confounding variables acting in concert,
+such as family wealth, high school quality, and regional indicators. How can we reason whether all these
+1See Mehlum (2020) for an intuitive graphical characterization of Fieller’s solutions using polar coordinates.
+11
+variables are strong enough to bring about an η ≈4.2%?
+The OVB approach we present here change
+the focus from η to the omitted variables W . That is, instead of asking for direct judgments about η,
+the OVB approach reveals what one must believe about the maximum explanatory power of such omitted
+variables in order for them to be problematic. Here W consists of the necessary set of variables to block
+both confounding between the instrument and the outcome, as well as blocking paths from the instrument
+to the outcome, not through the treatment (e.g, see Figure 2).
+Finally, it is worth mentioning that these two approaches are not necessarily mutually exclusive. To
+illustrate, suppose we have a structural model
+Yi = τDi + ηZi + γW + εi.
+(84)
+Here suppose η now eﬀectively stands for the direct eﬀect of Z on Y , not through D nor W. If plausibility
+judgments on the direct eﬀect of Z are available, we can leverage such knowledge by ﬁrst subtracting this
+oﬀand then employing all OVB-based tools we have presented in this paper to perform sensitivity analysis
+with respect to the remaining bias due to W.
+H
+Supplementary Results for the Empirical Example
+H.1
+Minimal reporting and sensitivity contours of the reduced form
+Table 1 shows our proposal for a minimal sensitivity reporting of the reduced-form estimate (here, the eﬀect
+of Proximity on Earnings). Beyond the usual statistics such as the point estimate, standard-error and t-
+value, we recommend that researchers also report the: (i) partial R2 of the instrument with the outcome
+(R2
+Y ∼Z|X = 0.18%), as well as (ii) the robustness value (RVq∗,α = 0.67%), and (iii) the extreme robustness
+value (XRVq∗,α = 0.05%), both for where the conﬁdence interval would cross zero (q∗= 1), at a chosen
+signiﬁcance level (here, α = 0.05).
+Outcome: Earnings (log)
+Instrument
+Estimate
+Std. Error
+t-value
+R2
+Y ∼Z|X
+XRVq∗,α
+RVq∗,α
+Proximity
+0.042
+0.018
+2.33
+0.18%
+0.05%
+0.67%
+Bound (1x SMSA): R2
+Y ∼W |Z,X = 2%, R2
+W ∼Z|X = 0.6%, t† max
+α,df −1,R2 = 2.55
+Note: df = 2994,
+q∗= 1,
+α = 0.05
+Table 1: Minimal sensitivity reporting of the reduced-form regression.
+In our running example, the RV reveals that confounders explaining 0.67% of the residual variation both
+of proximity and of (log) Earnings are already suﬃcient to make the reduced-form estimate statistically
+insigniﬁcant. Further, the XRV and the R2
+Y ∼Z|X show that, if we are not willing to impose constraints
+on the partial R2 of confounders with the outcome, they need only explain 0.05% of the residual variation
+instrument to “lose signiﬁcance,” or 0.18% to fully eliminating the point estimate. To aid users in making
+plausibility judgments, the note of Table 1 provides the maximum strength of unobserved confounding if it
+were as strong as SMSA (an indicator variable for whether the individual lived in a metropolitan region)
+along with the bias-adjusted critical value for a confounder with such strength, t† max
+α,df −1,R2 = 2.55. Since
+the observed t-value (2.33) is less than the adjusted critical threshold of 2.55, this immediately reveals
+that confounding as strong as SMSA (e.g.
+residual geographic confounding) is suﬃciently strong to be
+problematic.
+Beyond the results of Table 1, researchers can also explore sensitivity contour plots of the t-value for
+testing the null hypothesis of zero eﬀect, while showing diﬀerent bounds on strength of confounding, under
+diﬀerent assumptions of how they compare to the observed variables. This is shown in Figure 1a. The
+12
+Partial R2 of confounder(s) with the instrument
+Partial R2 of confounder(s) with the outcome
+ −2 
+ −1 
+ 0 
+ 1 
+0.00
+0.02
+0.04
+0.06
+0.08
+0.00
+0.02
+0.04
+0.06
+0.08
+ 1.961 
+Unadjusted
+(2.3)
+1x smsa
+(1.722)
+1x black
+(1.722)
+(a) Sensitivity contours of the reduced form.
+Partial R2 of confounder(s) with the instrument
+Partial R2 of confounder(s) with the treatment
+ 0 
+ 1 
+ 3 
+0.00
+0.02
+0.04
+0.06
+0.08
+0.00
+0.02
+0.04
+0.06
+0.08
+ 1.961 
+Unadjusted
+(3.6)
+2x black
+(2.786)
+2x smsa
+(3.014)
+(b) Sensitivity contours of the ﬁrst stage.
+Figure 1: Sensitivity contour plots of the reduced form and ﬁrst stage.
+horizontal axis describes the partial R2 of the confounder with the instrument whereas the vertical axis
+describes the partial R2 of the confounder with the outcome.
+The contour lines show the t-value one
+would have obtained, had a confounder with such postulated strength been included in the reduced-form
+regression. The red dashed line shows the statistical signiﬁcance threshold, and the red diamonds places
+bounds on strength of confounding as strong as Black (an indicator for race) and, again, SMSA. As we can
+see, confounders as strong as either Black or SMSA are suﬃcient to bring the reduced form, and hence also
+the IV estimate, to a region which is not statistically diﬀerent from zero. Since it is not very diﬃcult to
+imagine residual confounders as strong or stronger than those (e.g., parental income, ﬁner grained geographic
+location, etc), these results for the reduced form already call into question the reliability of the instrumental
+variable estimate.
+H.2
+Minimal reporting and sensitivity contours of the ﬁrst stage
+Table 2 performs the same sensitivity exercises for the regression of Education (treatment) on Proximity
+(instrument).
+As expected, the association of proximity to college with years of education is stronger
+than its association with earnings. This is reﬂected in the robustness statistics, which are slightly higher
+(R2
+D∼Z|X = 0.44%, XRVq∗,α = 0.31% and RVq∗,α = 3.02%). Confounding as strong as SMSA would not be
+suﬃciently strong to bring the ﬁrst-stage estimate to a region where it is not statistically diﬀerent than zero.
+Treatment: Education (years)
+Instrument
+Estimate
+Std. Error
+t-value
+R2
+D∼Z|X
+XRVq∗,α
+RVq∗,α
+Proximity
+0.32
+0.088
+3.64
+0.44%
+0.31%
+3.02%
+Bound (1x SMSA): R2
+D∼W |Z,X = 0.5%, R2
+Z∼W |X = 0.6%, t† max
+α,df −1,R2 = 2.26
+Note: df = 2994,
+q∗= 1,
+α = 0.05
+Table 2: Minimal sensitivity reporting of the ﬁrst-stage regression.
+Figure 1b supplements those analysis with the sensitivity contour plot for the t-value of the ﬁrst-stage
+regression. Here the horizontal axis still describes the partial R2 of the confounder with the instrument,
+13
+but now the vertical axis describes the partial R2 of the confounder with the treatment. The plot reveals
+that, contrary to the reduced form, the ﬁrst stage survives confounding once or twice as strong as Black or
+SMSA.
+I
+Data on the use of sensitivity for IV
+We collected data from all papers published in the American Economic Review during the year of 2020. If
+the paper performed an instrumental variable analysis, even if it was not the main analysis of the paper, we
+coded this as a paper using IV. Of this subset, we then checked whether the paper performed or mentioned
+any type sensitivity analysis against violations of the exclusion or independence restrictions.
+J
+Connections to Frost (1979)
+Here we brieﬂy discuss the connection of our OVB formula with that of Frost (1979). Using our notation,
+Frost’s formula can be written as:
+|λ −λr| = |γ|
+q
+R2
+Z∼W|X × sd(W ⊥X)
+sd(D⊥X) .
+Notice that Frost’s formula has three sensitivity parameters related to the omitted variable W: (1) the
+regression coeﬃcient of W in the long regression of the outcome γ; (2) the residual standard deviation of
+W after adjusting for the remaining covariates; and (3) the partial correlation of W with the independent
+variable of interest.
+This parameterization has some shortcomings for sensitivity analysis. For instance, these three sensitivity
+parameters are not variation independent. That is, ﬁxing
+q
+R2
+Z∼W|X constrains the feasible region of the
+product |γ| × sd(W ⊥X), which is now upper bounded by
+ 
+1
+q
+1−R2
+Z∼W |X
+× sd(Y ⊥Z,X)
+sd(D⊥X)
+!
+. Thus, for instance,
+a naive use of Frost’s formula could lead to bounds larger than they need to be. Moreover, for the same
+reason, Frost’s parameterization does not immediately reveal that bounding R2
+Z∼W|X alone is suﬃcient to
+bounds the bias, a key component for deriving some of the robustness metrics we propose in the paper, such
+as the XRV.
+K
+Connections to over-identiﬁcation tests
+Our focus in this paper is on the just-identiﬁed case with one instrument and one treatment. The presence
+of multiple putative instruments, however, can be used to perform test instrument validity, provisional on
+the condition that at least some of the instruments are valid. Here we discuss some connections between
+over-identiﬁcation tests and our proposal for sensitivity analysis.
+First, if a researcher performs an over-identiﬁcation test, and this test rejects that all instruments are
+valid, then this would provide a very compelling justiﬁcation for running the sensitivity analysis of the type
+we propose in this paper—the data itself already points out that some invalid instruments must be present,
+and, therefore, result should not be taken at face value. We also note, however, that failing to reject that
+the instruments are valid does not mean the instruments are indeed valid, and unobserved confounding can
+still be a concern.
+Another potential connection with our approach is that it may be possible to extend our sensitivity
+analysis to perform over-identiﬁcation tests not to assess the exact validity of multiple instruments, but to
+assess whether multiple instruments are all approximately valid, within certain bounds. We leave further
+examination of sensitivity analysis with multiple instruments to future work.
+14
+L
+Supplementary Tables and Figures
+Z
+D
+Y
+X
+(a)
+Z
+D
+W
+Y
+X
+(b)
+Z
+D
+W
+Y
+X
+(c)
+Figure 2: Causal diagrams illustrating traditional IV assumptions. Directed arrows, such as X →Y , denote a possible
+direct causal eﬀect of X on Y . Bidirected arrows, such as D ↔Y , stand for latent common causes between D and Y .
+In Figure 2a, X is suﬃcient for rendering Z a valid instrumental variable. In Figures 2b and 2c, however, W is also
+needed to render Z a valid IV, either because it confounds the instrument-outcome relationship (Fig. 2b) or because
+it is a side-eﬀect of the instrument aﬀecting the outcome other than through its eﬀect of on the treatment (Fig. 2c).
+In practice, all these violations will be happening simultaneously.
+Dependent variable:
+Education
+Earnings (log)
+FS
+RF
+OLS
+IV
+(1)
+(2)
+(3)
+(4)
+Proximity
+0.320∗∗∗
+0.042∗∗
+(0.088)
+(0.018)
+Education
+0.075∗∗∗
+0.132∗∗
+(0.003)
+(0.055)
+Black
+−0.936∗∗∗
+−0.270∗∗∗
+−0.199∗∗∗
+−0.147∗∗∗
+(0.094)
+(0.019)
+(0.018)
+(0.054)
+SMSA
+0.402∗∗∗
+0.165∗∗∗
+0.136∗∗∗
+0.112∗∗∗
+(0.105)
+(0.022)
+(0.020)
+(0.032)
+Other covariates
+yes
+yes
+yes
+yes
+Observations
+3,010
+3,010
+3,010
+3,010
+R2
+0.477
+0.195
+0.300
+0.238
+Note:
+∗p<0.1; ∗∗p<0.05; ∗∗∗p<0.01
+Table 3: Results of Card (1993). Columns show estimates and standard errors (in parenthesis) of the First Stage
+(FS), Reduced Form (RF), Ordinary Least Squares (OLS) and Indirect Least Squares/Two-Stage Least Squares (IV).
+Black is an indicator of race; SMSA an indicator for whether the individual lived in a metropolitan area. Following
+Card (1993), other covariates include age, regional indicators, experience and experience squared.
+15
+R2
+Z∼W |X/R2
+Y ∼W |Z,X
+0.05
+0.1
+0.15
+0.2
+0.25
+0.3
+0.35
+0.4
+0.45
+0.5
+0.55
+0.6
+0.65
+0.7
+0.75
+0.8
+0.85
+0.9
+0.95
+0.05
+3.58
+4.20
+4.66
+5.04
+5.37
+5.66
+5.91
+6.15
+6.36
+6.55
+6.73
+6.89
+7.04
+7.17
+7.29
+7.39
+7.47
+7.52
+7.52
+0.1
+4.37
+5.29
+5.99
+6.56
+7.06
+7.50
+7.90
+8.27
+8.60
+8.91
+9.20
+9.47
+9.72
+9.95
+10.16
+10.35
+10.52
+10.65
+10.74
+0.15
+5.04
+6.22
+7.10
+7.84
+8.48
+9.05
+9.57 10.05 10.49
+10.90
+11.28
+11.63
+11.97
+12.28
+12.57
+12.83
+13.07
+13.27
+13.42
+0.2
+5.67
+7.08
+8.14
+9.03
+9.80 10.49 11.12 11.70 12.23
+12.73
+13.20
+13.63
+14.04
+14.43
+14.79
+15.12
+15.43
+15.69
+15.90
+0.25
+6.29
+7.92
+9.16 10.19 11.09 11.89 12.63 13.30 13.93
+14.51
+15.06
+15.57
+16.06
+16.51
+16.94
+17.34
+17.71
+18.04
+18.30
+0.3
+6.91
+8.77 10.18 11.35 12.38 13.30 14.14 14.91 15.62
+16.30
+16.92
+17.52
+18.08
+18.60
+19.10
+19.56
+19.99
+20.38
+20.70
+0.35
+7.56
+9.64 11.23 12.55 13.71 14.74 15.69 16.56 17.37
+18.13
+18.84
+19.51
+20.15
+20.75
+21.31
+21.84
+22.34
+22.78
+23.16
+0.4
+8.24 10.57 12.33 13.81 15.10 16.26 17.32 18.29 19.20
+20.05
+20.85
+21.60
+22.31
+22.99
+23.63
+24.23
+24.78
+25.30
+25.73
+0.45
+8.97 11.55 13.51 15.16 16.59 17.88 19.05 20.14 21.15
+22.09
+22.99
+23.83
+24.62
+25.38
+26.09
+26.77
+27.40
+27.97
+28.47
+0.5
+9.77 12.63 14.80 16.62 18.21 19.64 20.94 22.15 23.27
+24.32
+25.31
+26.25
+27.13
+27.98
+28.77
+29.52
+30.23
+30.88
+31.44
+0.55
+10.67 13.83 16.23 18.25 20.01 21.59 23.04 24.37 25.62
+26.79
+27.89
+28.93
+29.91
+30.85
+31.74
+32.58
+33.36
+34.09
+34.73
+0.6
+11.68 15.19 17.86 20.09 22.05 23.81 25.41 26.90 28.28
+29.58
+30.80
+31.96
+33.06
+34.10
+35.09
+36.03
+36.91
+37.72
+38.44
+0.65
+12.87 16.77 19.74 22.24 24.42 26.38 28.17 29.82 31.37
+32.82
+34.18
+35.48
+36.70
+37.87
+38.98
+40.03
+41.01
+41.93
+42.74
+0.7
+14.29 18.67 22.01 24.80 27.25 29.45 31.46 33.32 35.06
+36.69
+38.22
+39.68
+41.06
+42.37
+43.62
+44.81
+45.92
+46.96
+47.88
+0.75
+16.07 21.04 24.83 28.00 30.78 33.28 35.56 37.68 39.65
+41.50
+43.25
+44.91
+46.48
+47.97
+49.39
+50.74
+52.02
+53.20
+54.26
+0.8
+18.41 24.16 28.54 32.20 35.42 38.31 40.95 43.39 45.68
+47.82
+49.84
+51.76
+53.58
+55.32
+56.96
+58.53
+60.01
+61.39
+62.62
+0.85
+21.77 28.61 33.82 38.19 42.02 45.47 48.61 51.53 54.25
+56.81
+59.22
+61.51
+63.68
+65.75
+67.72
+69.59
+71.36
+73.01
+74.50
+0.9
+27.25 35.88 42.46 47.97 52.80 57.15 61.12 64.80 68.24
+71.46
+74.51
+77.40
+80.15
+82.77
+85.26
+87.62
+89.86
+91.96
+93.85
+0.95
+39.37 51.90 61.47 69.48 76.51 82.83 88.61 93.97 98.97 103.67 108.11 112.31 116.32 120.13 123.76 127.21 130.48 133.54 136.31
+Table 4: Bias adjusted critical values: df = 1, 000
+16
+References
+Anderson, T. W. and Rubin, H. (1949). Estimation of the parameters of a single equation in a complete
+system of stochastic equations. The Annals of Mathematical Statistics, 20(1):46–63.
+Card, D. (1993). Using geographic variation in college proximity to estimate the return to schooling. Tech-
+nical report, National Bureau of Economic Research.
+Cinelli, C. and Hazlett, C. (2020). Making sense of sensitivity: Extending omitted variable bias. Journal of
+the Royal Statistical Society: Series B (Statistical Methodology).
+Conley, T. G., Hansen, C. B., and Rossi, P. E. (2012). Plausibly exogenous. Review of Economics and
+Statistics, 94(1):260–272.
+Frost, P. A. (1979). Proxy variables and speciﬁcation bias. The review of economics and Statistics, pages
+323–325.
+Mehlum, H. (2020). The polar conﬁdence curve for a ratio. Econometric Reviews, 39(3):234–243.
+Wang, X., Jiang, Y., Zhang, N. R., and Small, D. S. (2018). Sensitivity analysis and power for instrumental
+variable studies. Biometrics.
+17
+Replication File - An Omitted Variable Bias Framework for
+Sensitivity Analysis of Instrumental Variables
+Carlos Cinelli and Chad Hazlett
+2024-11-28
+Main Text
+Package and data
+First install the package from GitHub, available at https://github.com/carloscinelli/iv.sensemakr.
+# loads package
+library(iv.sensemakr)
+# loads and prepare dataset
+data("card")
+y <- card$lwage
+# outcome
+d <- card$educ
+# treatment
+z <- card$nearc4 # instrument
+x <- model.matrix( ~ exper + expersq + black + south + smsa + reg661 + reg662 + reg663 +
+reg664 + reg665+ reg666 + reg667 + reg668 + smsa66,
+data = card) # covariates
+Anderson-Rubin regression
+Fitting the Anderson-Rubin regression.
+# fits IV model
+card.fit <- iv_fit(y,d,z,x)
+card.fit
+##
+## Instrumental Variable Estimation
+## (Anderson-Rubin Approach)
+## =============================================
+## IV Estimates:
+##
+Coef. Estimate: 0.132
+##
+t-value: 2.33
+##
+p-value: 0.02
+##
+Conf. Interval: [0.025, 0.285]
+## Note: H0 = 0, alpha = 0.05, df = 2994.
+## =============================================
+## See summary for first stage and reduced form.
+1
+Sensitivity Analysis
+Sensitivity analysis results in the main text.
+# runs sensitivity analysis
+card.sens <- sensemakr(card.fit, benchmark_covariates = c("black", "smsa"))
+# sensitivity statistics
+all.stats <- sensitivity_stats(card.sens,parm = c("iv", "fs", "rf"))
+round(all.stats, 4)[1:6]
+##
+estimate
+lwr
+upr t.value xrv_qa
+rv_qa
+## iv
+0.1315 0.0248 0.2848
+2.3271 0.0005 0.0067
+## fs
+0.3199 0.1476 0.4922
+3.6408 0.0031 0.0302
+## rf
+0.0421 0.0066 0.0775
+2.3271 0.0005 0.0067
+# benchmarking
+iv.bounds <- card.sens$bounds$iv
+iv.bounds[-1] <- round(iv.bounds[-1], 4)
+iv.bounds
+##
+bound_label r2zw.x r2y0w.zx
+lwr
+upr t.dagger
+## 1
+1x black 0.0022
+0.0750 -0.0212 0.4019
+2.5942
+## 2
+1x smsa 0.0064
+0.0202 -0.0192 0.3958
+2.5710
+# sensitivity contour plot for AR
+plot(card.sens, lim = 0.08)
+Lower Limit CI
+Partial R2 of omitted variable(s) with the instrument
+Partial R2 of omitted variable(s) with the pot. outcome
+ −0.112 
+ −0.06 
+ −0.022 
+ 0 
+ 0.022 
+0.00
+0.02
+0.04
+0.06
+0.08
+0.00
+0.02
+0.04
+0.06
+0.08
+ −Inf 
+Unadjusted
+(0.025)
+1x black
+(−0.0212)
+1x smsa
+(−0.0192)
+Upper Limit CI
+Partial R2 of omitted variable(s) with the instrument
+Partial R2 of omitted variable(s) with the pot. outcome
+ 0.291 
+ 0.405 
+ 0.555 
+ 0.932 
+0.00
+0.02
+0.04
+0.06
+0.08
+0.00
+0.02
+0.04
+0.06
+0.08
+ Inf 
+Unadjusted
+(0.28)
+1x black
+(0.4019)
+1x smsa
+(0.3958)
+2
+Appendix – sensitivity of the Reduced Form
+# sensitivity statistics
+round(sensitivity_stats(card.sens, parm = "rf")[1:6], 4)
+##
+estimate
+lwr
+upr t.value xrv_qa
+rv_qa
+## rf
+0.0421 0.0066 0.0775
+2.3271 0.0005 0.0067
+# benchmarking
+rf.bounds <- card.sens$bounds$rf
+rf.bounds[-1] <- round(rf.bounds[-1], 4)
+rf.bounds
+##
+bound_label r2zw.x r2yw.zx
+lwr
+upr t.dagger
+## 1
+1x black 0.0022
+0.0657 -0.0042 0.0883
+2.5583
+## 2
+1x smsa 0.0064
+0.0197 -0.0043 0.0884
+2.5645
+# sensitivity contour plot for RF
+plot(card.sens, parm = "rf", sensitivity.of = "t-value", lim = 0.08, kz = 1, ky = 1)
+Partial R2 of omitted variable(s) with the instrument
+Partial R2 of omitted variable(s) with the outcome
+ −2 
+ −1.5 
+ −1 
+ −0.5 
+ 0 
+ 0.5 
+ 1 
+ 1.5 
+0.00
+0.02
+0.04
+0.06
+0.08
+0.00
+0.02
+0.04
+0.06
+0.08
+ 1.961 
+Observed
+(2.327)
+1x black
+(1.722)
+1x smsa
+(1.722)
+3
+Appendix – sensitivity of the First Stage
+# sensitivity statistics
+round(sensitivity_stats(card.sens, parm = "fs")[1:6], 4)
+##
+estimate
+lwr
+upr t.value xrv_qa
+rv_qa
+## fs
+0.3199 0.1476 0.4922
+3.6408 0.0031 0.0302
+# benchmarking
+fs.bounds <- card.sens$bounds$fs
+fs.bounds[-1] <- round(fs.bounds[-1], 4)
+fs.bounds
+##
+bound_label r2zw.x r2dw.zx
+lwr
+upr t.dagger
+## 1
+1x black 0.0022
+0.0334 0.1089 0.5309
+2.4014
+## 2
+1x smsa 0.0064
+0.0050 0.1202 0.5195
+2.2723
+# sensitivity contour plot for FS
+plot(card.sens, parm = "fs", sensitivity.of = "t-value", lim = 0.08, kz = 2, kd = 2)
+Partial R2 of omitted variable(s) with the instrument
+Partial R2 of omitted variable(s) with the treatment
+ −0.5 
+ 0 
+ 0.5 
+ 1 
+ 1.5 
+ 2.5 
+ 3 
+ 3.5 
+0.00
+0.02
+0.04
+0.06
+0.08
+0.00
+0.02
+0.04
+0.06
+0.08
+ 1.961 
+Observed
+(3.641)
+2x black
+(2.786)
+2x smsa
+(3.014)
+4

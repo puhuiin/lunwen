@@ -1,0 +1,5660 @@
+A five-factor asset pricing model$
+Eugene F. Fama a, Kenneth R. French b,n
+a Booth School of Business, University of Chicago, USA
+b Tuck School of Business, Dartmouth College, Hanover, NH 03750, USA
+a r t i c l e i n f o
+Article history:
+Received 12 May 2014
+Received in revised form
+13 August 2014
+Accepted 11 September 2014
+Available online 29 October 2014
+JEL classification:
+G12
+Keywords:
+Asset pricing model
+Factor model
+Dividend discount model
+Profitability
+Investment
+a b s t r a c t
+A five-factor model directed at capturing the size, value, profitability, and investment
+patterns in average stock returns performs better than the three-factor model of Fama and
+French (FF, 1993). The five-factor model's main problem is its failure to capture the low
+average returns on small stocks whose returns behave like those of firms that invest a lot
+despite low profitability. The model's performance is not sensitive to the way its factors
+are defined. With the addition of profitability and investment factors, the value factor of
+the FF three-factor model becomes redundant for describing average returns in the
+sample we examine.
+& 2014 Elsevier B.V. All rights reserved.
+1. Introduction
+There is much evidence that average stock returns are
+related to the book-to-market equity ratio, B/M. There is
+also evidence that profitability and investment add to the
+description of average returns provided by B/M. We can
+use the dividend discount model to explain why these
+variables are related to average returns. The model says
+the market value of a share of stock is the discounted value
+of expected dividends per share,
+mt ¼ ∑
+1
+τ ¼ 1
+Eðdt þτÞ=ð1þrÞτ:
+ð1Þ
+In this equation, mt is the share price at time t, E(dtþτ)
+is the expected dividend per share for period tþτ, and r is
+(approximately) the long-term average expected stock
+return or, more precisely, the internal rate of return on
+expected dividends.
+Eq. (1) says that if at time t the stocks of two firms
+have the same expected dividends but different prices, the
+stock with a lower price has a higher (long-term average)
+expected return. If pricing is rational, the future dividends
+of the stock with the lower price must have higher risk.
+The predictions drawn from (1), here and below, are,
+however, the same whether the price is rational or
+irrational.
+With a bit of manipulation, we can extract the implica-
+tions of Eq. (1) for the relations between expected return
+and expected profitability, expected investment, and B/M.
+Miller and Modigliani (1961) show that the time t total
+market value of the firm's stock implied by (1) is,
+Mt ¼ ∑
+1
+τ ¼ 1
+EðYt þτ dBt þτÞ=ð1þrÞτ:
+ð2Þ
+In this equation, Ytþτ, is total equity earnings for period
+tþτ and dBtþτ¼BtþτBtþτ1 is the change in total book
+Contents lists available at ScienceDirect
+journal homepage: www.elsevier.com/locate/jfec
+Journal of Financial Economics
+http://dx.doi.org/10.1016/j.jfineco.2014.10.010
+0304-405X/& 2014 Elsevier B.V. All rights reserved.
+☆Fama and French are consultants to, board members of, and share-
+holders in Dimensional Fund Advisors. Robert Novy-Marx, Tobias Mos-
+kowitz, and Ľuboš Pástor provided helpful comments. John Cochrane,
+Savina Rizova, and the referee, Kent Daniel, get special thanks.
+n Corresponding author.
+E-mail address: kfrench@dartmouth.edu (K.R. French).
+Journal of Financial Economics 116 (2015) 1–22
+equity. Dividing by time t book equity gives,
+Mt
+Bt
+¼ Σ1
+τ ¼ 1EðYt þτ dBt þτÞ=ð1þrÞτ
+Bt
+:
+ð3Þ
+Eq. (3) makes three statements about expected stock
+returns. First, fix everything in (3) except the current value
+of the stock, Mt, and the expected stock return, r. Then a
+lower value of Mt, or equivalently a higher book-to-market
+equity ratio, Bt/Mt, implies a higher expected return. Next,
+fix Mt and the values of everything in (3) except expected
+future earnings and the expected stock return. The equa-
+tion then tells us that higher expected earnings imply a
+higher expected return. Finally, for fixed values of Bt, Mt,
+and expected earnings, higher expected growth in book
+equity – investment – implies a lower expected return.
+Stated in perhaps more familiar terms, (3) says that Bt/Mt is
+a noisy proxy for expected return because the market cap
+Mt also responds to forecasts of earnings and investment.
+The research challenge posed by (3) has been to
+identify proxies for expected earnings and investments.
+Novy-Marx (2013) identifies a proxy for expected profit-
+ability that is strongly related to average return. Aharoni,
+Grundy, and Zeng (2013) document a weaker but statisti-
+cally reliable relation between investment and average
+return.
+(See
+also
+Haugen
+and
+Baker,
+1996;
+Cohen,
+Gompers, and Vuolteenaho, 2002; Fairfield, Whisenant,
+and Yohn, 2003; Titman, Wei, and Xie, 2004; and Fama
+and French, 2006, 2008.) Available evidence also suggests
+that much of the variation in average returns related to
+profitability and investment is left unexplained by the
+three-factor model of Fama and French (FF, 1993). This
+leads us to examine a model that adds profitability and
+investment factors to the market, size, and B/M factors of
+the FF three-factor model.
+Many “anomaly” variables are known to cause pro-
+blems for the three-factor model, so it is reasonable to ask
+why we choose profitability and investment factors to
+augment the model. Our answer is that they are the
+natural choices implied by Eqs. (1) and (3). Campbell and
+Shiller (1988) emphasize that (1) is a tautology that
+defines the internal rate of return, r. Given the stock price
+and estimates of expected dividends, there is a discount
+rate r that solves Eq. (1). With clean surplus accounting,
+Eq. (3) follows directly from (1), so it is also a tautology.
+Most asset pricing research focuses on short-horizon
+returns – we use a one-month horizon in our tests. If each
+stock's short-horizon expected return is positively related
+to its internal rate of return in (1) – if, for example, the
+expected return is the same for all horizons – the valuation
+equation implies that the cross-section of expected returns
+is determined by the combination of current prices and
+expectations of future dividends. The decomposition of
+cashflows in (3) then implies that each stock's relevant
+expected return is determined by its price-to-book ratio
+and expectations of its future profitability and investment.
+If variables not explicitly linked to this decomposition,
+such as Size and momentum, help forecast returns, they
+must do so by implicitly improving forecasts of profit-
+ability and investment or by capturing horizon effects in
+the term structure of expected returns.
+We test the performance of the five-factor model in
+two steps. Here we apply the model to portfolios formed
+on size, B/M, profitability, and investment. As in FF (1993),
+the portfolio returns to be explained are from finer
+versions of the sorts that produce the factors. We move
+to more hostile territory in Fama and French (FF, 2014),
+where we study whether the five-factor model performs
+better than the three-factor model when used to explain
+average returns related to prominent anomalies not tar-
+geted by the model. We also examine whether model
+failures are related to shared characteristics of problem
+portfolios identified in many of the sorts examined here –
+in other words, whether the asset pricing problems posed
+by different anomalies are in part the same phenomenon.
+We begin (Section 2) with a discussion of the five-
+factor model. Section 3 examines the patterns in average
+returns the model is designed to explain. Definitions and
+summary statistics for different versions of the factors are
+in
+Sections 4 and 5. Section 6 presents summary asset pricing
+tests. One Section 6 result is that for portfolios formed on
+size, B/M, profitability, and investment, the five-factor
+model provides better descriptions of average returns than
+the FF three-factor model. Another result is that inferences
+about the asset pricing models we examine do not seem to
+be sensitive to the way factors are defined, at least for the
+definitions considered here. One result in Section 6 is so
+striking we caution the reader that it may be specific to
+this sample: When profitability and investment factors are
+added to the FF three-factor model, the value factor, HML,
+seems
+to
+become
+redundant
+for
+describing
+average
+returns. Section 7 confirms that the large average HML
+return is absorbed by the exposures of HML to the other
+four factors, especially the profitability and investment
+factors. Section 8 provides asset pricing details, specifi-
+cally, intercepts and pertinent regression slopes. An inter-
+esting Section 8 result is that the portfolios that cause
+major problems in different sorts seem to be cast in the
+same mold, specifically, small stocks whose returns behave
+like those of firms that invest a lot despite low profitability.
+Finally, the paper closest to ours is Hou, Xue, and Zhang
+(2012). We discuss their work in the concluding Section 9,
+where contrasts with our work are easily described.
+2. The ﬁve-factor model
+The FF (1993) three-factor model is designed to capture
+the relation between average return and Size (market
+capitalization, price times shares outstanding) and the
+relation between average return and price ratios like
+B/M. At the time of our 1993 paper, these were the two
+well-known patterns in average returns left unexplained
+by the CAPM of Sharpe (1964) and Lintner (1965).
+Tests of the three-factor model center on the time-
+series regression,
+Rit–RFt ¼ ai þbi RMt–RFt
+ð
+ÞþsiSMBt þhiHMLt þeit:
+ð4Þ
+In this equation Rit is the return on security or portfolio
+i for period t, RFt is the riskfree return, RMt is the return on
+the value-weight (VW) market portfolio, SMBt is the return
+on a diversified portfolio of small stocks minus the return
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+2
+on a diversified portfolio of big stocks, HMLt is the
+difference between the returns on diversified portfolios
+of high and low B/M stocks, and eit is a zero-mean residual.
+Treating the parameters in (4) as true values rather than
+estimates, if the factor exposures bi, si, and hi capture all
+variation in expected returns, the intercept ai is zero for all
+securities and portfolios i.
+The evidence of Novy-Marx (2013), Titman, Wei, and
+Xie (2004), and others says that (4) is an incomplete model
+for expected returns because its three factors miss much of
+the variation in average returns related to profitability and
+investment. Motivated by this evidence and the valuation
+Eq. (3), we add profitability and investment factors to the
+three-factor model,
+Rit–RFt ¼ ai þbi RMt–RFt
+ð
+ÞþsiSMBt þhiHMLt þriRMWt
+þciCMAt þeit:
+ð5Þ
+In this equation RMWt is the difference between the
+returns on diversified portfolios of stocks with robust and
+weak profitability, and CMAt is the difference between the
+returns on diversified portfolios of the stocks of low and
+high investment firms, which we call conservative and
+aggressive. If the exposures to the five factors, bi, si, hi, ri,
+and ci, capture all variation in expected returns, the
+intercept ai in (5) is zero for all securities and portfolios i.
+We suggest two interpretations of the zero-intercept
+hypothesis. Leaning on Huberman and Kandel (1987), the
+first proposes that the mean-variance-efficient tangency
+portfolio, which prices all assets, combines the riskfree
+asset, the market portfolio, SMB, HML, RMW, and CMA. The
+more ambitious interpretation proposes (5) as the regres-
+sion equation for a version of Merton's (1973) model in
+which up to four unspecified state variables lead to risk
+premiums that are not captured by the market factor. In
+this view, Size, B/M, OP, and Inv are not themselves state
+variables, and SMB, HML, RMW, and CMA are not state
+variable mimicking portfolios. Instead, in the spirit of Fama
+(1996), the factors are just diversified portfolios that
+provide
+different
+combinations
+of
+exposures
+to
+the
+unknown state variables. Along with the market portfolio
+and the riskfree asset, the factor portfolios span the
+relevant multifactor efficient set. In this scenario, the role
+of the valuation Eq. (3) is to suggest factors that allow us to
+capture the expected return effects of state variables
+without identifying them.
+3. The playing ﬁeld
+Our empirical tests examine whether the five-factor
+model and models that include subsets of its factors
+explain average returns on portfolios formed to produce
+large spreads in Size, B/M, profitability, and investment.
+The first step is to examine the Size, B/M, profitability, and
+investment patterns in average returns we seek to explain.
+Panel A of Table 1 shows average monthly excess
+returns (returns in excess of the one-month U.S. Treasury
+bill rate) for 25 value-weight (VW) portfolios from inde-
+pendent sorts of stocks into five Size groups and five B/M
+groups. (We call them 5  5 Size-B/M sorts, and for a bit of
+color we typically refer to the smallest and biggest Size
+quintiles as microcaps and megacaps.) The Size and B/M
+quintile breakpoints use only NYSE stocks, but the sample
+is all NYSE, AMEX, and NASDAQ stocks on both CRSP and
+Compustat with share codes 10 or 11 and data for Size and
+B/M. The period is July 1963–December 2013. Fama and
+French (1993) use these portfolios to evaluate the three-
+factor model, and the patterns in average returns in
+Table 1 are like those in the earlier paper, with 21 years
+of new data.
+In each B/M column of Panel A of Table 1, average
+return typically falls from small stocks to big stocks – the
+size effect. The first column (low B/M extreme growth
+stocks) is the only exception, and the glaring outlier is the
+low average return of the smallest (microcap) portfolio.
+For the other four portfolios in the lowest B/M column,
+there is no obvious relation between Size and average
+return.
+The relation between average return and B/M, called
+the value effect, shows up more consistently in Table 1. In
+every Size row, average return increases with B/M. As is
+well-known, the value effect is stronger among small
+stocks. For example, for the microcap portfolios in the first
+row, average excess return rises from 0.26% per month for
+the lowest B/M portfolio (extreme growth stocks) to 1.15%
+Table 1
+Average monthly percent excess returns for portfolios formed on Size and
+B/M, Size and OP, Size and Inv; July 1963–December 2013, 606 months.
+At the end of each June, stocks are allocated to five Size groups (Small
+to Big) using NYSE market cap breakpoints. Stocks are allocated inde-
+pendently to five B/M groups (Low to High), again using NYSE break-
+points. The intersections of the two sorts produce 25 value-weight
+Size-B/M portfolios. In the sort for June of year t, B is book equity at the
+end of the fiscal year ending in year t1 and M is market cap at the end
+of December of year t1, adjusted for changes in shares outstanding
+between the measurement of B and the end of December. The Size-OP
+and Size-Inv portfolios are formed in the same way, except that the
+second sort variable is operating profitability or investment. Operating
+profitability, OP, in the sort for June of year t is measured with accounting
+data for the fiscal year ending in year t1 and is revenues minus cost of
+goods sold, minus selling, general, and administrative expenses, minus
+interest expense all divided by book equity. Investment, Inv, is the change
+in total assets from the fiscal year ending in year t2 to the fiscal year
+ending in t1, divided by t2 total assets. The table shows averages of
+monthly returns in excess of the one-month Treasury bill rate.
+Low
+2
+3
+4
+High
+Panel A: Size-B/M portfolios
+Small
+0.26
+0.81
+0.85
+1.01
+1.15
+2
+0.48
+0.72
+0.94
+0.94
+1.02
+3
+0.50
+0.78
+0.79
+0.88
+1.07
+4
+0.60
+0.57
+0.71
+0.85
+0.86
+Big
+0.46
+0.51
+0.48
+0.56
+0.62
+Panel B: Size-OP portfolios
+Small
+0.56
+0.94
+0.90
+0.95
+0.88
+2
+0.59
+0.78
+0.84
+0.81
+0.98
+3
+0.53
+0.77
+0.72
+0.78
+0.94
+4
+0.57
+0.65
+0.63
+0.70
+0.82
+Big
+0.39
+0.33
+0.43
+0.47
+0.57
+Panel C: Size-Inv portfolios
+Small
+1.01
+0.98
+0.99
+0.89
+0.35
+2
+0.92
+0.91
+0.92
+0.90
+0.48
+3
+0.90
+0.93
+0.81
+0.82
+0.50
+4
+0.79
+0.72
+0.71
+0.75
+0.54
+Big
+0.71
+0.52
+0.49
+0.48
+0.42
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+3
+per month for the highest B/M portfolio (extreme value
+stocks). In contrast, for the biggest stocks (megacaps)
+average excess return rises only from 0.46% per month
+to 0.62%.
+Panel B of Table 1 shows average excess returns for 25
+VW portfolios from independent sorts of stocks into Size
+and profitability quintiles. The details of these 5  5 sorts
+are the same as in Panel A, but the second sort is on
+profitability rather than B/M. For portfolios formed in June
+of year t, profitability (measured with accounting data for
+the fiscal year ending in t1) is annual revenues minus
+cost of goods sold, interest expense, and selling, general,
+and administrative expenses, all divided by book equity at
+the end of fiscal year t1. We call this variable operating
+profitability, OP, but it is operating profitability minus
+interest expense. As in all our sorts, the OP breakpoints
+use only NYSE firms.
+The patterns in the average returns of the 25 Size-OP
+portfolios in Table 1 are like those observed for the
+Size-B/M portfolios. Holding operating profitability roughly
+constant, average return typically falls as Size increases.
+The decline in average return with increasing Size is
+monotonic in the three middle quintiles of OP, but for
+the extreme low and high OP quintiles, the action with
+respect to Size is almost entirely due to lower average
+returns for megacaps.
+The profitability effect identified by Novy-Marx (2013)
+and others is evident in Panel B of Table 1. For every Size
+quintile, extreme high operating profitability is associated
+with higher average return than extreme low OP. In each
+of the first four Size quintiles, the middle three portfolios
+have similar average returns, and the profitability effect is
+a low average return for the lowest OP quintile and a high
+average return for the highest OP quintile. In the largest
+Size quintile (megacaps), average return increases more
+smoothly from the lowest to the highest OP quintile.
+Panel C of Table 1 shows average excess returns for
+25 Size-Inv portfolios again formed in the same way as the
+25 Size-B/M portfolios, but the second variable is now
+investment (Inv). For portfolios formed in June of year t,
+Inv is the growth of total assets for the fiscal year ending in
+t1 divided by total assets at the end of t2. In the
+valuation Eq. (3), the investment variable is the expected
+growth of book equity, not assets. We have replicated all
+tests using the growth of book equity, with results similar to
+those obtained with the growth of assets. The main differ-
+ence is that sorts on asset growth produce slightly larger
+spreads in average returns. (See also Aharoni, Grundy, and
+Zeng, 2013.) Perhaps the lagged growth of assets is a better
+proxy for the infinite sum of expected future growth in
+book equity in (3) than the lagged growth in book equity.
+The choice is in any case innocuous for all that follows.
+In every Size quintile the average return on the portfo-
+lio in the lowest investment quintile is much higher than
+the return on the portfolio in the highest Inv quintile, but
+in the smallest four Size quintiles this is mostly due to low
+average returns on the portfolios in the highest Inv
+quintile. There is a size effect in the lowest four quintiles
+of Inv; that is, portfolios of small stocks have higher
+average returns than big stocks. In the highest Inv quintile,
+however, there is no size effect, and the microcap portfolio
+in the highest Inv group has the lowest average excess
+return in the matrix, 0.35% per month. The five-factor
+regressions will show that the stocks in this portfolio are
+like the microcaps in the lowest B/M quintile of Panel A of
+Table 1; specifically, strong negative five-factor RMW and
+CMA slopes say that their stock returns behave like those
+of firms that invest a lot despite low profitability. The low
+average returns of these portfolios are lethal for the five-
+factor model.
+Eq. (3) predicts that controlling for profitability and
+investment, B/M is positively related to average return, and
+there are similar conditional predictions for the relations
+between average return and profitability or investment.
+The valuation equation does not predict that B/M, OP, and
+Inv effects show up in average returns without the appro-
+priate controls. Moreover, Fama and French (1995) show
+that the three variables are correlated. High B/M value
+stocks tend to have low profitability and investment, and
+low B/M growth stocks – especially large low B/M stocks –
+tend to be profitable and invest aggressively. Because the
+characteristics are correlated, the Size-B/M, Size-OP, and
+Size-Inv portfolios in Table 1 do not isolate value, profit-
+ability, and investment effects in average returns.
+To disentangle the dimensions of average returns, we
+would like to sort jointly on Size, B/M, OP, and Inv. Even
+3  3  3  3 sorts, however, produce 81 poorly diversified
+portfolios that have low power in tests of asset pricing
+models. We compromise with sorts on Size and pairs of the
+other three variables. We form two Size groups (small and
+big), using the median market cap for NYSE stocks as the
+breakpoint, and we use NYSE quartiles to form four groups
+for each of the other two sort variables. For each combina-
+tion of variables we have 2  4  4¼32 portfolios, but
+correlations between characteristics cause an uneven
+allocation of stocks. For example, B/M and OP are nega-
+tively correlated, especially among big stocks, so portfolios
+of stocks with high B/M and high OP can be poorly
+diversified. In fact, when we sort stocks independently
+on Size, B/M, and OP, the portfolio of big stocks in the
+highest quartiles of B/M and OP is often empty before July
+1974. To spread stocks more evenly in the 2  4  4 sorts,
+we use separate NYSE breakpoints for small and big stocks
+in the sorts on B/M, OP, and Inv.
+Table 2 shows average excess returns for the 32 Size-
+B/M-OP portfolios, the 32 Size-B/M-Inv portfolios, and the
+32 Size-OP-Inv portfolios. For small stocks, there are strong
+value, profitability, and investment effects in average
+returns. Controlling for OP or Inv, average returns of small
+stock portfolios increase with B/M; controlling for B/M or
+Inv, average returns also increase with OP; and controlling
+for B/M or OP, higher Inv is associated with lower average
+returns. Though weaker, the patterns in average returns
+are similar for big stocks.
+In the tests of the five-factor model presented later, two
+portfolios in Table 2 display the lethal combination of RMW
+and CMA slopes noted in the discussion of the Size-B/M and
+Size-Inv portfolios of Table 1. In the Size-B/M-OP sorts, the
+portfolio of small stocks in the lowest B/M and OP quartiles
+has an extremely low average excess return, 0.03% per month.
+In the Appendix we document that this portfolio has negative
+five-factor exposures to RMW and CMA (typical of firms that
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+4
+invest a lot despite low profitability) that, at least for small
+stocks, are associated with low average returns left unex-
+plained by the five-factor model. In the Size-OP-Inv sorts, the
+portfolio of small stocks in the lowest OP and highest Inv
+quartiles has an even lower average excess return, 0.09% per
+month. In this case, the five-factor slopes simply confirm that
+the small stocks in this portfolio invest a lot despite low
+profitability.
+The portfolios in Tables 1 and 2 do not cleanly disen-
+tangle the value, profitability, and investment effects in
+average returns predicted by the valuation Eq. (3), but we
+shall see that they expose variation in average returns
+sufficient to provide strong challenges in asset pricing tests.
+4. Factor deﬁnitions
+To examine whether the specifics of factor construction
+are important in tests of asset pricing models, we use three
+sets of factors to capture the patterns in average returns in
+Tables 1 and 2. The three approaches are described
+formally and in detail in Table 3. Here we provide a brief
+summary.
+The first approach augments the three factors of Fama
+and French (1993) with profitability and investment fac-
+tors defined like the value factor of that model. The Size
+and value factors use independent sorts of stocks into two
+Size groups and three B/M groups (independent 2  3
+sorts). The Size breakpoint is the NYSE median market
+cap, and the B/M breakpoints are the 30th and 70th
+percentiles of B/M for NYSE stocks. The intersections of
+the sorts produce six VW portfolios. The Size factor, SMBBM,
+is the average of the three small stock portfolio returns
+minus the average of the three big stock portfolio returns.
+The value factor HML is the average of the two high B/M
+portfolio returns minus the average of the two low B/M
+portfolio returns. Equivalently, it is the average of small
+and big value factors constructed with portfolios of only
+small stocks and portfolios of only big stocks.
+The profitability and investment factors of the 2  3
+sorts, RMW and CMA, are constructed in the same way as
+HML except the second sort is either on operating profit-
+ability (robust minus weak) or investment (conservative
+minus aggressive). Like HML, RMW and CMA can be
+interpreted as averages of profitability and investment
+factors for small and big stocks.
+The 2  3 sorts used to construct RMW and CMA
+produce two additional Size factors, SMBOP and SMBInv.
+The Size factor SMB from the three 2  3 sorts is defined as
+the average of SMBB/M, SMBOP, and SMBInv. Equivalently,
+SMB is the average of the returns on the nine small stock
+portfolios of the three 2  3 sorts minus the average of the
+returns on the nine big stock portfolios.
+When we developed the three-factor model, we did not
+consider alternative definitions of SMB and HML. The
+choice of a 2  3 sort on Size and B/M is, however, arbitrary.
+To test the sensitivity of asset pricing results to this choice,
+we construct versions of SMB, HML, RMW, and CMA in the
+same way as in the 2  3 sorts, but with 2  2 sorts on Size
+and B/M, OP, and Inv, using NYSE medians as breakpoints
+for all variables (details in Table 3).
+Since HML, RMW, and CMA from the 2  3 (or 2  2)
+sorts weight small and big stock portfolio returns equally,
+they are roughly neutral with respect to size. Since HML is
+constructed without controls for OP and Inv, however, it is
+not neutral with respect to profitability and investment.
+This likely means that the average HML return is a mix of
+premiums related to B/M, profitability, and investment.
+Similar comments apply to RMW and CMA.
+To better isolate the premiums in average returns
+related to Size, B/M, OP, and Inv, the final candidate factors
+Table 2
+Averages of monthly percent excess returns for value-weight (VW) portfolios formed on (i) Size, B/M, and OP, (ii) Size, B/M, and Inv, and (iii) Size, OP, and
+Inv; July 1963–December 2013, 606 months.
+At the end of June each year t, stocks are allocated to two Size groups (Small and Big) using the NYSE median market cap as breakpoint. Stocks in each Size
+group are allocated independently to four B/M groups (Low B/M to High B/M for fiscal year t1), four OP groups (Low OP to High OP for fiscal year t1), and
+four Inv groups (Low Inv to High Inv for fiscal year t1) using NYSE breakpoints specific to the Size group. The table shows averages of monthly returns in
+excess of the one-month Treasury bill rate on the 32 portfolios formed from each of the three sorts.
+Small
+Big
+Panel A: Portfolios formed on Size, B/M, and OP
+B/M-
+Low
+2
+3
+High
+Low
+2
+3
+High
+Low OP
+0.03
+0.72
+0.84
+0.93
+0.24
+0.23
+0.37
+0.60
+2
+0.67
+0.76
+0.88
+1.08
+0.41
+0.50
+0.47
+0.69
+3
+0.66
+0.88
+1.07
+1.30
+0.40
+0.59
+0.68
+0.91
+High OP
+0.81
+1.13
+1.22
+1.63
+0.53
+0.64
+0.79
+0.71
+Panel B: Portfolios formed on Size, B/M and Inv
+B/M -
+Low
+2
+3
+High
+Low
+2
+3
+High
+Low Inv
+0.69
+0.99
+1.18
+1.23
+0.58
+0.70
+0.62
+0.77
+2
+0.87
+0.92
+0.93
+1.08
+0.49
+0.54
+0.54
+0.60
+3
+0.84
+0.95
+1.01
+0.97
+0.49
+0.54
+0.56
+0.72
+High Inv
+0.39
+0.75
+0.87
+1.01
+0.49
+0.44
+0.39
+0.64
+Panel C: Portfolios formed on Size, OP, and Inv
+OP -
+Low
+2
+3
+High
+Low
+2
+3
+High
+Low Inv
+0.85
+1.01
+1.19
+1.27
+0.63
+0.66
+0.79
+0.70
+2
+0.94
+0.90
+0.92
+1.04
+0.32
+0.43
+0.64
+0.64
+3
+0.61
+0.93
+0.94
+1.06
+0.52
+0.57
+0.48
+0.53
+High Inv
+0.09
+0.58
+0.76
+0.76
+0.29
+0.25
+0.38
+0.65
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+5
+use four sorts to control jointly for the four variables. We
+sort stocks independently into two Size groups, two B/M
+groups, two OP groups, and two Inv groups using NYSE
+medians as breakpoints. The intersections of the groups
+are 16 VW portfolios. The Size factor SMB is the average of
+the returns on the eight small stock portfolios minus the
+average of the returns on the eight big stock portfolios.
+The value factor HML is the average return on the eight
+high B/M portfolios minus the average return on the eight
+low B/M portfolios. The profitability factor, RMW, and the
+investment factor, CMA, are also differences between
+average returns on eight portfolios (robust minus weak
+OP or conservative minus aggressive Inv). Though not
+detailed in Table 3, we can, as usual, also interpret the
+value, profitability, and investment factors as averages of
+small and big stock factors.
+In the 2  2  2  2 sorts, SMB equal weights high and
+low B/M, robust and weak OP, and conservative and
+aggressive Inv portfolio returns. Thus, the Size factor is
+roughly neutral with respect to value, profitability, and
+investment, and this is what we mean when we say the
+Size factor controls for the other three variables. Likewise,
+HML is roughly neutral with respect to Size, OP, and Inv,
+and similar comments apply to RMW and CMA. We shall
+see, however, that neutrality with respect to characteris-
+tics does not imply low correlation between factor returns.
+Joint controls likely mean that the factors from the
+2  2  2  2 sorts better isolate the premiums in average
+returns related to B/M, OP, and Inv. But factor exposures
+are more important in our eventual inferences. Since
+multivariate regression slopes measure marginal effects,
+the five-factor slopes for HML, RMW, and CMA produced by
+the factors from the 2  3 or 2  2 sorts may isolate
+exposures to value, profitability, and investment effects
+in returns as effectively as the factors from the 2  2 
+2  2 sorts.
+5. Summary statistics for factor returns
+Table 4 shows summary statistics for factor returns.
+Summary statistics for returns on the portfolios used to
+construct the factors are in Appendix Table A1.
+Average SMB returns are 0.29% to 0.30% per month for
+the three versions of the factors (Panel A of Table 4).
+The standard deviations of SMB are similar, 2.87–3.13%,
+and the correlations of the different versions of SMB are
+0.98 and 1.00 (Panel B of Table 4). The high correlations
+and the similar means and standard deviations are not
+surprising since the Size breakpoint for SMB is always the
+NYSE median market cap, and the three versions of SMB
+use all stocks. The average SMB returns are more than 2.3
+standard errors from zero.
+The summary statistics for HML, RMW, and CMA depend
+more on how they are constructed. The results from the
+2  3 and 2  2 sorts are easiest to compare. The standard
+deviations of the three factors are lower when only two B/M,
+OP, or Inv groups are used, due to better diversification. In the
+2  2 sorts, HML, RMW, and CMA include all stocks, but in the
+2  3 sorts, the factors do not use the stocks in the middle
+40% of B/M, OP, and Inv. The 2 3 sorts focus more on the
+extremes of the three variables, and so produce larger
+average HML, RMW, and CMA returns. For example, the
+average HML return is 0.37% per month in the 2  3
+Size-B/M sorts, versus 0.28% in the 2 2 sorts. Similar
+Table 3
+Construction of Size, B/M, profitability, and investment factors.
+We use independent sorts to assign stocks to two Size groups, and two or three B/M, operating profitability (OP), and investment (Inv) groups. The VW
+portfolios defined by the intersections of the groups are the building blocks for the factors. We label these portfolios with two or four letters. The first
+always describes the Size group, small (S) or big (B). In the 2  3 sorts and 2  2 sorts, the second describes the B/M group, high (H), neutral (N), or low (L),
+the OP group, robust (R), neutral (N), or weak (W), or the Inv group, conservative (C), neutral (N), or aggressive (A). In the 2  2  2  2 sorts, the second
+character is B/M group, the third is OP group, and the fourth is Inv group. The factors are SMB (small minus big), HML (high minus low B/M), RMW (robust
+minus weak OP), and CMA (conservative minus aggressive Inv).
+Sort
+Breakpoints
+Factors and their components
+2  3 sorts on
+Size: NYSE median
+SMBB/M¼(SH þ SN þ SL)/3  (BH þ BN þ BL)/3
+Size and B/M, or
+Size and OP, or
+Size and Inv
+SMBOP¼(SR þ SN þ SW)/3  (BR þ BN þ BW)/3
+SMBInv¼(SC þ SN þ SA)/3  (BC þ BN þ BA)/3
+SMB¼(SMBB/M þ SMBOP þ SMBInv)/3
+B/M: 30th and 70th NYSE percentiles
+HML¼(SH þ BH)/2  (SL þ BL)/2¼[(SH  SL) þ (BH  BL)]/2
+OP: 30th and 70th NYSE percentiles
+RMW¼(SR þ BR)/2  (SW þ BW)/2¼[(SR  SW) þ (BR  BW)]/2
+Inv: 30th and 70th NYSE percentiles
+CMA¼(SC þ BC)/2  (SA þ BA)/2¼[(SC  SA) þ (BC  BA)]/2
+2  2 sorts on
+Size: NYSE median
+SMB¼(SH þ SL þ SR þ SW þ SC þ SA)/6  (BH þ BL þ BR þ BW þ BC þ BA)/6
+Size and B/M, or
+Size and OP, or
+Size and Inv
+B/M: NYSE median
+HML¼(SH þ BH)/2  (SL þ BL)/2¼[(SH  SL) þ ( BH  BL)]/2
+OP: NYSE median
+RMW¼(SR þ BR)/2  (SW þ BW)/2¼[(SR  SW) þ (BR  BW)]/2
+Inv: NYSE median
+CMA¼(SC þ BC)/2  (SA þ BA)/2¼[(SC  SA) þ (BC  BA)]/2
+2 2 2 2 sorts on
+Size: NYSE median
+SMB¼(SHRC þ SHRA þ SHWC þ SHWA þ SLRC þ SLRA þ SLWC þ SLWA)/8
+Size, B/M, OP, and Inv
+ (BHRC þ BHRA þ BHWC þ BHWA þ BLRC þ BLRA þ BLWC þ BLWA)/8
+B/M: NYSE median
+HML¼(SHRC þ SHRA þ SHWC þ SHWA þ BHRC þ BHRA þ BHWC þ BHWA)/8
+ (SLRC þ SLRA þ SLWC þ SLWA þ BLRC þ BLRA þ BLWC þ BLWA)/8
+OP: NYSE median
+RMW¼(SHRC þ SHRA þ SLRC þ SLRA þ BHRC þ BHRA þ BLRC þ BLRA)/8
+ (SHWC þ SHWA þ SLWC þ SLWA þ BHWC þ BHWA þ BLWC þ BLWA)/8
+Inv: NYSE median
+CMA¼(SHRC þ SHWC þ SLRC þ SLWC þ BHRC þ BHWC þ BLRC þ BLWC)/8
+ (SHRA þ SHWA þ SLRA þ SLWA þ BHRA þ BHWA þ BLRA þ BLWA)/8
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+6
+Table 4
+Summary statistics for monthly factor percent returns; July 1963–December 2013, 606 months.
+RMRF is the value-weight return on the market portfolio of all sample stocks minus the one-month Treasury bill rate. At the end of each June, stocks are assigned to two Size groups using the NYSE median market cap
+as the breakpoint. Stocks are also assigned independently to two or three book-to-market equity (B/M), operating profitability (OP), and investment (Inv) groups, using NYSE medians of B/M, OP, and Inv or the 30th and
+70th NYSE percentiles. In the first two blocks of Panel A, the B/M factor, HML, uses the VW portfolios formed from the intersection of the Size and B/M sorts (2  2¼4 or 2  3¼6 portfolios), and the profitability and
+investment factors, RMW and CMA, use four or six VW portfolios from the intersection of the Size and OP or Inv sorts. In the third block, HML, RMW, and CMA use the intersections of the Size, B/M, OP, and Inv sorts
+(2 2  2  2¼16 portfolios). HMLB is the average return on the portfolio(s) of big high B/M stocks minus the average return on the portfolio(s) of big low B/M stocks, HMLS is the same but for portfolios of small stocks,
+HML is the average of HMLS and HMLB, and HMLS-B is the difference between them. RMWS, RMWB, RMW, and RMWS-B and CMAS, CMAB, CMA, and CMAS-B are defined in the same way, but using high and low OP or Inv
+instead of B/M. In the 2  2 2  2 sorts, SMB is the average return on the eight portfolios of small stocks minus the average return on the eight portfolios of big stocks. In the separate 2  3 Size-B/M, Size-OP, and Size-Inv
+sorts, there are three versions of SMB, one for each 2  3 sort, and SMB is the average of the three. SMB in the separate 2 2 sorts is defined similarly. Panel A of the table shows average monthly returns (Mean), the
+standard deviations of monthly returns (Std dev.) and the t-statistics for the average returns. Panel B shows the correlations of the same factor from different sorts and Panel C shows the correlations for each set of factors.
+Panel A: Averages, standard deviations, and t-statistics for monthly returns
+2  3 Factors
+2  2 Factors
+2  2  2  2 Factors
+RMRF
+SMB
+HML
+RMW
+CMA
+RMRF
+SMB
+HML
+RMW
+CMA
+RMRF
+SMB
+HML
+RMW
+CMA
+Mean
+0.50
+0.29
+0.37
+0.25
+0.33
+0.50
+0.30
+0.28
+0.17
+0.22
+0.50
+0.30
+0.30
+0.25
+0.14
+Std dev.
+4.49
+3.07
+2.88
+2.14
+2.01
+4.49
+3.13
+2.16
+1.52
+1.48
+4.49
+2.87
+2.13
+1.49
+1.29
+t-Statistic
+2.74
+2.31
+3.20
+2.92
+4.07
+2.74
+2.33
+3.22
+2.79
+3.72
+2.74
+2.60
+3.43
+4.09
+2.71
+HMLS
+HMLB
+HMLS-B
+RMWS
+RMWB
+RMWS-B
+CMAS
+CMAB
+CMAS-B
+2  3 factors
+Mean
+0.53
+0.21
+0.32
+0.33
+0.17
+0.16
+0.45
+0.22
+0.23
+Std dev.
+3.24
+3.11
+2.69
+2.69
+2.35
+2.68
+2.00
+2.66
+2.47
+t-Statistic
+4.05
+1.69
+2.94
+3.06
+1.81
+1.48
+5.49
+2.00
+2.29
+2  2 Factors
+Mean
+0.40
+0.16
+0.24
+0.22
+0.13
+0.09
+0.33
+0.11
+0.22
+Std dev
+2.39
+2.36
+1.97
+1.93
+1.69
+2.00
+1.53
+1.87
+1.70
+t-Statistic
+4.16
+1.68
+3.05
+2.76
+1.86
+1.09
+5.37
+1.50
+3.17
+2  2  2  2 Factors
+Mean
+0.37
+0.22
+0.16
+0.30
+0.21
+0.09
+0.23
+0.07
+0.17
+Std dev.
+2.40
+2.36
+2.01
+2.18
+1.53
+2.22
+1.23
+1.58
+1.59
+t-Statistic
+3.83
+2.28
+1.91
+3.41
+3.38
+1.02
+4.64
+1.03
+2.56
+Panel B: Correlations between different versions of the same factor
+SMB
+HML
+RMW
+CMA
+2  3
+2  2
+2  2  2  2
+2  3
+2  2
+2  2  2  2
+2  3
+2  2
+2  2  2  2
+2  3
+2  2
+2  2  2  2
+2  3
+1.00
+1.00
+0.98
+1.00
+0.97
+0.94
+1.00
+0.96
+0.80
+1.00
+0.95
+0.83
+2  2
+1.00
+1.00
+0.98
+0.97
+1.00
+0.96
+0.96
+1.00
+0.83
+0.95
+1.00
+0.87
+2  2  2  2
+0.98
+0.98
+1.00
+0.94
+0.96
+1.00
+0.80
+0.83
+1.00
+0.83
+0.87
+1.00
+Panel C: Correlations between different factors
+2  3 Factors
+2  2 Factors
+2  2  2  2 Factors
+RMRF
+SMB
+HML
+RMW
+CMA
+RMRF
+SMB
+HML
+RMW
+CMA
+RMRF
+SMB
+HML
+RMW
+CMA
+RMRF
+1.00
+0.28
+0.30
+0.21
+0.39
+1.00
+0.30
+0.34
+0.13
+0.43
+1.00
+0.25
+0.33
+0.27
+0.42
+SMB
+0.28
+1.00
+0.11
+0.36
+0.11
+0.30
+1.00
+0.16
+0.32
+0.13
+0.25
+1.00
+0.21
+0.33
+0.21
+HML
+0.30
+0.11
+1.00
+0.08
+0.70
+0.34
+0.16
+1.00
+0.04
+0.71
+0.33
+0.21
+1.00
+0.63
+0.37
+RMW
+0.21
+0.36
+0.08
+1.00
+0.11
+0.13
+0.32
+0.04
+1.00
+0.19
+0.27
+0.33
+0.63
+1.00
+0.15
+CMA
+0.39
+0.11
+0.70
+0.11
+1.00
+0.43
+0.13
+0.71
+0.19
+1.00
+0.42
+0.21
+0.37
+0.15
+1.00
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+7
+differences are observed in average RMW and CMA returns.
+The t-statistics (and thus the Sharpe ratios) for average HML,
+RMW, and CMA returns are, however, similar for the 2  3
+and 2  2 sorts. The correlations between the factors of the
+two sorts (Panel B of Table 4) are also high, 0.97 (HML), 0.96
+(RMW), and 0.95 (CMA).
+Each factor from the 2  2 and 2  3 sorts controls for
+Size
+and
+one
+other
+variable.
+The
+factors
+from
+the
+2  2  2  2 sorts control for all four variables. Joint
+controls have little effect on HML. The correlations of the
+2  2  2  2 version of HML with the 2  2 and 2  3
+versions
+are
+high,
+0.94
+and
+0.96.
+The
+2  2
+and
+2  2  2  2 versions of HML, which split stocks on the
+NYSE median B/M, have almost identical means and
+standard deviations, and both means are more than 3.2
+standard errors from zero (Panel A of Table 4).
+The correlations of RMW and CMA from the 2  2 
+2  2 sorts with the corresponding 2  3 and 2  2 factors
+are lower, 0.80 to 0.87, and joint controls produce an
+interesting result  a boost to the profitability premium at
+the expense of the investment premium. The 2  2  2  2
+and 2  2 versions of RMW have similar standard devia-
+tions, 1.49% and 1.52% per month, but the 2  2  2  2
+RMW has a larger mean, 0.25% (t¼4.09) versus 0.17%
+(t¼2.79). The standard deviation of CMA drops from 1.48
+for the 2  2 version to 1.29 with four-variable controls,
+and the mean falls from 0.22% (t¼3.72) to 0.14% (t¼2.71).
+Thus, with joint controls, there is reliable evidence of an
+investment premium, but its average value is much lower
+than those of the other 2  2  2  2 factor premiums.
+The value, profitability, and investment factors are
+averages of small and big stock factors. Here again, joint
+controls produce interesting changes in the premiums for
+small and big stocks (Panel A of Table 4). The factors from
+the 2  3 and 2  2 sorts confirm earlier evidence that the
+value premium is larger for small stocks (e.g., Fama and
+French, 1993, 2012; Loughran, 1997). For example, in the
+2  3 Size-B/M sorts the average HMLS return is 0.53% per
+month (t¼4.05), versus 0.21% (t¼1.69) for HMLB. The
+evidence of a value premium in big stock returns is
+stronger if we control for profitability and investment.
+The average value of HMLB in the 2  2 and 2  3 sorts is
+less than 1.7 standard errors from zero, but more than 2.2
+standard errors from zero in the 2  2  2  2 sorts. Con-
+trols for profitability and investment also reduce the
+spread between the value premiums for small and big
+stocks. The average difference between HMLS and HMLB
+falls from 0.24 (t¼3.05) in the 2  2 sorts to 0.16 (t¼1.91)
+in the 2  2  2  2 sorts.
+For all methods of factor construction, there seem to be
+expected profitability and investment premiums for small
+stocks; the average values of RMWS and CMAS are at least 2.76
+standard errors from zero. The average profitability premium
+is larger for small stocks than for big stocks, but the evidence
+that the expected premium is larger is weak. In the 2 3 sorts
+the average difference between RMWS and RMWB is 1.48
+standard errors from zero. In the 2 2 and 2 2 2 2 sorts
+the average difference between RMWS and RMWB is less than
+1.1 standard errors from zero.
+In contrast, there is strong evidence that the expected
+investment premium is larger for small stocks. The average
+value of CMAS is 4.64–5.49 standard errors from zero, but the
+average value of CMAB is only 1.03–2.00 standard errors from
+zero, and it is more than 2.2 standard errors below the
+average value of CMAS. In the 2 2 2 2 sorts the average
+value of CMAB is 0.07% per month (t¼1.03), and almost all the
+average value of CMA is from small stocks.
+Panel C of Table 4 shows the correlation matrix for each
+set of factors. With 606 monthly observations, the stan-
+dard error of the correlations is only 0.04, and most of the
+estimates are more than three standard errors from zero.
+The value, profitability, and investment factors are nega-
+tively correlated with both the market and the size factor.
+Since small stocks tend to have higher market betas than
+big stocks, it makes sense that SMB is positively correlated
+with the excess market return. Given the positive correla-
+tion between profitability and investment, it is perhaps
+surprising that the correlation between the profitability
+and investment factors is low, 0.19 to 0.15.
+The correlations of the value factor with the profit-
+ability and investment factors merit comment. When HML
+and CMA are from separate 2  2 or 2  3 sorts, the
+correlation between the factors is about 0.70. This is
+perhaps not surprising given that high B/M value firms
+tend to be low investment firms. In the 2  2  2  2 sorts
+the correlation falls about in half, to 0.37, which also is not
+surprising since the factors from these sorts attempt to
+neutralize the effects of other factors.
+The correlations between HML and RMW are surprising.
+When the two factors are from separate Size-B/M and Size-
+OP sorts, the correlation is close to zero, 0.04 in the 2  2
+sorts and 0.08 in the 2  3 sorts. When the sorts jointly
+control for Size, B/M, OP, and Inv, the correlation between
+HML and RMW jumps to 0.63. There is a simple explana-
+tion. Among the 16 portfolios used to construct the
+2  2  2  2 factors, the two with by far the highest return
+variances (small stocks with low B/M, weak OP, and low or
+high Inv) are held short in HML and RMW. Similarly, the
+portfolio of big stocks with the highest return variance is
+held long in the two factors, and the big stock portfolio
+with the second highest return variance is in the short end
+of both factors. The high correlation between HML and
+RMW is thus somewhat artificial, and it is a negative
+feature of the factors constructed with joint controls.
+Finally, initiated by Carhart (1997), the FF three-factor
+model is often augmented with a momentum factor. The
+liquidity factor of Pástor and Stambaugh (2003) is another
+common addition. We do not show results for models that
+include these factors since for the left-hand-side (LHS)
+portfolios examined here, the two factors have regression
+slopes close to zero and so produce trivial changes in
+model performance. The same is true for the LHS anomaly
+portfolios in FF (2014), except when the LHS portfolios are
+formed on momentum, in which case including a momen-
+tum factor is crucial.
+6. Model performance summary
+We turn now to our primary task, testing how well the
+three sets of factors explain average excess returns on the
+portfolios of Tables 1 and 2. We consider seven asset
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+8
+pricing models: (i) three three-factor models that combine
+RMRF and SMB with HML, RMW, or CMA; (ii) three four-
+factor models that combine RMRF, SMB, and pairs of HML,
+RMW, and CMA; and (iii) the five-factor model.
+With seven models, six sets of left-hand-side portfolios,
+and three sets of right-hand-side (RHS) factors, it makes
+sense to restrict attention to models that fare relatively
+well in the tests. To judge the improvements provided by
+the profitability and investment factors, we show sum-
+mary statistics for the original FF (1993) three-factor
+model, the five-factor model, and the three four-factor
+models for all sets of LHS portfolios and RHS factors. But
+we show results for alternative three-factor models only
+for the 5  5 sorts on Size and OP or Inv and only for the
+model in which the third factor – RMW or CMA – is aimed
+at the second LHS sort variable.
+If an asset pricing model completely captures expected
+returns, the intercept is indistinguishable from zero in a
+regression of an asset's excess returns on the model's
+factor returns. Table 5 shows the GRS statistic of Gibbons,
+Ross, and Shanken (1989) that tests this hypothesis for
+combinations of LHS portfolios and factors. The GRS test
+easily rejects all models considered for all LHS portfolios
+and RHS factors. To save space, the probability, or p-value,
+of getting a GRS statistic larger than the one observed if the
+true intercepts are all zero, is not shown. We can report
+Table 5
+Summary statistics for tests of three-, four-, and five-factor models; July 1963–December 2013, 606 months.
+The table tests the ability of three-, four-, and five-factor models to explain monthly excess returns on 25 Size-B/M portfolios (Panel A), 25 Size-OP
+portfolios (Panel B), 25 Size-Inv portfolios (Panel C), 32 Size-B/M-OP portfolios (Panel D), 32 Size-B/M-Inv portfolios (Panel E), and 32 Size-OP-Inv portfolios
+(Panel F). For each set of 25 or 32 regressions, the table shows the factors that augment RMRF and SMB in the regression model, the GRS statistic testing
+whether the expected values of all 25 or 32 intercept estimates are zero, the average absolute value of the intercepts, A|ai|, A ai
+j
+j=Ajri|, the average absolute
+value of the intercept ai over the average absolute value of ri, which is the average return on portfolio i minus the average of the portfolio returns, and
+Að^α2
+i Þ=Að^μ2
+i Þ, which is Aða2
+i Þ=Aðr2
+i ), the average squared intercept over the average squared value of ri, corrected for sampling error in the numerator and
+denominator.
+2  3 Factors
+2  2 Factors
+2  2  2  2 Factors
+GRS
+A|ai|
+A ai
+j
+j
+Ajrij
+Að^α2
+i Þ
+Að^μ2
+i Þ
+GRS
+A|ai|
+A ai
+j
+j
+Ajrij
+Að^α2
+i Þ
+Að^μ2
+i Þ
+GRS
+A|ai|
+A ai
+j
+j
+Ajrij
+Að^α2
+i Þ
+Að^μ2
+i Þ
+Panel A: 25 Size-B/M portfolios
+HML
+3.62
+0.102
+0.54
+0.38
+3.54
+0.101
+0.53
+0.36
+3.40
+0.096
+0.51
+0.36
+HML RMW
+3.13
+0.095
+0.50
+0.24
+3.11
+0.096
+0.51
+0.26
+3.29
+0.089
+0.47
+0.24
+HML CMA
+3.52
+0.101
+0.53
+0.39
+3.46
+0.100
+0.53
+0.37
+3.18
+0.096
+0.51
+0.35
+RMW CMA
+2.84
+0.100
+0.53
+0.22
+2.78
+0.093
+0.49
+0.19
+2.78
+0.087
+0.46
+0.13
+HML RMW CMA
+2.84
+0.094
+0.50
+0.23
+2.80
+0.093
+0.49
+0.23
+2.82
+0.088
+0.46
+0.18
+Panel B: 25 Size-OP portfolios
+HML
+2.31
+0.108
+0.68
+0.51
+2.31
+0.109
+0.68
+0.51
+1.91
+0.089
+0.56
+0.37
+RMW
+1.71
+0.067
+0.42
+0.12
+1.82
+0.078
+0.49
+0.16
+1.73
+0.059
+0.37
+0.05
+HML RMW
+1.64
+0.062
+0.39
+0.16
+1.74
+0.058
+0.36
+0.03
+1.62
+0.064
+0.40
+0.06
+HML CMA
+3.02
+0.137
+0.86
+0.90
+2.85
+0.135
+0.85
+0.86
+2.06
+0.102
+0.64
+0.49
+RMW CMA
+1.87
+0.075
+0.47
+0.12
+1.67
+0.066
+0.42
+0.05
+1.61
+0.068
+0.43
+0.05
+HML RMW CMA
+1.87
+0.073
+0.46
+0.12
+1.73
+0.066
+0.42
+0.06
+1.60
+0.069
+0.43
+0.07
+Panel C: 25 Size-Inv portfolios
+HML
+4.56
+0.112
+0.64
+0.57
+4.40
+0.107
+0.61
+0.53
+4.32
+0.100
+0.57
+0.56
+CMA
+4.03
+0.105
+0.60
+0.47
+4.05
+0.106
+0.61
+0.47
+4.23
+0.123
+0.70
+0.62
+HML RMW
+4.40
+0.106
+0.61
+0.57
+4.26
+0.103
+0.59
+0.52
+4.45
+0.116
+0.66
+0.66
+HML CMA
+4.00
+0.099
+0.57
+0.43
+3.97
+0.098
+0.56
+0.41
+3.70
+0.084
+0.48
+0.35
+RMW CMA
+3.33
+0.085
+0.49
+0.29
+3.28
+0.082
+0.47
+0.26
+3.50
+0.082
+0.47
+0.27
+HML RMW CMA
+3.32
+0.085
+0.49
+0.29
+3.27
+0.082
+0.47
+0.27
+3.59
+0.082
+0.47
+0.28
+Panel D: 32 Size-B/M-OP portfolios
+HML
+2.50
+0.152
+0.61
+0.35
+2.57
+0.151
+0.60
+0.34
+2.31
+0.134
+0.53
+0.26
+HML RMW
+1.96
+0.110
+0.44
+0.13
+2.30
+0.112
+0.45
+0.14
+1.90
+0.096
+0.38
+0.12
+HML CMA
+3.00
+0.169
+0.67
+0.45
+2.99
+0.165
+0.66
+0.42
+2.29
+0.145
+0.58
+0.26
+RMW CMA
+2.02
+0.137
+0.55
+0.16
+2.06
+0.129
+0.51
+0.13
+1.73
+0.108
+0.43
+0.07
+HML RMW CMA
+2.02
+0.134
+0.54
+0.17
+2.21
+0.129
+0.51
+0.15
+1.74
+0.111
+0.44
+0.10
+Panel E: 32 Size-B/M-Inv portfolios
+HML
+2.72
+0.129
+0.64
+0.38
+2.80
+0.134
+0.66
+0.40
+2.82
+0.131
+0.65
+0.40
+HML RMW
+2.32
+0.120
+0.60
+0.38
+2.49
+0.128
+0.64
+0.42
+2.49
+0.122
+0.61
+0.37
+HML CMA
+2.43
+0.102
+0.51
+0.25
+2.52
+0.108
+0.54
+0.26
+2.36
+0.114
+0.57
+0.27
+RMW CMA
+1.70
+0.097
+0.48
+0.18
+1.70
+0.092
+0.46
+0.14
+1.82
+0.080
+0.40
+0.07
+HML RMW CMA
+1.73
+0.091
+0.45
+0.18
+1.87
+0.092
+0.46
+0.18
+1.86
+0.084
+0.42
+0.13
+Panel F: 32 Size-OP-Inv portfolios
+HML
+4.38
+0.182
+0.79
+0.69
+4.17
+0.179
+0.78
+0.67
+4.01
+0.170
+0.74
+0.61
+HML RMW
+3.80
+0.140
+0.61
+0.37
+3.82
+0.140
+0.61
+0.37
+3.55
+0.151
+0.66
+0.43
+HML CMA
+3.91
+0.177
+0.77
+0.68
+3.82
+0.177
+0.77
+0.67
+3.66
+0.142
+0.62
+0.48
+RMW CMA
+2.92
+0.103
+0.45
+0.20
+3.04
+0.098
+0.42
+0.20
+2.99
+0.102
+0.44
+0.19
+HML RMW CMA
+2.92
+0.103
+0.45
+0.21
+3.04
+0.097
+0.42
+0.20
+3.03
+0.101
+0.44
+0.19
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+9
+that for four of the six sets of LHS returns, the p-values for
+all models round to zero to at least three decimals. The
+models fare best in the tests on the 25 Size-OP portfolios,
+but the p-values are still less than 0.04. In short, the GRS
+test says all our models are incomplete descriptions of
+expected returns.
+Asset pricing models are simplified propositions about
+expected returns that are rejected in tests with power. We
+are less interested in whether competing models are
+rejected than in their relative performance, which we
+judge using GRS and other statistics. We want to identify
+the model that is the best (but imperfect) story for average
+returns on portfolios formed in different ways.
+We are interested in the improvements in descriptions
+of average returns provided by adding profitability and
+investment factors to the FF three-factor model. For all six
+sets of LHS portfolios, the five-factor model produces
+lower GRS statistics than the original three-factor model.
+Table 5 shows that the average absolute intercepts, A|ai|,
+are also smaller for the five-factor model. For the 25
+Size-B/M portfolios, the five-factor model produces minor
+improvements, less than a basis point, in the average
+absolute intercept. The improvements are larger for the
+25 Size-OP portfolios (2.0–4.3 basis points), the 25 Size-Inv
+portfolios (1.8–2.7 basis points), the 32 Size-B/M-OP port-
+folios (1.8–2.3 basis points), and the 32 Size-B/M-Inv
+portfolios (3.8–4.7 basis points).
+Relative to the FF three-factor model, the biggest
+improvements in the average absolute intercept (6.9–8.2
+basis points per month) are produced by the five-factor
+model when applied to the 32 Size-OP-Inv portfolios. This
+is not surprising since these portfolios are formed on two
+variables (profitability and investment) not directly tar-
+geted by the three-factor model. The results suggest that
+the FF three-factor model is likely to fare poorly when
+applied to portfolios with strong profitability and invest-
+ment tilts.
+Table 5 also shows two ratios that estimate the propor-
+tion of the cross-section of expected returns left unex-
+plained by competing models. The numerator of each is a
+measure of the dispersion of the intercepts produced by a
+given model for a set of LHS portfolios; the denominator
+measures the dispersion of LHS expected returns. Define Ri
+as the time-series average excess return on portfolio i,
+define R as the cross-section average of Ri, and define ri as
+portfolio i's deviation from the cross-section average,
+ri ¼ Ri R. The first estimate is A ai
+j
+j=Ajri|, the average
+absolute intercept over the average absolute value of ri.
+The results for A ai
+j
+j=Ajri| in Table 5 tell us that for
+different sets of LHS portfolios and factor definitions, the
+five-factor model's average absolute intercept, A ai
+j
+j, ranges
+from 42% to 54% of Ajri|. Thus, measured in units of return,
+the five-factor model leaves 42–54% of the dispersion of
+average excess returns unexplained. The dispersion of
+average excess returns left unexplained by the three-
+factor model is higher, 54–68%. Though not shown in
+Table 5, we can report that when the CAPM is estimated
+on the six sets of LHS portfolios, A ai
+j
+j=Ajri| ranges from 1.26
+to 1.55. Thus, CAPM intercepts are more disperse than
+average returns, a result that persists no matter how we
+measure dispersion.
+Measurement error inflates both the average absolute
+intercept A ai
+j
+j and the average absolute deviation Ajri|.
+The estimated intercept, ai, is the true intercept, αi, plus
+estimation error, ai ¼ αi þei: Similarly, ri is μi, portfolio i's
+expected deviation from the grand mean, plus estimation
+error, ri ¼ μiþεi. We can adjust for measurement error if
+we focus on squared intercepts and squared deviations.
+The cross-section average of μi is zero, so Aðμ2
+i Þ is the
+cross-section variance of expected portfolio returns, and
+Aðα2
+i Þ/A(μ2
+i ) is the proportion of Aðμ2
+i Þ left unexplained by a
+model. Since αi is a constant, the expected value of the
+square of an estimated intercept is the squared value of the
+true intercept plus the sampling variance of the estimate,
+Eða2
+i Þ ¼ α2
+i þEðe2
+i Þ. Our estimate, ^α2
+i , of the square of the
+true intercept, α2
+i , is the difference between the squared
+estimates of the regression intercept and its standard
+error. Similarly, our estimate of μ2
+i , ^μ2
+i ; is the difference
+between the square of the realized deviation, r2
+i ; and the
+square
+of
+its
+standard
+error.
+The
+ratio
+of
+averages,
+Að ^α2
+i Þ=Að^μ2
+i Þ, then estimates the proportion of the variance
+of LHS expected returns left unexplained. (As such, it is
+akin to 1–R2 in the regression of LHS expected returns on
+the expected returns from a model.)
+In part because it is in units of return squared and in part
+because of the corrections for sampling error, Að ^α2
+i Þ=Að^μ2
+i Þ
+provides a more positive picture of the five-factor model than
+A ai
+j
+j=Ajri|. In the 5 5 sorts, the Size-Inv portfolios present the
+biggest challenge, but the estimates suggest that the five-
+factor model leaves only around 28% of the cross-section
+variance of expected returns unexplained. The estimate drops
+to less than 25% for the 25 Size-B/M portfolios and 6–12% for
+the 25 Size-OP portfolios. These are far less than the variance
+ratios produced by the FF three-factor model, which are
+mostly greater than 50% for the Size-Inv and Size-OP portfolios
+and about 37% for the Size-B/M portfolios. For the 25 Size-OP
+portfolios, however, the five-factor model is not systematically
+better on any metric than the three-factor model that
+substitutes RMW for HML.
+The estimates of the cross-section variance of expected
+returns left unexplained by the five-factor model are lower
+for the LHS portfolios from the 2  4  4 sorts. For the 32
+Size-OP-Inv portfolios, Að ^α2
+i Þ=Að^μ2
+i Þ suggests that only about
+20% of the cross-section variance of expected returns is left
+unexplained, versus 61–69% for the original three-factor
+model. The five-factor estimates drop to 13–18% for the 32
+Size-B/M-Inv portfolios and 10–17% for the Size-B/M-OP
+portfolios, and most are less than half the estimates for the
+three-factor model.
+Two important general results show up in the tests for
+each of the six sets of LHS portfolios. First, the factors from the
+2 3, 2 2, and 2 2 2 2 sorts produce much the same
+results in the tests of a given model. Second, and more
+interesting, the five-factor model outperforms the FF three-
+factor model on all metrics and it generally outperforms other
+models, with one major exception. Specifically, the five-factor
+model and the four-factor model that excludes HML are
+similar on all measures of performance, including the GRS
+statistic. We explore this result in Section 7.
+Finally, we do not show average values of R2 in Table 5,
+but we can report that on average our models absorb a
+smaller fraction of return variance for the LHS portfolios
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+10
+Table 6
+Using four factors in regressions to explain average returns on the fifth: July 1963–December 2013, 606 months.
+RMRF is the value-weight return on the market portfolio of all sample stocks minus the one-month Treasury bill rate; SMB (small minus big) is the size
+factor; HML (high minus low B/M) is the value factor; RMW (robust minus weak OP) is the profitability factor; and CMA (conservative minus aggressive Inv)
+is the investment factor. The 2  3 factors are constructed using separate sorts of stocks into two Size groups and three B/M groups (HML), three OP groups
+(RMW), or three Inv groups (CMA). The 2  2 factors use the same approach except the second sort for each factor produces two rather than three portfolios.
+Each factor from the 2  3 and 2  2 sorts uses 2  3¼6 or 2  2¼4 portfolios to control for Size and one other variable (B/M, OP, or Inv). The 2  2  2  2
+factors use the 2  2  2  2¼16 portfolios to jointly control for Size, B/M, OP, and Inv. Int is the regression intercept.
+Int
+RMRF
+SMB
+HML
+RMW
+CMA
+R2
+2  3 Factors
+RMRF
+Coef
+0.82
+0.25
+0.03
+0.40
+0.91
+0.24
+t-Statistic
+4.94
+4.44
+0.38
+4.84
+7.83
+SMB
+Coef
+0.39
+0.13
+0.05
+0.48
+0.17
+0.17
+t-Statistic
+3.23
+4.44
+0.81
+8.43
+1.92
+HML
+Coef
+0.04
+0.01
+0.02
+0.23
+1.04
+0.51
+t-Statistic
+0.47
+0.38
+0.81
+5.36
+23.03
+RMW
+Coef
+0.43
+0.09
+0.22
+0.20
+0.44
+0.21
+t-Statistic
+5.45
+4.84
+8.43
+5.36
+7.84
+CMA
+Coef
+0.28
+0.10
+0.04
+0.45
+0.21
+0.57
+t-Statistic
+5.03
+7.83
+1.92
+23.03
+7.84
+2  2 Factors
+RMRF
+Coef
+0.78
+0.28
+0.00
+0.43
+1.30
+0.25
+t-Statistic
+4.80
+5.09
+0.02
+3.71
+8.12
+SMB
+Coef
+0.38
+0.15
+0.03
+0.63
+0.18
+0.17
+t-Statistic
+3.10
+5.09
+0.36
+7.60
+1.42
+HML
+Coef
+0.00
+0.00
+0.01
+0.25
+1.08
+0.53
+t-Statistic
+0.01
+0.02
+0.36
+5.66
+23.13
+RMW
+Coef
+0.30
+0.05
+0.14
+0.21
+0.51
+0.21
+t-Statistic
+5.22
+3.71
+7.60
+5.66
+9.29
+CMA
+Coef
+0.19
+0.08
+0.02
+0.43
+0.25
+0.60
+t-Statistic
+4.72
+8.12
+1.42
+23.13
+9.29
+2  2  2  2 Factors
+RMRF
+Coef
+0.79
+0.19
+0.23
+0.33
+1.29
+0.24
+t-Statistic
+4.77
+3.23
+2.26
+2.30
+8.63
+SMB
+Coef
+0.42
+0.09
+0.13
+0.64
+0.33
+0.15
+t-Statistic
+3.73
+3.23
+1.82
+6.78
+3.04
+HML
+Coef
+0.02
+0.04
+0.04
+0.84
+0.48
+0.48
+t-Statistic
+0.23
+2.26
+1.82
+18.61
+8.05
+RMW
+Coef
+0.20
+0.03
+0.11
+0.43
+0.20
+0.46
+t-Statistic
+4.28
+2.30
+6.78
+18.61
+4.50
+CMA
+Coef
+0.19
+0.09
+0.05
+0.20
+0.16
+0.26
+t-Statistic
+4.39
+8.63
+3.04
+8.05
+4.50
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+11
+from the 2  4  4 sorts than for the portfolios from the
+5  5 sorts. For example, average R2 in the five-factor
+regressions is 0.91–0.93 for the 5  5 sorts, versus 0.85–
+0.89 for the 2  4  4 sorts. Average R2 is lower because the
+LHS portfolios with three sort variables are less diversified.
+First, the 2  4  4 sorts produce 32 portfolios and the
+5  5 sorts produce only 25. Second, correlation between
+variables limits the diversification of some LHS portfolios.
+For example, the negative correlation between OP and B/M
+means there are often few big stocks in the top quartiles of
+OP and B/M (highly profitable extreme value stocks).
+7. HML: a redundant factor
+The five-factor model never improves the description of
+average returns from the four-factor model that drops HML
+(Table 5). The explanation is interesting. The average HML
+return is captured by the exposures of HML to other
+factors. Thus, in the five-factor model, HML is redundant
+for describing average returns, at least in U.S. data for
+1963–2013.
+The evidence is in Table 6, which shows regressions of
+each of the five factors on the other four. In the RMRF
+regressions, the intercepts (average returns unexplained by
+exposures to SMB, HML, RMW, and CMA) are around 0.80% per
+month, with t-statistics greater than 4.7. In the regressions to
+explain SMB, RMW, and CMA, the intercepts are more than
+three standard errors from zero. In the HML regressions,
+however, the intercepts are 0.04% (t¼ 0.47) for the 2 3
+factors, 0.00% (t¼0.01) for the 2 2 factors, and 0.02%
+(t¼0.23) for the 2 2 2 2 factors.
+In the spirit of Huberman and Kandel (1987), the
+evidence suggests that in U.S. data for 1963–2013, adding
+HML does not improve the mean-variance-efficient tan-
+gency portfolio produced by combining the riskfree asset,
+the market portfolio, SMB, RMW, and CMA. It will be
+interesting to examine whether this result shows up in
+U.S. data for the pre-1963 period or in international data.
+The slopes in the Table 6 regressions often seem
+counterintuitive. For example, in the HML regressions,
+the large average HML return is mostly absorbed by the
+slopes for RMW and CMA. The CMA slopes are strongly
+positive, which is in line with the fact that high B/M value
+firms tend to do little investment. But the RMW slopes are
+also strongly positive, which says that controlling for other
+factors, value stocks behave like stocks with robust profit-
+ability, even though unconditionally, value stocks tend to
+be less profitable. The next section provides more exam-
+ples of multivariate regression slopes that do not line up
+with univariate characteristics.
+8. Regression details
+For insights into model performance we next examine
+regression details, specifically, intercepts and pertinent
+slopes. To simplify the task, we could drop the five-factor
+model, given that HML is redundant for describing average
+returns. Though captured by exposures to other factors,
+however, there is a large value premium in average returns
+that is often targeted by money managers. Thus, in
+evaluating investment performance, we probably want to
+know the exposures of LHS portfolios to the Size, B/M, OP,
+and Inv factors. But we also want other factors to have
+slopes that reflect the fact that, at least in this sample, the
+four-factor model that drops HML captures average returns
+as well as the five-factor model.
+A twist on the five-factor model (suggested by the
+referee) meets these goals. Define HMLO (orthogonal HML)
+as the sum of the intercept and residual from the regression
+of HML on RMRF, SMB, RMW, and CMA. Substituting HMLO
+for HML in (5) produces an alternative five-factor model,
+Rit–RFt ¼ ai þbi RMt–RFt
+ð
+ÞþsiSMBt þhiHMLOt
+þriRMWt þciCMAt þeit:
+ð6Þ
+The intercept and residual in (6) are the same as in the
+five-factor regression (5), so the two regressions are equiva-
+lent for judging model performance. (The results in Table 5,
+for example, do not change if we use Eq. (6) rather than (5).)
+The HMLO slope in (6) is also the same as the HML slope in (5),
+so (6) produces the same estimate of the value tilt of the LHS
+portfolio. But the estimated mean of HMLO (the intercept in
+the HML regressions in Table 6) is near zero, so its slope adds
+little to the estimate of the expected LHS return from (6).
+(Table 6 also says that the variance of HMLO is about half that
+of HML.) The slopes on the other factors in (6) are the same as
+in the four-factor model that drops HML, so the other factors
+have slopes that reflect the fact that they capture the
+information in HML about average returns.
+The slopes in (6) for different versions of the factors are
+estimates of the same marginal effects, and we can report
+that the stories told by the slopes are similar for different
+versions of the factors. The three versions of the factors
+also produce much the same descriptions of average
+returns (Table 5). Thus, we keep the presentation of
+regression details manageable by focusing on one set of
+factors. Driven by precedent, we choose the factors from
+the 2  3 sorts – the FF (1993) approach.
+We show regression intercepts and pertinent slopes
+from (6) for the 25 Size-B/M, the 25 Size-OP, the 25 Size-
+Inv, and the 32 Size-OP-Inv portfolios. Results for the 32
+portfolios formed on Size, B/M, and either OP or Inv are
+relegated to Appendix A since they just reinforce the
+results for other LHS portfolios. For perspective on the
+five-factor results, we usually show the regression inter-
+cepts from the FF three-factor model, using HML rather
+that HMLO as the value factor.
+The discussion of regression details is long, and a summary
+is helpful. Despite rejection on the GRS test, the five-factor
+model performs well: unexplained average returns for indivi-
+dual portfolios are almost all close to zero. The major
+exception is a portfolio that shows up in many sorts. The
+stocks in the offending portfolio are small and have negative
+exposures to RMW and CMA; that is, their returns behave like
+those of firms that invest a lot despite low profitability. In each
+sort that produces such a portfolio, its five-factor intercept is
+so negative that, using Bonferroni's inequality, we can easily
+reject the model for the entire set of 25 or 32 LHS portfolios.
+8.1. 25 Size-B/M portfolios
+Panel A of Table 7 shows intercepts from the FF
+three-factor regressions for the 25 Size-B/M portfolios. As
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+12
+in
+Fama
+and
+French
+(1993,
+2012),
+extreme
+growth
+stocks (left column of the intercept matrix) are a problem
+for the three-factor model. The portfolios of small extreme
+growth stocks produce negative three-factor intercepts
+and the portfolios of large extreme growth stocks produce
+positive
+intercepts.
+Microcap
+extreme
+growth
+stocks
+(upper left corner of the intercept matrix) are a huge
+problem. By itself, the three-factor intercept for this
+portfolio, 0.49% per month (t¼ 5.18), is sufficient to
+reject the three-factor model as a description of expected
+returns on the 25 Size-B/M portfolios.
+The five-factor regression (6) reduces these problems. The
+intercept for the microcap extreme growth portfolio rises 20
+basis points to 0.29 (t¼ 3.31), and the intercepts for three
+of the other four extreme growth portfolios shrink toward
+zero (Panel B of Table 7). But the pattern in the extreme
+growth intercepts – negative for small stocks and positive for
+large – survives in the five-factor model.
+Panel B of Table 7 shows the five-factor slopes for HMLO,
+RMW, and CMA. The market and SMB slopes are not shown.
+The market slopes are always close to 1.0, and the SMB slopes
+are strongly positive for small stocks and slightly negative for
+big stocks. The market and SMB slopes are similar for different
+models, so they cannot account for changes in the intercepts
+observed when factors are added. To save space, here and
+later, we concentrate on HMLO, RMW, and CMA slopes.
+The five-factor slopes provide information about stocks in
+the troublesome microcap portfolio in the lowest B/M quintile.
+The portfolio's HMLO slope (0.43, t¼ 10.11), and its CMA
+slope (0.57, t¼ 12.27) are similar to those of other extreme
+growth portfolios. But the portfolio has the most negative
+RMW slope, 0.58 (t¼ 13.26). The RMW and CMA slopes
+Table 7
+Regressions for 25 value-weight Size-B/M portfolios; July 1963 to December 2013, 606 months.
+At the end of June each year, stocks are allocated to five Size groups (Small to Big) using NYSE market cap breakpoints. Stocks are allocated independently
+to five B/M groups (Low B/M to High B/M), again using NYSE breakpoints. The intersections of the two sorts produce 25 Size-B/M portfolios. The LHS
+variables in each set of 25 regressions are the monthly excess returns on the 25 Size-B/M portfolios. The RHS variables are the excess market return, RMRF,
+the Size factor, SMB, the value factor, HML or its orthogonal version, HMLO, the profitability factor, RMW, and the investment factor, CMA, constructed using
+independent 2  3 sorts on Size and each of B/M, OP, and Inv. Panel A of the table shows three-factor intercepts produced by the Mkt, SMB, and HML. Panel B
+shows five-factor intercepts, slopes for HMLO, RMW, and CMA, and t-statistics for these coefficients.. The five-factor regression equation is,
+R(t)RF(t)¼aþb[RM(t)RF(t)]þsSMB(t)þhHMLO(t)þrRMW(t)þcCMA(t)þe(t).
+B/M -
+Low
+2
+3
+4
+High
+Low
+2
+3
+4
+High
+Panel A: Three-factor intercepts: RMRF, SMB, and HML
+a
+t(a)
+Small
+0.49
+0.00
+0.02
+0.16
+0.14
+5.18
+0.07
+0.40
+2.88
+2.37
+2
+0.17
+0.04
+0.12
+0.07
+0.02
+2.75
+0.80
+2.24
+1.40
+0.38
+3
+0.06
+0.06
+0.02
+0.06
+0.12
+0.98
+0.92
+0.33
+0.96
+1.66
+4
+0.14
+0.10
+0.04
+0.07
+0.08
+2.24
+1.46
+0.55
+1.05
+0.94
+Big
+0.17
+0.02
+0.07
+0.11
+0.18
+3.53
+0.40
+0.95
+1.86
+1.92
+Panel B: Five-factor coefficients: RMRF, SMB, HMLO, RMW, and CMA
+a
+t(a)
+Small
+0.29
+0.11
+0.01
+0.12
+0.12
+3.31
+1.61
+0.17
+2.12
+1.99
+2
+0.11
+0.10
+0.05
+0.00
+0.04
+1.73
+1.88
+0.95
+0.04
+0.64
+3
+0.02
+0.01
+0.07
+0.02
+0.05
+0.40
+0.10
+1.06
+0.25
+0.60
+4
+0.18
+0.23
+0.13
+0.05
+0.09
+2.73
+3.29
+1.81
+0.73
+1.09
+Big
+0.12
+0.11
+0.10
+0.15
+0.09
+2.50
+1.82
+1.39
+2.33
+0.93
+h
+t(h)
+Small
+0.43
+0.14
+0.10
+0.27
+0.52
+10.11
+4.38
+3.90
+10.12
+17.55
+2
+0.46
+0.01
+0.29
+0.43
+0.69
+15.22
+0.45
+11.77
+16.78
+24.44
+3
+0.43
+0.12
+0.37
+0.52
+0.67
+14.70
+3.71
+12.28
+17.07
+18.75
+4
+0.46
+0.09
+0.38
+0.52
+0.80
+15.18
+2.76
+11.03
+15.88
+20.26
+Big
+0.31
+0.03
+0.26
+0.62
+0.85
+14.12
+1.09
+7.54
+21.05
+18.74
+r
+t(r)
+Small
+0.58
+0.34
+0.01
+0.11
+0.12
+13.26
+10.56
+0.31
+3.89
+3.95
+2
+0.21
+0.13
+0.27
+0.26
+0.21
+6.75
+4.89
+10.35
+9.86
+7.04
+3
+0.21
+0.22
+0.33
+0.28
+0.33
+6.99
+6.77
+10.36
+8.98
+8.88
+4
+0.19
+0.27
+0.28
+0.14
+0.25
+6.06
+7.75
+7.99
+4.16
+6.14
+Big
+0.13
+0.25
+0.07
+0.23
+0.02
+5.64
+8.79
+2.07
+7.62
+0.49
+c
+t(c)
+Small
+0.57
+0.12
+0.19
+0.39
+0.62
+12.27
+3.46
+6.59
+13.15
+19.10
+2
+0.59
+0.06
+0.31
+0.55
+0.72
+17.76
+1.94
+11.27
+19.39
+22.92
+3
+0.67
+0.13
+0.42
+0.64
+0.78
+20.59
+3.64
+12.52
+18.97
+19.62
+4
+0.51
+0.31
+0.51
+0.60
+0.79
+15.11
+8.33
+13.35
+16.41
+18.03
+Big
+0.39
+0.26
+0.41
+0.66
+0.73
+16.08
+8.38
+10.80
+19.88
+14.54
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+13
+say the portfolio is dominated by microcaps whose returns
+behave like those of unprofitable firms that grow rapidly. The
+portfolio's negative five-factor loadings on RMW and CMA
+absorb about 40% of its three-factor intercept (0.49,
+t¼ 5.18), but the five-factor model still leaves a large
+unexplained average return (0.29, t¼ 3.31). There is a
+similar negative intercept in the results to come whenever the
+LHS assets include a portfolio of small stocks with strong
+negative RMW and CMA slopes.
+Since lots of what is common in the story for average
+returns for different sets of LHS portfolios centers on the
+slopes for RMW, CMA, and in some cases HMLO, an
+interesting question is whether the factor slopes line up
+with the profitability (OP), investment (Inv), and B/M
+characteristics. Summary statistics for the portfolio char-
+acteristics, in Table 8, say the answer is often, but not
+always, yes. The regression slopes always line up with the
+characteristics used to form a set of LHS portfolios, but not
+always with other characteristics. For example, the HMLO
+slopes for the 25 Size-B/M portfolios in Panel B of Table 7
+have a familiar pattern  strongly negative for low B/M
+growth stocks and strongly positive for high B/M value
+stocks. The Size-B/M portfolios are not formed on invest-
+ment, but strong negative CMA slopes for low B/M growth
+stocks and strong positive CMA slopes for high B/M value
+stocks line up with the evidence in Table 8 that low B/M
+stocks invest aggressively and high B/M stocks invest
+conservatively. On the other hand, profitability is higher
+for low B/M growth portfolios than for high B/M value
+portfolios (Table 8), but (megacaps aside) this is the
+reverse of the pattern in the RMW slopes (Table 7).
+There is, however, no reason to expect that univariate
+characteristics line up with multivariate regression slopes,
+which estimate marginal effects holding constant other
+explanatory variables. Moreover, the characteristics are
+measured with lags relative to returns. Since pricing
+should be forward looking, an interesting question for
+future research is whether RMW, CMA, and HMLO slopes
+line up better with future values of the corresponding
+characteristics than with past values.
+Since characteristics do not always line up with regres-
+sion slopes, we are careful when describing the slopes. For
+Table 8
+Time-series averages of book-to-market ratios (B/M), profitability (OP), and investment (Inv) for portfolios formed on (i) Size and B/M, (ii) Size and OP,
+(iii) Size and Inv, and (iv) Size, OP, and Inv.
+In the sort for June of year t, B is book equity at the end of the fiscal year ending in year t1 and M is market cap at the end of December of year t-1,
+adjusted for changes in shares outstanding between the measurement of B and the end of December. Operating profitability, OP, in the sort for June of
+year t is measured with accounting data for the fiscal year ending in year t1 and is revenues minus cost of goods sold, minus selling, general, and
+administrative expenses, minus interest expense all divided by book equity. Investment, Inv, is the rate of growth of total assets from the fiscal year
+ending in year t2 to the fiscal year ending in t1. Each of the ratios for a portfolio for a given year is the value-weight average (market cap weights) of
+the ratios for the firms in the portfolio. The table shows the time-series averages of the ratios for the 51 portfolio formation years 1963–2013.
+B/M
+OP
+Inv
+25 Size-B/M portfolios
+B/M-
+Low
+2
+3
+4
+High
+Low
+2
+3
+4
+High
+Low
+2
+3
+4
+High
+Small
+0.25
+0.54
+0.77
+1.05
+1.95
+0.28
+0.22
+0.22
+0.19
+0.13
+0.29
+0.25
+0.15
+0.10
+0.04
+2
+0.26
+0.54
+0.77
+1.04
+1.81
+0.41
+0.28
+0.24
+0.22
+0.16
+0.35
+0.21
+0.13
+0.11
+0.07
+3
+0.27
+0.54
+0.77
+1.04
+1.75
+0.37
+0.29
+0.25
+0.22
+0.16
+0.33
+0.17
+0.13
+0.10
+0.07
+4
+0.27
+0.54
+0.77
+1.04
+1.72
+0.43
+0.30
+0.25
+0.21
+0.16
+0.25
+0.15
+0.11
+0.09
+0.07
+Big
+0.26
+0.53
+0.76
+1.04
+1.61
+0.50
+0.32
+0.27
+0.23
+0.19
+0.16
+0.12
+0.11
+0.10
+0.11
+25 Size-OP portfolios
+OP -
+Low
+2
+3
+4
+High
+Low
+2
+3
+4
+High
+Low
+2
+3
+4
+High
+Small
+1.11
+1.06
+0.92
+0.77
+0.54
+0.37
+0.19
+0.25
+0.32
+1.63
+0.07
+0.18
+0.20
+0.24
+0.31
+2
+1.02
+0.94
+0.80
+0.66
+0.46
+0.10
+0.19
+0.25
+0.32
+0.95
+0.13
+0.18
+0.19
+0.21
+0.27
+3
+1.04
+0.94
+0.75
+0.61
+0.42
+0.09
+0.19
+0.25
+0.32
+0.67
+0.16
+0.15
+0.15
+0.19
+0.24
+4
+1.09
+0.92
+0.71
+0.56
+0.40
+0.03
+0.19
+0.25
+0.32
+0.61
+0.14
+0.13
+0.14
+0.16
+0.19
+Big
+1.01
+0.84
+0.69
+0.51
+0.35
+0.08
+0.19
+0.25
+0.33
+0.59
+0.19
+0.12
+0.12
+0.13
+0.13
+25 Size-Inv portfolios
+Inv -
+Low
+2
+3
+4
+High
+Low
+2
+3
+4
+High
+Low
+2
+3
+4
+High
+Small
+1.14
+1.12
+1.00
+0.87
+0.65
+0.12
+0.19
+0.25
+0.25
+0.29
+0.14
+0.02
+0.08
+0.15
+0.71
+2
+0.99
+0.96
+0.87
+0.74
+0.55
+0.14
+0.45
+0.26
+0.28
+0.28
+0.10
+0.02
+0.08
+0.15
+0.64
+3
+0.95
+0.90
+0.80
+0.68
+0.51
+0.18
+0.26
+0.30
+0.33
+0.29
+0.08
+0.03
+0.08
+0.15
+0.58
+4
+0.90
+0.87
+0.75
+0.62
+0.49
+0.26
+0.29
+0.30
+0.33
+0.32
+0.08
+0.03
+0.08
+0.15
+0.51
+Big
+0.75
+0.71
+0.61
+0.49
+0.42
+0.35
+0.33
+0.34
+0.37
+0.48
+0.07
+0.03
+0.08
+0.14
+0.43
+32 Size-OP-Inv portfolios
+OP-
+Low
+2
+3
+High
+Low
+2
+3
+High
+Low
+2
+3
+High
+Small
+Low Inv
+1.20
+1.16
+0.96
+0.66
+0.50
+0.18
+0.26
+1.71
+0.14
+0.08
+0.08
+0.10
+2
+1.30
+1.13
+0.90
+0.66
+0.04
+0.18
+0.26
+0.61
+0.02
+0.03
+0.03
+0.03
+3
+1.11
+0.99
+0.80
+0.59
+0.03
+0.19
+0.27
+0.57
+0.11
+0.11
+0.11
+0.11
+High Inv
+0.74
+0.76
+0.64
+0.45
+0.30
+0.18
+0.27
+0.66
+0.93
+0.51
+0.42
+0.45
+Big
+Low Inv
+1.12
+0.83
+0.65
+0.48
+0.11
+0.24
+0.32
+0.59
+0.04
+0.02
+0.02
+0.03
+2
+1.01
+0.78
+0.59
+0.41
+0.14
+0.24
+0.32
+0.54
+0.06
+0.06
+0.06
+0.06
+3
+0.90
+0.69
+0.51
+0.34
+0.14
+0.24
+0.32
+0.54
+0.12
+0.12
+0.12
+0.12
+High Inv
+0.75
+0.55
+0.45
+0.31
+0.11
+0.24
+0.32
+0.66
+0.57
+0.37
+0.35
+0.34
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+14
+example, for the microcap portfolio in the lowest B/M
+quintile, we say that strong negative RMW and CMA slopes
+imply that the portfolio contains stocks whose returns
+“behave like” those of unprofitable firms that grow rapidly.
+Table 8 says that these firms have grown rapidly, and they
+are less profitable than extreme growth (low B/M) portfo-
+lios in larger size quintiles, but they are more profitable
+than other microcap portfolios.
+8.2. 25 Size-OP portfolios
+The GRS test and other statistics in Table 5 say that the
+five-factor model and the three-factor model that includes
+RMW provide similar descriptions of average returns on the
+25 portfolios formed on Size and profitability. The five-factor
+intercepts for the portfolios (Panel B of Table 9) show no
+patterns and most are close to zero. This is in line with the
+evidence in Table 5 that average absolute intercepts are
+smaller for the Size-OP portfolios than for other LHS portfolios.
+The highest profitability microcap portfolio produces the most
+extreme five-factor intercept, 0.15 (t¼ 2.05), but it is
+modest relative to the most extreme intercept in other sorts.
+The tests on the 25 Size-OP portfolios tell us that for small
+and big stocks, low profitability per se is not a five-factor
+asset pricing problem. For example, the five-factor intercept
+for the microcap portfolio in the lowest profitability quintile
+is 0.10% per month (t¼ 1.28). This portfolio has strong
+negative exposure to RMW (0.67, t¼ 17.70) but modest
+exposure to CMA (-0.06, t¼ 1.42). This is in contrast to the
+Size-B/M sorts, in which the big problem is microcaps with
+extreme negative exposures to RMW and CMA. In short,
+portfolios formed on Size and OP are less of a challenge for
+the five-factor model than portfolios formed on Size and B/M
+in large part because the Size-OP portfolios do not isolate
+small stocks whose returns behave like those of firms that
+invest a lot despite low profitability.
+The Size-OP portfolios are a problem for the FF three-
+factor model. Panel A of Table 9 shows that the model
+produces negative intercepts far from zero for the three
+small stock portfolios in the lowest OP quintile. The
+estimate for the low OP microcap portfolio, for example,
+is 0.30% per month (t¼ 3.25). Four of the five portfo-
+lios in the highest OP quintile produce positive three-
+factor intercepts, all more than two standard errors from
+zero. The results suggest that the three-factor model is
+likely to have problems in applications when portfolios
+have strong tilts toward high or low profitability.
+8.3. 25 Size-Inv portfolios
+Table 5 says that the five-factor model improves the
+description of average returns on the 25 Size-Inv portfolios
+provided by the FF three-factor model. Panel A of Table 10
+shows that the big problems of the three-factor model are
+strong negative intercepts for the portfolios in the three
+smallest Size quintiles and the highest Inv quintile. Switch-
+ing to the five-factor model moves these intercepts toward
+zero. The improvements trace to negative slopes for the
+investment and profitability factors, which lower five-
+factor estimates of expected returns. For example, the
+microcap portfolio in the highest Inv quintile produces
+the most extreme three-factor intercept, 0.48% (t¼ 7.19),
+but the portfolio's negative RMW and CMA slopes (0.19,
+t¼ 5.93, and 0.31, t¼ 8.78) lead to a less extreme five-
+factor intercept, 0.35% (t¼ 5.30). This intercept is still
+sufficient (on Bonferroni's inequality) for a strong rejection of
+the five-factor model as a description of expected returns on
+the 25 Size-Inv portfolios.
+The problem for the five-factor model posed by the
+microcap portfolio in the highest Inv quintile is similar to
+that posed by the microcap portfolio in the lowest B/M
+quintile in Table 7. Both show negative exposures to RMW
+and CMA, like those of firms that invest a lot despite low
+profitability, but their RMW and CMA slopes do not suffice
+to explain their low average returns (Table 1).
+Given that the second-pass sort variable is investment, the
+CMA slopes for the Size-Inv portfolios show the expected
+pattern — positive for low investment portfolios and negative
+for high investment portfolios. There is less correspondence
+between the HMLO and RMW slopes and the B/M and OP
+characteristics. Table 8 says low investment is associated with
+value (high B/M) and high investment is associated with
+growth (low B/M). Confirming one end of this pattern, the
+HMLO slopes in the highest Inv quintile in Table 10 are zero to
+slightly negative, which is typical of growth stocks. But the
+portfolios in the lowest Inv quintile have rather low HMLO
+slopes (two are negative), which does not line up with their
+rather high average B/M in Table 8. Low investment firms are
+typically less profitable, and high investment firms are more
+profitable (Table 8). RMW slopes that are negative or close to
+zero for low investment portfolios in Table 10 indeed suggest
+low profitability, but the RMW slopes for the portfolios in the
+highest Inv quintile are also negative, and profitability is not
+low for these portfolios (Table 8).
+Again, there is no reason to expect that multivariate
+regression slopes relate directly to univariate characteris-
+tics. Still, if one interprets the results for the 25 Size-Inv
+portfolios in terms of characteristics rather than factor
+exposures, the evidence suggests that high investment
+per se is a five-factor asset pricing problem, in particular,
+negative five-factor intercepts for high investment portfo-
+lios of small stocks and positive intercepts for high invest-
+ment portfolios of big stocks. The Size-B/M portfolios of
+Table 7 also suggest this conclusion.
+Adding fuel to the fire, Table 8 shows that average annual
+rates of investment in the highest Inv quintile are impressive,
+rising from 43% of assets for megacaps to 71% for microcaps. It
+seems likely that lots of these firms issue new stock and do
+mergers financed with stock — actions known to be asso-
+ciated
+with
+low
+subsequent
+stock
+returns
+(Ikenberry,
+Lakonishok, and Vermaelen, 1995; Loughran and Ritter,
+1995; Loughran and Vijh, 1997). The overlap among new
+issues, mergers financed with stock, and high investment is an
+interesting topic for future research. For example, are the
+three patterns in unexplained returns somewhat independent
+or are they all subsumed by investment?
+8.4. Size-OP-Inv portfolios
+Table 11 shows three-factor and five-factor regression
+intercepts and five-factor RMW and CMA slopes for the 32
+portfolios from 2  4  4 sorts on Size, OP, and Inv. (To save
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+15
+space the five-factor HMLO slopes are not shown.) These
+sorts are interesting because the profitability and invest-
+ment characteristics of the stocks in the portfolios line up
+with their RMW and CMA slopes. For small and big stocks,
+RMW slopes are positive for high profitability quartiles and
+negative for low OP quartiles, and CMA slopes are positive
+for low investment quartiles and negative for high Inv
+quartiles. The correspondence between characteristics and
+regression slopes facilitates inferences about the nature of
+the stocks in troublesome portfolios.
+The biggest problem for the five-factor model in
+Table 11 is the portfolio of small stocks in the lowest
+profitability and highest investment quartiles. Its intercept,
+0.47% per month (t¼ 5.89) easily rejects the model as
+a description of expected returns on the 32 Size-OP-Inv
+portfolios. Low profitability per se is not a problem for the
+five-factor model in the results for small stocks. Two of the
+other three portfolios in the lowest OP quartile produce
+positive intercepts and one is 2.59 standard errors from
+zero. There is again suggestive evidence that for small
+stocks, high investment alone is associated with five-factor
+problems. The other three small stock portfolios in the
+highest Inv quartile also produce negative five-factor
+intercepts and two are more than two standard errors
+below zero.
+If one looks to big stocks for confirmation of the five-
+factor problems observed for small stocks, none is found.
+The portfolio of big stocks in the lowest OP and highest Inv
+quartiles (the lethal combination for small stocks) pro-
+duces a small positive five-factor intercept, 0.12% per
+month (t¼1.37). Moreover, the intercepts for the four big
+stock portfolios in the highest Inv quartile split evenly
+Table 9
+Regressions for 25 value-weight Size-OP portfolios; July 1963–December 2013, 606 months.
+At the end of each June, stocks are allocated to five Size groups (Small to Big) using NYSE market cap breakpoints. Stocks are allocated independently to
+five OP (profitability) groups (Low OP to High OP), again using NYSE breakpoints. The intersections of the two sorts produce 25 Size-OP portfolios. The LHS
+variables in each set of 25 regressions are the monthly excess returns on the 25 Size-OP portfolios. The RHS variables are the excess market return, RMRF,
+the Size factor, SMB, the value factor, HML or its orthogonal version, HMLO, the profitability factor, RMW, and the investment factor, CMA, constructed using
+independent 2  3 sorts on Size and each of B/M, OP, and Inv. Panel A shows three-factor intercepts and their t-statistics. Panel B shows five-factor
+intercepts, slopes for HMLO, RMW, and CMA, and t-statistics for these coefficients.
+R(t)RF(t)¼aþb[RM(t)RF(t)]þsSMB(t)þhHMLO(t)þrRMW(t)þcCMA(t)þe(t)
+OP-
+Low
+2
+3
+4
+High
+Low
+2
+3
+4
+High
+Panel A: Three-factor intercepts: RMRF, SMB, and HML
+a
+t(a)
+Small
+0.30
+0.10
+0.05
+0.09
+0.02
+3.25
+1.54
+0.85
+1.30
+0.30
+2
+0.24
+0.03
+0.05
+0.04
+0.16
+3.16
+0.55
+0.94
+0.58
+2.08
+3
+0.21
+0.07
+0.01
+0.05
+0.20
+2.27
+1.04
+0.14
+0.79
+2.51
+4
+0.11
+0.02
+0.05
+0.06
+0.18
+1.15
+0.24
+0.73
+0.96
+2.43
+Big
+0.17
+0.20
+0.03
+0.05
+0.22
+1.90
+2.94
+0.58
+1.20
+4.03
+Panel B: Five-factor coefficients: RMRF, SMB, HMLO, RMW, and CMA
+a
+t(a)
+Small
+0.10
+0.04
+0.05
+0.05
+0.15
+1.28
+0.64
+0.80
+0.80
+2.05
+2
+0.05
+0.11
+0.03
+0.11
+0.00
+0.83
+1.86
+0.64
+1.92
+0.02
+3
+0.08
+0.04
+0.06
+0.07
+0.03
+1.15
+0.67
+1.05
+1.23
+0.43
+4
+0.16
+0.02
+0.12
+0.09
+0.05
+1.91
+0.26
+1.97
+1.52
+0.76
+Big
+0.14
+0.11
+0.03
+0.02
+0.08
+2.08
+1.67
+0.57
+0.42
+1.85
+h
+t(h)
+Small
+0.14
+0.24
+0.26
+0.28
+0.21
+3.82
+8.05
+9.32
+9.31
+6.17
+2
+0.12
+0.17
+0.23
+0.18
+0.15
+3.96
+5.84
+9.51
+6.38
+5.08
+3
+0.00
+0.14
+0.21
+0.19
+0.09
+0.11
+4.36
+7.68
+6.74
+2.93
+4
+0.03
+0.15
+0.21
+0.10
+0.02
+0.72
+4.80
+7.19
+3.60
+0.69
+Big
+0.22
+0.16
+0.04
+0.00
+0.13
+6.70
+5.33
+1.42
+0.19
+6.13
+r
+t(r)
+Small
+0.67
+0.21
+0.30
+0.47
+0.45
+17.70
+6.98
+10.59
+15.08
+12.95
+2
+0.60
+0.21
+0.29
+0.45
+0.55
+19.94
+6.90
+11.32
+15.76
+17.91
+3
+0.76
+0.03
+0.24
+0.38
+0.57
+21.06
+0.93
+8.33
+13.12
+17.19
+4
+0.75
+0.15
+0.23
+0.39
+0.37
+18.94
+4.54
+7.49
+12.95
+11.09
+Big
+0.71
+0.26
+0.08
+0.12
+0.35
+21.05
+8.41
+2.82
+5.66
+15.54
+c
+t(c)
+Small
+0.06
+0.25
+0.34
+0.31
+0.14
+1.42
+7.58
+10.89
+9.08
+3.76
+2
+0.09
+0.29
+0.26
+0.23
+0.05
+2.65
+8.94
+9.52
+7.44
+1.56
+3
+0.17
+0.26
+0.24
+0.23
+0.02
+4.41
+7.31
+7.89
+7.49
+0.65
+4
+0.02
+0.30
+0.30
+0.26
+0.02
+0.41
+8.56
+9.08
+8.12
+0.48
+Big
+0.03
+0.23
+0.19
+0.04
+0.12
+0.83
+6.82
+6.16
+1.82
+5.22
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+16
+between positive and negative, and the troublesome one is
+positive (0.36% per month, t¼4.36, for the big stock
+portfolio in the highest OP and Inv quartiles). Thus, if the
+market overprices small stocks that invest a lot, the
+problem does not carry over to big stocks. Indeed, the
+asset pricing problem for big stocks is the high average
+return of highly profitable firms that invest a lot.
+The FF three-factor model's problems in the tests on
+the 32 Size-OP-Inv portfolios are more severe. For example,
+portfolios of small or big stocks that combine high OP
+and low Inv produce strong positive intercepts in the
+three-factor model, but in the five-factor model the high
+average returns of these portfolios are absorbed by strong
+positive RMW and CMA slopes. The lethal combination that
+dooms the five-factor model is even more deadly in the
+three-factor model. The three-factor intercept for the portfo-
+lio of small stocks in the lowest OP and highest Inv quartiles
+is 0.87% per month (t¼ 8.45), but negative RMW and
+CMA slopes shrink the intercept to 0.47% (t¼ 5.89) in the
+five-factor model. The Size-OP-Inv sorts provide the most
+direct evidence that strong profitability and investment tilts
+are problems for the three-factor model.
+9. Conclusions
+There are patterns in average returns related to Size,
+B/M, profitability, and investment. The GRS test easily rejects
+a five-factor model directed at capturing these patterns, but
+we estimate that the model explains between 71% and 94%
+Table 10
+Regressions for 25 value-weight Size-Inv portfolios; July 1963–December 2013, 606 months.
+At the end of June each year, stocks are allocated to five Size groups (Small to Big) using NYSE market cap breakpoints. Stocks are allocated independently
+to five Inv (investment) groups (Low Inv to High Inv), again using NYSE breakpoints. The intersections of the two sorts produce 25 Size-Inv portfolios. The
+LHS variables are the monthly excess returns on the 25 Size-Inv portfolios. The RHS variables are the excess market return, RMRF, the Size factor, SMB, the
+value factor, HML or its orthogonal version, HMLO, the profitability factor, RMW, and the investment factor, CMA, constructed using independent 2  3 sorts
+on Size and each of B/M, OP, and Inv. Panel A shows three-factor intercepts and their t-statistics. Panel B shows five-factor intercepts, slopes for HMLO, RMW,
+and CMA, and t-statistics for these coefficients.
+R(t)RF(t)¼aþb[RM(t)RF(t)]þsSMB(t)þhHMLO(t)þrRMW(t)þcCMA(t)þe(t)
+Inv -
+Low
+2
+3
+4
+High
+Low
+2
+3
+4
+High
+Panel A: Three-factor intercepts: RMRF, SMB, and HML
+a
+t(a)
+Small
+0.09
+0.15
+0.17
+0.06
+0.48
+1.01
+2.74
+2.76
+1.00
+7.19
+2
+0.01
+0.10
+0.15
+0.08
+0.26
+0.14
+1.72
+2.74
+1.45
+4.71
+3
+0.09
+0.19
+0.10
+0.11
+0.17
+1.11
+3.15
+1.80
+1.73
+2.50
+4
+0.02
+0.01
+0.04
+0.14
+0.03
+0.24
+0.19
+0.66
+2.09
+0.38
+Big
+0.15
+0.07
+0.02
+0.07
+0.05
+1.86
+1.18
+0.39
+1.43
+0.75
+Panel B: Five-factor coefficients: RMRF, SMB, HMLO, RMW, and CMA
+a
+t(a)
+Small
+0.21
+0.11
+0.09
+0.02
+0.35
+2.66
+1.93
+1.47
+0.32
+5.30
+2
+0.01
+0.01
+0.06
+0.02
+0.14
+0.14
+0.21
+1.12
+0.30
+2.59
+3
+0.03
+0.10
+0.01
+0.09
+0.02
+0.40
+1.74
+0.21
+1.37
+0.33
+4
+0.09
+0.09
+0.04
+0.08
+0.15
+1.20
+1.42
+0.73
+1.22
+2.05
+Big
+0.04
+0.07
+0.06
+0.04
+0.20
+0.49
+1.42
+1.31
+0.90
+3.33
+h
+t(h)
+Small
+0.10
+0.17
+0.16
+0.12
+0.00
+2.67
+6.53
+5.50
+4.35
+0.14
+2
+0.06
+0.26
+0.14
+0.25
+0.11
+2.33
+9.11
+5.26
+10.24
+4.36
+3
+0.13
+0.21
+0.21
+0.18
+0.04
+3.53
+7.26
+7.99
+6.12
+1.40
+4
+0.15
+0.29
+0.25
+0.08
+0.19
+4.34
+9.41
+8.63
+2.50
+5.57
+Big
+0.10
+0.04
+0.10
+0.00
+0.06
+2.94
+1.86
+4.47
+0.18
+2.04
+r
+t(r)
+Small
+0.55
+0.04
+0.15
+0.11
+0.19
+14.42
+1.52
+5.13
+3.79
+5.93
+2
+0.18
+0.27
+0.17
+0.30
+0.15
+6.54
+9.37
+6.02
+11.72
+5.86
+3
+0.01
+0.11
+0.29
+0.18
+0.13
+0.36
+3.71
+10.65
+5.99
+4.20
+4
+0.05
+0.21
+0.21
+0.16
+0.31
+1.51
+6.68
+7.29
+5.02
+8.77
+Big
+0.05
+0.07
+0.17
+0.15
+0.02
+1.50
+2.74
+7.20
+6.05
+0.71
+c
+t(c)
+Small
+0.22
+0.38
+0.34
+0.18
+0.31
+5.27
+13.11
+10.50
+5.69
+8.78
+2
+0.47
+0.47
+0.36
+0.17
+0.51
+15.85
+15.12
+12.21
+6.28
+18.17
+3
+0.47
+0.53
+0.37
+0.06
+0.56
+11.59
+16.71
+12.66
+1.83
+16.72
+4
+0.64
+0.56
+0.39
+0.11
+0.60
+16.64
+16.55
+12.46
+3.10
+16.03
+Big
+0.69
+0.48
+0.25
+0.12
+0.76
+18.03
+18.80
+10.27
+4.59
+24.15
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+17
+Table 11
+Regressions for 32 value-weight Size-OP-Inv portfolios; July 1963–December 2013, 606 months.
+At the end of June each year, stocks are allocated to two Size groups (Small and Big) using the NYSE median as the market cap breakpoint. Small and big stocks are allocated independently to four OP groups (Low
+OP to High OP) and four Inv groups (Low Inv to High Inv), using NYSE OP and Inv breakpoints for the small or big Size group. The intersections of the three sorts produce 32 Size-OP-Inv portfolios. The LHS variables
+in the 32 regressions are the excess returns on the 32 Size-OP-Inv portfolios. The RHS variables are the excess market return, RMRF, the Size factor, SMB, the B/M factor, HML or its orthogonal version HMLO, the
+profitability factor, RMW, and the investment factor, CMA, constructed using 2  3 sorts on Size and B/M, OP, or Inv. Panel A shows three-factor intercepts and their t-statistics. Panel B shows five-factor intercepts,
+slopes for RMW and CMA, and their t-statistics.
+R(t)RF(t)¼aþb[RM(t)RF(t)]þsSMB(t)þhHMLO(t)þrRMW(t)þcCMA(t)þe(t)
+Small
+Big
+OP -
+Low
+2
+3
+High
+Low
+2
+3
+High
+Low
+2
+3
+High
+Low
+2
+3
+High
+Panel A: Three-factor intercepts: RMRF, SMB, and HML
+a
+t(a)
+a
+t(a)
+Low Inv
+0.09
+0.11
+0.32
+0.34
+0.92
+1.45
+3.71
+3.74
+0.01
+0.10
+0.21
+0.17
+0.07
+1.12
+2.39
+1.97
+2
+0.11
+0.09
+0.15
+0.21
+1.37
+1.51
+2.72
+2.87
+0.25
+0.11
+0.16
+0.20
+2.88
+1.40
+2.22
+2.53
+3
+0.24
+0.18
+0.17
+0.28
+2.72
+2.99
+3.01
+4.21
+0.11
+0.01
+0.03
+0.15
+1.25
+0.19
+0.40
+1.86
+High Inv
+0.87
+0.23
+0.02
+0.05
+8.45
+2.80
+0.40
+0.66
+0.23
+0.27
+0.06
+0.29
+2.34
+3.04
+0.71
+3.24
+Panel B: Five-factor coefficients: RMRF, SMB, HMLO, RMW, and CMA
+a
+t(a)
+a
+t(a)
+Low Inv
+0.05
+0.00
+0.11
+0.11
+0.66
+0.04
+1.29
+1.30
+0.05
+0.11
+0.03
+0.10
+0.63
+1.36
+0.43
+1.27
+2
+0.18
+0.03
+0.03
+0.01
+2.59
+0.45
+0.60
+0.21
+0.18
+0.10
+0.05
+0.03
+2.11
+1.29
+0.75
+0.33
+3
+0.14
+0.15
+0.06
+0.09
+1.67
+2.33
+1.21
+1.72
+0.07
+0.01
+0.05
+0.01
+0.80
+0.11
+0.73
+0.09
+High Inv
+0.47
+0.23
+0.05
+0.13
+5.89
+2.91
+0.96
+2.44
+0.12
+0.17
+0.01
+0.36
+1.37
+1.88
+0.11
+4.36
+r
+t(r)
+r
+t(r)
+Low Inv
+0.65
+0.15
+0.38
+0.51
+18.43
+3.88
+9.37
+11.88
+0.37
+0.15
+0.39
+0.38
+9.86
+3.68
+10.03
+9.65
+2
+0.43
+0.25
+0.33
+0.57
+12.40
+8.92
+12.53
+18.64
+0.23
+0.11
+0.17
+0.37
+5.32
+2.75
+4.97
+9.71
+3
+0.36
+0.07
+0.32
+0.58
+8.74
+2.35
+12.27
+22.30
+0.36
+0.10
+0.22
+0.43
+8.62
+2.47
+6.48
+11.62
+High Inv
+0.89
+0.18
+0.22
+0.48
+22.84
+4.65
+8.10
+19.02
+0.62
+0.06
+0.12
+0.15
+14.89
+1.43
+2.88
+3.77
+c
+t(c)
+c
+t(c)
+Low Inv
+0.23
+0.65
+0.69
+0.66
+6.02
+15.86
+15.95
+14.34
+0.48
+0.74
+0.67
+0.59
+11.95
+17.31
+15.78
+13.79
+2
+0.26
+0.59
+0.50
+0.52
+7.04
+19.27
+17.88
+15.73
+0.33
+0.38
+0.27
+0.25
+7.29
+8.85
+7.28
+6.14
+3
+0.11
+0.24
+0.34
+0.27
+2.58
+7.21
+12.39
+9.67
+0.23
+0.23
+0.05
+0.07
+5.21
+5.41
+1.46
+1.62
+High Inv
+0.67
+0.12
+0.11
+0.21
+15.95
+2.78
+3.61
+7.57
+0.49
+0.34
+0.49
+0.77
+11.04
+7.10
+10.97
+18.03
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+18
+of the cross-section variance of expected returns for the Size,
+B/M, OP, and Inv portfolios we examine.
+Judged on regression intercepts, the three sets of factors
+we use — (i) separate 2 3 sorts on Size and B/M, OP, or Inv,
+(ii) separate 2 2 sorts, and (iii) 2 2 2 2 sorts that jointly
+control for Size, B/M, OP, and Inv  provide similar descrip-
+tions of average returns on the LHS portfolios examined.
+Armed with the evidence presented here, which ver-
+sion of the factors would we choose if starting fresh? We
+might prefer the factors from the 2  2 Size-B/M, Size-OP,
+and Size-Inv sorts over those from the 2  3 sorts (the
+original approach). Since the 2  2 versions of HML, RMW,
+and CMA use all stocks and the 2  3 versions exclude 40%,
+the 2  2 factors are better diversified. In the tests of the
+five-factor model here and in Fama and French (2014),
+however, the performance of the two sets of factors is
+similar for the LHS portfolios we examine, so the choice
+between them seems inconsequential.
+The joint controls of the 2 2 2 2 sorts are attractive
+for isolating estimates of factor premiums. But given that
+multivariate regression slopes measure marginal effects, it's
+not clear that the factors from the 2 2 2 2 sorts better
+isolate exposures to variation in returns related to Size, B/M,
+profitability, and investment. And inevitable uncertainty about
+the eventual list of factors lessens the attraction of the
+2 2 2 2 factors. Controlling for more factors is proble-
+matic. If we add momentum, for example, correlations among
+the five variables are likely to result in poor diversification of
+some of the portfolios used to construct factors. If one short-
+ens the list of factors (for example, dropping HML), one should
+reconstruct the factors since controlling for unused character-
+istics is potentially harmful (though apparently not an issue in
+the Table 5 tests of three-factor and four-factor models).
+In the end, precedent, flexibility in accommodating more
+or fewer factors, and the fact that they perform as well as the
+2 2 and 2 2 2 2 factors in our tests of asset pricing
+models lead us back to the factors from the 2 3 sorts.
+If parsimony is an issue, our results suggest that HML is
+a redundant factor in the sense that its high average return
+is fully captured by its exposures to RMRF, SMB, and
+especially RMW and CMA. Thus, in applications where the
+sole interest is abnormal returns (measured by regression
+intercepts), our tests suggest that a four-factor model that
+drops HML performs as well as the five-factor model. But if
+one is also interested in portfolio tilts toward Size, value,
+profitability, and investment premiums, the five-factor
+model is the choice. As a concession to the evidence that
+suggests HML is redundant, however, one might substitute
+HMLO for HML in the five-factor model.
+One of our more interesting results is that portfolios of
+small stocks with negative exposures to RMW and CMA are
+the biggest asset pricing problem in four of the six sets of LHS
+portfolios examined here. The negative CMA exposures of the
+troublesome portfolios always line up with evidence that the
+firms in these portfolios invest a lot, but negative exposures to
+RMW in the 5 5 Size-B/M and Size-Inv sorts (Tables 7 and 10)
+do not correspond to particularly low profitability. For these
+portfolios, we say their returns behave like those of the stocks
+of firms that invest a lot despite low profitability, but there are
+hints that for small stocks, high investment alone might be
+the prime problem. For the 2 4 4 Size-OP-Inv portfolios in
+Table 11, there is less ambiguity. In this sort, negative RMW
+and CMA slopes line up nicely with low OP and high Inv, and
+we conclude that the lethal portfolios contain small stocks of
+firms that invest a lot despite low profitability. As a lure for
+potential readers of FF (2014) we can report that small stock
+portfolios with similar properties play a big role in our tests of
+the five-factor model on prominent anomaly variables, speci-
+fically, accruals, net share issues, and volatility.
+Behavioral stories for the low average returns of small
+stocks that invest a lot despite low profitability face a
+serious challenge: The unexplained average returns of big
+stocks that invest a lot despite low profitability are
+positive.
+Finally, the paper closest to ours is Hou, Xue, and Zhang
+(2012). They examine a four-factor model that, in addition
+to RMRF, includes factors much like SMB, RMW, and CMA
+that are constructed from 2  3  3 sorts that jointly
+control for Size, profitability, and investment. They do not
+comment on why HML is not in the model, and they only
+compare the performance of their four-factor model to
+that of the CAPM, the FF three-factor model, and Carhart's
+(1997) four-factor model, which adds a momentum factor.
+Their investigation of models is more restricted than ours,
+and they do not consider alternative factor definitions.
+More
+important,
+they
+are
+primarily
+concerned
+with
+explaining the returns associated with anomaly variables
+not used to construct their factors, and they focus on VW
+portfolios from univariate sorts on each variable. Value-
+weight portfolios from univariate sorts on variables other
+than Size are typically dominated by big stocks, and one of
+the main messages here and in Fama and French (1993,
+2012, 2014) is that the most serious problems of asset
+pricing models are in small stocks.
+Appendix A
+A.1. Summary statistics for the components of the factors
+Table A1 shows the means, standard deviations, and
+t-statistics for the means for returns on the portfolios used
+to construct SMB, HML, RMW, and CMA.
+A.2. Five-factor regressions to explain the returns for
+Size-B/M-OP and Size-B/M-Inv Portfolios
+Table A2 shows intercepts and HMLO, RMW, and CMA
+slopes from five-factor regression (6) for monthly excess
+returns for the 32 portfolios from 2 4 4 sorts on Size, B/
+M, and operating profitability OP. The portfolios of small and
+big stocks with the highest B/M and OP (highly profitable
+extreme value stocks) produce rather extreme intercepts,
+negative for big stocks (0.20% per month), and positive for
+small stocks (0.35%), but they are only 0.97 and 1.80
+standard errors from zero, suggestive of chance results. The
+imprecision of these intercepts is due to poor diversification:
+highly profitable extreme value stocks are rare, especially
+among big stocks. The regression R2 for these portfolios (not
+shown in Table A2) are low, 0.57 for big stocks and 0.67 for
+small stocks.
+For small and big stocks, the HMLO slopes for the 32 Size-
+B/M-OP portfolios increase monotonically from the low B/M
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+19
+Table A1
+Average percent returns, standard deviations (Std dev.), and t-statistics for the average return for the portfolios used to construct SMB, HML, RMW, and
+CMA; July 1963–December 2013, 606 months.
+We use independent sorts to form two Size groups, and two or three B/M, operating profitability (OP), and investment (Inv) groups. The VW portfolios
+defined by the intersections of the groups are the building blocks for the factors. We label the portfolios with two or four letters. The first is small (S) or big
+(B). In the 2  3 and 2  2 sorts, the second is the B/M group, high (H), neutral (N), or low (L), the OP group, robust (R), neutral (N), or weak (W), or the Inv
+group, conservative (C), neutral (N), or aggressive (A). In the 2  2  2  2 sorts, the second character is the B/M group, the third is the OP group, and the
+fourth is the Inv group.
+2  3 Sorts
+2  2 Sorts
+Size-B/M
+SL
+SN
+SH
+BL
+BN
+BH
+SL
+SH
+BL
+BH
+Mean
+0.93
+1.31
+1.46
+0.89
+0.94
+1.10
+1.03
+1.43
+0.88
+1.04
+Std dev.
+6.87
+5.44
+5.59
+4.65
+4.34
+4.68
+6.41
+5.42
+4.50
+4.38
+t-Statistic
+3.32
+5.93
+6.44
+4.69
+5.36
+5.78
+3.95
+6.51
+4.82
+5.86
+Size-OP
+SW
+SN
+SR
+BW
+BN
+BR
+SW
+SR
+BW
+BR
+Mean
+1.02
+1.27
+1.35
+0.81
+0.87
+0.98
+1.10
+1.32
+0.82
+0.95
+Std dev
+6.66
+5.32
+5.96
+4.98
+4.38
+4.39
+6.16
+5.69
+4.53
+4.39
+t-Statistic
+3.77
+5.87
+5.60
+4.00
+4.91
+5.50
+4.41
+5.71
+4.47
+5.33
+Size-Inv
+SC
+SN
+SA
+BC
+BN
+BA
+SC
+SA
+BC
+BA
+Mean
+1.41
+1.34
+0.96
+1.07
+0.94
+0.85
+1.40
+1.06
+0.99
+0.88
+Std dev
+6.12
+5.22
+6.59
+4.38
+4.08
+5.18
+5.73
+6.17
+4.09
+4.69
+t-Statistic
+5.66
+6.35
+3.59
+5.99
+5.69
+4.03
+6.01
+4.25
+5.98
+4.62
+2  2  2  2 Size-B/M-OP-Inv Sorts
+SLWC
+SLWA
+SLRC
+SLRA
+SHWC
+SHWA
+SHRC
+SHRA
+Mean
+1.13
+0.70
+1.36
+1.16
+1.43
+1.24
+1.64
+1.54
+Std dev
+7.18
+7.36
+5.38
+6.15
+5.55
+5.62
+5.23
+5.52
+t-Statistic
+3.89
+2.34
+6.24
+4.64
+6.34
+5.42
+7.72
+6.88
+BLWC
+BLWA
+BLRC
+BLRA
+BHWC
+BHWA
+BHRC
+BHRA
+Mean
+0.77
+0.78
+1.02
+0.91
+1.02
+0.93
+1.24
+1.17
+Std dev
+5.16
+5.47
+4.16
+4.74
+4.36
+4.69
+4.79
+5.51
+t-Statistic
+3.69
+3.51
+6.04
+4.75
+5.78
+4.87
+6.38
+5.23
+Table A2
+Five-factor regression results for 32 value-weight Size-B/M-OP portfolios; July 1963–December 2013, 606 months.
+At the end of June each year, stocks are allocated to two Size groups (Small and Big) using the NYSE median as the market cap breakpoint. Small and big
+stocks are allocated independently to four B/M groups (Low B/M to High B/M) and four OP groups (Low OP to High OP), using NYSE B/M and OP breakpoints
+for the small or big Size group. The intersections of the three sorts produce 32 Size-B/M-OP portfolios. The LHS variables are the excess returns on the 32
+Size-B/M-OP portfolios. The RHS variables are the excess market return, RMRF, the Size factor, SMB, the B/M factor, HML or its orthogonal version, HMLO,
+the profitability factor, RMW, and the investment factor, CMA, constructed using 2  3 sorts on Size and B/M, OP, or Inv. The table shows five-factor
+regression intercepts, HMLO, RMW, and CMA slopes, and t-statistics for the intercepts and slopes.
+R(t)RF(t)¼aþb[RM(t)RF(t)]þsSMB(t)þhHMLO(t)þrRMW(t)þcCMA(t)þe(t)
+Small
+Big
+B/M -
+Low
+2
+3
+High
+Low
+2
+3
+High
+Low
+2
+3
+High
+Low
+2
+3
+High
+a
+t(a)
+a
+t(a)
+Low OP
+0.33
+0.03
+0.08
+0.11
+3.49
+0.36
+1.09
+1.67
+0.34
+0.18
+0.13
+0.11
+2.01
+1.72
+1.53
+1.88
+2
+0.00
+0.13
+0.05
+0.01
+0.02
+1.84
+0.90
+0.13
+0.20
+0.17
+0.21
+0.12
+1.79
+1.97
+2.58
+1.50
+3
+0.13
+0.06
+0.09
+0.25
+2.14
+1.10
+1.67
+2.04
+0.05
+0.06
+0.12
+0.18
+0.69
+0.93
+1.34
+1.42
+Low OP
+0.14
+0.08
+0.12
+0.35
+2.94
+1.34
+1.26
+1.80
+0.07
+0.13
+0.07
+0.20
+1.25
+1.36
+0.53
+0.97
+h
+t(h)
+h
+t(h)
+Low OP
+0.54
+0.14
+0.13
+0.55
+12.12
+3.27
+3.71
+16.89
+0.53
+0.08
+0.20
+0.63
+6.58
+1.60
+5.16
+22.21
+2
+0.34
+0.17
+0.38
+0.79
+7.52
+5.12
+14.56
+23.38
+0.60
+0.04
+0.17
+0.84
+11.40
+0.91
+4.45
+22.73
+3
+0.16
+0.29
+0.54
+0.79
+5.71
+11.66
+20.64
+13.82
+0.32
+0.05
+0.44
+0.76
+9.91
+1.52
+10.39
+12.57
+Low OP
+0.01
+0.52
+0.67
+0.74
+0.40
+18.56
+14.91
+7.96
+0.26
+0.06
+0.45
+1.01
+9.55
+1.45
+6.97
+10.63
+r
+t(r)
+r
+t(r)
+Low OP
+1.05
+0.52
+0.12
+0.03
+22.91
+11.60
+3.24
+1.04
+1.02
+0.38
+0.21
+0.02
+12.23
+7.47
+5.25
+0.61
+2
+0.12
+0.31
+0.29
+0.33
+2.48
+8.86
+10.67
+9.30
+0.43
+0.26
+0.13
+0.34
+7.77
+6.26
+3.24
+8.95
+3
+0.18
+0.44
+0.42
+0.33
+6.25
+16.69
+15.62
+5.58
+0.15
+0.30
+0.41
+0.26
+4.55
+9.32
+9.35
+4.09
+Low OP
+0.57
+0.58
+0.57
+0.50
+24.51
+20.26
+12.18
+5.17
+0.36
+0.52
+0.33
+0.43
+12.82
+11.44
+4.89
+4.32
+c
+t(c)
+c
+t(c)
+Low OP
+0.73
+0.06
+0.40
+0.67
+14.79
+1.17
+10.47
+18.62
+1.28
+0.08
+0.30
+0.67
+14.30
+1.39
+7.10
+21.40
+2
+0.41
+0.29
+0.58
+0.80
+8.05
+7.71
+20.05
+21.27
+0.61
+0.27
+0.58
+0.75
+10.33
+5.94
+13.75
+18.42
+3
+0.16
+0.45
+0.61
+0.71
+4.94
+16.03
+21.01
+11.16
+0.45
+0.26
+0.62
+0.45
+12.73
+7.75
+13.25
+6.72
+Low OP
+0.05
+0.48
+0.68
+0.86
+1.95
+15.56
+13.50
+8.33
+0.28
+0.36
+0.31
+0.61
+9.31
+7.38
+4.27
+5.75
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+20
+portfolio to the high B/M portfolios, and the RMW slopes
+increase with profitability. This is not surprising, given that the
+LHS sorts are on Size, B/M, and OP. Investment is not a sort
+variable, but the CMA slopes in Table A2 also line up nicely
+with the evidence in Table A4 that investment is higher for
+low B/M (growth) portfolios and lower for high B/M value
+portfolios. The CMA slopes are more negative (Table A2) and
+investment is stronger (Table A4) for less profitable small
+stocks in the lowest B/M quartile. It is tempting to infer that
+this result is driven by unprofitable startups, but the same
+pattern in CMA slopes and Inv is observed for big stocks in the
+lowest B/M quartile. In any case, the correspondence between
+B/M, OP, and Inv characteristics and HMLO, RMW, and CMA
+slopes makes the five-factor regression results easy to
+interpret.
+The big problem for the five-factor model in Table A2 is
+the negative intercept (0.33% per month, t¼ 3.49) for
+the portfolio of small stocks in the lowest OP and B/M
+quartiles (small, low profitability growth stocks). This
+portfolio has negative HMLO, RMW, and CMA slopes, but
+the reductions to expected return implied by the slopes
+don’t fully explain the low average excess return on the
+portfolio, 0.03% per month (Table 2). The problem for the
+five-factor model posed by this portfolio is like the big
+problem in the tests on the 32 Size-OP-Inv portfolios
+(Table 11). In a nutshell, small stocks that invest a lot
+despite low profitability fare much worse than predicted
+by the five-factor model. The 2  4  4 sorts on Size, B/M,
+and OP add to the puzzle since the portfolio of big stocks in
+the lowest B/M and OP quartiles also has strong negative
+exposures to HMLO, RMW, and CMA, but it has a positive
+five-factor intercept (0.34% per month, t¼2.01). Thus,
+judged by the five-factor model, the average returns of
+big growth stocks that invest a lot despite low profitability
+are, if anything, too high.
+Table A3 shows five-factor intercepts and HMLO, RMW,
+and CMA slopes for the 32 portfolios from 2 4 4 sorts on
+Size, B/M, and Inv. The HML and CMA slopes behave as
+expected, given that the LHS sorts are on B/M and Inv. The
+HML slopes are negative for low B/M portfolios and strongly
+positive for high B/M portfolios. The CMA slopes fall from
+strongly positive for low investment portfolios to strongly
+negative for high Inv portfolios. There is less correspondence
+between the RMW slopes in Table A3 and average OP in Table
+A4. Except for the lowest Inv quartile of small stocks, OP tends
+to be higher for small and big low B/M growth stocks than for
+high B/M value stocks (Table A4). This pattern does not show
+up in the RMW slopes for small stocks and it does not show
+up consistently for big stocks (Table A3).
+The portfolios of small and big stocks in the lowest B/M
+quartile and the highest Inv quartile (growth stocks that
+invest a lot) produce intercepts more than 3.5 standard
+errors from zero but of opposite sign — negative (0.20%
+per month, t¼ 4.18) for small stocks and positive (0.37%,
+t¼5.39) for big stocks. Both portfolios have strong nega-
+tive exposures to CMA and weaker negative exposures to
+RMW. The negative intercept for the small stock portfolio
+in the lowest B/M quartile and the highest Inv quartile is
+Table A3
+Five-factor regression results for 32 Size-B/M-Inv portfolios; July 1963–December 2013, 606 months.
+At the end of June each year, stocks are allocated to two Size groups (Small and Big) using the NYSE median as the market cap breakpoint. Small and big
+stocks are allocated independently to four B/M groups (low B/M to High B/M) and four Inv groups (low Inv to High Inv) using NYSE breakpoints for the small
+or big Size group. The intersections of the three sorts produce 32 Size-B/M-Inv portfolios. The LHS variables in the 32 regressions are the excess returns on
+the 32 Size-B/M-Inv portfolios. The RHS variables are the excess market return, RMRF, the Size factor, SMB, the orthogonal version of the B/M factor, HMLO,
+the profitability factor, RMW, and the investment factor, CMA, constructed using 2  3 sorts on Size and B/M, OP, or Inv. The table shows five-factor
+regression intercepts, HMLO, RMW, and CMA slopes, and t-statistics for the intercepts and slopes.
+R(t)RF(t)¼aþb[RM(t)RF(t)]þsSMB(t)þhHMLO (t)þrRMW(t)þcCMA(t)þe(t)
+Small
+Big
+B/M -
+Low
+2
+3
+High
+Low
+2
+3
+High
+Low
+2
+3
+High
+Low
+2
+3
+High
+a
+t(a)
+a
+t(a)
+Low Inv
+0.05
+0.06
+0.18
+0.04
+0.64
+0.81
+2.46
+0.53
+0.06
+0.08
+0.18
+0.10
+0.64
+0.95
+2.20
+1.37
+2
+0.10
+0.01
+0.04
+0.04
+1.37
+0.18
+0.83
+0.54
+0.03
+0.09
+0.08
+0.11
+0.32
+1.07
+0.95
+1.39
+3
+0.08
+0.02
+0.07
+0.06
+1.45
+0.30
+1.36
+0.68
+0.06
+0.08
+0.12
+0.02
+0.83
+0.99
+1.39
+0.21
+High Inv
+0.20
+0.07
+0.03
+0.02
+4.18
+1.27
+0.47
+0.14
+0.37
+0.18
+0.22
+0.06
+5.39
+2.07
+2.18
+0.60
+h
+t(h)
+h
+t(h)
+Low Inv
+0.45
+0.07
+0.25
+0.58
+11.39
+1.92
+7.43
+15.13
+0.44
+0.20
+0.10
+0.53
+9.85
+5.19
+2.65
+15.52
+2
+0.25
+0.23
+0.35
+0.73
+7.49
+8.35
+13.91
+21.74
+0.28
+0.05
+0.27
+0.73
+7.02
+1.43
+6.74
+20.22
+3
+0.18
+0.27
+0.45
+0.66
+7.48
+10.22
+17.34
+15.51
+0.22
+0.02
+0.33
+1.00
+6.59
+0.63
+7.72
+23.05
+High Inv
+0.23
+0.32
+0.46
+0.83
+10.26
+11.63
+13.54
+15.97
+0.42
+0.29
+0.53
+0.73
+12.73
+6.94
+11.32
+14.41
+r
+t(r)
+r
+t(r)
+Low Inv
+0.49
+0.12
+0.05
+0.14
+12.01
+3.47
+1.48
+3.55
+0.18
+0.26
+0.18
+0.23
+3.97
+6.61
+4.47
+6.57
+2
+0.07
+0.32
+0.32
+0.22
+2.08
+11.02
+12.17
+6.46
+0.27
+0.17
+0.07
+0.17
+6.51
+4.37
+1.69
+4.44
+3
+0.12
+0.41
+0.34
+0.21
+4.73
+14.86
+12.76
+4.70
+0.28
+0.31
+0.21
+0.16
+8.06
+8.18
+4.75
+3.65
+High Inv
+0.15
+0.16
+0.15
+0.26
+6.48
+5.66
+4.21
+4.79
+0.15
+0.30
+0.16
+0.15
+4.49
+7.04
+3.35
+2.82
+c
+t(c)
+c
+t(c)
+Low Inv
+0.00
+0.44
+0.64
+0.92
+0.06
+11.54
+16.97
+21.72
+0.21
+0.61
+0.76
+0.89
+4.15
+14.60
+17.88
+23.20
+2
+0.07
+0.52
+0.66
+0.80
+1.89
+16.80
+23.59
+21.44
+0.01
+0.31
+0.52
+0.64
+0.17
+7.32
+11.68
+16.01
+3
+0.06
+0.38
+0.55
+0.70
+2.31
+12.85
+18.96
+14.81
+0.22
+0.14
+0.49
+0.61
+5.88
+3.55
+10.46
+12.57
+High Inv
+0.65
+0.06
+0.32
+0.41
+25.95
+1.91
+8.55
+7.04
+1.06
+0.02
+0.10
+0.42
+29.26
+0.44
+1.94
+7.39
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+21
+consistent with all the evidence of underperformance for
+small stocks whose returns behave like those of firms that
+invest a lot despite low profitability. The strong positive
+five-factor intercept for the otherwise similar big stock
+portfolio adds to the puzzle.
+References
+Aharoni, G., Grundy, B., Zeng, Q., 2013. Stock returns and the Miller
+Modigliani valuation formula: revisiting the Fama French analysis.
+Journal of Financial Economics 110, 347–357.
+Campbell, J., Shiller, R., 1988. The dividend-price ratio and expectations
+for future dividends and discount factors. Review of Financial Studies
+1, 195–228.
+Carhart, M., 1997. On persistence in mutual fund performance. Journal of
+Finance 52, 57–82.
+Cohen, R., Gompers, P., Vuolteenaho, T., 2002. Who underreacts to
+cashflow news? Evidence from trading between individuals and
+institutions. Journal of Financial Economics 66, 409–462.
+Fairfield, P., Whisenant, S., Yohn, T., 2003. Accrued earnings and growth:
+Implications for future profitability and market mispricing. The
+Accounting Review 78, 353–371.
+Fama, E., 1996. Multifactor portfolio efficiency and multifactor asset
+pricing. Journal of Financial and Quantitative Analysis 31, 441–465.
+Fama, E., French, K., 1993. Common risk factors in the returns on stocks
+and bonds. Journal of Financial Economics 33, 3–56.
+Fama, E., French, K., 1995. Size and book-to-market factors in earnings
+and returns. Journal of Finance 50, 131–156.
+Fama, E., French, K., 2006. Profitability, investment, and average returns.
+Journal of Financial Economics 82, 491–518.
+Fama, E., French, K., 2008. Dissecting anomalies. Journal of Finance 63,
+1653–1678.
+Fama, E., French, K., 2012. Size, value, and momentum in international
+stock returns. Journal of Financial Economics 105, 457–472.
+Fama, E., French, K., 2014. Dissecting anomalies with a five-factor model.
+Unpublished working paper. University of Chicago and Dartmouth
+College.
+Haugen, R., Baker, N., 1996. Commonality in the determinants of
+expected stock returns. Journal of Financial Economics 41, 401–439.
+Hou, K., Xue, C., Zhang, L., 2012. Digesting anomalies: an investment
+approach. NBER working paper no. 18435.
+Huberman, G., Kandel, S., 1987. Mean-variance spanning. Journal of
+Finance 42, 873–888.
+Gibbons, M., Ross, S., Shanken, J., 1989. A test of the efficiency of a given
+portfolio. Econometrica 57, 1121–1152.
+Ikenberry, D., Lakonishok, J., Vermaelen, T., 1995. Market underreaction
+to open market share repurchases. Journal of Financial Economics 39,
+181–208.
+Lintner, J., 1965. The valuation of risk assets and the selection of risky
+investments in stock portfolios and capital budgets. Review of
+Economics and Statistics 47, 13–37.
+Loughran, T., 1997. Book-to-market across firm size, exchange, and
+seasonality: Is there an effect? Journal of Financial and Quantitative
+Analysis 32, 249–268.
+Loughran, T., Ritter, J., 1995. The new issues puzzle. Journal of Finance 50,
+23–51.
+Loughran, T., Vijh, A., 1997. Do long-term shareholders benefit from
+corporate acquisitions? Journal of Finance 52, 1765–1790.
+Merton, R., 1973. An intertemporal capital asset pricing model. Econo-
+metrica 41, 867–887.
+Miller, M., Modigliani, F., 1961. Dividend policy, growth, and the valua-
+tion of shares. Journal of Business 34, 411–433.
+Novy-Marx, R., 2013. The other side of value: The gross profitability
+premium. Journal of Financial Economics 108, 1–28.
+Pástor, L., Stambaugh, R., 2003. Liquidity risk and expected stock returns.
+Journal of Political Economy 111, 642–685.
+Sharpe, William F., 1964. Capital asset prices: A theory of market
+equilibrium
+under
+conditions
+of
+risk.
+Journal
+of
+Finance
+19,
+425–442.
+Titman, S., Wei, K., Xie, F., 2004. Capital investments and stock returns.
+Journal of Financial and Quantitative Analysis 39, 677–700.
+Table A4
+Time-series averages of book-to-market ratios (B/M), profitability (OP), and investment (Inv) for 32 portfolios formed on Size, B/M, and OP or Inv.
+In the sort for June of year t, B is book equity at the end of the fiscal year ending in year t1 and M is market cap at the end of December of year t-1,
+adjusted for changes in shares outstanding between the measurement of B and the end of December. Operating profitability, OP, in the sort for June of year
+t is measured with accounting data for the fiscal year ending in year t1 and is revenues minus cost of goods sold, minus selling, general, and
+administrative expenses, minus interest expense all divided by book equity. Investment, Inv, is the rate of growth of total assets from the fiscal year ending
+in year t2 to the fiscal year ending in t1. Each of the ratios for a portfolio for a given year is the value-weight average (market cap weights) of the ratios
+for the stocks in the portfolio. The table shows the time-series averages of the ratios for the 51 portfolio formation years 1963–2013.
+B/M
+OP
+Inv
+B/M-
+Low
+2
+3
+High
+Low
+2
+3
+High
+Low
+2
+3
+High
+32 Size-B/M-OP portfolios
+Small
+Low OP
+0.32
+0.77
+1.11
+2.12
+0.67
+0.01
+0.03
+0.03
+0.37
+0.15
+0.09
+0.05
+2
+0.41
+0.77
+1.10
+1.81
+0.19
+0.19
+0.18
+0.18
+0.35
+0.14
+0.10
+0.08
+3
+0.42
+0.76
+1.08
+1.76
+0.27
+0.27
+0.26
+0.26
+0.27
+0.13
+0.10
+0.08
+High OP
+0.34
+0.74
+1.07
+1.82
+0.88
+0.42
+0.46
+0.46
+0.25
+0.14
+0.12
+0.10
+Big
+Low OP
+0.27
+0.54
+0.80
+1.34
+0.00
+0.14
+0.14
+0.13
+0.42
+0.18
+0.14
+0.11
+2
+0.29
+0.53
+0.78
+1.21
+0.24
+0.24
+0.24
+0.23
+0.23
+0.11
+0.08
+0.08
+3
+0.29
+0.51
+0.77
+1.20
+0.33
+0.32
+0.32
+0.31
+0.17
+0.13
+0.11
+0.11
+High OP
+0.23
+0.51
+0.77
+1.24
+0.65
+0.45
+0.46
+0.49
+0.16
+0.11
+0.11
+0.10
+32 Size-B/M-Inv portfolios
+Small
+Low Inv
+0.36
+0.76
+1.11
+2.07
+0.06
+0.15
+0.14
+0.08
+0.14
+0.10
+0.09
+0.10
+2
+0.41
+0.77
+1.09
+2.00
+0.35
+0.25
+0.22
+0.15
+0.03
+0.03
+0.03
+0.03
+3
+0.41
+0.76
+1.09
+1.83
+0.39
+0.26
+0.23
+0.17
+0.11
+0.11
+0.11
+0.11
+High Inv
+0.34
+0.75
+1.08
+1.84
+0.30
+0.26
+0.22
+0.16
+0.63
+0.44
+0.42
+0.50
+Big
+Low Inv
+0.28
+0.53
+0.79
+1.36
+0.51
+0.31
+0.25
+0.19
+0.04
+0.03
+0.02
+0.03
+2
+0.27
+0.53
+0.79
+1.25
+0.48
+0.32
+0.26
+0.21
+0.06
+0.06
+0.06
+0.06
+3
+0.25
+0.51
+0.78
+1.22
+0.46
+0.32
+0.27
+0.21
+0.12
+0.12
+0.12
+0.12
+High Inv
+0.23
+0.51
+0.78
+1.24
+0.53
+0.31
+0.26
+0.21
+0.38
+0.37
+0.40
+0.48
+E.F. Fama, K.R. French / Journal of Financial Economics 116 (2015) 1–22
+22

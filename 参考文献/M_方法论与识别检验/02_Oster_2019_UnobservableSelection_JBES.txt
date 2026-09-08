@@ -1,0 +1,3130 @@
+Unobservable Selection and Coeﬃcient Stability:
+Theory and Evidence∗
+Emily Oster
+Brown University and NBER
+August 9, 2016
+Abstract
+A common approach to evaluating robustness to omitted variable bias is to observe coeﬃcient movements
+after inclusion of controls. This is informative only if selection on observables is informative about selection
+on unobservables. Although this link is known in theory (i.e. Altonji, Elder and Taber (2005)), very few
+empirical papers approach this formally. I develop an extension of the theory which connects bias explicitly
+to coeﬃcient stability. I show that it is necessary to take into account coeﬃcient and R-squared
+movements. I develop a formal bounding argument. I show two validation exercises and discuss application
+to the economics literature.
+∗Ling Zhong, Unika Shrestha, Damian Kozbur, Guillaume Pouliot, David Birke and Angela Li provided excellent research
+assistance. I thank David Cesarini, Raj Chetty, Todd Elder, Amy Finkelstein, Guido Imbens, Larry Katz, Jonah Gelbach, Matt
+Gentzkow, Matt Notowidigdo, Chad Syverson, Manisha Shah, Azeem Shaikh, Jesse Shapiro, Bryce Steinberg, Matt Taddy, Heidi
+Williams and participants in seminars at Brown University, University of Chicago Booth School of Business, Wharton and Yale
+for helpful comments. I am grateful to a number of authors for providing replication ﬁles or re-running analysis by request. I
+gratefully acknowledge ﬁnancial support from the Neubauer Family. Stata code to perform the calculations described in this paper
+is available from the authors website or through ssc under the name psacalc.
+1
+1
+Introduction
+Concerns about omitted variable bias are common to most or all non-experimental work in economics.1 The
+most straightforward approach to such concerns is to include controls that can be observed. Angrist and
+Pischke (2010) argue that among the major advances in empirical economics in the past two decades is greater
+eﬀort to identify the most important threats to validity, and to address them with appropriate selection of
+controls.
+In some cases it is possible to argue that a control (or set of controls) fully captures a particular omitted
+variable. However, in many cases observed controls are an incomplete proxy for the true omitted variable or
+variables. For example, it is common in many applications to worry about confounding from socioeconomic
+status. Researchers often include controls to capture this, but typically with the acknowledgment that the
+controls observed in a typical dataset (e.g. education and income categories, race groups) do not perfectly
+capture overall socioeconomic status. Similarly, in many cross-country or cross-regional analyses authors seek
+to control for geographic diﬀerences across areas, but observed controls (extent of mountains, access to water)
+are incomplete proxies for the true omitted factor.
+A common approach in these situations is to explore the sensitivity of treatment eﬀects to the inclusion
+of observed controls. If a coeﬃcient is stable after inclusion of the observed controls, this is taken as a sign
+that omitted variable bias is limited.2 The intuitive appeal of this approach lies in the idea that the bias
+arising from the observed (imperfect) controls is informative about the bias that arises from the full set
+including the unobserved components. This is not, however, implied by the baseline assumptions underlying
+the linear model.
+Formally, using the observables to identify the bias from the unobservables requires making further
+assumptions about the covariance properties of the two sets. In particular, the case in which the omitted
+variable bias is fully identiﬁed by the observed controls corresponds to the extreme assumption that the
+relationship between treatment and unobservables can be fully recovered from the relationship between
+treatment and observables (Murphy and Topel, 1990; Altonji, Elder and Taber, 2005a; Altonji et al, 2011).
+Even under this most optimistic assumption, however, coeﬃcient movements alone are not a suﬃcient
+statistic to calculate bias. To illustrate why, consider the case of a researcher estimating wage returns to
+education with individual ability as the only counfounder, and where there are two orthogonal components of
+ability, one of which has a higher variance than the other. Assume wages would be fully explained if both
+1Despite recent trends, this still makes up the vast majority of results within economics: in 2012 the combination of the
+American Economic Review, the Quarterly Journal of Economics and the Journal of Political Economy published 69 empirical,
+non-structural papers, only 11 of which were randomized.
+2The next section and the ﬁnal section of this paper will discuss more explicitly the use of this approach within economics,
+but it is worth noting that it is the link between coeﬃcient stability and omitted variable bias is often quite direct. For example,
+Chiappori et al (2012) state: “It is reassuring that the estimates are very similar in the standard and the augmented speciﬁcations,
+indicating that our results are unlikely to be driven by omitted variables bias.” Similarly, Lacetera et al (2012) state: “These
+controls do not change the coeﬃcient estimates meaningfully, and the stability of the estimates from columns 4 through 7 suggests
+that controlling for the model and age of the car accounts for most of the relevant selection.”
+2
+ability components were observed but, in practice, the researcher sees only one of the two. The coeﬃcient will
+appear much more stable if the observed ability control is the lower variance one, but this is not because the
+bias is smaller but simply because less of the wage outcome is explained by the controls.
+This example is described in more detail in Section 2. The key observation is that the quality of the
+control is diagnosed by how much of the variance in the outcome is explained by its inclusion or, equivalently,
+how much the R-squared moves when the controls are introduced. Omitted variable bias is proportional to
+coeﬃcient movements, but only if such movements are scaled by the change in R-squared when controls are
+included.3
+Recognizing this point, Altonji, Elder and Taber (2005a) (hence, AET) suggest a method for evaluating
+the robustness of results under the assumption that the relationship between treatment and unobservables can
+be recovered from the relationship between treatment and observables. Speciﬁcally, they provide a test
+statistic which is valid under the null of a zero treatment eﬀect for how important the unobservables would
+have to be relative to the observables to eliminate the observed eﬀect. The test statistic assumes that if one
+could observe the full set of unobservables the outcome variance would be fully explained, so the regression
+would have an R-squared of 1.
+Empirical work in economics which invokes coeﬃcient stability rarely either discusses R-squared
+movements or explicitly uses the AET method. I demonstrate this in Section 2 using a sample of 76 results
+from 27 papers in top journals after AET and explicitly discuss coeﬃcient stability in the context of imperfect
+controls.4 Only two of these papers mention the importance of their controls in explaining the variance of the
+outcome. Only one paper in this set (Nunn and Wantchekon, 2011) attempts to implement the method
+described in AET and they do not do it correctly. I show that these omissions are especially problematic as
+only a third of results considered would be robust by the AET standard.
+At least three factors may have limited the take-up of the AET methodology. First, in their analysis of
+the linear case in AET they present a test which is valid only under the null of a zero treatment eﬀect, and do
+not detail how a bias-adjusted treatment eﬀect would be estimated. Among other things, this limits the
+possibility of evaluating the robustness of results for which the magnitude increases when controls are added.5
+Second, their assumption that including the unobservables would produce an R-squared of 1 may understate
+the robustness of results, for example in cases where there is measurement error in the outcome. Finally,
+perhaps most important, they do not provide any validation evidence for this approach.6
+The aim of this paper is to extend the methodology for evaluating robustness to omitted variable bias
+3This point is closely related to the partial R-squared logic in Imbens (2003).
+4The universe is papers from the American Economic Review, Quarterly Journal of Economics, Econometrica and the Journal
+of Political Economy for 2008-2010 with at least 20 citations in the ISI Web of Science, and those from 2011-2013 in the same
+journals with at least 10 citations. I further limit to papers with replication ﬁles available.
+5Their working paper, Altonji, Elder and Taber (2002), does produce an implicit function of the bias-adjusted eﬀect in the
+non-linear case, although empirical researchers do not appear to have made use of this at all.
+6A fourth factor, in addition to these, is that their paper does not explicitly link their calculation to coeﬃcient movements
+although the link is obvious econometrically.
+3
+under the assumption that the relationship between treatment and unobservables can be recovered from the
+relationship between the treatment and observables. I link the bias explicitly to coeﬃcient stability and
+provide some validation suggesting the procedure performs well. Finally, I will return to analyzing the
+economics literature and suggest possible robustness standards using evidence from randomized data.
+Section 3 expands on the theory in AET. I focus on the case of a linear model in which an outcome is
+fully determined by a treatment, a set of observed, a set of unobserved covariates and an iid error term. The
+coeﬃcient of interest is the treatment eﬀect. The observed and unobserved covariates are linked by shared
+covariance properties with the treatment. I show ﬁrst that under a restrictive set of assumptions a consistent
+estimator of the treatment eﬀect can be recovered through an intuitive function of coeﬃcients and R-squared
+values. The inputs in this case are typically reported in standard regression output, making it easy to evaluate
+robustness of published results.
+Following this, I show it is possible to generate a consistent, closed-form, estimator for omitted variable
+bias under less restrictive assumptions. This estimator also relies on coeﬃcient and R-squared values, but in
+addition requires the researcher to observe the variance of the outcome and treatment, as well as information
+on the share of the treatment variance which is explained by the observed controls. Although these values are
+not typically reported in standard regression tables they are straightforward to calculate. Details of this
+estimator make clear the limits of coeﬃcient stability: it is possible that the coeﬃcient will be completely
+unchanged with the addition of controls but there may still be a large bias on the treatment eﬀect. I show in
+this section how it is also possible to deliver these results in a GMM setup.
+A key input into the estimator is the R-squared from a hypothetical regression of the outcome on
+treatment and both observed and unobserved controls; I denote this Rmax. If the outcome can be fully
+explained by the treatment and full controls set, then Rmax = 1 (this is the assumption in AET). In many
+empirical settings it seems likely (due, for example, to measurement error) that the outcome cannot be fully
+explained even if the full control set is included. Knowledge about measurement error or expected
+idiosyncratic variation in the outcome can be used to develop intuition about this value.
+The results allow researchers to calculate a consistent estimate of the bias-adjusted treatment eﬀects
+under two assumptions: (1) a value for the relative degree of selection on observed and unobserved variables
+(δ) and (2) a value for Rmax. Given bounding values for both objects, researchers can calculate an identiﬁed
+set for the treatment eﬀect. As in AET I suggest that equal selection (i.e. δ = 1) may be an appropriate upper
+bound on δ.
+The second contribution of the paper, in Section 4, is to perform some validation of the estimator and
+the bounding logic suggested in empirical settings. This section ﬁrst uses NLSY data to construct a dataset
+relating education and wages; the data is constructed such that we know the true treatment eﬀect. I evaluate
+the performance of this adjustment by excluding combinations of controls from the “observed” set. I estimate
+4
+the relative degree of selection on observed and unobserved controls which would be produced by each
+excluded set and calculate the bias-adjusted treatment eﬀect. I show that in 89% of cases the bounds I
+propose would include the true eﬀect; in only 62% of cases does the conﬁdence interval of the naive coeﬃcients
+estimated with controls include this eﬀect. This may actually undervalue the estimator performance as the
+control set in this exercise is selected at random rather than based on using the most important controls ﬁrst,
+as would be common in practice.
+In a second test I estimate several relationships between maternal behavior and child outcomes;
+socioeconomic status confounders are a major concern. I match possibly biased observational estimates with
+external evidence on causal eﬀects from randomized data or comprehensive meta-analyses (this is close in
+spirit to LaLonde (1986)). I then ask whether the robustness tests described above would separate true from
+false associations. I ﬁnd that the adjustment performs well: the approach identiﬁes as robust only the two
+relationships for which external evidence conﬁrms a link. Both of the validation exercises therefore suggest
+empirical support for this assumption.
+The ﬁnal contribution of the paper, developed in Section 5, is to return to the application of the
+procedure to the economics literature. As in Section 2, I focus on a sample of well-cited papers from top
+journals in which coeﬃcient stability is invoked in light of imperfect controls. I use the estimator developed to
+calculate bias-adjusted treatment eﬀects under the assumption of Rmax = 1 and the assumption that δ = 1. I
+am able to calculate these eﬀects for both results where controls move the coeﬃcient toward zero, and those
+that move it away from it. As in Section 2, I show that only a small share of results are robust to this
+adjustment.
+I then consider how this conclusion changes with other bounds on Rmax, in particular focusing on
+bounds which are a function of the R-squared from the regression with controls. These capture the idea that
+there is variation in how predictable outcomes are, and this variation can be roughly inferred from how much
+is predicted by the observables. Denoting the R-squared from the regression with controls as ˜R, I explore
+robustness to Rmax = Π ˜R, with varying values of Π. Twenty-seven percent of results are robust to a value of
+Π = 2, and 57% to a value of Π = 1.25. I demonstrate that coeﬃcient movements alone can be very misleading
+about the degree of robustness.
+There is considerable variation across papers in the robustness of stability claims, but this does not
+suggest an appropriate general value for the bound on Rmax. There are many possible ways to calculate such a
+bound. In Section 5, I suggest one: that randomized results might provide a bounding value. I use a sample of
+randomized papers, also from top journals, to derive cutoﬀvalues of Π which would allow at least 90% of
+randomized results to survive: this value is Π = 1.3. To the extent that this is an attractive methodology for
+generating bounds on Rmax it suggests that researchers might calculate a bias-adjusted treatment eﬀect bound
+using a value of Rmax = 1.3 ˜R. In the sample of non-randomized results considered, about 45% would survive
+5
+this standard.
+The theoretical contribution of this paper relates to a large literature on causal inference in the face of
+unobserved confounders (Rosenbaum and Rubin, 1983). Imbens (2003) presents an analysis of sensitivity
+using a partial R-squared logic which is conceptually similar to the insights in this paper. A number of
+methodological papers consider the approach of varying the covariate set as a sensitivity analysis (Heckman
+and Hotz, 1989; Dehejia and Wahba, 1999; Gelbach, forthcoming). I also relate to the idea of speciﬁcation and
+control set search (Leamer, 1978; Pearl, 2000; Angrist and Pischke, 2010). It is worth noting that the
+approach in this paper diﬀers in some conceptual sense from the latter set of references in that I am concerned
+with estimating a bias-adjusted treatment eﬀect under an assumption about the full model rather than with
+searching for the appropriate full model.
+The paper follows most closely a series of papers which explore bias in treatment eﬀect under
+proportional selection (Murphy and Topel, 1990; Altonji, Elder and Taber, 2005a; Altonji et al, 2011). The
+derivation of closed-form estimators in the linear case represents an extension of the case of non-linear
+estimation in Altonji et al (2005a) and Altonji et al (2002).
+2
+Coeﬃcient Stability: Illustrative Example and Use in Economics
+I motivate the analysis in the paper with a simple illustration of the issue and with some data on coeﬃcient
+stability within economics.
+Illustrative Example
+A central point of this paper is to make clear that coeﬃcient movements alone are not suﬃcient to evaluate
+bias, even under the strong assumption of related observed and unobserved variables. As an illustration,
+consider the case of a researcher estimating wage returns to education with individual ability as the only
+counfounder.7
+I consider the following simple setup. Assume that the model which determines wages is given by
+Y = βX + W + C
+where W and C are two orthogonal components of “ability” and X is education. Assume that the variance of
+W is much larger than the variance of C but both relate to X in the same way. More speciﬁcally, a regression
+of X on either W or C yields the same coeﬃcient.
+Now consider the diﬀerence between the case where the researcher observes W (the high variance
+7This example is motivated by independent work by Pischke and Schwandt (2015), although their setting is focused on issues of
+measurement error in the ability measure.
+6
+control) and the case where s/he observes C (the lower variance control). The key observation is that if the
+researcher observes the ability control with the lower variance the coeﬃcient will appear stable when the
+control is included. This is not, however, because the bias is small, but simply because the control is less
+important in explaining wages.
+To see this precisely, consider Panel A of Table 1, which uses data constructed from the model above,
+with the assumption that β = 0. The ﬁrst row shows controlled and uncontrolled coeﬃcients when the
+observed control is the one with the larger variance; the second shows the coeﬃcients when the observed
+control is the one with the smaller variance. The coeﬃcient in the second row appears much more stable, even
+though the true eﬀect is zero in both.
+The key diﬀerence in the two rows is the change in R-squared, which diagnoses the poor quality of the
+proxy in the second row compared to the ﬁrst. The uninformative control leaves the coeﬃcient largely
+unchanged but also adds little to the R-squared. Omitted variable bias is proportional to coeﬃcient
+movements, but only if such movements are scaled by movements in R-squared.
+Coeﬃcient Stability in Economics
+Many economics papers use coeﬃcient stability to argue for a causal treatment eﬀect in the presence of
+imperfect controls. To get a sense of the formal robustness of these claims, I extract a sample of top journal
+publications. I begin with the universe of all papers in the American Economic Review, Quarterly Journal of
+Economics, The Journal of Political Economy and Econometrica from 2008-2010 with at least 20 citations in
+the ISI Web of Science, and those from 2011-2013 in the same journals with at least 10 citations. I limit the
+sample to papers with replication ﬁles available so it is possible to do further robustness calculations. From
+these papers I extract all results where the researcher explores the sensitivity of the result to a control set and,
+using a close reading of the papers, those in which this exercise appears to be designed to address an imperfect
+set of controls.8 The sample (full citation list in Appendix C) includes 27 papers with 76 total results.
+The illustrative example above makes clear the importance of incorporating movements in R-squared in
+coeﬃcient stability discussions. However, this importance is rarely acknowledged in these papers. Only two of
+the papers in the sample mention anything about movements in R-squared (or variance explained).
+In principle, if coeﬃcients and R-squared values typically move together, this will introduce less bias. If
+large coeﬃcient movements were always accompanied by large R-squared movements, then the coeﬃcient
+stability would be eﬀectively a suﬃcient statistic. Similarly, if the R-squared values from the regression with
+8This later restriction does not eliminate many results; nearly all papers which comment on coeﬃcient stability appear to do
+so to deal with this issue. However, there are exceptions. As an example, in their work on corruption in trucking routes, Olken
+and Barron (2009) comment on the stability of the coeﬃcients when trip ﬁxed eﬀects are included. The inclusion of these eﬀects is
+clearly an important robustness check, as it tests whether diﬀerences across trips drive the results. But there is no sense in which
+such ﬁxed eﬀects are a proxy for some unobserved omitted control. In a case like this it is worth noting that in fact the movement
+of the coeﬃcient is notable only to the extent one wants to draw conclusions from the eﬀect without controls.
+7
+controls were always very large – say, always close to 1 – then the coeﬃcient movements would be enough. In
+practice, neither of these is the case.
+Figure 1 uses the results extracted from the 27 papers described above. I include only results where the
+controlled eﬀect is signiﬁcant. The ﬁgures graph the relationship between the percent movement in eﬀect size
+and the absolute movement in R-squared values. Figure 1a uses all results, and Figure 1b limits to cases where
+the inclusion of controls moves the coeﬃcient toward zero.
+It is not the case that the controlled regressions uniformly have a high R-squared. The range of values
+for the R-squared in the regression with controls is 0.029 to 0.992, with an average of 0.403. Moreover, there is
+at best a very weak relationship between coeﬃcient movements and R-squared movements. If we limit
+ourselves to results where the percent change in coeﬃcient values is between -12% and -8%, for example, the
+range of changes in R-squared values is from 0.034 to 0.156. This observation suggests that the robustness of
+these results may vary widely even if they all have similarly small coeﬃcient movements.
+AET suggest a formal notion of robustness drawing on the assumption that the observed and
+unobserved controls have related covariance properties. In particular, they derive a consistent estimator for
+the ratio of the covariance between (a) the treatment and the unobserved controls and (b) the treatment and
+the observed controls which would produce a treatment eﬀect of zero. They suggest that results with a ratio
+above 1 - that is, those in which the unobserved controls are more important in explaining the treatment than
+the observed controls - be viewed as robust. Their estimator is consistent under the null of a zero treatment
+eﬀect and under the assumption that if both observed and unobserved controls were included in a regression
+the R-squared would be 1. Although AET do not explicitly derive the relation between their estimator and
+the idea of coeﬃcient stability, the connection is theoretically direct.
+The papers in the sample I consider were all published after AET. However, only one of them engages
+in a formal robustness calculation of the type AET suggest (Nunn and Wantchekon, 2011). Further, even that
+paper does not perform the exact calculation in AET. Instead, they follow Bellows and Miguel (2009) in
+implicitly assuming that the observed and unobserved controls are equally important in explaining the
+variance of the outcome. This ignores the fact that that coeﬃcient movements must be scaled by R-squared
+movements.
+Focusing on the 45 results in which the inclusion of controls moves the coeﬃcient toward zero, I
+calculate the AET estimator for the papers in this sample. Table 2 shows some characteristics of the
+distribution. The median result would be eliminated if the ratio of the selection on unobservables to selection
+on observables was 0.73, less than the suggested robustness standard of 1. Indeed, only 30% of results are
+robust to a value of δ = 1.
+On its own, this observation makes clear that formalizing the coeﬃcient stability procedure is
+important, and is likely to matter quantitatively in many settings. In practice, the speciﬁc approach suggested
+8
+by AET may be incomplete for several reasons. First, the estimator they detail is consistent only under the
+null of a zero treatment eﬀect. It is not possible to evaluate robustness under other null assumptions, nor do
+they provide an explicit estimator for the bias-adjusted treatment eﬀect in the linear case. This means it is
+not possible to use this to evaluate robustness of results where the inclusion of controls moves the coeﬃcient
+away from zero - eﬀectively, all results of this type are “robust”. However, if the coeﬃcient is increased
+signiﬁcantly by the included controls then the conclusions about magnitude may be radically biased even if
+the rejection of zero is retained. More generally, if one wants to make statements about the size of the
+“bias-adjusted treatment eﬀect,” their estimator will not deliver this.
+A second issue is that the calculation they suggest does not provide a direct way to allow for the
+possibility that the inclusion of the unobserved controls might not move the R-squared all the way to 1. Since
+in many settings there is likely to be some idiosyncratic variation in outcome - and, importantly, the degree of
+this is likely to vary - this will understate the robustness of results in an unpredictable way.
+The theory section below addresses both of these issues while developing a consistent estimator for the
+bias-adjusted treatment eﬀect in the linear version of the AET model. I then look at the empirical
+performance of this estimator in simulated data and, ﬁnally, return to the sample of papers described above in
+an attempt to develop a more tractable procedure for formalizing coeﬃcient stability.
+3
+Theory
+I begin in this section by developing the estimator under a set of restrictive assumptions. Although these
+assumptions are unlikely to be met in practical settings, the resulting estimator has an intuitive form which
+lays bare many of the issues in this setting. I then develop the estimator under more general assumptions.
+Finally, I discuss implementation.
+Before moving into the theory it is useful to brieﬂy discuss the conceptual approach. I focus on an
+approach to estimating an unbiased treatment eﬀect from a model in which there are some observed
+confounders and some unobserved confounders. Assuming the data-generating process speciﬁed below, the
+approach will generate bias-adjusted treatment eﬀects. There may be numerous other threats to causality,
+including poorly speciﬁed functional form and others.9 This approach will not remove the bias arising from
+those. Leamer (1978) and Angrist and Pischke (2010) (among others) provide more discussion on the related
+topic of model speciﬁcation in search of a causal eﬀect.
+9This analysis is appropriate only for a linear model. AET develop a similar estimator in the context of at least one type of
+non-linear model (a bivariate probit model).
+9
+3.1
+General Setup and Deﬁnitions
+Throughout this section I will focus on the following setup. Consider the regression model
+Y = βX + Ψωo + W2 + ϵ
+(1)
+where X is the (scalar) treatment and ωo is a vector of the observed controls, ωo
+1, ..., ωo
+J. The index W2 is not
+observed. Deﬁne W1 = Ψωo and assume that all elements of ωo are orthogonal to W2, so W1 and W2 are
+orthogonal. Without loss of generality, assume the elements of ωo are also orthogonal to each other.10 Deﬁne
+the proportional selection relationship as δ σ1X
+σ2
+1 = σ2X
+σ2
+2 , where σiX = Cov(Wi, X), σ2
+i = V ar(Wi) for i ∈{1, 2}
+and δ is the coeﬃcient of proportionality. Note that at this point we do not make any assumptions about δ so
+this relationship will always hold for some δ. Deﬁne V ar(X) = σ2
+X and V ar(Y ) = σ2
+y.
+This setup is drawn from AET, who assume ϵ = 0 and that W2 contains some error unrelated to X.
+These results go through in a straightforward way if ϵ = 0.
+As in AET, the orthogonality of W1 and W2 is central to deriving the results and may be somewhat at
+odds with the intuition that the observables and the unobservables are “related.” In practice, the weight of
+this assumption is in how we think about the proportionality condition. In Appendix A.1 I show formally that
+if we begin with a case in which the elements of W1 are correlated with W2 we can always redeﬁne W2 such
+that the results hold under some value of δ.
+Denote the coeﬃcient resulting from the short regression of Y on X as ˚β and the R-squared from that
+regression as ˚
+R. Deﬁne the coeﬃcient from the intermediate regression of Y on X and ωo as ˜β and the
+R-squared as ˜R. Finally, deﬁne Rmax as the R-squared from a hypothetical regression of Y on X, ωo and W2.
+Note that other than Rmaxthese are values which are estimated in-sample based on the available data. Rmax
+is a (theoretical) population value.
+The omitted variable bias of the OLS estimates ˚β and ˜β are determined by auxiliary regressions of (1)
+each value ωo
+1, ..., ωo
+J on X; (2) W2 on X; and (3) W2 on X and ωo. Denote the in-sample estimated coeﬃcient
+on X from regressions of each ωo
+i on X as ˆλωo
+i |X and the (unobservable) in-sample estimated coeﬃcient on X
+from a hypothetical regression of W2 on X as ˆλW2|X. Finally, denote the coeﬃcient on X from a regression of
+W2 on X and ωo as ˆλW2|X,ωo. Denote the population analogs of these values λωo
+i |X, λW2|X and λW2|X,ωo.
+The goal is to provide a consistent estimator for β from Equation (1). Throughout this section all
+estimates are implicitly indexed by n. Probability limits are taken as n approaches inﬁnity. All observations
+are independent and identically distributed according to model (1).
+10All results go through identically if these elements are correlated.
+10
+3.2
+Restricted Estimator
+I develop a consistent estimator of the bias under two additional assumptions.
+Assumption 1 δ = 1, so σ1X
+σ2
+1 = σ2X
+σ2
+2 .
+Assumption 2 Consider a regression of X on ωo and denote the coeﬃcient vector from this regression as
+(µ1, ...., µJ). The coeﬃcients on these controls in the regression of Y on X and ωo are ψi. Assume that
+ψi
+ψj = µi
+µj ∀i, j .
+The ﬁrst of these assumptions implies an equal selection relationship - the unobservable and observables are
+equally related to the treatment. The second assumption delivers the result that the coeﬃcient on X in the
+intermediate regression of Y on X and controls is the same with the observed control set ωo as it would be if
+we could control for the index W1. The proof of this statement appears in Appendix A.2.
+The intuition behind the second condition is straightforward: the relative contributions of each variable
+to X must be the same as their contribution to Y . It will be satisﬁed trivially if there is only one observed
+control. With multiple controls it is very unlikely to hold except in pathological cases. However, as long as the
+deviations from this condition are not extremely large, the estimator will provide an approximation to the
+consistent estimator.
+Using the deﬁnitions above, and standard omitted variable bias formulas, I can express the probability
+limits of the short and intermediate regression coeﬃcients in terms of the auxiliary regression coeﬃcients.
+˚β
+p→
+β +
+J
+X
+i=1
+ψo
+i λωo
+i |X + λW2|X
+˜β
+p→
+β + λW2|X,ωo.
+The asymptotic bias on ˜β (the coeﬃcient on X with controls included) is λW2|X,ωo. Under the second
+assumption above, ˜β is the same coeﬃcient which would be recovered from a regression of Y on X and the
+index W1. Given this, the bias is equal to
+σ2
+2σ1X
+σ2
+1(σ2
+X−
+σ2
+1X
+σ2
+1
+). Denote this bias as Π.
+Deﬁne the following.
+β∗= ˜β −
+h
+˚β −˜β
+i Rmax −˜R
+˜R −˚
+R
+Proposition 1 summarizes the result.
+Proposition 1. β∗
+p→β.
+Proof. I outline the proof here, with details in Appendix A.3. Using the deﬁnition of coeﬃcient and R-squared
+11
+values and recalling the bias is denoted Π we have the following relationships.
+(˚β −˜β)
+p→
+σ1X
+σ2
+X
+ 
+1 −σ1X
+σ2
+1
+Π
+
+
+˜R −˚
+R
+
+ˆσ2
+y
+p→
+σ2
+1 + Π2(σ2
+X −σ2
+1X
+σ2
+1
+) −1
+σ2
+X
+
+σ1X + Π(σ2
+X −σ2
+1X
+σ2
+1
+)
+2
+(Rmax −˜R)ˆσ2
+y
+p→
+Π
+
+
+σ2
+1
+
+σ2
+X −σ2
+1X
+σ2
+1
+
+σ1X
+−Π
+
+σ2
+X −σ2
+1X
+σ2
+1
+
+
+These deﬁne a system of three equations in three unknowns (σ2
+1,σ1X and Π). The system is identiﬁed and the
+solution is Π =
+h
+˚β −˜β
+i
+Rmax−˜
+R
+˜
+R−˚
+R
+.
+Some intuition for this result may be developed by observing that Π = ˜β −β so this result implies that
+˜β−β
+˚
+β−˜β = Rmax−˜
+R
+˜
+R−˚
+R
+. That is, under the equal selection assumption, the ratio of the movement in coeﬃcients is
+equal to the ratio of the movement in R-squared. The objects W1 and W2 enter the equation for Y
+symmetrically in terms of coeﬃcients, and equal selection implies they also are symmetric in their impact on
+X. The only way in which their impact may diﬀer is if they have diﬀerent variances. This possible diﬀerence
+will be captured in the diﬀerential contributions to R-squared. In the special case where the variances are
+equal, then Rmax−˜
+R
+˜
+R−˚
+R
+= 1 and the coeﬃcient movement with inclusion of observed controls is equal to the
+expected coeﬃcient movement with unobserved controls.
+If we relax the assumption of equal selection, and return to the proportional selection relationship
+(δ σ1X
+σ2
+1 = σ2X
+σ2
+2 ), it is straightforward to observe that we can calculate an approximation of the bias-adjusted
+treatment eﬀect with
+β∗≈˜β −δ
+h
+˚β −˜β
+i Rmax −˜R
+˜R −˚
+R
+Given the restrictiveness of the assumptions required to generate this simple formulation it is not
+appropriate to suggest that researchers use this as an estimator directly. However, it is useful for developing
+intuition and, perhaps more so, because it can be calculated from objects included in standard regression
+tables. In many cases, this will be a close approximation to the consistent estimator for the bias developed
+below. It therefore provides a simple way to evaluate the robustness of published results.
+3.3
+Unrestricted Estimator
+I now consider the estimator without the additional restrictions described above. I retain the notation and the
+proof method proceeds similarly.
+The estimator now relies on observing an additional object from the data. Deﬁne ˜X as the residual
+from a regression of X on ωo. Deﬁne the variance of this residual in sample as ˆτx and the population analog as
+12
+τx. Eﬀectively, the diﬀerence between τx and σ2
+X captures how much of the variance of X can be explained by
+the controls. This is not an object which is reported in standard regression tables although it is
+straightforward to calculate (it would be suﬃcient to observe the R-squared from a regression of X on ωo
+along with the variance of X).
+As above, I can express the probability limits of the short and intermediate regression coeﬃcients in
+terms of the auxiliary regression coeﬃcients:
+˚β
+p→
+β +
+j
+X
+i=1
+ψo
+i λωo
+i |X + λW2|X
+˜β
+p→
+β + λW2|X,ωo.
+The asymptotic bias on ˜β is δσ1Xσ2
+2
+σ2
+1τx . Denote this bias Π.
+Deﬁne the cubic function f(ν) as:
+f(ν)
+=
+δ
+
+(Rmax −˜
+R)σyy
+ 
+˚
+β −˜β
+
+σ2
+X
++
+ν
+
+δ
+
+(Rmax −˜
+R)σ2
+y
+
+(σ2
+X −τx) −
+
+˜
+R −˚
+R
+
+σ2
+y
+
+τx −σ2
+Xτx
+
+˚
+β −˜β
+2
++
+ν2 
+τx
+
+˚
+β −˜β
+
+σ2
+X(δ −2)
+
++
+ν3(δ −1)(τxσ2
+X −τ 2
+x)
+Proposition 2. The proposition has two cases depending on the roots of f(ν).
+Case 1: f(ν) has a single real root, deﬁne this root as ν1. Deﬁne β∗= ˜β −ν1. β∗
+p→β.
+Case 2: f(ν) has three real roots, deﬁne them as ν1, ν2 and ν3. Deﬁne a set
+β∗= {˜β −ν1, ˜β −ν2, ˜β −ν3}. One element of the set β∗converges in probability to β.
+Proof. This is an outline of the proof, with details in Appendix A.4. Using the deﬁnition of coeﬃcient and
+R-squared values and recalling that the bias is denoted Π we have the following relationships.
+(˚β −˜β)
+p→
+σ1X
+σ2
+X
+−Π
+σ2
+X −τx
+σ2
+X
+
+
+˜R −˚
+R
+
+ˆσyy
+p→
+σ2
+1 + Π2(τx) −1
+σ2
+X
+(σ1X + Π(τx))2
+(Rmax −˜R)ˆσyy
+p→
+Π
+σ2
+1τx
+σ1X
+−Πτx
+
+These deﬁne a system of three equations in three unknowns (σ2
+1,σ1X and Π). Solving recursively leaves us with
+Π as the root of the equation f(ν) given above. This is a cubic with all real coeﬃcients so it has either one or
+three real roots. If it has a single real root, that is the solution. If it has multiple real roots, one of the three
+will be the solution.
+13
+Proposition 2 parallels Theorem 2 in the Altonji, Elder and Taber (2002) working paper; they consider
+the case where X is binary.
+The corollary below develops the case of δ = 1.
+Corollary 1. Deﬁne
+ν1
+=
+−(Θ) −
+r
+(Θ)2 + 4
+
+(Rmax −˜R)σ2y
+ 
+˚β −˜β
+2
+(σ2
+X)2τx
+−2τX
+
+˚β −˜β
+
+(σ2
+X)
+ν2
+=
+−(Θ) +
+r
+(Θ)2 + 4
+
+(Rmax −˜R)σ2y
+ 
+˚β −˜β
+2
+(σ2
+X)2τx
+−2τX
+
+˚β −˜β
+
+(σ2
+X)
+where Θ =
+
+(Rmax −˜R)σ2
+y
+
+((σ2
+X) −τx) −
+
+˜R −˚
+R
+
+σ2
+y
+
+τx −(σ2
+X)τx
+
+˚β −˜β
+2
+. Deﬁne a set
+β∗= {˜β −ν1, ˜β −ν2}. One element of the set β∗converges in probability to β.
+Proof. This follows immediately from Proposition 2, with δ = 1.
+In either case – regardless of whether δ = 1 – this problem may have multiple solutions. Only one
+element of the set will converge in probability to the true β. I discuss solution selection below.
+Proposition 3 shows a result related to δ. In particular, I solve for the value of δ to match a particular
+treatment eﬀect. This will be central to implementation since it allows us to ask how large the relative
+selection on observables and unobservables would need to be to produce a treatment eﬀect of zero.
+Proposition 3. Deﬁne some value ˆβ. Deﬁne ˆδ as the coeﬃcient of proportionality for which β = ˆβ. Deﬁne:
+δ∗=
+
+˜β −ˆβ
+ 
+˜
+R −˚
+R
+
+ˆσ2
+y ˆ
+τx +
+
+˜β −ˆβ
+
+ˆσ2
+X ˆτx(˚
+β −˜β)2 + 2
+
+˜β −ˆβ
+2 
+ˆτx(˚
+β −˜β)ˆσ2
+X
+
++
+
+˜β −ˆβ
+3  (ˆτxˆσ2
+X −ˆτ 2
+x)
+
+
+(Rmax −˜
+R)ˆσ2y(˚
+β −˜β)ˆσ2
+X +
+
+˜β −ˆβ
+
+(Rmax −˜
+R)ˆσ2y(ˆσ2
+X −ˆτx) +
+
+˜β −ˆβ
+2 
+ˆτx(˚
+β −˜β)ˆσ2
+X
+
++
+
+˜β −ˆβ
+3  (ˆτxˆσ2
+X −ˆτ 2
+x)
+
+Under this deﬁnition, δ∗
+p→ˆδ.
+Proof. The proof follows from setting Π = ˜β −ˆβ, substituting into the f(ν) function and solving for δ.
+Proposition 3 shows that there is a single value of δ to match any targeted treatment eﬀect – for
+example, a single value of δ will match a treatment eﬀect of zero.
+Together, Proposition 2, Corollary 1 and Proposition 3 deﬁne the details of the estimator. The following
+subsections discuss some issues in interpretation and extensions.
+3.3.1
+Interpretation of ϵ
+In discussing empirical applications, it will be crucial to take a stand on the value of Rmax which is inﬂuenced
+by ϵ. Conceptually, ϵ represents an error which is uncorrelated with X, W1 or W2. One interpretation of ϵ is
+14
+that it captures the degree of measurement error in the outcome. Another interpretation is that ϵ captures the
+inﬂuence of anything which is determined after X, W1 and W2 are determined. Both of these interpretations
+may be useful in choosing a value for Rmax in a particular context.
+3.3.2
+Solution Selection
+This estimator may deliver multiple solutions for β. One of these will be the true β under the proportional
+selection relationship. With an added assumption we can typically eliminate at least one solution and, in the
+case where δ = 1, always produce a single solution.
+Using the notation in Assumption 2, note that can deﬁne W1 = ψ1ωo
+1 + ... + ψJωo
+J. Now deﬁne
+ˆ
+W1 = ˆψ1ωo
+1 + ... + ˆψJωo
+J where ˆψi is the coeﬃcient on ωo
+i which is estimated in the observable regression of Y
+on X and the observed controls.
+Assumption 3 Sign(Cov(X, ˆW1)) = Sign(Cov(X, W1)).
+Eﬀectively, this assumes that the bias from the unobservables is not so large that it biases the direction of the
+covariance between the observable index and the treatment. Under Assumption 3, if δ = 1 there is a unique
+solution.
+In the case where δ̸ = 1 there may be multiple solutions, one closer to the controlled treatment eﬀect
+and one further. The obvious procedure of selecting the treatment eﬀect closest to the controlled coeﬃcient
+will be appropriate if one is willing to assume that the bias is fairly small.
+I argue below that in empirical settings a value of δ = 1 is a good bounding value; this is consistent with
+arguments in AET. For the purposes of implementation, therefore, it may be appropriate to consider either (a)
+calculating the bias-adjusted eﬀect under the assumption of δ = 1, with Assumption 3 active or (b) calculating
+the value of δ such that β = 0. Either of these will provide a unique solution.
+3.3.3
+Additional Controls
+It is useful to consider a simple extension in which there is an additional observed set of controls.
+Formally, consider the case where the full model is
+Y = βX + Ψωo + W2 + m + ϵ
+(2)
+where m is orthogonal to ωo, W2 and ϵ and the assumptions about orthogonality with ϵ are as above. Assume
+that the covariance between m and X is unrelated to the covariance between X and ωo and W2. It is
+straightforward to observe in this case that if we simply regress all other variables on m and take the residuals
+we return to the setup above and the results go through as stated there. In practice, this means that the
+15
+controls m are included in both controlled and “uncontrolled” regressions, and X is residualized with respect
+to m when generating σ2
+X and τx.
+3.3.4
+Inference
+Standard errors around β∗could be generated using a bootstrap approach. Such an approach depends on the
+estimator displaying asymptotic normality. I show evidence for this using simulation. I simulate data from two
+populations with varying data generating processes.11 The populations are of size 1,000,000 and I run 1,000
+Monte Carlo simulations of the estimator, drawing 10,000 observations each time.
+The distributions of estimated β∗in the two cases are shown in Figure 2. A normal distribution is
+overlaid. The distributions appear normal and a Shapiro-Wilk test does not reject normality in either case.
+This suggests that a bootstrap approach may be an acceptable way to generate standard errors if that is of
+interest.
+3.3.5
+Relation to Coeﬃcient Stability
+All else equal, coeﬃcient stability correlates with a smaller amount of bias. However, it is crucial to note that
+it is possible for coeﬃcients to be stable - indeed, to be completely unchanged - even in the presence of very
+large bias.
+To see this in theory, assume δ = 1 and consider the conditions under which the uncontrolled coeﬃcient
+˚β is exactly equal to the controlled coeﬃcient ˜β. Using the notation above, this occurs if and only if
+σ1X
+σ2
+X + σ1Xσ2
+2
+σ2
+1τx
+τx
+σ2
+X = σ1Xσ2
+2
+σ2
+1τx
+One condition which will cause this to hold is if σ1X = 0. The formula for the bias is
+σ1Xσ2
+2
+σ2
+1τx
+so if σ1X = 0, then there is no bias and β = ˜β.
+However, this condition will also hold if σ2
+1 = σ2
+X−τx
+τx
+σ2
+2. Under this assumption, the movement in
+R-squared is
+ σ2
+X −τx
+
+ 
+σ2
+2
+τx −
+
+σ1X
+(σ2
+X−τx)
+2!
+which will be non-zero as long as σ2
+X > τx and σ2
+2 > 0. In this
+way, the coeﬃcient movement is zero and the R-squared movement is positive, which would appear to suggest
+limited (or zero) bias. However, the bias in this case is actually
+σ1X
+σ2
+X−τx which is non-zero.
+In practice, this will become a serious issue when the variance of W2 is large and the proportionality
+assumption underlying the restricted estimator in Section 3.2 is seriously violated.
+3.3.6
+GMM Representation
+It is useful to observe that there is a GMM representation of this problem. To observe this consider Equation
+(3) below, which explicitly includes a set of many observed controls j ∈{1..J} and excludes the error term.
+11The inputs are described in the ﬁgure notes.
+16
+Y = βX +
+J
+X
+j=1
+Ψjωo
+j + W2
+(3)
+By assumption, W2 in this setup is orthogonal to all of the ωo
+j, which means we can deﬁne the normal OLS
+moments on ωo
+j with W2 treated as the error.12
+Additional moments are generated by the combination of the proportional selection assumption and the
+auxiliary regressions of X on the index of observed and unobserved controls. More speciﬁcally, we have the
+following GMM setup
+E
+
+
+
+
+
+
+
+
+
+
+
+
+
+Y −βX −PJ
+j=1 Ψjωo
+j
+
+ωo
+
+X −α1 −π
+PJ
+j=1 Ψjωo
+j
+ PJ
+j=1 Ψjωo
+j
+
+
+X −α1 −π
+PJ
+j=1 Ψjωo
+j
+
+
+X −α1 −δπ
+
+Y −βX −PJ
+j=1 Ψjωo
+j
+ 
+Y −βX −PJ
+j=1 Ψjωo
+j
+
+
+X −α1 −δπ
+
+Y −βX −PJ
+j=1 Ψjωo
+j
+
+
+
+
+
+
+
+
+
+
+
+
+
+= 0
+where the ﬁrst moment is a vector of moments for each observed control. The value of δ is provided by the
+user.
+There are J + 4 moments and J + 4 parameters to estimate (the J elements of Ψj, α1, α2, π and β.) The
+system can be estimated by GMM.
+The case of primary concern above is represented in Equation (4), which replicates Equation (3) but
+includes an orthogonal error term
+Y = βX +
+J
+X
+j=1
+Ψjωo
+j + W2 + ϵ
+(4)
+Note that if we consider W2 + ϵ as a single object we are back in the case above without error and the
+moments are the same.
+The proportional selection condition is given by δ σ1X
+σ2
+1 = σ2X
+σ2
+2
+with Rmax < 1. Note, however, that we
+can rewrite this as δ
+σ2
+2
+V ar(W2+ϵ)
+σ1X
+σ2
+1 =
+σ2X
+V ar(W2+ϵ). We now have this condition deﬁned with Rmax = 1 and
+δmod = δ
+σ2
+2
+V ar(W2+ϵ). The object
+σ2
+2
+V ar(W2+ϵ) can be summarized as the share of the total unobserved variance
+explained by W2. This will be approximated by the ratio Rmax−˜
+R
+1−˜
+R
+but will not be exact.
+3.4
+Implementation
+In empirical work in economics, discussions of coeﬃcient stability are typically used in establishing robustness.
+The estimator above suggests two related ways that such robustness statements might be made. I detail these
+below.
+12If W2 is not mean 0 then we will also need to include a constant which will add another moment.
+17
+Statements about δ
+One approach to robustness is to assume a value for Rmax and calculate the value of δ for which β = 0. This
+can be interpreted as the degree of selection on unobservables relative to observables which would be necessary
+to explain away the result (under the full model hypothesized). A value of δ = 2, for example, would suggest
+that the unobservables would need to be twice as important as the observables to produce a treatment eﬀect
+of zero.
+This approach is akin to the robustness statements suggested by AET.13 They suggest that a value of
+δ = 1 may be an appropriate cutoﬀ. A value of δ = 1 suggests the observables are at least as important as the
+unobservables. One reason to favor this is that researchers typically focus their data collection eﬀorts (or their
+choice of regression controls) on the controls they believe ex ante are the most important (Angrist and
+Pischke, 2010). A second is that W2 is residualized with respect to ωo so, conceptually, we want to think of
+the omitted variables as having been stripped of the portion related to the included variables.
+This suggested robustness leaves open the question of what is a reasonable Rmax to assume in
+describing the identiﬁed set. I discuss this in two speciﬁc empirical contexts in Section 4 and in more detail in
+the context of the economics literature in Section 5.
+Bounding Statements about β
+A second approach to robustness is to use bounds on Rmax and δ to develop a set of bounds for β. Such
+bounds could then be compared to, for example, a value of zero or some other value of interest.
+I consider this with language similar to partial identiﬁcation (Tamer, 2010; Manski, 2003). Consider the
+estimator β∗(Rmax, δ) deﬁned as above. Without any additional assumptions, I note that Rmax is bounded
+between ˜R (the R-squared in the regression with controls) and 1. I assume that the proportional selection is
+positive: that is, that the covariance between X and the observables has the same sign as the correlation
+between X and the unobservables. This bounds the value of δ below at 0 and it is bounded above at some
+arbitrary upper bound δ.
+We can then deﬁne bounds for β. One bound is ˜β, the value of β delivered when Rmax = ˜R or δ = 0.
+The other bound is β∗(1, δ). Without more assumptions, this is either positive or negative inﬁnity, since δ is
+unbounded. The insight of partial identiﬁcation is that it may be possible to use additional intuition from the
+problem to further bound both Rmax and δ.
+Consider ﬁrst the issue of bounding δ. I argue that for many problems δ = 1 is an appropriate bound,
+for the reasons discussed above. Ultimately, this is an empirical issue, and I will discuss at least some evidence
+for this bound in Section 4.
+13The calculation will be diﬀerent since their test produces a value of δ under the null that β = 0, whereas the calculation in this
+section is correct for the true β.
+18
+In the case of Rmax it may be possible to generate a bound smaller than 1 by, for example, considering
+measurement error in Y or evaluating variation in Y which cannot be related to X because it results from
+choices made after X is determined. Deﬁne an assumed upper bound on Rmax as Rmax, with Rmax ≤1.
+With these two bounding assumptions I can deﬁne a bounding set as: ∆s = [˜β, β∗(Rmax, 1)].
+Empirically, the question of interest in considering ∆s is whether the conclusions based on the full set
+are similar to what we would draw based on observing the controlled coeﬃcient ˜β. If inclusion of controls
+moves the coeﬃcient toward zero, one natural question is whether the set includes zero. Regardless of the
+direction of movement one could ask whether the bounds of the set are outside the conﬁdence interval on ˜β –
+this eﬀectively asks whether the conclusions based on the controlled coeﬃcient are robust.
+As above, an assumption about Rmax is necessary for generating this bounding statement.
+Statements about Rmax
+If the question of interest is whether the bias-adjusted β is diﬀerent from zero, and one assumes that the
+bound δ = 1 holds, a third approach is to calculate bounds on Rmax. That is, researchers could report the
+value of Rmax for which β = 0 if δ = 1. This value could then be discussed in terms of whether it is plausible
+that the unobservables explain more of the variance than implied by this value.
+Stata Code
+These calculations can be performed using STATA code which accompanies this paper. The command is
+psacalc.
+4
+Empirical Validation
+The results above provide a way to recover an estimate of unbiased treatment eﬀects under the assumption
+that selection on observables and unobservables is proportional. However, the theoretical discussion does not
+provide any insight as to how this is likely to perform in empirical settings.
+In this section I explore this issue using two approaches. In the ﬁrst subsection, I ask how this
+adjustment performs in simulated data where, by deﬁnition, we know the treatment eﬀect. I construct the
+data with a full set of controls and then explore coeﬃcient bias when various sets of controls are excluded.
+This allows for a test of whether the proportional selection relationship would lead to better inference in this
+setting, and allows for direct estimation of values of δ. The latter is helpful in evaluating the empirical validity
+of the bounding assumption suggested above. I perform this exercise in the familiar setting of wage returns to
+education.
+19
+In the second subsection I use observational data on the relationship between maternal pregnancy and
+early life behaviors and child outcomes. I compute possibly biased treatment eﬀects, perform the adjustment,
+and compare the resulting conclusions to external evidence on causal impacts. I ask whether the adjusted
+coeﬃcients generate more accurate conclusions than the simple controlled estimates.
+4.1
+Simulated Data: Returns to Education
+In this section I consider validation of the estimator in real data which is constructed such that we know the
+treatment eﬀect. I use the canonical example of estimating wage returns to education.
+Estimation of this relationship starts with standard Mincer regressions of wages on education,
+experience and experience-squared. One central counfounder is family background: people whose mothers
+have more education, for example, are more likely to be highly educated but also have higher wages for other
+reasons.14 Using data from the NLSY, I construct a dataset in which I deﬁne the “true” return to education
+as the impact of education controlling for a full set of family background characteristics. I then consider the
+bias – both in simple controlled regressions and after this adjustment is performed – in hypothetical cases in
+which I do not observe the full set of controls. This exercise will allow me to see how the adjustment performs,
+to compare the performance of the simple and the general estimator and to estimate values of δ and ask how
+they compare to the bounds suggested in Section 3.4.
+4.1.1
+Data and Empirical Strategy
+I use data from the NLSY-79 cohort. I am concerned with the impact of years of education on log wages, and
+I begin by considering the standard Mincer regression of log wages on educational attainment. I use the higher
+of the two educational levels recorded in 1981 and 1986 and the higher of the two wage values recorded in 1996
+and 1998. Experience and experience-squared are calculated in the typical way (experience = age – education
+years – 6). I also control for sex.
+My concern is with confounding by demographics and family background. I capture this with eight
+variables: region of residence, race, marital status, mother’s education, father’s education, mother’s
+occupation, father’s occupation and number of siblings. All variables are controlled for fully ﬂexibly, with
+dummies. Summary statistics for these data appear in Appendix B.
+I construct a dataset by regressing log wages on education, experience, sex and the full set of family
+background data. I generate ﬁtted values, and then take these as the “true” eﬀects in the model – that is, the
+eﬀect on education we see in this regression is the unbiased treatment eﬀect in the simulated data.15
+14A second obvious confounder is ability. It would be possible to do an exercise similar to this one with that counfounder. Since
+the exercise is not about ﬁnding the causal eﬀect of education on wages, but is simply about exploring this adjustment, there is no
+loss to ignoring the issue of ability.
+15Clearly, this is not to suggest that this is the causal impact of education on wages. I mean only to assume that this is the true
+eﬀect in the simulated data, against which I will evaluate estimates which exclude some of the controls used in constructing the
+20
+The regression of this ﬁtted value on the full set of controls has an R-squared of 1 by construction. In
+practice, however, wages are not fully predicted by family background or individual characteristics. I therefore
+add an orthogonal error term to this ﬁtted value. To generate a magnitude for this term I regress the log wage
+measure I use on log wages in 1992 or 1994 (again, I take the higher of the two). This regression has an
+R-squared of 0.45. I argue that family background, education, etc, should not explain more of the outcome
+than the previous year’s wages, since these variables all contribute to that wage. I therefore add an orthogonal
+error term to the ﬁtted value such that the ultimate regression R-squared is about 0.45.
+It is important to note that the addition of this error term is done largely for realism; it will be
+instructive to explore errors that may be introduced by incorrectly assuming that Rmax = 1. However, the
+calculations of δ is not sensitive to this addition.
+Given this dataset, the empirical exercise is straightforward. I iterate through excluding all sets of
+controls (up to 6 of the 8). In each case I: (1) calculate the δ implied by the included and excluded control set;
+(2) calculate β∗with this δ and the true Rmax; and (3) calculate whether the set bounded by ˜β and
+β∗(Rmax, 1) contains the true eﬀect.
+4.1.2
+Results
+Figure 3a shows the distributions of the true β and the estimated ˜β and the values of β∗. The true eﬀect in
+the simulated data is 0.087, with a standard error of 0.003. The β∗values cluster at the true eﬀect value. This
+is a simple numerical check of the procedure: if we know the true Rmax and the true δ the adjustment works
+as it should. Not surprisingly, the estimates of ˜β are shifted substantially to the right of the true β. The
+estimates of β from the regressions with controls are systematically biased upwards.
+Figure 3b shows the values of δ calculated in this exercise. This value is not mechanical: nothing in the
+setup constrains any particular value of δ. In the ﬁgure, I show the full distribution of δ and the [0,1] bounds
+that I suggest would be appropriate in many settings.
+The average δ is 0.545 and 86% of values fall within the [0,1] range. Only 2 (of 211) values are negative.
+The cases with values of δ > 1 are instructive. These are combinations of controls where the index of the
+omitted variables are more important in explaining education than the included ones. Of the 28 cases with
+δ > 1, 92% of them excluded either maternal or paternal education. This makes clear that these variables are
+among the most important confounders; this should not be surprising and, indeed, it seems likely that
+researchers would think to include these ﬁrst, before considering data on (for example) parental occupation or
+number of siblings. Put diﬀerently, if we consider control set selection not at random as I do in this example
+but with the idea that the most important controls are selected ﬁrst, it is likely that the [0, 1] bound would ﬁt
+in an even larger share of cases. The fact that the average δ is less than 1 supports the idea of 1 as an upper
+eﬀect.
+21
+bound on δ, rather than as an average value.
+I can comment on the bounding logic described in Section 4. Given the δ values, it is straightforward to
+observe that if we calculate the set [ ˜β,β∗′(Rmax, 1)], in 89% of cases this will include the true value. This is an
+improvement over the regression with observed controls. The naive estimate with controls captures the true
+value of β only 62% of the time. It is worth saying that if I were to use a value of Rmax = 1 to do these
+calculations the adjustment would be too large.
+A ﬁnal approach to evaluating performance is to look more directly at the likely control set in a more
+limited data source. The full set of demographic controls used in the analysis above are region of residence,
+race, marital status, mother’s education, father’s education, mother’s occupation, father’s occupation and
+number of siblings. The data on parents and siblings is available in the NLSY because of the panel nature of
+the data. Such data would not be available in many cross-sectional datasets, or even in panel datasets with
+more limited information on early life.
+It is simple to consider what we would conclude if we saw only the more standard controls of region,
+marital status and race (these would, for example, be available in datasets like the SIPP or the CPS). The
+coeﬃcient estimate with these controls only is 0.107, versus the true eﬀect of 0.087. The value of δ which
+matches the true eﬀect is 0.79 and if we assume a value of δ = 1 the adjusted coeﬃcient is 0.082. The δ = 1
+bound would, therefore, include the true estimate of δ.
+4.2
+Observational Data: Maternal Behavior and Child Outcomes
+A second approach to validation is to take a setting in which we have some possibly biased observational
+relationships and we think we have a sense of the causal eﬀect from external sources. Given this, the question
+is whether this approach can separate causal from non-causal associations.16
+In this section I undertake this type of validation exercise in the context of the link between maternal
+behaviors, infant birth weight and child IQ. These relationships are of some interest in economics, and of wider
+interest in public health and public policy circles. A literature in economics demonstrates that health shocks
+while children are in the womb can inﬂuence early outcomes and later cognitive skills (e.g. Almond and
+Currie, 2011; Almond and Mazumder, 2011). A second literature, largely in epidemiology and public health,
+suggests that even much smaller variations in behavior – occasional drinking during pregnancy, not
+breastfeeding – could impact child IQ and birth weight. These latter studies, in particular, are subject to
+signiﬁcant omitted variable concerns, largely associated with omitted socioeconomic status and family
+background. I consider ﬁve relationships in all: the relationship between child IQ and breastfeeding, drinking
+during pregnancy, and low birth weight/prematurity and the relationship between birth weight (as the
+outcome) and maternal drinking and smoking in pregnancy.
+16Altonji, Elder and Taber (2008) do a version of this for the relationship between survival and catheterization.
+22
+4.2.1
+Data
+I use NLSY data, this time from the Children and Young Adult sample, which has information on the children
+of NLSY participants. I measure IQ with PIAT test scores for children 4 to 8 and birth weight (in grams)as
+reported by the mother. In the latter analysis I include all children. In all cases I control for child sex and,
+with IQ, for their age. These are not considered as part of the confounding set.
+The IQ treatments are: months of breastfeeding, any drinking of alcohol in pregnancy and an indicator
+for being low birth weight and premature (<2500 grams and <37 weeks of gestation). The birth weight
+treatments are maternal smoking and drinking intensity during pregnancy. I measure family background, the
+confounding category, with child race, maternal age, maternal education, maternal income and maternal
+marital status. Summary statistics for these data appear in Appendix B.
+4.2.2
+Empirical Strategy
+I run regressions with and without the controls to extract ˚β, ˚
+R, ˜β and ˜R. I adopt a bounding value for Rmax
+drawn from within sibling correlations (Mazumder, 2011). In theory, Rmax should reﬂect how much of the
+variation in child IQ and birth weight could be explained if we had full controls for family background; I argue
+this is the thought experiment approximated by the sibling ﬁxed eﬀect R-squared. The ﬁgures are 0.61 for IQ
+and 0.53 for birth weight.
+Given this Rmax bound, I ﬁrst calculate the set [ ˜β,β∗(Rmax, 1)]. I also ﬁnd the value of δ which would
+produce β = 0 under the assumed Rmax and compare this to δ = 1. These two analyses eﬀectively contain the
+same information.
+The conclusions from these robustness calculations are compared to the conclusions we would expect to
+get if we were able to estimate the full model. To ask whether the adjusted coeﬃcient leads to the correct
+answer, it is necessary to know what this answer is.
+I use two types of evidence. First, I consider external evidence from randomized trials (where available)
+and meta-analyses. Randomized evidence suggests that breastfeeding is not linked with full-scale IQ (Kramer
+et al, 2008) and most evidence does not suggest an impact of occasional maternal drinking on child IQ (see,
+for example: Falgreen-Eriksen et al, 2012; O’Callaghan et al, 2007).17 In contrast, low birth weight and
+prematurity do seem to be consistently linked to low IQ (Salt and Redshaw, 2006), a link which also has a
+biological underpinning (de Kieviet et al, 2012). Occasional maternal drinking is typically not thought to
+impact birth weight (Henderson, Gray and Brocklehurst, 2007), but there is better evidence that smoking does
+(e.g. from trials of smoking cessation programs as in Lumley et al, 2009).
+17Although the question of whether occasional maternal drinking lowers IQ is a controversial issue, as I show below the observa-
+tional data actually estimates positive impacts of maternal drinking on IQ, and the fact that those eﬀects are not causal is not a
+subject of much debate.
+23
+Second, I consider the conclusions one would draw from sibling ﬁxed eﬀects regressions in the NLSY
+data described above, which provides a more “within sample” test of fully controlling for family background.
+Of course, sibling ﬁxed eﬀects estimates may be subject to their own concerns about causality, so it is perhaps
+comforting that the conclusions are the same using either approach.
+4.2.3
+Results
+Table 3 reports the results: Panel A shows results on IQ, Panel B on birth weight.
+The ﬁrst column shows treatment eﬀects, standard errors and R-squared values without the
+socioeconomic status controls. Column 2 shows similar values with the full control set. More breastfeeding is
+associated with higher IQ in these regressions, and low birth weight is associated with lower child IQ. More
+maternal drinking appears in these data to be associated with higher child IQ later, a ﬁnding which is likely to
+be due to selection given limited biological mechanisms. Both samples show smoking and drinking are
+associated with lower birth weight. All analyses reported show signiﬁcant eﬀects with the full set of controls.
+Interpreting these results in a naive way, one would conclude that each has a signiﬁcant link with child
+outcomes.
+Column 3 reports whether external evidence, summarized above, suggests a causal impact. As noted,
+external evidence supports a relationship between low birth weight and IQ and between smoking and low birth
+weight but the other relationships do not have broad support. Column 4 shows sibling ﬁxed eﬀects regressions,
+which result in similar conclusions. The only diﬀerence is in the impact of low birth weight on child IQ, where
+the NLSY regression coeﬃcient is signiﬁcant only at the 11% level.
+Column 5 shows the bounding set, using the Rmax estimates in the top row of each panel and δ = 1.
+This procedure performs well. The two cases in which the identiﬁed set does not include zero are those where
+the external evidence suggest signiﬁcant results. Put diﬀerently, if one were to use the rule of accepting the
+eﬀect as causal only if the identiﬁed set excluded zero, this would lead to the same conclusions as the external
+evidence. In all cases the identiﬁed set includes the sibling ﬁxed eﬀect estimates. In Column 6, I calculate the
+values of δ such that β = 0. I show that the eﬀects conﬁrmed in external data are those for which δ > 1 is
+necessary to produce β = 0.
+There are two ﬁnal points to make about this analysis. First, similar to the wage analysis above, the
+average value of δ which matches the adjusted eﬀects to the sibling ﬁxed eﬀect values is less than 1 – it is 0.47
+– pointing to the value of 1 as a bound. Second, doing these calculations with a value of Rmax = 1 as the
+bound would lead us to reject all the associations – including the two which are conﬁrmed in outside data.
+The results in this section suggest that the robustness framework performs well. It also makes clear the
+importance of doing formal bias calculations. In this latter example, if we based our analysis only on the size
+(say, in percent terms) of the coeﬃcient movements we would conclude that the link between drinking and low
+24
+birth weight is much more robust than the link between low birth weight and IQ, since the former moves only
+by 10% and the latter by 30%. In fact, the low birth weight and IQ link has more external support. This is
+conﬁrmed by the identiﬁed set conclusions, and mechanically it is reﬂective of the much larger change in
+R-squared in the low birth weight – IQ relationship.
+5
+Application to Economics Literature
+I now return to the application of this approach within economics, using the data described in Section 2. I
+undertake two exercises. First, I return to the sample of papers discussed in Section 2 and the question of how
+robust these claims are to the formal adjustment. I calculate bias-adjusted treatment eﬀects under the
+assumption that Rmax = 1 but also under varying values of Rmax. The discussion in Section 4 suggests that
+Rmax = 1 may lead to over-adjustment in many cases.
+In the second subsection I discuss how Rmax may be chosen in practice. I detail one approach based on
+an analysis of results from randomized treatment eﬀects.
+5.1
+Robustness of Coeﬃcient Stability Claims
+The data in this section is the same as that used in Section 2. Recalling that discussion: I begin with the
+universe of all papers in the American Economic Review, Quarterly Journal of Economics, The Journal of
+Political Economy and Econometrica from 2008-2010 with at least 20 citations in the ISI Web of Science, and
+those from 2011-2013 in the same journals with at least 10 citations. I limit the sample to papers with
+replication ﬁles available so it is possible to do further robustness calculations. From these papers I extract all
+results where the researcher explores the sensitivity of the result to a control set and, using a close reading of
+the papers, those in which this exercise appears to be designed to address an imperfect set of controls.The
+sample (full citation list in Appendix C) includes 27 papers with 76 total results.
+The empirical exercise is as follows. I extract the relevant inputs from replication ﬁles. Note that in
+cases where controls are included sequentially, I compare the fewest-controls to the most-controls set. For each
+result, I calculate the bias-adjusted treatment eﬀect with δ = 1 and varying values of Rmax.
+I consider Rmax = 1 as one bound. I also consider a parametrization of Rmax as a function of ˜
+R :
+Rmax = min{Π ˜R, 1} with varying values of Π. This function assumes that the degree of variation accounted
+for by the observables (including the treatment) is informative as to the degree accounted for by the
+unobservables.
+Having calculated the identiﬁed set using these Rmax values, I consider two standards for robustness.
+First, focusing on the subset of results for which the inclusion of controls moves the coeﬃcient towards zero, I
+ask whether the set includes zero. I also consider whether the bounds of the set fall within +/- 2.8 standard
+25
+errors of the controlled estimate, an analysis which can be done by including results where controls move the
+coeﬃcient away from zero (+/- 2.8 standard errors is the bounds of the 99.5% conﬁdence interval). This
+second standard captures a test of whether the size of the estimate from the regression with controls is similar
+to the bias-adjusted estimate.
+I summarize the robustness of a given relationship with the largest value of Π for which the result
+survives the robustness standard. The results appear in Figures 4a and 4b. Figure 4a shows the primary
+robustness with rejection of zero; Figure 4b uses all results and shows the magnitude test. These graphs show
+the share of relationships which would survive varying values of Π, with Rmax = min{Π ˜R, 1}. In either case, I
+ﬁnd only about 9% to 16% of results would survive Rmax = 1. This share is smaller than the share implied by
+the AET calculation in Section 2 since the analysis does not use the null of β = 0 but, instead, calculates the δ
+value with the true β. Within the set of results which would not survive this standard, there is a wide range of
+robustness. Some of these results would not survive even quite small diﬀerences between ˜R and Rmax.
+To quantify this, Panel A of Table 4 shows the share of results which would survive Rmax = 1 and three
+values of Π. About 40% of results would not survive Π = 1.25. Considering the rejection-of-zero robustness
+criteria, within this set that is not robust to Π = 1.25, the average study fails at a value of Π = 1.15 or, in
+point estimate terms, a predicted increase in R-squared of 0.06 with inclusion of unobserved controls.
+In nearly all of the analyses discussed in this section, the authors discuss only coeﬃcient movements. As
+noted, this is potentially misleading for two reasons. First, it fails to take into account the R-squared
+movements. Second, as I note in Section 3.3.5, it is possible that coeﬃcient stability is misleading even in the
+context of large R-squared movements in some cases, particularly if the assumption of proportionality which
+underlies the restricted estimator described is seriously violated. I explore the importance of these two issues
+empirically.
+First, consider how the conclusions would diﬀer from those which rely only on coeﬃcient movements.
+To explore this, I choose an Rmax = 1.3 ˜R cutoﬀand compare the percent reduction (in absolute value) in
+coeﬃcients for results which do and do not survive this cutoﬀ. I choose this value because it will be the cutoﬀ
+I identify later in the analysis of randomized data. Figure 5 shows these results. There is full overlap in the
+distributions of coeﬃcient movements between robust and non-robust results, illustrating the fact that
+coeﬃcient movements alone do not provide much insight about these.
+Second, I calculate the bias implied by the restricted estimator in each case. The restricted estimator
+accounts for movements in R-squared values but makes the strong proportionality assumption, so the
+diﬀerence in the eﬀect implied by this restricted version and the true bias-adjusted eﬀect gives a sense of how
+misleading conclusions may be if a simpler version of the adjustment is used. I do the calculation assuming,
+again, that Rmax = 1.3 ˜R. In about 80% of cases one would draw the correct conclusion about robustness from
+the restricted estimator. However, the restricted version generally understates the bias, on average by about
+26
+40%. The error is larger in cases where much of the treatment variance is explained by the controls.
+5.1.1
+Example
+To be more concrete on the issues above, I illustrate with an example.
+Nunn and Wantchekon (2011) analyze the impact of the slave trade on mistrust in Africa. This is a
+salient example because the authors worry explicitly about unobserved diﬀerences across areas, and present a
+number of arguments to support the interpretation of their results as causal. In contrast to most papers in
+this literature, they undertake direct calculations based on the theory in AET. They use coeﬃcient movements
+in their regressions to calculate the value of δ which would be required to produce β = 0. They argue the
+results are robust because all the calculated values of δ are greater than 1. Equivalently, the adjusted
+treatment eﬀects have the same sign as the eﬀects in regressions with controls if δ = 1.
+Although it is not made explicit, the calculations they undertake in the paper assume that
+Rmax = ˜R + ( ˜R −˚
+R).18 In other words, they assume that the unobservable controls explain as much of the
+outcome as the observable controls. In practice, the R-squared values in their regressions do not move much;
+as an example, in the ﬁrst row of their Table 4, considering the “Trust Relatives” measure, adding controls
+increases R-squared from 0.115 to 0.133. Their adjustment assumes that the R-squared in the regression with
+controls would be 0.151. This change is quite small, and it seems reasonable to explore the impact on the
+results from changing it.
+A set of results from their Table 4 are reported in Table 5. The ﬁrst two columns show their estimated
+eﬀects, and the third column shows the estimated β using their implicit assumption on Rmax and δ = 1. Three
+of the ﬁve results have adjusted β values the same sign as the estimated eﬀects; two diﬀer in sign. This result
+diﬀers from the result in the paper because the robustness in the paper is done under the null of β = 0. On its
+face, this suggests that the results are less robust than implied in the paper even with the implicit assumption
+used.
+Column (4) estimates these bias-adjusted βs using the assumption that Rmax = 1.3 ˜R. As noted above,
+this cutoﬀis derived from randomized data later, so it serves as a focal point. Although the R-max values
+implied by this cutoﬀare still fairly small (for example, in the ﬁrst row the implied Rmax is just 0.169) only
+one of the ﬁve results are robust to this assumption. Column (5) calculates the value of Rmax at which each of
+the results fail. In general, these values are fairly low and suggest that even if the unobservables play a fairly
+small role in explaining the outcome, the results may not be robust by this test.
+In addition to showing the importance of the formal adjustment in analyzing coeﬃcient stability, this
+example illustrates one way that robustness might be explored in this context. Rather than assuming a value
+for Rmax it would be feasible to explore a range of values and report, for example, the value of Rmax for which
+18They draw this from Bellows and Miguel (2009).
+27
+the result is no longer robust (if δ = 1). Comparing this to the R-squared in the regression with controls,
+authors and readers can discuss the concept of robustness more concretely.
+An alternative approach is to try to generate some general guidelines about Rmax. Below, I suggest one
+approach to this, using data from randomized trials.
+5.2
+Evidence on Stability Cutoﬀs from Randomized Data
+The evidence above makes clear that, even within a sample of papers which argue for coeﬃcient stability,
+there is a lot of variation in the robustness of results depending on Rmax. A natural following question is
+whether we can suggest any guidance about where one might draw the line – speciﬁcally, is there some value
+of Π (where Rmax = Π ˜R) above which we should consider a result robust?
+I argue that one place to look for such guidance is in reports from randomized data. Randomized
+experiments are becoming increasingly common within economics and papers reporting results of these
+experiments often include regressions with and without controls. Sometimes these are explicitly used to test
+balance in the experiment, although it is also commonly done to increase precision. Assuming that the data is
+correctly randomized, if the sample size were inﬁnite, the eﬀects would not be expected to move at all. In
+practice, with ﬁnite data, coeﬃcients can move a bit simply due to very small diﬀerences across groups.
+When non-randomized papers invoke a coeﬃcient stability heuristic to argue the results they observe
+are causal, they are (perhaps implicitly) suggesting that the treatment is as good as random. Including
+controls does not change the coeﬃcient because there is no confounding; this is exactly the argument we know
+holds in randomized cases. Given this, I argue we can use the stability of randomized data as a guide to how
+much stability we would expect in non-randomized data if the treatment were assigned exogenously: is the
+coeﬃcient stability within the range the researcher would expect with a randomly assigned treatment?
+The approach in this section is to assume that the eﬀects estimated in randomized data are causal and
+to therefore assume that they should survive this adjustment procedure.19 I then ask what value of Π in the
+Rmax parametrization would make this true.
+The baseline set of papers for this analysis is all randomized papers (lab or ﬁeld) published in the
+American Economic Review, Quarterly Journal of Economics, Journal of Political Economy, Econometrica
+and the American Economic Journal – Applied Economics in the period 2008 through 2013.20 I extract from
+these all papers which report sensitivity of a treatment eﬀect to controls. In cases where there are multiple
+eﬀects reported (i.e. multiple outcomes), I include all eﬀects. I use replication ﬁles or researcher requests to
+extract the estimator inputs where possible. The ﬁnal sample includes 65 results.
+19An obvious concern is that, perhaps, these papers are not correctly randomized. This would lead me to a standard which was
+too lax. I address this in two ways. First, I have focused on papers published in highly ranked journals, increasing the chance that
+the randomization was of high quality. Second, I will draw guidelines which ﬁt nearly all but not all papers, thus accepting that a
+small share of randomized papers may suﬀer from true lack of balance and should not be used to guide this approach.
+20I include AEJ-Applied because it has published a large number of experimental papers. This journal began publishing in 2009.
+28
+The full set of references is in Appendix C.
+I undertake the same analysis as in the non-randomized data: calculate the bias-adjusted treatment
+eﬀect assuming δ = 1 and varying Rmax and compare the results to the two standards for robustness.
+Figures 6a and 6b show the distributions of sensitivity for the randomized data. A ﬁrst thing to note is
+that these results are more robust than the non-randomized results. About 40% of randomized results would
+survive a cutoﬀof Rmax = 1. Nearly all would survive a cutoﬀof Rmax = 1.25 ˜R , much greater than for the
+non-randomized results. Panel B of Table 4 shows the survival shares for this dataset explicitly under the
+varying Rmax cutoﬀs.
+It is not surprising that the randomized results are more robust. The fact that they do not all survive
+Rmax = 1 is due to the fact that even small changes in coeﬃcients can be blown up with this assumption. I
+use these data to develop robustness cutoﬀvalues. I base these on the value of Π which would allow 90% of
+results to survive in both the conﬁdence interval and the rejection of zero test. This leads to the bounding
+values of Π = 1.3. This value suggests a bound where the unobservables explain somewhat less than the
+observables (where the latter includes the treatment). This has some intuitive appeal if we think that the
+observables are chosen with an eye to those which are most important in explaining the outcome.
+Under this approach, to argue for a level of stability consistent with randomized treatment, researchers
+should consider whether the set [ ˜β,β∗(min{1.3 ˜R, 1}, 1)] excludes zero or, equivalently, that the δ which
+produces β = 0 with Rmax = 1.3 ˜R exceeds 1. Applying this to the non-randomized data above, I ﬁnd that
+45% of results would survive this standard. This standard could be valuable to explore even in cases where the
+controls cause the coeﬃcient to move away from zero; in that case the question would be whether considering
+the full set would lead to very diﬀerent conclusions than the controlled estimate.
+6
+Conclusion
+Coeﬃcient stability is a commonly invoked argument against omitted variable bias. In fact, such stability is
+informative only if authors also consider the importance of the controls in explaining the variance of the
+outcome. I connect the heuristic to the idea of a proportional selection relationship on observed and
+unobserved variables. I describe a tractable strategy for generating bounds on treatment eﬀects and show
+validation in empirical contexts. Importantly, I show that most existing work does not consider these issues
+explicitly, and I argue that many results with “stable coeﬃcients” are not very robust.
+I suggest a standard for robustness relying on this estimator which could be easily implemented by
+researchers. A key issue is the need to make an assumption about the share of the variance of the dependent
+variable which is jointly explained by the observed and unobserved variables which are correlated with it. I
+suggest a standard based on the performance of this estimator in randomized data.
+29
+This provides one general approach to developing intuition about Rmax but it is worth noting that
+within a given context it may be possible to develop a better intuition. Some examples of this are provided
+earlier in the paper. In the case of education and wages I develop a value of Rmax (used for constructing the
+data) by looking at how much of current year wages are explained by past year wages; the theory is that any
+ability/motivation/family background confounders are determined prior to the previous year’s wages. In the
+analysis of maternal behavior and child outcomes I use sibling correlations as a benchmark since sibling share
+the same family background. In two papers following on their original paper (Altonji et al, 2005b; Altonji et
+al, 2008) Altonji and coauthors suggest two methods for adjusting for idiosyncratic variance, an approach
+parallel to my use of Rmax.
+The core insight is to recognize that coeﬃcient stability on its own is at best uninformative and at worst
+very misleading. It must be combined with information about R-squared movements to develop an argument.
+The robustness approach in this paper addresses concerns related to unobservables which are related to
+the observables. A key issue which must still be addressed is the appropriate choice of observables (as
+discussed in Angrist and Pischke, 2010). If there are unobservables related to the treatment for which we
+cannot learn about this relationship using the relationship between treatment and observed controls then this
+result breaks down. Recognizing this issue may help improve the control sets used in empirical work.
+30
+References
+Almond, Douglas and Bhashkar Mazumder, “Health Capital and the Prenatal Environment:
+The Eﬀect of Ramadan Observance during Pregnancy,” American Economic Journal: Applied
+Economics, October 2011, 3 (4), 56–85.
+and Janet Currie, “Killing Me Softly: The Fetal Origins Hypothesis,” Journal of Economic
+Perspectives, Summer 2011, 25 (3), 153–72.
+Altonji, Joeseph, Timothy Conley, Todd Elder, and Christopher Taber, “Methods for
+Using Selection on Observed Variables to Address Selection on Unobserved Variables,” 2011.
+Mimeo, Yale University.
+Altonji, Joseph G., Todd E. Elder, and Christopher R. Taber, “An Evaluation of
+Instrumental Variable Strategies for Estimating the Eﬀects of Catholic Schools,” NBER
+Working Paper No. 9358, 2002.
+,
+, and
+, “An Evaluation of Instrumental Variable Strategies for Estimating the
+Eﬀects of Catholic Schooling,” Journal of Human Resources, 2005, 40 (4), 791–821.
+,
+, and
+, “Selection on Observed and Unobserved Variables: Assessing the
+Eﬀectiveness of Catholic Schools,” Journal of Political Economy, 2005, 113 (1), 151–184.
+,
+, and
+, “Using Selection on Observed Variables to Assess Bias from Unobservables
+When Evaluating Swan-Ganz Catheterization,” American Economic Review, 2008, 98 (2),
+345–50.
+Angrist, Joshua D. and Jorn-Steﬀen Pischke, “The Credibility Revolution in Empirical
+Economics: How Better Research Design Is Taking the Con out of Econometrics,” Journal of
+Economic Perspectives, Spring 2010, 24 (2), 3–30.
+Bellows, John and Edward Miguel, “War and local collective action in Sierra Leone,” Journal
+of Public Economics, 2009, 93 (11), 1144–1157.
+Chiappori, Pierre-Andrei, Sonia Oreﬃce, and Climent Quintana-Domeque, “Fatter
+Attraction: Anthropometric and Socioeconomic Matching on the Marriage Market,” Journal
+of Political Economy, 2012, 120 (4), 659 – 695.
+de Kieviet, J. F., L. Zoetebier, R. M. van Elburg, R. J. Vermeulen, and J. Oosterlaan,
+“Brain development of very preterm and very low-birthweight children in childhood and
+adolescence: a meta-analysis,” Dev Med Child Neurol, Apr 2012, 54 (4), 313–323.
+Dehejia, Rajev and Sadek Wahba, “Causal Eﬀects in Nonexperimental Studies: Reevaluating
+the Evaluation of Training Programs,” Journal of the American Statistical Association, 1999,
+94 (448), 1053–1062.
+Falgreen-Eriksen, H. L., E. L. Mortensen, T. Kilburn, M. Underbjerg, J. Bertrand,
+H. Stavring, T. Wimberley, J. Grove, and U. S. Kesmodel, “The eﬀects of low to
+moderate prenatal alcohol exposure in early pregnancy on IQ in 5-year-old children,” BJOG,
+Sep 2012, 119 (10), 1191–1200.
+Gelbach, Jonah B, “When do covariates matter? And which ones, and how much?,” Journal of
+Labor Economics, forthcoming.
+Heckman, James and Joseph Hotz, “Choosing Among Alternative Nonexperimental Methods
+for Estimating the Impact of Social Programs: The Case of Manpower Training,” Journal of
+the American Statistical Association, 1989, 84 (408), 862–874.
+Henderson, J., R. Gray, and P. Brocklehurst, “Systematic review of eﬀects of low-moderate
+prenatal alcohol exposure on pregnancy outcome,” BJOG, Mar 2007, 114 (3), 243–252.
+Imbens, Guido, “Sensitivity to Exogeneity Assumptions in Program Evaluation,” American
+Economic Review, 2003, 93 (2), 126–132.
+31
+Kramer, M. S., F. Aboud, E. Mironova et al., “Breastfeeding and child cognitive
+development: new evidence from a large randomized trial,” Arch. Gen. Psychiatry, May 2008,
+65 (5), 578–584.
+Lacetera, Nicola, Devin G. Pope, and Justin R. Sydnor, “Heuristic Thinking and Limited
+Attention in the Car Market,” American Economic Review, August 2012, 102 (5), 2206–36.
+LaLonde, Robert J, “Evaluating the Econometric Evaluations of Training Programs with
+Experimental Data,” American Economic Review, September 1986, 76 (4), 604–20.
+Leamer, Edward, Speciﬁcation Searches: Ad Hoc Inference with Nonexperimental Data, Wiley,
+1978.
+Leamer, Edward E, “Let’s Take the Con Out of Econometrics,” American Economic Review,
+March 1983, 73 (1), 31–43.
+Lumley, J., C. Chamberlain, T. Dowswell, S. Oliver, L. Oakley, and L. Watson,
+“Interventions for promoting smoking cessation during pregnancy,” Cochrane Database Syst
+Rev, 2009, (3), CD001055.
+Manski, C.F., Partial Identiﬁcation of Probability Distributions Springer Series in Statistics,
+Springer, 2003.
+Mazumder, Bhashkar, “Family and Community Inﬂuences on Health and Socioeconomic Status:
+Sibling Correlations Over the Life Course,” The B.E. Journal of Economic Analysis & Policy,
+2011, 11 (3), 1.
+Murphy, Kevin and Robert Topel, “Eﬃciency Wages Reconsidered: Theory and Evidence,” in
+“Advances in the Theory and Measurement of Unemployment” 1990, pp. 204–240.
+Nunn, Nathan and Leonard Wantchekon, “The Slave Trade and the Origins of Mistrust in
+Africa,” American Economic Review, 2011, 101 (7), 3221–3252.
+O’Callaghan, F. V., M. O’Callaghan, J. M. Najman, G. M. Williams, and W. Bor,
+“Prenatal alcohol exposure and attention, learning and intellectual ability at 14 years: a
+prospective longitudinal study,” Early Hum. Dev., Feb 2007, 83 (2), 115–123.
+Olken, Benjamin A. and Patrick Barron, “The Simple Economics of Extortion: Evidence
+from Trucking in Aceh,” JOURNAL OF POLITICAL ECONOMY, JUN 2009, 117 (3),
+417–452.
+Pearl, Judea, Causality: Models, Reasoning and Inference, Cambridge university Press, 2000.
+Pischke, Jorn-Steﬀen and Hannes Schwandt, “Poorly Measured Confounders are Useful on
+the Left But Not on the Right,” September 2015. London School of Economics Working Paper.
+Rosenbaum, Paul and Don Rubin, “Assessing Sensitivity to an Unobserved Binary Covariate
+in an Observational Study with Binary Outcome,” Journal of the Royal Statistical Society,
+Series B, 1983, 45 (2), 212–218.
+Salt, A. and M. Redshaw, “Neurodevelopmental follow-up after preterm birth: follow up after
+two years,” Early Hum. Dev., Mar 2006, 82 (3), 185–197.
+Tamer, Elie, “Partial Identiﬁcation in Econometrics,” Annual Review of Economics, 09 2010, 2
+(1), 167–195.
+32
+Figure 1: Coeﬃcient Stability and R-Squared Movements
+(a) All Signiﬁcant Relationships
+−.5
+0
+.5
+1
+1.5
+Pct. Change in Coefficient
+0
+.2
+.4
+.6
+.8
+Increase in R−Squared
+(b) Sample where Controls Lower Magnitude
+−.8
+−.6
+−.4
+−.2
+0
+Pct. Change in Coefficient
+0
+.2
+.4
+.6
+.8
+Increase in R−Squared
+Notes: These ﬁgures show the relationship between the percent change in coeﬃcient and the increase in R-squared in sample
+of highly cited papers from top journals in economics. The sample is discussed in Section 2.
+33
+Figure 2: Distribution of Estimated Treatment Eﬀects
+(a) First Parameter Set
+0
+1
+2
+3
+Density
+199.6
+199.8
+200
+200.2
+200.4
+beta_value
+(b) Second Parameter Set
+0
+.01
+.02
+.03
+.04
+Density
+160
+180
+200
+220
+240
+beta_value
+Notes: These ﬁgures show the distribution of estimated bias-adjusted treatment eﬀects under two parameter sets. The ﬁgures
+are generated by drawing 1,000 samples of size 10,000 from a population of 1,000,000. The data generating values for the ﬁrst
+set are: β = 200, δ = 1, γ1 = 100, γ2 = 200, Cov(X, wo
+1) = 0.1, Cov(X, wo
+2) = 0.1, V ar(W2) = 20, 000, V ar(wo
+1) = V ar(wo
+2) =
+1. The second set uses the same inputs but with V ar(W2) = 250, 000. In both cases, I add an iid error with mean 100 and
+standard deviation 1.
+34
+Figure 3: NLSY Wage Data Simulation
+(a) “True”, Controlled and Adjusted Beta
+0
+100
+200
+300
+400
+Adjusted Density
+0
+50
+100
+150
+True, Controlled Effect Density
+.07
+.08
+.09
+.1
+.11
+Estimate
+True Treatment Effect
+Controlled Beta
+Adjusted Beta
+(b) Distribution of Estimated Delta
+0
+.5
+1
+1.5
+−1
+0
+1
+2
+3
+Calculated Delta
+Notes: These ﬁgures show results from the validation using the constructed NLSY wage dataset. The analysis is described
+in Section 5.
+35
+Figure 4: Robustness of Stability Results in Economics Literature
+(a) Rejection of Zero, Rmax = Π ˜R.
+Survive Rmax=1:     0.091
+.1
+.2
+.3
+.4
+.5
+.6
+.7
+.8
+.9
+1
+Share of Results With sign(β)=sign(βtilde)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+Multiplier Π : Rmax = Π *Rtilde
+(b) Results within +/- 2.8 SE, Rmax = Π ˜R.
+Survive Rmax=1:     0.158
+.3
+.4
+.5
+.6
+.7
+.8
+.9
+1
+Share of Results with β +/−  SE from β tilde
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+Multiplier Π : Rmax = Π *Rtilde
+Notes: These graphs show the performance of non-randomized results under the proportional selection adjustment. Each
+ﬁgure graphs the share of results which would survive varying parameterization of Rmax, in all cases assuming ˜δ = 1. Sub-
+Figure a indicates the share of results which would survive Rmax = Π ˜
+R for varying values of Π, with survival in this case
+meaning the identiﬁed set does not include zero. This ﬁgure contains only relationships where the eﬀect is signiﬁcant with
+controls and adding the controls moves the coeﬃcient toward zero. Sub-Figure b indicates the share of results for which the
+full identiﬁed set would be within 2.8 standard errors of the controlled coeﬃcient. This Sub-Figure includes all relationships.
+36
+Figure 5: Relationship between Full Robustness and Coeﬃcient Movement
+0
+1
+2
+3
+−.6
+−.4
+−.2
+0
+% Reduction in Coefficient Size
+Robust to Rmax = 1.25 *Rtilde
+Not Robust to Rmax = 1.25 *Rtilde
+Notes: This graph shows the range of coeﬃcient movements in non-randomized studies. These studies are divided into those which are
+robust to the proportional selection adjustment with Rmax = 1.3 ˜
+R (solid line) and those which are not (dotted line). This includes only
+relationships in which the inclusion of controls moves the coeﬃcient toward zero.
+37
+Figure 6: Results from Randomized Data
+(a) Rejection of Zero, Rmax = Π ˜R.
+Survive Rmax=1:     0.429
+.3
+.4
+.5
+.6
+.7
+.8
+.9
+1
+Share of Results With sign(β)=sign(βtilde)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+Multiplier Π : Rmax = Π *Rtilde
+(b) Results within +/- 2.8 SE, Rmax = Π ˜R.
+Survive Rmax=1:     0.369
+.3
+.4
+.5
+.6
+.7
+.8
+.9
+1
+Share of Results with β +/− 1.64 SE from β tilde
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+Multiplier Π : Rmax = Π *Rtilde
+Notes: These graphs show the performance of randomized results under the proportional selection adjustment. Each ﬁgure
+graphs the share of results which would survive varying parameterizations of Rmax, in all cases assuming ˜δ = 1. Sub-Figure a
+indicates the share of results which would survive Rmax = Π ˜
+R for varying values of Π, with survival in this case meaning the
+identiﬁed set does not include zero. This ﬁgure contains only relationships where the eﬀect is signiﬁcant with controls and
+adding the controls moves the coeﬃcient toward zero. Sub-Figure b indicates the share of results for which the full identiﬁed
+set would be within 2.8 standard errors of the controlled coeﬃcient. This Sub-Figure includes all relationships.
+38
+Table 1: Calibrated Example
+High Versus Low Variance Control
+Quality of Observed Control
+Uncontrolled Coeﬃcient. [R2]
+Controlled Coeﬃcient [R2]
+True Eﬀect
+High Variance Control Observed
+0.202 [.004]
+0.002 [.990]
+0
+Low Variance Control Observed
+0.202 [.004]
+0.200 [.013]
+0
+Notes: This table shows calculations based on simulated data. The true model is Y = βX + W + C, with β = 0. The data is constructed
+so the high variance control is W and V ar(W ) = 10 and the low variance controls is C and V ar(C) = 0.1. V ar(X) = 1, Cov(X, W ) = .2
+and Cov(X, C) = 0.002. Note that Cov(X, C) is implied by the equal selection assumption, Cov(X, W ), V ar(C) and V ar(W ).
+Table 2: Summary of Results under AET Adjustment
+Relative Degree of Selection
+to Eliminate Result (δ)
+Min
+0.0039
+10%
+0.099
+25%
+0.326
+Median
+0.739
+75%
+1.22
+90%
+8.45
+Max
+90.37
+Notes: This table uses data from published papers in economics to calculate the degree of selection on unobservables compared to observables
+that would be required to eliminate the result. The calculation used is that from Altonji, Elder and Taber (2005). The calculation assumes
+that if unobservables were included in the regression all of the outcome variance would be explained.
+39
+Table 3: Maternal Behavior, Child IQ and Birth Weight
+(1)
+(2)
+(3)
+(4)
+(5)
+(6)
+Panel A: Child IQ, Standardized (NLSY) (Rmax = .61)
+Treatment Variable
+Baseline Eﬀect
+Controlled Eﬀect
+Null Reject?
+Sibling FE
+Identiﬁed
+˜δ for β = 0
+(Std. Error), [R2]
+(Std. Error), [R2]
+(extrnl. evid.)
+Estimate
+Set
+Given Rmax
+Breastfeed (Months)
+0.045∗∗∗(.003) [.045]
+0.017∗∗∗(.002) [.256]
+No
+-0.007 (.005)
+[-0.033,0.017]
+0.37
+Drink in Preg. (Any)
+0.176∗∗∗(.026) [.008]
+0.050∗∗(.023) [.249]
+No
+0.026 (.036)
+[-0.146,0.050]
+0.26
+LBW + Preterm
+-0.188∗∗∗(.057) [.004]
+-0.125∗∗∗(.050) [.251]
+Yes
+-0.111 (.070)
+[-0.124,-0.033]†
+1.37
+Panel B: Birth Weight in Grams (NLSY) (Rmax = .53)
+Treatment Variable
+Baseline Eﬀect
+Controlled Eﬀect
+Null Reject?
+Sibling FE
+Identiﬁed
+˜δ for β = 0
+(Std. Error), [R2]
+(Std. Error), [R2]
+(extrnl. evid.)
+Estimate
+Set
+Given Rmax
+Smoking in Preg
+-183.1∗∗∗(12.9) [.31]
+-172.5∗∗∗(13.3) [.35]
+Yes
+-94.3∗∗∗(27.6)
+[-172.5,-30.3]†
+1.08
+Drink in Preg. (Amt)
+-16.7∗∗∗(5.15) [.30]
+-14.1∗∗∗(5.06) [.34]
+No
+-1.53 (7.48)
+[-14.1,0.49]
+0.96
+Notes: This table shows the validation results for the analysis of the impact of maternal behavior on child birth weight and IQ. Baseline eﬀects include only controls for child sex and (1)
+age dummies in the case of IQ and (2) gestation week in the case of birth weight. Full controls: race, age, education, income, marital status. Sibling ﬁxed eﬀects estimates come from
+NLSY in all panels. The identiﬁed set in Column (5) is bounded below by ˜β and above by β∗calculated based on Rmax given in the top row of each panel and ˜δ = 1. Column (6) shows
+the value of ˜δ which would produce β = 0 given the values of Rmax reported in the title of each Panel.
+∗signiﬁcant at 10% level, ∗∗signiﬁcant at 5% level, ∗∗∗signiﬁcant at 1% level.
+†identiﬁed set excludes zero.
+40
+Table 4: Robustness of Stability Results
+Panel A: Non-Randomized Data, Share of Results which Survive ˜δ = 1, varying Rmax
+(1)
+(2)
+(3)
+(4)
+Rmax = 1
+Rmax = min(2 ˜
+R; 1)
+Rmax = min(1.5 ˜
+R; 1)
+Rmax = min(1.25 ˜
+R; 1)
+Share With Adjusted β Same Sign as ˜β
+9.1%
+27%
+36%
+57%
+Sample: Add Controls, Moves toward Zero
+Share with Adjusted β +/- 2.8 SE of ˜β
+16%
+38%
+42%
+51%
+Sample: All
+Panel B: Randomized Data, Share of Results which Survive ˜δ = 1, varying Rmax
+Rmax = 1
+Rmax = min(2 ˜
+R; 1)
+Rmax = min(1.5 ˜
+R; 1)
+Rmax = min(1.25 ˜
+R; 1)
+Share With Adjusted β Same Sign as ˜β
+42%
+82%
+91%
+97%
+Sample: Add Controls, Moves toward Zero
+Share with Adjusted β +/- 2.8 SE of ˜β
+37%
+82%
+86%
+91%
+Sample: All
+Notes: This table describes the survival of non-randomized (Panel A) and randomized (Panel B) results under the proportional selection
+adjustment. Both panels show the share of results which would survive ˜δ with varying Rmax values. I consider two deﬁnitions of survival:
+(1) the identiﬁed set does not include zero and (2) the outer bound of the set is within 2.8 standard errors of ˜
+β. The ﬁrst of these is
+considered only for results which move toward zero when controls are added.
+Table 5: Example: Nunn and Wantchekon, 2011
+(1)
+(2)
+(3)
+(4)
+(5)
+Result Description
+Baseline Eﬀect
+Controlled Eﬀect
+Bias-Adjusted β
+Bias-Adjusted β
+Max Rmax
+(Std.Error)[R2]
+(Std.Error)[R2]
+Rmax = ˜R + ( ˜R −˚
+R)
+Rmax = 1.3 ˜R
+for β < 0
+Trust Relatives
+-0.193 (.043) [.106]
+-0.178 (.031) [.130]
+-0.103
+0.352
+0.161
+Trust Neighbors
+-0.238 (.044) [.115]
+-0.202 (.029) [.159]
+-0.069
+-0.044
+0.210
+Trust Local Council
+-0.177 (.027) [.175]
+-0.128 (.021) [.205]
+0.046
+0.821
+0.230
+Intragroup Trust
+-0.208 (.041) [.121]
+-0.187 (.032) [.155]
+-0.091
+0.100
+0.197
+Intergroup Trust
+-0.145 (.031) [.093]
+-0.115 (.030) [.119]
+0.010
+0.194
+0.142
+Notes: This table shows the results from Nunn and Wantchekon (2011), Table 4.
+The ﬁrst columns show the baseline and controlled
+eﬀects. Columns (3) through (5) show the bias-adjusted β under various assumptions on Rmax. Column (3) uses the assumption from their
+paper. Columns (4) uses an alternative assumption, which is based on the conclusions from the randomized data. Column (5) estimates
+the maximum value of Rmax for which the result would survive in each case.
+41
+Appendix A: Theoretical Results
+Appendix A.1: Orthogonality of Observables and Unobservables
+Here, I formalize the statements about the importance of the orthogonality condition which were made in
+Section 3.1.
+Recall the setup of the model:
+Y = βX + Ψωo + W2 + ϵ
+where ωo is a vector of the observed controls, ωo
+1, ..., ωo
+j. The index W2 is not observed. In contrast to the
+model setup, assume that the elements of ωoare correlated with W2.
+Deﬁne ˜
+W2 as the residual from a regression of W2 on ωo. As I note in deﬁning the proportionality
+condition, there is always a value of δ for which the proportionality condition holds. There exists, therefore,
+some ˜δ such that ˜δ σ1X
+σ2
+1 = σ˜2X
+σ2
+˜2 , where the superscript in the right hand side of the equation indicates that these
+values refer to ˜
+W2.
+The estimator will be calculated based on ωo,X and Y. The key question is whether any of the inputs to
+the estimator are impacted by redeﬁning W2 as ˜
+W2. However, it should be clear that they are not. Since we
+do not observe W2(or ˜
+W2) the estimator inputs cannot include this. Therefore, the result goes through as in
+the text.
+Appendix A.2: Restriction on Intermediate Coeﬃcients
+Section 3.2 reports results from a restricted form of the estimator which relies on two assumptions. In that
+section I state an assumption (Assumption 2) under which the coeﬃcient on X from a regression of Y on X
+and the observed controls is the same as the coeﬃcient in a regression of Y on X and the index of these
+controls multiplied by their true coeﬃcients. I prove this statement here.
+Consider the two regressions below:
+Y
+=
+˜βX + ΓW1 + ˜ϵ
+(5)
+Y
+=
+ˆβX + Ψωo + ˆϵ
+(6)
+where W1 is an index of the elements of ωomultiplied by their true coeﬃcients. The derivation of the bias from
+the estimator relies on observing ˜β from Equation 5. However, the feasible regression is Equation 6. We
+therefore need to generate a condition under which ˜β = ˆβ.
+42
+Consider a regression of X on ωo and denote the coeﬃcients from this regression µi. Recall the
+coeﬃcients on these controls in the regression of Y on X and ωo are ψi.
+Proposition 4. If ψi
+ψj = µi
+µj ∀i, j then ˆβ = ˜β.
+Proof. Referring to equations 5 and 6 above, and recalling the notation from the paper, note that
+˜β
+p→β +
+δσ2
+2σ1X
+σ2
+1(V ar( ˜
+X)) where ˜X is the residual from a regression of X on W1, and ˆβ
+p→β +
+δσ2
+2σ1X
+σ2
+1(V ar( ˆ
+X)) where ˆX is
+the residual from a regression of X on ωo. Using the deﬁnitions of plim(˜β) and plim(ˆβ) it is straightforward to
+observe that the result requires V ar( ˜X) = V ar( ˆX). By the deﬁnition of variance, V ar( ˜X) = 1 −Cov(Ψωo,X)2
+V ar(Ψωo)
+and V ar( ˆX) = 1 −Pj
+i=1 µiCov(ωo
+i , X). Algebraic manipulation yields the result that V ar( ˜X) = V ar( ˆX) if
+and only if ψi
+ψj = µi
+µj ∀i, j.
+Appendix A.3: Restricted Estimator
+Proof of Proposition 1
+The proof proceeds by calculating each diﬀerence in terms of variance and covariance values, and then
+simplifying.
+Claim: (˚β −˜β)
+p→σ1X
+σ2
+X (1 −σ1X
+σ2
+1 Π) where Π =
+σ2
+2σ1X
+σ2
+1(σ2
+X−
+σ2
+1X
+σ2
+1
+), the asymptotic bias on ˜β.
+Proof: Observe that
+ˆλwo
+1|X converges in probability to Cov(wo
+1,X)
+V (X)
+=
+σ1X
+ψ1σ2
+X . By a similar logic, ˆλW2|X converges to σ2X
+σ2
+X and, under
+proportional selection, to σ1Xσ2
+2
+σ2
+1σ2
+X . ˆλW2|X,wo
+1 converges in probability to Cov(W2,X)
+V ar( ˜
+X)
+where ˜X is the residual from
+a regression of X on wo
+1. Note that V ar( ˜X) converges in probability to σ2
+X −σ2
+1X
+σ2
+1 . Therefore, again invoking
+proportional selection, ˆλW2|X,wo
+1 converges in probability to
+σ2
+2σ1X
+σ2
+1(σ2
+X−
+σ2
+1X
+σ2
+1
+). It will simplify notation to denote
+this bias Π and to write the equations in terms of Π, σ2
+1 and σ1X :
+˚β
+p→
+β + ψ1
+ σ1X
+ψ1σ2
+X
+
++ Π
+(σ2
+X −σ2
+1X
+σ2
+1 )
+σ2
+X
+˜β
+p→
+β + Π
+Subtracting yields:
+˚β −˜β
+p→
+σ1X
+σ2
+X
+
++ Π
+(σ2
+X −σ2
+1X
+σ2
+1 )
+σ2
+X
+−Π
+p→
+σ1X
+σ2
+X
+ 
+1 −σ1X
+σ2
+1
+Π
+
+43
+Claim: ( ˜R −˚
+R)ˆσyy
+p→σ2
+1 + Π2(σ2
+X −σ2
+1X
+σ2
+1 ) −
+1
+σ2
+X
+
+σ1X + Π(σ2
+X −σ2
+1X
+σ2
+1 )
+2
+and
+(Rmax −˜R)ˆσyy
+p→Π
+
+
+σ2
+1
+
+σ2
+X−
+σ2
+1X
+σ2
+1
+
+σ1X
+−Π
+
+σ2
+X −σ2
+1X
+σ2
+1
+
+
+.
+Proof: Observe the following deﬁnitions. From the
+short regression coeﬃcient, ˚
+Rˆσyy = σ2
+X(β + γ1ˆλwo
+1|X + ˆλW2|X)2. By Lemma 1, this converges in probability to
+σ2
+X
+ 
+β +
+
+σ1X
+σ2
+X
+
++ Π
+(σ2
+X−
+σ2
+1X
+σ2
+1
+)
+σ2
+X
+!2
+. In the intermediate regression the calculation relies on the coeﬃcient on X
+(β + Π) and the coeﬃcient on wo
+1, which is also biased by the exclusion of W2 through the joint correlation
+with X and is equal to γ1 −γ1σ1X
+σ2
+1
+Π. Note that σ2
+1 = γ2
+1V ar(wo
+1). Thus,
+˜Rˆσyy
+p→σ2
+X(β + Π)2 + σ2
+1(1 −σ1X
+σ2
+1 Π)2 + 2σ1X(β + Π)(1 −σ1X
+σ2
+1 Π). This simpliﬁes to
+˜Rˆσyy
+p→β2σ2
+X + σ2
+1 + Π2 
+σ2
+X −σ2
+1X
+σ2
+1
+
++ 2σ1Xβ −2βΠ
+
+σ2
+X −σ2
+1X
+σ2
+1
+
+. Finally, observe that
+Rmaxσ2
+y = β2σ2
+X + σ2
+1 + Π
+σ2
+1(σ2
+X−
+σ2
+1X
+σ2
+1
+)
+σ1X
++ 2βσ1,X + 2βΠ(σ2
+X −σ2
+1X
+σ2
+1 ).
+Subtracting yields:
+
+˜
+R −˚
+R
+
+ˆσyy
+p
+→
+β2σ2
+X + σ2
+1 + Π2
+ 
+σ2
+X −σ2
+1X
+σ2
+1
+!
++ 2σ1Xβ −2βΠ
+ 
+σ2
+X −σ2
+1X
+σ2
+1
+!
+−σ2
+X
+
+
+
+β +
+ 
+σ1X
+σ2
+X
+!
++ Π
+(σ2
+X −
+σ2
+1X
+σ2
+1
+)
+σ2
+X
+
+
+
+
+2
+p
+→
+σ2
+1 + Π2(σ2
+X −σ2
+1X
+σ2
+1
+) −
+1
+σ2
+X
+ 
+σ1X + Π(σ2
+X −σ2
+1X
+σ2
+1
+)
+!2
+(Rmax −˜
+R)ˆσyy
+p
+→
+β2σ2
+X + σ2
+1 + Π
+σ2
+1(σ2
+X −
+σ2
+1X
+σ2
+1
+)
+δσ1X
++ 2βσ1,X + 2βΠ(σ2
+X −σ2
+1X
+σ2
+1
+)
+−
+ 
+β2σ2
+X + σ2
+1 + Π2
+ 
+σ2
+X −σ2
+1X
+σ2
+1
+!
++ 2σ1Xβ −2βΠ
+ 
+σ2
+X −σ2
+1X
+σ2
+1
+!!
+p
+→
+Π
+
+
+
+
+σ2
+1
+
+σ2
+X −
+σ2
+1X
+σ2
+1
+
+σ1X
+−Π
+ 
+σ2
+X −σ2
+1X
+σ2
+1
+!
+
+
+
+
+Claim: Deﬁne β∗= ˜β −
+h
+˚β −˜β
+i
+Rmax−˜
+R
+˜
+R−˚
+R
+. Then, β∗
+p→β.
+Proof: The claims above deﬁne a system of three equations in three unknowns:
+(˚β −˜β)
+p→
+σ1X
+σ2
+X
+ 
+1 −σ1X
+σ2
+1
+Π
+
+
+˜R −˚
+R
+
+ˆσyy
+p→
+σ2
+1 + Π2(σ2
+X −σ2
+1X
+σ2
+1
+) −1
+σ2
+X
+
+σ1X + Π(σ2
+X −σ2
+1X
+σ2
+1
+)
+2
+(Rmax −˜R)ˆσyy
+p→
+Π
+
+
+σ2
+1
+
+σ2
+X −σ2
+1X
+σ2
+1
+
+σ1X
+−Π
+
+σ2
+X −σ2
+1X
+σ2
+1
+
+
+The unknowns are σ2
+1, σ1X and Π. The system is identiﬁed and the solution is Π =
+h
+˚β −˜β
+i
+Rmax−˜
+R
+˜
+R−˚
+R
+. This
+gives the result.
+44
+Appendix A.4: Estimator
+The approach is virtually identical to the restricted estimator case. It will be helpful to observe that ˚β and ˚
+R
+are deﬁned exactly as above, as is Rmax.These are not impacted by the way we deﬁne the W1index since the
+controls are either (1) not included or (b) fully included.
+Claim: (˚β −˜β)
+p→σ1X
+σ2
+X −Π
+
+σ2
+X−τx
+σ2
+X
+
+where Π = δσ1Xσ2
+2
+σ2
+1τx , the asymptotic bias on ˜β.
+Proof: As above, ˚β
+p→β + σ1X
+σ2
+X + σ2X
+σ2
+X . Given the proportional selection assumption and the deﬁnition of Π
+above, we therefore have: ˚β
+p→β + σ1X
+σ2
+X + Π τx
+σ2
+X . And by deﬁnition ˜β
+p→β + Π. Diﬀerencing yields:
+˚β −˜β
+p→
+σ1X
+σ2
+X
+−Π
+σ2
+X −τx
+σ2
+X
+
+Claim: ( ˜R −˚
+R)ˆσyy
+p→σ2
+1 + Π2τx −
+1
+σ2
+X (σ1X + Πτx)2 and (Rmax −˜R)ˆσyy
+p→Π
+
+σ2
+1τx
+δσ1X −Πτx
+
+.
+Proof: By the simple deﬁnition of ˚
+R we have ˚
+Rˆσyy
+p→(β + σ1X
+σ2
+X + Π τx
+σ2
+X )2σ2
+X. Deﬁne the variance of element
+ωo
+i as σωo
+ii and the covariance of element ωo
+i with X as σωo
+ix . By deﬁnition, we have:
+˜Rˆσyy
+p→(β + Π)2 σ2
+X +
+j
+X
+i=1
+ 
+ψi −σωo
+ix
+σωo
+ii
+(Π)
+2
+σωo
+ii
+!
++ 2(β + Π)
+j
+X
+i=1
+
+σωo
+ix
+
+ψi −σωo
+ix
+σωo
+ii
+(Π)
+
+Note the following: σ2
+1 = Pj
+i=1 ψ2
+i σωo
+ii , σ1X =
+hPj
+i=1 ψiσωo
+ix
+i
+and τx =
+
+σ2
+X −Pj
+i=1
+(σωo
+ix )
+2
+σωo
+ii
+
+. This therefore
+simpliﬁes to: ˜Rˆσyy
+p→β2σ2
+X + σ2
+1 + Π2τx + 2βΠ(τx) + 2βσ1X.
+Finally, Rmaxˆσyy
+p→β2σ2
+X + σ2
+1 + σ2
+2 + 2βσ1,X + 2βΠτx . Subtracting yields both results.
+Completion of Proof: The above claims provide a system of three equations in three unknowns (σ2
+1,σ1X, Π):
+(˚β −˜β)
+p→
+σ1X
+σ2
+X
+−Π
+σ2
+X −τx
+σ2
+X
+
+
+˜R −˚
+R
+
+ˆσyy
+p→
+σ2
+1 + Π2(τx) −1
+σ2
+X
+(σ1X + Π(τx))2
+(Rmax −˜R)ˆσyy
+p→
+Π
+σ2
+1τx
+σ1X
+−Πτx
+
+Solving these for Π yields a cubic equation:
+0
+=
+δ
+
+(Rmax −˜
+R)σ2
+y
+ 
+˚
+β −˜β
+
+σ2
+X
++
+Π
+
+δ
+
+(Rmax −˜
+R)σ2
+y
+
+(σ2
+X −τx) −
+
+˜
+R −˚
+R
+
+σ2
+y
+
+τx −σ2
+Xτx
+
+˚
+β −˜β
+2
++
+Π2 
+τxA
+
+˚
+β −˜β
+
+σ2
+X(δ −2)
+
++
+Π3(δ −1)(τxσ2
+X −τ 2
+x)
+The solution will be one of the three roots of this equation (if the equation has three real roots) or the
+single real root if it has one real root.
+45
+Appendix B: Appendix Tables
+Table 1: Summary Statistics: NLSY Wage Data
+Mean
+Standard Deviation
+Range
+Sample Size
+Log Wages (1996-1998)
+2.67
+0.63
+0-6.21
+7496
+Years of educ.
+12.5
+2.24
+0-20
+7496
+Years of exper.
+16.3
+3.02
+8-31
+7496
+Female
+0.49
+0.50
+0-1
+7496
+Region of Residence
+N/A
+N/A
+1-4
+7496
+White
+0.64
+0.47
+0-1
+7496
+Married Codes
+N/A
+N/A
+0-6
+7496
+Mother Educ (yrs)
+11.0
+3.00
+1-20
+7496
+Father Educ (yrs)
+11.2
+5.27
+1-20
+7496
+Mother Occup (codes)
+N/A
+N/A
+0-984
+7496
+Father Occup (codes)
+N/A
+N/A
+0-984
+7496
+Siblings (#)
+3.8
+2.6
+0-22
+7496
+Notes: This table shows summary statistics for the data used in the NSLY wage analysis in Section 4. Data comes from the NLSY-79
+cohort. Means are not reported for region, marital codes or occupation because they are not meaningful. All variables are controlled in the
+regressions as dummies. Wages are the max of 1996 and 1998 wages.
+46
+Table 2: Summary Statistics: Early Life and Child IQ
+Panel A: IQ Analysis
+Mean
+Standard Deviation
+Sample Size
+IQ (PIAT Score, Standardized)
+0.025
+0.991
+6962
+Breastfeeding Months
+2.40
+4.63
+6514
+LBW + Preterm
+0.049
+0.217
+6174
+Mom Drink at all in Pregnancy
+0.322
+0.467
+6537
+Age
+5.57
+1.37
+6962
+Child Female
+0.495
+0.500
+6962
+Mother Black
+0.282
+0.450
+6962
+Mother Age
+25.3
+5.61
+6962
+Mother Education (years)
+12.2
+2.7
+6962
+Mother Income
+$41,294
+$80,735
+6962
+Mother Married
+0.654
+0.476
+6962
+Panel B: Birth Weight Analysis
+Birth Weight (grams)
+3290.4
+647.69
+7686
+Mom Smoke in Pregnancy
+0.291
+0.454
+7686
+Drinking Intensity (0-7)
+0.638
+1.16
+7442
+Child Female
+0.486
+0.499
+7686
+Mother Black
+0.273
+0.445
+7686
+Mother Age
+24.4
+5.49
+7686
+Mother Education (years)
+12.0
+2.7
+7686
+Mother Income
+$30,813
+$65,374
+7686
+Mother Married
+0.667
+0.471
+7686
+Notes: This table shows summary statistics for the data used in the analysis in Section 4. Drinking intensity is coded from 0 (never) to 7
+(every day). Natality detail ﬁles are from 2001 and 2002. Data is from the NLSY Children and Young Adults panel.
+47
+Appendix C: References for Section 5
+Abeler, Johannes, Armin Falk, Lorenz Goette, and David Huﬀman, “Reference Points and Eﬀort
+Provision,” AMERICAN ECONOMIC REVIEW, APR 2011, 101 (2), 470–492.
+Acemoglu, Daron, Simon Johnson, James A. Robinson, and Pierre Yared, “Income and democracy,”
+AMERICAN ECONOMIC REVIEW, JUN 2008, 98 (3), 808–842.
+Aghion, Philippe, Robin Burgess, Stephen J. Redding, and Fabrizio Zilibotti, “The Unequal Eﬀects
+of Liberalization: Evidence from Dismantling the License Raj in India,” AMERICAN ECONOMIC
+REVIEW, SEP 2008, 98 (4), 1397–1412.
+Aker, Jenny C., Christopher Ksoll, and Travis J. Lybbert, “Can Mobile Phones Improve Learning?
+Evidence from a Field Experiment in Niger,” AMERICAN ECONOMIC JOURNAL-APPLIED
+ECONOMICS, OCT 2012, 4 (4), 94–120.
+Algan, Yann and Pierre Cahuc, “Inherited Trust and Growth,” AMERICAN ECONOMIC REVIEW,
+DEC 2010, 100 (5), 2060–2092.
+Angrist, Joshua and Victor Lavy, “The Eﬀects of High Stakes High School Achievement Awards:
+Evidence from a Randomized Trial,” AMERICAN ECONOMIC REVIEW, SEP 2009, 99 (4), 1384–1414.
+Ashraf, Nava, “Spousal Control and Intra-Household Decision Making: An Experimental Study in the
+Philippines,” AMERICAN ECONOMIC REVIEW, SEP 2009, 99 (4), 1245–1277.
+, James Berry, and Jesse M. Shapiro, “Can Higher Prices Stimulate Product Use? Evidence from a
+Field Experiment in Zambia,” AMERICAN ECONOMIC REVIEW, DEC 2010, 100 (5), 2383–2413.
+Ashraf, Quamrul and Oded Galor, “Dynamics and Stagnation in the Malthusian Epoch,” AMERICAN
+ECONOMIC REVIEW, AUG 2011, 101 (5), 2003–2041.
+Bandiera, Oriana, Andrea Prat, and Tommaso Valletti, “Active and Passive Waste in Government
+Spending: Evidence from a Policy Experiment,” AMERICAN ECONOMIC REVIEW, SEP 2009, 99 (4),
+1278–1308.
+Beaman, Lori, Raghabendra Chattopadhyay, Esther Duﬂo, Rohini Pande, and Petia Topalova,
+“POWERFUL WOMEN: DOES EXPOSURE REDUCE BIAS?,” QUARTERLY JOURNAL OF
+ECONOMICS, NOV 2009, 124 (4), 1497–1540.
+Beaudry, Paul, David A. Green, and Benjamin Sand, “Does Industrial Composition Matter for Wages?
+A Test of Search and Bargaining Theory,” ECONOMETRICA, MAY 2012, 80 (3), 1063–1104.
+Becker, Sascha O. and Ludger Woessmann, “WAS WEBER WRONG? A HUMAN CAPITAL THEORY
+OF PROTESTANT ECONOMIC HISTORY,” QUARTERLY JOURNAL OF ECONOMICS, MAY 2009,
+124 (2), 531–596.
+Bernard, Andrew B., Stephen J. Redding, and Peter K. Schott, “Multiple-Product Firms and
+Product Switching,” AMERICAN ECONOMIC REVIEW, MAR 2010, 100 (1), 70–97.
+1
+Bloom, Nicholas, Raﬀaella Sadun, and John Van Reenen, “Americans Do IT Better: US
+Multinationals and the Productivity Miracle,” AMERICAN ECONOMIC REVIEW, FEB 2012, 102 (1),
+167–201.
+Bohnet, Iris, Fiona Greig, Benedikt Herrmann, and Richard Zeckhauser, “Betrayal aversion:
+Evidence from Brazil, China, Oman, Switzerland, Turkey, and the United States,” AMERICAN
+ECONOMIC REVIEW, MAR 2008, 98 (1), 294–310.
+Boivin, Jean, Marc P. Giannoni, and Ilian Mihov, “Sticky Prices and Monetary Policy: Evidence from
+Disaggregated US Data,” AMERICAN ECONOMIC REVIEW, MAR 2009, 99 (1), 350–384.
+Broda, Christian, Nuno Limao, and David E. Weinstein, “Optimal Tariﬀs and Market Power: The
+Evidence,” AMERICAN ECONOMIC REVIEW, DEC 2008, 98 (5), 2032–2065.
+Brunnermeier, Markus K. and Stefan Nagel, “Do wealth ﬂuctuations generate time-varying risk
+aversion? Micro-evidence on individuals’ asset allocation,” AMERICAN ECONOMIC REVIEW, JUN
+2008, 98 (3), 713–736.
+Buera, Francisco J., Alexander Monge-Naranjo, and Giorgio E. Primiceri, “Learning the Wealth of
+Nations,” ECONOMETRICA, JAN 2011, 79 (1), 1–45.
+Burde, Dana and Leigh L. Linden, “Bringing Education to Afghan Girls: A Randomized Controlled Trial
+of Village-Based Schools,” AMERICAN ECONOMIC JOURNAL-APPLIED ECONOMICS, JUL 2013, 5
+(3), 27–40.
+Bursztyn, Leonardo and Lucas C. Coﬀman, “The Schooling Decision: Family Preferences,
+Intergenerational Conﬂict, and Moral Hazard in the Brazilian Favelas,” JOURNAL OF POLITICAL
+ECONOMY, JUN 2012, 120 (3), 359–397.
+Bustos, Paula, “Trade Liberalization, Exports, and Technology Upgrading: Evidence on the Impact of
+MERCOSUR on Argentinian Firms,” AMERICAN ECONOMIC REVIEW, FEB 2011, 101 (1), 304–340.
+Caballero, Ricardo J., Takeo Hoshi, and Anil K. Kashyap, “Zombie Lending and Depressed
+Restructuring in Japan,” AMERICAN ECONOMIC REVIEW, DEC 2008, 98 (5), 1943–1977.
+Cai, Hongbin, Yuyu Chen, and Hanming Fang, “Observational Learning: Evidence from a Randomized
+Natural Field Experiment,” AMERICAN ECONOMIC REVIEW, JUN 2009, 99 (3), 864–882.
+Card, David, Alexandre Mas, Enrico Moretti, and Emmanuel Saez, “Inequality at Work: The Eﬀect
+of Peer Salaries on Job Satisfaction,” AMERICAN ECONOMIC REVIEW, OCT 2012, 102 (6),
+2981–3003.
+Carpenter, Jeﬀrey, Peter Hans Matthews, and John Schirm, “Tournaments and Oﬃce Politics:
+Evidence from a Real Eﬀort Experiment,” AMERICAN ECONOMIC REVIEW, MAR 2010, 100 (1),
+504–517.
+Chaney, Eric, “REVOLT ON THE NILE: ECONOMIC SHOCKS, RELIGION, AND POLITICAL
+POWER,” ECONOMETRICA, SEP 2013, 81 (5), 2033–2053.
+Charles, Kerwin Koﬁand Jonathan Guryan, “Prejudice and Wages: An Empirical Assessment of
+Becker’s The Economics of Discrimination,” JOURNAL OF POLITICAL ECONOMY, OCT 2008, 116
+(5), 773–809.
+, Erik Hurst, and Nikolai Roussanov, “CONSPICUOUS CONSUMPTION AND RACE,”
+QUARTERLY JOURNAL OF ECONOMICS, MAY 2009, 124 (2), 425–467.
+Chen, Roy and Yan Chen, “The Potential of Social Identity for Equilibrium Selection,” AMERICAN
+ECONOMIC REVIEW, OCT 2011, 101 (6), 2562–2589.
+2
+Chetty, Raj, Adam Looney, and Kory Kroft, “Salience and Taxation: Theory and Evidence,”
+AMERICAN ECONOMIC REVIEW, SEP 2009, 99 (4), 1145–1177.
+, John N. Friedman, Nathaniel Hilger, Emmanuel Saez, Diane Whitmore Schanzenbach,
+and Danny Yagan, “How Does Your Kindergarten Classroom Aﬀect Your Earnings? Evidence from
+Project Star,” QUARTERLY JOURNAL OF ECONOMICS, NOV 2011, 126 (4), 1593–1660.
+Cohen, Jessica and Pascaline Dupas, “FREE DISTRIBUTION OR COST-SHARING? EVIDENCE
+FROM A RANDOMIZED MALARIA PREVENTION EXPERIMENT,” QUARTERLY JOURNAL OF
+ECONOMICS, FEB 2010, 125 (1), 1–45.
+Cohen, Lauren, Andrea Frazzini, and Christopher Malloy, “The Small World of Investing: Board
+Connections and Mutual Fund Returns,” JOURNAL OF POLITICAL ECONOMY, OCT 2008, 116 (5),
+951–979.
+Cole, Shawn, Xavier Gine, Jeremy Tobacman, Petia Topalova, Robert Townsend, and James
+Vickery, “Barriers to Household Risk Management: Evidence from India,” AMERICAN ECONOMIC
+JOURNAL-APPLIED ECONOMICS, JAN 2013, 5 (1), 104–135.
+Cortes, Patricia, “The eﬀect of low-skilled immigration on U. S. prices: Evidence from CPI data,”
+JOURNAL OF POLITICAL ECONOMY, JUN 2008, 116 (3), 381–422.
+Dafny, Leemore, Mark Duggan, and Subramaniam Ramanarayanan, “Paying a Premium on Your
+Premium? Consolidation in the US Health Insurance Industry,” AMERICAN ECONOMIC REVIEW,
+APR 2012, 102 (2), 1161–1185.
+Das, Jishnu, Stefan Dercon, James Habyarimana, Pramila Krishnan, Karthik Muralidharan,
+and Venkatesh Sundararaman, “School Inputs, Household Substitution, and Test Scores,”
+AMERICAN ECONOMIC JOURNAL-APPLIED ECONOMICS, APR 2013, 5 (2), 29–57.
+Dell, Melissa, “The Persistent Eﬀects of Peru’s Mining Mita,” ECONOMETRICA, NOV 2010, 78 (6),
+1863–1903.
+Djankov, Simeon, Oliver Hart, Caralee McLiesh, and Andrei Shleifer, “Debt Enforcement around
+the World,” JOURNAL OF POLITICAL ECONOMY, DEC 2008, 116 (6), 1105–1150.
+Duﬂo, Esther, Michael Kremer, and Jonathan Robinson, “Nudging Farmers to Use Fertilizer: Theory
+and Experimental Evidence from Kenya,” AMERICAN ECONOMIC REVIEW, OCT 2011, 101 (6),
+2350–2390.
+, Pascaline Dupas, and Michael Kremer, “Peer Eﬀects, Teacher Incentives, and the Impact of
+Tracking: Evidence from a Randomized Evaluation in Kenya,” AMERICAN ECONOMIC REVIEW,
+AUG 2011, 101 (5), 1739–1774.
+, Rema Hanna, and Stephen P. Ryan, “Incentives Work: Getting Teachers to Come to School,”
+AMERICAN ECONOMIC REVIEW, JUN 2012, 102 (4), 1241–1278.
+Dupas, Pascaline and Jonathan Robinson, “Why Don’t the Poor Save More? Evidence from Health
+Savings Experiments,” AMERICAN ECONOMIC REVIEW, JUN 2013, 103 (4), 1138–1171.
+Duranton, Gilles and Matthew A. Turner, “The Fundamental Law of Road Congestion: Evidence from
+US Cities,” AMERICAN ECONOMIC REVIEW, OCT 2011, 101 (6), 2616–2652.
+Estevadeordal, Antoni, Caroline Freund, and Emanuel Ornelas, “DOES REGIONALISM AFFECT
+TRADE LIBERALIZATION TOWARD NONMEMBERS?,” QUARTERLY JOURNAL OF
+ECONOMICS, NOV 2008, 123 (4), 1531–1575.
+Fairlie, Robert W. and Jonathan Robinson, “Experimental Evidence on the Eﬀects of Home Computers
+on Academic Achievement among Schoolchildren,” AMERICAN ECONOMIC JOURNAL-APPLIED
+ECONOMICS, JUL 2013, 5 (3), 211–240.
+3
+Ferraz, Claudio and Frederico Finan, “Electoral Accountability and Corruption: Evidence from the
+Audits of Local Governments,” AMERICAN ECONOMIC REVIEW, JUN 2011, 101 (4), 1274–1311.
+Finan, Frederico and Laura Schechter, “Vote-Buying and Reciprocity,” ECONOMETRICA, MAR 2012,
+80 (2), 863–881.
+Finkelstein, Amy, “E-ZTAX: TAX SALIENCE AND TAX RATES,” QUARTERLY JOURNAL OF
+ECONOMICS, AUG 2009, 124 (3), 969–1010.
+Gabaix, Xavier and Augustin Landier, “Why has CEO pay increased so much?,” QUARTERLY
+JOURNAL OF ECONOMICS, FEB 2008, 123 (1), 49–100.
+Gentzkow, Matthew and Jesse M. Shapiro, “Preschool television viewing and adolescent test scores:
+Historical evidence from the Coleman study,” QUARTERLY JOURNAL OF ECONOMICS, FEB 2008,
+123 (1), 279–323.
+and
+, “What Drives Media Slant? Evidence From US Daily Newspapers,” ECONOMETRICA, JAN
+2010, 78 (1), 35–71.
+Gruber, Jonathan and Daniel M. Hungerman, “The church versus the mall: What happens when
+religion faces increased secular competition?,” QUARTERLY JOURNAL OF ECONOMICS, MAY 2008,
+123 (2), 831–862.
+Guiso, Luigi, Paola Sapienza, and Luigi Zingales, “CULTURAL BIASES IN ECONOMIC
+EXCHANGE?,” QUARTERLY JOURNAL OF ECONOMICS, AUG 2009, 124 (3), 1095–1131.
+Heﬀetz, Ori and Moses Shayo, “How Large Are Non-Budget-Constraint Eﬀects of Prices on Demand?,”
+AMERICAN ECONOMIC JOURNAL-APPLIED ECONOMICS, OCT 2009, 1 (4), 170–199.
+Ifcher, John and Homa Zarghamee, “Happiness and Time Preference: The Eﬀect of Positive Aﬀect in a
+Random-Assignment Experiment,” AMERICAN ECONOMIC REVIEW, DEC 2011, 101 (7), 3109–3129.
+Jayachandran, Seema and Adriana Lleras-Muney, “LIFE EXPECTANCY AND HUMAN CAPITAL
+INVESTMENTS: EVIDENCE FROM MATERNAL MORTALITY DECLINES,” QUARTERLY
+JOURNAL OF ECONOMICS, FEB 2009, 124 (1), 349–397.
+Jensen, Robert, “Do Labor Market Opportunities Aﬀect Young Women’s Work and Family Decisions?
+Experimental Evidence from India,” QUARTERLY JOURNAL OF ECONOMICS, MAY 2012, 127 (2),
+753–792.
+Jensen, Robert T. and Nolan H. Miller, “Giﬀen Behavior and Subsistence Consumption,” AMERICAN
+ECONOMIC REVIEW, SEP 2008, 98 (4), 1553–1577.
+Karlan, Dean S. and Jonathan Zinman, “Credit elasticities in less-developed economies: Implications for
+microﬁnance,” AMERICAN ECONOMIC REVIEW, JUN 2008, 98 (3), 1040–1068.
+Khwaja, Asim Ijaz and Atif Mian, “Tracing the Impact of Bank Liquidity Shocks: Evidence from an
+Emerging Market,” AMERICAN ECONOMIC REVIEW, SEP 2008, 98 (4), 1413–1442.
+Kirwan, Barrett E., “The Incidence of US Agricultural Subsidies on Farmland Rental Rates,” JOURNAL
+OF POLITICAL ECONOMY, FEB 2009, 117 (1), 138–164.
+Kling, Jeﬀrey R., Sendhil Mullainathan, Eldar Shaﬁr, Lee C. Vermeulen, and Marian V.
+Wrobel, “Comparison Friction: Experimental Evidence from Medicare Drug Plans,” QUARTERLY
+JOURNAL OF ECONOMICS, FEB 2012, 127 (1), 199–235.
+Kremer, Michael, Jessica Leino, Edward Miguel, and Alix Peterson Zwane, “SPRING CLEANING:
+RURAL WATER IMPACTS, VALUATION, AND PROPERTY RIGHTS INSTITUTIONS,”
+QUARTERLY JOURNAL OF ECONOMICS, FEB 2011, 126 (1), 145–205.
+4
+Kroft, Kory, Fabian Lange, and Matthew J. Notowidigdo, “Duration Dependence and Labor Market
+Conditions: Evidence from a Field Experiment,” QUARTERLY JOURNAL OF ECONOMICS, AUG
+2013, 128 (3), 1123–1167.
+Lalive, Rafael and Josef Zweimueller, “HOW DOES PARENTAL LEAVE AFFECT FERTILITY AND
+RETURN TO WORK? EVIDENCE FROM TWO NATURAL EXPERIMENTS,” QUARTERLY
+JOURNAL OF ECONOMICS, AUG 2009, 124 (3), 1363–1402.
+Lavy, Victor, “Performance Pay and Teachers’ Eﬀort, Productivity, and Grading Ethics,” AMERICAN
+ECONOMIC REVIEW, DEC 2009, 99 (5), 1979–2011.
+Libecap, Gary D. and Dean Lueck, “The Demarcation of Land and the Role of Coordinating Property
+Institutions,” JOURNAL OF POLITICAL ECONOMY, JUN 2011, 119 (3), 426–467.
+Mas, Alexandre and Enrico Moretti, “Peers at Work,” AMERICAN ECONOMIC REVIEW, MAR 2009,
+99 (1), 112–145.
+Mian, Atif and Amir Suﬁ, “THE CONSEQUENCES OF MORTGAGE CREDIT EXPANSION:
+EVIDENCE FROM THE US MORTGAGE DEFAULT CRISIS,” QUARTERLY JOURNAL OF
+ECONOMICS, NOV 2009, 124 (4), 1449–1496.
+Michalopoulos, Stelios and Elias Papaioannou, “PRE-COLONIAL ETHNIC INSTITUTIONS AND
+CONTEMPORARY AFRICAN DEVELOPMENT,” ECONOMETRICA, JAN 2013, 81 (1), 113–152.
+Muralidharan, Karthik and Venkatesh Sundararaman, “Teacher Performance Pay: Experimental
+Evidence from India,” JOURNAL OF POLITICAL ECONOMY, FEB 2011, 119 (1), 39–77.
+Nunn, Nathan, “The long-term eﬀects of Africa’s slave trades,” QUARTERLY JOURNAL OF
+ECONOMICS, FEB 2008, 123 (1), 139–176.
+and Leonard Wantchekon, “The Slave Trade and the Origins of Mistrust in Africa,” AMERICAN
+ECONOMIC REVIEW, DEC 2011, 101 (7), 3221–3252.
+Olken, Benjamin A. and Patrick Barron, “The Simple Economics of Extortion: Evidence from Trucking
+in Aceh,” JOURNAL OF POLITICAL ECONOMY, JUN 2009, 117 (3), 417–452.
+Pope, Devin G. and Maurice E. Schweitzer, “Is Tiger Woods Loss Averse? Persistent Bias in the Face of
+Experience, Competition, and High Stakes,” AMERICAN ECONOMIC REVIEW, FEB 2011, 101 (1),
+129–157.
+Price, Joseph and Justin Wolfers, “RACIAL DISCRIMINATION AMONG NBA REFEREES,”
+QUARTERLY JOURNAL OF ECONOMICS, NOV 2010, 125 (4), 1859–1887.
+Rockoﬀ, Jonah E., Douglas O. Staiger, Thomas J. Kane, and Eric S. Taylor, “Information and
+Employee Evaluation: Evidence from a Randomized Intervention in Public Schools,” AMERICAN
+ECONOMIC REVIEW, DEC 2012, 102 (7), 3184–3213.
+Schularick, Moritz and Alan M. Taylor, “Credit Booms Gone Bust: Monetary Policy, Leverage Cycles,
+and Financial Crises, 1870-2008,” AMERICAN ECONOMIC REVIEW, APR 2012, 102 (2), 1029–1061.
+Shayo, Moses and Asaf Zussman, “Judicial Ingroup Bias in the Shadow of Terrorism,” QUARTERLY
+JOURNAL OF ECONOMICS, AUG 2011, 126 (3), 1447–1484.
+Snyder, Jr. James M. and David Stromberg, “Press Coverage and Political Accountability,” JOURNAL
+OF POLITICAL ECONOMY, APR 2010, 118 (2), 355–408.
+Song, Zheng, Kjetil Storesletten, and Fabrizio Zilibotti, “Growing Like China,” AMERICAN
+ECONOMIC REVIEW, FEB 2011, 101 (1), 196–233.
+Spolaore, Enrico and Romain Wacziarg, “THE DIFFUSION OF DEVELOPMENT,” QUARTERLY
+JOURNAL OF ECONOMICS, MAY 2009, 124 (2), 469–529.
+5
+Sullivan, Daniel and Till von Wachter, “JOB DISPLACEMENT AND MORTALITY: AN ANALYSIS
+USING ADMINISTRATIVE DATA,” QUARTERLY JOURNAL OF ECONOMICS, AUG 2009, 124 (3),
+1265–1306.
+Voors, Maarten J., Eleonora E. M. Nillesen, Philip Verwimp, Erwin H. Bulte, Robert Lensink,
+and Daan P. Van Soest, “Violent Conﬂict and Behavior: A Field Experiment in Burundi,”
+AMERICAN ECONOMIC REVIEW, APR 2012, 102 (2), 941–964.
+Wei, Shang-Jin and Xiaobo Zhang, “The Competitive Saving Motive: Evidence from Rising Sex Ratios
+and Savings Rates in China,” JOURNAL OF POLITICAL ECONOMY, JUN 2011, 119 (3), 511–564.
+6

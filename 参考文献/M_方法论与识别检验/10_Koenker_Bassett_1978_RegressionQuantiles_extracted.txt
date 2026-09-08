@@ -1,0 +1,226 @@
+
+--- PAGE 1 ---
+Regression Quantiles
+Roger Koenker; Gilbert Bassett, Jr.
+Econometrica, Vol. 46, No. 1. (Jan., 1978), pp. 33-50.
+Stable URL:
+http://links.jstor.org/sici?sici=0012-9682%28197801%2946%3A1%3C33%3ARQ%3E2.0.CO%3B2-J
+Econometrica is currently published by The Econometric Society.
+Your use of the JSTOR archive indicates your acceptance of JSTOR's Terms and Conditions of Use, available at
+http://www.jstor.org/about/terms.html. JSTOR's Terms and Conditions of Use provides, in part, that unless you have obtained
+prior permission, you may not download an entire issue of a journal or multiple copies of articles, and you may use content in
+the JSTOR archive only for your personal, non-commercial use.
+Please contact the publisher regarding any further use of this work. Publisher contact information may be obtained at
+http://www.jstor.org/journals/econosoc.html.
+Each copy of any part of a JSTOR transmission must contain the same copyright notice that appears on the screen or printed
+page of such transmission.
+JSTOR is an independent not-for-profit organization dedicated to and preserving a digital archive of scholarly journals. For
+more information regarding JSTOR, please contact support@jstor.org.
+http://www.jstor.org
+Wed Mar 21 14:18:37 2007
+--- PAGE 2 ---
+
+--- PAGE 3 ---
+
+--- PAGE 4 ---
+
+--- PAGE 5 ---
+
+--- PAGE 6 ---
+
+--- PAGE 7 ---
+
+--- PAGE 8 ---
+
+--- PAGE 9 ---
+
+--- PAGE 10 ---
+
+--- PAGE 11 ---
+
+--- PAGE 12 ---
+
+--- PAGE 13 ---
+
+--- PAGE 14 ---
+
+--- PAGE 15 ---
+
+--- PAGE 16 ---
+
+--- PAGE 17 ---
+
+--- PAGE 18 ---
+
+--- PAGE 19 ---
+
+--- PAGE 20 ---
+You have printed the following article:
+Regression Quantiles
+Roger Koenker; Gilbert Bassett, Jr.
+Econometrica, Vol. 46, No. 1. (Jan., 1978), pp. 33-50.
+Stable URL:
+http://links.jstor.org/sici?sici=0012-9682%28197801%2946%3A1%3C33%3ARQ%3E2.0.CO%3B2-J
+This article references the following linked citations. If you are trying to access articles from an
+off-campus location, you may be required to first logon via your library web site to access JSTOR. Please
+visit your library's website or contact a librarian to learn about options for remote access to JSTOR.
+[Footnotes]
+6 Simon Newcomb, Percy Daniell, and the History of Robust Estimation 1885-1920
+Stephen M. Stigler
+Journal of the American Statistical Association, Vol. 68, No. 344. (Dec., 1973), pp. 872-879.
+Stable URL:
+http://links.jstor.org/sici?sici=0162-1459%28197312%2968%3A344%3C872%3ASNPDAT%3E2.0.CO%3B2-5
+7 The 1972 Wald Lecture Robust Statistics: A Review
+Peter J. Huber
+The Annals of Mathematical Statistics, Vol. 43, No. 4. (Aug., 1972), pp. 1041-1067.
+Stable URL:
+http://links.jstor.org/sici?sici=0003-4851%28197208%2943%3A4%3C1041%3AT1WLRS%3E2.0.CO%3B2-%23
+10 The 1972 Wald Lecture Robust Statistics: A Review
+Peter J. Huber
+The Annals of Mathematical Statistics, Vol. 43, No. 4. (Aug., 1972), pp. 1041-1067.
+Stable URL:
+http://links.jstor.org/sici?sici=0003-4851%28197208%2943%3A4%3C1041%3AT1WLRS%3E2.0.CO%3B2-%23
+11 Small Sample Behavior of Some Robust Linear Estimators of Location
+J. L. Gastwirth; M. L. Cohen
+Journal of the American Statistical Association, Vol. 65, No. 330. (Jun., 1970), pp. 946-973.
+Stable URL:
+http://links.jstor.org/sici?sici=0162-1459%28197006%2965%3A330%3C946%3ASSBOSR%3E2.0.CO%3B2-8
+http://www.jstor.org
+LINKED CITATIONS
+- Page 1 of 5 -
+NOTE: The reference numbering from the original has been maintained in this citation list.
+--- PAGE 21 ---
+12 Simon Newcomb, Percy Daniell, and the History of Robust Estimation 1885-1920
+Stephen M. Stigler
+Journal of the American Statistical Association, Vol. 68, No. 344. (Dec., 1973), pp. 872-879.
+Stable URL:
+http://links.jstor.org/sici?sici=0162-1459%28197312%2968%3A344%3C872%3ASNPDAT%3E2.0.CO%3B2-5
+15 Estimates of Percentile Regression Lines Using Salary Data
+Robert V. Hogg
+Journal of the American Statistical Association, Vol. 70, No. 349. (Mar., 1975), pp. 56-59.
+Stable URL:
+http://links.jstor.org/sici?sici=0162-1459%28197503%2970%3A349%3C56%3AEOPRLU%3E2.0.CO%3B2-U
+15 Adaptive Distribution-Free Regression Methods and Their Applications
+Robert V. Hogg; Ronald H. Randles
+Technometrics, Vol. 17, No. 4. (Nov., 1975), pp. 399-407.
+Stable URL:
+http://links.jstor.org/sici?sici=0040-1706%28197511%2917%3A4%3C399%3AADRMAT%3E2.0.CO%3B2-X
+18 Review: [Untitled]
+Reviewed Work(s):
+Analyses of Industrial Operations. by Edward H. Bowman; Robert B. Fetter
+Harvey M. Wagner
+Journal of the American Statistical Association, Vol. 56, No. 293. (Mar., 1961), pp. 175-176.
+Stable URL:
+http://links.jstor.org/sici?sici=0162-1459%28196103%2956%3A293%3C175%3AAOIO%3E2.0.CO%3B2-I
+References
+2 A Robust Method for Multiple Linear Regression
+D. F. Andrews
+Technometrics, Vol. 16, No. 4. (Nov., 1974), pp. 523-531.
+Stable URL:
+http://links.jstor.org/sici?sici=0040-1706%28197411%2916%3A4%3C523%3AARMFML%3E2.0.CO%3B2-L
+http://www.jstor.org
+LINKED CITATIONS
+- Page 2 of 5 -
+NOTE: The reference numbering from the original has been maintained in this citation list.
+--- PAGE 22 ---
+9 On Some Analogues to Linear Combinations of Order Statistics in the Linear Model
+P. J. Bickel
+The Annals of Statistics, Vol. 1, No. 4. (Jul., 1973), pp. 597-616.
+Stable URL:
+http://links.jstor.org/sici?sici=0090-5364%28197307%291%3A4%3C597%3AOSATLC%3E2.0.CO%3B2-U
+10 One-Step Huber Estimates in the Linear Model
+P. J. Bickel
+Journal of the American Statistical Association, Vol. 70, No. 350. (Jun., 1975), pp. 428-434.
+Stable URL:
+http://links.jstor.org/sici?sici=0162-1459%28197506%2970%3A350%3C428%3AOHEITL%3E2.0.CO%3B2-U
+11 A Further Look at Robustness Via Bayes's Theorem
+G. E. P. Box; G. C. Tiao
+Biometrika, Vol. 49, No. 3/4. (Dec., 1962), pp. 419-432.
+Stable URL:
+http://links.jstor.org/sici?sici=0006-3444%28196212%2949%3A3%2F4%3C419%3AAFLARV%3E2.0.CO%3B2-1
+14 Small Sample Behavior of Some Robust Linear Estimators of Location
+J. L. Gastwirth; M. L. Cohen
+Journal of the American Statistical Association, Vol. 65, No. 330. (Jun., 1970), pp. 946-973.
+Stable URL:
+http://links.jstor.org/sici?sici=0162-1459%28197006%2965%3A330%3C946%3ASSBOSR%3E2.0.CO%3B2-8
+15 The Probability Approach in Econometrics
+Trygve Haavelmo
+Econometrica, Vol. 12, Supplement. (Jul., 1944), pp. iii-vi+1-115.
+Stable URL:
+http://links.jstor.org/sici?sici=0012-9682%28194407%2912%3Ciii%3ATPAIE%3E2.0.CO%3B2-F
+22 Estimates of Percentile Regression Lines Using Salary Data
+Robert V. Hogg
+Journal of the American Statistical Association, Vol. 70, No. 349. (Mar., 1975), pp. 56-59.
+Stable URL:
+http://links.jstor.org/sici?sici=0162-1459%28197503%2970%3A349%3C56%3AEOPRLU%3E2.0.CO%3B2-U
+http://www.jstor.org
+LINKED CITATIONS
+- Page 3 of 5 -
+NOTE: The reference numbering from the original has been maintained in this citation list.
+--- PAGE 23 ---
+23 Adaptive Distribution-Free Regression Methods and Their Applications
+Robert V. Hogg; Ronald H. Randles
+Technometrics, Vol. 17, No. 4. (Nov., 1975), pp. 399-407.
+Stable URL:
+http://links.jstor.org/sici?sici=0040-1706%28197511%2917%3A4%3C399%3AADRMAT%3E2.0.CO%3B2-X
+24 Robust Estimation of a Location Parameter
+Peter J. Huber
+The Annals of Mathematical Statistics, Vol. 35, No. 1. (Mar., 1964), pp. 73-101.
+Stable URL:
+http://links.jstor.org/sici?sici=0003-4851%28196403%2935%3A1%3C73%3AREOALP%3E2.0.CO%3B2-K
+25 The 1972 Wald Lecture Robust Statistics: A Review
+Peter J. Huber
+The Annals of Mathematical Statistics, Vol. 43, No. 4. (Aug., 1972), pp. 1041-1067.
+Stable URL:
+http://links.jstor.org/sici?sici=0003-4851%28197208%2943%3A4%3C1041%3AT1WLRS%3E2.0.CO%3B2-%23
+26 Robust Regression: Asymptotics, Conjectures and Monte Carlo
+Peter J. Huber
+The Annals of Statistics, Vol. 1, No. 5. (Sep., 1973), pp. 799-821.
+Stable URL:
+http://links.jstor.org/sici?sici=0090-5364%28197309%291%3A5%3C799%3ARRACAM%3E2.0.CO%3B2-I
+28 Estimating Regression Coefficients by Minimizing the Dispersion of the Residuals
+Louis A. Jaeckel
+The Annals of Mathematical Statistics, Vol. 43, No. 5. (Oct., 1972), pp. 1449-1458.
+Stable URL:
+http://links.jstor.org/sici?sici=0003-4851%28197210%2943%3A5%3C1449%3AERCBMT%3E2.0.CO%3B2-F
+29 Nonparametric Estimate of Regression Coefficients
+Jana Jureckova
+The Annals of Mathematical Statistics, Vol. 42, No. 4. (Aug., 1971), pp. 1328-1338.
+Stable URL:
+http://links.jstor.org/sici?sici=0003-4851%28197108%2942%3A4%3C1328%3ANEORC%3E2.0.CO%3B2-I
+http://www.jstor.org
+LINKED CITATIONS
+- Page 4 of 5 -
+NOTE: The reference numbering from the original has been maintained in this citation list.
+--- PAGE 24 ---
+32 On Some Useful "Inefficient" Statistics
+Frederick Mosteller
+The Annals of Mathematical Statistics, Vol. 17, No. 4. (Dec., 1946), pp. 377-408.
+Stable URL:
+http://links.jstor.org/sici?sici=0003-4851%28194612%2917%3A4%3C377%3AOSU%22S%3E2.0.CO%3B2-E
+37 A Useful Convergence Theorem for Probability Distributions
+Henry Scheffe
+The Annals of Mathematical Statistics, Vol. 18, No. 3. (Sep., 1947), pp. 434-438.
+Stable URL:
+http://links.jstor.org/sici?sici=0003-4851%28194709%2918%3A3%3C434%3AAUCTFP%3E2.0.CO%3B2-S
+38 Simon Newcomb, Percy Daniell, and the History of Robust Estimation 1885-1920
+Stephen M. Stigler
+Journal of the American Statistical Association, Vol. 68, No. 344. (Dec., 1973), pp. 872-879.
+Stable URL:
+http://links.jstor.org/sici?sici=0162-1459%28197312%2968%3A344%3C872%3ASNPDAT%3E2.0.CO%3B2-5
+39 Linear Functions of Order Statistics with Smooth Weight Functions
+Stephen M. Stigler
+The Annals of Statistics, Vol. 2, No. 4. (Jul., 1974), pp. 676-693.
+Stable URL:
+http://links.jstor.org/sici?sici=0090-5364%28197407%292%3A4%3C676%3ALFOOSW%3E2.0.CO%3B2-A
+43 Review: [Untitled]
+Reviewed Work(s):
+Analyses of Industrial Operations. by Edward H. Bowman; Robert B. Fetter
+Harvey M. Wagner
+Journal of the American Statistical Association, Vol. 56, No. 293. (Mar., 1961), pp. 175-176.
+Stable URL:
+http://links.jstor.org/sici?sici=0162-1459%28196103%2956%3A293%3C175%3AAOIO%3E2.0.CO%3B2-I
+http://www.jstor.org
+LINKED CITATIONS
+- Page 5 of 5 -
+NOTE: The reference numbering from the original has been maintained in this citation list.
