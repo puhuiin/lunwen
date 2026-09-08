@@ -1,0 +1,26 @@
+﻿TOP: ['群体画像', '能力五分组背景', '典型画像']
+群体画像 -> ['n_each', '五维', '原始指标', '业绩']
+能力五分组背景 -> ['n', '综合能力', 'ff5_alpha', '季度收益', '规模亿', '管理费率', '硕士以上占比', 'CFA占比']
+典型画像 -> list
+TOP: ['样本覆盖', '逐年基金数', '描述统计', '成分覆盖率', '五维描述统计']
+样本覆盖 -> ['起始季度', '结束季度', '季度数', '基金数', '基金季观测', '可进入横截面回归的基金数']
+逐年基金数 -> ['2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026']
+描述统计 -> ['中文名', 'count', 'mean', 'std', 'min', '25%', '50%', '75%', 'max']
+成分覆盖率 -> ['risk_asym', 'de', 'oc_conf', 'ICI', 'ISDI', 'ARG', 'timing', 'mppm8_lag', 'sortino8_lag', 'sharpe8_lag', 'SDI', 'lsv']
+五维描述统计 -> ['count', 'mean', 'std', 'min', '25%', '50%', '75%', 'max']
+python : Traceback (most recent call last):
+At line:15 char:2450
++ ... pgrep\bin'; python -c "import json;d=json.load(open(r'output\画像_群体与典型 ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "<string>", line 1, in <module>
+    import json;d=json.load(open(r'output\画像_群体与典型_2026-08-26.json',encoding='utf-8'));g=d['群体画像'];print('五维:',list(g['
+五维'].keys()));print('五维.认知能力:',list(g['五维']['认知能力'].keys()));print('原始指标keys:',list(g['原始指标'].keys())[:5],'...共',len(g[
+'原始指标']));print('业绩:',g['业绩']);print('n_each:',g['n_each']);print('典型0:',json.dumps(d['典型画像'][0],ensure_ascii=False)[:6
+00])
+                                                                                                                       
+                                                         ~~~~~~~~~^^^^^^^^^^^^
+KeyError: '认知能力'
+五维: ['Top5%', 'Bottom5%', '差值', 't', 'p']

@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学术方法论说明与优化方案 | 基金经理行为分析研究</title>
+<style>
+  :root{
+    --primary:#2B5A8C;
+    --primary-light:#3a78b5;
+    --primary-dark:#1f4570;
+    --primary-soft:#e8f0f8;
+    --accent:#C9A961;
+    --accent-light:#d9bd7e;
+    --accent-soft:#faf4e6;
+    --bg:#f4f6f9;
+    --surface:#ffffff;
+    --text:#263445;
+    --text-soft:#5a6b80;
+    --border:#dde4ed;
+    --p0:#c0392b;
+    --p0-soft:#fdecea;
+    --p1:#b8860b;
+    --p1-soft:#fdf6e3;
+    --p2:#27865a;
+    --p2-soft:#e8f6ee;
+    --code-bg:#1e2b3a;
+    --code-text:#e6edf3;
+    --shadow:0 1px 3px rgba(43,90,140,.08),0 1px 2px rgba(43,90,140,.06);
+    --shadow-lg:0 10px 30px rgba(43,90,140,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Microsoft YaHei","微软雅黑","PingFang SC","Helvetica Neue",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.75;
+    font-size:15px;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* ===== 顶部头图 ===== */
+  .hero{
+    background:linear-gradient(135deg,#1f4570 0%,#2B5A8C 55%,#3a78b5 100%);
+    color:#fff;
+    padding:64px 40px 56px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;top:-60px;right:-60px;
+    width:340px;height:340px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,169,97,.25),transparent 70%);
+  }
+  .hero::after{
+    content:"";
+    position:absolute;bottom:-80px;left:-40px;
+    width:260px;height:260px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%);
+  }
+  .hero .eyebrow{
+    display:inline-block;
+    font-size:12.5px;letter-spacing:3px;
+    color:var(--accent-light);
+    border:1px solid rgba(201,169,97,.5);
+    padding:5px 14px;border-radius:20px;
+    margin-bottom:18px;text-transform:uppercase;
+  }
+  .hero h1{font-size:34px;font-weight:700;letter-spacing:1px;margin-bottom:14px;position:relative;z-index:2}
+  .hero .subtitle{font-size:16px;color:rgba(255,255,255,.85);max-width:820px;position:relative;z-index:2;font-weight:300}
+  .hero .meta{
+    margin-top:26px;display:flex;gap:28px;flex-wrap:wrap;
+    font-size:13px;color:rgba(255,255,255,.78);position:relative;z-index:2;
+  }
+  .hero .meta span{display:flex;align-items:center;gap:6px}
+  .hero .meta .dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+
+  /* ===== 布局 ===== */
+  .layout{display:flex;max-width:1280px;margin:0 auto;gap:0}
+  .nav-side{
+    width:240px;flex-shrink:0;
+    position:sticky;top:0;align-self:flex-start;
+    max-height:100vh;overflow-y:auto;
+    padding:28px 18px 28px 40px;
+    border-right:1px solid var(--border);
+    background:var(--surface);
+  }
+  .nav-side h4{
+    font-size:12px;letter-spacing:2px;color:var(--text-soft);
+    text-transform:uppercase;margin-bottom:14px;font-weight:600;
+  }
+  .nav-side ol{list-style:none;counter-reset:nav}
+  .nav-side li{counter-increment:nav;margin-bottom:2px}
+  .nav-side a{
+    display:block;padding:7px 10px 7px 30px;
+    font-size:13.5px;color:var(--text-soft);
+    text-decoration:none;border-radius:6px;
+    position:relative;transition:all .2s;
+  }
+  .nav-side a::before{
+    content:counter(nav);
+    position:absolute;left:6px;top:7px;
+    width:18px;height:18px;border-radius:50%;
+    background:var(--primary-soft);color:var(--primary);
+    font-size:11px;text-align:center;line-height:18px;font-weight:600;
+  }
+  .nav-side a:hover{background:var(--primary-soft);color:var(--primary)}
+  .nav-side .sub{padding-left:48px;font-size:12.5px;color:var(--text-soft)}
+  .nav-side .sub::before{display:none}
+  .nav-side .sub:hover{color:var(--primary)}
+
+  .main{flex:1;min-width:0;padding:36px 56px 60px}
+
+  /* ===== Section ===== */
+  .section{margin-bottom:54px;scroll-margin-top:20px}
+  .section-head{
+    display:flex;align-items:center;gap:14px;
+    margin-bottom:24px;padding-bottom:16px;
+    border-bottom:2px solid var(--primary-soft);
+  }
+  .section-num{
+    flex-shrink:0;width:40px;height:40px;border-radius:10px;
+    background:linear-gradient(135deg,var(--primary),var(--primary-light));
+    color:#fff;font-size:18px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 12px rgba(43,90,140,.3);
+  }
+  .section-head h2{font-size:23px;color:var(--primary-dark);font-weight:700}
+  .section-head .en{font-size:12px;color:var(--text-soft);font-weight:400;margin-top:2px;display:block;letter-spacing:.5px}
+
+  h3.sub-h{
+    font-size:17.5px;color:var(--primary);font-weight:700;
+    margin:30px 0 14px;padding-left:14px;
+    border-left:4px solid var(--accent);
+  }
+  h4.mini-h{
+    font-size:15.5px;color:var(--primary-dark);font-weight:700;
+    margin:22px 0 10px;
+  }
+  p{margin-bottom:12px;color:var(--text)}
+  strong{color:var(--primary-dark);font-weight:600}
+  .accent-strong{color:var(--accent);font-weight:700}
+
+  /* ===== 卡片/方法块 ===== */
+  .method-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:24px 26px;
+    margin-bottom:24px;
+    box-shadow:var(--shadow);
+    border-left:5px solid var(--primary);
+    transition:box-shadow .25s,transform .25s;
+  }
+  .method-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+  .method-card.as{border-left-color:#3a78b5}
+  .method-card.rg{border-left-color:#5b9bd5}
+  .method-card.sdi{border-left-color:#C9A961}
+  .method-card.oci{border-left-color:#c0392b}
+  .method-card.ff{border-left-color:#27865a}
+  .method-card .mc-title{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    margin-bottom:16px;
+  }
+  .method-card .mc-title .tag{
+    font-size:11px;font-weight:700;letter-spacing:1px;
+    background:var(--primary-soft);color:var(--primary);
+    padding:3px 10px;border-radius:4px;
+  }
+  .method-card .mc-title h4{font-size:18px;color:var(--primary-dark);font-weight:700}
+  .mc-row{margin-bottom:14px}
+  .mc-row:last-child{margin-bottom:0}
+  .mc-label{
+    display:inline-block;font-size:12.5px;font-weight:700;
+    color:#fff;background:var(--primary);
+    padding:2px 9px;border-radius:4px;margin-right:8px;
+    vertical-align:middle;
+  }
+  .mc-label.warn{background:var(--p0)}
+  .mc-label.result{background:var(--p2)}
+  .mc-label.norm{background:var(--accent)}
+
+  /* ===== Callout ===== */
+  .callout{
+    border-radius:8px;padding:14px 18px 14px 16px;
+    margin:14px 0;font-size:14px;
+    border-left:4px solid;
+    position:relative;
+  }
+  .callout .ct{font-weight:700;display:block;margin-bottom:4px;font-size:13.5px}
+  .callout.info{background:var(--primary-soft);border-color:var(--primary);color:#2a4a6b}
+  .callout.info .ct{color:var(--primary-dark)}
+  .callout.warn{background:var(--p0-soft);border-color:var(--p0);color:#7a2418}
+  .callout.warn .ct{color:var(--p0)}
+  .callout.note{background:var(--accent-soft);border-color:var(--accent);color:#6b541f}
+  .callout.note .ct{color:#9a7b2a}
+  .callout.success{background:var(--p2-soft);border-color:var(--p2);color:#1a5e3f}
+  .callout.success .ct{color:var(--p2)}
+
+  /* ===== 表格 ===== */
+  .table-wrap{overflow-x:auto;margin:16px 0;border-radius:10px;box-shadow:var(--shadow)}
+  table{width:100%;border-collapse:collapse;background:var(--surface);font-size:14px}
+  thead{background:linear-gradient(135deg,var(--primary-dark),var(--primary))}
+  thead th{color:#fff;padding:13px 16px;text-align:left;font-weight:600;font-size:13.5px;letter-spacing:.3px}
+  tbody td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--text)}
+  tbody tr:nth-child(even){background:#f8fafc}
+  tbody tr:hover{background:var(--primary-soft)}
+  tbody tr:last-child td{border-bottom:none}
+  .pill{
+    display:inline-block;padding:2px 10px;border-radius:12px;
+    font-size:12px;font-weight:700;
+  }
+  .pill.high{background:var(--p2-soft);color:var(--p2)}
+  .pill.mid{background:var(--p1-soft);color:var(--p1)}
+  .pill.low{background:#eef1f5;color:var(--text-soft)}
+
+  /* ===== 代码块 ===== */
+  pre{
+    background:var(--code-bg);color:var(--code-text);
+    border-radius:10px;padding:18px 20px;
+    margin:16px 0;font-family:"Consolas","Courier New",monospace;
+    font-size:13.5px;line-height:1.6;overflow-x:auto;
+    border:1px solid #2d3e54;
+  }
+  pre .c-key{color:#79c0ff}
+  pre .c-str{color:#a5d6ff}
+  pre .c-com{color:#8b949e;font-style:italic}
+  pre .c-num{color:#ffa657}
+  pre .c-fn{color:#d2a8ff}
+  code.inline{
+    background:#eef2f7;color:var(--primary-dark);
+    padding:2px 7px;border-radius:4px;font-size:13px;
+    font-family:"Consolas",monospace;
+  }
+
+  /* ===== 优先级标识 ===== */
+  .priority-block{
+    border-radius:12px;padding:22px 26px;margin-bottom:22px;
+    background:var(--surface);box-shadow:var(--shadow);
+    border:1px solid var(--border);
+    position:relative;overflow:hidden;
+  }
+  .priority-block::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:6px;
+  }
+  .priority-block.p0::before{background:var(--p0)}
+  .priority-block.p1::before{background:var(--p1)}
+  .priority-block.p2::before{background:var(--p2)}
+  .pb-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .priority-badge{
+    font-size:11px;font-weight:800;letter-spacing:1.5px;
+    color:#fff;padding:4px 12px;border-radius:4px;text-transform:uppercase;
+  }
+  .priority-badge.p0{background:var(--p0)}
+  .priority-badge.p1{background:var(--p1)}
+  .priority-badge.p2{background:var(--p2)}
+  .priority-block .opt-num{
+    font-size:13px;color:var(--text-soft);font-weight:600;
+  }
+  .priority-block h4{font-size:16.5px;color:var(--primary-dark);font-weight:700}
+  .priority-block .pb-section{margin-top:12px}
+  .priority-block .pb-section .lbl{
+    font-weight:700;font-size:13px;display:inline-block;
+    padding:1px 9px;border-radius:4px;margin-right:8px;
+  }
+  .lbl.p0{background:var(--p0-soft);color:var(--p0)}
+  .lbl.p1{background:var(--p1-soft);color:var(--p1)}
+  .lbl.p2{background:var(--p2-soft);color:var(--p2)}
+  .lbl.sol{background:var(--primary-soft);color:var(--primary)}
+
+  /* ===== U型图示 ===== */
+  .u-shape{
+    display:flex;justify-content:center;margin:18px 0;
+  }
+  .u-shape svg{max-width:340px;height:auto}
+
+  /* ===== 链式 ===== */
+  .chain{
+    display:flex;align-items:stretch;gap:0;flex-wrap:wrap;
+    margin:16px 0;
+  }
+  .chain .node{
+    flex:1;min-width:120px;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:8px;padding:12px 10px;text-align:center;
+    box-shadow:var(--shadow);font-size:12.5px;
+  }
+  .chain .node .nl{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:1px}
+  .chain .node .nt{font-size:13px;color:var(--primary-dark);font-weight:700;margin:3px 0}
+  .chain .node .nd{font-size:11.5px;color:var(--text-soft);line-height:1.4}
+  .chain .arrow{
+    display:flex;align-items:center;justify-content:center;
+    color:var(--primary);font-size:20px;padding:0 4px;
+  }
+
+  /* ===== 执行清单 ===== */
+  .checklist{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:12px;padding:28px 30px;box-shadow:var(--shadow-lg);
+    margin-top:20px;
+  }
+  .checklist h3{
+    font-size:19px;color:var(--primary-dark);margin-bottom:6px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .checklist .sub{font-size:13px;color:var(--text-soft);margin-bottom:20px}
+  .cl-group{margin-bottom:22px}
+  .cl-group .cl-title{
+    font-size:13px;font-weight:700;letter-spacing:1px;
+    text-transform:uppercase;margin-bottom:10px;
+    padding-bottom:6px;border-bottom:1px dashed var(--border);
+  }
+  .cl-group.p0 .cl-title{color:var(--p0)}
+  .cl-group.p1 .cl-title{color:var(--p1)}
+  .cl-group.p2 .cl-title{color:var(--p2)}
+  .cl-item{
+    display:flex;align-items:flex-start;gap:12px;
+    padding:9px 12px;border-radius:6px;font-size:14px;
+    transition:background .2s;cursor:pointer;
+  }
+  .cl-item:hover{background:var(--bg)}
+  .cl-item input[type=checkbox]{
+    margin-top:4px;width:17px;height:17px;accent-color:var(--primary);
+    cursor:pointer;flex-shrink:0;
+  }
+  .cl-item label{cursor:pointer;flex:1}
+  .cl-item .cl-tag{
+    font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:3px;
+    margin-left:8px;white-space:nowrap;
+  }
+  .cl-tag.p0{background:var(--p0-soft);color:var(--p0)}
+  .cl-tag.p1{background:var(--p1-soft);color:var(--p1)}
+  .cl-tag.p2{background:var(--p2-soft);color:var(--p2)}
+  .cl-item.done{opacity:.5;text-decoration:line-through}
+
+  /* ===== 页脚 ===== */
+  footer{
+    background:var(--primary-dark);color:rgba(255,255,255,.7);
+    text-align:center;padding:32px 20px;
+    font-size:13px;margin-top:0;
+  }
+  footer .ft-line{margin-bottom:6px}
+  footer .ft-accent{color:var(--accent-light)}
+
+  /* ===== 工具栏 ===== */
+  .toolbar{
+    position:fixed;right:24px;bottom:24px;
+    display:flex;flex-direction:column;gap:10px;z-index:50;
+  }
+  .toolbar button{
+    width:44px;height:44px;border-radius:50%;border:none;
+    background:var(--primary);color:#fff;cursor:pointer;
+    font-size:18px;box-shadow:var(--shadow-lg);
+    transition:transform .2s,background .2s;
+  }
+  .toolbar button:hover{background:var(--primary-dark);transform:scale(1.08)}
+
+  ul.tight{margin:8px 0 8px 22px}
+  ul.tight li{margin-bottom:5px}
+  .stat-inline{font-family:Consolas,monospace;color:var(--p0);font-weight:700}
+  .stat-pos{font-family:Consolas,monospace;color:var(--p2);font-weight:700}
+  .divider{height:1px;background:var(--border);margin:24px 0;border:0}
+  @media(max-width:900px){
+    .layout{flex-direction:column}
+    .nav-side{position:static;width:100%;max-height:none;border-right:none;border-bottom:1px solid var(--border);padding:20px}
+    .main{padding:24px}
+    .hero{padding:40px 24px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <span class="eyebrow">Methodology &amp; Optimization</span>
+  <h1>学术方法论说明与优化方案</h1>
+  <p class="subtitle">基金经理行为分析研究项目 · 五层递进框架的理论基础、文献定位、创新强化与可执行优化清单</p>
+  <div class="meta">
+    <span><span class="dot"></span> 项目阶段：实证分析完成后 / 论文撰写前</span>
+    <span><span class="dot"></span> 样本：400 只基金 · 20 年面板</span>
+    <span><span class="dot"></span> 文档版本：v1.0</span>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- ============ 侧边导航 ============ -->
+  <nav class="nav-side">
+    <h4>报告目录</h4>
+    <ol>
+      <li><a href="#sec1">学术方法论说明</a></li>
+      <li><a href="#sec1-1" class="sub">1.1 Active Share</a></li>
+      <li><a href="#sec1-2" class="sub">1.2 Return Gap</a></li>
+      <li><a href="#sec1-3" class="sub">1.3 Style Drift Index</a></li>
+      <li><a href="#sec1-4" class="sub">1.4 OCI</a></li>
+      <li><a href="#sec1-5" class="sub">1.5 FF3/FF5 因子</a></li>
+      <li><a href="#sec2">文献缺口分析</a></li>
+      <li><a href="#sec3">创新点强化方案</a></li>
+      <li><a href="#sec4">具体优化建议</a></li>
+      <li><a href="#sec4-p0" class="sub">P0 必须执行</a></li>
+      <li><a href="#sec4-p1" class="sub">P1 建议执行</a></li>
+      <li><a href="#sec4-p2" class="sub">P2 后续可选</a></li>
+      <li><a href="#sec5">论文写作规范</a></li>
+      <li><a href="#checklist" class="sub">优化执行清单</a></li>
+    </ol>
+  </nav>
+
+  <!-- ============ 主体 ============ -->
+  <main class="main">
+
+  <!-- ========== 第一部分 ========== -->
+  <section class="section" id="sec1">
+    <div class="section-head">
+      <div class="section-num">1</div>
+      <div>
+        <h2>学术方法论说明</h2>
+        <span class="en">每个指标的理论基础、选择理由与学术规范要求</span>
+      </div>
+    </div>
+
+    <p>本研究的五层递进框架中，每一层指标均基于经典金融学文献提出，并针对中国市场环境做出方法论适配。以下逐一说明各指标的理论依据、选择理由、当前实证结果解读及学术规范要求，确保论文在方法选择与结果报告上的学术诚实性。</p>
+
+    <!-- 1.1 AS -->
+    <div class="method-card as" id="sec1-1">
+      <div class="mc-title">
+        <span class="tag">L2</span>
+        <h4>Active Share (AS) · 主动偏离度</h4>
+      </div>
+      <div class="mc-row">
+        <span class="mc-label">理论依据</span>
+        Cremers &amp; Petajisto (2009) 在 <em>Journal of Financial Economics</em> 提出，用于衡量基金经理主动偏离基准持仓的程度，定义为基金持仓权重与基准权重之差的绝对值总和的一半。
+      </div>
+      <div class="mc-row">
+        <span class="mc-label">选择理由</span>
+        AS 相比跟踪误差（TE）的优势在于：AS 对<strong>持仓权重</strong>敏感，而 TE 对<strong>收益波动</strong>敏感。在中国市场，基金基准多样（沪深300 / 中证500 / 中证800 等），AS 能更直接地反映经理的选股决策，避免收益噪音干扰。
+      </div>
+      <div class="callout warn">
+        <span class="ct">当前问题与学术诚实声明</span>
+        本研究 AS 标准差仅 <span class="stat-inline">0.038</span>（Cremers 原论文美股样本为 0.17），且 <span class="stat-inline">62%</span> 观测值相同（0.8325）。原因有二：(1) 使用前十大重仓股近似全持仓；(2) 部分基金缺失基准信息时使用等权基准替代。<strong>这是数据源限制而非方法错误</strong>，需在论文"数据局限"章节如实声明。
+      </div>
+      <div class="callout info">
+        <span class="ct">学术规范要求</span>
+        论文中必须报告 AS 的计算基准来源、持仓数据频率（季报前十大 vs 半年报全持仓）、缺失值处理方式。
+      </div>
+    </div>
+
+    <!-- 1.2 RG -->
+    <div class="method-card rg" id="sec1-2">
+      <div class="mc-title">
+        <span class="tag">L3</span>
+        <h4>Return Gap (RG / ARG) · 收益缺口</h4>
+      </div>
+      <div class="mc-row">
+        <span class="mc-label">理论依据</span>
+        Kacperczyk, Sialm &amp; Zheng (2008) 在 <em>Review of Financial Studies</em> 提出，RG 捕捉季报间隐形交易对收益的净贡献，即报告期持仓买入并持有的模拟收益与基金实际收益之差。
+      </div>
+      <div class="mc-row">
+        <span class="mc-label">选择理由</span>
+        RG 相比换手率的优势在于：<strong>RG 直接衡量交易的经济后果</strong>，而非交易频率。ARG（申宇等，2013）取绝对值后加总，避免正负相抵，更能反映隐形交易的信息含量。
+      </div>
+      <div class="callout success">
+        <span class="ct">当前结果解读</span>
+        ARG 均值 <span class="stat-pos">0.228</span>，OLS 中 <code class="inline">t = 7.95***</code> 正向显著，与 Kacperczyk (2008) 美股发现一致 —— 隐形交易包含信息含量。
+      </div>
+      <div class="callout info">
+        <span class="ct">学术规范要求</span>
+        需说明 RG 计算中的持仓收益率假设（买入持有假设）、季度数据频率、个股收益率来源。
+      </div>
+    </div>
+
+    <!-- 1.3 SDI -->
+    <div class="method-card sdi" id="sec1-3">
+      <div class="mc-title">
+        <span class="tag">L4</span>
+        <h4>Style Drift Index (SDI) · 风格漂移指数</h4>
+      </div>
+      <div class="mc-row">
+        <span class="mc-label">理论依据</span>
+        寇宗来等 (2020) 在《金融研究》提出，衡量风格配置的时序变化。四类风格（大盘成长/价值、小盘成长/价值）来自 Sharpe (1992) 风格分析框架。
+      </div>
+      <div class="mc-row">
+        <span class="mc-label">选择理由</span>
+        SDI 相比收益率回归法的优势在于<strong>直接使用持仓权重</strong>，避免收益噪音。
+      </div>
+      <div class="callout note">
+        <span class="ct">U 型关系理论</span>
+        寇宗来发现业绩-SDI 呈 U 型，对称轴 0.63。极好/极差业绩时经理倾向切换风格，中等业绩时维持稳定。
+      </div>
+      <div class="u-shape">
+        <svg viewBox="0 0 340 150" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20,30 Q170,150 320,30" fill="none" stroke="#C9A961" stroke-width="3"/>
+          <line x1="170" y1="20" x2="170" y2="110" stroke="#2B5A8C" stroke-width="1" stroke-dasharray="4,3"/>
+          <circle cx="170" cy="103" r="5" fill="#2B5A8C"/>
+          <circle cx="40" cy="38" r="4" fill="#c0392b"/>
+          <circle cx="300" cy="38" r="4" fill="#c0392b"/>
+          <text x="172" y="120" font-size="11" fill="#2B5A8C" font-family="Microsoft YaHei">对称轴 0.63</text>
+          <text x="30" y="22" font-size="10" fill="#5a6b80" font-family="Microsoft YaHei">极差业绩</text>
+          <text x="262" y="22" font-size="10" fill="#5a6b80" font-family="Microsoft YaHei">极好业绩</text>
+          <text x="150" y="145" font-size="10" fill="#5a6b80" font-family="Microsoft YaHei">业绩</text>
+          <text x="6" y="80" font-size="10" fill="#5a6b80" font-family="Microsoft YaHei">SDI</text>
+        </svg>
+      </div>
+      <div class="callout warn">
+        <span class="ct">当前结果解读</span>
+        SDI 在 OLS 中不显著（<code class="inline">t = 0.64</code>）但在基金 FE 中显著（<code class="inline">t = 4.70***</code>），说明个体效应吸收了部分变异。安慰剂检验未通过（<span class="stat-inline">70.2%</span> 分位），需谨慎解读。
+      </div>
+      <div class="callout info">
+        <span class="ct">学术规范要求</span>
+        需报告风格分类方法、权重计算来源、与寇宗来 (2020) 方法的异同。
+      </div>
+    </div>
+
+    <!-- 1.4 OCI -->
+    <div class="method-card oci" id="sec1-4">
+      <div class="mc-title">
+        <span class="tag">L5</span>
+        <h4>OCI · 过度自信指数</h4>
+      </div>
+      <div class="mc-row">
+        <span class="mc-label">理论依据</span>
+        Odean (1998) 在 <em>Journal of Finance</em> 提出过度自信假说 —— 高换手率反映过度自信，损害业绩。
+      </div>
+      <div class="mc-row">
+        <span class="mc-label">选择理由</span>
+        用换手率 Z-score 标准化作为 OCI 代理变量，优点是数据可得性好、计算简单。<strong>争议</strong>：Cuthbertson et al. (2016) 指出 OCI 应综合多个行为偏差，单一换手率可能不够全面。
+      </div>
+      <div class="callout success">
+        <span class="ct">当前结果解读</span>
+        OCI 是最强预测指标（<code class="inline">t = -26.02***</code>），在所有模型中均显著。安慰剂检验 <span class="stat-pos">0%</span> 分位，效应极其稳健。
+      </div>
+      <div class="callout info">
+        <span class="ct">学术规范要求</span>
+        论文中需明确说明 OCI 的定义（换手率 Z-score）、与 Odean (1998) 原始定义的差异、代理变量的合理性论证。
+      </div>
+    </div>
+
+    <!-- 1.5 FF -->
+    <div class="method-card ff" id="sec1-5">
+      <div class="mc-title">
+        <span class="tag">因子</span>
+        <h4>FF3 / FF5 因子调整</h4>
+      </div>
+      <div class="mc-row">
+        <span class="mc-label">理论依据</span>
+        Fama &amp; French (1993) 三因子模型、Fama &amp; French (2015) 五因子模型。
+      </div>
+      <div class="mc-row">
+        <span class="mc-label">选择理由</span>
+        FF3 调整后的超额收益<strong>剥离了市场/规模/价值因子暴露</strong>，更纯粹地反映经理的选股能力。中国版 FF 因子来自 CNRDS / RESSET 数据库。
+      </div>
+      <div class="callout info">
+        <span class="ct">学术规范要求</span>
+        需报告因子来源、计算窗口、与 Liu, Stambaugh &amp; Yuan (2019) 中国四因子模型的对比。
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========== 第二部分 ========== -->
+  <section class="section" id="sec2">
+    <div class="section-head">
+      <div class="section-num">2</div>
+      <div>
+        <h2>文献缺口分析</h2>
+        <span class="en">现有研究的空白与本文的填补贡献</span>
+      </div>
+    </div>
+
+    <h3 class="sub-h">2.1 现有文献的三大空白</h3>
+
+    <div class="method-card">
+      <div class="mc-title">
+        <span class="tag">空白 1</span>
+        <h4>缺乏整合性框架</h4>
+      </div>
+      <p>现有研究分别研究 AS（Cremers 2009）、RG（Kacperczyk 2008）、SDI（寇宗来 2020）等单一指标，<strong>缺乏将这些指标纳入统一递进框架的研究</strong>。本文的五层递进框架填补此空白。</p>
+    </div>
+
+    <div class="method-card">
+      <div class="mc-title">
+        <span class="tag">空白 2</span>
+        <h4>中国市场行为研究不足</h4>
+      </div>
+      <p>大部分经典行为指标研究基于美股市场，中国 A 股市场的制度环境（T+1、涨跌停、散户占比高）可能导致行为-业绩关系差异。<strong>本文的 AS 负向发现（与美股相反）验证了这一假设</strong>。</p>
+    </div>
+
+    <div class="method-card">
+      <div class="mc-title">
+        <span class="tag">空白 3</span>
+        <h4>牛熊市异质性缺乏研究</h4>
+      </div>
+      <p>现有研究多在全样本下检验行为-业绩关系，较少分析不同市场环境下的效应差异。<strong>本文发现 AS/SDI/OCI 在牛熊市符号翻转是重要贡献</strong>。</p>
+    </div>
+
+    <h3 class="sub-h">2.2 本文填补的空白</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>研究空白</th><th>本文贡献</th><th>证据强度</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>行为指标缺乏整合</td>
+            <td>五层递进框架</td>
+            <td><span class="pill mid">中</span> 框架组织新，但指标为现成</td>
+          </tr>
+          <tr>
+            <td>中国市场验证不足</td>
+            <td>400 只基金 20 年面板</td>
+            <td><span class="pill high">高</span> 大样本 + 长周期</td>
+          </tr>
+          <tr>
+            <td>牛熊市异质性</td>
+            <td>AS/SDI/OCI 符号翻转</td>
+            <td><span class="pill high">高</span> 统计显著 + 经济直觉清晰</td>
+          </tr>
+          <tr>
+            <td>OCI 在中国市场的预测力</td>
+            <td><code class="inline">t = -26.02</code> 极强</td>
+            <td><span class="pill high">高</span> 安慰剂检验通过</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========== 第三部分 ========== -->
+  <section class="section" id="sec3">
+    <div class="section-head">
+      <div class="section-num">3</div>
+      <div>
+        <h2>创新点强化方案</h2>
+        <span class="en">从理论、实证、方法三个维度提升学术贡献</span>
+      </div>
+    </div>
+
+    <h3 class="sub-h">3.1 理论创新强化</h3>
+    <div class="method-card">
+      <div class="mc-row">
+        <span class="mc-label warn">当前状态</span>
+        五层框架是组织创新，但各层指标均为现成。
+      </div>
+      <div class="mc-row">
+        <span class="mc-label result">强化方案</span>
+        在论文第三章增加"层级递进的理论逻辑"小节，论证 <strong>L1 → L2 → L3 → L4 → L5</strong> 的因果递进关系。
+      </div>
+      <div class="chain">
+        <div class="node"><span class="nl">L1</span><span class="nt">背景特征</span><span class="nd">从业年限</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><span class="nl">L2</span><span class="nt">持仓偏离</span><span class="nd">年轻经理偏离更大</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><span class="nl">L3</span><span class="nt">交易行为</span><span class="nd">偏离大→隐形交易多</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><span class="nl">L4</span><span class="nt">风格漂移</span><span class="nd">交易频繁→风格不稳</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><span class="nl">L5</span><span class="nt">认知偏差</span><span class="nd">风格不稳→过度自信</span></div>
+      </div>
+      <div class="callout success">
+        <span class="ct">预期效果</span>
+        将"指标堆砌"转化为"因果链条"，提升理论贡献。
+      </div>
+    </div>
+
+    <h3 class="sub-h">3.2 实证创新强化</h3>
+    <div class="method-card">
+      <h4 class="mini-h">AS 负向发现</h4>
+      <p>需深入分析机制 —— 可能原因包括：(1) 中国市场主动管理成本更高；(2) A 股高波动使得偏离基准的风险更大；(3) 中国基金经理的选股能力整体不足。<strong>建议加入基金公司固定效应检验</strong>。</p>
+      <hr class="divider">
+      <h4 class="mini-h">牛熊市异质性</h4>
+      <p>需提供理论解释 —— <strong>适应性市场假说（Lo, 2004）</strong>认为，牛市中信息效率更高，行为偏差更容易被市场惩罚；熊市中噪音交易更多，行为指标的信号被稀释。</p>
+      <hr class="divider">
+      <h4 class="mini-h">OCI 最强预测力</h4>
+      <p>需与美国文献对比 —— Odean (1998) 美股 OCI 的预测系数约为 <code class="inline">-0.05</code>，本文 OCI 系数 <code class="inline">-1.11</code>，远强于美股。可能原因是中国基金经理换手率更高（均值 1.04 vs 美股 0.77），过度交易成本更大。</p>
+    </div>
+
+    <h3 class="sub-h">3.3 方法创新强化</h3>
+    <div class="method-card">
+      <div class="mc-row">
+        <span class="mc-label">级联式综合判断</span>
+        需与晨星 Medalist、华泰 100 因子方法做详细对比，突出<strong>三步法</strong>（因果递进 + 分布分类 + 回归验证）的优势。
+      </div>
+      <div class="mc-row">
+        <span class="mc-label">PS 模型</span>
+        当前简化为 Logistic 回归，需在论文中说明这是 <strong>MVP 阶段的简化方案</strong>，未来可升级为 LSTM。
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 第四部分 ========== -->
+  <section class="section" id="sec4">
+    <div class="section-head">
+      <div class="section-num">4</div>
+      <div>
+        <h2>具体优化建议</h2>
+        <span class="en">按优先级 P0 / P1 / P2 分级的可执行清单</span>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <span class="ct">优先级图例</span>
+      <span class="priority-badge p0">P0</span> 必须立即执行 &nbsp;·&nbsp;
+      <span class="priority-badge p1">P1</span> 建议尽快执行 &nbsp;·&nbsp;
+      <span class="priority-badge p2">P2</span> 后续可选执行
+    </div>
+
+    <!-- ===== P0 ===== -->
+    <h3 class="sub-h" id="sec4-p0">P0 级 · 必须立即执行</h3>
+
+    <div class="priority-block p0">
+      <div class="pb-head">
+        <span class="priority-badge p0">P0</span>
+        <span class="opt-num">优化 1</span>
+        <h4>多重检验校正</h4>
+      </div>
+      <div class="pb-section"><span class="lbl p0">问题</span>5 个行为指标 × 4 个模型 = 20 次假设检验，未做校正，假阳性风险高。</div>
+      <div class="pb-section"><span class="lbl sol">方案</span>加入 Bonferroni 校正（<code class="inline">α' = 0.05 / 20 = 0.0025</code>）和 Benjamini-Hochberg FDR 控制。</div>
+      <div class="pb-section"><span class="lbl sol">操作</span>在回归结果表中增加校正后的 p 值列。</div>
+      <div class="callout success">
+        <span class="ct">影响评估</span>
+        AS（<code class="inline">t = -3.80, p = 0.0001</code>）和 OCI（<code class="inline">t = -26.02, p &lt; 0.0001</code>）在 Bonferroni 校正后仍显著；ARG（<code class="inline">t = 7.95, p &lt; 0.0001</code>）也通过；ICI 和 SDI 本就不显著，不受影响。
+      </div>
+    </div>
+
+    <div class="priority-block p0">
+      <div class="pb-head">
+        <span class="priority-badge p0">P0</span>
+        <span class="opt-num">优化 2</span>
+        <h4>AS 变异度问题声明与改善</h4>
+      </div>
+      <div class="pb-section"><span class="lbl p0">问题</span>AS 标准差 0.038，62% 观测值相同，截面区分力极弱。</div>
+      <div class="pb-section"><span class="lbl sol">方案 A（论文声明）</span>在"数据局限"章节详细说明 AS 计算方法的限制，引用 Cremers &amp; Petajisto (2009) 原文中关于持仓数据频率的讨论。</div>
+      <div class="pb-section"><span class="lbl sol">方案 B（数据改善）</span>用基金合同基准替代等权基准重算 AS。需要获取每只基金的基准指数成分股权重。</div>
+      <div class="pb-section"><span class="lbl sol">方案 C（指标替代）</span>在稳健性检验中加入跟踪误差（TE）作为 AS 的替代指标。</div>
+    </div>
+
+    <div class="priority-block p0">
+      <div class="pb-head">
+        <span class="priority-badge p0">P0</span>
+        <span class="opt-num">优化 3</span>
+        <h4>两套回归结果不一致的解释</h4>
+      </div>
+      <div class="pb-section"><span class="lbl p0">问题</span>存在 <code class="inline">R² = 0.024</code>（旧）和 <code class="inline">R² = 0.107</code>（新）两套结果。</div>
+      <div class="pb-section"><span class="lbl sol">方案</span>在论文中明确说明数据版本迭代过程：旧结果使用截面 <code class="inline">log_aum</code>（非时变），新结果使用时变 <code class="inline">log_aum</code>。引用 Petersen (2009) 关于面板数据中时变 vs 非时变控制变量的讨论。</div>
+    </div>
+
+    <!-- ===== P1 ===== -->
+    <h3 class="sub-h" id="sec4-p1">P1 级 · 建议尽快执行</h3>
+
+    <div class="priority-block p1">
+      <div class="pb-head">
+        <span class="priority-badge p1">P1</span>
+        <span class="opt-num">优化 4</span>
+        <h4>因果识别（至少做 IV）</h4>
+      </div>
+      <div class="pb-section"><span class="lbl p1">问题</span>当前仅有相关性分析，无法排除反向因果（业绩好 → 行为改变）。</div>
+      <div class="pb-section"><span class="lbl sol">方案</span>用经理变更作为工具变量。逻辑：经理变更外生于基金业绩 → 变更后行为指标变化 → 影响后续业绩。</div>
+      <div class="pb-section"><span class="lbl sol">操作</span>两阶段最小二乘法（2SLS）：</div>
+<pre><span class="c-com"># 第一阶段：回归行为指标 on 经理变更虚拟变量</span>
+<span class="c-key">Behavior</span>_<span class="c-fn">it</span> = α + β · <span class="c-key">ManagerChange</span>_<span class="c-fn">it</span> + γ · X_<span class="c-fn">it</span> + ε_<span class="c-fn">it</span>
+
+<span class="c-com"># 第二阶段：回归业绩 on 预测的行为指标</span>
+<span class="c-key">Performance</span>_<span class="c-fn">it</span> = α + β̂ · <span class="c-key">Behavior</span>_<span class="c-fn">it</span> + γ · X_<span class="c-fn">it</span> + u_<span class="c-fn">it</span></pre>
+    </div>
+
+    <div class="priority-block p1">
+      <div class="pb-head">
+        <span class="priority-badge p1">P1</span>
+        <span class="opt-num">优化 5</span>
+        <h4>Fama-MacBeth 回归改善</h4>
+      </div>
+      <div class="pb-section"><span class="lbl p1">问题</span>仅 12/79 期成功，早期季度基金覆盖少。</div>
+      <div class="pb-section"><span class="lbl sol">方案 A</span>限制样本至 2015 年后（覆盖较全），增加成功期数。</div>
+      <div class="pb-section"><span class="lbl sol">方案 B</span>改用年度截面回归（12 个年度截面），增加每期样本量。</div>
+      <div class="pb-section"><span class="lbl sol">方案 C</span>用 Newey-West 调整的 pooled OLS 替代 FM 回归。</div>
+    </div>
+
+    <div class="priority-block p1">
+      <div class="pb-head">
+        <span class="priority-badge p1">P1</span>
+        <span class="opt-num">优化 6</span>
+        <h4>幸存者偏差声明</h4>
+      </div>
+      <div class="pb-section"><span class="lbl p1">问题</span>400 只基金全部存活至 2026Q2。</div>
+      <div class="pb-section"><span class="lbl sol">方案</span>在"研究局限"章节声明，引用寇宗来等 (2020) 使用全样本（含退市基金）的研究结果进行对比。加入 RDD（清盘线 5000 万断点）间接检验退市效应。</div>
+    </div>
+
+    <div class="priority-block p1">
+      <div class="pb-head">
+        <span class="priority-badge p1">P1</span>
+        <span class="opt-num">优化 7</span>
+        <h4>ICI / SDI 在 OLS 与 FE 中不一致的解释</h4>
+      </div>
+      <div class="pb-section"><span class="lbl p1">问题</span>ICI 和 SDI 在 OLS 中不显著但基金 FE 中显著。</div>
+      <div class="pb-section"><span class="lbl sol">方案</span>在论文中讨论这一发现的理论含义 —— 基金个体特征（如投资风格、公司文化）吸收了 ICI/SDI 的部分效应，说明行为指标的效应存在个体异质性。引用 Mundlak (1978) 关于固定效应与随机效应选择的讨论。</div>
+    </div>
+
+    <!-- ===== P2 ===== -->
+    <h3 class="sub-h" id="sec4-p2">P2 级 · 后续可选执行</h3>
+
+    <div class="priority-block p2">
+      <div class="pb-head">
+        <span class="priority-badge p2">P2</span>
+        <span class="opt-num">优化 8</span>
+        <h4>OCI 定义改进（NLP 文本分析）</h4>
+      </div>
+      <div class="pb-section"><span class="lbl p2">方案</span>用基金季报文本中的自信语言频率（如"坚定看好""大幅加仓"等）构建 NLP-OCI，与换手率 OCI 对比。</div>
+    </div>
+
+    <div class="priority-block p2">
+      <div class="pb-head">
+        <span class="priority-badge p2">P2</span>
+        <span class="opt-num">优化 9</span>
+        <h4>PS 模型升级</h4>
+      </div>
+      <div class="pb-section"><span class="lbl p2">方案</span>用 LSTM 深度学习模型替代 Logistic 回归，提升预测精度。</div>
+    </div>
+
+    <div class="priority-block p2">
+      <div class="pb-head">
+        <span class="priority-badge p2">P2</span>
+        <span class="opt-num">优化 10</span>
+        <h4>中美市场对比</h4>
+      </div>
+      <div class="pb-section"><span class="lbl p2">方案</span>补充美国市场数据，对比 AS/OCI 在两国市场的预测力差异。</div>
+    </div>
+  </section>
+
+  <!-- ========== 第五部分 ========== -->
+  <section class="section" id="sec5">
+    <div class="section-head">
+      <div class="section-num">5</div>
+      <div>
+        <h2>论文写作规范指导</h2>
+        <span class="en">第四章数据与研究设计、第五章实证结果、引用规范</span>
+      </div>
+    </div>
+
+    <h3 class="sub-h">5.1 第四章（数据与研究设计）写作要点</h3>
+    <div class="method-card">
+      <ul class="tight">
+        <li><strong>4.1 数据来源</strong>：逐一说明每个数据项的来源、频率、覆盖率。</li>
+        <li><strong>4.2 样本选择</strong>：说明筛选条件（成立满 3 年、规模 &gt; 2 亿）、样本量、时间范围。</li>
+        <li><strong>4.3 指标计算</strong>：每个指标给出公式、文献来源、计算示例。</li>
+        <li><strong>4.4 模型设定</strong>：写出核心回归方程，说明变量定义、标准误聚类方式。</li>
+      </ul>
+      <div class="callout warn">
+        <span class="ct">关键</span>
+        必须在 4.3 中声明 AS 的计算限制。
+      </div>
+    </div>
+
+    <h3 class="sub-h">5.2 第五章（实证结果）写作要点</h3>
+    <div class="method-card">
+      <ul class="tight">
+        <li><strong>5.1 描述性统计</strong>：报告均值/标准差/分位数，与文献对比（如 AS vs Cremers 2009）。</li>
+        <li><strong>5.2 基准回归</strong>：报告 Model 1-3 的 OLS 结果，用表格呈现系数/t值/显著性。</li>
+        <li><strong>5.3 固定效应</strong>：报告基金 FE 结果，讨论与 OLS 的差异。</li>
+        <li><strong>5.4 稳健性检验</strong>：安慰剂检验、子样本检验、多重检验校正。</li>
+      </ul>
+      <div class="callout warn">
+        <span class="ct">关键</span>
+        如实报告 ICI/SDI 不显著的结果，不选择性报告。
+      </div>
+    </div>
+
+    <h3 class="sub-h">5.3 引用规范</h3>
+    <div class="method-card">
+      <ul class="tight">
+        <li>每个指标首次出现时标注原始文献（如"Active Share (AS, Cremers &amp; Petajisto, 2009)"）。</li>
+        <li>公式编号连续（如公式 (1)、(2)……）。</li>
+        <li>表格自含（table note 说明数据来源、样本期、标准误类型）。</li>
+        <li>参考文献格式统一（建议 APA 或 GB/T 7714）。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== 优化执行清单 ========== -->
+  <section class="section" id="checklist">
+    <div class="section-head">
+      <div class="section-num">✓</div>
+      <div>
+        <h2>优化执行清单</h2>
+        <span class="en">可勾选追踪 · 共 10 项优化任务</span>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>执行追踪表</h3>
+      <p class="sub">点击勾选已完成的优化项，进度将本地保存。</p>
+
+      <div class="cl-group p0">
+        <div class="cl-title">P0 · 必须立即执行（3 项）</div>
+        <div class="cl-item">
+          <input type="checkbox" id="t1"><label for="t1">优化 1：多重检验校正（Bonferroni + BH-FDR，增加校正 p 值列）</label><span class="cl-tag p0">P0</span>
+        </div>
+        <div class="cl-item">
+          <input type="checkbox" id="t2"><label for="t2">优化 2：AS 变异度问题声明与改善（方案 A 论文声明 / B 数据改善 / C 指标替代）</label><span class="cl-tag p0">P0</span>
+        </div>
+        <div class="cl-item">
+          <input type="checkbox" id="t3"><label for="t3">优化 3：两套回归结果不一致的解释（说明 log_aum 时变 vs 非时变）</label><span class="cl-tag p0">P0</span>
+        </div>
+      </div>
+
+      <div class="cl-group p1">
+        <div class="cl-title">P1 · 建议尽快执行（4 项）</div>
+        <div class="cl-item">
+          <input type="checkbox" id="t4"><label for="t4">优化 4：因果识别（经理变更作为 IV，2SLS 两阶段回归）</label><span class="cl-tag p1">P1</span>
+        </div>
+        <div class="cl-item">
+          <input type="checkbox" id="t5"><label for="t5">优化 5：Fama-MacBeth 回归改善（限样本 2015+ / 年度截面 / NW-OLS）</label><span class="cl-tag p1">P1</span>
+        </div>
+        <div class="cl-item">
+          <input type="checkbox" id="t6"><label for="t6">优化 6：幸存者偏差声明（研究局限 + 对比寇宗来 2020 + RDD 检验）</label><span class="cl-tag p1">P1</span>
+        </div>
+        <div class="cl-item">
+          <input type="checkbox" id="t7"><label for="t7">优化 7：ICI/SDI 在 OLS 与 FE 中不一致的解释（个体异质性，引 Mundlak 1978）</label><span class="cl-tag p1">P1</span>
+        </div>
+      </div>
+
+      <div class="cl-group p2">
+        <div class="cl-title">P2 · 后续可选执行（3 项）</div>
+        <div class="cl-item">
+          <input type="checkbox" id="t8"><label for="t8">优化 8：OCI 定义改进（季报文本 NLP 自信语言频率构建 NLP-OCI）</label><span class="cl-tag p2">P2</span>
+        </div>
+        <div class="cl-item">
+          <input type="checkbox" id="t9"><label for="t9">优化 9：PS 模型升级（LSTM 深度学习替代 Logistic 回归）</label><span class="cl-tag p2">P2</span>
+        </div>
+        <div class="cl-item">
+          <input type="checkbox" id="t10"><label for="t10">优化 10：中美市场对比（补充美股数据，对比 AS/OCI 预测力差异）</label><span class="cl-tag p2">P2</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<!-- ============ 工具栏 ============ -->
+<div class="toolbar">
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+</div>
+
+<!-- ============ 页脚 ============ -->
+<footer>
+  <div class="ft-line">基金经理行为分析研究项目 · <span class="ft-accent">学术方法论说明与优化方案</span></div>
+  <div class="ft-line">五层递进框架 · AS · RG · SDI · OCI · FF3/FF5</div>
+  <div class="ft-line" style="margin-top:10px;opacity:.6">文档版本 v1.0 · 仅供研究使用</div>
+</footer>
+
+<script>
+  // 勾选状态持久化 + 划除效果
+  (function(){
+    var items = document.querySelectorAll('.cl-item input[type=checkbox]');
+    items.forEach(function(cb){
+      var saved = localStorage.getItem('opt-'+cb.id);
+      if(saved==='1'){ cb.checked=true; cb.closest('.cl-item').classList.add('done'); }
+      cb.addEventListener('change', function(){
+        var item = this.closest('.cl-item');
+        if(this.checked){ item.classList.add('done'); localStorage.setItem('opt-'+this.id,'1'); }
+        else{ item.classList.remove('done'); localStorage.setItem('opt-'+this.id,'0'); }
+      });
+      // 点击整行非 label / 非 checkbox 区域也能勾选
+      cb.parentElement.addEventListener('click', function(e){
+        if(e.target === cb) return;            // checkbox 自身已处理
+        if(e.target.tagName === 'LABEL') return; // label 的 for 已自动勾选
+        e.preventDefault();
+        cb.checked = !cb.checked;
+        cb.dispatchEvent(new Event('change'));
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

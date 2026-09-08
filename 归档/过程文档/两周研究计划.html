@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基金经理行为分析研究 — 两周研究计划</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+    background: #f0f4f8;
+    color: #2c3e50;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+  /* ========== Header ========== */
+  .header {
+    background: linear-gradient(135deg, #1a5276, #2980b9);
+    color: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(41,128,185,0.3);
+  }
+  .header h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+  .header .subtitle { font-size: 15px; opacity: 0.9; }
+  .header .meta { display: flex; gap: 30px; margin-top: 15px; font-size: 13px; opacity: 0.85; }
+  .header .meta span::before { content: "▸ "; }
+
+  /* ========== Overview Cards ========== */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+  .stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-top: 3px solid #2980b9;
+  }
+  .stat-card .num { font-size: 28px; font-weight: 700; color: #2980b9; }
+  .stat-card .label { font-size: 13px; color: #7f8c8d; margin-top: 4px; }
+  .stat-card.green { border-top-color: #27ae60; }
+  .stat-card.green .num { color: #27ae60; }
+  .stat-card.orange { border-top-color: #e67e22; }
+  .stat-card.orange .num { color: #e67e22; }
+  .stat-card.red { border-top-color: #e74c3c; }
+  .stat-card.red .num { color: #e74c3c; }
+
+  /* ========== Section ========== */
+  .section {
+    background: white;
+    border-radius: 10px;
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a5276;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ecf0f1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: white;
+  }
+
+  /* ========== Status Table ========== */
+  .status-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .status-table th {
+    background: #ecf0f1;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 500;
+    color: #34495e;
+    border-bottom: 2px solid #d5dbdb;
+  }
+  .status-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #ecf0f1;
+  }
+  .status-table tr:hover { background: #f8f9fa; }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .badge-done { background: #d4edda; color: #155724; }
+  .badge-todo { background: #fff3cd; color: #856404; }
+  .badge-optional { background: #e2e3e5; color: #383d41; }
+
+  /* ========== Week Header ========== */
+  .week-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .week-1 { background: linear-gradient(135deg, #2980b9, #3498db); }
+  .week-2 { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+
+  /* ========== Day Card ========== */
+  .day-card {
+    border: 1px solid #e0e6ed;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    transition: box-shadow 0.2s;
+  }
+  .day-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .day-card.week1 { border-left: 4px solid #2980b9; }
+  .day-card.week2 { border-left: 4px solid #27ae60; }
+
+  .day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .day-title { font-size: 16px; font-weight: 700; color: #2c3e50; }
+  .day-date { font-size: 13px; color: #95a5a6; }
+  .day-focus {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .focus-write { background: #eaf2f8; color: #2980b9; }
+  .focus-data { background: #fef9e7; color: #e67e22; }
+  .focus-review { background: #eafaf1; color: #27ae60; }
+  .focus-final { background: #fdedec; color: #e74c3c; }
+
+  .task-list { list-style: none; margin: 10px 0; }
+  .task-list li {
+    padding: 5px 0 5px 24px;
+    position: relative;
+    font-size: 14px;
+  }
+  .task-list li::before {
+    content: "☐";
+    position: absolute;
+    left: 0;
+    color: #bdc3c7;
+  }
+  .task-list li.highlight::before { content: "★"; color: #e67e22; }
+  .task-list li.code::before { content: "▶"; color: #2980b9; font-size: 10px; }
+
+  .deliverable {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #555;
+  }
+  .deliverable strong { color: #2980b9; }
+
+  /* ========== Milestone ========== */
+  .milestone-bar {
+    display: flex;
+    margin: 20px 0;
+    height: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .milestone-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: white;
+    font-weight: 500;
+    flex: 1;
+  }
+
+  /* ========== Risk Table ========== */
+  .risk-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .risk-table th {
+    background: #fdedec;
+    padding: 10px;
+    text-align: left;
+    color: #922b21;
+    border-bottom: 2px solid #f5b7b1;
+  }
+  .risk-table td { padding: 10px; border-bottom: 1px solid #fdeaea; }
+  .risk-high { color: #e74c3c; font-weight: 700; }
+  .risk-mid { color: #e67e22; font-weight: 700; }
+  .risk-low { color: #27ae60; font-weight: 700; }
+
+  /* ========== Checklist ========== */
+  .checklist { list-style: none; }
+  .checklist li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .checklist li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #27ae60;
+    font-weight: 700;
+  }
+
+  /* ========== Deliverable Grid ========== */
+  .deliv-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .deliv-item {
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #2980b9;
+    font-size: 14px;
+  }
+  .deliv-item .d-title { font-weight: 700; color: #2c3e50; margin-bottom: 3px; }
+  .deliv-item .d-desc { font-size: 13px; color: #7f8c8d; }
+
+  /* ========== Footer ========== */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    color: #95a5a6;
+    font-size: 13px;
+  }
+
+  @media (max-width: 768px) {
+    .overview-grid { grid-template-columns: repeat(2, 1fr); }
+    .deliv-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ========== Header ========== -->
+  <div class="header">
+    <h1>基金经理行为分析研究 — 两周研究计划</h1>
+    <div class="subtitle">基于五层递进框架的基金经理投资行为画像实证研究</div>
+    <div class="meta">
+      <span>计划周期：2026-08-08 ~ 2026-08-21（14天）</span>
+      <span>目标字数：15,000字</span>
+      <span>当前版本：MVP v14/v15</span>
+    </div>
+  </div>
+
+  <!-- ========== Overview Stats ========== -->
+  <div class="overview-grid">
+    <div class="stat-card">
+      <div class="num">9,581</div>
+      <div class="label">面板观测数（143列）</div>
+    </div>
+    <div class="stat-card green">
+      <div class="num">0.2679</div>
+      <div class="label">最佳模型 R²（M6）</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="num">6,500</div>
+      <div class="label">已完成初稿字数（前三章）</div>
+    </div>
+    <div class="stat-card red">
+      <div class="num">4</div>
+      <div class="label">待写核心章节（Ch4-Ch7）</div>
+    </div>
+  </div>
+
+  <!-- ========== Current Status ========== -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon" style="background:#2980b9;">一</span>
+      当前状态评估
+    </div>
+    <table class="status-table">
+      <thead>
+        <tr>
+          <th style="width:25%;">模块</th>
+          <th style="width:15%;">状态</th>
+          <th>详情</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>数据面板（v14）</td>
+          <td><span class="badge badge-done">已完成</span></td>
+          <td>9,581行×143列，400基金，222经理，2006-2026年；AS真实权重、FF4 alpha、BHS、晨星评级均已就绪</td>
+        </tr>
+        <tr>
+          <td>核心回归（8模型矩阵）</td>
+          <td><span class="badge badge-done">已完成</span></td>
+          <td>M6最佳R²=0.2679；SDI***、ARG**显著；VIF最大2.22，无共线性</td>
+        </tr>
+        <tr>
+          <td>v15高级计量</td>
+          <td><span class="badge badge-done">已完成</span></td>
+          <td>PSM因果推断、Bootstrap、分位数回归、交互效应、非线性、PS分类、中介效应、动态面板LSDV</td>
+        </tr>
+        <tr>
+          <td>稳健性检验体系</td>
+          <td><span class="badge badge-done">已完成</span></td>
+          <td>安慰剂(500次)、子样本(牛/熊市)、Fama-MacBeth(41期)、多重检验校正(74检验Bonf+FDR)</td>
+        </tr>
+        <tr>
+          <td>PPT（v7，49页）</td>
+          <td><span class="badge badge-done">已完成</span></td>
+          <td>含指标总表、6模型解释、FF3/FF4对比、v15高级计量、2周写作计划</td>
+        </tr>
+        <tr>
+          <td>ipynb（v2，41单元格）</td>
+          <td><span class="badge badge-done">已完成</span></td>
+          <td>19步骤全部执行无报错，含v14/v15全部分析代码</td>
+        </tr>
+        <tr>
+          <td>前三章初稿</td>
+          <td><span class="badge badge-done">已完成</span></td>
+          <td>Ch1绪论+Ch2文献综述(28篇)+Ch3理论框架(L1-L5)，6,500字</td>
+        </tr>
+        <tr>
+          <td>Ch4 实证分析</td>
+          <td><span class="badge badge-todo">待撰写</span></td>
+          <td>数据已就绪，需用v14/v15结果撰写描述统计、8模型回归、稳健性检验</td>
+        </tr>
+        <tr>
+          <td>Ch5 PS综合分类</td>
+          <td><span class="badge badge-todo">待撰写</span></td>
+          <td>Logistic模型已运行(Pseudo R²=0.1207)，需撰写行为画像分析</td>
+        </tr>
+        <tr>
+          <td>Ch6 结论与建议</td>
+          <td><span class="badge badge-todo">待撰写</span></td>
+          <td>三大核心结论已明确，需撰写实践启示和政策建议</td>
+        </tr>
+        <tr>
+          <td>Ch7 稳健性整合</td>
+          <td><span class="badge badge-todo">待撰写</span></td>
+          <td>v15高级计量结果需整合为独立章节</td>
+        </tr>
+        <tr>
+          <td>退市基金数据补充</td>
+          <td><span class="badge badge-todo">待执行</span></td>
+          <td>已获取27,449只基金列表，需识别清盘基金并下载历史数据</td>
+        </tr>
+        <tr>
+          <td>DID/RDD因果识别</td>
+          <td><span class="badge badge-optional">可选</span></td>
+          <td>经理变更作为自然实验(DID)、排名中位数断点(RDD)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== Milestone Bar ========== -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon" style="background:#8e44ad;">二</span>
+      两周里程碑总览
+    </div>
+    <div class="milestone-bar">
+      <div class="milestone-seg" style="background:#2980b9;">D1-3: Ch4实证</div>
+      <div class="milestone-seg" style="background:#3498db;">D4-5: Ch5+Ch6+Ch7</div>
+      <div class="milestone-seg" style="background:#e67e22;">D6-7: 数据补充+初稿整合</div>
+      <div class="milestone-seg" style="background:#27ae60;">D8-10: 规范+审查+补充</div>
+      <div class="milestone-seg" style="background:#1abc9c;">D11-12: 预审+修改</div>
+      <div class="milestone-seg" style="background:#e74c3c;">D13-14: 定稿提交</div>
+    </div>
+    <p style="font-size:13px; color:#7f8c8d; margin-top:8px;">
+      第一周聚焦核心章节撰写（Ch4-Ch7），确保Day 7完成全文初稿；第二周聚焦规范审查、反馈修改和定稿提交。
+    </p>
+  </div>
+
+  <!-- ========== Week 1 ========== -->
+  <div class="week-header week-1">
+    第一周（8/8 ~ 8/14）— 核心章节撰写
+  </div>
+
+  <!-- Day 1 -->
+  <div class="day-card week1">
+    <div class="day-header">
+      <span class="day-title">Day 1（8/8 周五）— 前三章修订 + 描述性统计更新</span>
+      <span class="day-date">预计 6 小时</span>
+    </div>
+    <span class="day-focus focus-write">写作</span>
+    <ul class="task-list">
+      <li class="highlight">修订 Ch1 绪论：更新研究背景，补充v14新发现（ARG最稳健、SDI在FF4中凸显、OCI被动量吸收）</li>
+      <li class="highlight">修订 Ch2 文献综述：补充Carhart(1997)动量因子文献、锦标赛理论(Brown et al., 1996)最新进展</li>
+      <li class="highlight">修订 Ch3 理论框架：更新H1-H5假设验证状态表，补充6模型正交设计动机说明</li>
+      <li>更新描述性统计表：25个变量（含v14新增14变量），使用三线表格式</li>
+      <li>更新相关系数矩阵：11个核心变量的Pearson相关系数</li>
+      <li class="code">运行 <code>MVP实证分析_逐步操作_v2.ipynb</code> Step 1-3，导出更新的描述性统计</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>修订后的Ch1-Ch3（约8,000字）+ 更新的描述性统计表 + 相关系数矩阵
+    </div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="day-card week1">
+    <div class="day-header">
+      <span class="day-title">Day 2（8/9 周六）— Ch4.1 数据描述 + Ch4.2 回归分析</span>
+      <span class="day-date">预计 7 小时</span>
+    </div>
+    <span class="day-focus focus-write">写作</span>
+    <ul class="task-list">
+      <li class="highlight">撰写 4.1 数据描述：样本筛选条件（成立满3年、规模>2亿）、数据来源四级降级策略</li>
+      <li>撰写 4.1.2 描述性统计：重点讨论AS vs AS_improved差异、BHS分布特征</li>
+      <li class="highlight">撰写 4.2.1 FF3模型（M1-M4）：基础模型R²=0.11 → 扩展模型R²=0.14，对比控制变量增量贡献</li>
+      <li class="highlight">撰写 4.2.2 FF4模型（M5-M8）：重点报告M6最佳模型（R²=0.2679），SDI***、ARG**</li>
+      <li>撰写 4.2.3 六模型正交设计说明：FF3 vs FF4、原始AS vs AS_improved、基础 vs 扩展控制</li>
+      <li>绘制回归结果汇总表（学术三线表格式，含系数/t值/显著性星号）</li>
+      <li class="code">从 <code>mvp_v14_results.json</code> 提取8模型回归系数，制作标准学术表格</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>Ch4.1 + Ch4.2初稿（约2,000字）+ 8模型回归结果表（三线表）
+    </div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="day-card week1">
+    <div class="day-header">
+      <span class="day-title">Day 3（8/10 周日）— Ch4.3 稳健性检验 + Ch4.4 核心发现</span>
+      <span class="day-date">预计 7 小时</span>
+    </div>
+    <span class="day-focus focus-write">写作</span>
+    <ul class="task-list">
+      <li class="highlight">撰写 4.3.1 安慰剂检验：500次随机打乱，8/11变量通过，附系数分布图</li>
+      <li class="highlight">撰写 4.3.2 子样本检验：牛/熊市分组，OCI符号翻转（牛负熊正），ARG两市均显著</li>
+      <li class="highlight">撰写 4.3.3 Fama-MacBeth回归：2015后41期，ARG**、ICI***、AS**</li>
+      <li class="highlight">撰写 4.3.4 多重检验校正：74个检验，Bonferroni 25/74、BH-FDR 35/74</li>
+      <li>撰写 4.3.5 VIF检验：最大VIF=2.22，无多重共线性</li>
+      <li class="highlight">撰写 4.4 核心发现讨论：三大发现（ARG最稳健、SDI在FF4凸显、OCI被动量吸收）</li>
+      <li>撰写行为指标稳健性排序表：ARG > OCI > SDI > AS > ICI > BHS</li>
+      <li class="code">从 <code>多重检验校正结果_v14.csv</code> 提取数据制作稳健性排序表</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>Ch4.3 + Ch4.4初稿（约2,000字）+ Ch4全章完成（约4,000字）
+    </div>
+  </div>
+
+  <!-- Day 4 -->
+  <div class="day-card week1">
+    <div class="day-header">
+      <span class="day-title">Day 4（8/11 周一）— Ch5 PS综合分类 + 行为画像</span>
+      <span class="day-date">预计 6 小时</span>
+    </div>
+    <span class="day-focus focus-write">写作</span>
+    <ul class="task-list">
+      <li class="highlight">撰写 5.1 PS模型构建：Logistic回归，Pseudo R²=0.1207，自变量AS/ICI/SDI/ARG/OCI</li>
+      <li>撰写 5.1.2 PS分组验证：Q1-Q5五分位组合收益差2.98%，单调性检验</li>
+      <li class="highlight">撰写 5.2 行为画像分类：基于ARG/SDI/OCI三稳健指标构建2×2×2=8类画像</li>
+      <li>撰写 5.3 八类画像特征分析：每类的行为特征、业绩表现、占比分布</li>
+      <li>撰写 5.4 画像与业绩关系：高ARG+低SDI+低OCI组合最优，附收益对比表</li>
+      <li>撰写 5.5 PS分类的实践意义：为基金评价提供行为维度新视角</li>
+      <li class="code">从 <code>mvp_v14_deep_results.json</code> 提取PS分类结果和Logistic系数</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>Ch5初稿（约2,000字）+ 八类行为画像表 + PS分组收益对比表
+    </div>
+  </div>
+
+  <!-- Day 5 -->
+  <div class="day-card week1">
+    <div class="day-header">
+      <span class="day-title">Day 5（8/12 周二）— Ch6 结论 + Ch7 稳健性整合</span>
+      <span class="day-date">预计 7 小时</span>
+    </div>
+    <span class="day-focus focus-write">写作</span>
+    <ul class="task-list">
+      <li class="highlight">撰写 Ch6 结论与建议：</li>
+      <li style="padding-left:20px;">6.1 三大核心结论（ARG正向预测、SDI损害业绩、OCI牛熊翻转）</li>
+      <li style="padding-left:20px;">6.2 实践启示（基金评价行为维度、投资者选基参考、经理管理建议）</li>
+      <li style="padding-left:20px;">6.3 政策建议（信息披露、评级体系优化）</li>
+      <li style="padding-left:20px;">6.4 研究局限与未来方向</li>
+      <li class="highlight">撰写 Ch7 稳健性检验整合（v15高级计量）：</li>
+      <li style="padding-left:20px;">7.1 PSM因果推断：ARG ATT=+0.52%***, SDI ATT=-0.50%***, OCI ATT=+0.40%***</li>
+      <li style="padding-left:20px;">7.2 Bootstrap稳健标准误：500次重抽样，SE比值0.965-0.999</li>
+      <li style="padding-left:20px;">7.3 分位数回归：ARG效应Q10→Q90单调递增(0.002→0.022)</li>
+      <li style="padding-left:20px;">7.4 交互效应：AS×牛市***、OCI×牛市***、SDI×牛市***</li>
+      <li style="padding-left:20px;">7.5 非线性效应：AS²倒U型**(p=0.013)、OCI²倒U型***(p&lt;0.001)</li>
+      <li style="padding-left:20px;">7.6 中介效应：波动率部分中介SDI(z=3.01***)和OCI(z=2.43**)</li>
+      <li style="padding-left:20px;">7.7 动态面板LSDV：业绩持续性0.2045***</li>
+      <li style="padding-left:20px;">7.8 子时期稳定性：2013后SDI/ARG系数方向一致</li>
+      <li class="code">从 <code>mvp_v15_advanced_results.json</code> 提取全部高级计量结果</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>Ch6初稿（约1,500字）+ Ch7初稿（约2,500字）
+    </div>
+  </div>
+
+  <!-- Day 6 -->
+  <div class="day-card week1">
+    <div class="day-header">
+      <span class="day-title">Day 6（8/13 周三）— 退市基金数据 + 幸存者偏差检验</span>
+      <span class="day-date">预计 6 小时</span>
+    </div>
+    <span class="day-focus focus-data">数据</span>
+    <ul class="task-list">
+      <li class="code">从 <code>全部基金列表_含清盘.csv</code>（27,449只）中识别已清盘基金</li>
+      <li class="code">下载清盘基金的历史净值和规模数据（AKShare fund_em_fund_name接口）</li>
+      <li class="code">构建含退市基金的扩展面板，重新运行M6核心回归</li>
+      <li>对比存活样本 vs 全样本回归结果差异，评估幸存者偏差影响程度</li>
+      <li>撰写幸存者偏差讨论段落（加入Ch6.4研究局限）</li>
+      <li>如清盘基金数据不可获取，撰写详细的偏差方向讨论（存活基金系统性高估）</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>幸存者偏差检验结果 + 扩展面板回归对比表 + 讨论段落
+    </div>
+  </div>
+
+  <!-- Day 7 -->
+  <div class="day-card week1">
+    <div class="day-header">
+      <span class="day-title">Day 7（8/14 周四）— 第一周回顾 + 全文初稿整合</span>
+      <span class="day-date">预计 5 小时</span>
+    </div>
+    <span class="day-focus focus-review">整合</span>
+    <ul class="task-list">
+      <li class="highlight">全文初稿整合：Ch1-Ch7合并为完整文档，检查章节间逻辑衔接</li>
+      <li>检查数据引用一致性：正文数字与表格、附录数据是否完全对应</li>
+      <li>检查假设-验证对应关系：H1-H5在Ch3提出、Ch4验证、Ch6总结的闭环</li>
+      <li>全文字数统计（目标15,000字），识别篇幅失衡章节</li>
+      <li>生成全文目录和图表索引</li>
+      <li>第一周自我审查：对照研究计划检查完成度</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>全文初稿第一版（约15,000字）+ 目录 + 图表索引 + 自查报告
+    </div>
+  </div>
+
+  <!-- ========== Week 2 ========== -->
+  <div class="week-header week-2">
+    第二周（8/15 ~ 8/21）— 完善与定稿
+  </div>
+
+  <!-- Day 8 -->
+  <div class="day-card week2">
+    <div class="day-header">
+      <span class="day-title">Day 8（8/15 周五）— 全文格式规范</span>
+      <span class="day-date">预计 5 小时</span>
+    </div>
+    <span class="day-focus focus-review">规范</span>
+    <ul class="task-list">
+      <li>统一图表编号：表1-1/表1-2...、图1-1/图1-2...，章节内连续编号</li>
+      <li>统一公式编号：(1)、(2)...或(3-1)、(3-2)...章节编号</li>
+      <li>统一参考文献格式：GB/T 7714-2015标准，28篇文献逐条核对</li>
+      <li>统一术语使用：Active Share/主动份额、Return Gap/收益缺口等中英文对照</li>
+      <li>检查表格格式：全部使用三线表，无竖线，表头加粗</li>
+      <li>检查图表清晰度：确保ECharts导出图片分辨率≥300dpi</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>格式规范化的全文（第二版）
+    </div>
+  </div>
+
+  <!-- Day 9 -->
+  <div class="day-card week2">
+    <div class="day-header">
+      <span class="day-title">Day 9（8/16 周六）— 学术规范审查</span>
+      <span class="day-date">预计 6 小时</span>
+    </div>
+    <span class="day-focus focus-review">审查</span>
+    <ul class="task-list">
+      <li class="highlight">检查未来函数风险：确认所有回归均使用t期行为指标预测t+1期业绩</li>
+      <li class="highlight">检查过拟合风险：确认样本外检验（PSM、Fama-MacBeth）结果一致</li>
+      <li class="highlight">检查统计严谨性：标准误按基金聚类、1%/99%缩尾、VIF通过</li>
+      <li>检查内生性讨论：IV分析（经理变更作为工具变量）、Hausman检验结果</li>
+      <li>检查引用完整性：正文引用与文献列表一一对应，无遗漏</li>
+      <li>检查因果推断逻辑：PSM的平行趋势假设、Sobel中介检验的逐步条件</li>
+      <li>生成学术规范审查报告，列出需修改项</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>学术规范审查报告 + 问题修改清单
+    </div>
+  </div>
+
+  <!-- Day 10 -->
+  <div class="day-card week2">
+    <div class="day-header">
+      <span class="day-title">Day 10（8/17 周日）— 稳健性检验补充（可选）</span>
+      <span class="day-date">预计 5 小时</span>
+    </div>
+    <span class="day-focus focus-data">补充</span>
+    <ul class="task-list">
+      <li class="code">DID因果识别：以经理变更作为自然实验，检验行为指标变化的因果效应</li>
+      <li class="code">RDD断点回归：以排名中位数为断点，检验锦标赛效应的非连续性</li>
+      <li class="code">样本外预测验证：2015前训练、2015后测试，评估预测能力稳定性</li>
+      <li class="code">交叉验证：5折CV评估PS模型的分类准确率</li>
+      <li>将补充检验结果整合到Ch7稳健性检验章节</li>
+      <li>如时间不足，优先完成DID和样本外验证</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>补充稳健性检验结果（DID/RDD/样本外/CV）+ Ch7更新
+    </div>
+  </div>
+
+  <!-- Day 11 -->
+  <div class="day-card week2">
+    <div class="day-header">
+      <span class="day-title">Day 11（8/18 周一）— 导师/同行预审</span>
+      <span class="day-date">预计 4 小时</span>
+    </div>
+    <span class="day-focus focus-review">预审</span>
+    <ul class="task-list">
+      <li>提交全文初稿（第二版）给导师/同行审阅</li>
+      <li>附上研究框架说明文档和核心发现摘要（1页纸概要）</li>
+      <li>准备预审问题清单：重点关注方法论合理性、创新点表述、结论稳健性</li>
+      <li>收集反馈意见，按优先级分类（必须修改 / 建议修改 / 可选修改）</li>
+      <li>等待反馈期间，同步进行文字校对和格式微调</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>预审反馈意见清单 + 修改优先级分类表
+    </div>
+  </div>
+
+  <!-- Day 12 -->
+  <div class="day-card week2">
+    <div class="day-header">
+      <span class="day-title">Day 12（8/19 周二）— 反馈修改</span>
+      <span class="day-date">预计 7 小时</span>
+    </div>
+    <span class="day-focus focus-write">修改</span>
+    <ul class="task-list">
+      <li class="highlight">根据预审反馈修改核心问题：方法论、创新点、结论表述</li>
+      <li>补充缺失的分析：根据反馈意见增补必要的检验或讨论</li>
+      <li>完善论证逻辑：强化"行为指标→业绩预测→实践应用"的逻辑链条</li>
+      <li>优化创新点表述：明确与现有文献的差异和贡献</li>
+      <li>修正文字表述：消除歧义、统一用词、优化句式</li>
+      <li>更新表格和图表：根据修改内容同步更新对应表格</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>修改后的全文（第三版）+ 修改对照表
+    </div>
+  </div>
+
+  <!-- Day 13 -->
+  <div class="day-card week2">
+    <div class="day-header">
+      <span class="day-title">Day 13（8/20 周三）— PPT更新 + 最终校对</span>
+      <span class="day-date">预计 5 小时</span>
+    </div>
+    <span class="day-focus focus-final">校对</span>
+    <ul class="task-list">
+      <li>更新PPT：确保与论文最终版内容完全一致（重点更新结论页和数据页）</li>
+      <li>校对全文文字错误：错别字、标点符号、数字精度</li>
+      <li>检查数据一致性：正文、表格、图表中的数字完全对应</li>
+      <li>检查图表质量：分辨率、字体大小、坐标轴标注、图例位置</li>
+      <li>检查附录完整性：数据来源说明、指标计算公式、补充回归结果</li>
+      <li>最终通读：从头到尾完整阅读一遍，检查行文流畅性</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>最终版论文 + 更新版PPT + 校对记录
+    </div>
+  </div>
+
+  <!-- Day 14 -->
+  <div class="day-card week2">
+    <div class="day-header">
+      <span class="day-title">Day 14（8/21 周四）— 定稿与提交准备</span>
+      <span class="day-date">预计 4 小时</span>
+    </div>
+    <span class="day-focus focus-final">定稿</span>
+    <ul class="task-list">
+      <li class="highlight">最终格式检查：页边距、行距、字体、页眉页脚、页码</li>
+      <li>生成PDF版本：确保公式、表格、图表在PDF中显示正确</li>
+      <li>准备投稿材料：投稿信、作者信息、匿名版本（如需双盲审）</li>
+      <li>整理附录和补充材料：数据说明、代码仓库链接、补充表格</li>
+      <li>备份所有文件：论文、数据、代码、PPT的完整备份</li>
+      <li>更新handoff.md：记录最终状态和后续可能的修改方向</li>
+    </ul>
+    <div class="deliverable">
+      <strong>交付物：</strong>可提交的论文终稿（PDF+Word）+ 投稿材料 + 完整备份
+    </div>
+  </div>
+
+  <!-- ========== Deliverables ========== -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon" style="background:#27ae60;">三</span>
+      两周交付物清单
+    </div>
+    <div class="deliv-grid">
+      <div class="deliv-item">
+        <div class="d-title">论文全文（15,000字）</div>
+        <div class="d-desc">Ch1-Ch7完整初稿，含目录、图表索引、参考文献</div>
+      </div>
+      <div class="deliv-item">
+        <div class="d-title">学术标准表格集</div>
+        <div class="d-desc">8模型回归表、稳健性检验表、PS分类表、描述统计表（三线表格式）</div>
+      </div>
+      <div class="deliv-item">
+        <div class="d-title">幸存者偏差检验报告</div>
+        <div class="d-desc">含退市基金的扩展面板回归对比，偏差影响评估</div>
+      </div>
+      <div class="deliv-item">
+        <div class="d-title">补充稳健性检验</div>
+        <div class="d-desc">DID因果识别、RDD断点回归、样本外预测、交叉验证</div>
+      </div>
+      <div class="deliv-item">
+        <div class="d-title">学术规范审查报告</div>
+        <div class="d-desc">未来函数检查、过拟合检查、内生性讨论、引用完整性</div>
+      </div>
+      <div class="deliv-item">
+        <div class="d-title">更新版PPT</div>
+        <div class="d-desc">与论文最终版内容对齐的演示文稿</div>
+      </div>
+      <div class="deliv-item">
+        <div class="d-title">投稿材料包</div>
+        <div class="d-desc">投稿信、作者信息、匿名版、附录补充材料</div>
+      </div>
+      <div class="deliv-item">
+        <div class="d-title">完整文件备份</div>
+        <div class="d-desc">论文、数据、代码、PPT的版本化备份</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== Risk Control ========== -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon" style="background:#e74c3c;">四</span>
+      风险控制与应对
+    </div>
+    <table class="risk-table">
+      <thead>
+        <tr>
+          <th style="width:20%;">风险</th>
+          <th style="width:10%;">概率</th>
+          <th style="width:10%;">影响</th>
+          <th>应对措施</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>退市基金数据不可获取</td>
+          <td class="risk-mid">中</td>
+          <td class="risk-high">高</td>
+          <td>Day 6如无法获取，改为撰写详细的偏差方向讨论（存活基金系统性高估业绩），Day 10用DID替代</td>
+        </tr>
+        <tr>
+          <td>Ch4实证结果与文献不一致</td>
+          <td class="risk-mid">中</td>
+          <td class="risk-mid">中</td>
+          <td>Day 3撰写4.4讨论时，重点解释中国市场特殊性（AS负向vs美国正向、OCI牛熊翻转），作为创新点而非缺陷</td>
+        </tr>
+        <tr>
+          <td>导师反馈意见量大</td>
+          <td class="risk-mid">中</td>
+          <td class="risk-high">高</td>
+          <td>Day 11-12预留充足修改时间；按优先级处理（必须>建议>可选）；必要时延后Day 10的可选检验</td>
+        </tr>
+        <tr>
+          <td>全文逻辑不连贯</td>
+          <td class="risk-low">低</td>
+          <td class="risk-high">高</td>
+          <td>Day 7专门进行全文整合和逻辑检查；建立H1-H5假设在各章的对应追踪表</td>
+        </tr>
+        <tr>
+          <td>格式规范不达标</td>
+          <td class="risk-low">低</td>
+          <td class="risk-mid">中</td>
+          <td>Day 8全天专门处理格式；提前准备GB/T 7714参考文献模板</td>
+        </tr>
+        <tr>
+          <td>时间不足导致章节压缩</td>
+          <td class="risk-mid">中</td>
+          <td class="risk-mid">中</td>
+          <td>优先级：Ch4 > Ch5 > Ch7 > Ch6 > 补充检验；Ch6可压缩至1,000字</td>
+        </tr>
+        <tr>
+          <td>未来函数风险遗漏</td>
+          <td class="risk-low">低</td>
+          <td class="risk-high">极高</td>
+          <td>Day 9专项检查：确认所有回归均为Behavior(t) → Return(t+1)；检查指标计算不使用未来数据</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== Quality Checklist ========== -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon" style="background:#f39c12;">五</span>
+      定稿前质量检查清单
+    </div>
+    <ul class="checklist">
+      <li>全文15,000字以上，Ch1-Ch7结构完整，逻辑连贯</li>
+      <li>H1-H5假设在Ch3提出、Ch4验证、Ch6总结形成闭环</li>
+      <li>8模型回归结果以三线表呈现，含系数/t值/显著性星号/R²/N</li>
+      <li>所有回归使用t期行为指标预测t+1期业绩，无未来函数</li>
+      <li>标准误按基金聚类，核心变量1%/99%缩尾处理</li>
+      <li>VIF最大值&lt;5，无多重共线性问题</li>
+      <li>至少3种稳健性检验（安慰剂/子样本/Fama-MacBeth）结果一致</li>
+      <li>多重检验校正（Bonferroni + BH-FDR）已报告</li>
+      <li>PSM因果推断结果与OLS回归方向一致</li>
+      <li>幸存者偏差已讨论（含数据补充或方向性讨论）</li>
+      <li>28篇参考文献格式统一（GB/T 7714），正文引用一一对应</li>
+      <li>图表编号连续，分辨率≥300dpi，坐标轴标注完整</li>
+      <li>术语中英文对照统一，无歧义表述</li>
+      <li>PPT与论文核心数据和结论完全一致</li>
+      <li>所有代码文件已备份，可复现全部结果</li>
+    </ul>
+  </div>
+
+  <!-- ========== Key Data Reference ========== -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon" style="background:#1abc9c;">六</span>
+      核心数据文件索引（写作时引用）
+    </div>
+    <table class="status-table">
+      <thead>
+        <tr>
+          <th>文件</th>
+          <th>用途</th>
+          <th>对应章节</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>mvp_panel_v14.csv</code></td><td>主数据面板（9,581×143）</td><td>Ch3, Ch4.1</td></tr>
+        <tr><td><code>mvp_v14_results.json</code></td><td>8模型回归+VIF+安慰剂+子样本+FM+多重检验</td><td>Ch4.2, Ch4.3</td></tr>
+        <tr><td><code>mvp_v14_deep_results.json</code></td><td>交互效应+非线性+PS分类+分位数回归</td><td>Ch4.4, Ch5</td></tr>
+        <tr><td><code>mvp_v15_advanced_results.json</code></td><td>PSM+Bootstrap+中介+动态面板+子时期</td><td>Ch7</td></tr>
+        <tr><td><code>多重检验校正结果_v14.csv</code></td><td>74检验Bonferroni+FDR校正</td><td>Ch4.3.4</td></tr>
+        <tr><td><code>描述性统计.csv</code></td><td>25变量描述性统计</td><td>Ch4.1.2</td></tr>
+        <tr><td><code>相关系数矩阵.csv</code></td><td>11变量Pearson相关</td><td>Ch4.1.3</td></tr>
+        <tr><td><code>论文初稿_前三章.md</code></td><td>Ch1-Ch3初稿（6,500字）</td><td>Day 1修订基础</td></tr>
+        <tr><td><code>MVP实证分析_逐步操作_v2.ipynb</code></td><td>完整可执行分析代码（41单元格）</td><td>数据导出/验证</td></tr>
+        <tr><td><code>基金经理投资行为画像研究_v7.pptx</code></td><td>PPT（49页）</td><td>Day 13更新</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    基金经理行为分析研究 | 两周研究计划 | 生成日期：2026-08-07<br>
+    基于MVP v14/v15全面改进结果制定 | 目标：2周完成15,000字论文初稿
+  </div>
+
+</div>
+</body>
+</html>

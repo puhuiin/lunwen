@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学术规范性审查报告 | 基金经理行为分析研究</title>
+<style>
+  :root {
+    --primary: #2B5A8C;
+    --primary-light: #3A7BC8;
+    --primary-lighter: #E8F1FA;
+    --primary-dark: #1E3F61;
+    --secondary: #C9A961;
+    --secondary-light: #F5EFE0;
+    --bg: #F7F9FC;
+    --surface: #FFFFFF;
+    --text: #1F2A37;
+    --text-muted: #5B6878;
+    --border: #E3E9F0;
+    --green: #2E8B57;
+    --green-bg: #E6F4EC;
+    --yellow: #D98C00;
+    --yellow-bg: #FCF3E0;
+    --red: #C0392B;
+    --red-bg: #FBEAE8;
+    --shadow: 0 1px 3px rgba(43,90,140,0.06), 0 1px 2px rgba(43,90,140,0.04);
+    --shadow-lg: 0 8px 24px rgba(43,90,140,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ===== Header ===== */
+  header.report-header {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
+    color: #fff;
+    padding: 48px 0 40px;
+    border-bottom: 4px solid var(--secondary);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .report-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  header.report-header h1 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  header.report-header .subtitle {
+    font-size: 15px;
+    opacity: 0.88;
+    max-width: 800px;
+  }
+  .header-meta {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    font-size: 13px;
+    opacity: 0.92;
+  }
+  .header-meta span { display: inline-flex; align-items: center; gap: 6px; }
+  .header-meta span::before {
+    content: "";
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--secondary);
+    border-radius: 50%;
+  }
+
+  /* ===== Section ===== */
+  section.block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 32px 34px;
+    margin-top: 26px;
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid var(--primary-lighter);
+    padding-bottom: 14px;
+    margin-bottom: 22px;
+  }
+  .section-title .num {
+    background: var(--primary);
+    color: #fff;
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .section-title h2 {
+    font-size: 21px;
+    color: var(--primary-dark);
+    font-weight: 700;
+  }
+  .section-title .en {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  h3.sub {
+    font-size: 17px;
+    color: var(--primary);
+    margin: 26px 0 14px;
+    padding-left: 12px;
+    border-left: 4px solid var(--secondary);
+    font-weight: 700;
+  }
+  h4.subsub {
+    font-size: 15px;
+    color: var(--primary-dark);
+    margin: 18px 0 10px;
+    font-weight: 700;
+  }
+  p { margin-bottom: 12px; color: var(--text); }
+  p, li { font-size: 14.5px; }
+
+  ul, ol { padding-left: 22px; margin-bottom: 12px; }
+  li { margin-bottom: 7px; }
+  li::marker { color: var(--primary-light); }
+
+  strong { color: var(--primary-dark); }
+
+  /* ===== Background banner ===== */
+  .bg-banner {
+    background: linear-gradient(135deg, var(--primary-lighter) 0%, #f7fbff 100%);
+    border-left: 4px solid var(--primary);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 6px;
+  }
+  .bg-banner p { margin-bottom: 0; }
+  .bg-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .bg-stats .item {
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+  .bg-stats .item .v { font-size: 18px; font-weight: 700; color: var(--primary); }
+  .bg-stats .item .l { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ===== Overall stat cards (top) ===== */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .stat-card {
+    border-radius: 12px;
+    padding: 20px 22px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+  }
+  .stat-card.low::before { background: var(--green); }
+  .stat-card.mid::before { background: var(--yellow); }
+  .stat-card.high::before { background: var(--red); }
+  .stat-card .label { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+  .stat-card .grade {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .stat-card.low .grade { color: var(--green); }
+  .stat-card.mid .grade { color: var(--yellow); }
+  .stat-card.high .grade { color: var(--red); }
+  .stat-card .desc { font-size: 12.5px; color: var(--text-muted); }
+
+  /* ===== Risk badge ===== */
+  .badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .badge.low { background: var(--green-bg); color: var(--green); border: 1px solid #BFE3CD; }
+  .badge.mid { background: var(--yellow-bg); color: var(--yellow); border: 1px solid #F0D9A8; }
+  .badge.high { background: var(--red-bg); color: var(--red); border: 1px solid #F0C2BC; }
+
+  /* ===== Callout ===== */
+  .callout {
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 14px 0;
+    border-left: 4px solid;
+  }
+  .callout .ct-title {
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .callout.info { background: var(--primary-lighter); border-color: var(--primary); }
+  .callout.info .ct-title { color: var(--primary); }
+  .callout.warn { background: var(--yellow-bg); border-color: var(--yellow); }
+  .callout.warn .ct-title { color: var(--yellow); }
+  .callout.danger { background: var(--red-bg); border-color: var(--red); }
+  .callout.danger .ct-title { color: var(--red); }
+  .callout.ok { background: var(--green-bg); border-color: var(--green); }
+  .callout.ok .ct-title { color: var(--green); }
+  .callout.gold { background: var(--secondary-light); border-color: var(--secondary); }
+  .callout.gold .ct-title { color: #8A6D20; }
+  .callout ul { margin-bottom: 0; }
+
+  .risk-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: #FAFBFD;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .risk-row .left {
+    flex: 0 0 160px;
+    text-align: left;
+  }
+  .risk-row .left .name { font-weight: 700; color: var(--primary-dark); font-size: 14.5px; }
+  .risk-row .left .badge { margin-top: 6px; }
+  .risk-row .right { flex: 1; }
+  .risk-row .right p { margin-bottom: 6px; }
+  .risk-row .right p:last-child { margin-bottom: 0; }
+  .risk-row .right .label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== Table ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 14px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--border);
+  }
+  thead {
+    background: var(--primary);
+    color: #fff;
+  }
+  th {
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13.5px;
+  }
+  td {
+    padding: 11px 14px;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: #FAFBFD; }
+  tbody tr:hover { background: var(--primary-lighter); }
+  td.center, th.center { text-align: center; }
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .pill.theory { background: var(--primary-lighter); color: var(--primary); }
+  .pill.empirical { background: var(--secondary-light); color: #8A6D20; }
+  .pill.method { background: #EEF5EE; color: var(--green); }
+  .strength-bar {
+    display: inline-block;
+    width: 70px; height: 8px;
+    background: #E3E9F0;
+    border-radius: 4px;
+    vertical-align: middle;
+    overflow: hidden;
+    margin-right: 6px;
+  }
+  .strength-bar > i {
+    display: block; height: 100%;
+    background: linear-gradient(90deg, var(--secondary), var(--primary));
+  }
+
+  /* ===== Priority action list ===== */
+  .priority-list { margin-top: 10px; }
+  .priority-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 12px;
+    background: #fff;
+  }
+  .priority-item .p-tag {
+    flex: 0 0 52px;
+    height: 28px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: #fff;
+  }
+  .priority-item.p0 .p-tag { background: var(--red); }
+  .priority-item.p1 .p-tag { background: var(--yellow); }
+  .priority-item.p2 .p-tag { background: var(--green); }
+  .priority-item .p-body { flex: 1; }
+  .priority-item .p-body .p-title { font-weight: 700; color: var(--primary-dark); margin-bottom: 3px; font-size: 14.5px; }
+  .priority-item .p-body .p-desc { font-size: 13px; color: var(--text-muted); }
+
+  .check-box {
+    flex: 0 0 20px;
+    width: 18px; height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    margin-top: 2px;
+  }
+
+  /* ===== Total evaluation table ===== */
+  .total-eval th { width: 28%; }
+  .total-eval td:nth-child(2) { width: 18%; text-align: center; font-weight: 700; }
+
+  footer.report-footer {
+    text-align: center;
+    padding: 30px 0 20px;
+    color: var(--text-muted);
+    font-size: 12.5px;
+    border-top: 1px solid var(--border);
+    margin-top: 30px;
+  }
+
+  @media (max-width: 760px) {
+    .stat-grid, .bg-stats { grid-template-columns: 1fr; }
+    .risk-row { flex-direction: column; }
+    .risk-row .left { flex: none; }
+    .section-title .en { display: none; }
+    section.block { padding: 22px 18px; }
+    header.report-header h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="report-header">
+  <div class="header-inner">
+    <span class="report-tag">学术规范性审查 · ACADEMIC INTEGRITY REVIEW</span>
+    <h1>基金经理行为分析研究项目<br>学术规范性审查报告</h1>
+    <p class="subtitle">针对"中国基金经理投资行为画像：基于五层递进框架的实证研究"项目的学术规范、数据质量、创新贡献与方法严谨性进行系统审查。</p>
+    <div class="header-meta">
+      <span>研究主题：五层递进框架（L1-L5）</span>
+      <span>样本规模：400只基金 / 9,519个观测</span>
+      <span>审查日期：2026-08-07</span>
+      <span>审查类别：学术规范 / 创新性 / 方法严谨</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- 总体评估统计卡片 -->
+  <section class="block" style="margin-top: 26px;">
+    <div class="section-title">
+      <span class="num">概</span>
+      <h2>总体评估概览</h2>
+      <span class="en">OVERALL ASSESSMENT SUMMARY</span>
+    </div>
+    <p>下表汇总了本项目在五大审查维度上的总体评级，详细论证见后续章节。</p>
+
+    <div class="stat-grid" style="margin-top: 18px;">
+      <div class="stat-card mid">
+        <div class="label">学术不端风险</div>
+        <div class="grade">中低</div>
+        <div class="desc">无故意造假，但数据质量与报告完整性需改善</div>
+      </div>
+      <div class="stat-card high">
+        <div class="label">堆砌前人方法</div>
+        <div class="grade">中高</div>
+        <div class="desc">8个核心指标均为直接引用，需增加改进创新</div>
+      </div>
+      <div class="stat-card mid">
+        <div class="label">实证创新性</div>
+        <div class="grade">中高</div>
+        <div class="desc">中国市场特异发现具有较高价值</div>
+      </div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card mid">
+        <div class="label">理论创新性</div>
+        <div class="grade">中</div>
+        <div class="desc">五层框架有组织创新，缺乏深层理论贡献</div>
+      </div>
+      <div class="stat-card mid">
+        <div class="label">方法创新性</div>
+        <div class="grade">中</div>
+        <div class="desc">级联式判断有新意，但实现尚简</div>
+      </div>
+      <div class="stat-card mid">
+        <div class="label">整体学术贡献</div>
+        <div class="grade">中</div>
+        <div class="desc">有实证发现价值，需强化理论与方法创新</div>
+      </div>
+    </div>
+
+    <div class="callout info" style="margin-top: 20px;">
+      <div class="ct-title">审查结论速览</div>
+      <p style="margin-bottom:0;">本项目在实证发现层面具有中国市场的特异价值（AS负向、OCI最强预测、牛熊市异质性），但存在两处需重点改进的问题：一是<strong>AS指标数据质量问题</strong>必须在论文中说明；二是<strong>多重检验校正缺失</strong>与<strong>两套回归结果不一致</strong>需处理。建议优先完成P0级改进后再投稿。</p>
+    </div>
+  </section>
+
+  <!-- 审查背景 -->
+  <section class="block">
+    <div class="section-title">
+      <span class="num">背</span>
+      <h2>审查背景</h2>
+      <span class="en">REVIEW BACKGROUND</span>
+    </div>
+    <div class="bg-banner">
+      <p>本研究的主题是<strong>"中国基金经理投资行为画像：基于五层递进框架的实证研究"</strong>。研究构建了 L1-L5 五层递进框架（背景特征 → 持仓偏离 → 交易行为 → 风险应对 → 认知偏差），使用 400 只基金、9,519 个观测的面板数据进行实证分析。</p>
+      <div class="bg-stats">
+        <div class="item"><div class="v">L1-L5</div><div class="l">五层递进框架</div></div>
+        <div class="item"><div class="v">400</div><div class="l">样本基金数</div></div>
+        <div class="item"><div class="v">9,519</div><div class="l">面板观测数</div></div>
+        <div class="item"><div class="v">8</div><div class="l">核心行为指标</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 一、学术不端风险审查 -->
+  <section class="block">
+    <div class="section-title">
+      <span class="num">一</span>
+      <h2>学术不端风险审查</h2>
+      <span class="en">ACADEMIC MISCONDUCT RISK</span>
+    </div>
+    <p>本章节从抄袭剽窃、数据造假、选择性报告、p值操纵四个维度，系统评估研究过程中可能存在的学术不端风险。</p>
+
+    <h3 class="sub">1.1 抄袭 / 剽窃风险</h3>
+    <div class="risk-row">
+      <div class="left">
+        <div class="name">抄袭剽窃风险</div>
+        <span class="badge low">中低风险</span>
+      </div>
+      <div class="right">
+        <p><span class="label">指标来源</span>　AS (Cremers 2009)、RG (Kacperczyk 2008)、ICI (Kacperczyk 2005)、SDI (寇宗来 2020)、OCI (Odean 1998) 均为前人提出的经典指标。</p>
+        <p><span class="label">风险评估</span>　中低风险。指标计算方法本身属于公共知识，关键在于应用场景（中国市场）和组合方式（五层框架）。</p>
+        <p><span class="label">合规措施</span>　每个指标明确标注原始文献，计算方法在论文中详细说明来源。</p>
+      </div>
+    </div>
+
+    <h3 class="sub">1.2 数据造假风险</h3>
+    <div class="risk-row">
+      <div class="left">
+        <div class="name">数据造假风险</div>
+        <span class="badge mid">中风险</span>
+      </div>
+      <div class="right">
+        <p><span class="label">风险点1</span>　AS指标 62% 观测值相同 (0.8325)，标准差仅 0.041（美股样本为 0.17）。</p>
+        <p><span class="label">风险点2</span>　存在两套回归结果（R²=0.024 vs R²=0.068），数据不一致。</p>
+        <p><span class="label">风险评估</span>　中风险。AS问题源于数据源限制（用前十大重仓近似全持仓），非故意造假，但需在论文中明确说明。</p>
+        <p><span class="label">合规措施</span>　在"数据局限"章节声明 AS 计算方法限制，报告所有数据来源。</p>
+      </div>
+    </div>
+    <div class="callout warn">
+      <div class="ct-title">需重点关注</div>
+      <p style="margin-bottom:0;">AS 指标 62% 观测值相同的问题若不在论文中说明，一旦被审稿人发现将直接质疑数据质量与结论可信度，属 P0 级改进事项。</p>
+    </div>
+
+    <h3 class="sub">1.3 选择性报告风险</h3>
+    <div class="risk-row">
+      <div class="left">
+        <div class="name">选择性报告风险</div>
+        <span class="badge low">低风险</span>
+      </div>
+      <div class="right">
+        <p><span class="label">风险点</span>　仅报告显著结果，可能隐瞒不显著结果。</p>
+        <p><span class="label">风险评估</span>　低风险。当前报告了 ICI 和 SDI 的不显著结果，安慰剂检验中 ICI/SDI 未通过也如实报告。</p>
+        <p><span class="label">合规措施</span>　完整报告所有指标结果（显著/不显著），报告安慰剂检验失败案例。</p>
+      </div>
+    </div>
+
+    <h3 class="sub">1.4 p值操纵风险</h3>
+    <div class="risk-row">
+      <div class="left">
+        <div class="name">p值操纵风险</div>
+        <span class="badge mid">中风险</span>
+      </div>
+      <div class="right">
+        <p><span class="label">风险点</span>　多次检验（5个行为指标 × 多个模型）可能增加假阳性。</p>
+        <p><span class="label">风险评估</span>　中风险。5个指标 × 4个模型 = 20次检验，未做多重检验校正。</p>
+        <p><span class="label">合规措施</span>　建议加入 Bonferroni 校正或 FDR 控制；报告所有检验结果而非仅显著的。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 二、大量堆砌前人观点和指标计算方法的审查 -->
+  <section class="block">
+    <div class="section-title">
+      <span class="num">二</span>
+      <h2>大量堆砌前人观点和指标计算方法的审查</h2>
+      <span class="en">OVER-RELIANCE ON PRIOR METHODS</span>
+    </div>
+
+    <h3 class="sub">2.1 指标来源统计</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>指标</th>
+          <th>提出者</th>
+          <th class="center">年份</th>
+          <th>本文使用方式</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>AS</td><td>Cremers &amp; Petajisto</td><td class="center">2009</td><td>直接使用原版公式</td></tr>
+        <tr><td>ICI</td><td>Kacperczyk et al.</td><td class="center">2005</td><td>直接使用原版公式</td></tr>
+        <tr><td>RG</td><td>Kacperczyk et al.</td><td class="center">2008</td><td>直接使用原版公式</td></tr>
+        <tr><td>ARG</td><td>申宇等</td><td class="center">2013</td><td>直接使用原版公式</td></tr>
+        <tr><td>SDI</td><td>寇宗来等</td><td class="center">2020</td><td>直接使用原版公式</td></tr>
+        <tr><td>OCI</td><td>Odean</td><td class="center">1998</td><td>使用换手率 Z-score 代理</td></tr>
+        <tr><td>BHS</td><td>Brown et al.</td><td class="center">1996</td><td>直接使用原版方法</td></tr>
+        <tr><td>PS</td><td>Cohen et al.</td><td class="center">2026</td><td>简化为 Logistic 回归</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">2.2 堆砌风险评估</h3>
+    <div class="callout danger">
+      <div class="ct-title">问题识别</div>
+      <p style="margin-bottom:0;"><strong>8个核心指标全部来自前人文献，计算方法均为直接引用，未做实质性改进。</strong></p>
+    </div>
+    <div class="risk-row">
+      <div class="left">
+        <div class="name">堆砌风险</div>
+        <span class="badge high">中高</span>
+      </div>
+      <div class="right">
+        <p><span class="label">严重程度</span>　中高。如果仅是"指标搬运 + 中国数据验证"，学术贡献有限。</p>
+        <p><span class="label">改进建议</span></p>
+        <ol style="margin-top:4px;">
+          <li>至少对 2-3 个指标提出改进（如 AS 用基金合同基准、OCI 用 NLP 文本分析）。</li>
+          <li>五层框架的组合方式本身是创新，需在论文中突出。</li>
+          <li>牛熊市异质性发现是原创贡献，需深入分析机制。</li>
+        </ol>
+      </div>
+    </div>
+
+    <h3 class="sub">2.3 理论框架原创性</h3>
+    <div class="callout gold">
+      <div class="ct-title">五层递进框架</div>
+      <p>将分散的行为指标纳入"L1 → L2 → L3 → L4 → L5"递进结构，这是本文的<strong>理论组织创新</strong>。</p>
+    </div>
+    <div class="callout gold">
+      <div class="ct-title">级联式综合判断</div>
+      <p>区别于晨星的并列打分和华泰的 PCA 聚类，采用<strong>因果递进 + 分布分类</strong>的方式。</p>
+    </div>
+    <div class="callout info">
+      <div class="ct-title">评估结论</div>
+      <p style="margin-bottom:0;">框架组织有新意，但各层内部指标计算方法缺乏创新，原创性主要体现在"组织方式"而非"指标本身"。</p>
+    </div>
+  </section>
+
+  <!-- 三、创新点识别与强化 -->
+  <section class="block">
+    <div class="section-title">
+      <span class="num">三</span>
+      <h2>创新点识别与强化</h2>
+      <span class="en">INNOVATION IDENTIFICATION &amp; STRENGTHENING</span>
+    </div>
+
+    <h3 class="sub">3.1 已有创新点</h3>
+    <ol>
+      <li><strong>五层递进框架（理论创新）</strong>：首次将 BHS 锦标赛、AS 持仓偏离、RG 隐形交易、SDI 风格漂移、OCI 认知偏差纳入统一递进框架。</li>
+      <li><strong>中国市场 AS 负向发现（实证创新）</strong>：AS 与业绩负相关（t = -3.80***），与美股正向发现相反，揭示了 A 股市场特性。</li>
+      <li><strong>牛熊市异质性（实证创新）</strong>：AS/SDI/OCI 在牛熊市符号翻转，行为指标在牛市预测力更强（R² = 0.171 vs 0.063）。</li>
+      <li><strong>OCI 最强预测力（实证创新）</strong>：OCI 是 A 股基金业绩最强预测指标（t = -26.02***），在美国市场文献中未见同等强度的发现。</li>
+      <li><strong>级联式综合判断方法（方法创新）</strong>：因果递进 + 分布分类 + 回归验证三步法。</li>
+    </ol>
+
+    <h3 class="sub">3.2 需强化的创新点</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>创新点</th>
+          <th>当前状态</th>
+          <th>改进 / 升级方案</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>AS 计算改进</strong></td>
+          <td>用前十大重仓近似全持仓，导致 AS 变异度不足</td>
+          <td>用基金合同基准替代等权基准</td>
+        </tr>
+        <tr>
+          <td><strong>OCI 定义改进</strong></td>
+          <td>用换手率 Z-score，争议较大</td>
+          <td>加入 NLP 文本分析衡量过度自信</td>
+        </tr>
+        <tr>
+          <td><strong>PS 模型升级</strong></td>
+          <td>简化为 Logistic 回归</td>
+          <td>用 LSTM 深度学习模型</td>
+        </tr>
+        <tr>
+          <td><strong>因果识别</strong></td>
+          <td>仅有相关性分析</td>
+          <td>用 IV / DID / RDD 进行因果推断</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">3.3 创新点强度评级</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>创新点</th>
+          <th class="center">类型</th>
+          <th class="center">强度</th>
+          <th>评价</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>五层递进框架</td>
+          <td class="center"><span class="pill theory">理论</span></td>
+          <td class="center"><span class="strength-bar"><i style="width:60%"></i></span>中</td>
+          <td>组织方式新，但各层指标均为现成</td>
+        </tr>
+        <tr>
+          <td>AS 负向发现</td>
+          <td class="center"><span class="pill empirical">实证</span></td>
+          <td class="center"><span class="strength-bar"><i style="width:75%"></i></span>中高</td>
+          <td>与美股相反，有市场特异性价值</td>
+        </tr>
+        <tr>
+          <td>牛熊市异质性</td>
+          <td class="center"><span class="pill empirical">实证</span></td>
+          <td class="center"><span class="strength-bar"><i style="width:75%"></i></span>中高</td>
+          <td>符号翻转是有趣发现，需机制解释</td>
+        </tr>
+        <tr>
+          <td>OCI 最强预测</td>
+          <td class="center"><span class="pill empirical">实证</span></td>
+          <td class="center"><span class="strength-bar"><i style="width:90%"></i></span>高</td>
+          <td>t = -26.02 极强，美国文献未见</td>
+        </tr>
+        <tr>
+          <td>级联式判断</td>
+          <td class="center"><span class="pill method">方法</span></td>
+          <td class="center"><span class="strength-bar"><i style="width:60%"></i></span>中</td>
+          <td>区别于现有方法，但实现尚简</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout ok">
+      <div class="ct-title">核心亮点</div>
+      <p style="margin-bottom:0;">OCI 最强预测力（t = -26.02***）是本项目最具发表潜力的发现，建议作为论文的核心卖点重点包装，并补充机制解释与稳健性检验。</p>
+    </div>
+  </section>
+
+  <!-- 四、研究规范性改进建议 -->
+  <section class="block">
+    <div class="section-title">
+      <span class="num">四</span>
+      <h2>研究规范性改进建议</h2>
+      <span class="en">IMPROVEMENT RECOMMENDATIONS</span>
+    </div>
+
+    <h3 class="sub">4.1 必须改进（P0）</h3>
+    <div class="callout danger">
+      <div class="ct-title">P0 级 — 投稿前必须完成</div>
+      <ol style="margin-bottom:0;">
+        <li><strong>AS 变异度问题</strong>必须在论文中说明，否则被审稿人发现会质疑数据质量。</li>
+        <li><strong>多重检验校正</strong>必须加入，20 次检验不做校正会被质疑。</li>
+        <li><strong>两套回归结果的不一致</strong>必须解释清楚。</li>
+      </ol>
+    </div>
+
+    <h3 class="sub">4.2 建议改进（P1）</h3>
+    <div class="callout warn">
+      <div class="ct-title">P1 级 — 强烈建议完成</div>
+      <ol style="margin-bottom:0;">
+        <li><strong>因果识别</strong>至少做 IV（经理变更作为工具变量）。</li>
+        <li><strong>退市基金幸存者偏差</strong>需在"研究局限"声明。</li>
+        <li><strong>指标计算改进</strong>至少完成 AS 和 OCI 两项。</li>
+        <li><strong>Fama-MacBeth 回归</strong>需改善（当前仅 12 期成功）。</li>
+      </ol>
+    </div>
+
+    <h3 class="sub">4.3 可选改进（P2）</h3>
+    <div class="callout ok">
+      <div class="ct-title">P2 级 — 提升论文质量的可选方向</div>
+      <ol style="margin-bottom:0;">
+        <li>NLP 文本分析增强 OCI 定义。</li>
+        <li>LSTM 模型构建 PS。</li>
+        <li>中美市场对比分析。</li>
+        <li>DID 因果识别（2015 股灾 / 2020 疫情作为外生冲击）。</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 五、总体评估 -->
+  <section class="block">
+    <div class="section-title">
+      <span class="num">五</span>
+      <h2>总体评估</h2>
+      <span class="en">OVERALL EVALUATION</span>
+    </div>
+    <table class="total-eval">
+      <thead>
+        <tr>
+          <th>维度</th>
+          <th class="center">评级</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>学术不端风险</td>
+          <td><span class="badge mid">中低</span></td>
+          <td>无故意造假，但数据质量和报告完整性需改善</td>
+        </tr>
+        <tr>
+          <td>堆砌前人方法</td>
+          <td><span class="badge high">中高</span></td>
+          <td>8个指标均为直接引用，需增加改进创新</td>
+        </tr>
+        <tr>
+          <td>实证创新性</td>
+          <td><span class="badge mid">中高</span></td>
+          <td>中国市场特异发现有价值</td>
+        </tr>
+        <tr>
+          <td>理论创新性</td>
+          <td><span class="badge mid">中</span></td>
+          <td>五层框架有组织创新，但缺乏深层理论贡献</td>
+        </tr>
+        <tr>
+          <td>方法创新性</td>
+          <td><span class="badge mid">中</span></td>
+          <td>级联式判断有新意，但实现尚简</td>
+        </tr>
+        <tr>
+          <td>整体学术贡献</td>
+          <td><span class="badge mid">中</span></td>
+          <td>有实证发现价值，但需强化理论和方法创新</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 改进行动清单 -->
+  <section class="block">
+    <div class="section-title">
+      <span class="num">行</span>
+      <h2>改进行动清单（按优先级排序）</h2>
+      <span class="en">ACTION CHECKLIST BY PRIORITY</span>
+    </div>
+    <p>以下清单汇总所有改进事项，按优先级 P0 → P1 → P2 排序，建议逐项落实并勾选完成状态。</p>
+
+    <div class="priority-list">
+      <div class="priority-item p0">
+        <div class="check-box"></div>
+        <div class="p-tag">P0</div>
+        <div class="p-body">
+          <div class="p-title">说明 AS 变异度问题</div>
+          <div class="p-desc">在"数据局限"章节声明 AS 用前十大重仓近似全持仓的限制，解释 62% 观测相同的原因。</div>
+        </div>
+      </div>
+      <div class="priority-item p0">
+        <div class="check-box"></div>
+        <div class="p-tag">P0</div>
+        <div class="p-body">
+          <div class="p-title">加入多重检验校正</div>
+          <div class="p-desc">对 5 指标 × 4 模型 = 20 次检验做 Bonferroni 校正或 FDR 控制，报告校正后显著性。</div>
+        </div>
+      </div>
+      <div class="priority-item p0">
+        <div class="check-box"></div>
+        <div class="p-tag">P0</div>
+        <div class="p-body">
+          <div class="p-title">解释两套回归结果不一致</div>
+          <div class="p-desc">说明 R²=0.024 与 R²=0.068 两套结果的来源差异（样本/变量/模型设定），统一报告口径。</div>
+        </div>
+      </div>
+      <div class="priority-item p1">
+        <div class="check-box"></div>
+        <div class="p-tag">P1</div>
+        <div class="p-body">
+          <div class="p-title">因果识别（IV）</div>
+          <div class="p-desc">以基金经理变更作为工具变量，至少完成 IV 估计以缓解内生性。</div>
+        </div>
+      </div>
+      <div class="priority-item p1">
+        <div class="check-box"></div>
+        <div class="p-tag">P1</div>
+        <div class="p-body">
+          <div class="p-title">声明幸存者偏差</div>
+          <div class="p-desc">在"研究局限"中声明退市基金导致的幸存者偏差及其影响方向。</div>
+        </div>
+      </div>
+      <div class="priority-item p1">
+        <div class="check-box"></div>
+        <div class="p-tag">P1</div>
+        <div class="p-body">
+          <div class="p-title">改进 AS 与 OCI 指标</div>
+          <div class="p-desc">AS 用基金合同基准替代等权基准；OCI 重新定义或补充稳健性说明，至少完成两项。</div>
+        </div>
+      </div>
+      <div class="priority-item p1">
+        <div class="check-box"></div>
+        <div class="p-tag">P1</div>
+        <div class="p-body">
+          <div class="p-title">改善 Fama-MacBeth 回归</div>
+          <div class="p-desc">当前仅 12 期成功，需排查数据缺失/期数设置问题，提升估计有效性。</div>
+        </div>
+      </div>
+      <div class="priority-item p2">
+        <div class="check-box"></div>
+        <div class="p-tag">P2</div>
+        <div class="p-body">
+          <div class="p-title">NLP 文本分析增强 OCI</div>
+          <div class="p-desc">用基金季报/年报文本构建过度自信指标，增强 OCI 定义的原创性。</div>
+        </div>
+      </div>
+      <div class="priority-item p2">
+        <div class="check-box"></div>
+        <div class="p-tag">P2</div>
+        <div class="p-body">
+          <div class="p-title">LSTM 模型构建 PS</div>
+          <div class="p-desc">将 PS 从 Logistic 回归升级为 LSTM 深度学习模型，提升预测力与方法贡献。</div>
+        </div>
+      </div>
+      <div class="priority-item p2">
+        <div class="check-box"></div>
+        <div class="p-tag">P2</div>
+        <div class="p-body">
+          <div class="p-title">中美市场对比分析</div>
+          <div class="p-desc">补充 AS 负向、OCI 强预测等发现在中美市场的对比，凸显中国市场特异性。</div>
+        </div>
+      </div>
+      <div class="priority-item p2">
+        <div class="check-box"></div>
+        <div class="p-tag">P2</div>
+        <div class="p-body">
+          <div class="p-title">DID 因果识别</div>
+          <div class="p-desc">以 2015 股灾、2020 疫情作为外生冲击，构建 DID 模型增强因果推断。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="report-footer">
+    <p>学术规范性审查报告 · 基金经理行为分析研究项目 &nbsp;|&nbsp; 审查日期：2026-08-07</p>
+    <p>本报告基于项目当前研究材料审查生成，改进建议供研究团队参考执行。</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

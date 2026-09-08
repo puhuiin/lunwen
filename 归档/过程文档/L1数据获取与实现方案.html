@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L1背景特征层：数据获取与实现方案</title>
+<style>
+  :root {
+    --primary: #1a5276;
+    --accent: #c0392b;
+    --green: #27ae60;
+    --orange: #e67e22;
+    --bg: #f8f9fa;
+    --border: #dee2e6;
+    --text: #2c3e50;
+    --light-blue: #d6eaf8;
+    --light-green: #d5f5e3;
+    --light-orange: #fdebd0;
+    --light-red: #fadbd8;
+  }
+  body {
+    font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 40px;
+    background: #fff;
+    color: var(--text);
+    line-height: 1.8;
+  }
+  h1 {
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 12px;
+    font-size: 1.6em;
+  }
+  h2 {
+    color: var(--primary);
+    margin-top: 36px;
+    font-size: 1.3em;
+    border-left: 4px solid var(--primary);
+    padding-left: 12px;
+  }
+  h3 {
+    color: var(--accent);
+    margin-top: 24px;
+    font-size: 1.1em;
+  }
+  .card {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-left: 4px solid var(--primary);
+  }
+  .card.accent { border-left-color: var(--accent); }
+  .card.green { border-left-color: var(--green); }
+  .card.orange { border-left-color: var(--orange); }
+  .formula {
+    background: #1e1e1e;
+    color: #e8e8e8;
+    padding: 14px 20px;
+    border-radius: 6px;
+    font-family: 'Cambria Math', 'Times New Roman', serif;
+    font-size: 1.05em;
+    margin: 10px 0;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.92em;
+  }
+  th {
+    background: var(--primary);
+    color: #fff;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:nth-child(even) { background: var(--bg); }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.82em;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .tag.free { background: var(--light-green); color: var(--green); }
+  .tag.paid { background: var(--light-orange); color: var(--orange); }
+  .tag.p0 { background: var(--light-blue); color: var(--primary); }
+  .tag.p1 { background: var(--light-red); color: var(--accent); }
+  code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.9em;
+    color: var(--accent);
+  }
+  .step {
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 0;
+  }
+  .step-num {
+    background: var(--primary);
+    color: #fff;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.85em;
+    margin-right: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .warning {
+    background: var(--light-red);
+    border-left: 4px solid var(--accent);
+    padding: 10px 16px;
+    border-radius: 4px;
+    margin: 12px 0;
+    font-size: 0.93em;
+  }
+  .tip {
+    background: var(--light-green);
+    border-left: 4px solid var(--green);
+    padding: 10px 16px;
+    border-radius: 4px;
+    margin: 12px 0;
+    font-size: 0.93em;
+  }
+</style>
+</head>
+<body>
+
+<h1>L1 背景特征层：数据获取与完整实现方案</h1>
+
+<p>L1层是整个五层框架的起点，回答"<strong>基金经理是谁、面对什么压力</strong>"。包含两个核心模块：<strong>BHS锦标赛压力</strong>和<strong>经理个人特征</strong>。</p>
+
+<h2>一、L1层要做什么（总览）</h2>
+
+<table>
+<tr><th>模块</th><th>核心指标</th><th>经济含义</th><th>公式</th><th>文献来源</th></tr>
+<tr><td>锦标赛压力</td><td>CR + RAR</td><td>排名落后→增险翻盘</td><td>CR=Π(1+R_t)-1；RAR=σ_下/σ_上</td><td>Brown, Harlow & Starks (1996) JF</td></tr>
+<tr><td>职业忧虑</td><td>Loser Dummy</td><td>排名后50%→被解雇风险高</td><td>CR排名分位 &lt; 中位数 → Dummy=1</td><td>Chevalier & Ellison (1999) QJE</td></tr>
+<tr><td>从业年限</td><td>Experience</td><td>经验积累→行为差异</td><td>Exp=(当前日期-首次任职)/365</td><td>艾洪德、刘聪 (2008) 财贸经济</td></tr>
+<tr><td>个人特征</td><td>学历/性别/CFA等</td><td>背景→投资风格</td><td>虚拟变量</td><td>赵秀娟 (2010) 管理评论</td></tr>
+</table>
+
+<h2>二、数据获取方案（逐项详解）</h2>
+
+<h3>模块A：BHS锦标赛压力 — 需要的数据</h3>
+
+<div class="card">
+<p><strong>需要3类数据：</strong></p>
+<table>
+<tr><th>数据</th><th>用途</th><th>来源</th><th>获取难度</th><th>优先级</th></tr>
+<tr>
+  <td>基金月度净值收益率</td>
+  <td>计算CR(排序期+测试期)和σ(风险)</td>
+  <td><span class="tag free">免费</span> AKShare <code>fund_open_fund_info_em</code></td>
+  <td>低（API直接拉取）</td>
+  <td><span class="tag p0">P0</span></td>
+</tr>
+<tr>
+  <td>基金分类标签</td>
+  <td>确定"同类基金"（股票型/混合型等）用于排名</td>
+  <td><span class="tag free">免费</span> AKShare <code>fund_name_em</code></td>
+  <td>低</td>
+  <td><span class="tag p0">P0</span></td>
+</tr>
+<tr>
+  <td>基金成立日期</td>
+  <td>过滤样本（需≥2年历史才有完整排序+测试期）</td>
+  <td><span class="tag free">免费</span> AKShare 同上接口</td>
+  <td>低</td>
+  <td><span class="tag p0">P0</span></td>
+</tr>
+</table>
+</div>
+
+<div class="card green">
+<p><strong>AKShare 获取代码示例：</strong></p>
+<div class="formula">
+import akshare as ak
+
+# 1. 获取全部基金列表（含分类标签）
+fund_list = ak.fund_name_em()
+# → 基金代码, 基金简称, 基金类型(股票型/混合型/QDII等), 成立日期
+
+# 2. 获取某只基金月度净值
+fund_nav = ak.fund_open_fund_info_em(symbol="000001", indicator="累计净值")
+# → 净值日期, 累计净值, 日增长率
+
+# 3. 转为月度收益率
+# R_t = (NAV_t / NAV_{t-1}) - 1
+</div>
+</div>
+
+<h3>模块B：BHS锦标赛压力 — 具体计算步骤</h3>
+
+<div class="step">
+<div class="step-num">1</div>
+<div>
+<strong>确定排序期和测试期</strong>：按BHS原文，将每年分为两半：<br>
+排序期 = 1-6月（前半年） | 测试期 = 7-12月（后半年）
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">2</div>
+<div>
+<strong>计算排序期累积收益率 CR</strong>：
+<div class="formula">
+CR_i = Π_{t=1}^{6}(1 + R_{i,t}) - 1
+</div>
+其中 R_{i,t} 为基金 i 在第 t 月的月度收益率
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">3</div>
+<div>
+<strong>同类基金排名分组</strong>：在同类型基金（如全部股票型基金）内部按CR排名<br>
+前50% → 赢家（Winner, Dummy=0） | 后50% → 输家（Loser, Dummy=1）
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">4</div>
+<div>
+<strong>计算排序期和测试期的风险（标准差）</strong>：
+<div class="formula">
+σ_rank = std(R_{i,t}),  t ∈ [1月, 6月]    （排序期风险）
+
+σ_test = std(R_{i,t}),   t ∈ [7月, 12月]   （测试期风险）
+</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">5</div>
+<div>
+<strong>计算风险调整比率 RAR</strong>：
+<div class="formula">
+RAR_i = σ_{test} / σ_{rank}
+</div>
+RAR > 1 → 下半年增险 | RAR < 1 → 下半年降险 | RAR = 1 → 风险不变
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">6</div>
+<div>
+<strong>检验锦标赛效应</strong>：
+<div class="formula">
+H₀: E[RAR | Loser] ≤ E[RAR | Winner]
+
+回归模型: RAR_i = α + β · LoserDummy_i + γ · Controls_i + ε_i
+</div>
+β > 0 且显著 → 输家增险 → 锦标赛效应存在
+</div>
+</div>
+
+<div class="tip">
+<strong>BHS原文 vs 我们的改进：</strong>原文用334只美国基金(1976-1991)，手动收集Lipper数据。我们用AKShare API自动化获取400+只中国基金，覆盖率100%，且可自由扩展样本量。
+</div>
+
+<h3>模块C：经理个人特征 — 需要的数据</h3>
+
+<div class="card accent">
+<table>
+<tr><th>变量</th><th>定义</th><th>数据来源</th><th>获取方式</th><th>优先级</th></tr>
+<tr>
+  <td>从业年限 (Experience)</td>
+  <td>(当前日期 - 首次任职日期) / 365</td>
+  <td><span class="tag free">免费</span> AKShare <code>fund_manager_em</code></td>
+  <td>API直接获取5万+条任职记录</td>
+  <td><span class="tag p0">P0</span></td>
+</tr>
+<tr>
+  <td>性别 (Gender)</td>
+  <td>男=0, 女=1（虚拟变量）</td>
+  <td><span class="tag paid">付费</span> CSMAR基金经理库</td>
+  <td>学校账号导出CSV</td>
+  <td><span class="tag p1">P1</span></td>
+</tr>
+<tr>
+  <td>学历 (Education)</td>
+  <td>本科/硕士/博士/MBA（分类变量）</td>
+  <td><span class="tag paid">付费</span> CSMAR / Wind</td>
+  <td>学校账号导出或Wind终端</td>
+  <td><span class="tag p1">P1</span></td>
+</tr>
+<tr>
+  <td>CFA/CPA资格</td>
+  <td>持有=1, 未持有=0</td>
+  <td><span class="tag paid">付费</span> CSMAR</td>
+  <td>导出经理简历</td>
+  <td><span class="tag p1">P1</span></td>
+</tr>
+<tr>
+  <td>海外背景</td>
+  <td>有海外教育/工作经历=1</td>
+  <td><span class="tag paid">付费</span> Wind</td>
+  <td>Wind经理资料页</td>
+  <td><span class="tag p1">P1</span></td>
+</tr>
+<tr>
+  <td>管理规模 (AUM)</td>
+  <td>基金净资产规模（取对数）</td>
+  <td><span class="tag free">免费</span> AKShare <code>fund_portfolio_hold_em</code></td>
+  <td>API直接获取</td>
+  <td><span class="tag p0">P0</span></td>
+</tr>
+<tr>
+  <td>校友网络 (3.0阶段)</td>
+  <td>毕业院校→网络中心度</td>
+  <td><span class="tag paid">付费</span> 手工/Wind</td>
+  <td>3.0阶段扩展</td>
+  <td>—</td>
+</tr>
+</table>
+</div>
+
+<div class="card green">
+<p><strong>AKShare 获取经理任职数据：</strong></p>
+<div class="formula">
+import akshare as ak
+
+# 获取全部基金经理任职记录
+manager_df = ak.fund_manager_em()
+# → 基金代码, 基金简称, 基金经理, 任职日期, 离任日期, 任职回报
+
+# 计算从业年限
+from datetime import datetime
+today = datetime.now()
+manager_df['Exp'] = manager_df['任职日期'].apply(
+    lambda x: (today - pd.to_datetime(x)).days / 365
+)
+# → 5万+条任职记录，400基金100%覆盖
+</div>
+</div>
+
+<h2>三、我们L1的完整实现路径</h2>
+
+<h3>阶段划分</h3>
+
+<table>
+<tr><th>阶段</th><th>目标</th><th>具体任务</th><th>数据需求</th><th>时间</th></tr>
+<tr>
+  <td><strong>1.0 (MVP)</strong></td>
+  <td>验证锦标赛效应是否存在</td>
+  <td>① 计算CR+RAR<br>② 跑OLS回归: RAR = α + β·LoserDummy + ε<br>③ β>0且p<0.05即初步验证</td>
+  <td>基金净值(免费API)<br>经理任职日期(免费API)</td>
+  <td>1-2天</td>
+</tr>
+<tr>
+  <td><strong>2.0</strong></td>
+  <td>加入控制变量提升解释力</td>
+  <td>① 加入Exp(从业年限)<br>② 加入log(AUM)(管理规模)<br>③ 加入基金类型/公司固定效应</td>
+  <td>同1.0<br>+ AKShare管理规模</td>
+  <td>+1天</td>
+</tr>
+<tr>
+  <td><strong>3.0</strong></td>
+  <td>个人特征→行为差异分析</td>
+  <td>① 加入性别、学历、CFA<br>② 分组对比（男女/新老/高学历vs低学历）<br>③ 交互项: Loser×Exp 等</td>
+  <td>+ CSMAR/Wind个人特征</td>
+  <td>+2-3天</td>
+</tr>
+</table>
+
+<h3>1.0阶段完整代码框架</h3>
+
+<div class="card">
+<div class="formula">
+import akshare as ak
+import pandas as pd
+import numpy as np
+from datetime import datetime
+
+# ========== Step 1: 获取基金净值 ==========
+fund_list = ak.fund_name_em()
+# 筛选股票型+混合型，成立≥2年
+stock_funds = fund_list[fund_list['基金类型'].str.contains('股票型|混合型')]
+
+all_nav = {}
+for code in stock_funds['基金代码'][:400]:
+    try:
+        nav = ak.fund_open_fund_info_em(symbol=code, indicator="累计净值")
+        nav['月度收益率'] = nav['累计净值'].pct_change()
+        all_nav[code] = nav
+    except:
+        continue
+
+# ========== Step 2: 计算CR (排序期累积收益) ==========
+def calc_cr(monthly_returns_h1):
+    """排序期1-6月累积收益率"""
+    cr = 1.0
+    for r in monthly_returns_h1:
+        cr *= (1 + r)
+    return cr - 1
+
+# ========== Step 3: 计算σ_rank 和 σ_test ==========
+def calc_rar(monthly_h1, monthly_h2):
+    """RAR = σ_下半年 / σ_上半年"""
+    sigma_rank = np.std(monthly_h1, ddof=1)
+    sigma_test = np.std(monthly_h2, ddof=1)
+    if sigma_rank == 0:
+        return np.nan
+    return sigma_test / sigma_rank
+
+# ========== Step 4: 同类排名分组 ==========
+# 在同类型基金内按CR排名
+# 后50% → Loser=1, 前50% → Loser=0
+df['Loser'] = (df['CR'].rank(pct=True) < 0.5).astype(int)
+
+# ========== Step 5: OLS回归 ==========
+import statsmodels.api as sm
+X = sm.add_constant(df[['Loser', 'Exp', 'log_AUM']])
+model = sm.OLS(df['RAR'], X).fit()
+print(model.summary())
+# β(Loser) > 0 且 p < 0.05 → 锦标赛效应验证
+</div>
+</div>
+
+<h2>四、与BHS原文的关键对比</h2>
+
+<table>
+<tr><th>对比维度</th><th>BHS原文 (1996)</th><th>我们的实现</th></tr>
+<tr><td>样本</td><td>334只美国基金</td><td>400+只中国基金</td></tr>
+<tr><td>数据来源</td><td>Lipper/CDA（手动收集）</td><td>AKShare API（自动化）</td></tr>
+<tr><td>时间跨度</td><td>1976-1991（15年）</td><td>2015-2024（约10年）</td></tr>
+<tr><td>排名基准</td><td>同类基金CR排名</td><td>同（股票型/混合型内排名）</td></tr>
+<tr><td>分组方式</td><td>中位数划分赢家/输家</td><td>同</td></tr>
+<tr><td>检验方法</td><td>列联表 + 非参数检验</td><td>OLS面板回归 + 固定效应</td></tr>
+<tr><td>控制变量</td><td>基金规模、类型</td><td>+ 经理特征(Exp/Gender/Edu)</td></tr>
+<tr><td>市场环境</td><td>美国成熟市场</td><td>中国新兴市场（锦标赛效应预期更强）</td></tr>
+</table>
+
+<div class="warning">
+<strong>注意事项：</strong>
+<ul>
+<li><strong>防未来函数</strong>：排序期CR必须在测试期开始前已知，不能用全年数据</li>
+<li><strong>样本筛选</strong>：需排除ETF/LOF（被动管理），排除成立不足2年的基金</li>
+<li><strong>同类排名</strong>：必须按基金类型分组排名，不能跨类型比较</li>
+<li><strong>新发基金</strong>：任职不足半年的经理排除，避免数据不完整</li>
+<li><strong>多经理基金</strong>：需决定取主经理还是取平均</li>
+</ul>
+</div>
+
+<h2>五、现有数据缺口与解决方案</h2>
+
+<table>
+<tr><th>缺口</th><th>现状</th><th>影响</th><th>解决方案</th><th>优先级</th></tr>
+<tr>
+  <td>经理名称匹配率低</td>
+  <td>mvp_panel中66%的基金缺少manager_name</td>
+  <td>L1特征无法关联到面板数据</td>
+  <td>AKShare fund_manager_em重新拉取，按基金代码join</td>
+  <td><span class="tag p0">P0</span></td>
+</tr>
+<tr>
+  <td>学历/CFA缺失</td>
+  <td>无此数据</td>
+  <td>3.0阶段无法做特征分析</td>
+  <td>CSMAR基金经理简历库（学校账号）</td>
+  <td><span class="tag p1">P1</span></td>
+</tr>
+<tr>
+  <td>排名分位数据</td>
+  <td>无同类排名</td>
+  <td>无法计算Loser Dummy</td>
+  <td>用AKShare净值自己算CR→自己排名</td>
+  <td><span class="tag p0">P0</span></td>
+</tr>
+</table>
+
+<p style="margin-top:30px; color:#999; font-size:0.85em; text-align:center;">
+基于 Brown, Harlow & Starks (1996) JF · Chevalier & Ellison (1999) QJE · 艾洪德、刘聪 (2008) 财贸经济 · 赵秀娟 (2010) 管理评论
+</p>
+
+</body>
+</html>
