@@ -1,0 +1,1 @@
+﻿The MCP server responded with: [{"type":"text","text":"{\"data\":[{\"columns\":[\"\收盘价\",\"2015-12-31(月)\",\"2015-11-30(月)\"],\"items\":[{\"x\":1}]}]}"}]

@@ -1,0 +1,6 @@
+﻿fund_code_batch,year,reason
+ALL_200_SAMPLE,2015,无法取数：本环境无 mcp__mx-ds-mcp__mx_fund_finance_data 工具；备选 get_data.py 需交互式东财授权(QR扫码/粘贴apikey)，无法自动执行；且上轮无2015遗留响应
+ALL_200_SAMPLE,2016,无法取数：本环境无 mcp__mx-ds-mcp__mx_fund_finance_data 工具；备选 get_data.py 需交互式东财授权(QR扫码/粘贴apikey)，无法自动执行；且上轮无2016遗留响应
+ALL_200_SAMPLE,2017,无法取数：本环境无 mcp__mx-ds-mcp__mx_fund_finance_data 工具；备选 get_data.py 需交互式东财授权(QR扫码/粘贴apikey)，无法自动执行；且上轮无2017遗留响应
+ALL_200_SAMPLE,2018,无法取数：本环境无 mcp__mx-ds-mcp__mx_fund_finance_data 工具；备选 get_data.py 需交互式东财授权(QR扫码/粘贴apikey)，无法自动执行；且上轮无2018遗留响应
+codes151-200_S1-S4,2019,上轮遗留响应仅含 B1-B3(样本序号1-150)；S1-S4(序号151-200) 响应文件缺失，故该50只基金2019换手率未恢复
