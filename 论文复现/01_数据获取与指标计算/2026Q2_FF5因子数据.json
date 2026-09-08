@@ -1,0 +1,54 @@
+{
+  "description": "2026Q2 Fama-French 5-factor (FF5) monthly and quarterly data",
+  "source": "BetaPlus (factorwar.com/data/factor-models), cross-validated corr=1.0 with historical vintage",
+  "monthly": [
+    {
+      "date": "2026-04-30",
+      "RF": 0.000838,
+      "MKT": 0.066354,
+      "SMB": 0.00926,
+      "HML": -0.072614,
+      "RMW": -0.038105,
+      "CMA": -0.027005
+    },
+    {
+      "date": "2026-05-31",
+      "RF": 0.000695,
+      "MKT": -0.00263,
+      "SMB": -0.033084,
+      "HML": -0.057377,
+      "RMW": 0.006525,
+      "CMA": -0.057759
+    },
+    {
+      "date": "2026-06-30",
+      "RF": 0.000817,
+      "MKT": 0.006111,
+      "SMB": -0.057329,
+      "HML": -0.109989,
+      "RMW": -0.042054,
+      "CMA": -0.081907
+    }
+  ],
+  "quarterly_sum": {
+    "year": 2026,
+    "quarter": 2,
+    "report_date": "2026-06-30",
+    "ff5_RF": 0.00235,
+    "ff5_MKT_excess": 0.069835,
+    "ff5_SMB": -0.081153,
+    "ff5_HML": -0.23998,
+    "ff5_RMW": -0.073634,
+    "ff5_CMA": -0.166671,
+    "rf_pipeline_const": 0.0025
+  },
+  "panel_patch_mapping": {
+    "ff5_MKT_excess": 0.069835,
+    "ff5_SMB": -0.081153,
+    "ff5_HML": -0.23998,
+    "ff5_RMW": -0.073634,
+    "ff5_CMA": -0.166671,
+    "ff5_RF": 0.00235,
+    "excess_return_formula": "quarter_return - 0.0025"
+  }
+}
