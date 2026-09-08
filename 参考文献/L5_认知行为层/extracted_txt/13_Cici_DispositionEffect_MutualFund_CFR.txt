@@ -1,0 +1,3246 @@
+ 
+ 
+CFR Working Paper NO. 11-05 
+ 
+ 
+ 
+ 
+The Prevalence of the Disposition Effect in 
+Mutual Funds' Trades 
+ 
+ 
+G. Cici 
+ 
+
+The Prevalence of the Disposition Effect in Mutual Funds' Trades 
+ 
+ 
+ 
+ 
+Gjergji Cici 
+ 
+ 
+Mason School of Business 
+College of William & Mary 
+Williamsburg, VA 23187, USA 
+& 
+Centre for Financial Research (CFR)  
+University of Cologne 
+Cologne, Germany 
+757-221-1826 gjergji.cici@mason.wm.edu 
+ 
+April 22, 2011 
+ 
+            
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I thank an anonymous referee for providing exceptionally useful comments and suggestions. I also thank Gordon 
+Alexander, Vikas Agarwal, Luca Benzoni, Stephen Brown (the editor), David Dubofsky, Scott Gibson, Ross Levine, 
+Terry Odean, Meir Statman, Rajdeep Singh, Andy Winton, seminar participants at SUNY Buffalo, University of 
+Minnesota, College of William and Mary, Suffolk University, Temple University, Wharton Research Data Services, 
+and conference participants at the 2005 FMA meetings for their insightful comments. A previous version of this 
+paper was circulated under the titles “The Impact of the Disposition Effect on the Performance of Mutual Funds” 
+and “The Relation of the Disposition Effect to Mutual Fund Trades and Performance”. All errors are my 
+responsibility. 
+
+ 
+ 
+ 
+The Prevalence of the Disposition Effect in Mutual Funds' Trades 
+ 
+ 
+ 
+Abstract 
+US equity mutual funds, on average, prefer realization of capital losses to capital gains. Nevertheless, 
+a substantial fraction exhibits the disposition effect of realizing gains more readily than losses. My 
+analysis suggests that learning effects have reduced the manifestation of the disposition effect over 
+time, implying that academic research has influenced industry practices. When funds experience 
+outflows and are managed by teams of portfolio managers they are more susceptible to selling 
+disproportionately more winners than losers. Disposition-driven behavior affects investment style, 
+causing lower market betas and characteristics of value-oriented and contrarian styles but has no 
+observable effect on fund performance. 
+
+ 
+1
+I. Introduction 
+The tendency to hold onto losses and sell winning investments, termed the disposition effect, 
+is a form of irrational behavior explained by the prospect theory of Kahneman and Tversky (1979). 
+While this effect has been extensively tested among retail investors (e.g., Shefrin and Statman 
+(1985); Odean (1998); and Grinblatt and Keloharju (2001))1, similar behavioral tendencies among 
+money managers are also receiving growing attention (e.g., Wermers (2003); Frazzini (2006); 
+O’Connell and Teo (2009); and Jin and Scherbina (2010)). This paper examines issues related to the 
+presence of the disposition effect within an important class of professional money managers, US 
+equity mutual funds. Employing thirty years of holdings data from a comprehensive set of 3,268 US 
+equity mutual funds, I conduct a two-fold analysis: First, I examine the extent to which the 
+disposition effect is present in the equity trades of mutual funds. Second, I investigate how the 
+disposition effect influences mutual funds’ investment style and performance. 
+As professional investors, mutual funds have access to superior investment technologies and 
+constantly trade securities in the financial markets. The experience acquired through continuous 
+trading presumably makes mutual funds more skilled and consequently more likely to avoid 
+behavioral biases than the average retail investor.2 Consistent with this view, I document that, on 
+average, mutual funds do not show a tendency to realize gains more readily than losses. This finding 
+is robust to different measurement methods, different subperiods, and different fund subgroups 
+defined by the funds’ investment objectives and even holds after controlling for past stock returns. 
+                                                 
+1 This effect has been documented in an experimental setting (e.g., Weber and Camerer (1998)); for home buyers and sellers 
+(e.g., Case and Shiller (1988) and Genesove and Mayer (2001)); for Israeli investors (e.g., Shapira and Venezia (2001)); for 
+futures traders at the Chicago Mercantile Exchange (e.g., Locke and Mann (2005)); and for treasury bond futures’ traders (e.g., 
+Coval and Shumway (2005)). 
+2 Seru et al. (2010) show that investors are more likely to avoid behavioral biases as they gain experience through trading. 
+
+ 
+2
+This is welcome news as it suggests that, given the size of their trades and holdings, mutual funds 
+serve as potential mitigators of distortions caused by the behavioral biases of retail investors. 
+Despite the aggregate results, I observe a great deal of heterogeneity among my sample 
+funds, as 22 to 55 percent of them exhibit a propensity to realize gains more readily than losses. 
+While this pattern is consistent with the disposition effect for this subset of funds, it could also be 
+caused by random variation in the empirical distribution. Exploring this alternative explanation, I 
+find that the tendency of these particular funds to sell winners rather than losers is persistent through 
+time. I also find that these funds show another related behavioral tendency, whereby they add shares 
+to their losses. Like holding onto losses, this doubling of sorts is another form of gambling with 
+losses. Taken altogether, these findings suggest that for the subset of funds that sell more winners 
+than losers, I cannot rule out the disposition effect as a contributing factor.  
+My mutual fund setting allows me to answer research questions that cannot be addressed 
+when studying the behavior of retail investors. One such question is “How do investors react when 
+they are under pressure to act on their investments?” Dror et al. (1999) show that, when placed under 
+time pressure, participants in their experiment were even more likely to take a gamble in a high risk 
+scenario, but less likely to do so in a low risk scenario. Unlike in the retail investment arena, it is 
+possible to identify situations, when mutual funds are under time pressure and trade due to liquidity 
+shocks. Specifically, mutual funds often experience redemptions, which they are under time pressure 
+to meet by selling portfolio securities to raise cash. I find that, when they are under such pressure, 
+mutual funds are more susceptible to sell disproportionately more winners than losers, as compared 
+to situations when they are not under such pressure. 
+My mutual fund setting also provides a unique opportunity to examine the impact that teams 
+have on disposition-prone behavior. Specifically, I examine whether an individual manager’s 
+portfolio decisions are more or less likely to be influenced by the disposition effect than portfolio 
+decisions made by a team. One view is that the presumed objectivity of other team members might 
+
+ 
+3
+help break possible attachments to portfolio stocks that certain portfolio managers could develop. 
+Conversely, members of a portfolio management team might gravitate toward “groupthink”, a 
+tendency for group members to reach agreement without evaluating ideas in a critical manner.3 Such 
+a tendency could intensify any behavioral biases that are present. Consistent with the latter view, I 
+find that funds managed by teams exhibit a stronger tendency to disproportionately realize more 
+gains than losses than funds managed by a single portfolio manager. 
+Next, I examine the implications of the disposition effect for mutual fund portfolio 
+investment style and performance. I hypothesize (style impact hypothesis) that disposition-driven 
+behavior will affect the investment styles of the underlying portfolios along three dimensions: First, 
+the preference of disposition-prone mutual funds for holding onto losses will lower the market risk 
+exposure (Beta) of the affected portfolios over time. While the market portfolio will experience 
+growing weights in past and current winner stocks, disposition-prone mutual fund portfolios will be 
+tilted toward poor past performing stocks. The opposite movements in weights for the affected 
+mutual fund portfolios versus the market portfolio will eventually create fund portfolios with large 
+deviations from the weights of the market portfolio.  
+Second, disposition-driven behavior could tilt portfolios toward a value-oriented style. From 
+Prospect Theory, investors use a reference point that is a function of past prices at which trades were 
+executed to establish a stock position. A portfolio stock that currently trades at a price above the 
+reference point is coded as a gain, whereas a stock that trades at a price below the reference point is 
+coded as a loss. While the reference point is a historical, backward-looking measure of value, the 
+current stock price is a forward looking measure of value. Since they are inclined to hold onto stocks 
+                                                 
+3 Janis (1972, p. 9) was the first to define groupthink as “A mode of thinking that people engage in when they are deeply involved 
+in a cohesive in-group, when the members' strivings for unanimity override their motivation to realistically appraise alternative 
+courses of action.” 
+
+ 
+4
+trading at prices below the reference point, disposition-prone mutual funds will thus appear to be 
+following active value-based investment strategies. 
+Finally, selling winners and holding onto losers will produce portfolios dominated by stocks 
+that have experienced negative returns in the past, which, as shown by Jegadeesh and Titman (1993), 
+will continue to underperform in the short term. Thus, disposition-prone funds will hold portfolios 
+weighted heavily by negative momentum stocks, creating the appearance of an active pursuit of 
+short-term contrarian style. 
+In my analysis of the “style impact” hypothesis I stratify the mutual fund portfolios by their 
+inclination to sell more winners than losers and examine their subsequent style characteristics. 
+Consistent with the “style impact” hypothesis, mutual funds with the strongest tendency to sell 
+winners rather than losers exhibit: (1) lower market betas; (2) higher loadings on the book-to-market 
+equity common risk factor, which is consistent with a value-oriented investment style; and (3) lower 
+(negative) loadings on the momentum factor, which is consistent with a short-term contrarian 
+investment style.  
+I hypothesize that the disposition effect could also have a negative effect on fund 
+performance (performance impact hypothesis). Since a disposition-related sale is triggered by the 
+stock price being above the reference point and not by fundamental information, disposition-prone 
+fund managers could be acting as uninformed investors who sustain losses to informed parties.4 
+Substantiating the real-world implications of the performance impact hypothesis, some fund 
+companies are actively trying to reduce the influence of behavioral biases on their fund managers. To 
+this end, fund companies can now hire external consultants to run diagnostics on the trades of 
+                                                 
+4 Grossman and Stiglitz (1980) show that in equilibrium, uninformed investors sustain losses to informed investors who are 
+compensated for the cost of becoming informed. However, this view does not take into account the possibility that investors 
+subject to behavioral biases could impact asset prices in certain ways. 
+
+ 
+5
+portfolio managers that are intended to detect behavioral biases and to recommend ways for reducing 
+the impact of such biases on fund performance.5 
+The analysis does not find support for the performance impact hypothesis. However, these 
+results should be interpreted with a caveat: the power of tests to detect disposition-driven behavior is 
+limited by the quarterly frequency of trading extrapolated from quarterly holdings. I believe that 
+further research is warranted to assess the impact of behavioral biases on performance, perhaps when 
+higher trading frequency data becomes available. 
+My study is related to O’Connell and Teo (2009) who show that institutional investors are 
+not subject to the disposition effect in their currency trades. Similarly, I show that mutual fund equity 
+trades are, on average, not subject to the disposition effect. My findings are also consistent with 
+Hudart and Narayanan (2002) and Sialm and Stark (2010), both of which show that, consistent with 
+optimal tax strategies, mutual funds prefer realizing capital losses to gains. Furthermore, my finding 
+of a disposition effect among a subset of mutual funds is consistent with Jin and Scherbina’s (2010) 
+finding of a reluctance to realize losses also among a subset of their sample—portfolio managers that 
+are eventually replaced. It is also consistent with Wermers’ (2003) finding of a reluctance to sell 
+losers among a subset of his sample—funds with poor past performance. 
+Beyond this main contribution, my paper reports three novel findings. First, I show that 
+trading under pressure makes mutual funds more susceptible to the disposition effect. This introduces 
+a new dimension in the behavioral finance literature that, to the best of my knowledge, has not been 
+investigated before. Second, I document that rather than reducing the influence of behavioral biases, 
+a team approach to organizational fund structure has the opposite effect of intensifying such biases. 
+This finding represents a contribution to a recent strand of literature with mixed findings on the 
+superiority of team-manager versus single-manager fund structures (see Massa et al. (2010); Han et 
+                                                 
+5 See Appell 2006 and Knight (2008). 
+
+ 
+6
+al. (2008); Chen et al. (2004); Qiu (2003); and Prather and Middleton (2002)). Finally, this study 
+contributes to the body of knowledge on the determinants of mutual fund investment styles and their 
+interaction with mutual fund performance (see Cooper et al. (2005), Wermers (2010)). Previous 
+studies addressing these issues have analyzed strategic aspects related to style choices or style 
+changes made by mutual funds. My study suggests that behavioral biases such as the disposition 
+effect could cause unintentional investment style changes in a predictable direction. 
+ 
+The rest of the paper is organized in six sections. Section II describes data and sample 
+characteristics. Section III tests for the presence of the disposition effect. Alternative explanations are 
+explored in Section IV. Section V examines the relation between disposition-driven behavior and 
+fund characteristics. The relation of the disposition effect to fund style and performance 
+characteristics is examined in Section VI. Section VII concludes.  
+ 
+II. Data 
+A. Data Sources and Sample Construction 
+Portfolio holdings data for U.S. equity mutual funds from January 1980 to December 2009 
+came from Thomson/CDA. For a given date and fund, the database provides the name and identifier 
+of each security and number of shares held. These data were supplemented with prices, volume, and 
+other individual stock information from the CRSP Monthly and Daily Stock Data Series. 
+All fund characteristics other than portfolio holdings, such as returns, fees, and investment 
+objectives came from the CRSP Mutual Fund (CRSP MF) Database. Since CRSP MF reports data by 
+share class, I aggregate information at the portfolio level by taking a value-weighted average for each 
+attribute across all share classes of the same portfolio. 
+I merge Thomson/CDA with the CRSP MF using WRDS’ MFLINKS, a dataset which links 
+Thomson/CDA fund identifiers with those of the CRSP MF Database. Both Thomson and CRSP 
+
+ 
+7
+fund datasets are free of survivorship bias.6 Given that CRSP MF Database has several investment 
+objective classification schemes from different data providers that cover different time periods, I 
+unify all the different investment objective classifications to come up with a single one.  
+To be included in the sample, a fund must: (1) be in the MFLINKS linked set; (2) have an 
+investment objective indicating that the fund invests primarily in equity securities; and (3) have an 
+average weight in common stocks of more than fifty percent. The resulting set of funds had their 
+names manually checked, and any remaining balanced, flexible, retirement, international, tax-
+exempt, or fixed-income funds were excluded. The final sample includes 3,268 domestic equity 
+funds in existence during the1980-2009 period. 
+I estimate quarterly fund trades for each fund by tracking changes in holdings over 
+consecutive quarters. Mutual funds were required by the Securities and Exchange Commission to 
+report their portfolio holdings semiannually prior to June 2005 and quarterly thereafter.7 Although 
+mutual funds were required to report their holdings only semiannually before June 2005, the majority 
+reported holdings to Thomson’s CDA/Spectrum on a quarterly basis. 
+ 
+B. Sample Characteristics 
+Table 1 presents summary characteristics for the 3,268 sample funds over the 1980-2009 
+period. Panel A reports characteristics for each year of the sample period. The sample starts with 214 
+funds in 1980 and ends with 1,976 funds in 2009, reflecting a dramatic increase in the popularity of 
+                                                 
+6 Since MFLINKS provides links until 2008, the linking table was extended to 2009 using a procedure that updated existing links 
+beyond 2008 and added new links obtained from an algorithm that compares the Thomson/CDA holdings with the more recently 
+introduced mutual fund holdings from the CRSP MF Database. 
+7 Each mutual fund is currently required to report its holdings every quarter: A mutual fund has to file a N-CSR and N-CSRS 
+form at the end of the second and fourth quarter and two N-Q forms at the end of the first and third quarter (see 
+http://www.sec.gov/info/edgar/certinvco.htm). 
+
+ 
+8
+mutual funds among investors. In terms of assets, my sample reached its peak in 2007 with 3.8 
+trillion dollars under management, steadily declining thereafter as a result of the recession in the US. 
+Panel B breaks down the sample funds into active and index funds. It also breaks down all 
+active funds into various investment objectives. Some index funds were identified using a 
+categorization variable from the CRSP MF Database introduced in the later years and others were 
+identified by inspecting fund names. My sample includes 262 index funds, which represent roughly 
+eight percent of my sample funds. Among actively managed funds, growth funds represent the most 
+numerous group with roughly 32 percent of the active fund subgroup. 
+ 
+III. Disposition Effect and the Decisions of Mutual Funds 
+A. Methodology 
+A.1. Detection of Disposition-Driven Behavior 
+As a first step, to assess the extent to which funds are affected by the disposition effect, I 
+calculate, for each fund and quarter, the difference between the proportion of realized capital gains 
+and the proportion of realized capital losses in the portfolio. I refer to this measure as the “disposition 
+spread”. A fund that is prone to the disposition effect will disproportionately realize more gains than 
+losses, and will thus have a positive disposition spread. 
+As in Odean (1998), I compute the proportion of realized capital gains, PGR, and the 
+proportion of realized capital losses, PLR, for each fund and each quarter in which at least one stock 
+sale took place, respectively, as follows: 
+(1) 
+ 
+ 
+i
+t
+UNRG
+i
+t
+RG
+i
+t
+RG
+i
+t
+PGR
++
+=
+, 
+i
+t
+UNRL
+ 
+ i
+t
+RL
+i
+t
+RL
+i
+t
+PLR
++
+=
+  
+ 
+where 
+i
+t
+RG is the number of realized capital gains by fund i in quarter t, 
+i
+t
+UNRG is the number of 
+unrealized gains, 
+i
+t
+RL is the number of realized losses, and 
+i
+t
+UNRL is the number of unrealized 
+
+ 
+9
+losses. The disposition spread, DISP, is then defined as the difference of the two proportions, 
+i
+t
+PLR
+i
+t
+PGR
+i
+t
+DISP
+−
+=
+. 
+Crucial to the computation of PGR and PLR statistics is the cost basis of each position. The 
+cost basis serves as a proxy for the reference point, which investors compare against the current stock 
+price to determine whether a stock position represents a gain or a loss. Odean (1998), Grinblatt and 
+Keloharju (2001), and Huddart and Narayanan (2002) calculate the cost basis as the average of the 
+prices at which the contributing stock purchases took place, weighted by the number of purchased 
+shares. In contrast, Frazzini (2006) uses a first in, first out accounting method. Given the 
+methodological differences from previous studies and absence of any theories supporting one 
+particular method, for robustness I use four methods to compute the cost basis: (1) average price; (2) 
+first in, first out (FIFO); (3) high in, first out (HIFO); and (4) low in, first out (LIFO). 
+I assess robustness along two additional dimensions. First, not knowing the exact day when a 
+trade takes place during the quarter, I report one set of results assuming that trades occur at the end of 
+the quarter and another set of results assuming that trades occur sometime during the quarter. Second, 
+I also show one set of results based on the dollar value of transactions and another set of results based 
+on the number of gains and losses. 
+ 
+A.2. Metric Used for Cross-Fund Comparisons 
+The disposition spread is useful for documenting whether funds realize more gains than 
+losses. However, this metric is not appropriate for cross-fund comparisons since a mechanical 
+relationship exists between portfolio size and disposition spread (see Odean (1998, p. 1,785)). This is 
+best illustrated with the following example. Suppose that half of the stocks in the portfolios of both 
+fund A and fund B represent gains and the other half losses. Assume that fund A has 12 winner and 
+12 loser stocks in its portfolio, whereas fund B has only three winner and three loser stocks. 
+
+ 
+10
+Furthermore, assume that both funds are equally affected by the disposition effect, both being twice 
+as likely to realize any given gain as any given loss. Accordingly, both funds sell 2 winner and 1 
+loser stocks. Fund A will have a PGR of 2/12, a PLR of 1/12, and a DISP of 1/12, while fund B will 
+have a PGR of 2/3, a PLR of 1/3, and a DISP of 1/3. Thus, fund B’s DISP will be four times greater 
+than fund A’s even though they have the same propensity for selling winners rather than losers.8  
+An alternative measure gets around this problem. The measure, which I refer to as the 
+disposition ratio, DISP RATIO, calculates the ratio of PGR to PLR rather than the difference of PGR 
+and PLR. In the above example, the disposition ratio for both funds will equal two, thus correctly 
+estimating the propensity to realize more gains than losses for both funds to be the same. Therefore, I 
+use DISP RATIO rather than DISP in any cross-sectional analysis.  
+ 
+B. Results 
+B.1. Overall Results 
+Table 2 reflects all the methodological variations employed to compute PGR, PLR, and DISP 
+statistics. The t-statistic associated with DISP is also reported along with the fraction of funds with 
+positive disposition spreads. Results based on each of the four accounting methods are reported in 
+separate columns. The PGR, PLR, and DISP statistics are computed using the dollar value of 
+transactions in Panel A and the number of transactions in Panel B. In Panels A.1 and B.1 trades are 
+assumed to happen at the end of quarter. In Panels A.2 and B.2 trades are assumed to happen at 
+prices that are averages of daily stock prices during the quarter, i.e., trades are assumed to occur 
+sometime during the quarter.  
+                                                 
+8 As the relationship between portfolio size and DISP is non-linear, the number of stocks held is not an adequate control variable. 
+Also, this relationship is so strong that it is likely to affect DISP even within subgroups of stocks formed based on the number of 
+stocks held. I thank Terry Odean for pointing this out. 
+
+ 
+11
+The PGR, PLR, and DISP measures are first computed for each fund in each quarter. Next, 
+for each fund, I calculate the time-series mean of each measure. A key statistic is the fraction of 
+funds with positive average disposition spreads, calculated by weighting each fund equally or by its 
+average assets under management. Regardless of the method used, the sample funds, on average, do 
+not appear to realize gains more readily than losses. Thus, these results contrast the findings of a 
+disposition effect among retail investors. The fraction of funds with positive disposition spreads is 
+slightly higher than 50 percent only in two out of the 16 methodological scenarios — when the FIFO 
+inventory method and the number of transactions are used and funds are weighted by their assets.  
+The result for equity mutual funds to realize, on average, more losses than gains is consistent 
+with similar findings by Hudart and Narayanan (2002) and Sialm and Stark (2010), both of which 
+study equity mutual funds in the context of optimal tax strategies. In sum I observe that, on average, 
+mutual funds have a stronger preference for realizing losses rather than gains. Nevertheless, I observe 
+a great deal of cross-sectional heterogeneity among mutual funds with respect to their realization of 
+gains and losses, as 22 to 55 percent of the sample exhibit positive disposition spreads. 
+ 
+B.2. Results Stratified by Subperiod 
+Has the behavior of mutual funds with respect to the realization of gains and losses changed 
+through time? Recent advances in investment technologies could have brought about more structure 
+and discipline and less reliance on behavioral heuristics. Table 3 reports subperiod results for 1980-
+1989, 1990-1999, and 2000-2009. In the interest of brevity, here and in all subsequent tables the 
+average price method is used to compute the cost basis and the proportions of gains and losses are 
+computed using the dollar value of trades and assuming that all trades happened at the end of the 
+quarter. Results are qualitatively similar if I use the other methods. Mutual funds do not show a 
+tendency to realize more gains than losses in any of the subperiods. The fraction of funds with 
+positive disposition spreads has significantly declined from roughly 46 percent during 1980-1989 to 
+
+ 
+12
+roughly 28-36 percent in the later two subperiods. This pattern is consistent with increased awareness 
+of behavioral finance theories among finance practitioners. Recognize that some of the pioneering 
+research documenting the disposition effect was first released in working paper format during the 
+second sample subperiod (e.g., Odean (1998); Weber and Camerer (1998); Genesove and Mayer 
+(2001); and Grinblatt and Keloharju (2001)). Furthermore, in 1995 the CFA Institute held its first 
+conference on the application of behavioral studies to financial markets, which incorporated 
+presentations by academics actively involved in behavioral research.9 Thus, consistent with finance 
+practitioners first being introduced to evidence of cognitive biases during the 1990-1999 period and 
+consequently reacting to such evidence, I observe that the fraction of funds with positive disposition 
+spreads sharply declined by roughly more than ten percentage points from the first to the second 
+subperiod, while it remained almost unchanged from the second to the third subperiod.10 
+Anecdotal evidence suggests that large fund families are more likely to hire staff with Ph.D. 
+degrees and are more attentive to academic research. Thus, larger fund families might have been 
+introduced to behavioral finance theories sooner than smaller families. Figure 1 shows that for larger 
+families the fraction of funds with positive disposition spreads experienced a sharp decline from the 
+first to the second subperiod and remained unchanged thereafter. In contrast, for smaller families the 
+fraction of funds with positive disposition spreads did not decline from the first to the second 
+subperiod (it slightly increased instead), but it declined significantly from the second to the third 
+subperiod. This evidence suggests that large fund families became aware of and incorporated lessons 
+from behavioral theories in their investment process sooner than small families. 
+ 
+ 
+                                                 
+9 See AIMR Conference Proceedings (December 1995). The academic presentations in this conference included De Bondt 
+(1995), Statman (1995), and Tversky (1995). 
+10 Topics from behavioral finance have now become an integral part of the CFA curriculum. 
+
+ 
+13
+B.3. Results Stratified by Fund Categories 
+Table 4 reports statistics for fund subgroups based on two categorizations. The first two 
+columns compare index funds versus actively-managed mutual funds. Given the passive nature of 
+index funds, their trades ought to reflect only the reconstitution rules of the underlying indices that 
+they follow and not be affected by any behavioral heuristics. This attractive feature makes index 
+funds a useful benchmark for evaluating the behavior of actively-managed funds.  
+Index funds exhibit an average disposition spread that is not statistically different from zero, 
+suggesting that they are equally as likely to realize gains as to realize losses. On the other hand, 
+actively-managed funds exhibit a significant negative disposition spread and, relative to index funds, 
+have a smaller fraction of funds with positive disposition spreads. Overall, the behavior of active 
+funds is consistent with an optimal tax strategy of harvesting losses to increase the present value of 
+tax savings (Constantinides (1984)). Moreover, such a strategy reduces taxable distributions to 
+investors (Gibson et al. (2000)) and could help funds attract investor clienteles that are sensitive to 
+taxes (see Bergstresser and Poterba (2002)). 
+The remaining columns from Table 4 compare actively-managed funds across different 
+investment objectives. The mean disposition spread is negative and statistically significant for each 
+investment objective. Furthermore, growth funds exhibit the smallest and small cap funds exhibit the 
+largest disposition spreads. 
+ 
+B.4. Controlling for Past Stock Returns and Comparability to Previous Research 
+Pertaining to stock trading by institutional investors, my findings are consistent with Huddart 
+and Narayanan (2002) and Sialm and Starks (2010). Huddart and Narayanan (2002) show that, 
+consistent with efficient tax strategies, mutual funds are more likely to realize capital losses than 
+capital gains. Sialm and Starks (2010), using a more recent sample, document a similar finding, 
+which holds for both short-term and long-term gains and losses. Pertaining to trading of other types 
+
+ 
+14
+of assets, my findings are consistent with O’Connell and Teo (2009) who show that global 
+institutional money managers are more likely to get out of currency positions in which they have 
+experienced losses and hold onto positions where they have experienced gains. 
+Grinblatt and Keloharju (2001) document the presence of the disposition effect among 
+Finnish institutional investors. To reconcile my results with Grinblatt and Keloharju (2001), I apply 
+their methodology to my sample. I specify the relationship between the sell versus hold decision 
+using a logit model. The dependent variable equals one when a mutual fund sells a stock and zero 
+when it does not sell but holds the stock. As in Grinblatt and Keloharju (2001), the two key 
+independent variables are a large capital loss dummy and a small capital loss dummy. Similar to 
+O’Connell and Teo (2009), for each fund I define a large (small) loss as a loss that is larger (smaller) 
+in magnitude than the median loss for that fund. Results are qualitatively similar if I use the 30% 
+cutoff used in Grinblatt and Keloharju (2001). 
+In this framework it is important to control for how investors react to past returns. The 
+overall tendency for funds to realize capital losses more readily than capital gains could be because 
+they actively follow momentum strategies. Past returns could also trigger other kinds of behavior 
+such as contrarian investing or rebalancing. Furthermore, past returns could be related to transaction 
+costs considerations. For example, a fund that has to sell for liquidity reasons might prefer to sell 
+stocks that have recently experienced a price run-up rather than those that have experienced a price 
+run-down and have become lower priced and less liquid (see Odean (p. 1,779, 1998)). For all these 
+reasons, it is important to assess whether the preference for mutual funds to realize capital losses 
+rather than capital gains persists even after controlling for how investors react to past returns. 
+Controlling for past returns is important for yet another reason: Such an exercise will help 
+reconcile my results with Wermers (2003) and Jin and Scherbina (2010). Unlike most of the related 
+literature, both Wermers (2003) and Jin and Scherbina (2010) define winner and loser stocks in 
+mutual fund portfolios based on the past 12 month returns of each stock. In contrast, my paper 
+
+ 
+15
+defines a winner and loser relative to a reference point that is specific to each mutual fund portfolio 
+and reflects the cost of establishing the underlying position.11 Thus, to control for investor behavior 
+in response to past returns and to reconcile my results with Wermers (2003) and Jin and Scherbina 
+(2010), I include two additional independent variables in the logit regression that capture past 
+market-adjusted stock returns compounded over the last 6 or 12 months. The two return variables are 
+Positive Return, defined as [max (return, 0)], and Negative Return, defined as [min (return, 0)]. 
+Results from the logit regression are reported in Table 5. Results in this and all subsequent 
+tables exclude index funds from the analysis. Even after controlling for past stock returns, mutual 
+funds are more likely to sell when facing capital losses than when facing capital gains. This 
+reinforces previous findings from Tables 2 through 4 and suggests that the difference between my 
+findings and those of Grinblatt and Keloharju (2001) cannot be attributed to methodological 
+differences. The coefficients on the past return variables suggest that mutual funds are more likely to 
+sell stocks that have experienced larger positive market-adjusted returns and are less likely to sell 
+stocks that have experienced more negative market-adjusted returns. This specific finding of how 
+mutual funds respond to past stock returns is consistent with Grinblatt and Keloharju (2001). The 
+finding that mutual funds are less likely to sell stocks that have experienced more negative market-
+adjusted returns is consistent with both Wermers (2003) and Jin and Scherbina (2010)12. However, 
+realize that the two latter papers do not relate mutual fund selling decisions to capital gains or losses 
+per se. Rather, these papers examine trading in response to past stock returns, which serve as trading 
+signals for investors that follow momentum or contrarian trading strategies. Nonetheless, even after 
+                                                 
+11 A stock characterized as a winner based on its past 12 month returns might not necessarily be a winner in a fund portfolio if 
+you consider the price paid for it. Such a stock might represent a capital loss if its purchase price is above the current price. 
+12 In unreported results I further explore comparability of my findings with those of Jin and Scherbina (2010). Specifically, I 
+explore what happens to disposition spreads following portfolio manager replacements. Interestingly, funds that displayed 
+behavior consistent with the disposition effect before a manager’s replacement show no such behavior after the replacement. 
+
+ 
+16
+controlling for such considerations, mutual funds appear to prefer selling stocks from positions with 
+capital losses rather than capital gains, suggesting that mutual funds are not affected by the 
+disposition effect, on average. 
+ 
+IV. Does Disposition Effect Cause the Positive Disposition Spreads of Some Funds? 
+The previous section showed that a sizable fraction of the sample funds have positive average 
+disposition spreads. Although the disposition effect could be a plausible explanation for these funds’ 
+positive disposition spreads, random variation in the empirical distribution could also be responsible. 
+In what follows, I explore this possibility.  
+ 
+A. Persistence 
+The subset consisting of 48% to 55% of the index funds with positive disposition spreads, 
+documented in Table 4, is most likely due to random variation in the disposition spread, as index 
+funds are passive investment vehicles. Randomness could also be responsible for the fraction of 
+actively-managed funds with positive disposition spreads that I observe in Table 4. If that was the 
+case, I should observe a lack of persistence in these funds’ tendency to realize more gains than losses. 
+To test this, I examine whether funds preserve their disposition ratio ranks over time. I construct a 
+contingency table of initial and subsequent fund ranks based on the disposition ratio. Every quarter, I 
+classify funds as High or Low disposition funds if their disposition ratio is respectively above or 
+below the median disposition ratio.  
+Cell frequencies from the two-way classification table are reported in Table 6. A Chi-Square 
+test rejects the null hypothesis that the disposition ratio ranks are independent from one quarter to the 
+next. This result suggests that the tendency for some funds to disproportionally realize more gains 
+than losses is persistent though time. 
+ 
+
+ 
+17
+ 
+B. Another Form of Gambling with Losses 
+An integral part of the disposition effect is a particular form of gambling with losses, 
+whereby investors hold onto losing investments. However, this is not the only way of gambling with 
+losses. Another way of gambling with losses arises when investors add additional shares to their 
+losses. This doubling of sorts was documented for Australian mutual funds by Brown et al. (2005). 
+Most important, this second form of gambling with losses can be measured independently from the 
+disposition-related tendency of holding onto losses. Thus, if random variation in the disposition 
+spread gives rise to a subset of funds with positive disposition spreads, these two manifestations of 
+gambling with losses should not be related to each other. I next explore this possibility. 
+To capture the tendency for funds to add additional shares to their losses, I construct what I 
+refer to as the doubling measure (DB), computed as the difference of the proportion of losses added, 
+PLA, and proportion of gains added, PGA. More specifically, PLA is computed as the dollar value of 
+shares added to stocks representing capital losses divided by the dollar value of all stock positions 
+representing capital losses in the portfolio at the beginning of the quarter. Similarly, PGA is 
+computed as the dollar value of shares added to stocks representing capital gains divided by the 
+dollar value of all stock positions representing capital gains in the portfolio at the beginning of the 
+quarter. A mutual fund that gambles with losses by adding shares to his losses more readily than to 
+his gains should exhibit a positive DB.  
+Table 7 reports the average DB for each of the decile portfolios formed based on disposition 
+ratios. I rank all funds every quarter into deciles based on their disposition ratios. Funds with the 
+highest disposition ratios are in the top decile and funds with the lowest disposition ratios are in the 
+bottom decile. Results show a monotonic relation between DISP RATIO and DB. Furthermore, funds 
+in the top four disposition ratio deciles exhibit positive DB, which is consistent with doubling 
+strategies. The DB differential between the top and bottom deciles is statistically significant. Taken 
+
+ 
+18
+altogether, these findings suggest a strong relation between the tendency for some funds to realize 
+gains rather than losses and their tendency to add additional shares to their losses rather than gains.  
+In sum, the propensity documented for some of my sample funds to realize gains rather than 
+losses is persistent through time and is accompanied by another form of gambling with losses. Such 
+evidence makes the disposition effect a likely explanation why a subset of the sample funds exhibit 
+positive disposition spreads. 
+ 
+V. Selling Preference and Characteristics 
+ 
+So far I have presented a somewhat isolated view of mutual fund preferences for realizing 
+capital gains and losses whereby two categories of funds exist: The majority of funds prefer to realize 
+losses more readily than gains, while a substantial minority prefers the opposite pattern of realizing 
+capital gains rather than capital losses. But mutual funds operate in a constantly changing 
+environment, where some conditions might give rise to certain behavioral tendencies and other 
+conditions might give rise to other tendencies. In what follows, I start with a discussion of other 
+factors that might influence mutual fund preferences for realizing capital gains and losses and 
+proceed with a multivariate analysis. 
+ 
+A. Tax Motivation 
+The propensity for the majority of funds to realize more capital losses than gains could be 
+driven by tax considerations. Tax selling works in the opposite direction with the disposition effect; 
+mutual funds offset capital gains realized in the earlier part of the year to reduce the tax liability of 
+their clients. A rationale for this type of trading activity is that, since mutual fund investors follow 
+after-tax returns (see Bergstresser and Poterba (2002)), mutual fund managers, competing for 
+investment cash flows, try to increase the after-tax returns of their clients by minimizing net realized 
+capital gains, 98 percent of which has to be distributed to investors. Indeed, Gibson et al. (2000) 
+
+ 
+19
+show that mutual funds accelerate their sale of “losers” before the common tax-year end. Thus, if tax 
+selling plays a role, I would expect funds to display a stronger tendency for realizing capital losses 
+rather than gains towards the end of the calendar year.  
+ 
+B. Dynamic Loss Aversion 
+Extending Kahneman and Tversky’s (1979) framework, Barberis et al. (2001) show that loss 
+aversion dynamically changes over time as a function of prior investment performance. More 
+specifically, after good prior performance investors become less loss averse because prior gains 
+cushion the negative effects of future losses. On the other hand, after poor prior performance they 
+become more loss averse, wanting to avoid additional setbacks. O’Connell and Teo (2009) argue that 
+“institutional fund managers are prone to dynamic loss aversion precisely because a large part of 
+their self esteem and industry standing is tied to their portfolios’ past performance.” Under this 
+framework, poor prior performance should lead to a pattern that runs contrary to the disposition 
+effect. Specifically, poor prior performance should lead to a greater propensity for mutual funds to 
+realize capital losses rather than gains. 
+ 
+C. Trading Under Pressure 
+My mutual fund setting presents a unique opportunity to examine research questions that 
+cannot be addressed with retail investor data. Studies from cognitive psychology suggest that 
+decisions made under time pressure might exacerbate behavioral biases. For example, Dror et al. 
+(1999) show that, when placed under time pressure, participants in their experiment were even more 
+likely to take a gamble in high risk scenarios, but less likely to do so in low risk scenarios. Another 
+study by Raymond and O’Brien (2009) shows that, under pressure, experiment participants were 
+more likely to recognize information predicting rewarding outcomes and to overlook information 
+predicting negative outcomes. In the financial markets investors often trade under pressure because 
+
+ 
+20
+of liquidity shocks, which might amplify the influence of behavioral biases such as the disposition 
+effect. While trading-under-pressure scenarios cannot be identified for retail investors, such scenarios 
+can be easily identified for mutual funds, as they are often pressured to trade in response to 
+redemption demands made by their investors. By distinguishing situations when mutual funds are 
+under pressure to act on their portfolios from situations when they are not under such pressure, I thus 
+examine whether time pressure exacerbates behavioral biases such as the disposition effect. 
+ 
+D. Team Effects 
+My mutual fund setting makes it possible to distinguish decisions that were made as part of a 
+team from those made by a single individual. One view is that the presumed objectivity of other team 
+members might help break possible attachments to portfolio stocks that portfolio managers could 
+develop. Conversely, members of a portfolio management team might gravitate toward a decision 
+making pattern known as “groupthink”. Janis (1972, p. 9) was the first to define groupthink as “A 
+mode of thinking that people engage in when they are deeply involved in a cohesive in-group, when 
+the members' strivings for unanimity override their motivation to realistically appraise alternative 
+courses of action.” More recently Benabou (2009) argues that groupthink might have been a 
+contributing factor to corporate fiascos such as Enron, WorldCom, and the mortgage-related financial 
+crisis. Groupthink in the investment management process has long been acknowledged (see Forrestal 
+(1988); Zeikel (1988); Fabozzi (1997, p. 41); and Benabou (2009)).13 In light of this discussion as 
+                                                 
+13 As an example of how fund families try to avoid groupthink, Emspak (2007) discusses the approach taken by Eileen 
+Rominger, Chief Investment Officer of Goldman Sachs Asset Management, to structure her team interaction:  
+“Beyond that, Rominger sets up a meeting with her team, with one person serving as the designated contrarian. Before the 
+meeting she asks other team members to submit anonymous evaluations to both her and the person who generated the idea. 
+The designated contrarian's job is to poke holes in the new idea, drawing on what the other team members have submitted. The 
+structure guards against groupthink. It also helps separate the really good ideas from the merely least objectionable. Left alone, 
+groups tend to gravitate to ideas that nobody dislikes rather than those that anyone thinks are really good, Rominger says.” 
+
+ 
+21
+applied to my mutual fund setting, I examine whether team-based decision making reduces the 
+influence of behavioral biases. 
+ 
+E. Logit Regression Methodology 
+I employ a logit regression to model the funds’ differential selling propensities in response to 
+gains vs. losses. The dependent variable, Positive DISP, is an indicator variable that equals one for 
+fund-quarter observations with positive disposition spreads (when funds sell more winners than 
+losers) and zero otherwise. Each fund in a given quarter represents a distinct unit of observation. 
+To examine whether tax loss selling affects selling preferences, I include, Last Quarter, a 
+dummy variable that equals one for observations in the last calendar quarter and zero otherwise, as 
+one of the independent variables. I introduce a fund performance variable, Past Fund Performance, 
+to detect behavior possibly affected by dynamic loss aversion. This variable is measured as the past 
+12-month risk-adjusted fund performance from the Carhart (1997) model. 
+To examine whether outflow-induced pressure and team-based fund structure affect selling 
+preferences, I include two key independent variables: Outflow, an indicator variable that equals one if 
+a fund experienced net outflows in a given quarter and Team, an indicator variable that equals one if 
+a fund is managed by a team of portfolio managers. 
+Presumably funds holding a smaller number of stocks or portfolios that are highly 
+concentrated on a few stocks are more likely to create an attachment to their portfolio losers, leading 
+to a stronger tendency to sell winners rather than losers. To examine this possibility, as additional 
+independent variables, I include Number of Stocks, defined as the natural log of the number of stocks 
+held in the fund portfolio, and Herfindahl Index, defined as the sum of the squared portfolio weights 
+in each stock, multiplied by 100.  
+ Another factor I control for is related to transaction cost considerations. Consider a fund 
+which holds some stocks that experienced a price run-down over a period of time. These stocks have 
+
+ 
+22
+become lower-priced and less liquid. If the fund is forced to sell to meet redemptions caused by fund 
+outflows, the fund will be more likely to sell portfolio winners, which have become more liquid and 
+have lower transaction costs (see Odean (p. 1,779, 1998)). To control for this possible effect, I 
+include two additional control variables: Amihud Ratio, defined as the ratio of absolute return to 
+dollar volume, averaged (value-weighted) across all stocks sold in a mutual fund portfolio in a given 
+quarter and Past Stock Performance, defined as the value-weighted average of past 12-month returns 
+of all the stocks sold in a mutual fund portfolio in a given quarter.  
+Additional control variables include Fund Assets, Family Assets, Portfolio Turnover, Expense 
+Ratio, Load. Fund Assets and Family Assets represent, respectively, the log of the total net assets of 
+the fund and of the family to which the fund belongs. Portfolio Turnover is the fund’s turnover rate 
+in percentage terms. Expense Ratio is the fund’s expense ratio. Load equals one if the fund charges a 
+load and zero if it does not. All independent variables are lagged by one quarter. Regressions are run 
+with and without investment objective dummies. The marginal probabilities for the independent 
+variables are reported along with the associated t-statistics in parentheses. 
+ 
+F. Results 
+Table 8 presents results. The negative coefficient on Last Quarter dummy is consistent with 
+tax selling taking place in the last quarter of the year. That is, mutual funds are even more likely to 
+realize capital losses than capital gains in the last quarter. Such behavior is consistent with a desire to 
+reduce taxable distributions in an effort to make the fund more attractive to potential investors. 
+The lack of significance for the coefficient on Past Fund Performance does not support the 
+prediction of the dynamic loss aversion theory of Barberis et al. (2001). The lack of significance 
+persisted even when I tried other measures of performance not reported here. O’Connell and Teo 
+(2009) show that, when trading currencies, mutual funds appear keener to respond to past 
+performance at the end of calendar year. Along the same vein, I interact Past Fund Performance with 
+
+ 
+23
+Last Quarter to examine whether gain vs. loss realization preferences become more responsive to 
+past performance towards the end of the calendar year. Again, the insignificant coefficient on the 
+interaction term does not follow predictions from dynamic loss aversion. This result should be 
+interpreted with two caveats: (1) The inconsistency of my results with those of O’Connell and Teo 
+(2009) could be because our studies examine trades in different types of securities—currencies in 
+their paper and equities in mine. (2) Unlike the high frequency of O’Connell and Teo’s (2009) data, 
+the quarterly frequency of my data could limit the power of my tests. 
+Consistent with time pressure intensifying the influence of the disposition effect, I find a 
+positive and significant relation between Positive DISP, the tendency to sell winners rather than 
+losers, and Outflow. Note that outflows introduce liquidity shocks that could trigger transaction cost 
+considerations as proposed by Odean (1998). Nonetheless, I controlled for such effects by including 
+Amihud Ratio and Past Stock Performance as additional independent variables. Taken together, this 
+evidence suggests that a when fund is forced to sell securities to meet redemptions, the probability 
+that he is likely to exhibit disposition-driven behavior increases. Although Outflow is positively 
+related to Positive Disp, recognize that investor outflows do not completely explain the propensity 
+for some funds to realize more gains than losses as shown by the fact that the magnitude of the 
+Pseudo R2 and the coefficient on Outflow are not that large.  
+The relation between Team and Positive DISP is positive and significant. This finding 
+suggests that a team approach to portfolio management is not effective in reducing the influence of 
+behavioral biases. This finding is consistent with the broader concern that team-based decision 
+making processes in investment management are susceptible to groupthink, which can lead to 
+suboptimal investment decisions, as argued in Forrestal (1988), Zeikel (1988), and Fabozzi (1997, p. 
+41). In this context, future research that looks at how intra-team interactions are structured across 
+
+ 
+24
+different mutual fund families and their impact on the quality of investment decisions is warranted, 
+perhaps when better data becomes available.14 
+The coefficients on Number of Stocks and Herfindahl Index suggest that funds holding a 
+small number of stocks or holding highly concentrated portfolios show a stronger tendency for 
+realizing gains rather than losses. This is consistent with the idea that such funds are perhaps more 
+likely to create an attachment to portfolio “loser” stocks. However, this finding could also be 
+consistent with an alternative explanation: Funds holding a small number of stocks face higher 
+reputational costs when selling losers, which makes it rational for them to avoid selling losers. Such 
+an explanation is in line with Jin and Scherbina’s (2010) conjecture that the reluctance of managers 
+“to sell losers may be caused by the fear that they will suffer reputational costs for having made an 
+investment mistake. As a result, they choose not to sell their underperforming stocks, thus not 
+admitting their mistakes publicly (p. 29).” To differentiate between the behavioral and reputational 
+explanations, I explored the interaction between fund past performance and Number of Stocks and 
+Herfindahl Index. Brown, Harlow, and Starks (1996) and Brown, Goetzmann, and Park (2001) show 
+that reputational concerns are more pronounced for funds with poor past performance who respond 
+by altering portfolio risk. If reputational concerns are behind the tendency for funds that hold a small 
+number of stocks or hold highly concentrated portfolios to sell more winners rather than losers, then 
+such funds should show an even stronger tendency to sell winners than losers when they face poor 
+past performance. Results not reported here show the interaction effects to be insignificant and 
+therefore inconsistent with a reputational effect. 
+Further results show that the coefficient on Amihud Ratio is significant for only one 
+specification. The coefficient on Past Stock Performance is positive and significant for both 
+                                                 
+14 Limited evidence suggests that there is some variation in the intra-team interactions across mutual fund families. Specifically, 
+some fund families structure their portfolio management teams so that the investment decisions are made by committee. Other 
+mutual fund companies such as American Funds use an approach that combines teamwork with individual accountability.   
+
+ 
+25
+regressions models, suggesting that mutual funds prefer to sell stocks that have experienced a price 
+run-up in the near past. This result is consistent with evidence from Table 5. Also, my finding of a 
+negative relation between Portfolio Turnover and Positive DISP is consistent with Seru et al. (2010) 
+finding that investors learn to avoid the disposition effect as they gain experience through trading.  
+ 
+VI. Impact on Style and Performance 
+A. Methodology 
+To examine the relation between disposition-driven behavior and portfolio style and 
+performance, I employ the following procedure. At the beginning of each quarter t, I rank funds into 
+deciles based on their DISP RATIO in quarter t-1. Funds with the highest DISP RATIO are placed in 
+the top decile and funds with the lowest DISP RATIO are placed in the bottom decile. Funds in each 
+decile are placed into portfolios and held for the three months, with the same ranking procedure and 
+portfolio updating repeated every quarter. A time-series of monthly returns (weighted by fund assets 
+at the beginning of the quarter) is created for each of the decile portfolios and their style 
+characteristics and performance are evaluated using the Fama and French (1993) and the Carhart 
+(1997) models specified below,  
+(2) 
+ 
+t
+t
+HML
+t
+SMB
+t
+MKT
+t
+HML
+SMB
+RMRF
+a
+R
+ε
+β
+β
+β
++
++
++
++
+=
+ 
+(3)  
+ 
+t
+t
+UMD
+t
+HML
+t
+SMB
+t
+MKT
+t
+UMD
+HML
+SMB
+RMRF
+a
+R
+ε
+β
+β
+β
+β
++
++
++
++
++
+=
+,   
+where 
+tR is the return in month t in excess of the risk-free rate. The common factor variables 
+RMRFt, SMBt, HMLt, and UMDt are the month-t return differentials between the market portfolio and 
+risk-free rate, small cap and large cap stocks, high and low book-to-market stocks, and positive and 
+negative return-momentum stocks, respectively.  
+ 
+ 
+
+ 
+26
+B. Results 
+Table 9 reports statistics for decile portfolios created from ranking funds on DISP RATIO. 
+Statistics include alphas and factor loadings from the performance regressions. The portfolios show a 
+wide variation in their sensitivities to market, book-to-market equity, and momentum factors and a 
+lower variation in their sensitivities to the size factor. Consistent with the style-impact hypothesis, 
+there is a monotonic relation between the DISP RATIO ranks and market, book-to-market equity, and 
+momentum factors in the hypothesized direction. More specifically, funds in the top decile have 
+significantly lower loadings on the market factor, higher loadings on the book-to-market equity 
+factor, and lower loadings on the momentum factor. In sum, funds in the top decile have a lower-
+than-average market risk exposure and display the characteristics of a value-oriented and short-term 
+contrarian investment style.  
+The lack of a clear monotonic pattern in the alphas of decile portfolios together with the 
+insignificant differential between the top and bottom deciles does not support the performance impact 
+hypothesis.15 This result is consistent with Locke and Mann’s (2005) finding of no measurable costs 
+associated with professional futures floor traders’ aversion to realizing losses. However, this 
+similarity of results should be interpreted with caution for two reasons: (1) Our studies examine 
+trades in different types of securities—futures in their paper and equities in mine. (2) Their study 
+uses high frequency data while mine employs data of quarterly frequency. Thus, it is possible that the 
+quarterly frequency of the trades inferred from quarterly fund holdings presents a limitation for the 
+power of my tests. Assessing the impact of behavioral biases on performance is worthy of future 
+research, perhaps when equity trading data of a higher frequency becomes available. 
+ 
+                                                 
+15 This result is further confirmed by unreported multivariate tests whereby quarterly fund alphas are regressed on the 
+disposition ratio and other fund and family characteristics. 
+
+ 
+27
+VII. Conclusion 
+As important players in the financial markets, mutual funds are supposed to be shrewd 
+professional investors whose endless search for mispriced securities and market anomalies 
+presumably makes the financial markets more efficient. Although, on average, mutual funds seem to 
+realize losses more readily than gains, surprisingly, a sizable fraction of them are not exempt from 
+the disposition effect, a behavioral effect that has been widely documented for individual investors. 
+The tendency of this particular subset of funds to sell winners rather than losers is persistent through 
+time. Interestingly, the affected funds do not only hold onto losses, but they also systematically add 
+to their losses in what appears to be another form of gambling with losses. 
+My finding of a greater inclination toward the disposition effect for funds that are under time 
+pressure to act on their portfolios due to investor redemptions has important implications. As 
+economy-wide shocks cause capital outflows that are correlated across funds, systematic trading 
+patterns among mutual funds could arise with implications for assets prices.  
+The documented stronger presence of the disposition effect in the trades of mutual funds that 
+are run by teams of portfolio managers as opposed to those run by a single portfolio manager raises 
+questions about the efficacy of the team approach to portfolio management. This finding also calls 
+for more research to shed light on the approaches to team management employed by different fund 
+complexes and their impact on portfolio decisions. 
+Finally, I document that disposition-driven behavior affects the investment styles of mutual 
+funds, causing the affected portfolios to have lower market betas and characteristics of value-oriented 
+and short-term contrarian styles. Such impacts on mutual fund investment styles, although 
+unintentional, could hurt investors by altering their asset allocations.  
+ 
+
+ 
+28
+REFERENCES 
+Appell, D. “Managers' Behavioral Biases Get Once-Over from Software; Analytic System Spots 
+Potential Problems without Value Judgments.” Pensions & Investments, 34 (2006), 21-21. 
+Bénabou, R. “Groupthink: Collective Delusions in Organizations and Markets.” Working Paper, 
+Princeton University (2009). 
+Bergstresser, D., and J. Poterba. “Do After-Tax Returns Affect Mutual Fund Flows?” Journal of 
+Financial Economics, 63 (2002), 381-414. 
+Brown, S. J.; D. R. Gallagher; O. W. Steenbeek; and P.L. Swan. “Double or Nothing: Patterns of 
+Equity Fund Holdings and Transactions.” Working Paper, New York University (2005). 
+Carhart, M.M. “On Persistence in Mutual Fund Performance.” Journal of Finance, 52 (1997), 57-
+ 
+82. 
+Case, K., and R. Shiller. “The Behavior of Home Buyers in Boom and Post Boom Markets.” New 
+England Economic Review, November/December (1988), 29-46. 
+Chen, J.; H. Hong; M. Huang; and J. D. Kubik. “Does Fund Size Erode Mutual Fund Performance? 
+The Role of Liquidity and Organization.”American Economic Review 94 (2004), 1276–1302. 
+Constantinides, G. “Optimal Stock Trading with Personal Taxes.” Journal of Financial Economics
+ 
+13 (1984), 65-89. 
+Cooper, M.; H. Gulen; and R. Rau. “Changing Names with Style: Mutual Fund Name Changes and
+ 
+their Effects on Fund Flows.” Journal of Finance, 60 (2005), 2825-2858. 
+Coval, J., and T. Shumway, “Do Behavioral Biases Affect Prices?” Journal of Finance, 60 (2005), 1-
+ 
+34. 
+De Bondt, W. “Investor Psychology and the Dynamics of Security Prices.” AIMR Conference
+ 
+Proceedings, Behavioral Finance and Decision Theory in Investment Management, December
+ 
+(1995), 7-13. 
+
+ 
+29
+ Dror, I.; J. Busemeyer; and B. Basola. “Decision Making under Time Pressure: An Independent Test
+ 
+of Sequential Sampling Models.” Memory & Cognition, 27 (1999), 713-725. 
+Emspak, J. “Investment Trends Culture Shows in Managers' Methods Lone Wolf or Team? Firms' 
+ 
+approaches Differ, but Goals Are the Same: Keep Good Ideas Handy.” Investor’s Business Daily,
+ 
+(March 8, 2007). 
+Fabozzi, F. “Pension Fund Investment Management.” New Hope, PA: Frank J. Fabozzi Associates
+ 
+(1997). 
+Fama, E., and K. French. “Common Risk Factors in the Returns on Stocks and Bonds.” Journal of 
+ 
+Financial Economics 33 (1993), 3-56. 
+Forrestal, D. J. III. “Control of the Investment Management Process within the Large Organization.”
+ 
+ICFA Continuing Education Series, 4 (1988), 29-35. 
+Frazzini, A. “The Disposition Effect and Under-Reaction to News.” Journal of Finance, 61 (2006),
+ 
+2017-2046. 
+Genesove, D., and C. Mayer. “Loss Aversion And Seller Behavior: Evidence From The Housing 
+ 
+Market.” Quarterly Journal of Economics, 116 (2001), 1233-1260. 
+Gibson, S.; A. Safieddine; and S. Titman. “Tax-Motivated Trading and Price Pressure: An Analysis 
+ 
+of Mutual Fund Holdings.” Journal of Financial and Quantitative Analysis, 35 (2000), 369-86. 
+Grinblatt, M., and M. Keloharju. “What Makes Investors Trade?” Journal of Finance, 56 (2001),  
+ 
+589 -616. 
+Grossman, S., and J. Stiglitz. “On the Impossibility of Informationally Efficient Markets.” American
+ 
+Economic Review, 70 (1980), 393–408.  
+Han, Y.; T. Noe; and M. Rebello. “Horses for Courses: Fund Managers and Organizational 
+ 
+Structures.” Working Paper, Tulane University (2008). 
+Huddart, S., and V. Narayanan. “An Empirical Examination of Tax Factors and Mutual Funds'
+ 
+Stock Sales Decisions.” Review of Accounting Studies, 7 (2002), 319-341. 
+
+ 
+30
+Janis, I. L. “Victims of Groupthink.” Boston, MA: Houghton Mifflin Company (1972). 
+Jin, L., and A. Scherbina. “Inheriting Losers.” Working Paper, Harvard University (2010). 
+Jegadeesh, N., and S. Titman. “Returns to Buying Winners and Selling Losers: Implications for 
+ 
+Stock Market Efficiency.” Journal of Finance, 48 (1993), 65–91. 
+Kahneman, D., and A. Tversky. “Prospect Theory: An Analysis of Decision under Risk.”
+ 
+Econometrica, 47 (1979), 263–291. 
+Knight, R. “Software Developer Fosters a Softer Science.” Financial Times (August 19, 2008). 
+Locke, P., and S. Mann, “Professional Trader Discipline and Trade Disposition.” Journal of
+ 
+Financial Economics, 76 (2005), 401-444. 
+Massa, M.; J. Reuter; and E. Zitzewitz. 2010, When Should Firms Share Credit with Employees? 
+Evidence from Anonymously Managed Mutual Funds, Journal of Financial Economics, forthcoming
+ 
+(2010). 
+O'Connell, P., and M. Teo. “Institutional Investors, Past Performance, and Dynamic Loss
+ 
+Aversion.” Journal of Financial and Quantitative Analysis, 44 (2009), 155-188. 
+Odean, T. “Are Investors Reluctant to Realize their Losses?” Journal of Finance, 53 (1998), 1775-
+ 
+1798. 
+Prather, L., and K. Middleton. “Are N + 1 Heads Better than One? The Case of Mutual Fund
+ 
+Managers.” Journal of Economic Behavior & Organization, 47 (2002), 103–120. 
+Raymond, J.E., and J. L. O’Brien. “Selective Visual Attention and Motivation: The Consequences of 
+Value Learning in an Attentional Blink Task.” Psychological Science, 20 (2009), 981-988. 
+Qiu, J. “Termination Risk, Multiple Managers and Mutual Fund Tournaments.” European Finance
+ 
+Review, 7 (2003), 161–190 
+Seru, A.; T. Shumway; and N. Stoffman. “Learning by Trading.” Review of Financial Studies, 23
+ 
+(2010), 705-739.  
+
+ 
+31
+Shapira, Z., and I. Venezia. “Patterns of Behavior of Professionally Managed and Independent
+ 
+Investors.” Journal of Banking and Finance, 25 (2001), 1573-1587. 
+Shefrin, H., and M. Statman. “The Disposition to Sell Winners Too Early and Ride Losers Too Long:
+ 
+Theory and Evidence.” Journal of Finance, 40 (1985), 777–790. 
+Sialm, C and L. Starks. “Mutual Fund Tax Clienteles.” Working Paper, University of Texas (2010). 
+Statman, M. “Behavioral Finance versus Standard Finance.” AIMR Conference Proceedings, 
+Behavioral Finance and Decision Theory in Investment Management, December (1995), 14-22. 
+Tversky, A. “The Psychology of Decision Making.” AIMR Conference Proceedings, Behavioral 
+ 
+Finance and Decision Theory in Investment Management, December (1995), 2-6. 
+Weber, M., and C. Camerer. “The Disposition Effect in Securities Trading: An Experimental
+ 
+Analysis.” Journal of Economic Behavior and Organization, 33 (1998), 167–184. 
+Wermers, R. “Is Money Really “Smart”? New Evidence on the Relation Between Mutual 
+ 
+Fund Flows, Manager Behavior, and Performance Persistence.” Working Paper, University of
+ 
+Maryland (2003).  
+Wermers, R. “A Matter of Style: The Causes and Consequences of Style Drift in Institutional
+ 
+Portfolios.” Working Paper, University of Maryland (2010).  
+Zeikel, A. “Managing the Team.” ICFA Continuing Education Series, 4 (1988), 16-20. 
+
+ 
+32
+TABLE 1 
+Sample Characteristics 
+ 
+Panel A. Fund Characteristics 
+Year 
+Number 
+Total 
+Assets 
+(millions) 
+Average 
+Assets 
+(millions) 
+Portfolio 
+Turnover 
+(%/year) 
+Expense 
+Ratio 
+(%/year) 
+Stock 
+Positions 
+1980 
+214 
+37,930 
+183 
+48.06% 
+0.94% 
+56 
+1981 
+228 
+37,802 
+178 
+56.43% 
+0.80% 
+59 
+1982 
+213 
+30,416 
+172 
+65.88% 
+0.78% 
+57 
+1983 
+234 
+50,599 
+252 
+58.25% 
+0.82% 
+68 
+1984 
+256 
+53,883 
+247 
+49.80% 
+0.83% 
+69 
+1985 
+268 
+68,518 
+292 
+62.20% 
+0.91% 
+73 
+1986 
+289 
+94,648 
+376 
+60.17% 
+0.99% 
+78 
+1987 
+310 
+126,767 
+453 
+68.56% 
+1.00% 
+82 
+1988 
+345 
+121,538 
+388 
+69.77% 
+1.00% 
+85 
+1989 
+358 
+128,281 
+417 
+57.98% 
+1.10% 
+90 
+1990 
+411 
+143,824 
+406 
+66.75% 
+1.23% 
+89 
+1991 
+474 
+224,962 
+478 
+81.69% 
+1.16% 
+92 
+1992 
+550 
+291,330 
+541 
+68.55% 
+1.07% 
+98 
+1993 
+632 
+408,461 
+659 
+71.05% 
+1.28% 
+108 
+1994 
+868 
+520,201 
+608 
+74.48% 
+1.27% 
+118 
+1995 
+1029 
+715,249 
+705 
+79.28% 
+1.34% 
+123 
+1996 
+1101 
+991,091 
+910 
+87.88% 
+1.39% 
+124 
+1997 
+1311 
+1,384,588 
+1,066 
+90.62% 
+1.39% 
+124 
+1998 
+1459 
+1,823,873 
+1,251 
+88.32% 
+1.38% 
+123 
+1999 
+1612 
+2,236,138 
+1,392 
+89.77% 
+1.41% 
+127 
+2000 
+1715 
+2,603,722 
+1,522 
+101.60% 
+1.39% 
+144 
+2001 
+1836 
+2,158,787 
+1,177 
+113.44% 
+1.43% 
+150 
+2002 
+2006 
+2,000,268 
+998 
+114.40% 
+1.50% 
+150 
+2003 
+2056 
+2,151,301 
+1,047 
+105.28% 
+1.53% 
+152 
+2004 
+2085 
+2,689,708 
+1,291 
+93.12% 
+1.53% 
+158 
+2005 
+2111 
+3,007,649
+1,425
+87.98%
+1.48% 
+158
+2006 
+2026 
+3,367,563 
+1,661 
+86.39% 
+1.46% 
+161 
+2007 
+2047 
+3,816,632 
+1,879 
+83.39% 
+1.44% 
+161 
+2008 
+2029 
+3,038,582 
+1,497 
+86.91% 
+1.38% 
+169 
+2009 
+1976 
+2,386,211 
+1,209 
+103.10% 
+1.39% 
+174 
+ 
+Panel B. Types of Funds 
+ 
+Index vs. Active 
+Classification 
+Investment Objective Classification for Active Funds 
+ 
+Index 
+Active 
+Growth 
+Growth & 
+Income 
+Small 
+Cap 
+Mid 
+Cap 
+Aggressive 
+Growth 
+Income 
+Missing 
+Objective 
+Number 
+262 
+3,006 
+1,059 
+763 
+681 
+535 
+97 
+82 
+51 
+Frequency (%) 
+8.02 
+91.98 
+32.41 
+23.35 
+20.84 
+16.37 
+2.97 
+2.51 
+1.56 
+ 
+This table reports summary characteristics for my 3,268 U.S. equity sample funds during the 1980-2009 period. 
+Panel A reports sample characteristics for each year of the sample period. Panel B reports information on the 
+breakdown of the sample into various categories based on fund investment objectives. 
+
+ 
+33
+TABLE 2 
+Proportion of Realized Gains and Losses 
+ 
+Panel A. Dollar Value of Transactions 
+Panel A.1. End of Quarter Prices 
+Average Price
+FIFO
+HIFO 
+ 
+LIFO
+PGR 
+ 
+0.335
+0.344
+0.320 
+ 
+0.329
+PLR 
+ 
+0.384
+0.391
+0.402 
+ 
+0.381
+DISP 
+ 
+-0.049
+-0.048
+-0.082 
+ 
+-0.052
+t-statistic 
+ 
+(-18.86)
+(-18.71)
+(-31.07) 
+ 
+(-19.23)
+% funds>0 (Equal-Weighted)  
+ 
+35.90%
+36.15%
+26.35% 
+ 
+35.38%
+% funds>0 (Asset-Weighted) 
+ 
+33.83%
+36.02%
+22.00% 
+ 
+28.77%
+Panel A.2. Average Quarter Prices 
+PGR 
+ 
+0.331
+0.345
+0.314 
+ 
+0.319
+PLR 
+ 
+0.382
+0.388
+0.401 
+ 
+0.382
+DISP 
+ 
+-0.051
+-0.042
+-0.087 
+ 
+-0.064
+t-statistic 
+ 
+(-19.75)
+(-16.84)
+(-32.70) 
+ 
+(-23.66)
+% funds>0 (Equal-Weighted)  
+ 
+34.28%
+36.18%
+23.48% 
+ 
+30.36%
+% funds>0 (Asset-Weighted) 
+ 
+32.83%
+36.11%
+18.25% 
+ 
+27.24%
+ 
+Panel B. Number of Transactions 
+Panel B.1. End of Quarter Prices 
+ 
+ 
+PGR 
+ 
+0.413
+0.414
+0.399 
+ 
+0.413
+PLR 
+ 
+0.428
+0.428
+0.446 
+ 
+0.430
+DISP 
+ 
+-0.015
+-0.015
+-0.047 
+ 
+-0.016
+t-statistic 
+ 
+(-7.56)
+(-7.60)
+(-24.13) 
+ 
+(-8.03)
+% funds>0 (Equal-Weighted)  
+ 
+44.69%
+45.09%
+28.04% 
+ 
+43.07%
+% funds>0 (Asset-Weighted) 
+ 
+49.59%
+53.52%
+22.22% 
+ 
+43.69%
+Panel B.2. Average Quarter Prices 
+PGR 
+ 
+0.418
+0.420
+0.404 
+ 
+0.414
+PLR 
+ 
+0.419
+0.418
+0.441 
+ 
+0.426
+DISP 
+ 
+-0.001
+0.002
+-0.037 
+ 
+-0.012
+t-statistic 
+ 
+(-0.44)
+(1.05)
+(-17.54) 
+ 
+(-5.85)
+% funds>0 (Equal-Weighted)  
+ 
+47.90%
+50.29%
+31.28% 
+ 
+42.42%
+% funds>0 (Asset-Weighted) 
+ 
+49.78%
+54.95%
+22.95% 
+ 
+43.38%
+ 
+This table reports the proportion of realized gains, PGR, proportion of realized losses, PLR, and the 
+difference between the proportion of realized gains and losses, DISP. Each statistic is computed every 
+quarter for each fund and its time-series mean is computed for each fund. The last two rows of each panel 
+present the fraction of funds with a positive average disposition spread, where each fund is weighted 
+equally or by its average assets. The PGR, PLR, and DISP statistics are computed using the dollar value 
+of transactions in Panel A and the number of transactions in Panel B. In Panels A.1 and B.1 trades are 
+assumed to happen at stock prices recorded at the end of quarter, i.e., trades are assumed to occur at the 
+end of quarter. In Panels A.2 and B.2 trades are assumed to happen at prices that are averages of daily 
+stock prices during the quarter, i.e., trades are assumed to occur sometime during the quarter. 
+
+ 
+34
+TABLE 3 
+Proportion of Realized Gains and Losses by Subperiod 
+ 
+ 
+ 
+Subperiods
+ 
+ 
+1980-1989
+1990-1999
+ 
+2000-2009
+PGR 
+ 
+0.282
+0.345
+ 
+0.337
+PLR 
+ 
+0.302 
+ 
+0.414 
+ 
+0.384 
+DISP 
+ 
+-0.019 
+ 
+-0.069 
+ 
+-0.047 
+t-statistic 
+ 
+(-2.48) 
+ 
+(-15.19) 
+ 
+(-16.76) 
+% funds>0 (Equal-Weighted)  
+ 
+46.38% 
+ 
+34.32% 
+ 
+36.29% 
+% funds>0 (Asset-Weighted) 
+ 
+46.33% 
+ 
+28.27% 
+ 
+31.44% 
+ 
+This table reports PGR, PLR, and DISP statistics computed for each of the three sample subperiods: 1980-
+1989, 1990-1999, 2000-2009. Each statistic is computed every quarter for each fund and its time-series 
+mean is computed for each fund. The last two rows present the fraction of funds with a positive average 
+disposition spread where each fund is weighted equally or by its average assets.  
+ 
+TABLE 4 
+Proportion of Realized Gains and Losses by Type of Fund 
+ 
+ 
+ 
+Index vs. Active 
+Classification 
+ 
+Investment Objective Classification for Active Funds 
+ 
+ 
+Index 
+Active 
+ 
+Growth
+Growth & 
+Income 
+Small 
+Cap 
+Mid 
+Cap 
+Aggressive 
+Growth 
+Income
+PGR 
+ 
+0.244 
+0.343 
+ 
+0.325 
+0.304 
+0.399 
+0.361 
+0.394 
+0.249 
+PLR 
+ 
+0.253 
+0.395 
+ 
+0.407 
+0.341 
+0.422 
+0.415 
+0.463 
+0.310 
+DISP 
+ 
+-0.008 
+-0.053 
+ 
+-0.083 
+-0.037 
+-0.022 
+-0.054 
+-0.069 
+-0.061 
+t-statistic 
+ 
+(-1.09) 
+(-19.22) 
+ 
+(-16.50) 
+(-7.04) 
+(-3.82) 
+(-8.12) 
+(-4.33) 
+(-3.37) 
+% funds>0 (EW) 
+54.58% 
+34.28% 
+ 
+25.71% 
+36.18% 
+44.64% 
+35.64% 
+29.67% 
+36.84% 
+% funds>0 (AW) 
+48.23% 
+31.65% 
+ 
+18.84% 
+35.14% 
+48.99% 
+42.81% 
+11.19% 
+45.36% 
+ 
+This table reports PGR, PLR, and DISP statistics by type of mutual fund. In the first two columns, results 
+are reported separately for index and actively-managed mutual funds. In the remaining columns, statistics 
+are reported separately for actively-managed mutual funds categorized by investment objective. Each 
+statistic is computed every quarter for each fund and its time-series mean is computed for each fund. The 
+last two rows present the fraction of funds with a positive average disposition spread where each fund is 
+weighted equally or by its average assets. 
+
+ 
+35
+TABLE 5 
+Logit Regression on Sell versus Hold Decision 
+ 
+ 
+ 
+Past Stock Returns Measured Over: 
+Independent Variables 
+ 
+Last 12 Months
+Last 6 Months 
+Extreme Loss 
+ 
+0.111
+0.101 
+ 
+ 
+(9.21) 
+ 
+(8.11) 
+Moderate Loss 
+ 
+0.047 
+ 
+0.044 
+ 
+ 
+(6.29) 
+ 
+(5.75) 
+Positive Return 
+ 
+0.051 
+ 
+0.093 
+ 
+ 
+(7.22) 
+ 
+(6.29) 
+Negative Return 
+ 
+0.125 
+ 
+0.062 
+ 
+ 
+(3.26) 
+ 
+(1.46) 
+ 
+This table reports results from a logit regression that models the sell versus hold decision. The dependent 
+variable equals one when a mutual fund sells a stock and zero when it does not sell but decides to hold the 
+stock. The two key independent variables are a large capital loss dummy and a small capital loss dummy. A 
+large (small) capital loss is defined as a loss that is larger (smaller) in magnitude than the median loss for that 
+fund. I include two additional independent variables in the logit regression that capture past market-adjusted 
+stock returns compounded over the last 6 or 12 months. The two return variables are Positive Return, defined 
+as [max (return, 0)], and Negative Return, defined as [min (return, 0)]. Standard errors are clustered by fund 
+and period. The marginal probabilities for the independent variables are reported along with the associated t-
+statistics in parentheses. 
+ 
+TABLE 6 
+Frequency Distributions of a 2 × 2 Classification 
+Based on the Disposition Ratio in Quarters t-1 and t 
+ 
+ 
+DISP RATIO Rank at t 
+DISP RATIO Rank at t-1 
+High DISP RATIO 
+Low DISP RATIO 
+High DISP RATIO 
+31.37 
+18.93 
+Low DISP RATIO 
+18.77 
+30.93 
+ 
+ 
+χ2=4,509  (p-value=<0.0001) 
+ 
+Cell frequencies from a 2 × 2 classification of funds based on the rank-ordered DISP RATIOS in quarter t-1 
+and t are reported. The DISP RATIO is calculated every quarter for each fund as the ratio of its PGR to its PLR. 
+Every quarter, I classify funds as High or Low Disposition Funds if their DISP RATIO is respectively above or 
+below the cross-sectional median for that quarter. The χ2 statistic is calculated under the null hypothesis that 
+each cell should get an equal distribution of 25% of the observations.  
+
+ 
+36
+TABLE 7 
+Doubling Measure 
+ 
+DISP RATIO 
+ 
+ 
+Portfolios 
+Doubling Measure 
+ 
+1 
+0.206 
+ 
+2 
+0.162 
+ 
+3 
+0.116 
+ 
+4 
+0.054 
+ 
+5 
+0.000 
+ 
+6 
+-0.041 
+ 
+7 
+-0.067 
+ 
+8 
+-0.085 
+ 
+9 
+-0.093 
+ 
+10 
+-0.067 
+ 
+1-10 
+0.273 
+ 
+t-stat 
+(29.37) 
+ 
+ 
+This table reports statistics on the Doubling Measure (DB) computed as the difference of the proportion of 
+losses added, PLA, and proportion of gains added, PGA. PLA is computed as the dollar value of shares 
+added to stocks representing capital losses in the portfolio at the beginning of the quarter, divided by the 
+dollar value of all stock positions representing capital losses in the portfolio at the beginning of the 
+quarter. Similarly, PGA is computed as the dollar value of shares added to stocks representing capital 
+gains in the portfolio at the beginning of the quarter, divided by the dollar value of all stock positions 
+representing capital gains in the portfolio at the beginning of the quarter. Every quarter I rank funds into 
+deciles based on the DISP RATIO. Funds with the highest DISP RATIO are in the top decile (Portfolio 1) 
+and funds with the lowest DISP RATIO are in the bottom decile (Portfolio 10). I compute the average  
+DB across all the funds in each decile and each period, creating a time-series of cross-sectional DB 
+averages, the mean of which is reported in this table for each decile.  
+
+ 
+37
+TABLE 8 
+Relation between Fund Characteristics and Disposition Effect 
+ 
+Dependent Variable: Positive Dif (1 if DISP>0 and 0 otherwise) 
+Independent Variables 
+Coefficients
+ 
+Last Quarter 
+-0.025
+-0.025 
+ 
+ 
+ 
+(-1.97) 
+(-2.00) 
+ 
+Past Fund Performance 
+ 
+0.038 
+0.039 
+ 
+ 
+ 
+(1.16) 
+(1.20) 
+ 
+Past Fund Performance *Last Quarter
+ 
+0.057 
+0.056 
+ 
+ 
+ 
+(0.56) 
+(0.56) 
+ 
+Outflow 
+ 
+0.059 
+0.059 
+ 
+ 
+ 
+(7.44)  
+(7.79) 
+ 
+Team 
+ 
+0.034 
+0.031 
+ 
+ 
+ 
+(3.22)  
+(2.95) 
+ 
+Number Stocks 
+ 
+-0.047 
+-0.059 
+ 
+ 
+ 
+(-4.09)  
+(-5.11) 
+ 
+Herfindahl Index 
+ 
+0.007 
+0.009 
+ 
+ 
+ 
+(2.53)  
+(2.76) 
+ 
+Amihud Ratio 
+ 
+0.005 
+0.003 
+ 
+ 
+ 
+(1.64)  
+(1.38) 
+ 
+Past Stock Performance 
+ 
+0.115 
+0.112 
+ 
+ 
+ 
+(4.23)  
+(4.16) 
+ 
+Fund Assets 
+ 
+-0.001 
+0.000 
+ 
+ 
+ 
+(-0.29)  
+(-0.08) 
+ 
+Family Assets 
+ 
+0.001 
+0.003 
+ 
+ 
+ 
+(0.44) 
+(1.33) 
+ 
+Portfolio Turnover 
+ 
+0.000 
+0.000 
+ 
+ 
+ 
+(-3.19)  
+(-2.83) 
+ 
+Expense Ratio 
+ 
+-0.004 
+-0.006 
+ 
+ 
+ 
+(-0.55)  
+(-0.76) 
+ 
+Load 
+ 
+0.008 
+0.007 
+ 
+ 
+ 
+(0.66)  
+(0.56) 
+ 
+Objective Fixed Effects 
+ 
+No 
+Yes 
+ 
+ 
+ 
+ 
+ 
+ 
+Pseudo R2 
+ 
+1.49% 
+2.13% 
+ 
+Observations 
+ 
+52,382 
+52,382 
+ 
+ 
+This table presents results from a logit regression that relates the tendency for funds to disproportionately 
+realize more gains than losses to fund characteristics. Analysis is done at the fund and quarter level, with 
+each fund at a given quarter representing a distinct observation. The dependent variable, Positive DISP, is 
+an indicator variable that equals one for fund-quarter observations with positive disposition spreads and 
+zero for those with zero or negative disposition spreads. The main set of independent variables include: 
+Last Quarter, a dummy variable that equals one for observations in the last calendar quarter and zero 
+
+ 
+38
+otherwise; Past Fund Performance, the past 12-month risk-adjusted fund return from the Carhart 4-factor 
+model; Outflow, an indicator variable that equals one if a fund experienced outflows in a given quarter 
+and zero otherwise; Team, an indicator variable that equals one if a fund is managed by a team of 
+portfolio managers and zero otherwise; Number of Stocks, the natural log of the number of stocks held in 
+the fund portfolio; Herfindahl Index, sum of the squares of the portfolio weights in each stock, multiplied 
+by 100; Amihud Ratio, the ratio of absolute return to dollar volume averaged (value-weighted) across all 
+stocks sold in a mutual fund portfolio in a given quarter; and Past Stock Performance, the value-weighted 
+average of past 12-month returns of all the stocks sold in a mutual fund portfolio in a given quarter. 
+Additional independent variables include Fund Assets, Family Assets, Portfolio Turnover, Expense Ratio, 
+and Load. Fund Assets represent the log of total net assets of the fund. Family Assets is the log of total 
+net assets of the corresponding fund family. Portfolio Turnover is the fund’s turnover rate in percentage 
+terms. Expense ratio is the fund’s expense ratio. Load equals one if a fund charges a load and zero if it 
+does not. All independent variables are lagged by one quarter. Regressions are run with and without 
+investment objective fixed effects. The marginal probabilities are reported along with the associated t-
+statistics in parentheses. Standard errors are clustered by fund and period. 
+
+ 
+39
+TABLE 9 
+Characteristics of Decile Portfolios formed on DISP RATIO 
+ 
+DISP RATIO 
+ 
+Fama-French (1993) Model 
+ 
+Carhart (1997) Model 
+Portfolios 
+ 
+ALPHA 
+RMRF 
+SMB 
+HML 
+R2 
+ 
+ALPHA 
+RMRF 
+SMB 
+HML 
+UMD 
+R2 
+1 
+ 
+-0.214% 
+0.928 
+0.020 
+0.249 
+94.69% 
+ 
+-0.133% 
+0.893 
+0.028 
+0.213 
+-0.087 
+95.81% 
+2 
+ 
+-0.165% 
+0.933 
+0.047 
+0.174 
+96.47% 
+ 
+-0.112% 
+0.911 
+0.053 
+0.151 
+-0.056 
+96.94% 
+3 
+ 
+-0.199% 
+0.936 
+0.022 
+0.073 
+96.02% 
+ 
+-0.164% 
+0.921 
+0.026 
+0.058 
+-0.038 
+96.23% 
+4 
+ 
+-0.103% 
+0.952 
+0.055 
+0.051 
+96.29% 
+ 
+-0.084% 
+0.944 
+0.057 
+0.043 
+-0.020 
+96.35% 
+5 
+ 
+-0.103% 
+0.945 
+0.107 
+-0.035 
+97.70% 
+ 
+-0.123% 
+0.954 
+0.105 
+-0.026 
+0.022 
+97.77% 
+6 
+ 
+-0.067% 
+0.943 
+0.090 
+-0.067 
+96.88% 
+ 
+-0.110% 
+0.961 
+0.086 
+-0.048 
+0.045 
+97.15% 
+7 
+ 
+0.020% 
+0.978 
+0.052 
+-0.086 
+97.27% 
+ 
+-0.018% 
+0.994 
+0.048 
+-0.069 
+0.041 
+97.47% 
+8 
+ 
+-0.094% 
+0.973 
+0.085 
+-0.105 
+95.98% 
+ 
+-0.128% 
+0.987 
+0.082 
+-0.090 
+0.036 
+96.13% 
+9 
+ 
+0.060% 
+0.962 
+0.112 
+-0.137 
+96.66% 
+ 
+-0.006% 
+0.990 
+0.106 
+-0.107 
+0.070 
+97.24% 
+10 
+ 
+-0.040% 
+1.028 
+-0.003 
+-0.152 
+95.92% 
+ 
+-0.075% 
+1.043 
+-0.006 
+-0.136 
+0.037 
+96.07% 
+1-10 
+ 
+-0.175% 
+-0.100 
+0.023 
+0.401 
+48.51% 
+ 
+-0.058% 
+-0.149 
+0.034 
+0.349 
+-0.124 
+56.89% 
+ 
+ 
+(-1.52) 
+(-3.80) 
+(0.64) 
+(10.97) 
+ 
+ 
+(-0.54) 
+(-5.88) 
+(1.06 
+(10.09) 
+(-6.10) 
+ 
+ 
+This table reports factor loadings and alphas from the return series of DISP RATIO deciles portfolios. At the beginning of each quarter t, funds are 
+ranked into deciles based on their DISP RATIO at quarter t-1. Funds with the highest DISP RATIO are placed in the top decile and those with the 
+lowest DISP RATIO are placed in the bottom decile. Funds in each decile are placed into value-weighted portfolios and held for three months, with 
+the same ranking procedure and portfolio updating repeated every quarter. A series of monthly returns is created for each of the decile portfolios 
+and their style characteristics and performance are evaluated using the Fama and French (1993) and the Carhart (1997) models specified below.  
+t
+t
+HML
+t
+SMB
+t
+MKT
+t
+HML
+SMB
+RMRF
+a
+R
+ε
+β
+β
+β
++
++
++
++
+=
+ 
+t
+t
+UMD
+t
+HML
+t
+SMB
+t
+MKT
+t
+UMD
+HML
+SMB
+RMRF
+a
+R
+ε
+β
+β
+β
+β
++
++
++
++
++
+=
+, 
+where 
+tR is the return in month t in excess of the risk-free rate. RMRFt, SMBt, HMLt, and UMDt are the month-t return differentials between the 
+market portfolio and risk-free rate, small cap and large cap stocks, high and low book-to-market stocks, and positive and negative return-
+momentum stocks, respectively. The associated t-statistics are in parentheses. 
+
+ 
+40
+Figure 1 
+Large vs. Small Families by Subperiods
+25.00%
+30.00%
+35.00%
+40.00%
+45.00%
+50.00%
+55.00%
+(1980-1989)
+(1990-1999)
+(2000-2009)
+Time Periods
+% Funds with DISP>0
+Large Family
+Small Family
+ 
+ 
+Figures 1 plots the fraction of funds with positive disposition spreads among large and small fund families for each 
+of the three sample subperiods, 1980-1989, 1990-1999, 2000-2009. Large and small fund families correspond to 
+families that fall in the top and bottom deciles formed by rankings on family size. 
+  
+ 
+
+ 
+ 
+ 
+CFR Working Paper Series 
+ 
+ 
+ 
+ 
+ 
+  Centre for Financial Research 
+ Cologne 
+ 
+ 
+ 
+ 
+ 
+ 
+CFR Working Papers are available for download from www.cfr-cologne.de. 
+ 
+Hardcopies can be ordered from: Centre for Financial Research (CFR),  
+Albertus Magnus Platz, 50923 Koeln, Germany. 
+ 
+2011 
+ 
+No. 
+Author(s) 
+Title 
+11-08 
+ 
+ 
+11-07 
+ 
+ 
+11-06 
+ 
+ 
+11-05 
+ 
+ 
+11-04 
+ 
+11-03 
+ 
+ 
+11-02 
+ 
+11-01 
+ 
+ 
+2010 
+ 
+No. 
+G. Cici, L.-F. Palacios 
+ 
+ 
+V. Agarwal, G. D. Gay, 
+L. Ling 
+ 
+N. Hautsch, D. Hess, 
+D. Veredas 
+ 
+G. Cici 
+ 
+ 
+S. Jank 
+ 
+G.Fellner, E.Theissen 
+ 
+ 
+S.Jank 
+ 
+V. Agarwal, C. Meneghetti 
+ 
+ 
+ 
+ 
+Author(s) 
+On the Use of Options by Mutual Funds: Do They Know What 
+They Are Doing? 
+ 
+Window Dressing in Mutual Funds 
+ 
+ 
+The Impact of Macroeconomic News on Quote Adjustments, 
+Noise, and Informational Volatility 
+ 
+The Prevalence of the Disposition Effect in Mutual Funds' 
+Trades  
+ 
+Mutual Fund Flows, Expected Returns and the Real Economy 
+ 
+Short Sale Constraints, Divergence of Opinion and Asset 
+Value: Evidence from the Laboratory 
+ 
+Are There Disadvantaged Clienteles in Mutual Funds? 
+ 
+The role of Hedge Funds as Primary Lenders 
+ 
+ 
+ 
+ 
+Title 
+ 
+10-20 
+ 
+ 
+10-19 
+ 
+ 
+ 
+10-18 
+ 
+ 
+10-17 
+ 
+ 
+10-16 
+ 
+G. Cici, S. Gibson,  
+J.J. Merrick Jr. 
+ 
+J. Hengelbrock,  
+E. Theissen, Ch. 
+Westheide 
+ 
+G. Cici, S. Gibson 
+ 
+ 
+D. Hess, D. Kreutzmann, 
+O. Pucker 
+ 
+S. Jank, M. Wedow 
+ 
+Missing the Marks? Dispersion in Corporate Bond Valuations 
+Across Mutual Funds 
+ 
+Market Response to Investor Sentiment 
+ 
+ 
+ 
+The Performance of Corporate-Bond Mutual Funds:  
+Evidence Based on Security-Level Holdings 
+ 
+Projected Earnings Accuracy and the Profitability of Stock 
+Recommendations 
+ 
+Sturm und Drang in Money Market Funds: When Money 
+Market Funds Cease to Be Narrow 
+ 
+ 
+ 
+10-15 
+G. Cici, A. Kempf, A. 
+Puetz 
+Caught in the Act:  
+How Hedge Funds Manipulate their Equity Positions 
+ 
+ 
+ 
+10-14 
+J. Grammig, S. Jank 
+Creative Destruction and Asset Prices 
+
+ 
+ 
+ 
+10-13 
+S. Jank, M. Wedow 
+Purchase and Redemption Decisions of Mutual Fund 
+Investors and the Role of Fund Families 
+ 
+ 
+ 
+10-12 
+S. Artmann, P. Finter, 
+A. Kempf, S. Koch,  
+E. Theissen 
+The Cross-Section of German Stock Returns: 
+New Data and New Evidence 
+ 
+ 
+ 
+10-11 
+M. Chesney, A. Kempf 
+The Value of Tradeability 
+ 
+ 
+ 
+10-10 
+S. Frey, P. Herbst 
+The Influence of Buy-side Analysts on 
+Mutual Fund Trading 
+ 
+ 
+ 
+10-09 
+V. Agarwal, W. Jiang, 
+Y. Tang, B. Yang 
+Uncovering Hedge Fund Skill from the Portfolio Holdings They 
+Hide 
+ 
+ 
+ 
+10-08 
+V. Agarwal, V. Fos,  
+W. Jiang 
+Inferring Reporting Biases in Hedge Fund Databases from 
+Hedge Fund Equity Holdings 
+ 
+ 
+ 
+10-07 
+V. Agarwal, G. Bakshi,  
+J. Huij 
+Do Higher-Moment Equity Risks Explain Hedge Fund 
+Returns? 
+ 
+ 
+ 
+10-06 
+J. Grammig, F. J. Peter 
+Tell-Tale Tails 
+ 
+ 
+ 
+10-05 
+K. Drachter, A. Kempf 
+Höhe, Struktur und Determinanten der Managervergütung- 
+Eine Analyse der Fondsbranche in Deutschland 
+ 
+ 
+ 
+10-04 
+J. Fang, A. Kempf,  
+M. Trapp  
+Fund Manager Allocation 
+ 
+ 
+ 
+10-03 
+P. Finter, A. Niessen-
+Ruenzi, S. Ruenzi 
+The Impact of Investor Sentiment on the German Stock Market
+ 
+ 
+ 
+10-02 
+D. Hunter, E. Kandel,  
+S. Kandel, R. Wermers 
+Endogenous Benchmarks 
+ 
+ 
+ 
+10-01 
+S. Artmann, P. Finter,  
+A. Kempf 
+Determinants of Expected Stock Returns: Large Sample 
+Evidence from the German Market 
+ 
+ 
+2009 
+ 
+No. 
+Author(s) 
+Title 
+ 
+09-17 
+ 
+E. Theissen 
+ 
+Price Discovery in Spot and Futures Markets: 
+A Reconsideration 
+ 
+ 
+ 
+09-16 
+M. Trapp 
+Trading the Bond-CDS Basis – The Role of Credit Risk  
+and Liquidity 
+ 
+ 
+ 
+09-14 
+A. Kempf, O. Korn, 
+M. Uhrig-Homburg 
+The Term Structure of Illiquidity Premia 
+ 
+ 
+ 
+09-13 
+W. Bühler, M. Trapp 
+Time-Varying Credit Risk and Liquidity Premia in Bond and 
+CDS Markets 
+ 
+ 
+ 
+09-12 
+W. Bühler, M. Trapp 
+ 
+Explaining the Bond-CDS Basis – The Role of Credit Risk and 
+Liquidity 
+ 
+ 
+ 
+09-11 
+S. J. Taylor, P. K. Yadav,  
+Y. Zhang 
+Cross-sectional analysis of risk-neutral skewness 
+ 
+ 
+ 
+09-10 
+A. Kempf, C. Merkle,  
+A. Niessen 
+Low Risk and High Return - How Emotions Shape 
+Expectations on the Stock Market 
+ 
+ 
+ 
+09-09 
+V. Fotak, V. Raman,  
+P. K. Yadav 
+Naked Short Selling: The Emperor`s New Clothes? 
+ 
+ 
+ 
+09-08 
+F. Bardong, S.M. Bartram,  
+P.K. Yadav 
+Informed Trading, Information Asymmetry and Pricing of 
+Information Risk: Empirical Evidence from the NYSE 
+ 
+ 
+ 
+
+09-07 
+S. J. Taylor , P. K. Yadav, 
+Y. Zhang 
+The information content of implied volatilities and model-free 
+volatility expectations: Evidence from options written on 
+individual stocks 
+ 
+ 
+ 
+09-06 
+S. Frey, P. Sandas 
+The Impact of Iceberg Orders in Limit Order Books 
+ 
+ 
+ 
+09-05 
+H. Beltran-Lopez, P. Giot, 
+J. Grammig 
+Commonalities in the Order Book 
+ 
+ 
+ 
+09-04 
+J. Fang, S. Ruenzi 
+Rapid Trading bei deutschen Aktienfonds: 
+Evidenz aus einer großen deutschen Fondsgesellschaft 
+ 
+ 
+ 
+09-03 
+A. Banegas, B. Gillen,      
+A. Timmermann,  
+R. Wermers 
+The Performance of European Equity Mutual Funds 
+ 
+ 
+ 
+09-02 
+J. Grammig, A. Schrimpf, 
+M. Schuppli 
+Long-Horizon Consumption Risk and the Cross-Section  
+of Returns: New Tests and International Evidence 
+ 
+ 
+ 
+09-01 
+O. Korn, P. Koziol 
+The Term Structure of Currency Hedge Ratios 
+ 
+ 
+ 
+ 
+ 
+2008 
+ 
+No. 
+Author(s) 
+Title 
+ 
+08-12 
+ 
+U. Bonenkamp,                
+C. Homburg, A. Kempf    
+ 
+Fundamental Information in Technical Trading Strategies 
+ 
+ 
+ 
+08-11 
+O. Korn 
+Risk Management with Default-risky Forwards 
+ 
+ 
+ 
+08-10  
+J. Grammig, F.J. Peter 
+International Price Discovery in the Presence 
+of Market Microstructure Effects 
+ 
+ 
+ 
+08-09 
+C. M. Kuhnen, A. Niessen 
+Public Opinion and Executive Compensation 
+ 
+ 
+ 
+08-08 
+A. Pütz, S. Ruenzi 
+Overconfidence among Professional Investors: Evidence from 
+Mutual Fund Managers 
+ 
+ 
+ 
+08-07 
+P. Osthoff 
+What matters to SRI investors? 
+ 
+ 
+ 
+ 
+08-06 
+ 
+ 
+08-05 
+ 
+ 
+ 
+08-04 
+ 
+A. Betzer, E. Theissen 
+ 
+ 
+P. Linge, E. Theissen 
+ 
+ 
+ 
+N. Hautsch, D. Hess,  
+C. Müller 
+ 
+Sooner Or Later: Delays in Trade Reporting by Corporate 
+Insiders 
+ 
+Determinanten der Aktionärspräsenz auf 
+Hauptversammlungen deutscher Aktiengesellschaften 
+ 
+ 
+Price Adjustment to News with Uncertain Precision 
+ 
+ 
+ 
+08-03 
+D. Hess, H. Huang,  
+A. Niessen 
+How Do Commodity Futures Respond to Macroeconomic 
+News? 
+ 
+ 
+ 
+08-02 
+R. Chakrabarti,  
+W. Megginson, P. Yadav 
+Corporate Governance in India 
+ 
+ 
+ 
+ 
+08-01 
+C. Andres, E. Theissen 
+Setting a Fox to Keep the Geese - Does the Comply-or-Explain 
+Principle Work? 
+ 
+ 
+2007 
+ 
+No. 
+Author(s) 
+Title 
+ 
+07-16 
+ 
+M. Bär, A. Niessen,  
+S. Ruenzi 
+ 
+The Impact of Work Group Diversity on Performance: 
+Large Sample Evidence from the Mutual Fund Industry 
+ 
+ 
+ 
+
+07-15 
+A. Niessen, S. Ruenzi 
+Political Connectedness and Firm Performance:  
+Evidence From Germany 
+ 
+ 
+ 
+07-14 
+O. Korn 
+Hedging Price Risk when Payment Dates are Uncertain 
+ 
+ 
+ 
+07-13 
+A. Kempf, P. Osthoff 
+SRI Funds: Nomen est Omen 
+ 
+ 
+ 
+07-12 
+J. Grammig, E. Theissen, 
+O. Wuensche 
+Time and Price Impact of a Trade: A Structural Approach 
+ 
+ 
+ 
+07-11 
+V. Agarwal, J. R. Kale 
+On the Relative Performance of Multi-Strategy and Funds of 
+Hedge Funds 
+ 
+ 
+ 
+07-10 
+M. Kasch-Haroutounian, 
+E. Theissen 
+Competition Between Exchanges: Euronext versus Xetra 
+ 
+ 
+ 
+07-09 
+V. Agarwal, N. D. Daniel, 
+N. Y. Naik 
+Do hedge funds manage their reported returns?  
+ 
+ 
+ 
+ 
+07-08 
+N. C. Brown, K. D. Wei,  
+R. Wermers 
+Analyst Recommendations, Mutual Fund Herding, and 
+Overreaction in Stock Prices 
+ 
+ 
+ 
+07-07 
+A. Betzer, E. Theissen 
+Insider Trading and Corporate Governance: 
+The Case of Germany 
+ 
+ 
+ 
+07-06 
+V. Agarwal, L. Wang 
+Transaction Costs and Value Premium 
+ 
+ 
+ 
+07-05 
+J. Grammig, A. Schrimpf 
+Asset Pricing with a Reference Level of Consumption: 
+New Evidence from the Cross-Section of Stock Returns 
+ 
+ 
+ 
+07-04 
+V. Agarwal, N.M. Boyson, 
+N.Y. Naik 
+Hedge Funds for retail investors? 
+An examination of hedged mutual funds 
+ 
+ 
+ 
+07-03 
+D. Hess, A. Niessen  
+The Early News Catches the Attention: 
+On the Relative Price Impact of Similar Economic Indicators 
+ 
+ 
+ 
+07-02 
+A. Kempf, S. Ruenzi, 
+T. Thiele  
+Employment Risk, Compensation Incentives and Managerial 
+Risk Taking - Evidence from the Mutual Fund Industry - 
+ 
+ 
+ 
+07-01 
+M. Hagemeister, A. Kempf CAPM und erwartete Renditen: Eine Untersuchung auf Basis 
+der Erwartung von Marktteilnehmern 
+ 
+ 
+2006 
+ 
+No. 
+Author(s) 
+Title 
+ 
+06-13 
+ 
+S. Čeljo-Hörhager,  
+A. Niessen 
+ 
+How do Self-fulfilling Prophecies affect Financial Ratings? - An 
+experimental study 
+ 
+ 
+ 
+06-12 
+R. Wermers, Y. Wu,  
+J. Zechner 
+Portfolio Performance, Discount Dynamics, and the Turnover 
+of Closed-End Fund Managers 
+ 
+ 
+ 
+06-11 
+U. v. Lilienfeld-Toal, 
+S. Ruenzi 
+Why Managers Hold Shares of Their Firm: An Empirical 
+Analysis 
+ 
+06-10 
+A. Kempf, P. Osthoff 
+The Effect of Socially Responsible Investing on Portfolio 
+Performance 
+ 
+ 
+ 
+06-09 
+R. Wermers, T. Yao,  
+J. Zhao 
+The Investment Value of Mutual Fund Portfolio Disclosure 
+ 
+ 
+ 
+06-08 
+M. Hoffmann, B. Kempa 
+The Poole Analysis in the New Open Economy 
+Macroeconomic Framework 
+ 
+06-07 
+K. Drachter, A. Kempf, 
+M. Wagner 
+Decision Processes in German Mutual Fund Companies: 
+Evidence from a Telephone Survey 
+ 
+ 
+ 
+06-06 
+J.P. Krahnen, F.A. 
+Schmid, E. Theissen 
+Investment Performance and Market Share: A Study of the 
+German Mutual Fund Industry 
+ 
+ 
+ 
+06-05 
+S. Ber, S. Ruenzi 
+On the Usability of Synthetic Measures of Mutual Fund Net-
+
+Flows 
+ 
+ 
+ 
+06-04 
+A. Kempf, D. Mayston 
+Liquidity Commonality Beyond Best Prices 
+ 
+06-03 
+O. Korn, C. Koziol 
+Bond Portfolio Optimization: A Risk-Return Approach 
+ 
+ 
+ 
+06-02 
+O. Scaillet, L. Barras, R. 
+Wermers 
+False Discoveries in Mutual Fund Performance: Measuring 
+Luck in Estimated Alphas 
+ 
+ 
+ 
+06-01 
+A. Niessen, S. Ruenzi 
+Sex Matters: Gender Differences in a Professional Setting 
+ 
+ 
+2005 
+ 
+No. 
+Author(s) 
+Title 
+ 
+05-16 
+ 
+E. Theissen 
+ 
+An Analysis of Private Investors´ Stock Market Return 
+Forecasts 
+ 
+ 
+ 
+05-15 
+T. Foucault, S. Moinas,  
+E. Theissen 
+Does Anonymity Matter in Electronic Limit Order Markets 
+ 
+ 
+ 
+05-14 
+R. Kosowski,  
+A. Timmermann,  
+R. Wermers, H. White 
+Can Mutual Fund „Stars“ Really Pick Stocks? 
+New Evidence from a Bootstrap Analysis 
+ 
+ 
+ 
+05-13 
+D. Avramov, R. Wermers 
+Investing in Mutual Funds when Returns are Predictable 
+ 
+ 
+ 
+05-12 
+K. Griese, A. Kempf 
+Liquiditätsdynamik am deutschen Aktienmarkt 
+ 
+ 
+ 
+05-11 
+S. Ber, A. Kempf,  
+S. Ruenzi 
+Determinanten der Mittelzuflüsse bei deutschen Aktienfonds 
+ 
+ 
+ 
+05-10 
+M. Bär, A. Kempf,  
+S. Ruenzi 
+Is a Team Different From the Sum of Its Parts? 
+Evidence from Mutual Fund Managers 
+ 
+ 
+ 
+05-09 
+M. Hoffmann 
+Saving, Investment and the Net Foreign Asset Position 
+ 
+ 
+ 
+05-08 
+S. Ruenzi 
+Mutual Fund Growth in Standard and Specialist Market 
+Segments 
+ 
+ 
+ 
+05-07 
+A. Kempf, S. Ruenzi 
+Status Quo Bias and the Number of Alternatives 
+- An Empirical Illustration from the Mutual Fund  
+Industry – 
+ 
+ 
+ 
+05-06 
+ 
+ 
+05-05 
+J. Grammig,  
+E. Theissen 
+ 
+H. Beltran,  
+J. Grammig,  
+A.J. Menkveld 
+Is Best Really Better? Internalization of Orders in an Open 
+Limit Order Book 
+ 
+Understanding the Limit Order Book: Conditioning on Trade 
+Informativeness 
+ 
+ 
+ 
+05-04 
+M. Hoffmann 
+Compensating Wages under different Exchange rate Regimes 
+ 
+ 
+ 
+05-03 
+M. Hoffmann 
+Fixed versus Flexible Exchange Rates: Evidence from 
+Developing Countries 
+ 
+ 
+ 
+05-02 
+A. Kempf, C. Memmel 
+On the Estimation of the Global Minimum Variance Portfolio 
+ 
+ 
+ 
+05-01 
+S. Frey, J. Grammig 
+Liquidity supply and adverse selection in a pure limit order 
+book market 
+ 
+ 
+2004 
+ 
+No. 
+Author(s) 
+Title 
+ 
+04-10 
+ 
+N. Hautsch, D. Hess 
+ 
+Bayesian Learning in Financial Markets – Testing for the 
+Relevance of Information Precision in Price Discovery 
+ 
+ 
+ 
+04-09 
+A. Kempf,  
+Portfolio Disclosure, Portfolio Selection and Mutual Fund 
+
+K. Kreuzberg 
+Performance Evaluation 
+ 
+ 
+ 
+04-08 
+N.F. Carline, S.C. Linn, 
+P.K. Yadav  
+Operating performance changes associated with corporate 
+mergers and the role of corporate governance 
+ 
+ 
+ 
+04-07 
+J.J. Merrick, Jr., N.Y.  
+Naik, P.K. Yadav 
+Strategic Trading Behavior and Price Distortion in a 
+Manipulated Market: Anatomy of a Squeeze  
+ 
+ 
+ 
+04-06 
+N.Y. Naik, P.K. Yadav  
+Trading Costs of Public Investors with Obligatory and 
+Voluntary Market-Making: Evidence from Market Reforms 
+ 
+ 
+ 
+04-05 
+A. Kempf, S. Ruenzi 
+Family Matters: Rankings Within Fund Families and  
+Fund Inflows 
+ 
+ 
+ 
+04-04 
+V. Agarwal,  
+N.D. Daniel, N.Y. Naik 
+Role of Managerial Incentives and Discretion in Hedge Fund 
+Performance 
+ 
+ 
+ 
+04-03 
+V. Agarwal, W.H. Fung, 
+J.C. Loon, N.Y. Naik 
+Risk and Return in Convertible Arbitrage:  
+Evidence from the Convertible Bond Market 
+ 
+ 
+ 
+04-02 
+A. Kempf, S. Ruenzi 
+Tournaments in Mutual Fund Families 
+ 
+ 
+ 
+04-01 
+I. Chowdhury, M. 
+Hoffmann, A. Schabert 
+Inflation Dynamics and the Cost Channel of Monetary 
+Transmission 
+ 
+
+Cfr/University of cologne
+Albertus-Magnus-Platz  
+D-50923 Cologne
+Fon +49(0)221-470-6995
+Fax +49(0)221-470-3992
+Kempf@cfr-Cologne.de
+www.cfr-cologne.de

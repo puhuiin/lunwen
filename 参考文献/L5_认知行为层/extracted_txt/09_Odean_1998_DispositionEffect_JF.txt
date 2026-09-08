@@ -1,0 +1,1248 @@
+Are Investors Reluctant to Realize
+Their Losses?
+TERRANCE ODEAN*
+ABSTRACT
+I test the disposition effect, the tendency of investors to hold losing investments too
+long and sell winning investments too soon, by analyzing trading records for 10,000
+accounts at a large discount brokerage house. These investors demonstrate a strong
+preference for realizing winners rather than losers. Their behavior does not appear
+to be motivated by a desire to rebalance portfolios, or to avoid the higher trading
+costs of low priced stocks. Nor is it justified by subsequent portfolio performance.
+For taxable investments, it is suboptimal and leads to lower after-tax returns.
+Tax-motivated selling is most evident in December.
+THE TENDENCY TO HOLD LOSERS too long and sell winners too soon has been
+labeled the disposition effect by Shefrin and Statman ~1985!. For taxable
+investments the disposition effect predicts that people will behave quite dif-
+ferently than they would if they paid attention to tax consequences. To test
+the disposition effect, I obtained the trading records from 1987 through 1993
+for 10,000 accounts at a large discount brokerage house. An analysis of these
+records shows that, overall, investors realize their gains more readily than
+their losses. The analysis also indicates that many investors engage in tax-
+motivated selling, especially in December. Alternative explanations have been
+proposed for why investors might realize their profitable investments while
+retaining their losing investments. Investors may rationally, or irrationally,
+believe that their current losers will in the future outperform their current
+*University of California, Davis. This paper is based on my dissertation at the University of
+California, Berkeley. I would like to thank an anonymous referee, Brad Barber, Peter Klein,
+Hayne Leland, Richard Lyons, David Modest, John Nofsinger, James Poterba, Mark Rubinstein,
+Paul Ruud, Richard Sansing, Richard Thaler, Brett Trueman, and participants at the Berkeley
+Program in Finance, the NBER behavioral finance meeting, the Financial Management Asso-
+ciation Conference, the American Finance Association meetings, and seminar participants at
+UC Berkeley, the Yale School of Management, the University of California, Davis, the Univer-
+sity of Southern California, the University of North Carolina, Duke University, the Wharton
+School, Stanford University, the University of Oregon, Harvard University, the Massachusetts
+Institute of Technology, the Amos Tuck School, the University of Chicago, the University of
+British Columbia, Northwestern University, the University of Texas, UCLA, the University of
+Michigan, and Columbia University for helpful comments. I would also like to thank Jeremy
+Evnine and especially the discount brokerage house that provided the data necessary for this
+study. Financial support from the Nasdaq Foundation is gratefully acknowledged.
+THE JOURNAL OF FINANCE • VOL. LIII, NO. 5 • OCTOBER 1998
+1775
+
+winners. They may sell winners to rebalance their portfolios. Or they may
+refrain from selling losers due to the higher transactions costs of trading at
+lower prices. I find, however, that when the data are controlled for rebal-
+ancing and for share price, the disposition effect is still observed. And the
+winning investments that investors choose to sell continue in subsequent
+months to outperform the losers they keep.
+The next section of the paper discusses the disposition effect and litera-
+ture related to it. Section II describes the data set and Section III describes
+the empirical study and its findings. Section IV discusses these findings and
+Section V concludes.
+I. The Disposition Effect
+A. Prospect Theory
+The disposition effect is one implication of extending Kahneman and Tver-
+sky’s ~1979! prospect theory to investments. Under prospect theory, when
+faced with choices involving simple two and three outcome lotteries, people
+behave as if maximizing an “S”-shaped value function ~see Figure 1!. This
+value function is similar to a standard utility function except that it is de-
+fined on gains and losses rather than on levels of wealth. The function is
+concave in the domain of gains and convex in the domain of losses. It is also
+steeper for losses than for gains, which implies that people are generally
+risk-averse. Critical to this value function is the reference point from which
+gains and losses are measured. Usually the status quo is taken as the ref-
+erence point; however, “there are situations in which gains and losses are
+Figure 1. Prospect theory value function.
+1776
+The Journal of Finance
+
+coded relative to an expectation or aspiration level that differs from the
+status quo.... A person who has not made peace with his losses is likely to
+accept gambles that would be unacceptable to him otherwise” ~Kahneman
+and Tversky ~1979!!.
+For example, suppose an investor purchases a stock that she believes to
+have an expected return high enough to justify its risk. If the stock appre-
+ciates and the investor continues to use the purchase price as a reference
+point, the stock price will then be in a more concave, more risk-averse, part
+of the investor’s value function. It may be that the stock’s expected return
+continues to justify its risk. However, if the investor somewhat lowers her
+expectation of the stock’s return, she will be likely to sell the stock. What if,
+instead of appreciating, the stock declines? Then its price is in the convex,
+risk-seeking, part of the value function. Here the investor will continue to
+hold the stock even if its expected return falls lower than would have been
+necessary for her to justify its original purchase. Thus the investor’s belief
+about expected return must fall further to motivate the sale of a stock that
+has already declined than one that has appreciated. Similarly, consider an
+investor who holds two stocks. One is up; the other is down. If the investor
+is faced with a liquidity demand, and has no new information about either
+stock, she is more likely to sell the stock that is up.
+Throughout this study, investors’ reference points are assumed to be their
+purchase prices. Though the results presented here appear to vindicate
+that choice, it is likely that for some investments, particularly those held
+for a long time over a wide range of prices, the purchase price may be only
+one determinant of the reference point. The price path may also affect the
+level of the reference point. For example, a homeowner who bought her
+home for $100,000 just before a real-estate boom and had the home ap-
+praised for $200,000 after the boom may no longer feel she is “breaking
+even” if she sells her home for $100,000 plus commissions. If purchase
+price is a major component, though not the sole component, of reference
+point, it may serve as a noisy proxy for the true reference point. Using the
+proxy in place of the true reference point will make a case for the dispo-
+sition effect more difficult to prove. It seems likely that if the true refer-
+ence point were available the statistical evidence reported here would be
+even stronger.
+B. An Alternative Behavioral Theory
+Investors might choose to hold their losers and sell their winners not be-
+cause they are reluctant to realize losses but because they believe that to-
+day’s losers will soon outperform today’s winners. If future expected returns
+for the losers are greater than those for the winners, the investors’ belief
+would be justified and rational. If, however, future expected returns for los-
+ers are not greater than those for winners, but investors continue to believe
+Are Investors Reluctant to Realize Their Losses?
+1777
+
+they are despite persistent evidence to the contrary, this belief would be
+irrational. In experimental settings Andreassen ~1988! finds that subjects
+buy and sell stocks as if they expect short-term mean reversion.1
+Most of the analysis presented here does not distinguish between pros-
+pect theory and an irrational belief in mean reversion as possible explana-
+tions for why investors hold losers and sell winners. It may be that investors
+themselves do not always make a clear distinction. For example, an in-
+vestor who will not sell a stock for a loss might convince himself that the
+stock is likely to bounce back rather than admit his unwillingness to accept
+a loss.
+C. Taxes
+Investors’ reluctance to realize losses is at odds with optimal tax-loss sell-
+ing for taxable investments. For tax purposes investors should postpone tax-
+able gains by continuing to hold their profitable investments. They should
+capture tax losses by selling their losing investments, though not necessarily
+at a constant rate. Constantinides ~1984! shows that when there are trans-
+actions costs, and no distinction is made between the short-term and long-
+term tax rates ~as is approximately the case from 1987 to 1993 for U.S.
+federal taxes2!, investors should gradually increase their tax-loss selling from
+January to December. Dyl ~1977!, Lakonishok and Smidt ~1986!, and Badri-
+nath and Lewellen ~1991! report evidence that investors do sell more losing
+investments near the end of the year.
+Shefrin and Statman ~1985! propose that investors choose to sell their
+losers in December as a self-control measure. They reason that investors are
+reluctant to sell for a loss but recognize the tax benefits of doing so. The end
+of the year is the deadline for realizing these losses. So each year, investors
+postpone realizing losses until December when they require themselves to
+sell losers before the deadline passes.
+A sophisticated investor could reconcile tax-loss selling with her aversion
+to realize losses though a tax-swap. By selling her losing stock and pur-
+chasing a stock with similar risk characteristics, she could realize a tax-
+loss while maintaining the same risk exposure. Thaler ~1985! argues that
+1 Subjects’ tendencies to trade as if making regressive predictions diminish when their at-
+tention is focused on price changes rather than price levels ~Andreassen ~1988!! and when
+casual attributions for price trends, such as might normally be provided by the media, are made
+available ~Andreassen ~1987, 1990!!.
+2 Prior to 1987 long-term capital gains tax rates were 40 percent of the short-term capital
+gains tax rates; from 1987 to 1993 long-term and short-term gains were taxed at the same
+marginal rates for lower income taxpayers. The maximum short-term rate at times exceeded
+the maximum long-term rate. In 1987 the maximum short-term rate was 38.5 percent and the
+maximum long-term rate was 28 percent. From 1988 to 1990 the highest income taxpayers paid
+a marginal rate of 28 percent on both long-term and short-term gains. In 1991 and 1992 the
+maximum long-term and short term-rates were 28 percent and 31 percent. In 1993 the maxi-
+mum long-term and short-term rates were 28 percent and 39.6 percent.
+1778
+The Journal of Finance
+
+people tend to segregate different gambles into separate mental accounts.
+These are then evaluated separately for gains and losses. A tax-swap re-
+quires closing such an account for a loss, which people are reluctant
+to do.
+D. Previous Studies
+Previous research3 offers some support for the hypothesis that investors
+sell winners more readily than losers, but this research is generally unable
+to distinguish among various motivations investors might have for doing
+so. Investors may be behaviorally motivated to hold losers and sell win-
+ners, that is, they may have value functions like those described in pros-
+pect theory or they may incorrectly expect mean-reverting prices. There
+are also rational reasons why investors may choose to hold their losers and
+sell their winners: ~1! Investors who do not hold the market portfolio may
+respond to large price increases by selling some of the appreciated stock to
+restore diversification to their portfolios ~Lakonishok and Smidt ~1986!!;
+~2! Investors who purchase stocks on favorable information may sell if the
+price goes up, rationally believing that price now reflects this informa-
+tion, and may continue to hold if the price goes down, rationally believ-
+ing that their information is not yet incorporated into price ~Lakonishok
+and Smidt ~1986!!; and ~3! Because trading costs tend to be higher for
+lower priced stocks, and because losing investments are more likely to be
+lower priced than winning investments, investors may refrain from selling
+losers simply to avoid the higher trading costs of low-priced stocks ~Harris
+~1988!!.
+The contribution of this paper is to demonstrate, with market data, that a
+particular class of investors ~those with discount brokerage accounts! sell
+winners more readily than losers. Even when the alternative rational moti-
+vations listed above are controlled for, these investors continue to prefer
+selling winners and holding losers. Their behavior is consistent with pros-
+pect theory; it is also consistent with a ~mistaken! belief that their winners
+and losers will mean revert.
+3 Starr-McCluer ~1995! finds that 15 percent of the stock-owning households interviewed in
+the 1989 and 1992 Surveys of Consumer Finances have paper losses of 20 percent or more. She
+estimates that in the majority of cases the tax advantages of realizing these losses would more
+than offset the trading costs and time costs of doing so. Heisler ~1994! documents loss aversion
+in a small sample of futures speculators. In a study of individual federal tax returns, Poterba
+~1987! finds that although many investors do offset their capital gains with losses, more than
+60 percent of the investors with gains or losses realized only gains. Weber and Camerer ~1995!
+report experimental evidence of the disposition effect. Lakonishok and Smidt ~1986! and Ferris,
+Haugen, and Makhija ~1988! find a positive correlation between price change and volume. Bremer
+and Kato ~1996! find the same correlation for Japanese stocks. Such a correlation could be
+caused by investors who prefer to sell winners and hold losers, but it could also be the result of
+buyers’ trading preferences.
+Are Investors Reluctant to Realize Their Losses?
+1779
+
+II. The Data
+The data for this study are provided by a nationwide discount brokerage
+house. From all accounts active in 1987 ~those with at least one transaction!,
+10,000 customer accounts are randomly selected. The data are in three files:
+a trades file, a security number to CUSIP file, and a positions file. Only the
+first two files are used in this study. The trades file includes the records of
+all trades made in the 10,000 accounts from January 1987 through Decem-
+ber 1993. This file has 162,948 records, each record is made up of an account
+identifier, the trade date, the brokerage house’s internal number for the
+security traded, a buy-sell indicator, the quantity traded, the commission
+paid, and the principal amount. Multiple buys or sells of the same stock, in
+the same account, on the same day, are aggregated. The security number to
+CUSIP table translates the brokerage house’s internal numbers into CUSIP
+numbers. The positions file contains monthly position information for the
+10,000 accounts from January 1988 through December 1993. Each of its
+1,258,135 records is made up of the account identifier, year, month, internal
+security number, equity, and quantity. Accounts that were closed between
+January 1987 and December 1993 are not replaced; thus the data set may
+have some survivorship bias in favor of more successful investors. The data
+do not distinguish different account types. Therefore it is not possible to
+separate taxable accounts from tax-free accounts. Given the large sample
+size, we can expect the sample proportions of different account types to be
+close to the proportions for all of the brokerage’s accounts. At the beginning
+of the data period, 20 percent of the brokerage’s accounts were either IRA or
+Keogh accounts, and these accounts were responsible for 17.5 percent of all
+trades. The inclusion of these tax-exempt accounts will reduce tax-motivated
+trading in the data set, but with 80 percent of the accounts taxable, tax-
+motivated selling is easily detectable.
+There are two data sets similar to this one described in the literature.
+Schlarbaum et al. ~1978! and others analyze trading records for 2500 ac-
+counts at a large retail brokerage house for the period January 1964 to
+December 1970; Badrinath and Lewellen ~1991! and others analyze a second
+data set provided by the same retail broker for 3000 accounts over the period
+January 1971 to September 1979. The data set studied here differs from
+these primarily in that it is more recent and comes from a discount broker.
+By examining discount brokerage records I can rule out the retail broker as
+an influence on observed trading patterns.
+Badrinath and Lewellen ~1991! look for evidence of tax-motivated trading
+and find that the ratio of stocks sold for a loss to those sold for a gain rises
+as the year progresses. Using a somewhat different measure, I also find
+evidence that investors increase their tax-motivated selling as the year pro-
+gresses. However the focus of this paper, unlike that of Badrinath and Lewel-
+len, is to test the disposition effect. As the next section describes, this is done
+by analyzing the rates at which investors realize gains and losses relative to
+their opportunities to do so.
+1780
+The Journal of Finance
+
+III. Empirical Study
+A. Methodology
+This study tests whether investors sell their winners too soon and hold
+losers too long. It also investigates tax-motivated trading in December. To
+determine whether investors sell winners more readily than losers, it is not
+sufficient to look at the number of securities sold for gains versus the num-
+ber sold for losses. Suppose investors are indifferent to selling winners or
+losers. Then in an upward-moving market they will have more winners in
+their portfolios and will tend to sell more winners than losers even though
+they had no preference for doing so.4 To test whether investors are disposed
+to selling winners and holding losers, we must look at the frequency with
+which they sell winners and losers relative to their opportunities to sell
+each.
+By going through each account’s trading records in chronological order, I
+construct for each date a portfolio of securities for which the purchase date
+and price are known. Clearly this portfolio represents only part of each in-
+vestor’s total portfolio. In most accounts there will be securities that were
+purchased before January 1987 for which the purchase price is not avail-
+able, and investors may also have other accounts that are not part of the
+data set. Though the portfolios constructed from the data set are only part
+of each investor’s total portfolio, it is unlikely that the selection process will
+bias these partial portfolios toward stocks for which investors have unusual
+preferences for realizing gains or losses.
+I obtain information on splits and dividends as well as other price data
+needed for this study from the 1993 Center for Research in Security Prices
+daily stock file for NYSE, AMEX, and Nasdaq stocks. The study is limited to
+stocks for which this information is available. Of the 10,000 accounts, 6,380
+trade stocks in the CRSP file for a total of 97,483 transactions.
+Each day that a sale takes place in a portfolio of two or more stocks, I
+compare the selling price for each stock sold to its average purchase price to
+determine whether that stock is sold for a gain or a loss. Each stock that is
+in that portfolio at the beginning of that day, but is not sold, is considered to
+be a paper ~unrealized! gain or loss ~or neither!. Whether it is a paper gain
+or loss is determined by comparing its high and low price for that day ~as
+obtained from CRSP! to its average purchase price. If both its daily high and
+low are above its average purchase price it is counted as a paper gain; if they
+are both below its average purchase price it is counted as a paper loss; if its
+average purchase price lies between the high and the low, neither a gain or
+loss is counted. On days when no sales take place in an account, no gains or
+losses, realized or paper, are counted.
+4 In Badrinath and Lewellen ~1991! 49 percent of all round-trip sales are for a loss. In my
+database only 43 percent of such sales are for a loss. The difference could be due to different
+trading practices by retail and discount investors, but quite likely it simply reflects the greater
+rise in prices during the period I examine.
+Are Investors Reluctant to Realize Their Losses?
+1781
+
+Suppose, for example, that an investor has five stocks in his portfolio, A,
+B, C, D, and E. A and B are worth more than he paid for them; C, D, and E
+are worth less. Another investor has three stocks F, G, and H in her port-
+folio. F and G are worth more than she paid for them; H is worth less. On
+a particular day the first investor sells shares of A and of C. The next day
+the other investor sells shares of F. The sales of A and F are counted as
+realized gains. The sale of C is a realized loss. Since B and G could have
+been sold for a profit but weren’t, they are counted as paper gains. D, E, and
+G are paper losses. So for these two investors over these two days, two re-
+alized gains, one realized loss, two paper gains, and three paper losses are
+counted. Realized gains, paper gains, realized losses, and paper losses are
+summed for each account and across accounts. Then two ratios are calculated:
+Realized Gains
+Realized Gains 1 Paper Gains
+5 Proportion of Gains Realized ~PGR!
+~1!
+Realized Losses
+Realized Losses 1 Paper Losses
+5 Proportion of Losses Realized ~PLR!
+~2!
+In the example PGR 5 102 and PLR 5 104. A large difference in the propor-
+tion of gains realized ~PGR! and the proportion of losses realized ~PLR! in-
+dicates that investors are more willing to realize either gains or losses.
+Any test of the disposition effect is a joint test of the hypothesis that peo-
+ple sell gains more readily than losses and of the specification of the refer-
+ence point from which gains and losses are determined. Some possible choices
+of a reference point for stocks are the average purchase price, the highest
+purchase price, the first purchase price, or the most recent purchase price.
+The findings of this study are essentially the same for each choice; results
+are reported for average purchase price. Commissions and dividends may or
+may not be considered when determining reference points, and profits and
+losses. Although investors may not consider commissions when they remem-
+ber what they paid for a stock, commissions do affect capital gains and losses.
+And because the normative standard to which the disposition effect is being
+contrasted is optimal tax-motivated selling, commissions are added to the
+purchase price and deducted from the sales price in this study except where
+otherwise noted. Dividends are not included when determining which sales
+are profitable because they do not affect capital gains and losses for tax
+purposes. The primary finding of the paper, that investors are reluctant to
+sell their losers and prefer to sell winners, is unaffected by the inclusion or
+exclusion of commissions or dividends. In determining whether the stocks
+that are not sold on a particular day could have been sold for a gain or a
+loss, the commission for the potential sale is assumed to be the average
+commission per share paid when the stock was purchased.5 All gains and
+losses are calculated after adjusting for splits.
+5 If, for potential sales, the commission is instead assumed to be the same percentage of
+principal as paid when the stock was purchased, the results do not significantly change.
+1782
+The Journal of Finance
+
+There are two hypotheses to be tested. The first is that investors tend to
+sell their winners and hold their losers. Stated in terms of realization rates
+for gains and losses this is:
+HYPOTHESIS 1: Proportion of Gains Realized . Proportion of Losses Realized
+(for the entire year).
+The null hypothesis in this case is that PGR # PLR. The second hypothesis
+is that in December investors are more willing to sell losers and less willing
+to sell winners than during the rest of the year. That is:
+HYPOTHESIS 2: Proportion of Losses Realized 2 Proportion of Gains Realized
+in December . Proportion of Losses Realized 2 Proportion of Gains Realized
+in January–November.
+The null hypothesis here is: PLR 2 PGR in December # PLR 2 PGR in
+January through November.
+B. Results
+Table I reports the PGR realized and the PLR realized for the entire year,
+for January through November, and for December. We see that for the entire
+year investors do sell a higher proportion of their winners than of their
+losers. For both Hypothesis 1 and Hypothesis 2 the null hypotheses can be
+rejected with a high degree of statistical significance. A one-tailed test of the
+first null hypothesis, PGR # PLR, is rejected with a t-statistic greater than
+35. The second null hypothesis, PLR 2 PGR in December # PLR 2 PGR in
+Table I
+PGR and PLR for the Entire Data Set
+This table compares the aggregate Proportion of Gains Realized ~PGR! to the aggregate Pro-
+portion of Losses Realized ~PLR!, where PGR is the number of realized gains divided by the
+number of realized gains plus the number of paper ~unrealized! gains, and PLR is the number
+of realized losses divided by the number of realized losses plus the number of paper ~unrealized!
+losses. Realized gains, paper gains, losses, and paper losses are aggregated over time ~1987–
+1993! and across all accounts in the data set. PGR and PLR are reported for the entire year, for
+December only, and for January through November. For the entire year there are 13,883 real-
+ized gains, 79,658 paper gains, 11,930 realized losses, and 110,348 paper losses. For December
+there are 866 realized gains, 7,131 paper gains, 1,555 realized losses, and 10,604 paper losses.
+The t-statistics test the null hypotheses that the differences in proportions are equal to zero
+assuming that all realized gains, paper gains, realized losses, and paper losses result from
+independent decisions.
+Entire Year
+December
+Jan.–Nov.
+PLR
+0.098
+0.128
+0.094
+PGR
+0.148
+0.108
+0.152
+Difference in proportions
+20.050
+0.020
+20.058
+t-statistic
+235
+4.3
+238
+Are Investors Reluctant to Realize Their Losses?
+1783
+
+January through November, is also rejected ~t equals 16!. These tests count
+each sale for a gain, sale for a loss, paper gain on the day of a sale, and
+paper loss on the day of a sale as separate independent observations.6 These
+observations are aggregated across investors. This independence assump-
+tion will not hold perfectly. For example, suppose an investor chooses not to
+sell the same stock on repeated occasions. It is likely that the decision not to
+sell on one date is not independent of the decision not to sell on another
+date. Alternatively, two investors may be motivated to sell the same stock
+on, or about, the same day because they receive the same information. This
+lack of independence will inflate the test statistics, though it won’t bias the
+observed proportions. For Hypotheses 1 and 2 the null hypotheses are re-
+jected with such a high degree of statistical significance that some lack of
+independence is not problematic. In the following discussion, the data are, at
+times, divided into several partitions ~e.g., Figure 2 and Table VI!. Where
+t-statistics for individual partitions approach the conventional thresholds of
+statistical significance, they should be viewed with some skepticism.
+To gain some perspective into how critical the independence assumptions
+made above are to the primary finding of this paper—that investors realize
+gains too soon and hold losers too long—it is instructive to look at an alter-
+native test. Suppose that instead of assuming that independence exists at a
+transactional level we assume only that it exists at an account level. That is,
+we assume that the proportions of gains and losses realized in each account
+are independent of those realized in other accounts. PGR and PLR are then
+estimated for each account and their difference, PGR – PLR, is calculated for
+each account. The average account PGR is 0.57, the average account PLR is
+0.36, the average of PGR 2 PLR is 0.21, and the hypothesis that the mean
+of PGR 2 PLR is less than or equal to zero is rejected with a t-statistic of
+19.7 This alternative test also attempts to control for dependence caused by
+common information. To do this the sale of a stock is only counted if no sale
+has been previously counted for that stock in any account within a week
+before or after the sale date. That is, no two sales of the same stock within
+a week of each other are counted. Similarly, no two unrealized paper losses
+or gains of the same stock within a week of each other are counted. This test
+provides an alternative to the one reported in Table I and throughout the
+rest of the paper, but it is not without drawbacks. The previous test, in
+6 To calculate the t-statistics in Table I, the standard error for the difference in the propor-
+tions PGR and PLR is:
+!
+PGR~1 2 PGR!
+nrg 1 npg
+1
+PLR~1 2 PLR!
+nrl 1 npl
+where nrg, npg, nrl, and npl are the number of realized gains, paper gains, realized losses, and
+paper losses.
+7 An account is included in this test only if the denominators for both PGR and for PLR are
+nonzero for that account. There are 1893 such accounts. These same accounts are used to
+calculate share-based and dollar-based PGR and PLR.
+1784
+The Journal of Finance
+
+effect, weights each account by the number of realized and paper gains and
+losses in that account. This alternative test weights each account equally,
+which means we ignore the fact that accounts with more transactions pro-
+vide more accurate estimates of their actual PGR and PLR. In other words,
+by treating each account the same, we assume that the observed account
+PGRs and PLRs are homoskedastic when they are clearly heteroskedastic.
+However, to properly weight for this heteroskedasticity we need to know the
+degree of independence of transactions within accounts, which is exactly the
+issue this test is intended to circumvent. It is presented here simply to dem-
+onstrate that when a different set of independence assumptions is made, the
+null to Hypothesis 1 is still rejected at a very significant level.
+It should be noted that the PGR and the PLR measures are dependent on
+the average size of the portfolios from which they are calculated. When the
+portfolio sizes are large, both of these proportions will be smaller. Thus these
+proportions are smaller for traders who trade frequently and generally have
+larger portfolios than for those who trade less frequently. When PGR and
+PLR are calculated for Table I, the accounts with more trades weigh more
+heavily than those with fewer trades. In the alternative specification de-
+scribed in the last paragraph all accounts are weighted equally. For this
+Figure 2. Ratio of the Proportion of Gains Realized (PGR) to the Proportion of Losses
+Realized (PLR) for each month. PGR is the number of realized gains divided by the number
+of realized gains plus the number of paper ~unrealized! gains, and PLR is the number of real-
+ized losses divided by the number of realized losses plus the number of paper ~unrealized!
+losses. Realized gains, paper gains, losses, and paper losses are aggregated over time ~1987–
+1993! and across all accounts in the data set.
+Are Investors Reluctant to Realize Their Losses?
+1785
+
+reason PGR and PLR are both larger in the alternative specification than in
+Table I. Of primary interest is not the individual values of PGR and PLR,
+but their values relative to each other.
+Throughout this paper PGR and PLR are calculated in terms of trades and
+potential trades. An alternative specification is to calculate them in terms of
+number of shares traded and potential number of shares traded. When gains,
+losses, paper gains, and paper losses are aggregated across accounts before
+calculating PGR and PLR, as is done throughout most of this paper, mea-
+suring in shares further complicates the question of independence. However,
+if PGR and PLR are first calculated for each account and then the mean of
+PGR 2 PLR is calculated—as in the alternative test described in the previ-
+ous paragraph—independence is assumed only between accounts. When this
+alternative test is done for PGR and PLR based on shares rather than trades,
+the results are virtually unchanged: average PGR is 0.58, average PLR is
+0.36, and the null hypothesis that the mean of PGR 2 PLR is less than or
+equal to zero is rejected with a t-statistic of 18.8
+Suppose investors frequently realize small gains and less frequently
+take large losses. It is then possible that they are selling similar propor-
+tions of the values of their gains and losses, though realizing gains at a
+higher rate on a trade-counted basis. This is, however, not the case. I
+calculate the average PGR and PLR per account by measuring losses, gains,
+potential losses, and potential gains in terms of dollars rather than shares
+or trades. When, as before, no two sales or potential sales of the same
+stock within a week of each other are counted, the average dollar-based
+PGR is 0.58 and the average dollar-based PLR is 0.42. The hypothesis that
+the mean of PGR 2 PLR is less than or equal to zero is rejected with a
+t-statistic of 13.9
+In Table I the ratio of PGR to PLR for the entire year is a little over 1.5,
+indicating that a stock that is up in value is more than 50 percent more
+likely to be sold from day to day than a stock that is down. In Weber and
+Camerer’s ~1995! experimental studies of the disposition effect, a stock that
+is up is also about 50 percent more likely to be sold than one that is down.
+Figure 2 charts the ratio of PGR to PLR for each month. This ratio declines
+from 2.1 in January to 0.85 in December. This decline is consistent with
+Constantinides’ tax-loss selling model and suggests that at least some inves-
+tors pay attention to tax-motivated selling throughout the year. From Jan-
+uary through November, however, the observed ratio of PGR to PLR is greater
+8 As in the previous test no two sales or potential sales of the same stock within a week of
+each other are counted here. If sales and potential within a week of each other are also counted,
+share-based PGR is 0.51 and share-based PLR is 0.31.
+9 To examine this issue from another perspective, I look at each year in each portfolio and
+tally the total number of years for which both potential gains and potential losses are present
+in the portfolio and either net gains or net losses are realized. Net dollar gains are realized for
+2,116 of these years and net dollar losses for 1,477 years. This indicates that, in most cases,
+large losses are not offsetting small gains.
+1786
+The Journal of Finance
+
+than 1 and the hypothesis that the population ratio is less than or equal to
+1 is rejected in each of these months with t-statistics ranging from 3.6 in
+November to 18 in January.10
+To test the robustness of these results the data set is partitioned into two
+time periods and also into two groups of traders. Table II displays results
+when the data set is partitioned into stocks sold from 1987 to 1990 and 1990
+to 1993, and when it is partitioned into the decile of traders who trade most
+frequently and the nine deciles of traders who trade least frequently. In the
+data set, the most active 10 percent of the traders account for 57 percent of
+all stock trades. In both time periods and for both the frequent and the
+infrequent traders, a significantly greater proportion of all possible gains
+than of all possible losses is realized throughout the year ~t greater than 22,
+in all cases!. In December, losses are realized at a higher rate relative to
+gains than during the rest of the year, indicating that investors are realizing
+tax losses in December. Due to how portfolios are reconstructed over time,
+average portfolio sizes are larger for the later years of the sample. PGR and
+PLR are therefore smaller for the second temporal partition, just as they are
+smaller for the partition of frequent traders.
+One reason investors might choose to sell winners rather than losers is
+that they anticipate a change in the tax law under which capital gains rates
+will rise. The tax law of 1986 made such a change. If investors sold off
+winners in anticipation of higher tax rates, they might have entered 1987
+with a larger percentage of losers in their portfolio than usual. Because such
+stocks are purchased prior to 1987 they would not show up in the portfolios
+reconstructed here. It is possible therefore that the rate at which winners
+are being realized relative to losers is lower in the investors’ total portfolio
+than in the partial reconstructed portfolios. As old stocks are sold and new
+ones purchased the partial portfolios become more and more representative
+of the total portfolio. We would expect that if a sell-off of winners in antici-
+pation of the 1986 tax law affects the observed rate at which gains and
+losses are realized in the partial portfolios, that effect would be greater in
+the first part of the sample period than in the last part. However the ratio
+PGR0PLR is virtually the same for the periods 1987 to 1990 and 1991 to 1993.
+10 In Tables I–VI, realized and unrealized losses are tabulated on days that sales took place
+in portfolios of two or more stocks. One objection to this formulation is that for portfolios that
+hold only winners or only losers an investor cannot choose whether to sell a winner or to sell a
+loser, but only which winner or loser to sell. Another objection is that if an investor has net
+capital losses of more than $3,000 for the current year ~in non-tax-deferred accounts! it may be
+normative for that investor to choose to sell a winner rather than a loser. I have repeated the
+analyses reported in the tables subject to the additional constraints that there be at least one
+winner and one loser in a portfolio on the day of a sale for that day to be counted and that the
+net realized capital losses for the year to date in the portfolio be less than $3,000. When these
+constraints are imposed, the difference in PGR and PLR is, for each analysis, greater. For
+example, for the entire sample and the entire year ~as in Table I! there are 10,111 realized
+gains, 71,817 paper gains, 5,977 realized losses, and 94,419 paper losses. Thus the PLR is
+0.060; the PGR is 0.123; their difference is 0.063; and the t-statistic for the difference in pro-
+portions is 47.
+Are Investors Reluctant to Realize Their Losses?
+1787
+
+Table III reports the average returns since the day of purchase for realized
+and paper winners and losers. In December the losses that are realized are
+of much greater magnitude than those realized throughout the rest of the
+year. This is additional evidence that some investors do engage in tax-
+motivated selling in December.
+Lakonishok and Smidt ~1986! suggest that investors might sell winners
+and hold on to losers in an effort to rebalance their portfolios. We expect
+that investors who are rebalancing will sell a portion, but not all, of their
+shares of winning stocks. A sale of the entire holding of a stock is most likely
+not motivated by the desire to rebalance. So to eliminate trades that may be
+motivated by a desire to rebalance, I calculate PGR and PLR using only
+sales that are of an account’s entire position in a stock ~and using paper
+gains and losses on the days of those sales!. There may be some cases where
+shares of a stock are already in the portfolio before 1987 and then additional
+shares are purchased. For these, the sale of all shares purchased after 1987
+Table II
+PGR and PLR Partitioned by Period and Trading Activity
+This table compares the aggregate Proportion of Gains Realized ~PGR! to the aggregate Pro-
+portion of Losses Realized ~PLR!, where PGR is the number of realized gains divided by the
+number of realized gains plus the number of paper ~unrealized! gains, and PLR is the number
+of realized losses divided by the number of realized losses plus the number of paper ~unrealized!
+losses. The data are partitioned into the periods 1987–1990 and 1990–1993 and into the 10
+percent of the accounts that trade most frequently and the 90 percent that trade least fre-
+quently. For 1987–1990 there are 7,280 realized gains, 28,998 paper gains, 7,253 realized losses,
+and 50,540 paper losses. For 1990–1993 there are 6,603 realized gains, 50,660 paper gains,
+4,677 realized losses, and 59,808 paper losses. For frequent traders there are 10,186 realized
+gains, 75,182 paper gains, 8,886 realized losses, and 103,096 paper. For infrequent traders
+there are 3,697 realized gains, 4,476 paper gains, 3,042 realized losses, and 7,251 paper losses.
+The t-statistics test the null hypotheses that the differences in proportions are equal to zero
+assuming that all realized gains, paper gains, realized losses, and paper losses result from
+independent decisions.
+1987–1990
+1991–1993
+Frequent
+Traders
+Infrequent
+Traders
+Entire year PLR
+0.126
+0.072
+0.079
+0.296
+Entire year PGR
+0.201
+0.115
+0.119
+0.452
+Difference in proportions
+20.075
+20.043
+20.040
+20.156
+t-statistic
+230
+225
+229
+222
+December PLR
+0.143
+0.110
+0.095
+0.379
+December PGR
+0.129
+0.097
+0.084
+0.309
+Difference in proportions
+0.014
+0.013
+0.010
+0.070
+t-statistic
+1.9
+2.3
+2.3
+3.5
+Jan.–Nov. PLR
+0.123
+0.069
+0.078
+0.282
+Jan.–Nov. PGR
+0.207
+0.117
+0.123
+0.469
+Difference in proportions
+20.084
+20.048
+20.045
+20.187
+t-statistic
+232
+227
+231
+225
+1788
+The Journal of Finance
+
+may not amount to the sale of all shares held. So this removal of sales that
+could be motivated by diversification is not perfect. Even so, if the prefer-
+ence for selling winners is due to rebalancing, removing most rebalancing-
+motivated trades will greatly reduce the preference for selling winners.
+In Table IV, for the entire year, when partial sales are ignored the pref-
+erence for selling winners rather than losers is not substantially changed.
+The tendency to sell winners and hold losers does not appear to be the result
+of rebalancing. When partial sales are ignored, investors realize losses in
+December at an even higher rate relative to realizing gains. Perhaps this is
+because investors who are intentionally realizing tax losses choose to sell
+their entire position in the losing stock.
+Investors who sell winners for the purpose of rebalancing their portfolios
+are likely to make new purchases. In an alternative effort to eliminate trades
+that may be motivated by a desire to rebalance, I calculate PGR and PLR
+using only sales for which there is no new purchase into a portfolio on the
+sale date or during the following three weeks ~and using paper gains and
+losses on the days of those sales!. Table V reports that when sales motivated
+by a desire to rebalance are eliminated in this way, investors continue to
+prefer to sell winners. Once again, investors realize losses at a higher rate
+than gains in December.
+Another reason investors might sell winners and hold losers is that they
+expect the losers to outperform the winners in the future. An investor who
+buys a stock because of favorable information may sell that stock when it
+goes up because she believes her information is now reflected in the price.
+On the other hand, if the stock goes down she may continue to hold it, be-
+lieving that the market has not yet come to appreciate her information.
+Investors could also choose to sell winners and hold losers simply be-
+cause they believe prices mean revert. I test whether such beliefs are justi-
+fied, ex post.
+Table III
+Average Returns
+This table reports the mean return realized on stocks sold for a gain and on stocks sold for a
+loss. It also reports mean return that could be realized by stocks that are not sold on days that
+other stocks in the same portfolio are sold. These stocks are classified as paper gains and paper
+losses. For all accounts over the entire year, there are 13,883 realized gains, 79,658 paper gains,
+11,930 realized losses, and 110,348 paper losses. For all accounts during the month of Decem-
+ber, there are 866 realized gains, 7,131 paper gains, 1,555 realized losses, and 10,604 paper
+losses.
+Jan.–Nov.
+December
+Entire Year
+Return on realized gains
+0.275
+0.316
+0.277
+Return on paper gains
+0.463
+0.500
+0.466
+Return on realized losses
+20.208
+20.366
+20.228
+Return on paper losses
+20.391
+20.417
+20.393
+Are Investors Reluctant to Realize Their Losses?
+1789
+
+Table VI reports excess returns for periods following the sale of a winning
+stock or the observation of a paper loss. Three investment horizons are ex-
+amined: 84 trading days, which is the approximate median in sample hold-
+ing period for stocks,11 254 trading days ~one year!, which is Benartzi and
+Thaler’s ~1995! estimate of the average investor’s investment horizon, and
+504 trading days ~two years!, which is how often, on average, New York
+Stock Exchange equities turned over during this period. Returns are calcu-
+lated in excess of the CRSP value-weighted index. For winners that are sold,
+the average excess return over the following year is 3.4 percent more than it
+is for losers that are not sold. Investors who sell winners and hold losers
+because they expect the losers to outperform the winners in the future are,
+on average, mistaken. The superior returns to former winners noted here
+are consistent with Jegadeesh and Titman’s ~1993! finding of price momen-
+tum in security returns at horizons of up to eighteen months, though De-
+Bondt and Thaler ~1985, 1987! find price reversals at longer horizons of
+three to five years.12
+11 Note that the in-sample median holding period is a downwardly biased estimate of the
+true median holding period since stocks held for long periods are more likely to be bought
+before or sold after the data period and therefore not counted in the sample averages. The
+average turnover rate for equity in these accounts is 6.5 percent per month, which corresponds
+to an average holding period of about 15 months.
+12 At the time of this study CRSP data were available through 1994. For this reason two-year
+subsequent returns are not calculated for sales dates in 1993.
+Table IV
+PGR and PLR When the Entire Position in a Stock Is Sold
+This table compares the aggregate Proportion of Gains Realized ~PGR! to the aggregate Pro-
+portion of Losses Realized ~PLR!, where PGR is the number of realized gains divided by the
+number of realized gains plus the number of paper ~unrealized! gains, and PLR is the number
+of realized losses divided by the number of realized losses plus the number of paper ~unrealized!
+losses. In this table losses and gains are counted only if a portfolio’s total position in a stock was
+sold that day. Paper ~unrealized! gains and losses are counted only if the portfolio’s total posi-
+tion in another stock held in the portfolio was sold that day. Realized gains, paper gains, losses,
+and paper losses are aggregated over time ~1987–1993! and across all accounts in the dataset.
+PGR and PLR are reported for the entire year and for December only. For the entire year there
+are 10,967 realized gains, 36,033 paper gains, 9,476 realized losses, and 51,502 paper losses.
+For December there are 666 realized gains, 3,440 paper gains, 1,171 realized losses, and 4,759
+paper losses. The t-statistics test the null hypotheses that the differences in proportions are
+equal to zero assuming that all realized gains, paper gains, realized losses, and paper losses
+result from independent decisions.
+Entire Year
+December
+PLR
+0.155
+0.197
+PGR
+0.233
+0.162
+Difference in proportions
+20.078
+0.035
+t-statistic
+232
+4.6
+1790
+The Journal of Finance
+
+The average excess returns to winners sold in Table VI are determined by
+calculating excess buy-and-hold returns over the periods subsequent to each
+profitable sale of each stock and then taking an average that weighs each
+observation equally. Many stocks are sold for a profit on more than one date;
+sometimes the same stock is sold for a profit on the same date by more than
+one investor. Each of these sales is counted as a separate observation. The
+same procedure applies to paper losses. The p-values in Table VI are esti-
+mated by bootstrapping an empirical distribution for the difference in aver-
+age excess buy-and-hold returns to realized winners and paper losses. This
+empirical distribution is generated under the null hypothesis that sub-
+sequent excess returns to realized winners and paper losers are drawn from
+the same underlying distribution. The methodology is similar to that of Brock,
+Lakonishok, and LeBaron ~1992! and Ikenberry, Lakonishok, and Vermaelen
+~1995!. Lyon, Barber, and Tsai ~1998! test the acceptance and rejection rates
+for this methodology and find that it performs well in random samples. For
+each stock in the sample for which CRSP return data are available, a re-
+placement stock is drawn ~with replacement! from the set of all CRSP stocks
+of the same size decile and same book-to-market quintile as the original
+stock. Using the replacement stocks together with the original observation
+dates, average excess buy-and-hold returns are calculated for the 84, 252,
+and 502 trading days following the dates on which sales for a profit or paper
+losses are observed. These averages, and their differences, constitute one
+observation from the empirical distribution. One thousand such observa-
+Table V
+PGR and PLR When No New Stock Is Purchased
+Within Three Weeks of Sale
+This table compares the aggregate Proportion of Gains Realized ~PGR! to the aggregate Pro-
+portion of Losses Realized ~PLR!, where PGR is the number of realized gains divided by the
+number of realized gains plus the number of paper ~unrealized! gains, and PLR is the number
+of realized losses divided by the number of realized losses plus the number of paper ~unrealized!
+losses. In this table losses and gains are counted only if a no new purchase was made into a
+portfolio on the day of the sale or within three weeks following the sale. Paper ~unrealized!
+gains and losses are counted for days on which qualifying sales were made. Realized gains,
+paper gains, losses, and paper losses are aggregated over time ~1987–1993! and across all ac-
+counts in the dataset. PGR and PLR are reported for the entire year and for December only. For
+the entire year there are 8,336 realized gains, 10,240 paper gains, 7,553 realized losses, and
+19,370 paper losses. For December there are 590 realized gains, 1,024 paper gains, 1,194 real-
+ized losses, and 1,863 paper losses. The t-statistics test the null hypotheses that the differences
+in proportions are equal to zero assuming that all realized gains, paper gains, realized losses,
+and paper losses result from independent decisions.
+Entire Year
+December
+PLR
+0.281
+0.391
+PGR
+0.449
+0.366
+Difference in proportions
+20.168
+0.015
+t-statistic
+236
+1.6
+Are Investors Reluctant to Realize Their Losses?
+1791
+
+tions are made. The null hypothesis is rejected at the a percent level if the
+average subsequent excess return to realized winners minus that to paper
+losers in the data set is greater than the ~1 2 a! percentile average excess
+return to realized winners minus that to paper losers observed in the em-
+pirical distribution.
+We saw in Table III ~column 3! that investors are more likely to realize
+smaller, rather than larger, gains and losses. It may be that, due to regret
+aversion, investors are most loath to realize their greatest losses, and, due to
+tax consequences, they postpone realizing their greatest gains. Lower price
+ranges are likely to have a greater proportion of large losers and a smaller
+proportion of large winners than upper price ranges. Investors will therefore
+have a greater propensity to not sell losers in lower price ranges, and to not
+sell winners in higher price ranges.
+Harris ~1988! suggests that investors’ reticence to sell losers may be due to
+their sensitivity to higher trading costs at lower stock prices. Table VII re-
+ports PGR and PLR for different price ranges and return ranges for January
+through November. Stocks with a price less than or equal to $10, with prices
+greater than $10 and less than or equal to $25, and with prices higher than
+$25, represent, respectively, 36 percent, 35 percent, and 29 percent of the
+data set. Partitioning on magnitude of return controls for the disproportion-
+ate numbers of large losers in the lower price range and of large winners in
+the top price range. The ranges for absolute value of return are: 0 to 0.15, 0.15
+to 0.30, 0.30 to 0.50, and greater than 0.50. We see that in fourteen of fifteen
+partitions winners are realized at a higher rate than losers. This difference is
+statistically significant in thirteen partitions. When comparing winners and
+losers of similar magnitude, investors appear to prefer to sell winners and
+hold losers even when trading costs for both are about the same.
+Table VI
+Ex Post Returns
+This table compares average returns in excess of the CRSP value-weighted index to stocks that
+are sold for a profit ~winning stocks sold! and to stocks that could be, but are not, sold for a loss
+~paper losses!. Returns are measured over the 84, 252, and 504 trading days subsequent to the
+sale of a realized winner and subsequent to days on which sales of other stocks take place in the
+portfolio of a paper loser. p-values refer to the frequency with which differences in excess re-
+turns over the same periods in the empirical ~bootstrapped! distributions exceed the difference
+in excess returns observed in the data.
+Performance over
+Next 84
+Trading Days
+Performance over
+Next 252
+Trading Days
+Performance over
+Next 504
+Trading Days
+Average excess return on
+winning stocks sold
+0.0047
+0.0235
+0.0645
+Average excess return on
+paper losses
+20.0056
+20.0106
+0.0287
+Difference in excess returns
+0.0103
+0.0341
+0.0358
+~ p-values!
+~0.002!
+~0.001!
+~0.014!
+1792
+The Journal of Finance
+
+There is another way to contrast the hypothesis that losses are realized
+more slowly due to the higher transactions costs with the two behavioral
+hypotheses. We can look at the rates at which investors purchase additional
+shares of stocks they already own. The proportion of gains purchased again
+~PGPA! and the proportion of losses purchased again ~PLPA! can be calcu-
+lated in a manner analogous to how PGR and PLR are calculated. When a
+stock already in the portfolio is purchased again it is counted as a gain
+purchased again or a loss purchased again. On days when purchases are
+made, stocks already in the portfolio for which additional shares are not
+repurchased are counted as gains or losses potentially purchased again. Thus:
+Gains Purchased Again
+Gains Purchased
+Again
+1 Gains Potentially
+Purchased Again
+5 Proportion of Gains
+Purchased Again
+~PGPA!
+~3!
+Losses Purchased Again
+Losses Purchased
+Again
+1 Losses Potentially
+Purchased Again
+5 Proportion of Losses
+Purchased Again
+~PGPA!
+~4!
+Table VII
+PGR and PLR Partitioned by Price and Return
+This table compares the aggregate Proportion of Gains Realized ~PGR! to the aggregate Pro-
+portion of Losses Realized ~PLR!, where PGR is the number of realized gains divided by the
+number of realized gains plus the number of paper ~unrealized! gains, and PLR is the number
+of realized losses divided by the number of realized losses plus the number of paper ~unrealized!
+losses. The data are partitioned on stock price and on absolute value of the return to date ~R!,
+for all accounts, 1987–1993, January through November only. The t-statistics test the null hy-
+potheses that the differences in proportions are equal to zero assuming that all realized gains,
+paper gains, realized losses, and paper losses result from independent decisions.
+6R6 # 0.15
+0.15 , |R| # 0.30
+0.30 , |R| # 0.50
+0.50 # |R|
+Price # $10
+PLR
+0.141
+0.129
+0.109
+0.030
+PGR
+0.267
+0.257
+0.295
+0.282
+Difference
+20.126
+20.128
+20.186
+20.252
+t-statistic
+13.0
+10.2
+11.7
+17.5
+$10 # Price # $25
+PLR
+0.138
+0.105
+0.076
+0.058
+PGR
+0.222
+0.186
+0.172
+0.135
+Difference
+20.084
+20.081
+20.096
+20.077
+t-statistic
+16.9
+13.1
+13.1
+11.3
+$25 # Price
+PLR
+0.125
+0.104
+0.104
+0.049
+PGR
+0.197
+0.126
+0.081
+0.055
+Difference
+20.072
+20.022
+0.023
+20.006
+t-statistic
+19.4
+4.5
+23.2
+0.61
+Are Investors Reluctant to Realize Their Losses?
+1793
+
+When these proportions are calculated, additional purchases of a particular
+stock in a particular account are not counted if they take place within one
+week of a previous purchase of the stock. This is done to avoid the possibility
+of counting a purchase order filled over more than one day as an additional
+purchase.
+If investors avoid the higher transactions cost of low priced stocks we
+would expect PLPA to be less than PGPA. If, however, investors are more
+risk seeking for losing investments ~prospect theory! or if they believe prices
+will revert ~as do Andreassen’s subjects!, then PLPA will be greater than
+PGPA. This is the case. For the entire sample PLPA 5 0.135 and PGPA 5
+0.094. If we assume that all decisions to purchase or not purchase additional
+stock are independent, the hypothesis that these two proportions are equal
+can be rejected with a t-statistic of 19. This supports the two behavioral
+theories, but not the transaction cost hypothesis.13
+In Table III we saw that investors tend to sell their larger gains and losses
+at a slower rate than their smaller gains and losses. Prospect theory does
+not predict that investors realize their large gains more slowly than their
+small gains. Nor does a belief in mean reversion predict this. If, however,
+investors believe that stocks that perform moderately well will revert, but
+those that perform unusually well will trend,14 they might sell their small
+winners and hold their larger ones. These beliefs could then also lead them
+to buy fewer additional shares of small winners and more additional shares
+of larger winners. To test this I partition winning investments into large or
+small winners using the mean unrealized winners’ return of 0.47 as a break
+point ~see Table III!. Similarly I partition losers into large and small losers
+using -0.39 as a break point. Small winners are repurchased at a rate of
+0.112, large winners are repurchased at a rate of 0.043. Small losers are
+repurchased at a rate of 0.172 and large losers at 0.067. The difference in
+the rates at which large and small gains are realized is highly significant
+~t equals 26, assuming independence!; so, too, is the difference in the rate at
+which large and small losses are realized ~t equals 39!. These investors do
+not tend to buy additional shares of big winners. This is not consistent with
+the hypothesis that they believe small winners will revert but large winners
+will perform well, however other factors may be working against the hypoth-
+esis. Investors who are in the habit of buying additional shares of stocks
+they already own may reach their limit of additional purchases before these
+stocks have an opportunity to make large gains ~or losses!. Regret aversion
+may also influence investors to not buy additional shares of big winners. For
+example, suppose an investor buys 100 shares of stock A at $100 per share.
+Then stock A appreciates to $150. The investor may believe stock A will
+13 For the same reasons as discussed in Section III B, these decisions will not always be
+independent. So the t-statistic of 19 overstates the actual statistical significance.
+14 In this vein Barberis, Shleifer, and Vishny ~1996! develop a model in which investors
+believe that earnings switch between two regimes, one mean reverting and the other trend
+following.
+1794
+The Journal of Finance
+
+continue to appreciate but he may still refrain from buying an additional
+100 shares, for if he does purchase more shares, he will more poignantly
+regret that he didn’t buy them at $100 per share to begin with. The greater
+the difference between the original and additional purchase prices, the greater
+is this potential regret.
+The results presented so far are not able to distinguish between the two
+behavioral hypotheses. Both prospect theory and a belief in mean reversion
+predict that investors will hold their losers too long and sell their winners
+too soon. Both predict that investors will purchase more additional shares of
+losers than of winners. However a belief in mean reversion should apply to
+stocks that an investor does not already own as well as those she does, but
+prospect theory applies only to the stocks she owns. Thus a belief in mean
+reversion implies that investors will tend to buy stocks that had previously
+declined even if they don’t already own these stocks, and prospect theory
+makes no prediction in this case. Odean ~1997! finds that this same group of
+investors tends to buy stocks that have, on average, outperformed the CRSP
+value-weighted index by about 25 percent over the previous two years.
+This would appear inconsistent with a simple belief in mean reversion.
+~It is, though, consistent with a belief that big winners will continue to per-
+form well.!
+IV. Discussion
+This paper examines the behavior of individual investors and finds that
+investors exhibit disposition effects; that is, they realize their profitable stocks
+investments at a much higher rate than their unprofitable ones, except in
+December. The extent to which this behavior affects market prices depends
+on the trading activities of other market participants such as professional
+traders and institutional investors. If the disposition effect holds in aggre-
+gate it may contribute to the positive relationship between price change and
+volume identified by Lakonishok and Smidt ~1986! and by Ferris et al. ~1988!.
+The disposition effect could also be a cause of the positive correlation be-
+tween price changes and volume in other markets such as residential real
+estate. Case and Shiller ~1988! report evidence of disposition effects from
+interviews with homeowners in boom and post-boom real estate markets.
+By affecting supply, the disposition effect may also contribute to market
+stability near prices at which substantial trading has previously taken place.
+If many investors buy a stock at a particular price, that price may become
+their reference point. If the stock falls below this reference point, these in-
+vestors will be averse to selling for a loss, reducing the supply of potential
+sellers. A reduced supply of potential sellers could slow further price de-
+creases. On the other hand, if the stock rises above the reference point, these
+investors will be more willing to sell, increasing the supply of potential sell-
+ers, and possibly slowing further price increases. If these investors have
+private information about the future prospects of a company whose stock
+Are Investors Reluctant to Realize Their Losses?
+1795
+
+they hold, the disposition effect may slow the rate at which this information
+is incorporated into price. For example, investors with negative information
+may be unwilling to sell a stock if its price is below their reference point. In
+not selling the stock, these investors will fail to signal their negative infor-
+mation to the market, and there could be a delay before that information is
+reflected in prices.
+Though the disposition effect may influence market prices, its economic
+significance is likely to be greatest for individual investors. To get a rough
+idea of the economic costs of the loss aversion, let us imagine that a hypo-
+thetical investor is choosing to sell one of two stocks. The first of these stocks
+behaves like the average realized winner in this data set and the other like
+the average paper loser. The investor wishes to sell $1,000 worth of stock
+after commissions and that happens to be what his position in each stock is
+currently worth. Suppose he is averse to realizing losses and so sells the
+winning stock. If his experience is similar to that of the average investor in
+this data set, his return on the sale will be 0.277 ~Table III, third column!.
+Since the stock is currently worth $1000, its purchase price must have been
+$783, and his capital gain is $217. If he instead chooses to sell $1,000 worth
+of the losing stock, his return will be 2 0.393, with a purchase price of $1,647,
+and a capital loss of $647. One year later the ~losing! stock that he held will
+have, on average, a return 1 percent below the market ~Table VI!; the win-
+ning stock that he sold will have, on average, a return 2.4 percent above the
+market. Marginal tax rates for capital gains for investors in this sample
+vary from 0 to 28 percent, plus state taxes. Assume that our investor’s mar-
+ginal tax rate is 15 percent and that he has taxable gains against which to
+offset losses. Then by choosing to sell the winning stock rather than the
+loser, he gives up an immediate tax savings of $130. Suppose that whichever
+stock the investor does not sell now, he will sell in one year; then the inves-
+tor is paying $130 in taxes one year earlier than he otherwise would. If he
+can expect a return of 8 percent on his money, choosing not to defer these
+taxes costs him about $10. In addition to this, over the next year the inves-
+tor’s return on the stock he holds ~the loser! is $34 less than if he had held
+the other stock ~the winner!. Using $1,000 as a basis, and including the
+value of the immediate tax savings ~$10! as well as the anticipated differ-
+ence in capital gains ~$34!, the investor’s return is about 4.4 percent higher
+over the next year if he sells the loser rather than the winner. The benefits
+of deferring taxes may be even higher if the investor chooses to delay real-
+izing his gains for more than one year. On the other hand, a habit of regular
+loss realizations may reduce the magnitude of available capital losses.
+The trading records analyzed in this paper are obtained from a discount
+brokerage house. This avoids the need to consider agency issues that influ-
+ence institutional investors or to disentangle the decisions and motivations
+of individual investors from those of their retail brokers. It would be illumi-
+nating to repeat this study with data on institutional trading and with data
+from a retail brokerage house.
+1796
+The Journal of Finance
+
+V. Conclusion
+This paper finds that individual investors demonstrate a significant pref-
+erence for selling winners and holding losers, except in December when tax-
+motivated selling prevails. This investor behavior does not appear to be
+motivated by a desire to rebalance portfolios or by a reluctance to incur the
+higher trading costs of low priced stocks. Nor is it justified by subsequent
+portfolio performance. It leads, in fact, to lower returns, particularly so for
+taxable accounts.
+REFERENCES
+Andreassen, Paul, 1987, On the social psychology of the stock market: Aggregate attributional
+effects and the regressiveness of prediction, Journal of Personality and Social Psychology
+53, 490–496.
+Andreassen, Paul, 1988, Explaining the price-volume relationship: The difference between price
+changes and changing prices, Organizational Behavior and Human Decision Processes 41,
+371–389.
+Andreassen, Paul, 1990, Judgmental extrapolation and market overreaction: On the use and
+disuse of news, Journal of Behavioral Decision Making 3, 153–174.
+Badrinath, S., and Wilber Lewellen, 1991, Evidence on tax-motivated securities trading behav-
+ior, Journal of Finance 46, 369-382.
+Barberis, Nicholas, Andre Shleifer, and Robert Vishny, 1996, A model of investor sentiment with
+both underreaction and overreaction, Working paper, University of Chicago.
+Benartzi, Shlomo, and Richard Thaler, 1995, Myopic loss aversion and the equity premium
+puzzle, Quarterly Journal of Economics 110, 73–92.
+Bremer, Marc, and Kato Kiyoshi, 1996, Trading volume for winners and losers on the Tokyo
+Exchange, Journal of Financial and Quantitative Analysis 31, 127–142.
+Brock, William, Josef Lakonishok, and Blake LeBaron, 1992, Simple technical trading rules and
+the stochastic properties of stock returns, Journal of Finance 47, 1731–1764.
+Case, Karl, and Robert Shiller, 1988, The behavior of home buyers in boom and post-boom
+markets, New England Economic Review November0December, 29–46.
+Constantinides, George, 1984, Optimal stock trading with personal taxes: Implications for prices
+and the abnormal January returns, Journal of Financial Economics 13, 65–69.
+DeBondt, Werner, and Richard Thaler, 1985, Does the stock market overreact?, Journal of Fi-
+nance 40, 793–807.
+DeBondt, Werner, and Richard Thaler, 1987, Further evidence on investor overreaction and
+stock market seasonality, Journal of Finance 42, 557–581.
+Dyl, Edward, 1977, Capital gains taxation and the year-end stock market behavior, Journal of
+Finance 32, 165–175.
+Ferris, Stephen, Robert Haugen, and Anil Makhija, 1988, Predicting contemporary volume with
+historic volume at differential price levels: Evidence supporting the disposition effect, Jour-
+nal of Finance 43, 677–697.
+Harris, Lawrence, 1988, Discussion of predicting contemporary volume with historic volume at
+differential price levels: Evidence supporting the disposition effect, Journal of Finance 43,
+698–699.
+Heisler, Jeffrey, 1994, Loss aversion in a futures market: An empirical test, Review of Futures
+Markets 13, 793–822.
+Ikenberry, David, Josef Lakonishok, and Theo Vermaelen, 1995, Market underreaction to open
+market share repurchases, Journal of Financial Economics 39, 181–208.
+Jegadeesh, Narasimhan, and Sheridan Titman, 1993, Returns to buying winners and selling
+losers: Implications for stock market efficiency, Journal of Finance 48, 65–91.
+Are Investors Reluctant to Realize Their Losses?
+1797
+
+Kahneman, Daniel, and Amos Tversky, 1979, Prospect theory: An analysis of decision under
+risk, Econometrica 46, 171–185.
+Lakonishok, Josef, and Seymour Smidt, 1986, Volume for winners and losers: Taxation and
+other motives for stock trading, Journal of Finance 41, 951–974.
+Lyon, John, Brad Barber, and Chih-Ling Tsai, 1998, Improved methods for tests of long-run
+abnormal stock returns, Journal of Finance, forthcoming.
+New York Stock Exchange Fact Book, 1995, ~New York Stock Exchange, Inc., New York, N.Y.!.
+Odean, Terrance, 1997, Do investors trade too much?, Working paper, University of California,
+Davis.
+Poterba, James, 1987, How burdensome are capital gains taxes? Evidence from the United
+States, Journal of Public Economics 33, 157–172.
+Schlarbaum, Gary, Wilber Lewellen, and Ronald Lease, 1978, Realized returns on common stock
+investments: The experience of individual investors, Journal of Business 51, 299–325.
+Shefrin, Hersh, and Meir Statman, 1985, The disposition to sell winners too early and ride
+losers too long: Theory and evidence, Journal of Finance 40, 777–790.
+Starr-McCluer, Martha, 1995, Tax losses and the stock portfolios of individual investors, Work-
+ing paper, Federal Reserve Board of Governors.
+Thaler, Richard, 1985, Mental accounting and consumer choice, Marketing Science 4, 199–214.
+Weber, Martin, and Colin Camerer, 1998, The disposition effect in securities trading: An exper-
+imental analysis, forthcoming Journal of Economic Behavior and Organization.
+1798
+The Journal of Finance

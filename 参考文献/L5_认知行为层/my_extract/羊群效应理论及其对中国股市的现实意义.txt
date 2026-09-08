@@ -1,0 +1,628 @@
+收稿日期：2002-08-09
+基金项目：国家杰出青年科学基金资助项目（79725002）
+羊群效应理论及其对中国股市的现实意义
+吴福龙　曾勇　唐小我
+（电子科技大学管理学院四川成都610054）
+摘　要：从支付外部性、委托代理模型、信息学习模型以及实证性羊群效应四个方面回顾了国内外羊群效应文
+献发现国外对羊群效应的研究比较全面得出了许多有用的结论。由于数据缺乏或者数据的难获取性国内
+研究羊群效应的相关文献还较少涉及的行为主体的类型比较单一提出了将来研究的几个可能方向以及羊群
+效应理论对中国股市的现实意义。
+关键词：羊群效应；支付外部性；委托代理；信息学习；实证性羊群效应模型
+中图分类号：F830．91　　　文献标识码：A　　　文章编号：1003-5192（2003）02-0062-07
+Herding Theories and Its Realistic Significance to Chinese Stock Market
+WU Fu-longZENG YongTANG Xiao-wo
+（School of ManagementUniversity of Electronic Science and Technology of ChinaChendu610054China）
+Abstract：The paper makes a full review of most of the herding papers existed from four aspects：payoff externality
+principa-
+l agent modelinformation cascades model and empirical herding．It finds that learners abroad have studied the
+herding phenomenon carefully and thoroughly and reached many practical and instructive results．Because of the lack of
+data and difficulty to access the data neededthe domestic learners made less study of the herding and the herding ac-
+tors．Finallyit suggests some directions for further study in the future and points out that the herding theories are of
+realistic significance to Chinese stock market．
+Key words：herding；payoff externality；principa-
+l agent；information cascades；empirical herding model
+1　引言
+羊群效应（Herding）是行为金融学的一个重要
+研究方向。在一定时期当采取相同策略（买或卖）
+交易特定资产的行为主体达到或超过一定数量时
+羊群效应就发生了。羊群效应主要研究信息传递
+和行为主体决策之间的相互影响以及这种影响对
+信息传递速度和充分性的作用。羊群效应需要一
+个协调机制。这种机制可以是一种大众接受的、以
+某种信号为基础的规则也可以通过观察别人的决
+策来实现。关于羊群效应主要有两种观点：一类是
+理性的羊群效应（Rational Herding）；另一类是非理
+性的羊群效应（Irrational Herding）。非理性的羊群
+效应主要研究行为主体的心理认为行为主体只会
+盲目的相互模仿从而忽视了理性分析的重要性。
+而理性的羊群效应认为由于信息获取的困难、行
+为主体的激励因素以及支付外部性的存在使得羊
+群行为成为行为主体的最优策略。此外还有一种
+折中的观点认为决策主体近似理性他们通过启
+发式方法（Heuristics）达到降低信息处理或信息获
+取的成本同时不会受到第三者理性行为的影响。
+羊群效应的提出要追溯到Keynes［1］的“选美
+论（Beauty Contest）”。凯恩斯将股票市场的投资
+比作选美比赛。他认为当竞争者被要求从100张
+照片中选出最漂亮的6张获奖者往往不是那些选
+出自己认为最漂亮的6张的人而是那些选出最能
+吸引其他竞争者的那6张照片的人这使得竞争者
+尽可能的猜测别的竞争者可能的选择并模仿这种
+选择不论自己是否真地认为当选者漂亮从而产
+生了羊群效应。此外他还表达了对长期投资者能
+够预测市场趋势进而做出有效投资决策的说法的
+置疑。他认为如果专业基金经理在意人们对他们
+的决策能力的评价他们最好的选择是羊群行为。
+Mackay ［2］、Kindleberger［3］以及Galbraith［4］发现
+金融危机的发生与羊群效应的不稳定性有着密切
+·62·
+预　　测
+Vol．22No．2　　　　　　　　　　　　FORECASTING　　　　　　　　　　　　2003年第2期
+
+的联系。他们从羊群效应的角度对股价偏离的系
+统性提出了新的解释。此外人们还发现了许多有
+效市场假说所无法解释的现象。为了解释这些现
+象行为金融学得到了发展羊群效应理论也引起
+了人们的注意。
+2　羊群效应理论综述
+一般而言羊群效应的相关文献主要从四个方
+面描述羊群效应：一是支付外部性（Payoff Exter-
+nality）；二是委托代理模型（Principa-
+l agent）；三是
+信息学习模型（Information Cascades）；四是实证性
+羊群效应模型（Empirical Herding）。支付外部性模
+型认为行为主体采取某种行动所获得的支付与随
+后采取相同行动的行为主体的数目成正比。委托
+代理模型显示当市场信息不明朗时基金经理为
+了保持声誉和证明自己的能力往往会采取羊群行
+为。信息学习模型认为在获取先行动者的行动所
+传递的信息之后后行动者往往忽略个人私有信
+息采取相似的行动。而实证性羊群效应模型主要
+研究的是金融证券市场上的羊群行为通过收集数
+据建立实证模型来研究某些行为主体的行为模
+式检验是否存在羊群效应。现有的羊群效应的相
+关文献往往从这四个方面中的一个或几个方面对
+羊群效应理论进行研究。
+2∙1　支付外部性
+现有的支付外部性模型主要研究三类现象：一
+是银行挤兑；二是市场流动性；三是信息获取。
+当发现许多人到银行取款根据先到先服务的
+原则为了避免可能的风险给自己造成的损失也
+争相到银行取款从而造成银行的挤兑现象。Dia-
+mond 和Dybvig［5］认为经济行为主体自我实现的
+要求导致了无效均衡均衡结果完全不可预测从
+而导致了银行挤兑现象。Diamond 和Dybvig 的银
+行挤兑模型得到了两种均衡：一是银行现有储备仍
+然能够支付许诺的高额利润；另一种是银行提前套
+现有高额回报率的投资项目。但是Diamond 和
+Dybvig 无法预测哪个均衡将会发生或者哪个均
+衡更有可能发生。Goldstein 和Pauzner［6］扩展了
+Diamond 和Dybvig 的模型得到了单一均衡模型
+银行挤兑现象只有当基本经济指标低于某个临界
+值时才会发生。Gorton［7］建立了信息引致模型研
+究了银行挤兑现象中的理性信息因素发现银行挤
+兑发生的可能性与储户的机会成本成正比。Jack-
+lin 和Bhattacharya［8］以及Chen［9］建立了在可能存
+在银行挤兑情况下银行事前反向投资模型。Jack-
+lin 和Bhattacharya 认为银行挤兑是某些储户获
+得不利于银行风险资产收益的信息导致的。Chari
+和Jagannathan［10］放宽了对流动性和序列性（Se-
+quential）的限制更加清晰地描述了银行挤兑现象
+的信息动态模型发现信息的非对称性是导致银行
+挤兑的主要原因。以上主要从理论方面研究了银
+行挤兑现象Gorton 和Donaldson［11］则从实证的角
+度对银行挤兑现象存在很大不确定性因素以及银
+行挤兑现象是可预测的这两种观点提出了异议。
+Park［12］回顾了美国历史上几次银行挤兑事件认
+为银行间相互挤兑现象会因为政府介入或新的私
+有信息的公布而结束。Wigmore［13］认为1933年
+发生的银行挤兑事件是由于早期对美元的挤兑造
+成的。
+随着规模经济的出现以及信息引致的交易产
+生了非信息引致的交易所没有的外部性时（Admati
+和Pfleiderer［14］；Chowdhry 和Nanda［15］）不论是
+信息引致还是非信息引致的交易者都希望提高市
+场的流动性增加自己的利益。这就产生了市场流
+动性羊群效应问题。
+当行为主体事先研究了他认为其他行为主体
+即将研究的信息并希望其他行为主体按自己预期
+的方向交易资产时信息获取羊群效应就发生了。
+Brennan［16］、Froot、Scharfstein 和Stein［17］、Dow 和
+Gorton［18］以及Hirshleifer、Subrahmanyam 和Tit-
+man［19］都对此进行了研究发现当行为主体研究
+其他行为主体即将研究的信息时这种研究价值与
+即将研究该信息的行为主体的数目成正比。Bren-
+nan 认为交易者购买信息的预期收益取决于其他
+交易者对该信息的预期收益。Froot、Scharfstein 和
+Stein 指出机构投资者具有高度的同质性他们通
+常关注同样的市场信息采用相似的经济模型、信
+息处理技术、组合及对冲策略。在这种情况下机
+构投资者可能对盈利预警或证券分析师的建议等
+相同的外部信息做出相似的反应在交易行为中表
+现出一定的羊群效应。Hirshleifer、Subrahmanyam
+和Titman 先假设行为主体获取信息存在先后顺
+序某些信息引致的行为主体在其他行为主体之前
+获取信息然后研究这种情况下行为主体的交易行
+为发现在某些情况下行为主体将采取羊群行为
+集中投资于某类股票忽视具有相同外部特征的其
+·63·
+吴福龙等：羊群效应理论及其对中国股市的现实意义
+
+它股票。以往的文献往往假设信息引致的行为主
+体同时获取信息。相比之下Hirshleifer 等的假设
+更接近现实它解释了“跟随领导者（following-the-
+leader）”等交易策略。
+2∙2　委托代理模型
+凯恩斯（Keynes）在《通论》中说道：“违反常规
+的胜利与符合常规的失败相比后者更有利于维护
+声誉。”基金经理为了避免意外的失败往往忽略个
+人的私有信息模仿其他基金经理行为这正是由
+基金经理业绩评价体系的相对性而非绝对性造成
+的从而产生了委托代理模型中的羊群效应。这方
+面的研究主要有Scharfstein 和Stein［20］、Stick-
+el［2122］、Trueman［23］、Rajan［24］、Zwiebel［25］、Hud-
+dart ［26］、Prendergast 和Stole［27］及Graham ［28］。
+Scharfstein 和Stein 建立了一个贝叶斯学习模型来
+研究基金经理的羊群效应发现无论是无能的基金
+经理还是能干的基金经理都倾向于羊群行为不论
+该决策是好是坏。Graham 扩展了该模型研究了
+投资新闻简报（Investment Newsletter）的羊群行
+为发现名声高的新闻简报较之名声低的新闻简报
+更倾向于仿效价值线（Value Line）做出投资决策。
+Stickel 显示泛美机构分析师（Al-
+l American）的收
+益预测较准确同时羊群效应较低原因是泛美机
+构分析师普遍享有高声誉从而推出与Graham 截
+然不同的结论：声誉高的分析师的羊群效应倾向较
+低。原因是Stickel 的结论反映了声誉、能力以及
+其他因素的净效应而没有区别各种因素对羊群效
+应的贡献。Prendergast 和Stole 认为高声誉的分
+析师的羊群效应倾向高是为了维护他们的社会地
+位和收入水平。Trueman 通过假设低支付的先验
+概率较高使得分析师宣布低支付的羊群效应倾向
+更加明显。Zwiebel 以一个市场参考组合作为基金
+经理羊群行为的参考系分析了分析师之间的羊群
+效应。此外Rajan 还对银行家之间的羊群效应进
+行了研究。
+2∙3　信息学习模型
+信息学习模型是对羊群效应的一种最通常的
+解释。它最早由Bikhchandani 等［29］和Welch［30］提
+出。信息学习模型适用于行为主体只能观察到其
+他行为主体的行动而不是私有信息的情形。从后
+行动者通过观察先行动者的决策获取有用的信息
+开始直到忽略个人私有信息仿效先行动者的行
+动成为最优也是最理性的策略为止信息学习现象
+就发生了。该模型常用于解释为什么错误的决策
+不断被行为主体采纳、为什么市场极其脆弱以及为
+什么信息学习模型对初始条件的依赖性很强等问
+题。信息学习模型的相关文献主要包括：Welch、
+Bikhchandani 等、Banerjee［31］、Lee［32］、Smith 和
+Soresen［33］、Banerjee 和Fudenberg［34］、Avery 和
+Zemsky ［35］、Brandenburger 和Polak［36］以及Khanna
+和Slezak［37］。Banerjee 建立了一个序贯决策模型
+解释了以往羊群效应模型所无法解释的存在于技
+术创新的采纳以及投票选举等事件中的羊群效应。
+Bikhchandani 等［29］认为先前若干个行为主体的
+行动决定了羊群效应的方向以及羊群效应是否有
+利于信息的传递。Avery 和Zemsky ［35］认为由于
+存在三方面的不确定性（价值不确定性、事件不确
+定性以及行为主体成分不确定性）造市商与不完
+全信息交易者对价格变化过程的解释截然不同。
+因此先行动者的决策将导致信息学习的发
+生后行动者会完全忽略个人私有信息。Lee 对
+Bikhchandani 等的模型进行了修改发现行为主体
+的行动最终将收敛于某一种行动（买或卖）而这种
+行动的收敛过程就是一种信息缺损的过程。
+2∙4　实证性羊群效应
+要仔细区分一种羊群效应属于何种类型具有
+一定的难度。而实证性羊群效应恰好避开了这个
+问题。实证性羊群效应的研究主要有两个方向：一
+是以特定类型的行为主体为对象；二是以股价分散
+度为指标研究整个市场的羊群行为。前者的相关
+文献主要有：Scharfstein 和Stein、Lakonishok
+等［38］、Peles［39］、Grinblatt、Titman 和Wermers［40］、
+Lamont ［41］、Falkenstein［42］、Nofsinger 和Sias［43］、
+Wylie［44］、Ehrbeck 和Waldmann［45］、Welch［46］以及
+Wermers［47］。他们研究的行为主体包括养老基金、
+互助基金和机构投资者。他们认为群体行为一致
+性（羊群效应）可能是动量策略或正反馈交易策略
+引致的也有可能是模仿上期的交易策略导致的。
+但是Graham 没有发现动量策略导致了群体行为
+的一致性。以往的论文主要检验羊群效应的存在
+性而Graham 主要检验羊群效应模型的理论依据
+以及个体行为者是否仿效市场领导者而不是检验
+个体行为者之间是否相互模仿而这恰恰是以往文
+献研究的重点。Lamont、Ehrbeck 和Waldmann 与
+Graham 的主旨相似。前者发现预测者的年龄与
+羊群行为倾向成正比。后者却未发现这种关系。
+·64·
+Vol．22No．2　　　　　　　　　　　　　　预　　测　　　　　　　　　　　　　　2003年第2期
+
+Ehrbeck 和Waldmann 发现国债预测者的实证模
+型并非声誉引致模型而是一种行为假设模型。
+Ehrbeck 和Waldmann 的实证结果支持国债预测者
+模仿那些预测误差较大的国债预测者的预测的假
+说而不是模仿有能力的国债预测者的预测的假
+说。而Graham 却支持声誉引致模型的解释。
+Scharfstein 和Stein 发现基金经理存在声誉引致
+的羊群效应。Welch 研究了证券分析师的羊群效
+应发现分析师对大众认可（ordinary consensus）的
+股票的推荐倾向为0∙13对以经纪人能力为权重
+确定的股票（broker-quality weighted）的推荐倾向
+为0∙1对以时间为权数确定的股票的推荐倾向为
+0∙13。Lakonishok 等发现养老基金的平均羊群行
+为倾向为2∙7％。这意味在某个时期如果有100
+只养老基金参与某只股票的交易那么买或卖股票
+的养老基金数量比无羊群效应情况下的采用相同
+交易策略的养老基金大约多3只。Wermers 的结
+论为：互助基金的平均羊群行为倾向为3∙4％随
+着持有股票的互助基金数量的增加羊群效应明显
+增强约为5∙5％。Grinblatt、Titman 和Wermers
+也研究了互助基金的羊群效应发现互助基金的平
+均羊群行为倾向为2∙5％。它与别的模型的差别
+可能是由于：（1）样本过大；（2）参与样本股票交易
+的互助基金数量太少只有1个。而Wermers 要
+求至少有5家互助基金持有样本股票。Welch 也
+要求至少有16 个证券分析师推荐样本股票。
+Wermers［48］检查1975年到1984年之间的274只
+互助基金的交易模式发现在按基金投资目的分类
+后互助基金存在同时购买和序列购买（sequential
+buy）同一只股票的行为。Nofsinger 和Sias 发现
+机构投资者持股比例的变化与同期该股收益之间
+存在强正相关。这说明机构投资者从事的正反馈
+交易比个体投资者多或者说机构投资者的羊群
+效应对股价的影响强于个体投资者的羊群效应。
+两者都在一定程度上解释了这种强正相关性。
+但是Nofsinger 和Sias 关于羊群效应是否有
+利于市场的稳定的实证检验还有待完善由于缺乏
+机构投资者持股比例的具体数据（除了年数据）无
+法知道持股比例变化的准确时间这也是羊群效应
+实证模型经常遇到的问题。Nofsinger 和Sias 主要
+研究所有机构投资者而以往的文献只研究机构投
+资者中的互助基金。其次以往的文献大都评价平
+均超常收益而Nofsinger 和Sias 集中于机构投资
+者持股比例发生大变动的证券上。再次Nofsinger
+和Sias 评价的是机构投资者所持资产的收益不
+包括交易成本和交易费用而不是机构投资者实现
+的收益。当以往的文献改用前一种评价方法时结
+论是一样的。
+第二个研究方向的相关文献主要包括：Cont
+和Bouchaud［49］朱少醒、吴冲锋和张则斌［5051］宋
+军和吴冲锋［52］施东晖［53］以及孙培源和施东
+晖［54］。Cont 和Bouchaud 建立了一个股票市场随
+机交流模型发现股价变化的厚尾性分布特性与金
+融市场的羊群效应之间存在明显的关系。朱少醒、
+吴冲锋和张则斌都阐述了这个问题得到了一致的
+结论。宋军和吴冲锋通过检验市场价格波动程度
+大和波动平均水平之下的分散度指标的相对大小
+来研究整个证券市场的羊群效应而不是个别股票
+的羊群效应同时比较了中国和美国股市的实证性
+研究结果发现我国证券市场的羊群行为倾向高于
+美国证券市场的羊群行为倾向以及中美股市都存
+在市场收益率极低时的羊群行为倾向高于市场收
+益率极高时的羊群行为倾向。关于文中所提出的
+一个合理的推断：羊群行为显著时个股的收益率将
+不会太偏离市场收益率的论断由于中国股市的不
+成熟指数编制的不合理还有待进一步证实。此
+外文中用回归方程的系数的正负性来判断羊群行
+为的方法在某些条件也有待进一步研究。对于这
+个问题孙培源和施东晖提出了异议。孙培源和施
+东晖认为上述方法存在一个重要的缺陷即忽略
+了股价分散度的实际变化过程。该方法只能考察
+非常剧烈的羊群行为无法灵敏地搜索小幅度的羊
+群行为。根据该方法无法对中国股市是否存在羊
+群行为做出明确的判断。因此孙培源和施东晖以
+资本资产定价模型为基础建立了一个更加灵敏的
+羊群行为检验模型并据此对中国股市进行了实证
+检验发现在政策干预频繁和信息严重不对称的市
+场环境下我国股市存在一定程度上的羊群行为
+并导致系统风险在总风险中占有较大比例。施东
+晖根据国内证券投资基金季报中投资组合数据对
+其交易行为和市场进行研究发现国内投资基金存
+在较严重的羊群行为这在一定程度上加剧了股价
+波动。
+以上介绍的各种羊群效应模型都是理性羊群
+效应模型。此外还有少量的非理性或近似理性
+（near-rational）的羊群效应模型相关的文献主要
+·65·
+吴福龙等：羊群效应理论及其对中国股市的现实意义
+
+有：Shiller
+和
+Pound［55］、Case
+和
+Shiller［56］、
+Shiller［57～59］、Ritter［60］、Lee 等［61］、Delong 等［62］以
+及Shiller 等［63］。Delong 等认为聪明的钱（smart
+money）实际上会加大愚蠢的钱的影响力而不是
+削弱它的影响力。Shiller 等认为群体行为导致的
+信息传递结果是否正确是由不同群体之间信息传
+递机制决定的而不是像Banerjee 中所说的由各个
+群体的先前若干个行为主体决定的。这种信息传
+递机制可以通过人类学的“交谈分析（conversation
+analysis）”以及社会心理学中“社会认知（socio-cog-
+nition）”来研究揭示了人类行为的不理性因素。
+Asch［64］的实验认为行为主体的羊群行为似乎是
+社会压力或群体压力造成的而Deutsch 和Ger-
+ard［65］的分离实验则认为Asch 实验结果主要是信
+息引致的。
+2∙5　进一步的研究方向
+从20世纪七八十年代到现在短短的十几、二
+十年时间里羊群效应理论得到了不断的发展和完
+善。许多学者从理论和实证两个方面研究了从日
+常生活到证券市场的羊群效应得出了一系列的有
+价值的结论。
+行为金融学是当今金融学的一个前沿课题羊
+群效应理论的发展也不够成熟还存在许多问题有
+待进一步研究和完善。例如如何将现有的理论结
+果应用于政策制订；如何识别羊群效应的类别；如
+何区分羊群效应和反馈交易等策略对股价的影
+响［66］；如何量化人的心理过程准确反映具体行为
+主体的行为模式；在以特定行为主体为对象的研究
+中由于具体数据的缺乏仍无法知道行为主体持
+有资产比例变化的具体时间这给实证研究的准确
+性造成了很大的影响等等。对于这些以及相干问
+题的研究也许会成为将来羊群效应理论的发展方
+向。
+3　羊群效应理论对中国股市的现实意义
+羊群效应有理性和非理性之分理性羊群效应
+有利于加快证券价格发现的速度维护市场的稳
+定；而非理性羊群效应则减缓了价格发现的速度
+加剧了市场的动荡。在中国股市短短十几年的历
+程中跟风行为从未停止过。这十几年中股市的剧
+烈动荡是否与跟风行为有密切的联系呢？倘若有
+那么这种跟风行为是否有利于价格发现机制的作
+用是否有利于维护市场稳定？目前我国学术界
+相关研究主要集中于应用价格分散度来研究市场
+上的羊群效应在以特定行为主体为对象的研究方
+向上还有不够。以上提到的几篇国内文献以及唐
+勇［67］都从不同角度证明了中国股市上存在一定程
+度的羊群效应。那么作为中国股市生力军的互助
+基金是否存在羊群效应以及该羊群效应是否有利
+于市场的稳定都是值得研究的方向。
+目前中国证监会陆续出台了一系列维护市场
+稳定保护中小投资者利益的政策。在这种环境
+下加深对中国股市羊群效应的理解引导有利于
+市场稳定的羊群行为制止加剧市场动荡的羊群行
+为杜绝庄家肆意拉抬股价欺骗中小投资者的现
+象的再次发生成为了当务之急。
+总之不论从目前还是从长远的角度来看加
+深对羊群效应理论的认识对中国证券市场的健康
+发展必将起到重要的促进作用。
+参　考　文　献：
+［1］Keynes J M．The general theory of employmentinterest
+and money ［M ］．London：Macmillan for the Royal Eco-
+nomic Society1936．
+［2］
+MacKay C．Extraordinary popular delusions and the
+madness of crowds．FarrarStraus［M ］．New York：Far-
+rarStraus and Giroux1841．
+［3］Kindleberger C P．Maniaspanicsand crashes：a history
+of financial crises［M ］．3rd ed．New York：WileyJohn
+＆SonsIncorporated1996．
+［4］Galbraith J．A short history of financial euphoria ［M ］．
+USA：Penguin1990．
+［5］Diamond D WPhilip H D．Bank runsdeposit insur-
+anceand liquidity ［J ］．Journal of Political Economy
+198391（3）：401-419．
+［6］Itay GAdy P．Demand deposit contracts and the proba-
+bility of bank runs ［J ］．Federal Reserve Bank of Min-
+neapolis Quarterly Review200024（1）：14-23．
+［7］Gorton G．Bank suspension of convertibility ［J］．Journal
+of Monetary Economics198515（2）：177-193．
+［8］Jacklin C JSudipto B．Distinguishing panics and infor-
+mation-based bank runs：welfare and policy implications
+［J］．Journal of Political Economy198896（3）：569-
+592．
+［9］Chen Y．Bank runs：panic of efficient monitoring ［R ］．
+Working PaperUCLA1995．
+［10］Chari V VRavi J．Banking panicsinformationand
+rational expectations equilibrium ［J ］．Journal of Fi-
+nance198843（3）：749-761．
+［11］Donaldson R G．Sources of panics：evidence from the
+·66·
+Vol．22No．2　　　　　　　　　　　　　　预　　测　　　　　　　　　　　　　　2003年第2期
+
+weekly data ［J ］．Journal of
+Monetary
+Economics
+199230（11）：277-305．
+［12］Park S．Bank failure contagion in historical perspective
+［J ］．Journal of Monetary Economics199128（7）：
+271-286．
+［13］Wigmore B．Was the bank holiday of 1933a run on the
+dollar rather than the banks ［J ］．Journal of Economic
+History198847（5）：739-756．
+［14］Admati A RPaul P．A theory of intra-day patterns：
+volume and price variability ［J ］．Review of Financial
+Studies19881（1）：3-40．
+［15］Chowdhry BVikram N．Mult-
+i market trading and
+market liquidity ［J ］．Review of Financial Studies
+19914（3）：483-511．
+［16］Brennan M J．Latent assets ［J ］．Journal of Finance
+199045（3）：709-730．
+［17］Froot K ADavid S SStein J C．Herd on the street：
+informational inefficiencies in a market with short-term
+speculation［J］．Journal of Finance199247（4）：1461-
+1484．
+［18］Dow JGary G．Arbitrage chains ［J ］．Journal of Fi-
+nance199449（3）：819-849．
+［19］Hirshleifer DAvanidhar SSheridan T ．Security anal-
+ysis and trading patterns when some investors receive in-
+formation before others ［J ］．Journal of Finance1994
+49（5）：1665-1698．
+［20］Scharfstein D SJeremy C S．Herd behavior and invest-
+ment［J ］．American Economic Review199080（3）：
+465-479．
+［21］Stickel S．Predicting individual analyst earnings fore-
+casts ［J ］．Journal of Accounting Research199028
+（2）：409-417．
+［22］Stickel S．Reputation and performance among security
+analysts［J ］．Journal of Finance199247（5）：1811-
+1836
+［23］Trueman B．Analyst forecasts and herding behavior［J］．
+Review of Financial Studies19947（1）：97-124．
+［24］Rajan R G．Why bank credit policies fluctuate：a theory
+and some evidence ［J ］．The Quarterly Journal of Eco-
+nomics1994109（2）：399-441．
+［25］Zwiebel J．Corporate conservatism and relative compen-
+sation［J］．Journal of Political Economy1995103（1）：
+1-25．
+［26］Huddart S．Reputation and performance fee effects on
+portfolio choice by investment advisors ［R ］．Working
+PaperDuke University1996．
+［27］Pendergast CLars S．Impetuous youngsters and jaded
+old-timers：acquiring a Reputation for learning［J］．Jour-
+nal of Political Economy1996104（6）：1105-1134．
+［28］John R G．Herding among investment newsletters：the-
+ory and evidence［J］．Journal of Finance199954（1）：
+237-268．
+［29］Bikhchandani SDavid HWelch I．A theory of fads
+fashioncustomand cultural change as informational
+cascades［J ］．Journal of Political Economy1992100
+（5）：992-1026．
+［30］Welch I．Sequential saleslearningand cascades ［J］．
+Journal of Finance199247（2）：695-732．
+［31］Banerjee A V．A simple model of herd behavior ［J ］．
+Quarterly Journal of Economics1992107（3）：797-
+817．
+［32］Lee I H．On the convergence of informational cascades
+［J］．Journal of Economics Theory199361（2）：395-
+411．
+［33］Smith LPeter S．Pathological models of observational
+learning ［R ］．Working PaperMassachusetts Institute
+of Technology1994．
+［34］Banerjee ADrew F．Word-of-mouth learning ［R ］．
+Working PaperMassachusetts Institute of Technology
+1995．
+［35］Avery CZemsky P．Mult-
+i dimensional uncertainty and
+herd behavior in financial markers［R］．Working Paper
+INSEAD1996．
+［36］Brandenburger ABen P．When managers cover their
+posteriors：making the decision the market wants to see
+［J］．Journal of Finance199627（3）：523-541．
+［37］Khanna NSteve S．The effect of organizational form
+on information flow and decision making：informational
+cascades in group decision making［R］．Working Paper
+University of North Carolina1998．
+［38］Lakonishok JShleifer AVishny R．Impact of institu-
+tional investors on stock prices［J］．Journal of Financial
+Economics199232：23-44．
+［39］Peles N．The determinants of institutional demand for
+equity：an
+empirical
+study ［R ］．Working
+Paper
+Columbia University1993．
+［40］Grinblatt MSheridan T Wermers R．Momentum in-
+vestment strategiesportfolio performanceand herd-
+ing：a study of mutual fund behavior［J］．American Eco-
+nomic Review199585（5）：1088-1105．
+［41］Lamont O．Mocroeconomic forecast and microeconomic
+forecasters ［R ］．Working Paper Cambridge MA
+1995．
+［42］Falkenstein E．Preferences for stock characteristics as
+·67·
+吴福龙等：羊群效应理论及其对中国股市的现实意义
+
+revealed by mutual fund portfolio holdings ［J ］．Journal
+of Finance199651（1）：111-135．
+［43］Nofsinger J RSias R D．Herding and feedback trading
+by institutional and individual investors ［J ］．Journal of
+Finance199954（6）：2263-2295．
+［44］Wylie S．Tests of the accuracy of measures of herding
+using UK data［R ］．Working PaperLondon School of
+Business1996．
+［45］Ehrbeck T Waldmann R．Why are professional fore-
+casters biased？Agency versus behavioral explanation
+［J ］．Quarterly Journal of Economics1996111（1）：
+21-40．
+［46］Welch I．Herding among security analysts ［J］．Journal
+of Financial Economics200058（3）：369-396．
+［47］Wermers R．Mutual fund herding and the impact on
+stock prices［J］．Journal of Finance199954（2）：581-
+622．
+［48］Wermers R．Herdingtrade reversalsand cascading by
+institutional Investors ［R ］．Working PaperUCLA
+1994．
+［49］Rama CBouchaud J P．Herd behavior and aggregate
+fluctuation in financial market：doctoral dissertation［R］．
+University of Paris1998．
+［50］朱少醒张则斌吴冲锋．“羊群效应”与股票收益分布
+的厚尾特性［J］．上海交通大学学报19994（7）：40-43．
+［51］朱少醒吴冲锋张则斌．基于随机图论的“股市羊群
+效应” 模型［J ］．系统工程理论和方法应用20009
+（1）：11-16．
+［52］宋军吴冲锋．证券市场中羊群行为的比较研究［J］．
+统计研究2001（11）：23-27．
+［53］施东晖．证券投资基金的交易行为及其市场影响［J］．
+世界经济2001（10）：26-31．
+［54］孙培源施东晖．基于CAMP 的中国股市羊群行为研
+究———兼与宋军和吴冲锋先生商榷［J ］．经济研究
+2002（2）：64-69．
+［55］Shiller R JPound J．Survey evidence on diffusion of inter-
+est and information among investors ［J］．Journal of Eco-
+nomic Behavior and Organization198912（1）：47-66．
+［56］Case K EShiller R J．The efficiency of the market for
+single family homes ［J ］．American Economic Review
+198979（1）：125-137．
+［57］
+Shiller R J．Stock prices and social dynamics ［J ］．
+Brookings Papers198415（2）：457-498．
+［58］Shiller R J．Initial public offerings：under-pricing and
+investor behavior ［R ］．Working PaperYale Universi-
+ty1989．
+［59］Shiller R J．Speculative prices and popular models ［J ］．
+Journal of Economic Perspectives19904（2）：55-66．
+［60］Ritter J．The long-term performance of initial public of-
+ferings［J］．Journal of Finance199146（1）：3-27．
+［61］Lee C M CShleifer AThaler R H．Investor senti-
+ment and the closed-end fund puzzle［J］．Journal of Fi-
+nance199146（1）：75-110．
+［62］DeLong J BShleifer ALawrence H Set al．．The
+survival of noise traders in financial markets［J］．Journal
+of Business199164（1）：1-20．
+［63］Shiller R JFumiko KYoshiro T ．Why did the nikkei
+crash？Expanding the scope of expectations data collec-
+tion［J］．Review of Economics and Statistics199678
+（1）：156-164．
+［64］
+Asch S．Social psychology ［M ］．NJ：Prentice-Hall
+1952．
+［65］Deutsch MGerard H B．A study of normative and in-
+formational social influences upon individual judgment
+［J］．Journal of Abnormal and Social Psychology1955
+51（3）：629-636．
+［66］唐或曾勇唐小我．反馈交易规则与股票收益自相关
+实证分析［J］．电子科技大学学报200130（3）：300-
+303．
+［67］唐勇．证券投资基金行为分析［EB／OL ］．http：／／
+search．cnstock．com／trsweb／Detail．wct？SelectID ＝
+6697＆RecID＝12001．
+　
+　
+（上接37页）
+［12］Grant R M．The resource-based theory of competitive
+advantage：implications for strategy formulation ［J ］．
+California Management Review199133（3）：114-135．
+［13］李垣刘益．企业竞争战略形成的整合分析模式［J］．
+西安交通大学学报199731（Sup．I）：127-132．
+［14］Prahalad C KHamel G．The core competence of the
+corporation ［J ］．Harvard Business Review199068
+（3）：79-91．
+［15］Stonier T ．The wealth of information—a profile of the
+post-industrial
+economy
+［M ］．London：Thames
+Methuen1983．
+［16］Robinson AStern S．Corporate creativity ［M ］．Berrett-
+Koehler Publishers．Inc1997．
+［17］方润生李垣．企业关键资源及其形成与配置机制
+［J］．南开管理评论20014（4）：6-10．
+［18］Gemunden H GHeydebreck PHerden R．Technolog-
+ical interweavement：a means of achieving innovation
+success［J］．R＆D Management199222：359-371．
+·68·
+Vol．22No．2　　　　　　　　　　　　　　预　　测　　　　　　　　　　　　　　2003年第2期

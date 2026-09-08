@@ -1,0 +1,1387 @@
+NBER WORKING PAPER SERIES
+RELATIONSHIP BETWEEN SOCIAL SECURITY PROGRAMS AND ELDERLY 
+EMPLOYMENT IN JAPAN
+Takashi Oshio
+Satoshi Shimizutani
+Akiko S. Oishi
+Working Paper 31470
+http://www.nber.org/papers/w31470
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+July 2023
+This paper is a part of NBER's project of the International Social Security (ISS). We sincerely 
+thank all ISS participants for their helpful and constructive comments and suggestions. The views 
+expressed herein are those of the authors and do not necessarily reflect the views of the National 
+Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been 
+peer-reviewed or been subject to the review by the NBER Board of Directors that accompanies 
+official NBER publications.
+© 2023 by Takashi Oshio, Satoshi Shimizutani, and Akiko S. Oishi. All rights reserved. Short 
+sections of text, not to exceed two paragraphs, may be quoted without explicit permission 
+provided that full credit, including © notice, is given to the source.
+
+Relationship between Social Security Programs and Elderly Employment in Japan
+Takashi Oshio, Satoshi Shimizutani, and Akiko S. Oishi
+NBER Working Paper No. 31470
+July 2023
+JEL No. H55,J14,J26
+ABSTRACT
+This study examines how elderly employment is associated with social security programs and 
+how it responds to recent reforms in Japan. To this end, we employed a rich and longitudinal 
+dataset of middle-aged and older individuals collected between 2005 and 2018. By incorporating 
+various factors related to social security incentives into a single index of implicit tax (ITAX), we 
+confirmed that the index successfully captured the incentives and their changes incorporated in 
+recent social security reforms. We further estimated the association of ITAX with an individual’s 
+decisions concerning retirement and pension benefit claims. Lastly, we conducted counterfactual 
+simulations to assess the effect of recent social security forms on retirement based on the 
+estimated regression parameters. The results showed that a higher ITAX drove individuals, 
+especially men, to retire and claim benefits earlier.
+Takashi Oshio
+Institute of Economic Research 
+Hitotsubashi University
+2-1 Naka, Kunitachi
+Tokyo 1
+86-8603
+Japan
+oshio@ier.hit-u.ac.jp
+Satoshi Shimizutani 
+Graduate School of Economics 
+University of Tokyo
+7-3-1  Hongo, Bunkyo-ku 
+Tokyo
+113-0033
+Japan
+sshimizutani@gmail.com
+Akiko S. Oishi
+Graduate School of Social Sciences
+Chiba University
+1-33 Yayoi-cho , Inage-ku
+Chiba
+263-8522
+Japan
+akiko.s.o@gmail.com
+
+ 
+ 
+1. Introduction 
+It is commonly and distinctly observed that the employment of older generations—or elderly 
+employment—in advanced countries had been declining in the second half of the last century. 
+However, elderly employment increased in the mid- to late 1990s (Coile et al., 2019). This U-
+shaped reversal of older individuals’ employment rate applies to Japan as well. However, in 
+Japan, the timing of the reversal lagged until the mid-2000s. This is encouraging news, as rapid 
+population aging in Japan is a serious policy issue. The population aging issue is expected to 
+result in labor shortage as well as financial pressure on the sustainability of social security 
+programs. In our previous work, we analyzed the mechanism of the upsurge in elderly 
+employment by examining a variety of factors that appear to have contributed toward it. We 
+found that the upsurge was closely related to a series of social security reforms, notably the 
+extension of the eligibility age for public pension benefits (Oshio et al., 2019). 
+We further examined and quantified the association between elderly employment and 
+social security reforms in Japan during 1980–2018 (Oshio et al., 2018). We used aggregated 
+data to summarize a variety of institutional changes that include extending the eligibility age, 
+reducing the actuarial adjustment factors, and revising the earnings-tested social security 
+program and the wage subsidy for elderly employment into one key parameter referred to as 
+“implicit tax” (ITAX), incurred by individuals working longer or claiming later. Oshio et al. (2018) 
+concluded that a reduction in ITAX under a series of social security reforms was associated with 
+a recent increase in elderly employment rates. This increase is particularly apparent in men and 
+women aged 60–69 and 55–64 years, respectively. This finding was supported by a negative 
+and significant association between ITAX and the elderly employment rate in several regression 
+analyses. 
+This study attempts to expand on these previous analyses to examine how elderly 
+
+ 
+ 
+employment is associated with social security programs and how it has responded to recent 
+reforms. We employed a rich longitudinal dataset of middle-aged and older generations. The 
+advantage of employing individual-level panel data as opposed to aggregated data can be 
+ascribed to three aspects. First, the response of employment to social security reforms can be 
+estimated more accurately using a large sample of individuals with rich variations. Second, we 
+can incorporate heterogeneity among older generations and across cohorts, which is not as 
+effective with aggregated data.1 Third, further to the second point, we can obtain a more 
+nuanced policy implication concerning social security reforms by scrutinizing a variation in the 
+effect of social security reforms among individuals and different cohorts.  
+This paper proceeds as follows. Section 2 explains the dataset used in the study and Section 
+3 describes the background of elderly employment in Japan. Section 4 presents the 
+computation of ITAX and a descriptive analysis based on it. Section 5 presents a regression 
+analysis that examines the association of ITAX with retirement and benefit claiming. Section 6 
+presents counterfactual simulations to assess the effect of recent social security reforms on the 
+probability of retirement, based on the estimated association between ITAX and retirement. 
+Section 7 concludes this paper. 
+ 
+2. Data description 
+ 
+We employed a twelve-wave panel dataset from “The Longitudinal Survey of Middle-Aged and 
+Older Adults” (LSMOA). The survey in question is conducted annually by the Japanese Ministry 
+of Health, Labour and Welfare (MHLW); the data for this study are from 2005 to 2018. The 
+survey was conducted in a nationwide, population-based manner. Samples from the first wave 
+                                                     
+1 Oshio and Shimizutani (2019) carefully examined both the average and the distribution of “health capacity to 
+work” among older generations in Japan to further extract a nuanced policy implication.  
+
+ 
+ 
+were collected in November 2005 using a two-stage random sampling procedure. First, 2,515 
+districts were randomly selected from the 5,280 districts included in the MHLW’s nationwide 
+population-based “Comprehensive Survey of the Living Conditions of People on Health and 
+Welfare,” which was conducted in 2004. The 5,280 districts in this survey were further 
+randomly selected from approximately 940,000 national census districts. Second, 40,877 
+residents aged 50–59 years as of October 30, 2005, were randomly selected from each of the 
+selected districts based on the population of each district. The questionnaires, which the 
+respondents completed by November 2, 2005, were manually distributed to their homes and 
+manually collected several days later.  
+A total of 34,240 individuals responded to the LSMOA (response rate:83.8%). These 
+individuals represent the baseline sample for the subsequent survey waves in this study. The 
+second to fourteenth waves of the survey were conducted in early November of each year 
+from 2006 to 2018; 20,677 individuals further continued participating in the study until the 
+fourteenth wave.2 No new respondents were included after the first wave. We used data from 
+ten cohorts—born from 1946–1955—in the empirical analysis below. The survey covered a 
+variety of variables including employment, health, education, and family status, which were 
+used as covariates in the regression analysis. The unit of the survey is an individual, as opposed 
+to a couple. Therefore, information concerning spouses is rare and does not allow us to 
+perform an analysis of couples’ joint retirement decisions.3  
+ 
+3. Background 
+3.1 Social security reforms 
+                                                     
+2 The average attrition rate per wave is quite low at approximately 4.0%. 
+3 The survey asked a spouse’s income and its source (work or pension benefit) but did not require the work or 
+pension status of a spouse in detail.  
+
+ 
+ 
+This section presents important features concerning social security reforms and elderly 
+employment in Japan, which are key variables in this study. First, we briefly describe a series of 
+social security reforms that took place during the study period. The Japanese government 
+implemented a large reform in the mid-1980s, which has continuously reduced its benefits to 
+date. The reforms implemented between 2005 and 2018 were consistent with an ongoing 
+trend toward lower generosity; gradual increases in eligibility age, minor changes in 
+parameters in the earnings-tested (Zaishoku) pension program, and a revision of the Elderly 
+Employment Stabilization Law that requires firms to either abolish the mandatory retirement 
+age or raise it to 65 years (effective as of April 2006) have been implemented. 
+While the effects of these reforms on retirement are likely to have interacted with each 
+other, previous studies suggest that extending the eligibility age for public pensions is a key 
+driver that affects social security benefits. In Employee Pension Insurance (EPI), a program 
+covering company employees and public sector workers and a pension program mainly 
+examined in this study, a gradual extension of the eligibility age was enacted during the study 
+period. For men, the eligibility age for the flat-rate (first-tier) benefit was 62 in 2005 and 2006 
+but revised to 63 in 2007 and 64 in 2010. This was lastly revised to 65 in 2013, and remained at 
+this level. For women, the corresponding eligibility age for the flat-rate component was 61 
+years in 2005, which was further revised to 65 years in 2018, with a five-year lag with men. 
+Meanwhile, men’s eligibility age for the wage-proportional (second-tier) benefits began 
+increasing from 60 to 61 in 2011 and was scheduled to gradually increase to 65 in 2025; for 
+women, the increase was scheduled to follow the increase with a five-year lag with men.4 
+ 
+                                                     
+4 Women’s eligibility age for the wage-proportional benefit remained at age 60 throughout 2005–2018. There was 
+no change in the benefit multiplier of the wage-proportional benefit, which was fixed at 7.125/1000 for all 
+individuals in the LSMOA sample used for this study. 
+
+ 
+ 
+3.2 Employment and benefit claiming 
+We further review employment status and benefit-claiming, both of which are key dependent 
+variables in the regression analyses. Figure 1 depicts the percentage of those with no paid 
+employment and those receiving pension benefits according to age. The sample pools all 
+individuals in all waves (2005–2018), including the self-employed. “No work” in the figure 
+refers to those who had no paid job. “Receiving pension benefits” indicates those who received 
+any type of public pension benefits, including disability and survivor pension benefits, 
+regardless of their job status.5  
+For men (Panel A), the percentage of those in their 50s with no paid employment is less 
+than 10%. This percentage increased to approximately 20% for those in their 60s, after which it 
+gradually increased with age during their 60s to reach approximately 50% at the age of 70. The 
+percentage of those receiving pension benefits was negligible in their 50s, but surged to over 
+30% at the age of 60 (the earliest age at which old-age pension benefits can be claimed). It 
+further increased to 80% at the age of 65 years and exceeded 90% for men in their late 60s. For 
+women (Panel B), the percentage of those with no paid employment was approximately 30% in 
+their late 50s and exceeded 40% at the age of 60, gradually increasing with age. The 
+percentage of women pension claimers was small but larger than that of men in their 50s and 
+increased to more than 40% at the age of 60. The gap in the proportions of pension claimers 
+between the ages of 59 and 60 was larger for women than men. The percentage of those 
+receiving pension benefits exceeded 90% from the age of 65 and above. 
+Figure 2 shows the evolution of work status and pension benefit claims for the cohort born 
+                                                     
+5 LSMOA does not contain information concerning whether an individual receives either flat-rate or wage-
+proportional benefit or both. The survey only examined whether a respondent received any benefit from public 
+pension program. These benefits include not only old age pension but also other pension programs (i.e., disability 
+pension program). The survey also examined whether a respondent received private pension benefit. However, it 
+did not examine the relevant amount. 
+
+ 
+ 
+in 1948 (age 57 in the 2005 wave). In this figure, we divided work status into full- and part-time 
+work by determining whether an individual worked more than 30 hours per week. The 
+distinction between full- and part-time workers is relevant in Japan, as the country has a large 
+segment of “working pensioners” (Shimizutani, 2011).  
+For men (Panel A), the percentage of those working and not receiving pension benefits 
+occupied approximately 95% of individuals in their 50s, which declined significantly to 
+approximately half of that at age 60, declined even further for those aged 61–65 years, and 
+became negligible above the age of 65. In contrast, the percentage of those not working and 
+receiving benefits began increasing at the age of 60, reaching 35% at the age of 65. The 
+percentage of working pensioners who were full- or part-time workers receiving pension 
+benefits, was approximately30% at the age of 60 and increased with age to more than 55% at 
+the age of 65 and above. For women, although the percentage of those not working and 
+claiming benefits was larger than that of men, the development of their work status and 
+pension claiming according to age was similar to that of men, accordingly reducing the share of 
+working pensioners.  
+ 
+4. ITAX computation and descriptive analysis 
+4.1 Two decision types: retirement and benefit claiming 
+This section presents the description and calculation of ITAX, a key determining measure of the 
+effects of social security incentives on retirement and benefit claiming. Because social security 
+incentives that affect decisions concerning retirement and benefit claiming cover various 
+aspects of public pensions as well as other programs, summarizing them into ITAX—a single 
+index representing tax forces that motivate these decisions—is appropriate.  
+To operationalize ITAX, which is incurred on individuals working longer and claiming 
+
+ 
+ 
+benefits later, we assume that an individual has two decisions to make at each age: (1) whether 
+to keep working or retire and (2) whether to claim benefits. As seen in Figure 2, these two 
+decision types should not be considered similar, as, for example, there is a large number of 
+“working pensioners” in their 60s, implying that these two decision types are two separate 
+factors although likely related to each other. 
+Regarding the first decision (retirement), we examine individuals who have stayed in the 
+labor force as employees in both the private and public sectors (i.e., excluding the self-
+employed) up to one year before the survey year. Regarding the second type of decision 
+(benefit claiming), we examined individuals who had never claimed benefits until one year 
+before the survey year.  
+ 
+4.2 Social security wealth (SSW) and its accrual (SSA) 
+To construct ITAX, we first compute social security wealth (SSW), the discount value of all 
+future social security benefits, by applying the benefit formulae to each age and cohort. While 
+computing social security benefits, we incorporate all institutional parameters related to social 
+security programs, including eligibility ages and benefit multipliers (see the Appendix for the 
+validation of the pension benefit calculator). We also performed a lifetime average estimation 
+for each individual to calculate their old-age pension benefits. Specifically, we conduct a simple 
+projection conditional calculation by assuming that an individual had received the same wage 
+observed in Wave 1 (2005) during the period before that wave.6 When an individual considers 
+                                                     
+6 For this study, we did not compute past wage profiles, considering the formula of wage-indexation of social 
+security benefits in Japan. When calculating the benefits in the formula, the formula reevaluates past wages using 
+the average wage growth rate in the overall economy from the time of receiving the wage in the past to the time 
+of claiming in the present. For simplicity, we assumed that the wage growth rates in previous years were equal 
+across all industries and occupations. We further assumed that each individual had received the same wage 
+observed in wave 1 over the entire period before wave 1. We also simply projected each individual’s contribution 
+months (which were not available from the LSMOA) at each age by applying the average of months of 
+contribution (392 months for men at age 61 and 383 months for women at age 60) according to MHLW statistics 
+in 2016. 
+
+ 
+ 
+whether to work for one more year, we assume that they expect their wages to be consistent 
+with those from the previous year. This assumption is justified in examining the ex-ante effect 
+of ITAX on retirement decisions, considering that many individuals tend to accept reduced 
+wages to avoid an earnings-tested reduction in benefits.  
+To calculate the SSW, we assume that the annual discount rate is 3% for all individuals in 
+the sample. We also calculate the survival rates at each age by the death rates for each year 
+obtained from the MHLW’s Life Tables during 2005–2018 and assume that each individual 
+expects their future survival rate to be consistent with that observed in that year.7 
+We further calculate the SSA and the accrual of the SSW by considering two versions of the 
+SSW, each corresponding to the abovementioned two types of decisions on retirement and 
+benefit claiming. The first is a “retirement version” aimed at capturing the SSA that is realized 
+upon delaying retirement for one year. In this case, we assume that an individual will claim 
+benefits upon reaching the eligibility age, regardless of their retirement decision, and that the 
+benefits will be earnings-tested and possibly reduced under the Zaishoku pension program.  
+The second is the “claiming version” aimed at capturing the SSA obtained by delaying 
+claiming for one year. In this version, we assume that an individual will continue working for an 
+additional year, regardless of their retirement decisions. If an individual delays claiming 
+benefits, they will lose one year of benefits, but will obtain additional benefits in future owing 
+to the additional premium contribution.  
+In both decision types, SSA can have both positive and negative values. A positive value 
+indicates an incentive for delaying retirement and postponing benefit claiming, whereas 
+negative values indicate a disincentive for these behaviors. 
+ 
+                                                     
+7 We examined a dichotomous choice of either working or claiming and did not consider other pathways to 
+retirement, as they are limited in Japan (Oshio and Shimizutani, 2012). 
+
+ 
+ 
+4.3 ITAX 
+Corresponding to the two decision types, we calculate the two types of ITAX. For the 
+retirement version of ITAX, we incorporate (i) an earnings-tested reduction in benefits under 
+the Zaishoku pension program, (ii) wage subsidy for the elderly, (iii) employment insurance 
+premium, and (iv) personal income tax,8 in addition to the retirement version of SSA. This is 
+calculated as follows: 
+ 
+Retirement ITAX = – Retirement SSA + (i) – (ii) + (iii) + (iv).   
+ 
+(1) 
+ 
+For the claiming version of ITAX, we incorporate only benefit reduction under the Zaishoku 
+pension program. This is because we assume that an individual will keep working despite 
+claiming benefits, meaning that they will continue paying the employment insurance premium 
+and personal income tax and obtain a wage subsidy. Therefore, we calculate the claiming 
+version of ITAX as follows: 
+ 
+Claiming ITAX = – Claiming SSA – (i). 
+ 
+ 
+ 
+ 
+(2) 
+  
+In this equation, an earnings-tested reduction in benefits is subtracted from, rather than added 
+to, ITAX, in contrast to the retirement version of ITAX (see Equation [1]), because an individual 
+can avoid an earnings-tested reduction in benefits if they postpone their benefit claiming. It 
+should also be noted that individuals may prevent an earnings-tested reduction in benefits if 
+their wages are expected to be sufficiently low. 
+ 
+                                                     
+8 Almost no income tax needs to be paid if there is no income other than public pension benefits, owing to income 
+deduction applied to public pension benefits. 
+
+ 
+ 
+4.4 Descriptive analysis 
+Figure 3 represents the evolution of the retired version of ITAX along with age for three 
+different cohorts (born in 1947, 1950, and 1953) for men (Panel A) and women (Panel B). For 
+men, ITAX was negative in their 50s for all cohorts, suggesting that individuals were motivated 
+to continue working in this age range. However, ITAX turned positive at the age of 60 years and 
+above, suggesting that individuals had an incentive to retire early in their 60s. ITAX peaked at 
+the age of 60 for men in the 1947 and 1950 cohorts, showing that they were the most highly 
+motivated to retire at that age, whereas ITAX peaked at age 61 for men in the 1953 cohort. This 
+shift in the peak age of ITAX can be attributed to an extension of the eligibility age for claiming 
+the wage-proportional benefit (ERA: early retirement age) from 60 to 61 years.  
+Panel B depicts the development of ITAX for women. Similar to men, ITAX changed from 
+negative to positive at the age of 60 years. However, women’s ITAX had larger negative values 
+before the age of 60 years and smaller positive values in their 60s. The shift in the peak after 
+the age of 60, albeit less pronounced than that of men, is attributable to the gradual increase 
+in the eligibility age for the flat-rate benefit (NRA: normal retirement age) from age 61 (for the 
+1947 cohort) to age 64 (for the 1953 cohort). 
+Figure 4 uses, as an example, the 1948 cohort to decompose the retirement version of ITAX 
+for men (Panel A) and women (Panel B). The decomposition is based on Equation (1). 
+Moreover, all factors are evaluated in terms of the ratio (percentage) of the pre-retirement 
+wage. For men, ITAX was negative for the ages of 58 and 59 when SSA was negative, indicating 
+that individuals expected future social security benefits to increase if they stayed in the labor 
+force until they reached the eligible age. The major change occurred at the age of 60, when 
+ITAX turned from negative to positive for two major reasons. First, the negative effect of SSA on 
+ITAX decreased markedly despite SSA remaining positive, meaning that the core component of 
+
+ 
+ 
+the public pension program did not provide a disincentive to work. Second, an earnings-tested 
+reduction in benefits under the Zaishoku program substantially raised ITAX for individuals in 
+their early 60s. This negative effect of the Zaishoku program persisted for the age of 65 years 
+and above. However, the effect was diminished. Personal income raised ITAX across all ages 
+from 58 to 68, consistently discouraging individuals from working. However, the wage subsidy 
+reduced ITAX for those aged 60 to 64. Similar patterns are observed for women in Panel B of 
+Figure 4, with a notable change from positive to negative ITAX at the age of 60. Compared with 
+the results for men, ITAX showed significantly larger negative values for women before the age 
+of 60. 
+Figure 5 shows the distribution of ITAX at ages 58, 60, and 65 years for men (Panel A) and 
+women (Panel B), both for the cohort born in 1948. Because the pension formulae and other 
+institutional factors were common for individuals across cohorts, the observed variations were 
+mainly attributed to past total wages. For men, Panel A shows that ITAX was negative at the 
+age of 58, except for the fifth (i.e., highest) quintile, and positive at the ages of 60 and 65, 
+except for the first (i.e., lowest) quintile. For those aged 65, ITAX in the fifth quintile was 
+significantly higher than that in the lower-income groups, possibly because the earnings test 
+under the Zaishoku program was applied to the highest-income group. 
+Panel B shows that ITAX for women was distributed in patterns similar to those for men. 
+However, ITAX was negative for all quintiles at the age of 58 years, with absolute values much 
+higher than those for men. Even at the age of 60 years, ITAX was negative for the three lower 
+quintiles, and the value in the fifth quintile was significantly lower than that of men. An ITAX 
+jump in the fifth quintile suggests that the earnings test was applied only to the highest-income 
+group. At the age of 65 years, ITAX was generally lower for women than for men. Moreover, 
+there was no increase in the fifth quintile, probably reflecting women’s lower wage income. 
+
+ 
+ 
+ 
+5．Regression analysis 
+5.1 Model specification 
+This section presents a regression analysis that links retirement and claiming decisions to ITAX 
+and determines the effect of institutional changes on decisions concerning retirement and 
+benefit claiming. For simplicity, we treat retirement and claiming decisions separately and 
+ignore their interdependent relationships. Therefore, we estimate the following two models (of 
+men and women) separately for the ages between 58 and 70. 
+ 
+𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑖𝑖,𝑡𝑡= α + 𝛽𝛽 𝑟𝑟𝑟𝑟𝑟𝑟𝑟𝑟𝑟𝑟𝑟𝑟𝑟𝑟𝑟𝑟𝑟𝑟 𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝑖𝑖,𝑡𝑡+ 𝑿𝑿𝑖𝑖,𝑡𝑡𝛄𝛄+ 𝑒𝑒𝑖𝑖,𝑡𝑡  
+(3) 
+𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝑖𝑖,𝑡𝑡= α + 𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽 𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝐼𝑖𝑖,𝑡𝑡+ 𝑿𝑿𝑖𝑖,𝑡𝑡𝛄𝛄+ 𝑒𝑒𝑖𝑖,𝑡𝑡  
+(4) 
+ 
+In equation (3), Retirementi,t is a binary variable of retirement, indicating whether individual 
+i retired in year t (= 1) or not (= 0), conditional on continuing work until year t-1. For this 
+equation, we assume that an individual claims benefits upon reaching the eligibility age 
+regardless of their retirement decision. Respondents remained in the sample if they kept 
+working and were excluded once they stopped working. In equation (4), Claimingi,t is a binary 
+variable of benefit claiming, indicating whether individual i claimed in year t (= 1) or not (= 0), 
+conditional on not claiming until year t-1. Here, we assume that an individual keeps working 
+regardless of their decision concerning benefit-claiming. Respondents remained in the sample 
+if they did not claim benefits and were excluded once they did. 
+A vector of covariates is indicated by Xi,t, which includes (i) SSW and lifetime income 
+earnings, both evaluated in terms of the ratio to income one year before the survey year, (ii) 
+engaged in full-time work and white-collar work one year before the survey year, (iii) binary 
+
+ 
+ 
+variables of health (measured by diagnosed prevalent non-communicable diseases, poor self-
+rated health9, any problems concerning ADLs, and smoking), (iv) caring for family member(s), 
+(v) marital status (having a spouse) and (vi) education (graduated from junior college or college 
+and above; the baseline value is high school or below), as well as (vii) age and its square. 
+   We performed a regression analysis by estimating five types of methods: linear probability 
+models (pooled, fixed-effects, and random-effects models) and probit models (pooled and 
+random-effects models) for men and women, respectively. The error term ei,t is decomposed 
+into an individual-level fixed effect and residuals in the random- and fixed-effects models. 
+Educational attainment is automatically excluded in fixed-effects models because it is a time-
+indifferent individual attribute. 
+ 
+5.2 Estimation results 
+Table 1 shows the estimated coefficients (or the marginal effects for the probit models) of ITAX, 
+the main variable of interest, and other variables across the five models that explain retirement 
+for men. The size of the coefficient varied from 0.140 to 0.229. For example, the coefficient was 
+0.229 in the LPM with fixed effects, meaning that a 10% reduction in ITAX increases the 
+probability of retirement by approximately 2.3%. As shown in Figure 3, ITAX increased by 
+approximately 32% between the ages of 59 and 60 years for men born in 1950. Considering 
+this together with the estimated coefficient, it is safe to conclude that the change in ITAX from 
+age 59 to 60 years increased the probability of retirement by 7.3%. For the LPM regressions, 
+the F test rejects the null hypothesis that all individual effects are equal to zero, and the 
+Hausman test rejects the null hypothesis that the individual effects are uncorrelated with the 
+                                                     
+9 The LSMOA asks respondents to choose their self-rated health from very good, good, relatively good, relatively 
+poor, poor and very poor. We construct a binary variable of poor self-rated health by allocating 1 to those who 
+chose poor or very poor and 0 to others. 
+
+ 
+ 
+other explanatory variables. In addition to the key results, we observe that higher SSW 
+encourages retirement, while higher lifetime income and white-collar work one year before the 
+survey year discourage it. As expected, poor health conditions and caring for family 
+members(s) tended to be positively associated with retirement. 
+Table 2 summarizes the estimated associations between ITAX and retirement and benefit 
+claims for men and women. As shown in this table, ITAX is positively associated with both 
+retirement and benefit-claiming for both men and women. By comparing the sizes of the 
+estimated coefficients and marginal effects, we observe that men are more sensitive to ITAX 
+than women, and that benefit claiming is more sensitive to ITAX than retirement for both men 
+and women. 
+ 
+6. Counterfactual simulations 
+6.1 Assumptions 
+Based on the estimated association between ITAX and retirement decisions, we conducted 
+counterfactual simulations to assess the effect of recent social security reforms on the 
+probability of retirement. Accordingly, we first calculated the counterfactual values of ITAX and 
+SSA for each individual in each year by assuming that institutional parameters related to social 
+security programs were fixed at their values/schemes before the 1985 Pension Reform, which 
+incorporated major changes in public pension programs. Most importantly, we suppose that 
+the eligibility age was fixed at 60, contrary to their gradual increase starting in 2001. We also 
+suppose that the benefit multipliers for the wage-proportional benefit, the benefit per month 
+of contribution for the flat-rate benefit, EPI and NPI premium rates, the formula of an earnings-
+tested reduction in benefits under the Zaishoku pension programs, and other institutional 
+parameters and schemes remained intact, to elucidate the effect of the 1985 Pension Reform 
+
+ 
+ 
+and their subsequent reforms.  
+We further substitute the actual ITAX and SSW by their counterfactual values and simulate 
+the evolution of the counterfactual probability of retirement of those aged 60–69 years in 2006 
+and 2018 using the estimated regression parameters. All the other variables were maintained 
+at their actual values. For the simulations, we use the estimation results of the LPM with fixed 
+effects.  
+ 
+6.2 Simulation results 
+The simulation results are summarized in Figures 6–10. Figure 6 compares the age evolutions 
+between the actual and counterfactual values of ITAX in 2006 and 2018. This figure 
+underscores the fact that a series of reforms in the past two decades have substantially 
+reduced the disincentive for work, especially for those aged 60–64 years. For both men and 
+women in this age group, the actual ITAX is 25–38% and 23–25% lower than the counterfactual 
+ITAX for men and women, respectively. This difference is largely accounted for by a reduction in 
+the threshold for the earnings test under the Zaishoku program and the introduction of a wage 
+subsidy for elderly employment. Meanwhile, Figure 7 shows a substantial reduction in SSW for 
+ages 55–59 largely owing to postponed eligibility ages from 60, encouraging individuals to stay 
+in the labor force during the late 50s.  
+   We further move to the simulation results for employment. First, Figure 8 compares the 
+observed and predicted probabilities of retirement at age 60 by year based on the results of 
+the LPM with FE. For both men and women, the predicted probabilities of retirement are 
+relatively upwardly biased toward the actual ones, but roughly trace their levels and changes. 
+The effect of a series of social security reforms since the mid-1980s is demonstrated by the 
+gaps between the curves of the predicted and counterfactual retirement probabilities, as 
+
+ 
+ 
+shown in Figure 9. Panel A in this figure shows that the curve of the predicted probability 
+remains below that of the counterfactual probability; the vertical distance between the two 
+curves ranges from 6–12% and 3–4% for men and women, respectively.  
+Panel B depicts the curves for those born in 1948, who were 58 years old, in 2006. The 
+vertical distance between the two curves remained relatively stable at approximately 9 and 3% 
+for men and women, respectively, until approximately 2012 (when the cohort was 64 years 
+old), and then became negligible after a sharp drop in the curves of counterfactual 
+probabilities in 2013 (when the cohort was 65 years old). This result suggests that the effect of 
+a series of reforms has concentrated largely on those aged 64 years or below, while there is a 
+limited effect on those aged 65 years or above.  
+Lastly, Figure 10 compares the predicted and counterfactual employment survival curves 
+for men and women, based on the estimated cross-sectional employment probabilities. As 
+seen in this figure, the predicted employment curve in 2018 is located above the 
+counterfactual curve in that year for both men and women, pointing to the positive effect of a 
+series of reforms on employment. We also noticed no substantial differences between the 
+predicted curves in 2006 and 2018, suggesting that a large portion of the effect of social 
+security reforms since the mid-1980s was realized in the early 2000s. 
+ 
+7. Conclusion 
+A previous study (Oshio et. al., 2018) employed aggregated data to confirm that a reduction in 
+the tax force under a series of social security reforms to reduce generosity between 1980 and 
+2018 was associated with the recent rebound of elderly employment rates. This study aims to 
+elaborate on the association between the tax force, retirement, and benefit claiming using a 
+rich longitudinal dataset in Japan. Furthermore, we aimed to determine the effect of social 
+
+ 
+ 
+security incentives from other factors, such as health status, on an individual’s decisions 
+concerning retirement and benefit-claiming. Lastly, we assess the effect of a series of recent 
+social security reforms on retirement by conducting counterfactual simulations.  
+Our findings confirm that an individual’s decisions on retirement and benefit claiming are 
+closely associated with social security incentives evaluated based on the ITAX construct. 
+Furthermore, the counterfactual simulation results suggest that a series of social security 
+reforms in recent years aimed at reducing generosity have encouraged individuals to keep 
+working and postpone claiming benefits, especially among men aged 60–64 years. 
+However, this study has several limitations. First, we ignore the possibility that social 
+security reform (or its absence) affects covariates in our counterfactual prediction. For 
+instance, the change in net income caused by the reform affects health, which may 
+consequently affect the elderly’s decisions on work and retirement, despite the magnitude of 
+such a feedback effect being limited. 
+Second, this study ignores the simultaneity of decisions concerning retirement and benefit 
+claims. The fact that working pensioners shape a key pathway from being a part of the 
+workforce to retirement suggests that the two decisions are not identical. However, we 
+estimate regression models to explain these two decisions separately, assuming, for simplicity, 
+that one decision does not affect the other. There is need to analyze the joint decision making 
+of retirement and claiming behavior to fully understand the elderly’s behavioral responses to 
+social security incentives.  
+Third, employment status could have been divided into full-time and part-time 
+employment, especially because a large portion of working pensioners are part-time workers, 
+as shown in Figure 2. To avoid complexity when computing SSW, we assumed a dichotomous 
+choice of either working or exiting the labor force, regardless of the hours worked.  
+
+ 
+ 
+Furthermore, the possibility of returning to work after staying outside the labor market for 
+some time needs to be considered. We excluded individuals from the analysis once they had 
+retired (or initially claimed benefits), ignoring the complexity of the dynamics of the elderly’s 
+decisions on work. 
+Future research should explore specific policy scenarios using the framework of this study. 
+One possible agenda is the effect of an extension of the mandatory retirement age—for 
+instance, up to the age of 70—or an extension of the eligibility age to claim public pension 
+benefits above the age of 65. We believe that these simulations could be particularly 
+informative for a more effective policy that considers the heterogeneity of older generations.  
+ 
+ 
+
+ 
+ 
+References  
+ 
+Coile, Courtney, Kevin Milligan, and David A. Wise eds. 2019. Social Security Programs and 
+Retirement around the World: Working Longer. Chicago: University of Chicago Press. 
+Oshio, Takashi, Akiko Oishi and Satoshi Shimizutani. 2018. “Social Security Programs and Elderly 
+Employment in Japan.” NBER Working Paper 25243.  
+Oshio, Takashi and Satoshi Shimizutani. 2012. “Disability Pension Program and Labor Force 
+Participation in Japan: A Historical Perspective,” In Social Security Programs and 
+Retirement around the World: Historical Trends in Mortality and Health, Employment, 
+and Disability Insurance Participation and Reforms, edited by David A. Wise, 391-417. 
+Chicago: University of Chicago Press. 
+Oshio, Takashi and Satoshi Shimizutani.2019. “Health Capacity to Work and Its Long-term 
+Trends among the Japanese Elderly.” Journal of the Japanese and International 
+Economies, 51: 76-86. 
+Oshio, Takashi, Emiko Usui and Satoshi Shimizutani. 2019. “Labor Force Participation of the 
+Elderly in Japan.” In Social Security Programs and Retirement around the World: Working 
+Longer, edited by Courtney Coile, Kevin Milligan, and David A. Wise, 163-178. Chicago: 
+University of Chicago Press. 
+Shimizutani, Satoshi. 2011. “A New Anatomy of the Retirement Process in Japan.” Japan and 
+the World Economy 23(3): 141-152. 
+Shimizutani, Satoshi and Takashi Oshio. 2013. “Revisiting the Labor Supply Effect of Social 
+Security Earnings Test: New Evidence from Its Elimination and Reinstatement in 
+Japan.” Japan and the World Economy 28:99-111. 
+ 
+ 
+
+ 
+ 
+Figure 1. Work status and benefit claiming 
+Panel A: Men 
+ 
+ 
+ 
+Panel B: Women 
+ 
+Note: The sample pools all observations for all waves (2005–2018). 
+ 
+ 
+ 
+0
+20
+40
+60
+80
+100
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+No work
+Receiving pension benefits
+Age (years)
+Percent
+0
+20
+40
+60
+80
+100
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+No work
+Receiving pension benefits
+Age (years)
+Percent
+
+ 
+ 
+Figure 2. Evolution of work status and benefit claiming:  
+the case of the cohort born in 1948 
+ 
+Panel A: Men 
+ 
+Panel B: Women 
+ 
+ 
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+Work + No pension
+Full-time work + Pension
+Part-time work + Pension
+No work + No pension
+No work + Pension
+Age (years)
+Percentage
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+Work + No pension
+Full-time work + Pension
+Part-time work + Pension
+No work + No pension
+No work + Pension
+Age (years)
+Percentage
+
+ 
+ 
+Figure 3. Development of ITAX with age by cohort 
+Panel A: Men 
+ 
+Panel B: Women 
+ 
+ 
+ 
+ 
+-20
+-10
+0
+10
+20
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+Born in 1947
+Born in 1950
+Born in 1953
+%
+Age (years)
+-40
+-30
+-20
+-10
+0
+10
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+Born in 1947
+Born in 1950
+Born in 1953
+%
+Age (years)
+Bor n i n
+1953
+1950
+1947
+1953
+1950
+1947
+Age i n wave 1
+52
+55
+58
+52
+55
+58
+ERA
+60- 61
+60
+60
+60
+60
+60
+NRA
+65
+65
+63- 64
+64
+62- 63
+61
+Women
+Men
+
+ 
+ 
+Figure 4. Decomposition of ITAX for each age: the case of the cohort born in 1948 
+Panel A: Men 
+ 
+ 
+Panel B: Women 
+ 
+ 
+ 
+
+ 
+ 
+Figure 5. Distribution of ITAX according to age: the case of the cohort born in 1948 
+Panel A: Men 
+ 
+Panel B: Women 
+ 
+ 
+-2.4
+1.9
+-18.8
+6.1
+3.0
+-10.4
+19.5
+4.5
+-4.7
+25.3
+7.3
+0.3
+28.9
+26.8
+-30
+-20
+-10
+0
+10
+20
+30
+58
+60
+65
+10%
+25%
+50%
+75%
+90%
+%
+Age (years)
+-45.0
+-1.6
+3.8
+-43.4
+-1.6
+3.8
+-38.6
+-0.7
+4.3
+-20.9
+1.3
+5.8
+-10.1
+18.8
+11.8
+-60
+-50
+-40
+-30
+-20
+-10
+0
+10
+20
+58
+60
+65
+10%
+25%
+50%
+75%
+90%
+%
+Age (years)
+
+ 
+ 
+Table 1. Estimation results of the regression models to explain retirement for men 
+ 
+Note. 62,610 observations of 10,482 men.  
+*** p < 0.001, ** p < 0.01, * p < 0.05, ✝ p < 0.1 
+ 
+ 
+Coef.
+(SE)
+Coef.
+(SE)
+Coef.
+(SE)
+dy /dx
+(SE)
+dy /dx
+(SE)
+ITAX
+0.161 *** (0.010)
+0.229 *** (0.011)
+0.192 *** (0.010)
+0.140 *** (0.010)
+0.174 *** (0.014)
+SSW 
+0.011 *** (0.001)
+0.009 *** (0.001)
+0.011 *** (0.001)
+0.009 *** (0.001)
+0.010 *** (0.001)
+Lifetime income 
+-0.001 *** (0.000)
+-0.001 *** (0.000)
+-0.001 *** (0.000)
+-0.001 *** (0.000)
+-0.001 *** (0.000)
+Full-time work
+-0.036 *** (0.005)
+-0.035 *** (0.005)
+-0.039 *** (0.005)
+-0.025 *** (0.004)
+-0.033 *** (0.006)
+White-collar work 
+0.000
+(0.002)
+0.000
+(0.004)
+-0.005
+(0.003)
+-0.001
+(0.002)
+0.001
+(0.004)
+Diabetes
+0.008 *
+(0.003)
+0.000
+(0.007)
+0.006
+(0.005)
+0.007 *
+(0.003)
+0.007
+(0.005)
+Heart disease
+0.010 +
+(0.005)
+0.004
+(0.008)
+0.012 +
+(0.007)
+0.009 *
+(0.005)
+0.016 *
+(0.007)
+Stroke
+0.057 *** (0.009)
+0.089 *** (0.013)
+0.089 *** (0.011)
+0.041 *** (0.007)
+0.065 *** (0.011)
+Hypertension
+-0.001
+(0.002)
+-0.002
+(0.005)
+-0.004
+(0.004)
+-0.001
+(0.002)
+-0.001
+(0.004)
+Hyperlipidemia
+-0.016 *** (0.003)
+-0.017 *** (0.005)
+-0.019 *** (0.004)
+-0.016 *** (0.003)
+-0.022 *** (0.005)
+Cancer
+0.052 *** (0.008)
+0.063 *** (0.009)
+0.061 *** (0.009)
+0.036 *** (0.006)
+0.048 *** (0.009)
+Poor SRH
+0.017 *** (0.003)
+0.006
+(0.004)
+0.013 *** (0.004)
+0.016 *** (0.003)
+0.018 *** (0.004)
+ADL problem
+-0.047 *** (0.005)
+-0.043 *** (0.006)
+-0.049 *** (0.005)
+-0.036 *** (0.004)
+-0.046 *** (0.006)
+Smoking 
+0.001
+(0.002)
+-0.038 *** (0.005)
+-0.012 **
+(0.004)
+0.002
+(0.002)
+-0.004
+(0.004)
+Caregiving 
+-0.020 *** (0.004)
+-0.024 *** (0.005)
+-0.023 *** (0.004)
+-0.018 *** (0.004)
+-0.026 *** (0.005)
+Married
+-0.019 *** (0.004)
+0.009
+(0.013)
+-0.025 *** (0.007)
+-0.018 *** (0.004)
+-0.028 *** (0.007)
+Junior high school
+0.006 +
+(0.003)
+0.000 *** (omitted)
+0.018 *
+(0.007)
+0.006 +
+(0.003)
+0.008
+(0.006)
+College or above 
+-0.011 *** (0.003)
+0.000 *** (omitted)
+-0.026 *** (0.006)
+-0.012 *** (0.003)
+-0.023 *** (0.005)
+Age 
+-0.001
+(0.007)
+-0.067 *** (0.008)
+-0.074 *** (0.007)
+0.017 *
+(0.007)
+0.050 **
+(0.016)
+Age2/100
+0.002
+(0.006)
+0.068 *** (0.006)
+0.071 *** (0.006)
+-0.012 *
+(0.006)
+-0.027 *
+(0.013)
+Pooled LPM
+LPM with FE
+LPM with RE
+Pooled probit
+Probit with RE
+
+ 
+ 
+Table 2. Estimated associations between ITAX and retirement/benefit claiming 
+ 
+ 
+*** p < 0.001 
+ 
+Coef.
+(SE)
+Coef.
+(SE)
+Coef.
+(SE)
+dy /dx
+(SE)
+dy /dx
+(SE)
+Retirement
+Men
+0.161 *** (0.010)
+0.229 *** (0.011)
+0.192 *** (0.010)
+0.140 *** (0.010)
+0.174 *** (0.014)
+Women
+0.119 *** (0.011)
+0.130 *** (0.012)
+0.122 *** (0.011)
+0.108 *** (0.011)
+0.121 *** (0.013)
+Benefit claiming
+Men
+0.209 *** (0.013)
+0.269 *** (0.015)
+0.209 *** (0.013)
+0.076 *** (0.012)
+0.103 *** (0.014)
+Women
+0.609 *** (0.014)
+0.701 *** (0.016)
+0.617 *** (0.014)
+0.480 *** (0.016)
+0.546 *** (0.018)
+Probit with RE
+Pooled probit
+LPM with RE
+LPM with FE
+Pooled LPM
+
+ 
+ 
+Figure 6. Actual and counterfactual ITAX during 2006–2018 
+ 
+ 
+ 
+-50
+-40
+-30
+-20
+-10
+0
+10
+20
+30
+40
+50
+60
+55 56 57 58 59 60 61 62 63 64 65 66 67 68 69
+55 56 57 58 59 60 61 62 63 64 65 66 67 68 69
+Actual
+Counterfactual
+%
+Age  (years)
+Men
+Women
+
+ 
+ 
+Figure 7. Actual and counterfactual SSW during 2006–2018  
+ 
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+55 56 57 58 59 60 61 62 63 64 65 66 67 68 69
+55 56 57 58 59 60 61 62 63 64 65 66 67 68 69
+Actual
+Counterfactual
+100,000 Euros at 2018 prices
+Age  (years)
+Men
+Women
+
+ 
+ 
+Figure 8. Actual and predicted probabilities of retirement at age 60  
+ 
+0
+5
+10
+15
+20
+25
+Actual
+Predicted
+Men
+Percent
+Women
+
+ 
+ 
+Figure 9. Predicted and counterfactual probabilities of retirement 
+Panel A: At age 60 
+ 
+Panel B: Cohort born in 1948 
+ 
+0
+5
+10
+15
+20
+25
+Predicted
+Counterfactual
+Men
+Percent
+Women
+0
+5
+10
+15
+20
+25
+30
+35
+40
+Predicted
+Counterfactual
+Men
+Percent
+Women
+
+ 
+ 
+Figure 10. Employment survival curves: predicted vs. counterfactual 
+ 
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+110
+55 56 57 58 59 60 61 62 63 64 65 66 67 68 69
+55 56 57 58 59 60 61 62 63 64 65 66 67 68 69
+Predicted in 2006
+Predicted in 2016
+Counterfactual in 2018
+Age (years)
+%
+Men
+Women
+
+ 
+ 
+Appendix: Validation of the pension benefit calculator 
+This appendix confirms the validity of the pension benefit calculator employed in this study by 
+comparing actual and projected social security benefits. For men, the distribution of the 
+simulated pension benefits is on the right of the distribution of the actual benefits (the 
+medium value was 1.14 million JPY for actual benefits and 1.33 million JPY for simulated ones). 
+However, the simulated distribution failed to capture higher values (JPY ≥ 3 million). This was 
+also the case for women. However, higher values were reasonably well predicted. 
+Consequently, the bias, defined as the prediction error divided by the average, is upwardly 
+biased for both genders, as shown in Figure A2. 
+ 
+ 
+ 
+
+ 
+ 
+Figure A1. Distribution of observed and simulated pension benefits 
+Panel A: Men 
+ 
+ 
+  Observed: Mean 1212, Medium 1080, SD 758                
+  Simulated: Mean 1329, Medium 1291, SD 622                 
+Panel B: Women 
+ 
+ Observed: Mean 700, Medium 600, SD 509                  
+ Simulated: Mean 853, Medium 892, SD 476  
+ 
+ 
+ 
+0
+2.0e-04
+4.0e-04
+6.0e-04
+8.0e-04
+Density
+0
+1000
+2000
+3000
+4000
+pension (annual, thousand JPY)
+Observed
+Simulated
+0
+2.0e-04
+4.0e-04
+6.0e-04
+8.0e-04
+Density
+0
+1000
+2000
+3000
+4000
+pension (annual, thousand JPY)
+Observed
+Simulated
+0
+5.0e-04
+.001
+.0015
+Density
+0
+1000
+2000
+3000
+4000
+pension (annual, thousand JPY)
+Observed
+Simulated
+0
+5.0e-04
+.001
+.0015
+Density
+0
+1000
+2000
+3000
+4000
+pension (annual, thousand JPY)
+Observed
+Simulated
+
+ 
+ 
+Figure A2. Estimation errors of pension benefits 
+ 
+                 Panel A: Men                     Panel B: Women 
+ 
+ 
+0
+.2
+.4
+.6
+.8
+Density
+-3
+-2
+-1
+0
+1
+2
+3
+error/mean
+0
+.2
+.4
+.6
+.8
+1
+Density
+-3
+-2
+-1
+0
+1
+2
+3
+error/mean

@@ -1,0 +1,2479 @@
+Predicting Mutual Funds’ Performance using Deep Learning and Ensemble Techniques
+Nghia Chu1
+Vega Corporation, Tang 3, 106 Hoang Quoc Viet, Nghia Do, Cau Giay, Hanoi, Vietnam
+cdnghia79@gmail.com
+Binh Dao
+Hanoi University, Km 9, Nguyen Trai, Nam Tu Liem, Hanoi, Vietnam
+binhdtt@hanu.edu.vn
+Nga Pham
+Monash Centre for Financial Studies, 30 Collins St, Melbourne, VIC 3000, Australia
+nga.pham@monash.edu
+Huy Nguyen
+The University of Melbourne, Melbourne Connect 700 Swanston St, Carlton, VIC 3053, Australia
+huyxuan.nguyen@student.unimelb.edu.au
+Hien Tran
+Hanoi University, Km 9, Nguyen Trai, Nam Tu Liem, Hanoi, Vietnam
+hientttfmt@hanu.edu.vn
+Abstract
+Predicting fund performance is beneficial to both investors and fund managers and yet is a challenging task. In this
+paper, we have tested whether deep learning models can predict fund performance more accurately than traditional
+statistical techniques. Fund performance is typically evaluated by the Sharpe ratio, which represents the risk-adjusted
+performance to ensure meaningful comparability across funds. We calculated the annualized Sharpe ratios based on the
+monthly returns time series data for more than 600 open-end mutual funds investing in listed large-cap equities in the
+United States. With five different forecast horizons ranging from 6 to 24 months, we find that long short-term memory
+(LSTM) and gated recurrent units (GRU) deep learning methods, both trained using modern Bayesian optimization,
+provide higher accuracy in forecasting funds’ Sharpe ratios than traditional statistical ones. An ensemble method which
+combines forecasts from LSTM and GRU achieves the best performance of all models. There is evidence to say that
+deep learning and ensembling offer promising solutions in addressing the challenge of fund performance forecasting.
+Keywords: deep learning, forecasting, time series, fund performance, LSTM, GRU, ensemble.
+1. Introduction
+Investment funds are important intermediaries of the
+world’s financial market. Globally, there were more than
+126,000 regulated mutual funds in 2020.
+In the United
+States alone, there were around 9,000 mutual funds with
+24 trillion dollars of assets under management (AUM) in
+2020, according to the Investment Company Fact Book by
+(ICI, 2021). Choosing the right investment fund has al-
+ways been challenging for institutional and individual in-
+vestors. Fund performance is driven by various factors, in-
+cluding the fund managers’ understanding of the macro en-
+vironment, industry factors, stock performance, and trad-
+1Corresponding Author
+ing skills. While it is always written in most funds’ prospec-
+tus that past performance is not indicative of future perfor-
+mance, there has been ample empirical literature that doc-
+uments fund performance persistence, for example, among
+fixed income funds as in (Kahn and Rudd, 1995), equity
+funds and real estate funds (Arnold et al., 2019). Some
+attribute performance persistence of mutual funds to man-
+agers’ skills (Berk and van Binsbergen, 2015, Kacperczyk
+et al., 2014) whereas others explain performance persis-
+tence by common factors affecting stock returns and per-
+sistent differences in fund expenses and transaction costs
+(Carhart, 1997) and capital flows (Lou, 2012).
+While the asset pricing literature centers around fac-
+tors that explain fund performance and performance pre-
+dictability, the topic of forecasting fund performance seems
+Preprint submitted to XXX
+August 1, 2023
+arXiv:2209.09649v3  [q-fin.ST]  31 Jul 2023
+
+to be under-explored. It is, therefore, interesting to answer
+whether future fund performance can be forecast given
+past performance data, especially with the advanced tech-
+niques in deep learning for time-series forecasting.
+Being able to forecast fund performance with confi-
+dence will allow asset owners, typically individual investors,
+endowments, foundations, pension funds and sovereign funds,
+to make more informed decisions about their future asset
+manager selection. It is well documented in the literature
+that investors recognize better-skilled managers and re-
+ward outperformance with more fund flows (Berk and van
+Binsbergen, 2015). Better performance predictability will
+drive fund flows in the market to outperforming funds, at
+the same time, creates pressure for underperforming funds
+to improve. This process enhances market efficiency.
+Despite its significance, there has been a lack of re-
+search in forecasting fund performances, especially research
+that involves forecasting the performance of multiple mu-
+tual funds as multiple simultaneous time series using one
+model. This research is intended to fill this gap. We aim to
+evaluate various techniques, including modern deep learn-
+ing algorithms, traditional statistical techniques, and en-
+semble methods that combine model forecasts in different
+ways.
+This work investigates whether deep learning techniques
+can better forecast future fund performances based on past
+performance data than conventional statistical methods.
+Deep learning comprises sophisticated neural network-based
+methods designed to learn patterns from data. Deep learn-
+ing has demonstrated its effectiveness in many prediction
+problems that involve natural language and vision datasets.
+While there have been certain advances for time series
+data, there is still a lack of convincing evidence that deep
+learning outperforms other simpler, statistics-based meth-
+ods on different problem domains.
+Past research concluded that neural networks were not
+well suited for time series forecasting (Hyndman, 2018).
+This may be because numerous deep learning-based al-
+gorithms require large amounts of data to perform well.
+For example, the famous BERT model, a transformer used
+for natural language processing, was pre-trained on an ex-
+tremely large text corpus, including the English Wikipedia
+with over 2,500M words (Kenton and Toutanova, 2019).
+The nature of time series data does not permit such a
+massive amount of data available for training deep learn-
+ing models.
+Contrarily, recent research in deep learning applied to
+the time series domain shows more promising results. In
+the M4 forecasting competition, the hybrid approach inte-
+grating exponential smoothing into advanced neural net-
+works outperforms other statistical methods and wins the
+competition as in (Smyl, 2020). (Hewamalage et al., 2021)
+investigates the effectiveness of recurrent neural networks
+in forecasting various datasets. The study concludes that
+RNNs are competitive alternatives to state-of-the-art uni-
+variate benchmark methods such as ARIMA and exponen-
+tial smoothing (ETS).
+These studies have in common that they investigate the
+recurrent neural network (RNN) algorithms that are well-
+known approaches in sequence modelling. They also de-
+velop global deep learning models capable of learning from
+multiple time series to improve prediction accuracy for in-
+dividual ones. This technique is known as cross-learning,
+which has been found as a promising alternative to tradi-
+tional forecasting (Semenoglou et al., 2021).
+Our study addresses the question of whether cross-
+learning with carefully tuned RNNs, specifically LSTM
+and GRU, works more effectively than traditional univari-
+ate methods in the problem of forecasting performances
+for multiple mutual funds. The sample of mutual funds
+is relatively homogeneous in that they adopt a similar in-
+vestment strategy in the United States, which increases
+the chance that information in one time series would help
+predict the future values of other time series.
+We compare the accuracy of ARIMA, Theta, ETS and
+Naive statistical methods with deep learning algorithms in
+predicting fund performance. While ARIMA and ETS are
+popular univariate statistical forecasting models, Theta
+was the best-performing forecasting algorithm in the M3
+competition, according to (Makridakis and Hibon, 2000).
+The Naive method is included for comparison as, despite
+its simplicity, it works well for various financial and eco-
+nomic time series (Hyndman and Athanasopoulos, 2018).
+In addition to individual deep learning and statistical algo-
+rithms, we investigate how various ensembling methods for
+combining model forecasts lead to different performance
+gains.
+In summary, the contributions of our research are:
+• To the best of our knowledge, our research is the first
+that addresses the problem of forecasting the perfor-
+mance of multiple mutual funds simultaneously using
+modern deep learning approaches.
+• We compare deep learning performances against well-
+known statistical methods using rolling origin cross-
+validation with well-defined data splitting methods
+and multiple forecast horizons.
+• We experiment with different ensembling methods
+for combining model forecasts, including local out-
+of-sample performance per time series per algorithm
+and global out-of-sample performance per algorithm
+in computing weighted averages of forecasts.
+• We present a detailed methodology for training deep
+learning models, specifically for LSTM and GRU al-
+gorithms, using modern Bayesian optimization. We
+believe the methodology benefits machine learning
+practitioners aiming to study the hyper-parameter
+optimization process of deep learning models.
+2. Study background
+This section presents the literature on predicting the
+performance of mutual funds, traditional univariate fore-
+2
+
+casting models, and deep learning models for time series
+forecasting.
+2.1. Predicting mutual fund performance
+Fund performance is fundamentally assessed based on
+two aspects (1) expected return and (2) risk level, i.e.,
+the variability of returns, measured by the standard de-
+viation of return. Although the expected rate of return
+of a fund is a critical indicator, it alone does not provide
+an accurate picture of how the fund has performed relat-
+ing to other funds, as higher expected returns come at the
+cost of having a higher level of risk. Different funds could
+exhibit different variability of returns due to differences in
+risk-taking strategies, diversification levels or management
+skills.
+Since the 1960s, the Sharpe ratio introduced by (Sharpe,
+1966) and modified in (Sharpe, 1994) has become the most
+popular performance statistics of mutual funds for consid-
+ering the trade-off between fund’s risk and return. Sharpe
+ratio is also known as the reward-to-variability ratio, as
+a fund’s excess return (the rate of return over and above
+the risk-free rate of return) is assessed against its level of
+risk, i.e., the variability of returns. Therefore, the Sharpe
+ratio is unaffected by scale. The implied assumption of the
+Sharpe ratio is that all investors can invest funds at the
+risk-free interest rate, representing the opportunity cost
+of investing in an investment fund or the cost of capital
+invested. Fund managers are under constant pressure to
+deliver a high Sharpe ratio, otherwise risking losing capital
+allocated to their fund.
+While other performance indicators are introduced in
+academic literature, the Sharpe ratio has always been among
+the preferred choices of industry practitioners when it comes
+to fund performance evaluation, thanks to its simplicity. It
+is reported by most asset managers and included in large
+fund databases such as Morningstar or Lipper, cited re-
+ports from (Elton and Gruber, 2020). Therefore, in this
+paper, we use the Sharpe ratio as an indicator of fund
+performance.
+Given the scant literature on forecasting fund perfor-
+mance, the selection of a reasonable forecast horizon re-
+mains an open question.
+Our considerations include a
+wide range of time windows in which performance per-
+sistence is found to hold, as identified in the persistence
+literature stream. Persistence studies investigate whether
+funds’ relative performance is sustained over adjacent pe-
+riods. Some find persistence to be short-lived (Bollen and
+Busse, 2005), with performance persistence observed only
+within six months (Kacperczyk et al., 2014) or one year
+(Carhart, 1997). (Lou, 2012) find that evidence for funds’
+persistence reversed after six to twelve quarters. However,
+(Irvine et al., 2022) provide evidence that outperformance
+persists for at least 17 to 24 months, depending on different
+asset pricing models. For longer time windows, Berk and
+van Binsbergen report large cross-sectional performance
+differences in managers’ skills persist for as long as ten
+years. Based on the diverse predictability and persistence
+time windows observed in the literature, we decided to use
+forecast horizons of 6, 9, 12, 18 and 24 months, with funds’
+performance being forecasted for every single month dur-
+ing a forecast horizon.
+Most studies on forecasting fund performance have used
+traditional time series forecasting models. Starting from
+the 1980s and 1990s, more advanced neural network tech-
+niques were used to address financial forecasting ques-
+tions. Specifically, the use of neural networks to forecast
+fund performance was introduced in the papers of (Chi-
+ang et al., 1996) and (Indro et al., 1999). (Chiang et al.,
+1996) employed neural networks to forecast mutual fund
+net asset value, while (Indro et al., 1999) used the same
+approach to forecasting mutual fund performance in terms
+of percentage returns.
+A more recent paper is (Wang and Huang, 2010). While
+(Wang and Huang, 2010) also use the Sharpe ratio to mea-
+sure fund performance like ours, they compare the fast
+adaptive neural network classifier (FANNC) with the Back
+Propagation neural network (BPN) model and report that
+the FANNC is more efficient than the BPN in both classi-
+fying and predicting the performance of mutual funds.
+It should also be noted that (Wang and Huang, 2010) use
+manager’s momentum strategies and herding behavior as
+input variables for the prediction of funds’ Sharpe ratio
+whereas, in our approach, past Sharpe ratios are the input
+to forecast future ones.
+The study of (Pan et al., 2019) is similar to the paper
+of (Wang and Huang, 2010) in which they use three inputs
+of fund size, annual management fee and fund custodian
+fee and the fund return as the output for data envelopment
+analysis, Back Propagation Neural Network and GABPN
+(new evolutionary method) for 17 open-end balance stock
+funds for the period August 31, 2015 to July 1, 2016. This
+study also uses five accuracy measures to evaluate fore-
+cast performance, analyzes the rate of return and builds
+the mutual fund net worth prediction model. Compared
+to (Pan et al., 2019), our paper examined a substantially
+larger number of funds over a much longer time window
+using extensive forecasting methods such as deep learning,
+ensemble, and traditional statistical techniques.
+2.2. Traditional univariate forecasting models
+Time series forecasting, especially stock price and fund
+performance forecasting, have traditionally been popular
+research topics in statistics and econometrics. Traditional
+methods range from simple seasonal decomposition (STL)
+and simple exponential smoothing (SEM) to more complex
+ones such as ETS (Hyndman et al., 2008) and ARIMA
+(Newbold, 1983; Box et al.,2015). Non-linear autoregres-
+sive time series using numerical forecasting procedure (m-
+step-ahead predictive) is also used in (Cai, 2005) and auto-
+matic ARIMA in (Melard and Pasteels, 2000) using Time
+Series Expert TSE-AX. Combining several traditional meth-
+ods can be seen in (Bergmeir and Benítez, 2012), which
+used six traditional forecasting methods, namely autore-
+gression (AR), moving average (MA), combinations of those
+3
+
+models (ARMA), and integrated ARMA as ARIMA, Sea-
+sonal and Trend decomposition using Loess (STL) as well
+as TAR (Threshold AR) based on cross-validation and
+evaluation using the series’ last part. They suggest that
+the use of a blocked form of cross-validation for time series
+evaluation should be the standard procedure.
+The traditional uni-variate methods dominated other
+complex computational methods at many forecasting com-
+petitions, including M2, M3, and M4 as in (Ahmed et al.,
+2010); (Crone et al., 2011); (Makridakis and Hibon, 2000).
+A recent paper, (Fiorucci and Louzada, 2020), proposes
+a methodology for combining time series forecast mod-
+els.
+The authors use a cross-validation scheme that as-
+signs higher weights to methods with more accurate in-
+sample predictions. The methodology is used to combine
+forecasts named generalized rolling origin evaluation from
+traditional forecasting methods such as the Theta, Sim-
+ple Exponential Smoothing (SES), and ARIMA models.
+(Makridakis et al., 2020) reported 61 forecasting methods
+used in M4 competition with 100,000 time series. The pa-
+per of (Li et al., 2020) used the ARIMA model with deep
+learning to forecast high-frequency financial time series.
+The traditional uni-variate methods show that they
+work well when the data volume is not extensive (Ban-
+dara et al., 2020; Xu et al., 2019 and Sezer et al., 2020)
+and a low number of parameters to be estimated.
+2.3. Deep learning forecasting models
+Recently, several papers combine the traditional meth-
+ods with deep learning (Li et al., 2020; (Pannakkong et al.,
+2017) and Xu et al., 2019). (Li et al., 2020) work on the
+Chinese CSI 300 index and compare method as Monte
+Carlo numerical simulation, ARIMA, support vector ma-
+chine (SVM), long short-term memory (LSTM) and ARIMA-
+SVM models. Their results show that the enhanced ARIMA
+model based on LSTM not only improves the forecasting
+accuracy of the single ARIMA model in both fitting and
+forecasting but also reduces the computational complex-
+ity of only a single deep learning model.
+(Pannakkong
+et al., 2017) proposes a hybrid forecasting model involving
+autoregressive integrated moving average (ARIMA), artifi-
+cial neural networks (ANNs) and k-means clustering. (Xu
+et al., 2019) use all linear models and deep belief network
+(DBN) models.
+Several other papers, (Jianwei et al., 2019), (Cao and
+Wang, 2019), and (Sezer et al., 2020) use mixture mod-
+els for financial commodity and stock forecasting. (Jian-
+wei et al., 2019) employs independent component anal-
+ysis (ICA), gate recurrent unit neural network (GRUNN)
+named ICA-GRUNN among others to estimate gold prices.
+The paper shows that ICA-GRUNN produces prediction
+with high accuracy and outperforms the benchmark meth-
+ods, namely ARIMA, radial basis function neural network
+(RBFNN), long short-term memory neural network (LSTM),
+GRUNN and ICA-LSTM. (Cao and Wang, 2019) proposes
+the convolutional neural network (CNN) and CNN-support
+vector machine (SVM) to forecast stock index. The pa-
+per concludes that the neural network method for finan-
+cial prediction can handle continuous and categorical vari-
+ables and yield good prediction accuracy.
+(Sezer et al.,
+2020) presents a review of financial time series forecasting
+methods. Machine Learning (ML) models (Artificial Neu-
+ral Networks (ANNs), Evolutionary Computations (ECs),
+Genetic Programming (GP), and Agent-based models),
+Deep Learning (DL) models (Convolutional Neural Net-
+works (CNNs), Deep Belief Networks (DBNs), and Long-
+Short Term Memory (LSTM)) have appeared within the
+field, with results that significantly outperform their tra-
+ditional ML counterparts for data like market indices, for-
+eign exchange rates, and commodity prices forecasting.
+(Hewamalage et al., 2021) provides a big picture of the
+perspective direction for time series forecasting using re-
+current neural networks. The authors present an extensive
+study and provide a software framework of existing RNN
+architectures for forecasting as Stacked Architecture and
+Sequences to Sequence (S2S) for three RNN units includ-
+ing Elman RNN, LSTM and GRU. The main difference
+between S2S and Stacked with the dense layer and the
+moving window input format is that in the former, the
+error is calculated per each time step and the latter calcu-
+lates the error only for the last time step.
+In (Chen et al., 2021), a multivariate model is pro-
+posed to explain Bitcoin price with other economic and
+technology variables, using both traditional statistical and
+deep learning models. They use RNN (Recurrent Neural
+Network) and RF (Random Forest) for the first stage to
+detect the importance of input variables. They propose a
+wide range of models for the second stage such as ARIMA
+(Autoregressive Integrated Moving Average), SVR (Sup-
+port Vector Regression), GA (Genetic Algorithm), LSTM
+(Long Short-Term Memory), ANFIS (Adaptive Network
+Fuzzy Inference System), for bitcoin forecast in different
+periods.
+Our research fills the gap of the lack of modern deep
+learning research for predicting funds’ risk-adjusted per-
+formance measured by the Sharpe ratio. The results of
+our research show that deep learning and ensembling are
+promising approaches to addressing the challenge of pre-
+dicting mutual funds’ performance.
+3. Methodology
+In this section, we present the methodology employed
+for this research, from cross-validation scheme, model se-
+lection to model training and other techniques to ensure
+the robustness of our results.
+3.1. Cross-validation scheme
+Cross-validation has been widely used in machine learn-
+ing to estimate models’ prediction errors as described in
+4
+
+(Ruppert, 2004). This method estimates the mean out-
+of-sample error, also known as the average generalization
+error by (Ruppert, 2004).
+For normal machine learning problems, where there is
+no time dimension, k-fold cross-validation is the common
+cross-validation technique applied in practice. This tech-
+nique requires the dataset to be randomly divided into a
+train set and a validation set, in k different settings. The
+random division makes each element of the dataset exist
+in the validation set exactly once and in the training set
+at least once.
+In time series forecasting, there is a time dimension,
+and care must be taken to ensure that time-dependent
+characteristics are preserved during dataset setup for model
+evaluations. For example, we cannot simply and randomly
+assign an element to the validation set, since this may in-
+terrupt time order between observations and lead to data
+leakage, where future data may be used to predict past
+data.
+The study of (Bergmeir and Benítez, 2012) showed that
+the use of cross-validation in time series forecasting led to
+a more robust model selection. In this research, we follow
+the rolling origin scheme to divide our dataset into six
+cross-validation splits. Our choice of six cross-validation
+splits is identical to the study of (Fiorucci and Louzada,
+2020).
+To limit the computational costs when training
+deep learning models within reasonable limits, it is beyond
+the scope of our study to evaluate the effects of different
+cross-validation splits on the study results.
+Models are trained on each training set and then evalu-
+ated on the respective validation set. The error measured
+in each validation set is the estimated generalization error
+for that particular fold. Averaging the generalization error
+estimated for all the folds will yield the estimated general-
+ization error of the model. Model selection is then carried
+out by comparing average generalization errors across all
+the models trained.
+Specifically, our cross-validation scheme is a slightly
+adjusted version of Generalized Rolling Origin Evaluation
+(GROE), as described in (Fiorucci and Louzada, 2020).
+Below are the properties of this GROE scheme in connec-
+tion to our study:
+• p denotes the number of origins, where an origin is
+the index of the last observation of a train set. The
+origins are referred to as n1, n2, ..., np, which can
+be found recursively through the equation ni+1 =
+ni + m. In this equation, m represents the number
+of data points between two consecutive origins. In
+our study, the number of origins p equals six, which
+means original data are split in six different ways to
+produce six train/validation set pairs.
+• H represents the different forecast horizons, which
+are 6, 9, 12, 18, and 24 months in our study.
+• n is the length of each time series and n1 is equal
+to n −H if n −H is greater than or equal a certain
+threshold.
+• m can be calculated as the biggest integer lower than
+or equal to H/p, which is problem dependent.
+We recognize that if we strictly follow GROE, this
+may lead to validation sets with different sizes. We be-
+lieve that setting the length of all the validation sets equal
+and equal to the forecast horizon will make the valida-
+tion sets represent the actual forecast dataset when ap-
+plying a forecasting model in practice better. Therefore,
+we adjust the method slightly by first determining the last
+train/validation sets, and then working backwards to de-
+termine the other train/validation sets. In our method,
+the last validation set is defined to consist of the last H
+observations in the dataset, and the corresponding train
+set consists of all the observations in the dataset prior to
+the validation set. Then we shift the origin of the last train
+set, which is n−H, back in time m data points to find the
+origin of the previous train sets, i.e. using ni = ni+1 −m.
+This modification ensures all validation sets have the
+same length, which is exactly equal to the forecast horizon.
+As an example, for the forecast horizon of 18 months, our
+cross-validation scheme results in the following division of
+train and validation sets:
+Figure 1: Train and validation sets for a forecast horizon
+of 18m
+3.2. Recurrent neural networks
+In this research, we employ two modern types of recur-
+rent neural networks (RNNs) known as LSTM and GRU
+and compare their effectiveness in forecasting fund per-
+formances against their statistical counterparts.
+In this
+section, we present the unit design and mathematics fun-
+damentals of these techniques. In addition to LSTM and
+GRU, we also describe the vanilla RNNs which provide the
+foundation for more advanced RNN architectures.
+3.2.1. Vanilla recurrent neural networks
+RNNs are designed to address the problem of learning
+from and predicting sequences.
+They have been widely
+applied in the field of natural language processing. In the
+following figure and equations, we illustrate the internal
+workings of RNNs. The basic RNN cell has the structure
+as shown in Figure 2.
+5
+
+Figure 2: A Basic Recurrent Cell
+Ht = ϕ (Ht−1 · Wh1 + Xt · Wh2 + bh)
+(1)
+Ot = Ht · Wo + bo
+(2)
+In equation 1, Ht denotes the hidden state of the RNN
+cell, and Xt denotes the input of the cell at the current
+time step (i.e. time step t). Wh1 and Wh2 are matrices
+of weights whereas bh denotes the bias vector for the hid-
+den state. ϕ is the activation function of the hidden state.
+This equation describes the recurrent computation which
+gives rise to the term "recurrent", where the current hid-
+den state Ht is computed based on the previous hidden
+state Ht−1 and the current input Xt. This recurrence in
+computation leads to the ability of the hidden state Ht to
+store information of the sequence up to time step t. In a
+similar way, the hidden state of the next time step Ht+1
+is computed based on Ht and the input Xt+1 at the next
+time step.
+Equation 2 shows how the output is computed using
+the hidden state of the current time step. In equation 2,
+Ot denotes the output of the cell at time step t, Wo is the
+weight matrix, and bo represents the bias vector for the
+cell output.
+Even though the recurrent computation makes it pos-
+sible for RNNs to carry past information into the cur-
+rent time step, RNNs has limited capability in handling
+long-term dependencies in sequential data. This type of
+network suffers from the problems of vanishing and ex-
+ploding gradients, making learning in long sequences dif-
+ficult.
+Vanishing gradients happen when gradients dur-
+ing backpropagation become vanishingly small, and the
+weights cannot be updated adequately, whereas explod-
+ing gradients occur when large gradients accumulate dur-
+ing backpropagation which results in unstable models as
+model weights receive very large updates.
+3.2.2. Long short-term memory
+Long short-term memory (LSTM), introduced in (Hochre-
+iter and Schmidhuber, 1997) extends the capacity of vanilla
+RNNs to be able to remember and effectively handle longer
+sequences.
+The computation of the hidden state in an
+LSTM is illustrated in Figure 3:
+Figure 3: Computation of hidden state in LSTM
+In Figure 3, there are three gates designed to regulate
+information flow through the memory cell.
+Specifically,
+the input gate controls how much information to read into
+the cell, the forget gate decides how much of the past infor-
+mation to forget and how much to retain, and the output
+gate reads output from the cell. This design enables the
+cell to decide when to remember and when to ignore in-
+puts, which is essential in remembering useful information
+and forgetting less useful one.
+Mathematically, these gates are computed as follows:
+It = σ (Ht−1 · Wi1 + Xt · Wi2 + bi)
+Ft = σ (Ht−1 · Wf1 + Xt · Wf2 + bf)
+Ot = σ (Ht−1 · Wo1 + Xt · Wo2 + bo)
+In the above equations, It, Ft and Ot represent the in-
+put gate, forget gate and output gate at the current time
+step t.
+Xt is the input at time t and Ht−1 is the hid-
+den state at the previous time step.
+The Ws represent
+the weight matrices and the bs are bias vectors. σ is the
+sigmoid activation function that makes the values of these
+gates in the range of (0, 1).
+The memory cell and the hidden state are computed
+as follows:
+˜Ct = tanh (Ht−1 · Wc1 + Xt · Wc2 + bc)
+Ct = Ft ⊙Ct−1 + It ⊙
+
+˜Ct
+
+Ht = Ot ⊙tanh (Ct)
+In the above equations, ˜Ct represents the candidate
+memory cell and Ct represent memory cell content. Similar
+to the equations of the gates, Ws represent the weight
+matrices and the bs are bias vectors. The computation of
+the candidate memory cell is similar to those of the gates,
+except that it uses the tanh activation function instead of
+sigmoid.
+The candidate memory cell captures both past infor-
+mation from Ht−1 and information from the current input
+6
+
+Xt. The computation of memory cell content Ct is based
+on past memory cell state represented by Ct−1 and the
+current memory cell candidate which serves as current in-
+put. The element-wise matrix multiplication denoted by
+⊙makes it possible for controlling how much of past infor-
+mation is forgotten (by multiplying Ft by Ct−1) and how
+much of current input is retained (by multiplying It by
+˜Ct). Both Ft and It use sigmoid as the activation func-
+tion, which produces values in the range (0, 1) to control
+how much information is discarded/retained in element-
+wise matrix multiplication. For example, when values of
+Ft are close to zero, the result of element-wise matrix mul-
+tiplication between Ft by Ct−1 will make past information
+close to zero or in other words past information become
+forgotten.
+The computation of the hidden state Ht depends on
+the memory cell Ct and how much of the memory cell is
+passed as output is controlled by the output gate Ot.
+Our study uses the above described design for LSTM,
+in contrast to (Hewamalage et al., 2021) which uses LSTM
+with peephole connections. We also use the stacked ar-
+chitectures for both LSTM and GRU, where the term
+“stacked" means that different recurrent layers can be stacked
+on top of each other.
+3.2.3. Gated recurrent units
+Gated recurrent units (GRU) (Cho et al., 2014) were
+introduced almost two decades after LSTM. GRU possess
+a similar but simpler architecture than that of LSTM,
+which gives them the advantage of faster computation.
+GRU also use gates to regulate information flow, but it
+contains only the reset gate and the update gate.
+The computation of the hidden state in GRU is de-
+scribed in Figure 4.
+Figure 4: Computation of hidden state in GRU
+Zt = σ (Ht−1 · Wz1 + Xt · Wz2 + bz)
+Rt = σ (Ht−1 · Wr1 + Xt · Wr2 + br)
+The above two equations show the mathematical mech-
+anisms of the two gates in GRU: update gate (Zt) and reset
+gate (Rt). The computation of both the update gate and
+reset gate at the current time step t is based on the hidden
+state at the previous time step Ht−1 and the current input
+Xt. The Ws are the weight matrices and bs are the bias
+vectors. σ is the sigmoid activation function that makes
+the values of these gates in the range of (0, 1).
+The next equations show the computation of the can-
+didate hidden state ( ˜Ht) and the hidden state (Ht).
+˜Ht = tanh ((Rt ⊙Ht−1) · Wh1 + Xt · Wh2 + bh)
+Ht = (1 −Zt) ⊙˜Ht + Zt ⊙Ht−1
+The candidate hidden state at the current time step ˜Ht
+captures both past information from the previous hidden
+state Ht−1 and information from the current input Xt.
+The element-wise matrix multiplication of Ht−1 and Rt
+makes it possible for the reset gate to control how much
+of past information in Ht−1 is retained as the value of Rt
+is in the range (0, 1). If, for example, Rt equals one, all
+of the information of Ht−1 is retained, and if Rt equals
+zero, all previously hidden state information is discarded.
+The candidate hidden state, therefore, contains the current
+input information plus parts of the previously hidden state
+information as controlled by the reset gate.
+In the next equation, the current hidden state Ht is
+computed from the current candidate hidden state ˜Ht and
+the hidden state from the previous time step Ht−1. The
+update gate is used to control how much information from
+these two components is passed to the current hidden state.
+When the update gate Zt is close to one, the current hid-
+den state takes most of the information from the previous
+hidden state whereas when the update gate Zt is close to
+zero, the current hidden state takes most of the informa-
+tion from the current candidate hidden state.
+A previous study conducted to evaluate GRU and LSTM
+algorithms on the sequence modelling tasks of polyphonic
+music modelling and speech signal modelling found GRU
+to be comparable to LSTM (Chung et al., 2014). How-
+ever, it is unclear which type of these algorithms performs
+better in forecasting fund performance. Therefore, our re-
+search aims to evaluate and compare these two deep learn-
+ing methods in the context of fund performance forecast-
+ing. Our study implements these methods using the Keras
+and Tensorflow libraries in Python where Bayesian opti-
+mization is used for hyper-parameter optimization, which
+will be described in a later section.
+7
+
+3.2.4. Ensemble methods
+Ensemble methods are ways to combine forecasts from
+different models with the aim to improve models’ perfor-
+mance. There are different methods to combine forecasts.
+The simplest method would be averaging the model pre-
+dictions for different algorithms. Other methods can make
+use of weighted averages.
+The study of (Fiorucci and
+Louzada, 2020) combines time series forecast models with
+the weights proportional to the quality of each model’s
+in-sample predictions in a cross-validation process. Their
+findings reveal that forecast results improve compared to
+methods that use equal weights for combination. However,
+all of the methods used for combination in their study are
+statistical methods, and in-sample prediction qualities are
+used to determine weights.
+Our approach in ensembling forecast results is different
+from the above study in that in addition to combining fore-
+casts of top-performing models, we also combine forecasts
+for models belonging to different approaches, i.e. all deep
+learning models combined with all statistical models. Ac-
+cording to (Petropoulos et al., 2022), combined forecasts
+work more effectively if the methods that generate fore-
+casts are diverse, which leads to fewer correlated errors.
+Another difference is that we use out-of-sample model pre-
+diction qualities to determine weights, which we believe
+are more objectively representative of models’ performance
+than using in-sample prediction qualities. The reason is
+that deep learning models may easily overfit the training
+data and produce high-quality in-sample predictions while
+the corresponding performances can significantly drop on
+out-of-sample data.
+In this study, we compare three ensembling methods:
+• The first method uses equal weights in averaging
+model forecasts. This is the simple form for com-
+bining forecasts, known as simple averages.
+• The second method calculates a weighted average
+of model forecasts where the weights are inversely
+proportional to the final out-of-sample MASE (our
+main forecasting performance metric used for evalu-
+ation of forecasting models) result of each algorithm.
+The weights represent the overall (or global) average
+out-of-sample model quality across all time series for
+each algorithm.
+• The third method calculates a weighted average of
+model forecasts where the weights are inversely pro-
+portional to the average out-of-sample MASE result
+of each algorithm for the particular time series in
+question. The weights represent the specific (or lo-
+cal) average out-of-sample model quality for each
+time series in each algorithm.
+3.3. Traditional statistical models for time series forecast-
+ing
+To compare against deep learning algorithms, we select
+three well-known traditional statistical methods for time
+series forecasting, which are ARIMA, ETS, and Theta, as
+well as the Naive method, which is known to work well for
+numerous financial and economic time series. The Theta
+method of forecasting, introduced by (Assimakopoulos and
+Nikolopoulos, 2000), is a special case of simple exponen-
+tial smoothing with drift. These four methods are recom-
+mended by (Petropoulos et al., 2022) when benchmarking
+new forecasting methods. Further detail about the four
+models can be seen in (Hyndman and Athanasopoulos,
+2018).
+In our experiments, we use an optimized version of the
+Theta model proposed by (Fiorucci et al., 2016). We use
+the well-known forecast R package introduced in (Hynd-
+man and Khandakar, 2008) for training ETS, ARIMA and
+Naive models, and the forecTheta R package for training
+the optimized Theta models.
+These models are trained
+using the parallel processing capabilities provided in the
+furrr R package.
+4. Experiment setup
+4.1. Data description
+Our dataset started with the monthly returns of more
+than 1200 mutual funds investing in listed large-cap equi-
+ties in the United States available on Morningstar Direct.
+Daily returns series are not available. We required at least
+20 years of data up to October 2021 and obtained 634
+funds.
+These funds are relatively homogeneous as they
+share the same investment strategy and are all domiciled
+in the United States. From the monthly returns series, we
+computed the annualised Sharpe ratios for each fund on
+a rolling basis. Table 1 summarises the statistics of these
+time series.
+Mean
+Sd
+Min
+Max
+us45890c7395
+Return
+4.351
+27.069
+-129.960
+62.540
+Sharpe
+0.213
+0.542
+-1.444
+2.132
+us5529815731
+Return
+7.522
+23.741
+-97.820
+70.040
+Sharpe
+0.295
+0.555
+-1.430
+1.790
+us82301q7759
+Return
+8.140
+22.494
+-100.080
+69.620
+Sharpe
+0.301
+0.571
+-1.444
+2.507
+us6409175063
+Return
+8.804
+29.045
+-114.100
+93.900
+Sharpe
+0.304
+0.584
+-1.288
+3.129
+us1253254072
+Return
+15.065
+35.222
+-156.560
+123.460
+Sharpe
+0.276
+0.533
+-1.188
+4.768
+Riskfree
+1.464
+1.713
+0.011
+6.356
+Overall
+Return
+8.226
+23.272
+-176.220
+126.320
+Overall
+Sharpe
+0.290
+0.556
+-2.446
+4.768
+Table 1: Time series descriptive statistics
+Looking at the details, the table illustrates five fund ex-
+amples with the annualised return (percent) and the an-
+nualised Sharpe ratio, in terms of their mean, standard
+deviation, minimum and maximum values. The five funds
+are respectively the minimum average return, 25th per-
+centile, 50th percentile, 75th percentile and maximum av-
+erage return over the period. The risk-free rate of return is
+the market yield on the 3-month U.S. Treasury Securities.
+8
+
+The last two rows represent the overall average return and
+respectively the Sharpe ratio of all the funds used in the
+sample.
+Within the primary “large-cap equities" strategy that
+categorizes the funds, there are three major sub-strategies,
+namely growth, value and blend. Those adopting a “growth"
+sub-strategy focuses on growth stocks listed in the United
+States, i.e., stocks with strong earnings growth potential,
+whereas “value" sub-strategy means the investment targets
+value stocks, those evaluated to be undervalued. “Blend"
+represents a mix of growth and value sub-strategies. The
+study sample of 634 funds includes all the three sub-categories
+mentioned above.
+4.2. Data preprocessing
+4.2.1. Data splitting
+The time series data are split into 6 train and vali-
+dation sets using the cross-validation scheme described in
+section 3.1 of Methodology. This cross-validation scheme
+allows for robust and reliable model selection based on
+their average out-of-sample performances.
+4.2.2. Removing trend and seasonality
+We transform each time series in the train set of each
+cross-validation split into its stationary form by two com-
+monly used techniques known as log transformation and
+differencing.
+Log transformation stabilizes the variance
+of the time series (Hyndman and Athanasopoulos, 2013).
+Since negative Sharpe ratios exist, an offset is added into
+all time series, to ensure each one of them is all positive,
+before applying log transformation.
+While log transformation is effective in handling time
+series variances, differencing can help remove changes in
+the level of a time series and is therefore effective in elimi-
+nating (or reducing) trend and seasonality (Hyndman and
+Athanasopoulos, 2013).
+Subsequent to log transforma-
+tions, we examine each time series to see which one needs
+differencing and the number of differences required to trans-
+form them into stationary form. The result shows that the
+majority of the time series have been stationary after log
+transformation and 68 of them need to be applied first
+differencing. These 68 time series are applied first differ-
+encing in each cross-validation split and their last train
+observation is saved for later inverse transformation back
+to their original scales.
+4.2.3. Data postprocessing
+Since each time series has been transformed prior to
+entering the modelling stage, the models’ outputs are not
+in the original scale and this does not allow for a direct
+comparison of the models’ outputs with the validation sets
+to obtain error metrics.
+Therefore, models’ predictions
+are transformed back to the original scales following the
+inverse order that we apply in the preprocessing steps. In
+detail, predictions for those time series that are previously
+differenced receive inverse differencing; after this step, all
+time series are inverse log-transformed, and then the offset
+that was previously added is subtracted from each time
+series.
+4.2.4. Forecasting multiple outputs
+Unlike univariate statistical methods, deep learning al-
+gorithms can potentially take advantage of cross-learning,
+in which patterns from multiple time series are learnt to
+improve forecast accuracy for individual time series. In
+this work, we aim to compare forecasting methods for pre-
+dicting 634 mutual funds, which involve 634 time series of
+a homogeneous group of funds. Each time series requires
+multi-step-ahead forecasts for the applicable forecast hori-
+zon. Therefore, we approach the problem as a multiple-
+output and multi-step-ahead forecasting problem, where
+inputs are fed into the neural networks, and after train-
+ing, vectors of outputs are produced directly by the model
+for six, nine, 12, 18 and 24 months ahead. This strategy
+has been demonstrated effective by the works of (Taieb
+et al., 2012) and (Wen et al., 2017) and also adopted by
+(Hewamalage et al., 2021).
+Supervised deep learning maps inputs to outputs, where
+in our time series context, inputs are fed into the model
+and outputs produced by the model following a sliding win-
+dow approach. This sliding window scheme is also used in
+the work of (Hewamalage et al., 2021). This approach con-
+siders each data sample as consisting of an input window
+of past observations of all time series that is mapped to an
+output window of future observations which immediately
+follow the input window in terms of time order relation-
+ship. In our experiments, each train set is preprocessed to
+form multiple sliding input and output windows with these
+characteristics, where each sliding window of the next con-
+secutive time step has the same form as the previous one
+but is shifted by a one-time step. This scheme allows for
+the use of past (lagged) time series in predicting future
+time series in each data observation.
+As patterns are learnt from inputs to predict outputs,
+we believe it is necessary to set the length of input se-
+quences to be at least equal to the length of output se-
+quences. This would suggest that deep learning algorithms
+have sufficient information from the past to predict the fu-
+ture. The length of each input window should not be too
+large, since the use of too long input windows would signif-
+icantly reduce the number of training samples and prob-
+ably affect model performance. In our study, we set the
+lengths of input windows equal to the lengths of the fore-
+cast horizon plus two months, given the lengths of output
+windows are determined by the chosen forecast horizons.
+These choices balance the need for covering sufficient in-
+formation in the input windows and the need to retain as
+many training samples as possible.
+4.3. Training deep learning models
+The performance of deep learning models depends on
+a number of factors, including, among others, the right
+9
+
+choice of the loss function, the optimization procedure
+within the training loop, and the outer optimization pro-
+cedure that selects the best combination (or configuration)
+of hyper-parameters. Our training procedure emphasizes
+extensive hyper-parameter tuning based on careful consid-
+eration for hyper-parameter configurations. This section
+describes in detail these training and optimization proce-
+dures.
+4.3.1. Loss function
+We use RMSE as the loss function for training deep
+learning models. This loss function will be optimized when
+training mini-batches of data samples. This type of loss
+function has the advantage of restricting large, outlier er-
+rors, since large errors may result in really large squared
+errors. This loss function is also the metric that we opti-
+mize in the Bayesian optimization loops.
+4.3.2. Hyper-parameter search setup
+Hyper-parameters refer to the parameters that mod-
+els cannot learn during the training process but may have
+an effect on models’ performance. For RNNs, the number
+of hidden layers, units in each hidden layer, and learning
+rate, etc., are important hyper-parameters. The process
+of identifying which hyper-parameter configuration results
+in optimal generalization performance is known as hyper-
+parameter optimization. We employ Bayesian optimiza-
+tion for this optimization procedure, which will be detailed
+in the next section.
+In our experiments, the following hyper-parameters are
+optimized:
+• Learning rate
+• Number of hidden layers
+• Units in a hidden layer
+• Dropout rate for inputs
+• Dropout rate for hidden layers
+• Mini-batch size
+• Whether to use batch normalization or not
+• If using batch normalization, placing it either before
+or after dropout layers
+• Activation functions
+• Weight decay
+• Number of epochs
+Unlike (Hewamalage et al., 2021), we consider the dropout
+rate as an important hyper-parameter for optimization.
+Dropout is an effective technique for addressing the over-
+fitting problem in deep neural networks (Srivastava et al.,
+2014). This technique may be even more appropriate for
+time series forecasting, where datasets are usually rela-
+tively small compared to those in other fields such as NLP
+or Computer Vision.
+We also provide an option to employ batch normaliza-
+tion (Ioffe and Szegedy, 2015) to further regularize and im-
+prove training speed, which allows for the possible training
+of deeper networks. Originally, batch normalization was
+understood to work by reducing internal covariate shifts.
+Later research demonstrated this concept was a misun-
+derstanding. The work of (Santurkar et al., 2018) clari-
+fied that the effectiveness of batch normalization lay in its
+ability to make the optimization landscape significantly
+smoother.
+In the training process that uses batch normalization,
+this normalization is performed for each mini-batch. By
+using batch normalization, we can use higher learning rates,
+and be more relaxed about network initialization. As a
+regularizer, in some cases, we may not need to use dropout
+if batch normalization is already in use. In our work, it
+is, however, uncertain that batch normalization can re-
+place the need for dropout, especially when our training
+data are limited. Therefore, we choose to optimize both
+of these hyper-parameters.
+There is also additional consideration for the order of
+batch normalization and dropout in actual implementa-
+tion. The combination of batch normalization and dropout
+works well in some cases but decreases the model perfor-
+mance in others, and thus their order should be carefully
+considered (Li et al., 2019). To work around this issue,
+and to possibly take advantage of both dropout and batch
+normalization, in our experiments, we add another hyper-
+parameter that controls whether batch normalization lay-
+ers are added to the model before or after dropout layers.
+The range of dropout rates in our experiments includes
+zero, which means the case of no dropout is covered.
+Another regularization method tuned is weight decay.
+Weight decay, also called L2 regularization, is probably
+the most common technique for regularizing parametric
+machine learning models (Zhang et al., 2021). This tech-
+nique works by adding a penalty term (or regularization
+term) into the model’s loss function so that the learning
+process will minimize the prediction loss plus the penalty
+term. The updated loss function with weight decay is then
+given by:
+L = Error +
+ψ
+p
+X
+i=1
+w2
+i
+|
+{z
+}
+L2 regularization
+Applied to our context, Error denotes the root mean square
+error from the network outputs, wi represents the train-
+able parameters of the network with p the number of all
+such parameters.
+Another important hyper-parameter is the number of
+hidden layers, which controls the network depth. The use
+of regularization methods described above can help reduce
+models’ overfitting, which as a result may allow for deeper
+networks to be trained. Therefore, we set the range of the
+10
+
+number of hidden layers from one to five, with five hidden
+layers representing a quite deep network given the limited
+amount of training data.
+We use Adam as the optimizer for the model train-
+ing process. Adam is a computationally efficient gradient-
+based optimization method for optimizing stochastic ob-
+jective functions, which is demonstrated to work well in
+practice and compares favorably to other stochastic opti-
+mization approaches (Kingma and Ba, 2014).
+In addition to the above, we choose to optimize other
+hyper-parameters including learning rate, mini-batch size,
+units which represent the dimensionality of the output
+space in a hidden layer, number of epochs, and activation
+functions. For each numeric hyper-parameter, as appro-
+priate, we try to include a wide range of values for the
+search, without making the computation cost too high.
+For example, the learning rate ranges between 0.001 and
+0.1, and the dropout rate ranges between 0.0 and 1.0. To
+control the computation cost within reasonable limits, we
+limit the range of the number of epochs to between 1 and
+30.
+4.3.3. Hyper-parameter optimization
+Prior studies have investigated different methods for
+executing this optimization procedure. Among these, grid
+search, random search and Bayesian optimization provide
+three alternatives for optimizing hyper-parameters. Bayesian
+optimization has been demonstrated to be more effective
+and will be chosen in our experiments.
+4.3.4. Grid search
+The grid search method finds the optimal hyper-parameter
+configuration based on a predetermined grid of values.
+This requires careful consideration in the choice of grid
+values, as there might be no limit to the number of possi-
+ble hyper-parameter configurations. For example, a learn-
+ing rate that ranges between 0.001 and 0.1 can take count-
+less possible values, and when combined with several other
+hyper-parameters, the search space would be so vast, such
+that covering all possible configurations in the search is im-
+possible. To limit the choice of hyper-parameters in a grid,
+we can rely on expert knowledge and experience, but this
+cannot guarantee success in many cases, especially when
+there are a large number of hyper-parameters for tuning
+in deep learning models.
+4.3.5. Random search
+Random search narrows down the number of possible
+hyper-parameters to search by selecting a random subset of
+all possible configurations. By narrowing down the search
+space, this algorithm reduces training time and has proved
+to be effective in many cases (Putatunda and Rama, 2019).
+The research of (Bergstra and Bengio, 2012) and (Pu-
+tatunda and Rama, 2019) show that random search is more
+effective than grid search as a hyper-parameter optimiza-
+tion method.
+4.3.6. Bayesian optimization
+Bayesian optimization (BO) is a modern hyper-parameter
+optimization technique that is effective for searching through
+a large search space that may involve a large number of
+hyper-parameters.
+It has demonstrated superior perfor-
+mance to the random search and grid search approach in a
+variety of settings (Wu et al., 2019; Putatunda and Rama,
+2019).
+The essence of BO is the construction of a probabilistic
+surrogate model that models the true objective function,
+and the use of this surrogate model together with the ac-
+quisition function to guide the search process. Its proce-
+dure first defines an objective function to optimize, which
+may be the loss function, or some other function deemed
+more appropriate for model selection. In training models
+where the evaluation of the objective function is costly,
+the surrogate which is cheaper to evaluate is used as an
+approximation of the objective function (Bergstra et al.,
+2011).
+The whole process of Bayesian optimization is sequen-
+tial by nature since the determination of the next promis-
+ing points to search is dependent on what is already known
+about the previously searched points. In addition to the
+surrogate model, another important component of BO is
+the acquisition function, which is designed to guide the
+search toward potential low values of the objective func-
+tion (Archetti and Candelieri, 2019). The acquisition func-
+tion allows for the balance between exploitation and ex-
+ploration, where exploitation means that searching is per-
+formed near the region of the current best points and ex-
+ploration refers to the searching in the regions that have
+not been explored.
+The initial probabilistic surrogate model is constructed
+by fitting a probability model over a sample of points se-
+lected by random search or some other sampling method.
+In the next step, a new promising point to search is iden-
+tified using the acquisition function. The objective func-
+tion is then evaluated and then the probabilistic surrogate
+model is updated with the new information. The next step
+uses the acquisition function to suggest a further promis-
+ing point. This process is repeated in a sequential manner
+until some termination condition is satisfied.
+Gaussian Process (GP) is a popular choice for the sur-
+rogate model. The GP can be understood as a collection
+of random variables which satisfies the condition that if
+any finite number of these random variables are combined,
+the result will be a joint Gaussian distribution (Archetti
+and Candelieri, 2019). . Another surrogate model is Tree-
+structured Parzen Estimator (TPE). Unlike GP which mod-
+els P(y|x) directly, the TPE approach models P(x|y) and
+P(y) (Bergstra et al., 2011), where x represents hyper-
+parameters, and y represents the associated evaluation
+score of the objective function. The hyper-parameter search
+space can be defined by a generative process, of which
+the TPE replaces the prior distributions of the hyper-
+parameter configuration with specific non-parametric den-
+11
+
+sities; the substitutions become a learning algorithm that
+then creates various densities over the search space (Bergstra
+et al., 2011).
+The TPE algorithm is implemented in the well-known
+hyperopt Python package in (Bergstra et al., 2013). In our
+experiments, we utilize this library for hyper-parameter
+optimization using the TPE algorithm of the Bayesian op-
+timization framework, where the number of iterations is set
+to 800 for each deep learning method. All deep learning
+models are trained using a server with the following char-
+acteristics: 8-core CPU, 16 GB RAM and Linux Ubuntu
+20.04.4.
+4.4. Forecast accuracy measures
+In this section, we present the metrics used to com-
+pute forecast accuracy that enables performance compar-
+ison among the models studied.
+Let Xt denote the observation at time t and Ft denote
+the forecast of Yt. Then the forecast error et = Xt −Ft.
+Let’s have k forecasts and that observation of data at each
+forecast period.
+We use the same notation as in (Hyndman and Koehler,
+2006) mean (xt) to denote the sample mean of {xt} over
+the sample. Analogously, we use the median (xt) for the
+sample median.
+The most commonly used scale-dependent measures
+are based on absolute errors or squared errors.
+Let Xt
+denote the observation at time t and Ft denote the fore-
+cast of Yt. Then the forecast error et = Xt −Ft. Let Mean
+Square Error MSE = mean
+ e2
+l
+
+.
+Root Mean Square Error:
+RMSE =
+q
+mean (e2
+l )
+Mean Absolute Error:
+MAE = mean (|et|)
+Often, the RMSE is preferred to the MSE as it is on the
+same scale as the data. Historically, the RMSE and MSE
+have been popular, largely because of their theoretical rel-
+evance in statistical modelling. However, they are more
+sensitive to outliers than MAE or MDAE (Median Abso-
+lute Error).
+Compared to absolute error, percentage errors have
+the advantage of being scale-independent, and so are fre-
+quently used to compare forecast performance across dif-
+ferent datasets. Let defined percentage error as pt = 100et/Xt.
+The Symmetric Median Absolute Percentage Error:
+SMDAPE = median (200 |Xt −Ft| / (Xt + Ft))
+The problems arising from small values of Xt may be
+less severe for SMDAPE. However, usually when Xt is close
+to zero, Fl is also likely to be close to zero.
+Thus, the
+measure still involves division by a number close to zero.
+Scaled errors is defined as:
+qt =
+et
+1
+n−1
+Pn
+i=2 |Xi −Xi−1|
+which is independent of the scale of the data. A scaled
+error is less than one if it arises from a better forecast
+than the average one-step Naive forecast computed in-
+sample. Conversely, it is greater than one if the forecast is
+worse than the average one-step Naive forecast computed
+in-sample (see Hyndman and Koehler, 2006).
+The famous scaled error is the Mean Absolute Scaled
+Error:
+MASE = mean (|qt|)
+When MASE < 1, the proposed method gives, on aver-
+age, smaller errors than the one-step errors from the Naive
+method. If multi-step forecasts are being computed, it is
+possible to scale by the in-sample MAE computed from
+multi-step naïve forecasts.
+The recent paper of (Kim and Kim, 2016) investigated
+and provided practical advantages of the new accuracy
+measure MAAPE, the mean arctangent absolute percent-
+age error:
+MAAPE = 1
+N
+N
+X
+t=1
+AAPEt = 1
+N
+N
+X
+t=1
+arctan
+
+Xt −Ft
+Xt
+
+
+Although MAAPE is finite when the response variable
+(i.e. Xt ) equals zero, it has a nice trigonometric repre-
+sentation. However, because MAAPE’s value is expressed
+in radians, this makes MAAPE less intuitive. Note that
+MAAPE does not have a symmetric version, since divi-
+sion by zero is no longer a concern. The MAAPE is also
+scale-free because its values are expressed in radians.
+5. Findings and analysis
+In this section, we run and train six models for five
+different forecast horizons, i.e., 30 models in total. The
+forecast horizons include 6 months, 9 months, 12 months,
+18 months, and 24 months. Among six models are two
+deep learning models (LSTM, GRU), three traditional sta-
+tistical (ARIMA, ETS, Theta), and the Naive model as a
+benchmark.
+The first subsection below presents the average results
+for five different forecast horizons using the six models and
+the ensemble models.
+The second subsection illustrates
+further details using the 18-month forecast horizon.
+5.1. Average of multiple forecast horizons
+5.1.1. Comparison of deep learning vs statistical models
+Table 2 provides the averages of the accuracy measures
+over five forecast horizons for each of five accuracy mea-
+sures (MASE, RMSE, MAE, SMDAPE and MAAPE) and
+each of six models. It is evident that the LTSM outper-
+forms all other models, then the GRU, resulting in the deep
+12
+
+Algorithm
+MASE
+RMSE
+MAE
+SMDAPE
+MAAPE
+LSTM
+1.510
+0.441
+0.363
+74.204
+59.340
+GRU
+1.546
+0.453
+0.371
+81.481
+59.791
+ARIMA
+1.815
+0.533
+0.435
+96.504
+63.207
+ETS
+1.835
+0.535
+0.441
+105.028
+65.012
+Theta
+1.961
+0.566
+0.471
+106.827
+67.567
+Naive
+4.176
+1.938
+1.437
+120.213
+75.317
+Table 2: Average accuracy measure of five forecast hori-
+zons
+learning models taking the first place. The next places are
+the ARIMA model, ETS, and the Theta, respectively. The
+worst model surprisingly is the Naive model. Regardless
+of the forecast horizon, the LSTM model is the best model
+on average and produces the most consistent result across
+different accuracy measures, as shown in Table 6 in the
+appendix.
+Figure 5: Comparison of MASE across all algorithms and
+forecast horizons.
+Figure 5 shows the MASE accuracy measure and RMSE
+and MAE are reported in Table 6 in the appendix. The
+results confirm the outperformance of the LSTM model as
+its MASE stays lowest across six models and the differ-
+ent forecast horizons, except for the six-month horizon for
+which GRU slightly outperformed LSTM. Across the five
+horizons, LSTM produces the lowest MASE (1.363) for the
+forecast horizon of 12 months.
+Table 6 reports RMSE, MAE, SMDAPE and MAAPE
+results. We conclude that LSTM is the best model across
+different algorithms and across different forecast horizons.
+Again, the 12-month horizon receives the best forecasting
+accuracy for the first two metrics and the nine-month for
+the last two. The Naive model consistently produces the
+least accuracy across algorithms and forecast horizons, es-
+pecially the longest one of 24 months.
+5.1.2. Ensemble models
+Algorithm
+MASE
+RMSE
+MAE
+SMDAPE
+MAAPE
+All algorithms
+simple average
+2.208
+0.678
+0.530
+94.532
+63.984
+global weights
+1.852
+0.553
+0.445
+91.495
+62.839
+local weights
+1.785
+0.529
+0.428
+91.004
+62.567
+Deep learning
+simple average
+1.469
+0.431
+0.353
+74.315
+58.429
+global weights
+1.468
+0.430
+0.352
+74.261
+58.418
+local weights
+2.056
+0.594
+0.493
+127.001
+67.196
+Stats
+simple average
+2.721
+0.841
+0.654
+110.821
+68.312
+global weights
+2.119
+0.631
+0.509
+108.158
+66.826
+local weights
+2.074
+0.609
+0.498
+122.540
+66.737
+Table 3: Average accuracy measure of ensemble method.
+Table 3 provides the results of the ensemble methods
+applied to combine forecasts by different groups of mod-
+els: all models (All algorithms in the table), LSTM and
+GRU (Deep learning), and statistical models (Stats). For
+each ensembling group, we use a set of combination meth-
+ods including simple average, weighted average with global
+weights (referred to as global weights in the table), and
+weighted average with local weights (referred to as local
+weights in the table).
+The best results come from the ensemble models of
+LSTM and GRU. The second best is All algorithms. The
+ensembles of All algorithms provide better accuracy for all
+error metrics than ensembling using only three statistical
+methods.
+Furthermore, ensembling provides lower error
+metrics than the individual ones for deep learning meth-
+ods for simple average and global weights methods. For
+example, the average - mean (across five forecast horizons)
+of MASE for LSTM and GRU are respectively 1.510 and
+1.546, whereas the highest mean of ensemble methods of
+simple average and global weights are only 1.469 and 1.468.
+The same results are also obtained for other error metrics
+such as RMSE, MAE, SMDAPE, and MAAPE. However,
+the local weights ensemble of GRU and LSTM are worse
+than the individual ones (true with MASE, RMSE, MAE,
+SMDAPE, and MAAPE), so the ensemble model with All
+algorithms has resulted in better accuracy measures.
+While the ensemble of All algorithms provides much
+better accuracy measures than the ensemble of statistical
+models, it is not as good as that of the original individual
+deep learning models.
+Initially, one would expect that the ensemble of all
+models should provide the best accuracy measure as, the-
+oretically, a more diverse set of models can result in fewer
+correlated errors. However, as shown by our analysis, the
+ensembles of GRU and LSTM using global weights provide
+the best model with the lowest mean of all error metrics.
+The relative performance of ensembling methods dif-
+fers across ensembling groups and forecast horizons. For
+All algorithms ensembling models, across all forecast hori-
+zons (see table 7), the local weights methods provide the
+lowest accuracy measures. For the ensembling of the deep
+learning models, the best choice is the global weight for all
+13
+
+the forecast horizons, except the 24-month horizon. For
+the ensembling of the Stats model, the choice is the global
+weight for only the 6, 9 and 12-month periods.
+Further details on each forecast horizon for six original
+models and nine ensemble models (three ensemble com-
+binations and three weighting methods) are provided in
+Tables 6 and 7 in the appendix.
+The next subsection further illustrates the detailed re-
+sults obtained for the forecast horizon of 18 months. De-
+tailed analysis for other forecast horizons can be performed
+in a similar manner using the results provided in the ap-
+pendices.
+5.2. Forecast horizon of 18 months
+5.2.1. Comparison of deep learning vs statistical models
+For each algorithm, we first calculate the average accu-
+racy metrics for each time series across the cross-validation
+splits. The results for all time series of an algorithm are
+then averaged to yield the final metrics’ values represent-
+ing the performance of that particular algorithm. For the
+latter step, we also report the median and standard devi-
+ation in addition to the mean.
+Table 4 presents the accuracy metrics measured for two
+methods of Deep learning (LSTM, GRU) and three statis-
+tical methods (ARIMA, ETS, and Theta) and the bench-
+mark model Naive.
+Algorithm
+LSTM
+GRU
+ARIMA
+ETS
+Theta
+Naive
+MASE
+mean
+1.425
+1.428
+1.539
+1.721
+1.762
+2.760
+median
+1.374
+1.384
+1.500
+1.700
+1.699
+1.684
+sd
+0.177
+0.153
+0.172
+0.159
+0.225
+3.234
+RMSE
+mean
+0.422
+0.422
+0.454
+0.503
+0.513
+0.830
+median
+0.415
+0.412
+0.445
+0.498
+0.498
+0.497
+sd
+0.045
+0.044
+0.044
+0.043
+0.053
+1.019
+MAE
+mean
+0.342
+0.343
+0.370
+0.414
+0.424
+0.660
+median
+0.334
+0.335
+0.363
+0.411
+0.411
+0.408
+sd
+0.038
+0.033
+0.037
+0.034
+0.049
+0.765
+SMDAPE
+mean
+95.775
+109.261
+111.320
+133.133
+132.561
+137.438
+median
+88.499
+108.577
+107.999
+130.480
+129.424
+131.305
+sd
+20.007
+13.229
+19.848
+10.339
+10.804
+17.906
+MAAPE
+mean
+74.979
+76.324
+77.763
+81.963
+82.685
+85.286
+median
+74.674
+75.891
+76.613
+82.901
+83.061
+82.188
+sd
+3.839
+3.825
+4.402
+3.217
+3.873
+12.389
+Table 4: Mean accuracy measures of six forecasting models
+of 18 months
+Overall, LSTM has the best performance with the small-
+est mean, median and standard error for almost all accu-
+racy metrics except for the SMDAPE metric for which the
+GRU model yields a lower mean and median. The results
+clearly show that LSTM is significantly superior to the
+other four forecasting methods. While ARIMA is the best-
+performing traditional statistical approach, it produces a
+much lower accuracy level than the GRU model. The met-
+rics’ median and the standard error confirm the same ob-
+servation. Therefore in the following table, we present only
+the mean value of five different accuracy metrics.
+It can be concluded that the methods of deep learn-
+ing provide significantly more accurate forecast than the
+traditional statistical ones, which confirms our research
+hypothesis.
+5.2.2. Ensemble models for the 18-month horizon
+Algorithm
+MASE
+RMSE
+MAE
+SMDAPE
+MAAPE
+All algorithms
+simple average
+1.535
+0.463
+0.369
+111.130
+76.021
+global weights
+1.513
+0.455
+0.363
+110.183
+75.772
+local weights
+1.469
+0.440
+0.353
+109.933
+75.565
+Deep learning
+simple average
+1.322
+0.393
+0.318
+96.948
+73.896
+global weights
+1.322
+0.393
+0.318
+96.939
+73.900
+local weights
+1.519
+0.472
+0.365
+141.321
+74.531
+Stats
+simple average
+1.794
+0.536
+0.431
+131.529
+79.995
+global weights
+1.756
+0.524
+0.422
+130.779
+79.70
+local weights
+1.639
+0.493
+0.394
+142.974
+77.915
+Table 5: Accuracy measures of Ensemble models of 18
+months
+The best results come from the ensemble models of
+GRU and LSTM, then All algorithms ensembling and Stats
+ensembling groups. Furthermore, ensembling provides lower
+error metrics than the individual ones for deep learning
+methods for simple average and global weights methods.
+For example, the means of MASE for LSTM and GRU are
+respectively 1.425 and 1.428, whereas the lowest mean of
+simple average and global weights is only 1.322. The same
+results are also obtained for other accuracy measures such
+as RMSE, MAE, SMDAPE, and MAAPE. However, the
+local weights ensemble of GRU and LSTM are worse than
+the individual ones (true with MASE, RMSE, MAE and
+SMDAPE).
+6. Conclusion
+The most interesting purpose of this study is to address
+the challenge of forecasting the performance of multiple
+mutual funds simultaneously using modern deep learning
+approaches, with a comparison against popular traditional
+statistical approaches. The deep learning approaches are
+studied from the cross-learning perspective, which means
+information from various time series is used to improve
+predictions of individual time series, and no external fea-
+tures are added to the models. In addition, we use differ-
+ent ensemble methods to combine forecasts generated by
+models of traditional and modern approaches. The results
+show that the ranking order of model quality for the stud-
+ied methods are Ensemble of deep learning models, LSTM,
+GRU, ARIMA, ETS, Theta, and Naive.
+The results among the ensemble methods vary depend-
+ing on which models are combined. The best model comes
+from the ensemble using weighted averages using global
+weights of LSTM and GRU models.
+14
+
+In our study, both LSTM and GRU models are trained
+with Bayesian optimization, a modern approach for hyper-
+parameter optimization that can be effective when eval-
+uating the model for individual configurations of hyper-
+parameters is costly, a property particularly true for deep
+learning problems. In this paper, we have outlined a de-
+tailed methodology for training these deep learning mod-
+els using Bayesian optimization, which we believe could be
+valuable for other research.
+We conclude that deep learning models and their en-
+sembling offer promising solutions to the dilemma question
+of forecasting the performance of multiple mutual funds
+measured by Sharpe ratios.
+7. Appendix
+Algorithm
+6m
+9m
+12m
+18m
+24m
+MASE
+LSTM
+1.863
+1.483
+1.363
+1.425
+1.417
+GRU
+1.835
+1.587
+1.453
+1.428
+1.429
+Arima
+2.252
+2.035
+1.779
+1.539
+1.470
+ETS
+2.073
+1.726
+2.104
+1.721
+1.552
+Theta
+2.055
+1.687
+2.119
+1.762
+2.183
+Naive
+2.977
+3.517
+2.302
+2.760
+18.326
+RMSE
+LSTM
+0.516
+0.438
+0.414
+0.422
+0.416
+GRU
+0.519
+0.462
+0.443
+0.422
+0.418
+ARIMA
+0.637
+0.619
+0.529
+0.454
+0.428
+ETS
+0.576
+0.522
+0.610
+0.503
+0.461
+Theta
+0.574
+0.504
+0.613
+0.513
+0.628
+Naive
+0.890
+1.021
+0.668
+0.830
+6.280
+MAE
+LSTM
+0.447
+0.356
+0.328
+0.342
+0.340
+GRU
+0.439
+0.381
+0.349
+0.343
+0.343
+ARIMA
+0.539
+0.488
+0.427
+0.370
+0.353
+ETS
+0.496
+0.414
+0.505
+0.414
+0.373
+Theta
+0.492
+0 .405
+0.509
+0.424
+0.524
+Naive
+0.715
+0.847
+0.553
+0.660
+4.409
+SMDAPE
+LSTM
+50.581
+42.983
+60.205
+95.775
+121.474
+GRU
+56.180
+45.544
+73.905
+109.261
+122.516
+ARIMA
+71.258
+76.036
+99.108
+111.320
+124.797
+ETS
+59.843
+55.429
+133.069
+133.133
+143.664
+Theta
+56.510
+53.094
+132.822
+132.561
+159.146
+Naive
+73.452
+85.090
+136.191
+137.438
+168.894
+MAAPE
+LSTM
+43.561
+40.625
+56.486
+74.979
+81.050
+GRU
+40.669
+43.733
+56.506
+76.324
+81.720
+ARIMA
+46.255
+45.339
+63.897
+77.763
+82.783
+ETS
+45.489
+41.978
+71.679
+81.963
+83.952
+Theta
+45.335
+42.205
+71.980
+82.685
+95.627
+Naive
+51.922
+59.664
+72.535
+85.286
+107.177
+Table 6: Accuracy measures across 6 algorithms
+and five forecast horizons
+8. Acknowledgement
+We acknowledge the support from Hanoi University for
+providing a server for training models, Ms Hoang Anh and
+Algorithm
+MASE
+RMSE
+MAE
+SMDAPE
+MAAPE
+6m
+All algorithms
+simple average
+2.026
+0.566
+0.485
+57.088
+44.819
+global weights
+2.017
+0.562
+0.483
+56.973
+44.700
+local weights
+2.011
+0.560
+0.482
+56.818
+44.655
+Deep learning
+simple average
+1.737
+0.486
+0.416
+49.372
+39.781
+global weights
+1.737
+0.486
+0.416
+49.378
+39.771
+local weights
+3.026
+0.817
+0.725
+118.567
+59.910
+Stats
+simple average
+2.206
+0.623
+0.528
+62.855
+47.206
+global weights
+2.195
+0.618
+0.526
+62.800
+47.143
+local weights
+2.546
+0.694
+0.610
+86.404
+51.459
+9m
+All algorithms
+simple average
+1.754
+0.524
+0.422
+51.380
+43.182
+global weights
+1.715
+0.513
+0.412
+50.520
+42.522
+local weights
+1.689
+0.506
+0.406
+49.718
+42.029
+Deep learning
+simple average
+1.526
+0.446
+0.366
+44.548
+42.095
+global weights
+1.524
+0.446
+0.366
+44.508
+42.042
+local weights
+2.406
+0.696
+0.578
+101.304
+53.860
+Stats
+simple average
+2.040
+0.604
+0.490
+65.303
+47.650
+global weights
+1.959
+0.582
+0.470
+62.085
+46.262
+local weights
+2.104
+0.626
+0.505
+82.616
+46.953
+12m
+All algorithms
+simple average
+1.699
+0.507
+0.408
+93.867
+63.387
+global weights
+1.684
+0.503
+0.404
+92.321
+63.099
+local weights
+1.680
+0.502
+0.404
+92.168
+62.985
+Deep learning
+simple average
+1.365
+0.419
+0.328
+61.133
+55.451
+global weights
+1.363
+0.419
+0.328
+60.908
+55.453
+local weights
+1.948
+0.558
+0.468
+125.655
+70.640
+Stats
+simple average
+2.009
+0.588
+0.483
+127.343
+69.327
+global weights
+2.003
+0.586
+0.481
+126.859
+69.202
+local weights
+2.039
+0.590
+0.490
+139.245
+70.686
+18m
+All algorithms
+simple average
+1.535
+0.463
+0.369
+111.130
+76.021
+global weights
+1.513
+0.455
+0.363
+110.183
+75.772
+local weights
+1.469
+0.440
+0.353
+109.933
+75.565
+Deep learning
+simple average
+1.322
+0.393
+0.318
+96.948
+73.896
+global weights
+1.322
+0.393
+0.318
+96.939
+73.900
+local weights
+1.519
+0.472
+0.365
+141.321
+74.531
+Stats
+simple average
+1.794
+0.536
+0.431
+131.529
+79.995
+global weights
+1.756
+0.524
+0.422
+130.779
+79.70
+local weights
+1.639
+0.493
+0.394
+142.974
+77.915
+24m
+All algorithms
+simple average
+4.025
+1.329
+0.968
+159.198
+92.513
+global weights
+2.331
+0.729
+0.560
+147.479
+88.100
+local weights
+2.073
+0.634
+0.498
+146.383
+87.601
+Deep learning
+simple average
+1.395
+0.409
+0.335
+119.573
+80.923
+global weights
+1.395
+0.409
+0.335
+119.573
+80.924
+local weights
+1.382
+0.430
+0.332
+148.157
+77.038
+Stats
+simple average
+5.558
+1.853
+1.337
+167.076
+97.383
+global weights
+2.683
+0.843
+0.645
+158.265
+91.822
+local weights
+2.042
+0.640
+0.490
+161.460
+86.667
+Table 7: Accuracy measures of Ensemble models
+15
+
+Mr Nguyen Ngoc Hieu for their assistance in the initial
+phase of the project.
+References
+Ahmed, N. K., Atiya, A. F., Gayar, N. E., and El-Shishiny, H. (2010).
+An empirical comparison of machine learning models for time se-
+ries forecasting. Econometric Reviews, 29(5-6):594–621.
+Archetti, F. and Candelieri, A. (2019). Bayesian optimization and
+data science. Springer.
+Arnold, T. R., Ling, D. C., and Naranjo, A. (2019). Private equity
+real estate funds: returns, risk exposures, and persistence. The
+Journal of Portfolio Management, 45(7):24–42.
+Assimakopoulos, V. and Nikolopoulos, K. (2000). The theta model:
+a decomposition approach to forecasting. International journal of
+forecasting, 16(4):521–530.
+Bandara, K., Bergmeir, C., and Smyl, S. (2020). Forecasting across
+time series databases using recurrent neural networks on groups
+of similar series: A clustering approach. Expert systems with ap-
+plications, 140:112896.
+Bergmeir, C. and Benítez, J. M. (2012).
+On the use of cross-
+validation for time series predictor evaluation. Information Sci-
+ences, 191:192–213.
+Bergstra, J., Bardenet, R., Bengio, Y., and Kégl, B. (2011).
+Al-
+gorithms for hyper-parameter optimization. Advances in neural
+information processing systems, 24.
+Bergstra, J. and Bengio, Y. (2012).
+Random search for hyper-
+parameter optimization.
+Journal of machine learning research,
+13(2).
+Bergstra, J., Yamins, D., Cox, D. D., et al. (2013). Hyperopt: A
+python library for optimizing the hyperparameters of machine
+learning algorithms.
+In Proceedings of the 12th Python in sci-
+ence conference, volume 13, page 20. Citeseer.
+Berk, J. B. and van Binsbergen, J. H. (2015). Measuring skill in the
+mutual fund industry. Journal of Financial Economics, 118(1):1–
+20.
+Bollen, N. P. B. and Busse, J. A. (2005).
+Short-term persistence
+in mutual fund performance.
+The Review of financial studies,
+18(2):569–597.
+Box, G. E., Jenkins, G. M., Reinsel, G. C., and Ljung, G. M. (2015).
+Time series analysis: forecasting and control. John Wiley & Sons.
+Cai, Y. (2005). A forecasting procedure for nonlinear autoregressive
+time series models. Journal of Forecasting, 24(5):335–351.
+Cao, J. and Wang, J. (2019). Stock price forecasting model based
+on modified convolution neural network and financial time se-
+ries analysis. International Journal of Communication Systems,
+32(12):e3987.
+Carhart, M. M. (1997). On persistence in mutual fund performance.
+The Journal of Finance, 52(1):57–82.
+Chen, W., Xu, H., Jia, L., and Gao, Y. (2021). Machine learning
+model for bitcoin exchange rate prediction using economic and
+technology determinants.
+International Journal of Forecasting,
+37(1):28–43.
+Chiang, W.-C., Urban, T., and Baldridge, G. (1996). A neural net-
+work approach to mutual fund net asset value forecasting. Omega,
+24(2):205–215.
+Cho, K., Van Merriënboer, B., Bahdanau, D., and Bengio, Y. (2014).
+On the properties of neural machine translation: Encoder-decoder
+approaches. arXiv preprint arXiv:1409.1259.
+Chung, J., Gulcehre, C., Cho, K., and Bengio, Y. (2014). Empirical
+evaluation of gated recurrent neural networks on sequence model-
+ing. arXiv preprint arXiv:1412.3555.
+Crone, S. F., Hibon, M., and Nikolopoulos, K. (2011).
+Advances
+in forecasting with neural networks? empirical evidence from the
+nn3 competition on time series prediction. International Journal
+of forecasting, 27(3):635–660.
+Elton, E. J. and Gruber, M. J. (2020). A review of the performance
+measurement of long-term mutual funds. Financial analysts jour-
+nal, 76(3):22–37.
+Fiorucci, J. A. and Louzada, F. (2020). Groec: combination method
+via generalized rolling origin evaluation. International Journal of
+Forecasting, 36(1):105–109.
+Fiorucci, J. A., Pellegrini, T. R., Louzada, F., Petropoulos, F., and
+Koehler, A. B. (2016). Models for optimising the theta method
+and their relationship to state space models. International Journal
+of Forecasting, 32(4):1151–1161.
+Hewamalage, H., Bergmeir, C., and Bandara, K. (2021). Recurrent
+neural networks for time series forecasting: Current status and
+future directions. International Journal of Forecasting, 37(1):388–
+427.
+Hochreiter, S. and Schmidhuber, J. (1997). Long short-term memory.
+Neural computation, 9(8):1735–1780.
+Hyndman, R. (2018). A brief history of time series forecasting com-
+petitions. URL https://robjhyndman.com/hyndsight/forecasting-
+competitions.
+Hyndman, R. and Athanasopoulos, G. (2013). Forecasting: princi-
+ples and practice.[e-book].
+Hyndman, R., Koehler, A. B., Ord, J. K., and Snyder, R. D. (2008).
+Forecasting with exponential smoothing: the state space approach.
+Springer Science & Business Media.
+Hyndman, R. J. and Athanasopoulos, G. (2018). Forecasting: prin-
+ciples and practice. OTexts.
+Hyndman, R. J. and Khandakar, Y. (2008). Automatic time series
+forecasting: the forecast package for r. Journal of statistical soft-
+ware, 27:1–22.
+Hyndman, R. J. and Koehler, A. B. (2006). Another look at mea-
+sures of forecast accuracy.
+International journal of forecasting,
+22(4):679–688.
+ICI, R. . S. P. (2021). 2021 Investment Company FACT BOOK.
+Indro, D., Jiang, C., Patuwo, B., and Zhang, G. (1999). Predicting
+mutual fund performance using artificial neural networks. Omega,
+27(3):373–380.
+Ioffe, S. and Szegedy, C. (2015).
+Batch normalization: Accelerat-
+ing deep network training by reducing internal covariate shift.
+In International conference on machine learning, pages 448–456.
+PMLR.
+Irvine, P. J., Kim, J. H. J., and Ren, J. (2022). The beta anomaly
+and mutual fund performance [working paper.
+Jianwei, E., Ye, J., and Jin, H. (2019). A novel hybrid model on
+the prediction of time series and its application for the gold price
+analysis and forecasting. Physica A: Statistical Mechanics and its
+Applications, 527:121454.
+Kacperczyk, M., Nieuwerburgh, S. V., and Veldkamp, L. (2014).
+Time-varying fund manager skill.
+The Journal of Finance,
+69(4):1455–1484.
+Kahn, R. N. and Rudd, A. (1995). Does historical performance pre-
+dict future performance? Financial analysts journal, 51(6):43–52.
+Kenton, J. D. M.-W. C. and Toutanova, L. K. (2019). Bert: Pre-
+training of deep bidirectional transformers for language under-
+standing. In Proceedings of NAACL-HLT, pages 4171–4186.
+Kim, S. and Kim, H. (2016). A new metric of absolute percentage
+error for intermittent demand forecasts. International Journal of
+Forecasting, 32(3):669–679.
+Kingma, D. P. and Ba, J. (2014). Adam: A method for stochastic
+optimization. arXiv preprint arXiv:1412.6980.
+Li, X., Chen, S., Hu, X., and Yang, J. (2019). Understanding the
+disharmony between dropout and batch normalization by variance
+shift.
+Li, Z., Han, J., and Song, Y. (2020). On the forecasting of high-
+frequency financial time series based on arima model improved by
+deep learning. Journal of Forecasting, 39(7):1081–1097.
+Lou, D. (2012). A flow-based explanation for return predictability.
+The Review of Financial Studies, 25(12):3457–3489.
+Makridakis, S. and Hibon, M. (2000). The m3-competition: results,
+conclusions and implications. International journal of forecasting,
+16(4):451–476.
+Makridakis, S., Spiliotis, E., and Assimakopoulos, V. (2020). The
+m4 competition: 100,000 time series and 61 forecasting methods.
+International Journal of Forecasting, 36(1):54–74.
+Melard, G. and Pasteels, J.-M. (2000). Automatic arima modeling
+16
+
+including interventions, using time series expert software. Inter-
+national Journal of Forecasting, 16(4):497–508.
+Newbold, P. (1983). Arima model building and the time series anal-
+ysis approach to forecasting. Journal of forecasting, 2(1):23–35.
+Pan, W.-T., Han, S.-Z., Yang, H.-L., and Chen, X.-Y. (2019). Pre-
+diction of mutual fund net value based on data mining model.
+Cluster computing, 22:9455–9460.
+Pannakkong, W., Pham, V.-H., and Huynh, V.-N. (2017). A novel
+hybridization of arima, ann, and k-means for time series forecast-
+ing.
+International Journal of Knowledge and Systems Science
+(IJKSS), 8(4):30–53.
+Petropoulos, F., Apiletti, D., Assimakopoulos, V., Babai, M. Z., Bar-
+row, D. K., Taieb, S. B., Bergmeir, C., Bessa, R. J., Bijak, J.,
+Boylan, J. E., et al. (2022).
+Forecasting: theory and practice.
+International Journal of Forecasting.
+Putatunda, S. and Rama, K. (2019). A modified bayesian optimiza-
+tion based hyper-parameter tuning approach for extreme gradient
+boosting. In 2019 Fifteenth International Conference on Infor-
+mation Processing (ICINPRO), pages 1–6. IEEE.
+Ruppert, D. (2004). The elements of statistical learning: data min-
+ing, inference, and prediction.
+Santurkar, S., Tsipras, D., Ilyas, A., and Mądry, A. (2018). How does
+batch normalization help optimization?
+In Proceedings of the
+32nd international conference on neural information processing
+systems, pages 2488–2498.
+Semenoglou, A.-A., Spiliotis, E., Makridakis, S., and Assimakopou-
+los, V. (2021). Investigating the accuracy of cross-learning time
+series forecasting methods. International Journal of Forecasting,
+37(3):1072–1084.
+Sezer, O. B., Gudelek, M. U., and Ozbayoglu, A. M. (2020). Financial
+time series forecasting with deep learning: A systematic literature
+review: 2005–2019. Applied Soft Computing, 90:106181.
+Sharpe, W. F. (1966). Mutual fund performance. The Journal of
+Business, 39(1):451–476.
+Sharpe, W. F. (1994). The sharpe ratio. Journal of portfolio man-
+agement, 21(1):49–58.
+Smyl, S. (2020).
+A hybrid method of exponential smoothing and
+recurrent neural networks for time series forecasting. International
+Journal of Forecasting, 36(1):75–85.
+Srivastava, N., Hinton, G., Krizhevsky, A., Sutskever, I., and
+Salakhutdinov, R. (2014). Dropout: a simple way to prevent neu-
+ral networks from overfitting. The journal of machine learning
+research, 15(1):1929–1958.
+Taieb, S. B., Bontempi, G., Atiya, A. F., and Sorjamaa, A. (2012).
+A review and comparison of strategies for multi-step ahead time
+series forecasting based on the nn5 forecasting competition. Expert
+systems with applications, 39(8):7067–7083.
+Wang, K. and Huang, S. (2010). Using fast adaptive neural network
+classifier for mutual fund performance evaluation. Expert systems
+with applications, 37(8):6007–6011.
+Wen, R., Torkkola, K., Narayanaswamy, B., and Madeka, D. (2017).
+A multi-horizon quantile recurrent forecaster.
+arXiv preprint
+arXiv:1711.11053.
+Wu, J., Chen, X.-Y., Zhang, H., Xiong, L.-D., Lei, H., and Deng,
+S.-H. (2019). Hyperparameter optimization for machine learning
+models based on bayesian optimization.
+Journal of Electronic
+Science and Technology, 17(1):26–40.
+Xu, W., Peng, H., Zeng, X., Zhou, F., Tian, X., and Peng, X. (2019).
+A hybrid modelling method for time series forecasting based on
+a linear regression model and deep learning. Applied Intelligence,
+49(8):3002–3015.
+Zhang, A., Lipton, Z. C., Li, M., and Smola, A. J. (2021). Dive into
+deep learning. arXiv preprint arXiv:2106.11342.
+17

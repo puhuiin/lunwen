@@ -1,0 +1,3470 @@
+NBER WORKING PAPER SERIES
+WAGE FIXING
+Axel Gottfries
+Gregor Jarosch
+Working Paper 33501
+http://www.nber.org/papers/w33501
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+February 2025, Revised April 2026
+Thanks to David Berger, Hannes Malmberg, Laura Pilossoph, Tommaso Porzio, and Isaac Sorkin 
+for useful conversations. Thanks to Larry Warren for discussion. Thanks to Leqing Huang for 
+research assistance. Gottfries thanks the European Research Council (ERC Starting Grant 
+101220912) for financial support. The views expressed herein are those of the authors and do not 
+necessarily reflect the views of the National Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been 
+peer-reviewed or been subject to the review by the NBER Board of Directors that accompanies 
+official NBER publications.
+© 2025 by Axel Gottfries and Gregor Jarosch. All rights reserved. Short sections of text, not to 
+exceed two paragraphs, may be quoted without explicit permission provided that full credit, 
+including © notice, is given to the source.
+
+Wage Fixing
+Axel Gottfries and Gregor Jarosch 
+NBER Working Paper No. 33501 
+February 2025, Revised April 2026
+JEL No. E0, J0
+ABSTRACT
+We model and analyze employer cartels that fix wages by committing to a wage ceiling. The setting 
+is a frictional labor market with large employers that compete for workers via posted wages. Wage 
+fixing reduces competition both inside and outside the cartel, leading to market-wide wage 
+depression. Competition from outside employers disciplines the cartel and hence governs its wage 
+impact and profitability. Consequently, wage-fixing schemes are more likely to emerge and remain 
+stable when the labor market has slack, concentration is high, the span of control is small, product 
+demand is elastic, and firms also collude in the product market. We describe a simple sufficient 
+statistic to gauge the harm caused by a wage-fixing cartel.
+Axel Gottfries
+The University of Edinburgh
+axel.gottfries@gmail.com
+Gregor Jarosch
+Duke University
+Department of Economics
+and NBER
+gregorjarosch@gmail.com
+
+“We rarely hear, it has been said, of the combinations of masters, though frequently of those of
+workmen. But whoever imagines, upon this account, that masters rarely combine, is as ignorant
+of the world as of the subject. Masters are always and everywhere in a sort of tacit, but constant
+and uniform combination, not to raise the wages of labour above their actual rate. [...] We seldom,
+indeed, hear of this combination, because it is the usual, and one may say, the natural state of things,
+which nobody ever hears of.”
+(Adam Smith, Wealth of Nations, Book I, Chapter VIII, Of the Wages of Labour, 1776)
+1
+Introduction
+Concerns that employers collude to suppress wages date back centuries but have recently
+drawn renewed interest from competition authorities in the US and Europe. For example,
+a 2021 US presidential executive order explicitly encouraged the Federal Trade Commis-
+sion (FTC) and the Department of Justice (DOJ) to prevent employers from collaborating to
+suppress wages (The President, 2021). Similar concerns have been expressed by European
+competition authorities (Joint Nordic Report, 2024; Aresu et al., 2024), following a broader
+shift in modern antitrust research and regulation towards the labor market. This policy
+shift has coincided with a growing number of legal cases related to employer collusion
+(see, e.g., Kariel et al. (2024)).
+The DOJ and FTC antitrust guidelines emphasize two distinct forms of collusion in the
+labor market: wage-fixing agreements, where employers coordinate on salary levels or
+ranges, and no-poaching agreements, where they agree not to hire each other’s employees
+(DOJ and FTC, 2016). Both practices have seen little attention from economists studying
+labor markets and antitrust.
+This paper focuses on wage-fixing agreements. We show how to model employer car-
+tels that fix wages in a canonical model of employment and wages in a frictional labor
+market. The cartel colludes on a wage ceiling (“going rate”), curbing wage competition
+for workers. We obtain a sharp characterization of the resulting equilibrium pay distri-
+bution which we complement with a rich set of qualitative and quantitative numerical
+observations.
+Our approach allows us to i) understand the economic mechanisms through which
+wage fixing might depress wages, ii) capture its full general equilibrium effect, iii) iden-
+tify settings in which collusion is particularly likely to be stable, profitable, or damaging
+to workers, and iv) assess its impact without the demanding information required by a
+1
+
+production-function based approach in the industrial organization tradition. In addition,
+our emphasis on firm granularity allows us to better understand the interplay between
+wage fixing schemes and market structure.
+Our theory builds on the dynamic monopsony model in Gottfries and Jarosch (2026).
+This is a wage posting model in the spirit of the Burdett and Mortensen (1998) (BM) text-
+book environment which lends itself naturally to wage-fixing schemes because it is an
+explicit model of competition in the labor market via wage posting, with employers poach-
+ing each other’s workers via higher pay along the job ladder. An explicit and descriptively
+appealing notion of wage fixing thus arises naturally: A subset of the employers can form
+a cartel that agrees not to offer pay above some ceiling.
+Compared with the textbook setting, our framework has granular firms, decreasing
+returns to scale in production, market power in the product market, and a linear hiring
+technology. This makes the environment richer, more flexible, and useful for quantitative
+analysis in a broad range of settings.
+After laying out the environment, the main theoretical results establish key properties
+of the equilibrium wage offer distribution in the presence of a wage-fixing cartel. Absent
+wage fixing, employers post dispersed, continuously distributed wages. With wage-fixing,
+there exist several different cases, depending on how aggressively the cartel restricts pay
+(which we take to be exogenous to begin with). When the wage ceiling is tight, then all
+cartel employers offer the ceiling, while the remaining, outside employers offer dispersed
+wages that begin just above it.
+In proving the main existence and uniqueness result (Proposition 1), we establish the
+full equilibrium characterization, along with several intermediate results that illustrate the
+key economics at play. We show, for instance, that there cannot be any mass or any gaps in
+the wage offer distribution away from the wage ceiling and that all firms of the same type
+act symmetrically.
+We next examine the impact of a wage fixing cartel on wages, employment, and profits.
+There are spillovers to the outside employers, who disproportionately benefit from wage
+fixing. This is not surprising because the outsiders can always mimic the cartel, so they
+must fare at least weakly better, but it has strong implications.
+First, it means that the outsiders have no incentive to “blow the whistle” on the cartel.
+Second, it means that a wage-fixing cartel is fragile, since profits are higher outside. We
+2
+
+argue that the temptation to leave the cartel, a common force in collusion settings (Asker
+and Nocke, 2021), is muted in our granular environment. A large cartel member contem-
+plating exit recognizes that such a move would shift the overall equilibrium, resulting in
+a jump in pay and drop in profits everywhere. Consequently, a cartel is more likely to
+emerge and be stable in a concentrated labor market.
+Third, it means that the outside firms’ labor demand response acts as a constraint on
+the cartel. If the cartel is too aggressive in curbing wages, the outside competitors—which
+benefit heavily from cartel activity—expand employment and drive the cartel firms out of
+the market.
+We investigate the disciplining role of the outside employers further and ask how a
+cartel optimally sets its wage ceiling. We find that an optimizing cartel generally pays
+well above the reservation wage. A key prediction is thus that harm and profits caused by
+a wage fixing cartel are large whenever the response of the outside competition is muted.
+For similar reasons, wage-fixing cartels are only profitable when a sufficiently large por-
+tion of the market participates.1
+We then extend the model along two dimensions for quantitative analysis. First, we
+add capital to production. Second, we generalize to inelastic product demand which then
+allows us to consider various forms of conduct in the output market. Most importantly,
+we consider cases where the cartel colludes in both the labor and the product market.
+We use a benchmark US calibration for a (local) labor market and then introduce a
+cartel similar in size to the one that has been documented in the US poultry processing
+industry (DOJ Antitrust Division, 2023).2 Instead of focusing on a single, quantitative
+benchmark, we explore a range of cases with a focus on comparative statics, asking which
+features of the environment make wage fixing cartels particularly harmful to workers.
+Our baseline calibration suggests that the overall labor market impact of wage fixing is
+quantitatively modest. We find that removing the cartel results in market-wide wage gains
+of just over 2%. Varying key model parameters, however, underscores the critical role of
+outside firms in disciplining a wage-fixing cartel. For instance, cartel-driven wage losses
+quickly rise to 6-8% when outside competition is low because the labor market has slack,
+1We do not endogenize participation or selection into the wage fixing cartel. Instead, we characterize equi-
+librium in the labor market given the presence of a cartel.
+2Multiple US meat and poultry processing employers recently settled in a string of wage fixing cases, see,
+e.g., Reuters and Reuters (Scarcella, 2024a,b).
+3
+
+or unresponsive because labor and other inputs are strong complements in production.
+To the same point, we find a key role for the span of control in determining the wage
+losses from wage fixing. If the outside firms ramp up employment in response to their
+cost advantage, the cartel can only do limited damage.
+The quantitative section next explores how the product market affects the impact of
+wage-fixing schemes. When demand is inelastic, the outside firms pass through their cost
+gains from wage fixing leading to lower prices, a force that keeps a wage fixing cartel in
+check. Further, we show that a cartel that also colludes in the product market optimally
+sets a lower wage ceiling.
+We speculate that these findings may explain why wage fixing has frequently been
+documented in sectors where the labor market is often concentrated and competition is
+weak (such as the US food processing industry) or in sectors where one might suspect that
+collusion easily extends into the product market (e.g., health, sports, education).3
+We conclude the paper with a final section that offers a sufficient statistic to calculate
+the (wage) harm caused to workers by a wage-fixing cartel. The appeal is that it sidesteps
+the need to solve the model: the calculations use endogenous objects, such as employment
+inside and outside the cartel, along with model primitives, and require only industry-
+specific information that can be obtained on a case-by-case basis. This makes the approach
+useful for practitioners assessing harm in specific cases.
+Related literature
+This paper is related to a large and growing literature on market power and barriers to
+competition in the labor market. That literature frequently takes a static, frictionless, “new
+classical” (Manning, 2021) approach to competition in the labor market (Robinson, 1933;
+Card et al., 2018; Berger et al., 2022). In contrast, we take a “modern” or “dynamic” (Man-
+ning, 2021) approach that roots market power of employers in search frictions in the BM
+tradition. In the same vein, Gouin-Bonenfant (2022) explores the implications of increas-
+ingly dispersed firm productivity in a BM setting for competition in the labor market.
+Heise and Porzio (2023) apply an extended BM framework to study spatial inequality.
+3See, e.g., various DOJ indictments for nurses (U.S. v. Ryan Hee and VDA OC, LLC, formerly Advantage on
+Call, LLC, 2021), physiotherapist (United States v. Jindal, 2020), healthcare workers (United States v. Manahe,
+2022) or recent case in Lithuania for basketball players.
+4
+
+Other recent applications of BM include Lhuillier (2025), Bilal and Lhuillier (2025), En-
+gbom and Moser (2022), Engbom et al. (2026), and Lo Bello and Pesaresi (2025). Our
+paper also relates to recent work that introduces decreasing returns to scale production
+into random on-the-job search models (Bilal et al., 2022; Elsby and Gottfries, 2022; Lentz
+and Mortensen, 2022). Jarosch et al. (2024) is a related framework that has large firms in a
+frictional labor market and wage bargaining. In our setting, wages are posted.
+Despite the attention from regulators and its anecdotal ubiquity, employer collusion
+in the labor market has seen little attention from academic economists. Recent exceptions
+studying collusion theoretically include Martins and Thomas (2023) and Bisceglia (2024).
+An empirical exception is Delabastita and Rubens (2024) whose approach detects collu-
+sion in the labor market via otherwise unexplained markdowns. Similarly, Sharma (2024)
+develops a test in the neoclassical setting that registers labor market collusion whenever
+firms expand in response to a competitors’ positive demand shock, detecting significant
+collusion in the Indian textile industry. These approaches towards collusion in the labor
+market in the IO tradition typically lump all forms of employer collusion into reduced-
+form wedges. In contrast, this is the first paper to model wage fixing explicitly from first
+principles.
+Of course, our paper is also related to a large and mature literature in IO on cartels,
+collusion, and price fixing. It emphasizes questions around cartel formation and cartel
+stability that are closely related to some of those we discuss in the context of the labor
+market. Several differences are worth noting. First, this literature has, to date, almost
+exclusively focused on product markets.4 Our focus is on cartels in the labor market. Sec-
+ond, while the IO literature includes work on partial cartels with a competitive fringe, the
+canonical models and much of the applied work focus on full-participation cartels. In con-
+trast, we allow for the coexistence between cartel and non-cartel employers and analyze
+how non-colluding firms constrain collusive behavior, generating equilibrium spillovers
+that discipline the cartel and shape its impact. In addition, we also model cartels that
+operate jointly in the labor and in the product market.
+Furthermore, our framework jointly determines employment and wages, prices and
+output and can hence speak to the full general equilibrium effects of a wage fixing scheme.
+4“The Economics of Collusion” (Marshall and Marx, 2012) and other books and survey articles such as
+Asker and Nocke (2021) on “Collusion, Mergers, and Related Antitrust Issues” pay virtually no attention to
+labor markets.
+5
+
+In contrast, the IO literature typically works with partial equilibrium frameworks. Finally,
+we work with a dynamic monopsony search model—a workhorse in the “macro-labor”
+approach to study employment, wages, and (imperfect) competition in the labor market—
+making it a natural starting point for the study of wage fixing cartels.
+2
+Model
+We extend the model of Gottfries and Jarosch (2026) to incorporate collusion between em-
+ployers. We first outline the baseline model and then describe how we model wage fixing
+by an employer cartel in this setting.
+The framework features search frictions, wage posting, and on-the-job-search, along
+the lines of Burdett and Mortensen (1998). Time is continuous, and workers and firms
+both discount the future at rate r. There is a unit measure of workers. Workers receive flow
+income b when unemployed, while employed workers receive a contracted wage w and
+lose their jobs becoming unemployed at rate δ. There are M symmetric profit-maximizing
+firms, all large with respect to the labor market in the sense that they will each employ a
+strictly positive fraction of the workforce. Firm i operates a decreasing-returns production
+function, xnα
+i , with ni denoting the measure of employees and x denoting common pro-
+ductivity. All firms produce a homogeneous good. There is a minimum wage wmin which,
+for the theoretical analysis, we assume is binding.
+Search is random, and workers search for jobs both on and off the job. Employers hence
+experience turnover because workers move both to unemployment and to better paying
+jobs. To hire, firms post wages and decide on a rate at which they make offers to workers,
+both employed and unemployed. Doing so is costless—firms can locate as many workers
+as they like instantaneously—but whenever a firm hires a worker, it needs to pay a hiring,
+or training cost c. There is hence an upside to higher pay: it lowers turnover and so the
+employer incurs less expenses on training and hiring replacement workers.
+Because firms are large and search is random, employed workers sometimes receive
+job offers from their own employers. We assume that if the worker receives such an offer
+and it comes with a higher wage, she is free to accept that offer. In this event, the firm does
+not need to pay the hiring cost again. To the extent that firms post dispersed wages, there
+is hence scope for internal raises. We focus on a stationary equilibrium.
+6
+
+For the exposition and the theoretical analysis, we assume that demand in the output
+market is perfectly elastic, with price p normalized to 1. In Section B, we endogenize the
+price, assuming quasi-linear utility over consumption and entertaining several different
+forms of conduct in the product market. We pay particular attention to the case where the
+employer cartel also colludes in the product market.
+Wage Fixing in the Labor Market
+We are interested in a case where a subset of employers in the market fixes wages. Specifi-
+cally, we consider a case where K ∈{2, 3, . . . , M} cartel members agree not to offer wages
+above some wage ceiling w f . We take that ceiling to be exogenous to begin with and then
+later consider its optimal level from the perspective of the cartel. We denote the set of firms
+in the cartel by C. For lack of a better term, we call the M −K firms not in the cartel the
+outside employers.
+This type of employer collusion is illegal in most countries, which raises the question of
+who, beyond the K participants, is aware of it. We assume that all employers in the labor
+market are aware, including those outside the cartel. The M −K outsiders thus respond
+to the presence (and the choices) of the cartel when making wage offers and choosing
+employment. We show below that the outside employers benefit from the presence of the
+cartel, and hence have no incentive to whistle-blow.
+We also assume that workers are aware of the collusion. However, for most of the anal-
+ysis below, we assume that the minimum wage is binding. This is isomorphic to the case
+where workers are unaware of the collusion and therefore do not adjust their reservation
+wage in response to cartel activity, since in either case the effective lower bound on wages
+is unresponsive to the cartel. Such a scenario seems natural given that these practices are
+illicit, happen in secrecy, and have, until recently, received little attention. In the quantita-
+tive section, we explore the case where the minimum wage is not binding and the lowest
+wage hence responds to wage fixing.
+Workers
+Workers in the baseline setting know all primitives and have rational expectations over
+the equilibrium, fully aware of any collusion. They only make one meaningful decision—
+the reservation wage, which we characterize in this section—and otherwise mechanically
+7
+
+move up the wage ladder.
+Unemployed and employed workers make contact with some employer j at rates ψj
+and sψj, respectively, where s ≤1. If that happens, they draw from the firm’s distribution
+of posted wages Fj.
+Workers’ preferences are linear in income. Let w ≡max{wr, wmin}. A worker’s value
+of unemployment and employment at wage w hence satisfy, respectively,
+rU
+=
+b + ∑
+j
+ψj
+ˆ ∞
+w
+(W ( ˜w) −U) dFj ( ˜w) ,
+(1)
+rW (w)
+=
+w + δ (U −W (w)) + ∑
+j
+sψj
+ˆ ∞
+w
+max {W ( ˜w) −W (w) , 0} dFj ( ˜w) .
+(2)
+The reservation wage satisfies W(wr) = U, which by standard arguments yields
+wr = b + (1 −s)
+ˆ ∞
+wr
+∑j ψj
+ 1 −Fj( ˜w)
+
+r + δ + ∑j sψj
+ 1 −Fj ( ˜w)
+d ˜w.
+(3)
+If the minimum wage is binding, wmin > wr, then the reservation wage is still well defined
+via (3) but does not affect the allocation.
+Transitions
+The identity of the employer—whether in the cartel or not—does not affect
+the worker above and beyond the wage because it does not affect the value of search.
+The optimal job acceptance policy of employed workers is therefore simple: accept any
+strictly higher wage offer and identical wage offers with small, positive probability κ.5 The
+probability that a worker with wage w accepts a random job offer from firm i is therefore
+1 −ˆFi(w) ≡1 −Fi(w) + κ
+ Fi(w) −Fi(w−)
+
+,
+(4)
+where w−refers to the left limit.
+Firms
+Firms maximize steady-state flow profits as in Burdett and Mortensen (1998). Gottfries
+and Jarosch (2026) show that there exists a dual formulation of the firm problem where
+5We emphasize that κ is small since the main uniqueness proof requires a sufficiently small value to rule out
+asymmetric equilibria; see Lemma C.8.
+8
+
+firm i directly chooses its employment ni and the distribution of wages across employed
+workers, denoted Gi. To implement the optimal time-invariant solution, firms i) initially
+hire their desired number of workers at the desired distribution of wages; and ii) then
+maintain this via a constant contact rate ψi and distribution of posted wages Fi. Because
+the hiring technology is linear, this is feasible.6
+Of course, all cartel employers are subject to an additional, self-imposed constraint,
+namely that pay must not exceed w f . The firm problem is hence
+rΠi =
+max{ni,Gi} xnα
+i −ni
+´ ∞
+w
+
+w + c
+
+r + δ + ∑j̸=i sψj
+ 1 −ˆFj (w)
+
+dGi(w). (5)
+subject to:
+Gi(w−) = 0, limw→∞Gi(w) = 1, Gi(w f ) = 1 if i ∈C,
+Gi(w1) ≤Gi(w2) for all w1 < w2.
+The right hand side consists of gross revenue net of the wage bill and turnover costs which
+we jointly refer to as the user cost of labor. Turnover is wage-specific because higher wages
+come with a lower quit rate. The turnover cost includes, in annuitized form, the cost of hir-
+ing the initial workforce implying that this formulation takes the cost of the instantaneous
+transition to steady state into account. 7
+As is implicit in the statement of the firm problem, firms take the reservation wage wr
+and their competitors’ actions—the contact rates ψj and offer distributions ˆFj—as given
+when making their choices.8 In that sense, we consider a Nash equilibrium where the
+agents, despite being large, take each other’s actions as given.
+3
+Theoretical results
+This section offers a theoretical analysis of the equilibrium effects of employer collusion.
+As a backdrop, we briefly characterize the equilibrium without collusion in Appendix A
+in closed form. The unique equilibrium is symmetric with all firms posting uniformly
+6Firms may choose a distribution with a finite number of intervals with densities, mass points (including
+degenerate distributions), and gaps. Exotic distributions not covered by this description, such as the Cantor
+distribution, are ruled out to avoid cumbersome notation.
+7In Burdett and Mortensen (1998) and (the baseline of) Gottfries and Jarosch (2026) firms just maximize
+steady state flow profits, not accounting for the cost of the initial hires.
+8To keep notation simple, we do not let the firm choose distributions with infinite number of nondifferen-
+tiable points (such as the Cantor distribution).
+9
+
+distributed wages from w. This guarantees user cost equalization, with every dollar of
+additional pay returning a dollar of turnover costs saved. Employment in turn is such that
+the marginal revenue product of labor equals the user cost.
+3.1
+Equilibrium with wage fixing
+We next study the case where K out of the M employers collude to not raise the wage
+above some threshold w f . We do not impose on the equilibrium that w f is set optimally or
+that forming or joining the cartel is rational. Instead, we first characterize equilibria given
+some K and w f and then study how user cost, wages, and profits for cartel members and
+outsiders depend on both these variables in Section 3.3. We relegate most formal details
+and derivations to Online Appendix C and focus on key properties and intuition.
+Characterizing the Equilibrium Wage Offer Distribution
+The proof of the main
+existence and uniqueness result below establishes that the equilibrium can take four dis-
+tinct shapes. We formally characterize these cases in the proof in Online Appendix C and
+here describe the corresponding wage offer distributions (plotted in Figure 1 below).
+The cases are ordered by how aggressively the cartel sets the wage ceiling w f , relative
+to w. We denote by ψc and ψo the rate at which, respectively, cartel and outside firms make
+offers to workers, and by Fc and Fo the corresponding distributions from which those offers
+are drawn.9
+Case I. All cartel firms offer all their jobs at w f . The outside firms offer jobs uniformly
+distributed over (w f , wu] at a common rate.
+The following condition guarantees that this is an equilibrium: w f ≤w + s(K −1)ψcc(1−
+κ). This condition guarantees that the cartel members prefer paying the wage ceiling in-
+stead of the reservation wage (or any wage in between) that comes with the additional
+turnover from losing workers to other cartel employers posting at the mass point.
+Case II. The cartel posts a mass of jobs at w f , but additionally posts uniformly distributed
+wages at a common rate on [w, w1], with a gap such that w1 < w f . The outside firms post
+uniformly distributed wages on (w f , wu] at a common rate, as in Case I.
+9This notation and the following discussion impose that all firms of a type act symmetrically which is a
+result we formally state in Proposition 1 below.
+10
+
+The following condition guarantees that this is an equilibrium: w + s(K −1)ψcc ≥
+w f > w + s(K −1)ψcc(1 −κ). The second inequality simply states that we are not in Case
+I, while the first states that the cartel prefers paying the ceiling over the reservation wage
+if all cartel activity is below the ceiling.
+It is easy to see why the equilibrium changes from Case I to II as w f rises sufficiently
+far above w. In this case, posting wages below w f becomes attractive despite the strictly
+larger turnover cost generated by the mass point above. Wages are uniform below w1
+because firms trade off wages and retention in the usual fashion, which also gives rise
+to uniformly distributed wage offers in the no-collusion equilibrium. As the cartel posts
+these additional jobs below the ceiling, it pulls back on hiring from the mass point because
+it would otherwise grow in size. Eventually, the gap closes and w1 →w f , while simul-
+taneously the mass at w f vanishes. This is exactly where the first weak inequality above
+holds with equality.
+Case III. There is overlap in the wages posted by cartel members and outside employers.
+Cartel members post uniformly and with uniform rate on [w, w1], while cartel members
+and outside employers act identically on the next interval, all posting uniformly and with
+identical rate on (w1, w f ]. Above w f , only outside employers post, again uniformly dis-
+tributed and with the same rate. The rates across these three intervals generally differ (and
+are presented in the Online Appendix). There is no longer mass at the wage ceiling but the
+ceiling is still binding for the cartel.
+The following condition guarantees that this is an equilibrium: w + s(M −1)ψcc ≥
+w f > w + s(K −1)ψcc. The second inequality simply states that we are not in Case II.
+If the first inequality does not hold, then there is a fourth case described in the Online
+Appendix. We henceforth rule this case out, which can be done via a parameter restriction
+that guarantees that the first inequality holds. The restriction is cumbersome, and we
+describe it in the course of the proof of Proposition 1 below (see Assumption 1 and Lemma
+C.12 in the Online Appendix). The restriction guarantees that employment in the cartel
+does not contract too much as a result of the wage ceiling. We will see below that the
+cartel suffers a cost disadvantage relative to the outside firms. The restriction is violated
+if, due to their cost advantage, the outside firms drive the cartel largely out of the market.
+In this scenario, the cartel can then satisfy its diminished employment demand by hiring
+from only a small segment of the wage support [w1, w f ] with w1 > w. The assumption is
+11
+
+therefore more likely to be violated in settings where the production function is close to
+linear.10
+Figure 1 plots the wage offer distributions in these three cases, separately for the cartel
+(Panel A) and the outside employers (Panel B).
+Figure 1: Equilibrium Wage Offer Distributions for Cartel and Outside Firms
+A. Cartel firms
+B. Outside firms
+Notes: Cumulative distribution function of posted wages for the cartel members in Panel A and outside firms
+in Panel B for different values of the wage ceiling w f . The case with a low w f (Case I) is depicted in blue, with
+a medium w f (Case II) in red, and with a high w f (Case III) in purple. The wage ceiling w f for each case is
+depicted with the thin dashed vertical lines. See the main text for a description of the three cases.
+Characterizing Equilibrium Employment
+With these in hand, it is straightforward
+to determine equilibrium employment. Optimal firm behavior requires that the user cost
+is equated across all wages posted by a firm. In all three cases, cartel firms always post
+jobs at the ceiling while the outsiders always post marginally above. For the outsiders, we
+thus get that,
+αxnα−1
+o
+= w f + c
+ r + δ + s(M −K −1)ψo(1 −Fo(w f ))
+
+(6)
+This states that outsiders will choose a level of employment such that the marginal revenue
+product of labor equals the user cost. The user cost is evaluated marginally above w f ,
+10The reason we do not consider this last case is primarily that we have been unable to rule out equilibrium
+multiplicity in that range. In the numerical exercises below, we consistently find that a profit-maximizing cartel
+sets an optimal w f that falls into Case I, far from this fourth case that we do not consider.
+12
+
+reflecting that the cartel is bound by w f and hence never poaches anywhere above. The
+r term reflects the cost of the initial hires in annuitized form while the δ term reflects
+turnover to unemployment.
+For the cartel, in turn,
+αxnα−1
+c
+= w f + c
+
+r + δ + s(M −K)ψo(1 −Fo(w f )) + s(K −1)ψcκ
+
+Fc
+ w f
+ −Fc
+
+w−
+f
+
+(7)
+The only difference is in the turnover cost. Wage competition arises from M −K outsiders
+and from K −1 cartel members that also post at w f .
+Existence and Uniqueness
+PROPOSITION 1. There exists a unique symmetric equilibrium with wage fixing.
+Proof. See Online Appendix C.
+In the course of proving the result, we establish that the equilibrium has one of the
+three shapes that we discuss in the previous section. In addition, the proof establishes
+several intermediate results, some of which we will discuss next, since they convey some
+of the key economics of the framework with wage fixing.
+Discussion of Additional Equilibrium Properties
+No Mass
+Lemma C.1 shows that a deviation argument rules out mass. Because this is a
+granular setting, it rules out many firms posting at the same mass point, the reason being
+that then one of these firms could post marginally higher pay with strictly lower turnover.
+Importantly, this logic breaks with wage fixing, simply because multiple cartel members
+might offer a mass of jobs at w f , which by definition shuts down any deviation to higher
+pay.
+No Gaps
+Lemma C.2 establishes that, generally, there cannot be a gap in the support of
+the wage offer distribution. The reason is simply that firms at the upper end of the gap
+could otherwise lower pay with no increase in turnover. This logic, however, breaks below
+a mass point. Here, the turnover rate discretely jumps below the mass due to a jump in the
+13
+
+rate at which strictly preferable outside offers arrive. Jointly with the logic sketched in the
+previous paragraph, this leaves room for a gap in the distribution below the wage ceiling
+w f .
+This logic is readily observable in Cases I and II in figure 1. The only difference between
+the two cases is that in Case I, the gap extends beyond w because the wage that comes with
+user cost equal to that at w f is below w.
+Identical User Cost
+Lemma C.6 establishes that outside firms have identical user costs
+and, which follows directly, the same level of employment. Lemma C.7 does the same for
+the cartel.
+To see why, suppose two outside firms have differing user costs. The firm with the
+higher cost can always post a wage marginally above the highest wage posted by the
+other firm. Since turnover is weakly lower at that point, the user cost differential vanishes
+as the wage differential vanishes, a contradiction.
+A similar logic applies within the cartel but with a difference: The logic we just ap-
+pealed to does not apply at w f . It follows that any potential user cost differential across
+cartel employers must arise from different mass at w f . Indeed, asymmetric cartels might
+arise where one cartel employer posts plenty of jobs at w f and the other posts few. This
+asymmetry results in a user cost differential because the small cartel member then has
+more competition and higher turnover. But it is also smaller, and if the difference in user
+cost equals the difference in marginal products, then this can be an equilibrium.
+However, this is not a possibility if κ—the rate at which workers move when indifferent—
+is sufficiently low. In that event, asymmetric wage posting will lead to small user cost
+differentials that will not line up with the difference in marginal productivity implied by
+the size difference. Assuming that κ is small, which seems natural, is thus sufficient to
+establish that the cartel firms have identical user cost, too.11
+3.2
+The Consequences of Wage Fixing
+We next formally characterize the impact of wage fixing on wages and profits for cartel and
+outside firm employers. We then complement the formal results with additional numer-
+11It is straightforward to construct asymmetric equilibria when they exist, following the discussion in the
+previous two paragraphs.
+14
+
+ical observations that build on our quantitative model below. We summarize our formal
+findings in the following proposition.
+PROPOSITION 2. A) Cartel employers have lower employment, higher user cost, and lower
+profits compared with outside employers. The impact of wage fixing on the average wage
+is ambiguous.
+B) A reduction in the wage ceiling w f reduces the user cost and increases profits for
+outside employers. Its impact on cartel members’ user costs and profits is ambiguous.
+Proof. See Online Appendix D.
+The fact that the user cost of labor is higher for cartel members follows directly from
+(6) and (7). The cartel piles up jobs at w f , and so turnover drops discretely right above,
+where the outsiders post continuously distributed wages and hence have lower user cost.
+Intuitively, the cartel ties its hands by committing to a ceiling w f . The outside firms operate
+in the same labor market and are always free to exactly emulate the cartel; hence, they must
+be weakly better off.
+Cartel Stability
+An immediate corollary of Part A is that cartel members might be
+tempted to deviate and pay like an outside employer since profits are strictly larger. A
+wage fixing scheme might thus appear fragile, requiring a form of enforcement, a com-
+mon feature of settings with collusion (Asker and Nocke (2021)). We emphasize that a
+granular market structure, such as we consider here, makes this less of a concern. A large
+member, tempted to deviate, would recognize that even under a unilateral deviation, ag-
+gregate competition would rise because the cartel’s size would shrink to K −1. That rise
+in competition moderates the incentives to exit—the firm would be an outside firm in a
+labor market with a cartel of size K −1, rather than a member of a cartel of size K. This
+consideration might potentially undo any such temptation or at least dampen it, stabiliz-
+ing the cartel. It is also strongest in markets that are concentrated, which suggests that
+cartel activity might rise when concentration rises. We revisit this below numerically.
+A more standard and complementary argument appeals to trigger strategies: suppose
+a single deviation triggers deviation by all other members and hence reversion to the no-
+collusion equilibrium. Then, the relevant comparison is cartel profits versus no-collusion
+15
+
+profits, not cartel profits versus outsider profits. As we show numerically below, cartel
+profits can exceed no-collusion profits even when outsider profits exceed cartel profits, so
+standard trigger strategies would naturally sustain the cartel.12
+Misallocation
+We highlight that wage fixing leads to misallocation. Part A of the propo-
+sition shows that cartel members have a higher user cost than outside firms. As a con-
+sequence, they have lower employment than outside firms because all firms optimally
+equate the marginal revenue product of labor to the user cost. Given identical decreasing
+returns to scale technology, this results in misallocation, constituting an aggregate down-
+side of wage-fixing agreements.
+Wage Impact
+The final part of part A implies that it might actually be possible for equi-
+librium wages to rise when a cartel fixes wages. This case may arise for moderate wage
+ceilings because a cartel that posts a mass of identical pay reduces not only competition
+but also turnover. The gains from the reduction in turnover are shared with workers when
+the wage ceiling is sufficiently high. We discuss this in more detail at the end of section
+3.3.
+Is it rational to form a cartel?
+It follows from part B of the proposition that, while
+outside employers strictly benefit from the introduction of the cartel, the impact on profits
+of the cartel firms is ambiguous. One might expect that the cartel enjoys higher profits due
+to lower turnover from internal and external competition. This need not be the case due to
+competition from the outside employers that can free-ride on the cartel. In response to the
+fall in their user cost, these outside employers increase hiring and expand in size, which
+drives up competition and turnover for the cartel. Whether it is collectively rational to
+form a cartel thus depends on the response of the outside firms.
+It follows that cartels are more likely to arise in settings where the competitive push-
+back from the remaining employers is less powerful. This is the case, for instance, when
+the production function features a lot of curvature (low α). By contrast, when it is close to
+linear, the outside firms aggressively expand in response to their falling user cost, driving
+12Standard patience and monitoring requirements for these arguments are irrelevant in our continuous time
+setting where a deviation can immediately be detected and transition to the new equilibrium can happen instan-
+taneously given the linear hiring technology.
+16
+
+out the cartel. On the flip side, this means that whenever a cartel does emerge in settings
+where the span of control is large, it needs to be large to be profitable, muting the compet-
+itive response of the outside employers. We discuss other market features which are key
+for the response of the outsiders and hence the profitability of a cartel below.
+Whistle-blowing
+Finally, it follows from the second part of the proposition that we
+should not expect any “whistle-blowing” from the outside employers, since they unam-
+biguously benefit from the formation and existence of a cartel.
+3.3
+The Optimal Wage Ceiling w f
+So far, we treated the wage ceiling w f as exogenous. It is then natural to consider the
+optimal w f from the perspective of the cartel firms. One might suspect that the profit
+maximizing w f equals the lowest possible wage, namely w. This, however, is not generally
+the case.
+Instead, there are two opposing forces. First, by reducing the wage w f , there is a direct
+reduction in the user cost of labor. However, a tighter ceiling also benefits the outside
+employers, who respond by expanding employment, driving up competition.
+This section first studies this situation formally in a simplified case and then offers
+complementary numerical observations from the quantitative model.
+A Simplified Analytical Case
+We next show analytically that the tradeoff between the cartel’s costs and external compe-
+tition naturally leads to an interior w f that lies above w. In this sense, a wage fixing cartel
+does not optimally suppress wages “all the way”.13
+We make analytical progress in the simplified case where the search efficiency of the
+employed equals that of the unemployed, s = 1. Since we are interested in understanding
+why a cartel would optimally choose w f > w we focus on Cases I and II. These are the
+cases with a relatively tight wage ceiling (Case I also endogenously emerges when we
+calibrate the model below).
+13Of course, if the cartel includes all employers, K = M, then the optimal wage ceiling is trivially just w. The
+following arguments thus apply when K < M.
+17
+
+As shown above, in these cases, the outside firms post wages uniformly from w f to
+wu. Their user cost hence is ωo ≡w f + (r + δ + (M −K −1)ψo)cOptimal hiring implies
+xαnα−1
+o
+= ωo, and so flow balance implies
+
+1 −(M −K)
+
+xα
+ωo
+
+1
+1−α 
+ψo = δ
+
+xα
+ωo
+
+1
+1−α . We
+can use this to obtain a simple (implicit) expression for ωo in terms of w f ,
+ωo = w f + (r + δ)c + (M −K −1)
+δ
+
+xα
+ωo
+
+1
+1−α
+1 −(M −K)
+
+xα
+ωo
+
+1
+1−α
+c.
+(8)
+The left (right) hand side is increasing (decreasing) in ωo, which implies that ωo is strictly
+increasing in w f . We can therefore think of the cartel as directly minimizing its own user
+cost via ωo.14 Assuming that κ →0, the user cost for the cartel members is
+ωc(ωo) ≡w f (ωo) + (r + δ + (M −K)ψo(ωo))c = ωo + δ
+
+xα
+ωo
+
+1
+1−α
+1 −(M −K)
+
+xα
+ωo
+
+1
+1−α
+c.
+(9)
+hence
+ω′
+c(ωo)
+=
+1 −
+1
+1 −α
+cδ
+ωo
+  ωo
+xα
+
+1
+1−α
+  ωo
+xα
+
+1
+1−α −(M −K)
+2 .
+(10)
+The fact that the derivative is less than one reflects that the firms outside the cartel
+benefit disproportionately from wage fixing. The second term captures the added turnover
+for the cartel relative to the outside employers. It is this second term that prevents the
+cartel from generically fixing the wage at its lowest possible value. A low wage ceiling
+leads outside employers to increase employment, disproportionately increasing turnover
+at the cartel firms.
+To see this most directly, consider what happens when the cartel acts so aggressively
+that the user cost of the outsiders falls towards xα(M −K)1−α. From (9), the outsiders
+then employ all the workers in the labor market, implying infinitely fast turnover and an
+infinitely high user cost for the cartel—which cannot be optimal. For slightly higher user
+costs, the derivative of the cartel’s user cost with respect to that of the outside firms is neg-
+14In doing so, the cartel is of course (implicitly) constrained by the reservation wage wr and an upper bound
+on the user cost corresponding to the equilibrium without collusion.
+18
+
+ative, as can be seen from (10). The offsetting competition from outsiders hence restrains
+the cartel. The derivative turns positive for sufficiently high ωo. It is further straightfor-
+ward to verify that the second derivative is strictly positive. It follows that there exists a
+unique value for ωo that minimizes the cartel’s user cost ωc. Since (9) is independent of the
+reservation wage wr, it also follows that there always exists a sufficiently low reservation
+wage such that the optimal wage ceiling is indeed above the reservation wage.
+Finally, a special case worth noting is the one where there is a single outside firm,
+K = M −1. In this case the cartel posts only at w f and the outsider posts a mass marginally
+above, so the wage distribution is effectively degenerate at w f . But this may mask that
+the sole outsider still exerts considerable competitive pressure on the cartel which in turn
+optimally keeps w f > w. Only when K = M does competition fully collapse.15
+Forces shaping the optimal w f
+To further unpack the forces determining the optimal
+wage ceiling w f , use that (10) equals zero at the optimum. Use that the level of employ-
+ment at outside firms, no, equals
+
+xα
+ωo
+
+1
+1−α to get that, at the optimum,
+w f
+c
+=
+ψo
+
+1
+1 −α
+1
+1 −(M −K)no
+−(M −K −1)
+
+−(r + δ).
+(11)
+This is a measure of how aggressively the cartel optimally sets the wage ceiling w f that is
+useful in understanding the forces at play.
+A large value of the span of control α means that outsiders increase employment more
+in response to a fall in their user cost which yields a higher optimal wage ceiling. 1 −(M −
+K)no, on the other hand, is where the outsiders as a whole source their employment from.
+If this is small then any increase in labor demand by outsiders drives up turnover in the
+cartel more sharply, again yielding a higher optimal wage ceiling. These observations an-
+ticipate an important quantitative result below: cartels act much more aggressively when
+the labor market has slack or when the span of control is small.16
+15Technically, with K = M −1, the single outside firm does not have a well-defined strategy because (w f , ∞)
+has no minimal element. It is simple to fix this, for instance by assuming that κ declines over a small interval ∆
+such that the optimal offer is w f + ∆.
+16The corresponding expression for the general case with s ≤1 is
+w f
+c
+=
+ψo
+
+1
+1 −α
+1 −(1 −s)Knc
+1 −(1 −s)Knc −(M −K)no
+−(M −K −1)
+
+−(r + δ).
+19
+
+Numerical Observations on the Impact of w f
+We complement these results with qualitative numerical observations that build on the
+calibrated model; we revisit these in the next section.
+Profits
+Figure 2 depicts the profits of cartel members and outside firms as we move the
+wage ceiling w f and the size of the cartel K. The black solid line indicates profits when
+there is no cartel.
+The two kinks are where the equilibrium moves from Case I to II and then III, as w f
+is relaxed.17 We focus our discussion primarily on Case I. This is because it follows from
+Panel A that the profit maximizing w f corresponds to this case.
+In addition, it follows from the same panel that the profit maximizing wage ceiling is
+generally strictly above w, as we have shown formally for the simplified setting above.
+The reason is the strong spillovers to the outside firms, whose employment response dis-
+ciplines the cartel. Ultimately, as K →M, we have that w f →w, but in general, this is not
+the case.
+We note that profits are generally increasing in the size of the cartel, both for cartel
+employers and outsiders. In turn, the profit-maximizing wage ceiling is not monotonically
+related to the size of the cartel. Finally, we depict a case in which the cartel is sufficiently
+small (K = 4) such that profits are strictly below the no-collusion benchmark.
+Both panels jointly also clarify that cartel employers, even if the cartel is profitable,
+should be tempted to leave the cartel because the outsiders fare even better. It further
+demonstrates that this temptation is muted in a granular setting. A firm leaving the cartel
+would recognize that the remaining group would be less powerful, resulting in a discrete
+reduction in profits at outside employers as well.
+Wages
+Panel A in Figure 4 plots mean wages, which are normalized to one without
+collusion. We plot them against the wage ceiling w f and again for different cartel sizes K.
+The two sets of kinks again indicate the transition from Case I to II and then III. We again
+focus on Case I.
+This follows exactly the same logic but has a generalized expression for labor market slack which takes into
+account that the employed search with lower efficiency.
+17The three cases are more easily visually discerned in Figure 3 since, as can be seen there, Case II only arises
+for a small range of w f .
+20
+
+Figure 2: Profits
+A. Cartel firms
+B. Outside firms
+Notes: Firms within the cartel in panel A and outside firms in panel B. The solid black line gives profits without
+collusion. Model is solved numerically for the baseline calibration in section 4.
+In Case I, mean wages monotonically fall as the ceiling tightens. They decline as the
+cartel grows, given w f . We note that, for wage ceilings w f above one and in Case I, a seem-
+ingly paradoxical result obtains. Both mean wages (Figure 3) and profits (Figure 2, both
+panels) are higher than they are under the baseline when the cartel is large enough to be
+profitable (K = 7 and K = 8). The reason this happens is that competition is inefficient
+in this setting because it induces costly worker turnover. The paradoxical case occurs be-
+cause turnover is much reduced when the cartel firms all post a mass of identical offers and
+workers transition with sufficiently low probability when receiving an offer with identical
+pay. If the wage ceiling is sufficiently moderate, then the gains from the drop in turnover
+brought about by the cartel are shared by both workers and employers. This, however, is
+not the case here when the cartel optimally sets w f , which clearly harms workers.
+4
+Quantitative Evaluation
+This section offers a quantification of the wage impact of wage-fixing cartels. We begin
+by extending the model for quantitative purposes. The technical details of the parts that
+follow Gottfries and Jarosch (2026) are relegated to Appendix B.
+First, we add capital and assume that production is CES with an elasticity of substi-
+tution σ between labor and capital. The reason for this extension is as follows: Cartels
+21
+
+Figure 3: Mean Wages
+Notes: The figure presents the mean wage for different numbers of cartel members. The solid straight black line
+gives the mean wage without collusion. The parameters are those underlying the baseline calibration in section
+4.
+ultimately lead to cost savings for both the cartel and the outside employers. As discussed
+previously, if the outsiders’ response is highly elastic, this restrains the cartel and limits
+its scope for wage suppression. Anything that mutes the response, therefore increases the
+harm wage fixing does to workers.
+In many empirically relevant settings, such as those covering the US food processing
+industry, labor is arguably a strong complement to other factors of production, in partic-
+ular capital and intermediates. This should mute the outside employers’ labor demand
+response to a falling user cost of labor. This is a first order issue for quantitative consider-
+ation, and the extension allows us to account for it.
+Second, we allow for product market power by micro-founding an iso-elastic market-
+level inverse demand function,
+p = ¯Q
+1
+η
+ 
+∑
+j
+yj
+!−1
+η
+.
+(12)
+This extension allows us to investigate how collusion in the labor and the product market
+interacts.
+22
+
+Finally, recall that, up to this point, we have assumed that the minimum wage binds.
+In this section, we drop this assumption which implies that the reservation wage is the
+lowest wage which then endogenously responds to cartel activity.
+4.1
+Conduct in the Product Market
+We entertain three different forms of conduct in the product market. In all formulations,
+we consider a Nash equilibrium where each firm treats its competitors’ choices as fixed
+when making its own decisions. Firms, as before, decide on a contact rate ψi and a wage
+offer distribution Fi. They also decide on output yi, which now depends on both employ-
+ment and capital. The three different forms of conduct will result in three distinct expres-
+sions for the marginal revenue product of labor at firm i, mi. Denote by dyi
+dni the marginal
+product of labor at firm i.
+Conduct I: Strategic.
+We first consider the case in Gottfries and Jarosch (2026) in which
+firms internalize their price impact. In this case, the marginal revenue product in equations
+(6) and (7) takes the following form
+mi = dyi
+dni
+× p
+ 
+1 −1
+η
+yi
+∑j yj
+!
+.
+(13)
+This will be our baseline scenario.
+Conduct II: Nonstrategic.
+We next consider the case where firms treat the output price
+as exogenous. This case is similar to the theoretical exposition above where we assumed
+that the output price is fixed, corresponding to an infinite price elasticity of demand. The
+difference here is that we actually do allow for a finite price elasticity, but firms do not
+internalize their price impact.
+The reason this setting is worth considering is that it might capture cases where there
+are many symmetric labor markets that are all in the same product market. With the
+boundaries of the product market being much wider than those of the labor market, any
+local employer would not perceive a price impact of their actions although, collectively
+across all employers, there would be such a price impact. In this case, the marginal revenue
+23
+
+product takes the following form,
+mi = dyi
+dni
+× p.
+(14)
+Conduct III: Collusion in the product market.
+As a third alternative, we consider
+the case where collusion extends to the product market. The collective revenue of the
+cartel is given by p ∑j∈C yj. In this third case, the “marginal” revenue for cartel firm i is
+mi = dyi
+dni
+× p
+ 
+1 −1
+η
+∑j∈C yj
+∑j yj
+!
+.
+(15)
+To understand this expression, compare it with (13). There, the firm recognizes that ex-
+panding employment leads to an adverse price effect that reduces its own revenue. Equa-
+tion (15) is simply the counterpart where the firm recognizes that the adverse price effect
+reduces revenue everywhere in the cartel. Of course, the firms outside the cartel continue
+to act according to (13).
+4.2
+Calibration
+The type of cartels we study in this paper naturally operate in the shadows. As such,
+it is hard to offer a standard quantitative macro exercise that aims to gauge the wage
+losses caused by such practices. We therefore proceed as follows. Wherever possible,
+we calibrate the model using an approach similar to that in Gottfries and Jarosch (2026),
+targeting standard empirical moments for the US labor market under the assumption that
+there is no collusion. The baseline calibration can thus be viewed as a “representative” US
+labor market.
+We then introduce a cartel of the size that has been operative in the US poultry industry
+and re-compute the labor market equilibrium. We then repeat this exercise for a wide
+range of modifications to the baseline calibration. The aim is to get a ballpark estimate for
+the wage consequences of wage fixing and to understand how this estimate depends on
+various market features.
+The discount rate r is set to match an annual discount rate of 5%. The curvature of the
+production function is set to α = .64, in line with the estimates of Cooper et al. (2007) and
+Cooper et al. (2015). The average wage is normalized to one via b. The hiring cost c equals
+24
+
+Table 1: Baseline Parameters
+Value
+Reason / Moment
+Model
+Target
+r
+0.004
+Annual discount rate
+0.05
+0.05
+δ
+0.016
+Unemployment rate
+0.06
+0.06
+s
+0.581
+E-to-E rate
+0.025
+0.025
+x
+0.753
+U-to-E rate
+0.25
+0.25
+c
+1
+Hiring costs / Monthly pay
+1
+1
+b
+0.825
+Normalization (wage)
+1
+1
+¯Q
+1.659
+Normalization (price)
+1
+1
+α
+0.64
+Cooper et al. (2007, 2015)
+—
+—
+η
+1.3
+Edmond et al. (2023)
+—
+—
+M
+10
+HHI
+1000
+≈1000
+Notes: Monthly calibration. The rationale and source for each targeted moment are explained in the main text.
+one month of wages, in line with Manning (2011). We set the elasticity of industry demand,
+η, to 1.3, which is in the middle of the range given in Edmond et al. (2023) and comparable
+to De Loecker et al. (2021). The probability of a move between cartel employers when pay
+is the same is set to κ = 0.01, small but non-zero. There are M = 10 identical firms within
+a labor market to rationalize a Herfindahl-Hirschman index (HHI) of approximately 1000
+(Berger et al., 2022; Jarosch et al., 2024).
+In each calibration, we pick the common level of productivity x to match a monthly job
+finding rate of 25%, in line with the Current Population Survey “gross flows” data. We set
+the exogenous separation rate δ so that the unemployment rate is 6% given the targeted
+job finding rate of 25%. We pick the relative search efficiency s to rationalize a job-to-job
+rate of 2.5% in a large labor market, in line with Fujita et al. (2024). The baseline calibration
+is summarized in Table 1.
+We target these moments under the assumption that there is no cartel and then study
+the impact of collusion by increasing K from zero to a setting in which the cartel controls
+approximately 80% of employment under collusion, in line with the DOJ complaint against
+the poultry industry (DOJ Antitrust Division, 2023). We therefore pick K = 8. When we
+introduce the cartel, we always set w f to its profit-maximizing level.
+25
+
+Table 2: Impact of collusion
+Baseline
+CES
+α = 0.85
+η = 1.1
+u = 0.04
+u = 0.1
+Emp. share
+0.797
+0.799
+0.796
+0.798
+0.797
+0.796
+no/nc
+1.018
+1.007
+1.026
+1.013
+1.018
+1.023
+(w f −wr)/(wu −wr)
+0.622
+0.226
+0.694
+0.663
+0.876
+−0.078
+d log(∑i ni)
+0.048
+0.052
+0.041
+0.039
+0.025
+0.09
+d log(E[w])
+−0.027
+−0.082
+−0.017
+−0.022
+−0.007
+−0.068
+d log(wo)
+−0.026
+−0.081
+−0.017
+−0.021
+−0.006
+−0.067
+d log(E[ω])
+−0.041
+−0.091
+−0.033
+−0.037
+−0.022
+−0.077
+d log(ωo)
+−0.047
+−0.1
+−0.037
+−0.041
+−0.028
+−0.085
+Results based on an equilibrium with wage fixing and K = 8 versus an equilibrium without collusion. Details
+are in main text. o and c index outside and cartel employers.
+4.3
+Quantitative Results
+Table 2 compares wages and user costs in an equilibrium without collusion with their
+counterparts in an equilibrium with wage fixing. The first column reports our baseline
+results. The additional columns then modify an assumption, recalibrate, and redo the ex-
+ercise. We first discuss the baseline and then describe the remaining columns. All columns
+correspond to product market conduct I, and this is then varied in the next table.
+Baseline Results.
+A cartel that covers approximately 80% of employment and picks the
+profit-maximizing wage as its ceiling generates wage losses of approximately 2.7%. There
+are strong spillovers, with wages falling almost as much for the (few) outside employers,
+as can be inferred from the fifth row. The user cost (sixth row) is even more depressed
+than wages because the cartel creates lower turnover. This is more pronounced among
+the outside employers (seventh row), which indicates that these are actually the primary
+beneficiaries of the cartel, as we discussed above.
+We also note that the cartel firms are almost as large as the outside employers (second
+row). The outsiders are just 1.8% larger than the cartel firms, which correspondingly con-
+trol almost 80% of employment. This indicates that the labor misallocation induced by
+the cartel is limited. The third row shows how tight the profit-maximizing wage ceiling
+is. In line with the discussion above, the outside competition moderates the cartel, which
+sets w f far above the (initial) reservation wage wr and, in fact, closer to the (initial) highest
+26
+
+wage wu.
+Lastly, consider the impact on unemployment or, equivalently, the employment rate
+(fourth row). Wage fixing reduces the user cost of labor for all firms which increases ag-
+gregate labor demand. The effect is substantial, with the employment rate increasing by
+4.8% when the cartel is active. To understand the magnitude of this, it is useful to consider
+the market level elasticity of employment demand. Using that, according to table 2, the
+user cost gains from wage fixing is similar across firms, we can approximate the market
+level (un)employment response as follows,
+d ln(∑
+j
+nj)
+≈∑
+i
+ni
+∑j nj
+d log(ωi) × d log (ni)
+d log (ωi)
+≈
+d log(E[ω]) ×
+1
+1 −α η−1
+η
+≈0.048.
+This approximation is close to the exact results in table 2 which (additionally) captures the
+heterogeneity in user costs across firms. The second line shows that the span of control α
+and the demand elasticity η govern the market level employment response to a fall in the
+user cost.
+CES production function.
+The next column shows that the wage losses can quickly
+rise to a much higher level when the cost share of labor is low and complementarities
+between factors are strong. Here, we use the CES production extension discussed in the
+previous subsection, with an elasticity of substitution σ = .5 and a weight on labor θ such
+that the wage bill relative to overall factor payments is just 10%.
+In this case, the wage losses triple: The cartel can adopt a more aggressive wage ceil-
+ing (third row) because the low cost share and the complementarities mute the outsiders’
+employment response to a fall in the user cost of labor.
+Larger span of control.
+Column three looks at the same forces from a different angle.
+It shows that if the span of control is larger than in the baseline, then the wage losses from
+optimal wage fixing are smaller. Again, the reason is the discipline imposed by the outside
+employers, which is stronger if these can aggressively scale up when costs fall. This is the
+case when the span of control is large (high α).
+27
+
+Product Demand
+The next column lowers the elasticity of market-level product de-
+mand from 1.3 (baseline) to 1.1. Here, the wage losses from wage fixing fall. To see why,
+note that costs are increasingly passed through into prices when demand is less elastic.
+This makes the cost reduction from wage fixing less profitable and acts as a constraint on
+the cartel. Additionally, the cost advantage of the outsiders, which drives the cartel out of
+the market, becomes increasingly detrimental.
+Local unemployment
+The last two columns consider a decrease (an increase) in the
+local unemployment rate from its baseline level of 6%. We maintain all other calibration
+targets at the levels described above and move the unemployment target to 4% and 10%,
+respectively. The results show that wage-fixing cartels do far more damage when the labor
+market has slack and competition is loose. In turn, when competition is fierce and wages
+are high, a cartel has little room to constrain pay. Starkly, even with a 10% unemployment
+rate, the moderating force from the outside competition vanishes to the point where the
+cartel optimally sets the wage ceiling below the (pre-cartel) reservation wage. This leads
+to wage losses that are more than double those in the baseline scenario.
+It is instructive to revisit mean wages as a function of w f , which we now plot for the
+baseline, as well as the high and low unemployment setting, in Panel A of Figure 4. We
+also indicate the profit-maximizing w f (horizontal lines) as well as, implicitly, the support
+for w f that begins at wr, the value of which depends on the case. The figure shows that
+variation in wage losses across the three settings is driven by differences in the profit-
+maximizing ceiling. With slack, the cartel optimally sets the wage ceiling at reservation.
+With a tight labor market, it has little room and sets the wage ceiling far higher.
+To further unpack this, panel B plots the relative user cost between outside and car-
+tel employers. It shows that the cost differential is mild before starting to sharply drop
+off at some point, with the outsiders gaining substantial cost advantages when the cartel
+becomes too aggressive. The cartel then optimally picks a wage ceiling right above this
+point. The tighter the labor market, the earlier this point is reached. With sufficient slack,
+this point is never reached, and the cartel then sets w f = wr.
+Together, these exercises show that cartel activity in our baseline setting causes rela-
+tively modest harm to workers. When the cartel is less constrained by competition, how-
+ever, this changes quickly, and the harm caused to workers can be large.
+28
+
+Figure 4: Wages and Relative User Cost
+A. Mean wage
+B. Relative cost
+Notes: The figure presents the mean wage for the different calibrations as a function of the wage ceiling w f . The
+vertical lines indicate the cartel’s profit-maximizing level of w f . The solid straight black line gives the mean
+wage without collusion. The parameters are those underlying the baseline calibration in Table 2.
+The Role of Product Market Conduct
+Table 3 investigates the role of product market conduct for the labor market consequences
+of an employer cartel. We consider the three different types of conduct laid out in Section
+4.1, with Conduct I referring to the baseline results we have already discussed. Table
+3 contrasts these with Conduct II (Nonstrategic) and Conduct III, where the cartel also
+colludes in the product market. As before, we recalibrate to meet the calibration targets
+under the three different settings (but we keep the number of cartel members fixed at
+K = 8).
+A downward sloping product demand curve generally limits the value of wage fixing.
+The lower user cost of labor is partially passed through to consumers via a lower product
+price. Furthermore, as already described, wage fixing benefits the outside firms, whose
+labor demand response both drives up wages and drives down the output price. This re-
+sponse, however, is somewhat muted when everyone, including the outsiders, is strategic
+in the product market. Hence, we expect the wage gains from eliminating a cartel to be a
+little larger in the strategic case.
+Comparing columns one and two shows that these additional considerations are quan-
+titatively negligible, since the effects of removing the cartel are indistinguishable across the
+two cases. This changes, however, if the cartel also actively colludes in the product market,
+29
+
+Table 3: Product market conduct
+Strategic (I)
+Price takers (II)
+Collusion (III)
+Emp. share
+0.797
+0.797
+0.497
+no/nc
+1.018
+1.021
+4.043
+(w f −wr)/(wu −wr)
+0.622
+0.622
+0.406
+d log(∑i ni)
+0.048
+0.048
+0.043
+d log(E[w])
+−0.027
+−0.027
+−0.029
+d log(wo)
+−0.026
+−0.026
+−0.026
+d log(E[ω])
+−0.041
+−0.041
+−0.034
+d log(ωo)
+−0.047
+−0.047
+−0.04
+Counterfactual results based on recalculating the equilibrium without collusion for the three different forms of
+conduct in the product market introduced in section 4.1. o and c index outside and cartel employers.
+as shown in the last column.
+In this case, the cartel strongly cuts back on employment and output, to the point where
+employment at each of the two outside employers is over four times larger than that at a
+cartel firm (second row). Correspondingly, the cartel employs less than 50% of the total
+workforce. Despite this, removing the cartel results in market-wide wage gains that are
+even larger when compared with the baseline in which the cartel employs 80% of the total
+workforce. This demonstrates a strong interaction between collusion in the product and
+labor markets. When wage-fixing employers collude in the product market as well, they
+suppress wages and employment more aggressively because the desired markup in the
+product market is far larger when the cartel acts as a block there as well.
+5
+Gauging Harm in Practice
+The above calculations accurately report the harm caused by a cartel according to the
+model, given model primitives. But, of course, they require fully solving the model and
+then solving for a counterfactual which, while straightforward, is time-consuming and
+requires some coding expertise.
+This section therefore offers a simple way to gauge the (wage) harm caused by a cartel
+in the spirit of a sufficient statistic. The aim is to express harm in terms of easily observable
+endogenous quantities along with several exogenous primitives.
+30
+
+We first cover the simplest case, in which the cartel covers most of the market, K ≥
+M −1. Worker harm H is defined by mean wages with the cartel relative to mean wages
+without it. Online Appendix E shows that this can be expressed as
+H = M −1
+M
+ s ¯N
+1 −¯N −log
+1 −(1 −s) ¯N
+1 −¯N
+ 1 −(1 −s) ¯N
+s ¯N
+δc −(w f −wr)
+where ¯N ≡∑j nj denotes the total level of employment without collusion.
+Starting with the first term, one needs to know the number of employers in the market
+M. Online Appendix E.1 shows how the relative search efficiency of the employed s can
+be constructed from data on worker flows between firms.
+The next input required is ¯N which is counterfactual. The results for the change in the
+unemployment rate reported in table 2 suggest that ¯N is typically around 5 percent lower
+than the actual employment rate under the cartel.18 The average rate of job loss δ and the
+hiring cost c can be determined in a case-specific fashion based on industry characteristics.
+w f and wr remain. We presume that, whenever a wage fixing cartel is discovered in
+practice, information on w f is revealed. wr, in turn, is well approximated via the minimum
+wage, in particular in the United States.19
+When K ≥M −1 this is exact. It also works well for our baseline calibration where we
+have K = 8, M = 10, ¯N = .94, s = 0.58, δ = 0.016, and c = 1E[w]K=0. For K = 8 and the
+profit-maximizing w f , we have w f −wr ≈0.081. Plugging in, this gives H ≈0.0269, in
+line with the 2.7 log points reported in Table 2, Column 1.
+The above equation is for large cartels. The following expressions cover the general
+case where K < M −1,
+E[w]K=0
+=
+wr + M −1
+M
+ s ¯N
+1 −¯N −log
+1 −(1 −s) ¯N
+1 −¯N
+ 1 −(1 −s) ¯N
+s ¯N
+δc,
+E[w]K>0
+=
+w f + M −K −1
+M −K
+N −Nc
+N
+1 −(1 −s)N
+1 −N + sNc
+−1 −(1 −s)N
+s(N −Nc)
+log
+1 −(1 −s)N
+1 −N + sNc
+
+δc.
+In addition to the above, these require knowledge of the number of cartel firms K, total em-
+ployment by the cartel Nc, and overall employment N (while the cartel is active). Plugging
+in the values corresponding to our quantitative baseline calibration recovers the results we
+18Harm is increasing in ¯N so a conservative estimate applies a large value for the employment losses when a
+cartel is removed.
+19In high wage sectors, the lowest pay in markets unaffected by the cartel can be used to measure wr.
+31
+
+compute above where we fully solve the model.
+These equations are useful to practitioners because they allow to calculate the harm
+created by a wage fixing cartel, according to our model, without having to solve the model.
+Instead, they only require information that can relatively straightforwardly be obtained on
+a case-by-case basis.
+6
+Conclusion
+We model and analyze wage fixing cartels in a canonical dynamic monopsony environ-
+ment with large firms. Wage fixing depresses labor market competition and employers
+outside the cartel benefit from it, even disproportionately. It follows that competition by
+outside employers curbs a wage fixing cartel. Cartels are thus more likely to arise, be sta-
+ble, and do substantial damage where the competitive response from outsiders is limited
+either due to technological reasons, product market conduct, or because of the local mar-
+ket structure. These observations can guide future research, in particular empirical work,
+on wage fixing in the labor market.
+References
+Aresu, Alessio, Dominik Erharter, and Dominik Renner-Loquenz, “Antitrust in Labour
+Markets,” European Commission Competition Policy Brief, May 2024.
+Asker, John and Volker Nocke, “Collusion, Mergers, and Related Antitrust Issues,” Work-
+ing Paper 29175, National Bureau of Economic Research August 2021.
+Bello, Salvatore Lo and Lorenzo Pesaresi, “The Concentration Channel of the Minimum
+Wage,” mimeo, 2025.
+Berger, David, Kyle Herkenhoff, and Simon Mongey, “Labor Market Power,” American
+Economic Review, April 2022, 112 (4), 1147–93.
+Bilal, Adrien and Hugo Lhuillier, “Outsourcing, Inequality and Aggregate Output,”
+2025.
+, Niklas Engbom, Simon Mongey, and Giovanni L Violante, “Firm and worker dy-
+namics in a frictional labor market,” Econometrica, 2022, 90 (4), 1425–1462.
+32
+
+Bisceglia, Michele, “Labor Market Power and Collusive Behavior,” Available at SSRN
+4999795, 2024.
+Burdett, Kenneth and Dale Mortensen, “Wage Differentials, Employer Size, and Unem-
+ployment,” International Economic Review, 1998, 39 (2), 257–73.
+Card, David, Ana Rute Cardoso, Jörg Heining, and Patrick Kline, “Firms and labor mar-
+ket inequality: Evidence and some theory,” Journal of Labor Economics, 2018, 36 (S1),
+S13–S70.
+Cooper, Russell, John Haltiwanger, and Jonathan L Willis, “Search frictions: Matching
+aggregate and establishment observations,” Journal of Monetary Economics, 2007, 54, 56–
+78.
+,
+, and
+, “Dynamics of labor demand: Evidence from plant-level observations and
+aggregate implications,” Research in Economics, 2015, 69 (1), 37–50.
+Delabastita, Vincent and Michael Rubens, “Colluding Against Workers,” Journal of Polit-
+ical Economy, Forthcoming, 2024.
+DOJ Antitrust Division, “United States v. Cargill Meat Solutions Corp., et al.; Proposed
+Final Judgment and Competitive Impact Statement,” Federal Register, May 2023, 88 (101),
+34030–34063.
+DOJ, Antitrust Division and FTC, “Antitrust Guidance for Human Resource Profession-
+als,” October 2016.
+Edmond, Chris, Virgiliu Midrigan, and Daniel Yi Xu, “How costly are markups?,” Jour-
+nal of Political Economy, 2023, 131 (7), 1619–1675.
+Elsby, Michael WL and Axel Gottfries, “Firm dynamics, on-the-job search, and labor mar-
+ket fluctuations,” The Review of Economic Studies, 2022, 89 (3), 1370–1419.
+Engbom, Niklas and Christian Moser, “Earnings inequality and the minimum wage: Ev-
+idence from Brazil,” American Economic Review, 2022, 112 (12), 3803–3847.
+, Aniket Baksy, and Daniele Carattelli, “The Long-Term Decline of the U.S. Job Lad-
+der,” 2026.
+Fujita, Shigeru, Giuseppe Moscarini, and Fabien Postel-Vinay, “Measuring Employer-
+to-Employer Reallocation,” American Economic Journal: Macroeconomics, 2024, 16 (3), 1–
+51.
+Gottfries, Axel and Gregor Jarosch, “Dynamic Monopsony with Granular Firms,” mimeo,
+2026.
+33
+
+Gouin-Bonenfant, Émilien, “Productivity Dispersion, Between-Firm Competition, and
+the Labor Share,” Econometrica, 2022, 90 (6), 2755–2793.
+Heise, Sebastian and Tommaso Porzio, “Labor misallocation across firms and regions,”
+Technical Report, National Bureau of Economic Research 2023.
+Jarosch, Gregor, Jan Sebastian Nimczik, and Isaac Sorkin, “Granular Search, Market
+Structure, and Wages,” The Review of Economic Studies, 01 2024, p. rdae004.
+Joint Nordic Report, “Competition and Labour Markets,” 2024.
+Kariel, Joel, Jakob Schneebacher, and Mike Walker, “Competition policy and labour
+market power: New evidence and open questions,” mimeo, 2024.
+Lentz, Rasmus and Dale T Mortensen, “Labor Market Friction, Firm Heterogeneity, and
+Aggregate Employment and Productivity,” mimeo, 2022.
+Lhuillier, Hugo, “The Local Root of Wage Inequality,” 2025.
+Loecker, Jan De, Jan Eeckhout, and Simon Mongey, “Quantifying market power and
+business dynamism in the macroeconomy,” mimeo, 2021.
+Manning, Alan, “Chapter 11 - Imperfect Competition in the Labor Market,” in David Card
+and Orley Ashenfelter, eds., David Card and Orley Ashenfelter, eds., Vol. 4 of Handbook of
+Labor Economics, Elsevier, 2011, pp. 973 – 1041.
+, “Monopsony in Labor Markets: A Review,” ILR Review, 2021, 74 (1), 3–26.
+Marshall, Robert C and Leslie M Marx, The economics of collusion: Cartels and bidding rings,
+Mit Press, 2012.
+Martins, Pedro S and Jonathan P Thomas, “Employer Collusion and Employee Training,”
+mimeo, 2023.
+Robinson, Joan, The economics of imperfect competition, Macmillan, 1933.
+Scarcella,
+Mike,
+“Cargill,
+Hormel
+latest
+to
+settle
+US
+workers’
+wage-
+fixing
+lawsuit,”
+Reuters,
+https://www.reuters.com/legal/litigation/
+cargill-hormel-latest-settle-us-workers-wage-fixing-lawsuit-2024-09-09/
+September 2024.
+,
+“Latest
+poultry
+workers’
+antitrust
+settlements
+push
+total
+to
+$217
+million,”
+Reuters,
+https://www.reuters.com/legal/litigation/
+latest-poultry-workers-antitrust-settlements-push-total-217-million-2024-04-02/
+April 2024.
+Sharma, Garima, “Collusion Among Employers in India,” mimeo, 2024.
+34
+
+The President, “Promoting Competition in the American Economy,” Federal Register, July
+2021, 86 (132), 36987–36999.
+United
+States
+v.
+Jindal,
+https://www.justice.gov/archives/opa/pr/
+former-owner-health-care-staffing-company-indicted-wage-fixing 2020.
+United
+States
+v.
+Manahe,
+https://www.justice.gov/archives/opa/pr/
+four-individuals-indicted-wage-fixing-and-labor-market-allocation-charges
+2022.
+U.S.
+v.
+Ryan
+Hee
+and
+VDA
+OC,
+LLC,
+formerly
+Advan-
+tage
+on
+Call,
+LLC,
+https://www.justice.gov/atr/case/
+us-v-ryan-hee-and-vda-oc-llc-formerly-advantage-call-llc 2021.
+APPENDIX
+A
+Equilibrium without collusion
+A.1
+Firm optimality conditions
+Firm optimality, as in Gottfries and Jarosch (2026), implies that the user cost of labor must
+be equated across all wages offered by a firm. Second, the marginal revenue cost of labor
+must equal its user cost. Formally,
+ˆ ∞
+w
+ 
+w −c∑
+j̸=i
+sψj ˆFj (w) −min
+˜w≥w{ ˜w −c∑
+j̸=i
+sψj ˆFj ( ˜w)}
+!
+dGi(w) = 0,
+(16)
+and
+αxnα−1
+i
+= min
+w≥w
+(
+w + c
+ 
+r + δ + ∑
+j̸=i
+sψj
+ 1 −ˆFj (w)
+
+!)
+.
+(17)
+A.2
+Equilibrium Characterization
+The equilibrium in this case is a special case of Gottfries and Jarosch (2026). There, we
+assume firms are strategic about an endogenous output price. Here, we instead assume
+that demand is perfectly elastic so that firms take a fixed output price as given.
+35
+
+The unique equilibrium then takes the following form. All M firms post a mix of wage
+offers uniformly on [w, wu],
+F(w) = w −w
+wu −w,
+(18)
+where wu denotes the highest wage posted. Workers contact a firm at endogenous rate ψ,
+and the highest wage solves
+wu = w + sψ(M −1)c.
+(19)
+This implies that the user cost of labor is equated across and within firms. The reservation
+wage is given by
+wr = b + (1−s)c
+
+1 −1
+M
+ 
+Mψ −r + δ
+s
+log
+r + δ + sMψ
+r + δ
+
++ (1−s)Mψ
+w −wr
+r + δ + sMψ.
+(20)
+Because the marginal revenue product equals the user cost of labor under optimal hiring,
+the contact rate ψ satisfies
+αx
+
+ψ
+δ + Mψ
+α−1
+=
+w + (r + δ + s(M −1)ψ) c.
+(21)
+The left hand side is just labor’s marginal revenue product, with firm-level employment
+given by
+ψ
+δ+Mψ as follows from a standard flow balance relationship. The right hand side
+is the user cost of labor at the reservation wage which is, under optimality, equal to the
+user cost of labor everywhere in the distribution of posted wages. These four equations
+fully characterize the equilibrium.
+B
+Extensions for Quantitative Model
+This section shows how to add capital to the production function. Then, it shows how to
+generalize to inelastic product demand and product market power.
+36
+
+Adding Capital
+We add capital and assume that labor and capital are imperfect substitutes with an elastic-
+ity of substitution σ. The production function is CES,
+yi = x
+
+θ
+1
+σ n
+σ−1
+σ
+i
++ (1 −θ)
+1
+σ k
+σ−1
+σ
+i
+α
+σ
+σ−1
+.
+(22)
+Capital can freely be adjusted. Denote the rental price of capital by rk. Firms make the
+same choices in the labor market as in the baseline model. In addition, they choose a level
+of output yi. Given firm level employment, capital is then implied by the chosen level of
+output.20 Optimality, as usual, implies that
+∂yi
+∂ni
+∂yi
+∂ki
+−1
+= ωi
+rk
+,
+(23)
+where ωi denotes the user cost of labor for firm i.
+Product market power
+We next extend the model to endogenize goods prices.
+As in Gottfries and Jarosch (2026), we assume that all firms in a labor market pro-
+duce an identical composite good and that the boundaries of the product market are the
+same as those of the labor market. Workers have linear preferences over an outside good
+(“money”), so their utility is quasi-linear. Employers care only about the outside good.
+Then, there is transferable utility between workers and firms. Workers choose consump-
+tion C to maximize the instantaneous utility function
+v =
+η
+η −1
+¯Q
+1
+η C
+η−1
+η + I −pC,
+where ¯Q is a positive constant. They do so taking income I, which is either equal to the
+wage or the flow income of unemployment, as given.
+20The reason to set up the firm problem in this form is as follows. Firms, as before, choose a contact rate ψi
+as well as distribution Fi taking each other’s choices as given. But this means that a firm might recognize that,
+by choosing a higher contact rate, its competitors choices would yield a different amount of employment and
+hence output. In a setting with product market power this in turn would have price impact. Assuming that
+firms choose output and let a flexible factor adjust shuts down these considerations.
+37
+
+Quasi-linear preferences imply that consumption is equalized across all workers and,
+since there is a unit measure of them, equilibrium consumption of each worker is simply
+C = ∑j yj. Optimal consumption requires p = ¯Q
+1
+η C
+−1
+η , which results in
+p = ¯Q
+1
+η
+ 
+∑
+j
+yj
+!−1
+η
+.
+(24)
+38
+
+ONLINE APPENDIX
+C
+Proof of Proposition 1
+Denote by w∗
+u the highest wage when there is no collusion. Any w f ≥w∗
+u is not binding
+in equilibrium (and the equilibrium therefore corresponds to the baseline without wage
+fixing). Similarly, if w f < wr, no worker is employed at the colluding firms and the equi-
+librium corresponds to the benchmark equilibrium with only the M −K outside firms. The
+following proof therefore presumes that w f ∈[wr, w∗
+u).
+C.1
+Preliminaries
+We begin by deriving some properties of the equilibrium.
+Lemma C.1. At any mass point, there can at most be one firm, except at w f where there can be
+more firms that are all in the cartel.
+To prove this, assume there are multiple employers all posting jobs at a mass point.
+Then, a firm at the mass point would find it profitable to post jobs with marginally higher
+pay and discretely lower turnover. The reason is that workers move with strictly positive
+probability when indifferent.
+Next, we establish the following.
+Lemma C.2. There cannot be any gap in the support, except below a mass point at w f . There
+cannot be any non-degenerate interval where only a single firm posts.
+The reason there cannot be any gaps is that a firm posting just above the gap could
+always lower its wage without increasing turnover. However, if there is a mass point with
+multiple firms posting, then turnover discretely jumps for a firm at the mass point when
+reducing the wage as long as κ < 1. We have already established that the only mass point
+where multiple firms possibly post wages is w f . To prove the second part of the lemma
+note that the lone firm on a non-degenerate interval could increase profits by only offering
+the lowest wage in the interval because its turnover cost would not rise.
+We now want to prove that all firms offer wages on a connected support (except for
+below any masspoint at w f ) from highest admissible wage and that all firms of the same
+39
+
+type offer jobs at the same rate and with the same distribution over wages. To do so, we
+proceed in a number of steps.
+Lemma C.3. Suppose (w1, w2) ⊆supp(Fi) for all i ∈M and Fj(w−
+2 ) = Fj(w1) for all j /∈M.
+Then, over this interval, the rate at which each firm offers jobs and the distribution of wages are
+identical.
+To see this, denote l the number of firms in the interval and ˆψj the rate of offer of jobs
+and ˆFj(w) the distribution of wages in the interval by firm j. For firm i in the interval, we
+require that
+w −w1 −sc∑
+j̸=i
+ˆψ′
+j ˆFj(w) = 0
+(25)
+since limw→w1 ˆFj(w) = 0. This has to hold for all w ∈(w1, w2) and all of the l firms.
+It follows that for any pair of firms i and z posting on this interval sc ∑j̸=z ˆψ′
+j ˆFj(w) −
+sc ∑j̸=i ˆψ′
+j ˆFj(w) = sc ˆψi ˆFi(w) −sc ˆψz ˆFz(w) = 0 for all w ∈(w1, w2). Given that limw→w2 ˆFj(w) =
+1 and limw→w1 ˆFj(w) = 0, sc ∑j̸=z ˆψ′
+j ˆFj(w2) −sc ∑j̸=i ˆψ′
+j ˆFj(w2) = sc ˆψi −sc ˆψz = 0 and so all
+firms have the same contact rate. Again use (25) evaluated at w2 and with symmetric
+contact rates to get that ˆψ′
+j = w2−w1
+sc(l−1).
+Plug in for the contact rate and use (25) once more to show that ˆFj(w) = w−w1
+w2−w1 . There-
+fore, all firms offer jobs at the same rate and with the same wage offer distribution over
+this interval.
+Lemma C.4. Suppose firm i posts a wage w1 but does not post wages anywhere on an interval
+immediately above, (w1, w2). Then, no other firm j offers wages over this interval, unless i is in the
+cartel and w1 = w f .
+To prove this, assume the contrary. Firm i offers w1 but not on (w1, w2) for some w2.
+Denote by l the number of i’s competitors posting on the first part of this interval, (w1, w′)
+with w′ ≤w2 (there might be intervals with a different numbers of firms posting). From
+(25), we have that (l −1)scψ′ = w′ −w1, where ψ′ now denotes the rate of offers in this
+interval by the l firms. This implies that the user cost is lower for firm i at w′ compared
+with w1 because its turnover cost over this interval falls by lscψ′ > w′ −w1. This proves
+the Lemma.
+Lemma C.5. If there is a mass at w f , no outside firm or cartel member that does not offer the most
+amount of jobs at w f offers a wage below w f .
+40
+
+Assume first that at least one cartel firms offer a mass of jobs at w f but that some other
+firm offers fewer jobs at w f . Assume that that other firm also offers wages below w f . Pick
+the firm i with the largest mass of jobs at w f . If that firm was posting a wage just marginally
+below the w f that job had additional turnover cost sc(1 −κ) ∑j̸=i ψj(Fj(w+
+f ) −Fj(w−
+f )). It
+follows that it would not post any wage below w f that is higher than w′ which solves
+w f −w′ = sc(1 −κ) ∑j̸=i ψj(Fj(w+
+f ) −Fj(w−
+f )). All other firms would post any wage on
+(w′, w f ) either as their increase in turnover would be weakly larger. Thus, if w′ < wr no
+firm posts any wage strictly below w f .
+If, in turn, w′ > wr and the gap below w f extended beyond w′, then firm i would prefer
+not to post on the masspoint and instead post the highest wage below the gap. Thus, for
+firm i to post a mass of jobs at w f , the gap has to span from w′ to w f .
+Now consider cartel firms that post a strictly lower mass at w f or outside firms that
+post right above w f . These firms will have strictly higher user cost at w′ and will hence
+not post there or immediately below. If they posted any wage below w f it would be at a
+level strictly below w′ but that is ruled out by Lemma C.4.
+Lemma C.6. All outside firms have the same user cost and hence the same level of employment.
+To prove this, note first that the user cost must be equated across all wages offered by
+any given firm since otherwise it could lower its total user cost. Assume now that there
+exist a firm i that has a lower user cost than another firm j of the same type. Denote by
+w′ the highest wage offered by firm i. Take firm j (of the same type) that has a higher
+user cost. Firm j can offer w′ and firm j must at this wage have weakly lower turnover
+and therefore weakly lower user cost of labor.21 This contradicts that i has a lower user
+cost and all firms of the same type must consequently have the same user cost. A direct
+implication is that employment is the same at all firms of the same type when technology
+is the same.
+Next, we establish the following.
+Lemma C.7. All cartel firms offer the same amount of jobs at w f when κ is sufficiently low.
+Suppose, to the opposite, that i posted fewer jobs than j at w f . By Lemma C.5, firm i
+21Firm i cannot offer a mass of jobs at its highest wage w′. If i did, j would only offer wages above w′ (the
+logic analogous to lemma C.5). If j offered a nondegenerate distribution of wages above w′, a contradiction
+would follow from lemma C.4; if it posted a mass, a contradiction would follow again from lemma C.5.
+41
+
+posts no jobs below w f . Firm j therefore has strictly higher employment than i since, by
+definition of w f , neither posts above.
+To prove that this cannot hold, abuse notation and denote by ψj firm j’s offer rate at w f
+(its total offer rate might be higher). Express firm i’s offer rate at w f as ∆ψj, with ∆< 1.
+We have that ni/nj = a∆where a ≤1 since firm j might post some jobs below w f . Next,
+denote by γ the quit rate at w f to firms other than i or j. Optimal employment implies that
+αxnα−1
+j
+=
+w f + (r + δ + γ)c + sκψic = w f + (r + δ + γ)c + sκψjc∆,
+(26)
+αxnα−1
+i
+=
+w f + (r + δ + γ)c + sκψjc.
+(27)
+Taking the ratio yields
+(a∆)1−α
+=
+1 −
+sκψjc
+w f + (r + δ + γ)c + sκψjc +
+sκψjc
+w f + (r + δ + γ)c + sκψjc∆.
+(28)
+Note that the equation holds when ∆= 1 and a = 1, that is in the limit where the two
+firms act identically. The Lemma immediately follows if this is the unique solution. We
+next show that this is indeed the case provided κ is low enough.
+To see this, note that the RHS is an increasing linear function in ∆with a positive
+intercept whereas the LHS is an increasing concave function function of ∆with intercept
+at 0. Thus, the slope of the LHS is lowest for ∆= 1. Start with a = 1. If the derivative
+of the LHS is higher than the derivative of the RHS at ∆= 1, the derivative of the LHS
+is higher for all ∆< 1. It follows that the LHS is lower than the RHS for all ∆< 1 since
+they reach the same value at ∆= 1. Hence, no solution with ∆< 1 exists. Of course, there
+is no solution for a < 1 since this implies a LHS that is even lower. The condition for the
+derivative of the LHS to be larger than the RHS is then
+1 −α
+>
+sκψjc
+w f + (r + δ + γ)c + sκψjc.
+(29)
+This holds if firm j does not contribute too much to the user cost of firm i. For any set of
+parameters there exists a sufficiently small value of κ such that this holds.
+Lemma C.8. All firms of the same type act symmetrically.
+First consider outside firms. They post wages from the highest wage. Suppose that was
+not the case and instead the highest wage that some regular firm posts is w′ with w′ < wu.
+42
+
+Then, it would not post on any open interval above w′, but then no other firm would post
+there either which would make w′ the highest wage, from Lemma C.4.
+It also follows from Lemma C.4 and Lemma C.2 that the outside firms post continu-
+ously distributed wages at least down to w f . If there is mass at w f then, by Lemma C.5,
+outside firms do not post any wages below and so behave identically.
+If, in turn, there is no mass at w f then, it follows jointly from Lemma C.2 and Lemma
+C.4 that each regular firm has a lowest wage above which it posts continuously up to the
+highest wage. Suppose two outside firms had differing lowest wages. Since they offer the
+same distribution at the same rate over any common interval by Lemma C.3, it follows
+that one is larger than the other which contradicts Lemma C.6.
+Turning to the cartel, we know from Lemma C.7 that all cartel firms offer the same
+amount of jobs at w f and have the same user costs and employment. If there is a mass of
+jobs offered at w f , there is a gap below until w′ where w′ = w f −sc(1 −κ) ∑j̸=i ψj(Fj(w f ) −
+Fj(w−
+f )) where i is a cartel firm. Note that all cartel firms offer the same amount of jobs at
+w f by Lemma C.7. If there is no mass at w f then w′ = w f . It also follows from Lemma
+C.4 and Lemma C.2 that firms post continuously distributed wages below w′ down to wr
+unless w′ ≤wr. The rest of the argument is symmetric to the outside firms.
+C.2
+Main Part of Proof of Proposition 1
+Let ψc denote the offer rate of each of the cartel members and ψu the offer rate, strictly
+above w f , of each of the outside firms. Define the employment given by the flows in the
+outside firms and cartel firms as ns
+o(ψu, ψc) and ns
+c(ψu, ψc), respectively. The implied em-
+ployment demand by each type of firms is similarly defined by nd
+o(ψu, ψc) and nd
+c(ψu, ψc),
+respectively.
+The proof proceeds as follows. We first show that the above Lemmas imply that, given
+fixed values of offer rates ψu and ψc, there is a unique allocation. We then show that these
+values of ψu and ψc are unique which then implies that the equilibrium is unique.
+To begin with, we show that the equilibrium, given ψc and ψu such that the wage ceiling
+is binding, can be split into the following four cases, depending on how large w f −wr is
+relative to ψc.
+In all cases, the outside firms offer jobs uniformly over (w f , wu] where wu = w f +
+sc(M −K −1)ψu but in case III and IV, they also offer wages below w f .
+43
+
+1. If w f −wr ≤(K −1)sψc(1 −κ)c, all cartel firms offer all their jobs at w f .
+Given that there is a mass point at w f , we know that no regular firm posts a lower
+wage. We further know that there are no gaps in the support and that the outside
+firms act symmetrically by Lemma C.8. It follows that they offer jobs uniformly over
+(w f , wu] where wu = w f + sc(M −K −1)ψu.
+Thus, it remains to show that the cartel firms offer jobs only at w f . Assume, to the
+contrary, that the cartel firms offer jobs at w f at a rate ˜ψ < ψc, implying that they
+also post jobs at wages below w f . From Lemma C.5, it follows that there are no
+offers over the interval (w1, w f ) where w1 = w f −s(1 −κ)(K −1) ˜ψc. The remaining
+offers must therefore be over the interval [wr, w1] . From Lemma C.3, we know that
+in order for the firms to be indifferent over this interval, we must have that w1 =
+wr + s(K −1)(ψc −˜ψ)c. These two conditions jointly imply
+˜ψ = ψc
+κ −
+w f −wr
+s(K −1)cκ,
+(30)
+which implies ˜ψ ≥ψc for
+ψc ≥
+w f −wr
+s(K −1)c(1 −κ),
+(31)
+and therefore a contradiction. We note that, if ˜ψ = 0, then outside firms might also
+make offers below w f which reinforces the argument. It follows that the cartel only
+posts at w f .
+Given these posting decisions, employment at the respective firms satisfies
+ns
+c(ψu, ψc)
+=
+ψc
+δ + s(M −K)ψu
+δ
+δ + Kψc + (M −K)ψu
+,
+(32)
+ns
+o(ψu, ψc)
+=
+ψu
+
+1 +
+sKψc
+δ + s(M −K)ψu
+
+δ
+δ + Kψc + (M −K)ψu
+.
+(33)
+The user costs satisfies
+ωc
+=
+w f + sc (κ(K −1)ψc + (M −K)ψu) ,
+(34)
+ωo
+=
+w f + sc(M −K −1)ψu,
+(35)
+44
+
+which implies that the optimal employment demand satisfies
+nd
+c(ψu, ψc)
+=
+
+αx
+w f + sc (κ(K −1)ψc + (M −K)ψu)
+
+1
+1−α
+,
+(36)
+nd
+o(ψu, ψc)
+=
+
+αx
+w f + sc(M −K −1)ψu
+
+1
+1−α
+.
+(37)
+2. If w f −wr ∈((K −1)sψc(1 −κ)c, (K −1)sψcc), the outside firms act as above whereas
+the cartel firms offer a mass of jobs at w f at rate ψf and, additionally, uniformly dis-
+tributed wages on [wr, w1], at rate ψc −ψf .
+w1 and ψf are such that scψf (1−κ)(K −1) = w f −w1 and w1 −wr = sc(ψc −ψf )(K −
+1). This implies that ψf = ψc
+κ −
+w f −wr
+sc(K−1)κ and w1 = wr + sc(K −1)
+
+ψc(1−κ)
+κ
++
+w f −wr
+sc(K−1)κ
+
+.
+Employment is given by (32) and (33), as before. The user cost is given by
+ωc = w f + sc(M −K)ψu + sc(K −1)κψf = w f + sc(M −K)ψu + sc(K −1)
+
+ψc −w f −wr
+sc(K −1)
+
+,
+ωo = w f + sc(M −K −1)ψu,
+which implies that the employment demand satisfies
+nd
+c(ψu, ψc)
+=
+
+
+αx
+w f + sc(M −K)ψu + sc(K −1)
+
+ψc −
+w f −wr
+sc(K−1)
+
+
+
+1
+1−α
+,
+(38)
+nd
+o(ψu, ψc)
+=
+
+αx
+w f + sc(M −K −1)ψu
+
+1
+1−α
+.
+(39)
+3. If w f −wr ≥(K −1)sψcc and w f −wr < (M −1)sψcc, cartel firms offer jobs uni-
+formly over [wr, w1] at rate ψ1 and over (w1, w f ] at rate ψ2 = ψc −ψ1. outside firms
+offer jobs uniformly over (w1, w f ], at rate ψ2, and over (w f , wu], at rate ψu where
+wu = w f + sc(M −K −1)ψu.
+Indifference implies both w1 = wr + sc(K −1)ψ1 and w1 = w f −sc(M −1)ψ2 which
+yields ψ1 =
+sc(M−1)ψc−(w f −wr)
+sc(M−K)
+and w1 = wr + sc(K −1)
+sc(M−1)ψc−(w f −wr)
+sc(M−K)
+. Employ-
+45
+
+ment satisfies
+ns
+c(ψu, ψc)
+=
+ψ1(ψu, ψc)
+δ + sMψ2(ψu, ψc) + s(M −K)ψu
+δ
+δ + Kψ1(ψu, ψc) + Mψ2(ψu, ψc) + (M −K)ψu
++
+ψ2(ψu, ψc)
+δ + s(M −K)ψu
+
+1 + sK
+ψ1(ψu, ψc)
+δ + sMψ2(ψu, ψc) + s(M −K)ψu
+
+δ
+δ + Kψ1(ψu, ψc) + Mψ2(ψu, ψc) + (M −K)ψu
+,
+=
+(M−1)ψc
+M−K
+−
+w f −wr
+sc(M−K)
+δ + s
+M
+M−K
+w f −wr
+sc
+−s M(K−1)
+M−K ψc + s(M −K)ψu
+δ
+δ + ψc +
+w f −wr
+sc
++ (M −K)ψu
++
+w f −wr
+sc(M−K) −K−1
+M−K ψc
+δ + s(M −K)ψu
+
+1 + sK
+(M−1)ψc
+M−K
+−
+w f −wr
+sc(M−K)
+δ + s
+M
+M−K
+w f −wr
+sc
+−s M(K−1)
+M−K ψc + s(M −K)ψu
+
+
+δ
+δ + ψc +
+w f −wr
+sc
++ (M −K)ψu
+,
+ns
+o(ψu, ψc)
+=
+1
+M −K
+ 
+ψc +
+w f −wr
+sc
++ (M −K)ψu
+δ + ψc +
+w f −wr
+sc
++ (M −K)ψu
+−Knc
+!
+.
+The user cost is given by
+ωc = w f + sc(M −K)ψu,
+(40)
+and
+ωo = w f + sc(M −K −1)ψu.
+(41)
+which implies that the employment demand satisfies
+nd
+c(ψu, ψc)
+=
+
+αx
+w f + sc(M −K)ψu
+
+1
+1−α
+,
+(42)
+nd
+o(ψu, ψc)
+=
+
+αx
+w f + sc(M −K −1)ψu
+
+1
+1−α
+.
+(43)
+4. If w f −wr ≥(M −1)sψcc, cartel firms offer jobs uniformly over (w1, w f ] at rate ψc.
+The outside firms offer jobs uniformly over [wr, w1) at rate ψ1 =
+w f −wr−scψc(M−1)
+sc(M−K−1)
+,
+over (w1, w f ] at rate ψc, and over (w f , wu] at rate ψu. The user costs are unchanged
+from the previous case,
+ωc = w f + sc(M −K)ψu
+(44)
+and
+ωo = w f + sc(M −K −1)ψu.
+(45)
+46
+
+Employment satisfies (where the arguments (ψu, ψc) for ψ1 and ψ2 are dropped)
+ns
+c(ψu, ψc)
+=
+ψc
+δ + s(M −K)ψu
+
+1 + s(M −K)
+ψ1
+δ + sMψc + s(M −K)ψu
+
+δ
+δ + (M −K)ψ1 + Mψc + (M −K)ψu
+,
+=
+ψc
+δ + s(M −K)ψu
+δ
+δ + sMψ2 + s(M −K)ψu
+δ + s(M −K)ψ1 + sMψc + s(M −K)ψu
+δ + (M −K)ψ1 + Mψc + (M −K)ψu
+,
+=
+ψc
+δ + s(M −K)ψu
+δ
+δ + sMψc + s(M −K)ψu
+δ +
+M−K
+M−K−1
+w f −wr
+c
+−s
+K
+(M−K−1) ψc + s(M −K)ψu
+δ + 1
+s
+M−K
+M−K−1
+w f −wr
+c
+−
+K
+(M−K−1) ψc + (M −K)ψu
+,
+ns
+o(ψu, ψc)
+=
+1
+M −K
+
+Kψ1 + Mψ2 + (M −K)ψu
+δ + Kψ1 + Mψ2 + (M −K)ψu
+−Knc
+
+.
+There are some implication of the characterization that will be useful later on.
+REMARK 1. The functions ns
+c(ψu, ψc), ns
+o(ψu, ψc), nd
+c(ψu, ψc), and nd
+o(ψu, ψc) are continuous
+in both argument.
+To see this note that the expressions are clearly continuous within each case. We there-
+fore just have to consider what happens when we cross between the cases.
+Notice that when going from equilibrium type I to II the supply ns
+c and ns
+c are un-
+changed so the result is immediate. Similarly, at the left limit of this region where w f −
+wr = (K −1)sψc(1 −κ)c, the limit of the mass of offers at w f is given by
+ψf = ψc
+κ −
+w f −wr
+sc(K −1)κ = ψc.
+(46)
+Similarly, when going from case II to III. In the right limit of region II, the rate offer at
+w f satisfies
+ψf = ψc
+κ −
+w f −wr
+sc(K −1)κ = 0.
+(47)
+In the left limit of region III,
+w1 = wr + sc(K −1)sc(M −1)ψc −(w f −wr)
+sc(M −K)
+= w f ,
+(48)
+so there is no overlapping region which implies that that the supply and demand are
+continuous as we move from region II to III.
+47
+
+Lastly, considering case III to case IV. In the right limit of region III and on the left limit
+of region IV, the rate offer over [wr, w f ] are the same for the two types of firms.
+Strategy for remainder of proof
+The four cases above are ordered by w f relative to
+an endogenous variable, ψc. We will therefore show that there exists a unique value ψc
+such that firms’ optimal labor demand equals labor supply as implied by worker flows.
+To do so, we first map ψc to ψu by showing that, given ψu, there exists a unique ψc such
+that relative labor demand equals relative labor supply and that the mapping from ψu to
+ψc is continuous. Then, we show that there exists a unique value of ψu that equates labor
+demand and supply for the outside firms using the intermediate value theorem. As a
+preliminary step, we establish a bound for ψu in the next lemma.
+Lemma C.9. ψu is bounded above by ψ which is the unique value that satisfies
+ψ
+
+1 −(1 −s)K
+ 
+αx
+w f + (r + δ + (M −K)sψ)c
+!
+1
+1−α
+−(M −K)
+ 
+αx
+w f + (r + δ + (M −K −1)sψ)c
+!
+1
+1−α 
+
+= δ
+ 
+αx
+w f + (r + δ + (M −K −1)sψ)c
+!
+1
+1−α
+. (49)
+Before proving the statement, it is instructive to briefly consider its content. In words,
+this is the average contact rate above w f in an equilibrium with no mass at w f where the
+cartel posts on [wr, w f ] and the outside firms post on [w f , wu], that is the knife-edge case
+between Case II and Case III described in the main text.
+Proof. We first note that since the right hand side is increasing in ψ, the left hand side is
+decreasing, and the right hand side is smaller for ψ →0 and larger for ψ →∞), a unique
+positive value of ψ that solves (49) exists.
+Assume then, to the contrary of the lemma, that an equilibrium exists with ψu > ψ. The
+user cost of the cartel firms is therefore weakly higher than w f + (r + δ + s(M −K)ψu)c.
+(The cost is weakly higher because the cartel firms might post a mass of jobs at w f .) Em-
+48
+
+ployment in the cartel firms is therefore bounded above by
+nc ≤
+
+αx
+w f + (r + δ + s(M −K)ψu)c
+
+1
+1−α
+<
+ 
+αx
+w f + (r + δ + s(M −K)ψ)c
+!
+1
+1−α
+.
+(50)
+The lowest employment in the outside firms occurs if they do not post any additional job
+offers. Employment in the outside firms is therefore bounded below by ˜no which is the
+level of employment at the outside firms if they only post above w f which solves
+δ ˜no
+=
+ψu (1 −(M −K)no −(1 −s)Knc) ,
+(51)
+where no is the employment at the outside firms (since additional employment below w f
+at the outside firms would raise their employment). From above it follows that the right
+hand side of this equation is bounded below (due to the upper bound for nc) by
+ψu (1 −(M −K)no −(1 −s)Knc) > ψ
+
+1 −(1 −s)K
+ 
+αx
+w f + (r + δ + (M −K)sψ)c
+!
+1
+1−α
+−(M −K)
+ 
+αx
+w f + (r + δ + (M −K −1)sψ)c
+!
+1
+1−α
+
+
+(52)
+We can similarly create an upper bound for the left hand side of (51). Note that since
+ψu > ¯ψ it follows from optimal labor demand that
+δ ˜no < δ
+ 
+αx
+w f + (r + δ + (M −K −1)sψ)c
+!
+1
+1−α
+.
+(53)
+However, equation (49) implies that the RHS of (52) and (53) to be the same, we get a
+contradiction.
+Lemma C.10. For each ψu ∈[0, ψ], there is a unique ψc such that ns
+o(ψu, ψc)/ns
+c(ψu, ψc) =
+nd
+o(ψu, ψc)/nd
+c(ψu, ψc).
+Proof. We will prove this in two parts.
+First, note that ns
+o/ns
+c exceeds nd
+o/nd
+c as ψc →0 since ns
+c →0 whereas nd
+o/nd
+c →
+
+w f +(r+δ+sψu(M−K))c
+w f +(r+δ+sψu(M−K−1))c
+
+1
+1−α > 0 and ns
+o > 0. Second, as ψc →∞, nd
+o/nd
+c →∞whereas
+ns
+o/ns
+c remain bounded. Since nd
+o/nd
+c and ns
+o/ns
+c are continuous functions in ψc, a solution
+nd
+o/nd
+c = ns
+o/ns
+c exists.
+49
+
+We will now show that nd
+o/nd
+c −ns
+o/ns
+c is strictly increasing in ψc which implies that
+there exist a unique solution.
+First, from the characterization it follows that nd
+o/nd
+c is weakly increasing in ψc since nd
+c
+is weakly decreasing in ψc whereas nd
+o is independent of ψc.
+We will now show that ns
+o/ns
+c is strictly decreasing in ψc.
+We do it case by case and show that within each case, it holds. For case I and II, it
+follows directly from (32) and (33).
+First, take a ψc that is strictly lower, the outside firms offer (weakly) more jobs below
+w f . Denote w′ the lowest wage paid by the outside firms. We get that from the characteri-
+zation and ψc being lower, it follows that w′ is weakly lower.
+First start with case III. Denote by ψ′ the rate of offers by the outside firms over the
+region [w′, w f ]. In the new equilibrium ψ′ has increased.
+Total employment is given by
+E =
+K(ψc −ψ′) + Mψ′ + (M −K)ψu
+δ + K(ψc −ψ′) + Mψ′ + (M −K)ψu
+=
+Kψc + (M −K)ψ′ + (M −K)ψu
+δ + Kψc + (M −K)ψ′ + (M −K)ψu
+,
+(54)
+using that (M −K)ψ′ =
+w f −wr
+sc
+−(K −1)ψc, this implies that a fall in ψc results in lower
+total employment. Total employment above w′ solves
+E′ = Mψ′ + (M −K)ψu
+δ
+(1 −E + s(E −E′)) =
+Mψ′ + (M −K)ψu
+δ + sMψ′ + s(M −K)ψf
+(1 −(1 −s)E),
+(55)
+which is strictly higher when ψc is lower since ψ′ has increased and employment E is lower.
+Thus, the outside firms employment increase unless the employment above w f decrease
+sufficiently. Total employment strictly above w f solves
+δEu = (M −K)ψu
+δ
+(1 −E + s(E −Eu)) →Eu =
+(M −K)ψu
+δ + s(M −K)ψu
+(1 −(1 −s)E)
+(56)
+which has strictly higher since E is lower. Total employment in the outside firms has there-
+fore increased. Total employment by cartel firms have decreased since total employment
+is lower. Thus, ns
+o/ns
+c is decreasing in ψc.
+For case IV, consider again a lower value of ψc. A lower value of ψc implies that total
+employment has increased (see characterization above). Employment in the cartel firms
+50
+
+satisfies
+ns
+c =
+δ
+δ + s(M −K)ψu
+ψc
+δ + sMψc + s(M −K)ψu
+δ +
+M−K
+M−K−1
+w f −wr
+c
+−s
+K
+(M−K−1)ψc + s(M −K)ψu
+δ + 1
+s
+M−K
+M−K−1
+w f −wr
+c
+−
+K
+(M−K−1)ψc + (M −K)ψu
+.
+(57)
+This expression is lower when ψc is lower. Thus, since total employment has increased
+and ns
+c is lower, we again get that ns
+o/ns
+c is decreasing in ψc.
+Lemma C.11. The function ψc(ψu) such that ns
+o(ψu,ψc(ψu))
+nsc(ψu,ψc(ψu)) = nd
+o(ψu,ψc(ψu))
+ndc(ψu,ψc(ψu)) is continuous in ψu for
+ψu ∈[0, ψu].
+Proof. Note that the function f (ψu, ψc) = nd
+o(ψu, ψc)/nd
+c(ψu, ψc) −ns
+o(ψu, ψc)/ns
+c(ψu, ψc) is
+continuous in both arguments (from the characterization) and, from the proof of Lemma
+C.10, strictly increasing in ψc. Assume that the function ψc(ψu) is not continuous at ψu
+with limϵ→0 ψc(ψu + ϵ) = ψc(ψu) + δ. We therefore get a contradiction since limϵ→0 f (ψu +
+ϵ, ψc(ψu + ϵ)) −f (ψu, ψc(ψu)) > 0 since f (ψu, ψc) is strictly increasing in ψc.
+Parameter Restriction II
+ASSUMPTION 1. We assume, from here on, that
+min
+ψu∈[0,ψ]
+(δ + s(M −K)ψu)2/δ
+
+αx
+w f +(r+δ+s(M−K)ψu)c
+
+1
+1−α
+1 −
+ δ+s(M−K)ψu
+δ
+sM + (1 −s)K
+ 
+αx
+w f +(r+δ+s(M−K)ψu)c
+
+1
+1−α
+−(1 −s)(M −K)
+
+αx
+w f +(r+δ+s(M−K−1)ψu)c
+
+1
+1−α
+>
+w f −wr
+(M −1)sc .
+(58)
+Lemma C.12. No type IV equilibrium exists.
+Proof. Recall that a type IV equilibrium occurs when ψc <
+w f −wr
+(M−1)sc. The following proof
+then just offers a lower bound on ψc in terms of primitives and assumption 1 guarantees
+that lower bound is sufficiently large. To see this note that under case IV, the offer rate of
+cartel firms is given by
+ψc =
+(δ + s(M −K)ψu)
+1 −Mnc −sX −(1 −s)(M −K) (no −nc)nc
+(59)
+51
+
+X denotes the employment strictly above w f , which solves
+δX
+=
+(M −K)ψu (1 −(1 −s)Knc −(1 −s)(M −K)no −sX)
+(60)
+X
+=
+(M −K)ψu
+δ + s(M −K)ψu
+(1 −(1 −s)Knc −(1 −s)(M −K)no)
+(61)
+We therefore have
+ψc
+=
+(δ + s(M −K)ψu)nc
+1 −Mnc −s
+(M−K)ψu
+δ+s(M−K)ψu (1 −(1 −s)Knc −(1 −s)(M −K)no) −(1 −s)(M −K) (no −nc)
+=
+(δ + s(M −K)ψu)
+δ
+δ+s(M−K)ψu −sMnc −
+δ
+δ+s(M−K)ψu (1 −s) (Knc + (M −K)no)
+nc
+=
+(δ + s(M −K)ψu)2/δ
+1 −δ+s(M−K)ψu
+δ
+sMnc −(1 −s) (Knc + (M −K)no)
+nc,
+(62)
+We know ψu ∈[0, ψ] and that, under case IV,
+nc
+=
+
+αx
+w f + (r + δ + s(M −K)ψu)c
+1/(1−α)
+,
+(63)
+no
+=
+
+αx
+w f + (r + δ + s(M −K −1)ψu)c
+1/(1−α)
+.
+(64)
+using these two equations, we get that
+ψc
+=
+(δ + s(M −K)ψu)2/δ
+1 −
+ s(M−K)ψu
+δ
+sM + s(M −K) + K
+
+nc −(1 −s)(M −K)no
+nc,
+=
+(δ + s(M −K)ψu)2/δ
+
+αx
+w f +(r+δ+s(M−K)ψu)c
+
+1
+1−α
+1 −
+ s(M−K)ψu
+δ
+sM + s(M −K) + K
+ 
+αx
+w f +(r+δ+s(M−K)ψu)c
+
+1
+1−α −(1 −s)(M −K)
+
+αx
+w f +(r+δ+s(M−K−1)ψu)c
+
+1
+1−α
+.
+Assumption 1 then implies that s(M −1)ψcc ≥w f −wr which immediately rules out case
+IV.
+Lemma C.13. There exists a unique equilibrium value of ψu.
+Proof. First clearly as ψu →0, ns
+o(ψu, ψc(ψu)) < nd
+o(ψu, ψc(ψu)) since the fixed wage is
+binding. As ψu →ψ, the opposite is true by Lemma C.9. Note further that the functions
+ns
+o(ψu, ψc(ψu)) −nd
+o(ψu, ψc(ψu)) is continuous in both arguments. The function ψc(ψu)) is
+52
+
+continuous from Lemma C.11. Therefore the function ns
+o(ψu, ψc(ψu)) −nd
+o(ψu, ψc(ψu)) is
+continuous and a solution exists.
+Second, for a higher value of ψu, nd
+o(ψu, ψc(ψu)) is lower. Consider now ψc that is
+weakly lower. This implies that ns
+o(ψu, ψc(ψu)) is higher (see proof of Lemma C.10) which
+results in the contradiction. Consider a case in which ψc has increased. Under Case I, II,
+and III this implies that the job offer rate over [wr, w f ] weakly increase. Employment must
+therefore go up. This results in the contradiction since nd
+o(ψu, ψc(ψu)), nd
+c(ψu, ψc(ψu)) have
+strictly decreased.
+D
+Proof of Proposition 2
+Part A
+Proof. For any equilibrium with a binding w f , the characterization of the equilibrium ob-
+tained in proving Proposition 1 directly implies that the user cost for the cartel members is
+higher. Since employment and profits are strictly declining in the user cost of labor, these
+firms also have lower profits and employment.
+To show that the impact on the average wage is ambiguous consider the following
+case in which all firms are in the cartel. Let wu and ψ denote the highest wage and offer
+arrival rate in the absence of collusion. Take the wage ceiling w f = wu −s(M −1)ψκc.
+We can now guess and verify that employment remains unchanged. Given an unchanged
+employment, the equilibrium is in case I with an unchanged user cost since the lower
+highest wage is offset by the turnover at the mass point. Clearly the average wage will
+increase provided that κ is sufficiently small relative to δ. In contrast, if K = M and
+w f = wr, clearly wages are lower.
+Part B
+Cartel Firms
+Proof. We first cover the cartel firms where we proceed by example. Equation (9) in the
+main body gives a closed form expression for the cartel’s user cost in the special case where
+53
+
+s = 1, K < M, κ →0, and we are in an equilibrium of type I. There, the cartel’s user cost
+is declining in the user cost of the outside firms (and therefore in w f ) for sufficiently low
+w f . In contrast, the user cost of the cartel members is increasing in w f when K = M. This
+establishes that reducing the wage ceiling may or may not reduce the cartel’s user cost.
+Additionally, in the case covered by (9), the cartel’s user cost goes to infinity for suffi-
+ciently low w f which gives a case where the cartel members’ profits are lower than with-
+out a binding wage ceiling. The opposite is the case for any binding wage ceiling above
+wr when K = M. The impact of wage fixing on the cartel’s profit is therefore ambiguous.
+Outside Firms
+Proof. We now turn to the outside firms. We prove that the highest wage wu is strictly
+increasing in w f . Since the user costs of the outside firms are given by wu + (r + δ)c,
+this is sufficient to establish that their user cost is strictly increasing in w f , the part of the
+proposition that remains to be proven.
+We proceed by contradiction. Suppose, to the contrary, that there exist two (binding)
+values for the wage ceiling with w′
+f < w′′
+f such that wu is higher under w′
+f than w′′
+f . This
+has two implications that we will use: first, employment at outside firms is higher under
+w′′
+f since the user cost are lower; second, the amount of offers above w f , ψu, is strictly lower
+under w′′
+f . The latter follows from wu = w f + s(M −K −1)ψuc, since w f is higher but wu
+is weakly lower.
+The rest of the proof establishes contradictions to these implications in a case-by-case
+fashion. We break the proof into two exhaustive cases, a) the case where the cartel mem-
+bers’ user cost is weakly lower under w′′
+f compared with w′
+f , and b) the case where the
+cartel members’ user cost is strictly higher under w′′
+f compared with w′
+f .
+Part a) lower cartel user cost under higher ceiling
+First, consider the case where
+the cartel members’ user cost is weakly lower under w′′
+f compared with w′
+f . This implies
+that cartel employment nc is weakly higher.
+Part a-I) Case I and II equilibrium under w′′
+f
+We first show that it cannot be that
+under w′′
+f , there is an equilibrium of Case I or II. Equilibrium employment in outside firms
+54
+
+under an equilibrium of these types is given by:
+no =
+ψu
+δ + (M −K)ψu (1 −(1 −s)Knc) .
+(65)
+Employment under w′
+f is
+no =
+ψu
+δ + (M −K)ψu (1 −(1 −s)Knc −(1 −s)(M −K)No) + No,
+(66)
+where No is the level of employment below w′
+f in an outside firm. Since ψu is higher, nc
+is lower, and No ≥0, employment is higher at the outside firms at the lower w′
+f . This
+contradicts the earlier observation that employment in the outside firms is higher at w′′
+f ,
+ruling out an equilibrium of Case I or II under w′′
+f .
+Part a-II) Case III under w′′
+f
+What remains to be shown is then that there is no equi-
+librium of Case III under w′′
+f . Denote the lowest wage posted by the outside employers
+associated with w′′
+f as w′′
+1. We will first consider the case in which we are in case I or II
+under w′
+f and then cover the case III.
+Part a-II-i) Equilibrium under w′
+f is either in Case I or II
+Step 1: it must be that w′′
+1 < w′
+f .
+Assume, to the contrary, that w′′
+1 ≥w′
+f . Let ˜ψ denote the total rate of offers above
+w′′
+1. From the characterization of Case III with w′′
+f , we know that ˜ψ =
+M−K
+M−K−1
+w′′
+u−w′′
+f
+sc
++
+M
+M−1
+w′′
+f −w′′
+1
+sc
+. In turn, under w′
+f we have that ˜ψ =
+M−K
+M−K−1
+w′
+u−w′′
+1
+sc
+, which is larger than under
+w′′
+f because w′
+u > w′′
+u.
+But recall the implication from above that employment at outside firms must be higher
+under w′′
+f . The total rate of job offers, denoted ¯ψ, must therefore be higher under w′′
+f .
+Total employment above w′′
+1 solves
+N1 =
+˜ψ
+δ + s ˜ψ
+
+1 −(1 −s)
+¯ψ
+δ + ¯ψ
+
+.
+(67)
+This expression is increasing in ˜ψ but declining in ¯ψ. N1 is therefore lower under w′′
+f since
+˜ψ is lower whereas ¯ψ is higher compared to w′
+f .
+Under w′
+f , the total employment by the outside firms (M −K)no is weakly higher than
+55
+
+N1, since only the outside firms post above w1 and w′′
+1 ≥w′
+f . Employment at the out-
+side firms is lower than employment N1 under w′′
+f since the cartel firms make offers over
+[w′′
+1, w′′
+f ]. This implies that employment in the outside firms is lower under w′′
+f than under
+w′
+f (since N1 is lower under the former). This yields a contradiction and so it must be the
+case that w′′
+1 ≤w′
+f .
+Step 2: Case I or II equilibrium under w′
+f
+Next, we show that there are fewer offers strictly above w′
+f under w′′
+f compared with
+w′
+f . Step 1 proved that w′′
+1 < w′
+f . This implies that all M firms offer wages over the
+region [w′
+f , w′′
+f ] under w′′
+f whereas only the M −K outside firms make offers over this
+region under w′
+f . The total amount of offers above w′
+f is thus
+M
+M−1
+w′′
+f −w′
+f
+sc
++
+M−K
+M−K−1
+w′′
+u−w′′
+f
+sc
+under w′′
+f . Under w′
+f , it is
+M−K
+M−K−1
+w′
+u−w′
+f
+sc
+which is strictly larger since, under our conjecture,
+w′
+u ≥w′′
+u.
+Next, consider the total amount of offers weakly below w′
+f . This is strictly higher under
+w′
+f (if we are in case I or II under w′
+f ) since it is bounded below by
+K
+K−1
+w′
+f −wr
+sc
+whereas under
+w′′
+f , it is given by
+M
+M−1
+w′
+f −w′′
+1
+sc
++
+K
+K−1
+w′′
+1 −wr
+sc
+, which is less since w′′
+1 < w′
+f (step 1). Jointly with
+the previous paragraph this implies that, under w′
+f , employment would be strictly higher
+compared with w′′
+f , a contradiction.
+This rules out Case I or II under w′
+f and therefore completes subcase a-II-i).
+Part a-II-ii) Case III equilibrium under w′
+f
+This leaves case III under w′
+f .
+Total employment by outside firms under either wage ceiling can conveniently be bro-
+ken into two pieces:
+M−K
+M
+times total employment above w1 plus K
+M times total employ-
+ment above the wage ceiling w f .
+We will next show that under w′
+f each of these is larger compared with w′′
+f . This implies
+that employment at the outside firms is larger, resulting in a contradiction.
+Start with employment above w f . The total rate of offers above w f solves ˜ψ =
+M−K
+M−K−1
+wu−w f
+sc
+.
+This is higher under w′
+f compared to w′′
+f since wu is higher while w f is lower. The over-
+all rate of offers ¯ψ in turn is lower under w′
+f since total employment is lower under the
+conjecture. The level of employment above w f is given by
+˜ψ
+δ+s ˜ψ
+
+1 −(1 −s)
+¯ψ
+δ+ ¯ψ
+
+which is
+thus larger under w′
+f compared with w′′
+f .
+Next consider the second piece, the total level of employment above w1. First, the total
+number of offers ¯ψ is
+K
+K−1
+w1−wr
+sc
++
+M
+M−1
+w f −w1
+sc
++
+M−K
+M−K−1
+wu−w f
+sc
+. Since total employment is
+56
+
+lower and wu is higher under w′
+f compared to w′′
+f (under the conjecture), w1 must therefore
+be lower under w′
+f since otherwise the rate of offers would be higher. The total rate of
+offers above w1 solves ˜ψ =
+M
+M−1
+w f −w1
+sc
++
+M−K
+M−K−1
+wu−w f
+sc
+which is higher under w′
+f compared
+to w′′
+f since wu is higher while w f and w1 are lower. Employment above w1 can then again
+be written as
+˜ψ
+δ+s ˜ψ
+
+1 −(1 −s)
+¯ψ
+δ+ ¯ψ
+
+, which is thus higher under w′
+f compared to w′′
+f .
+Jointly, it follows from the previous two paragraphs that employment at the outside
+firms is larger under w′
+f , a contradiction. That rules out subcase a-II-ii) and thus completes
+part a).
+Part b) higher cartel user cost under higher ceiling
+Consider now the case where
+the user cost for the cartel members is strictly higher under w′′
+f compared with w′
+f . We
+again split the proof into subcases.
+Before turning to the subcases, we will derive an inequality which we will use in each
+subcase. Define ψu as the rate of offers strictly above w f . As per the initial conjecture, the
+user cost of the outside firms w f + s(M −K −1)ψuc is lower under w′′
+f . For this to be the
+case, it must be that s(M −K −1)c(ψ′′
+u −ψ′
+u) ≤−(w′′
+f −w′
+f ). We therefore have that
+w′′
+f −w′
+f + s(M −K)c(ψ′′
+u −ψ′
+u) ≤w′′
+f −w′
+f −
+M −K
+M −K −1(w′′
+f −w′
+f ) = −
+w′′
+f −w′
+f
+M −K −1 < 0.
+(68)
+Part b-I) Case III equilibrium under w′′
+f .
+Equation (68) implies that the user cost of
+the cartel under case III, w f + s(M −K)ψuc + (r + δ)c, is strictly lower under w′′
+f which
+contradicts the conjecture that the cartel’s user cost is lower under w′′
+f .
+Part b-II-i) Case I or II equilibrium under w′′
+f and ψc is weakly lower under w′′
+f .
+We will derive a contradiction by showing that the user cost of the cartel firms is higher
+under w′′
+f . To do so, we will first show that we are in case I or II also under w′
+f .
+The condition for being in case I or II reads
+w f −wr
+ψc
+< (K −1)sc. This condition is met
+under w′′
+f (because this is the case currently under consideration). Since the left hand side
+is smaller when w f is lower and ψc is higher, it is also met under w′
+f , which means that we
+must be in case I or II under w′
+f as well.
+The offer rate of jobs paying w f under case I or II is ψf = min
+n
+ψc, ψc
+κ −
+w f −wr
+sc(K−1)κ
+o
+. Since
+w f is higher and ψc is lower under w′′
+f this is strictly lower.
+57
+
+This implies that the user cost for the cartel firms would be lower under w′′
+f since w f +
+sψu(M −K)c is lower via (68) and so is sψf (K −1)c which contradicts the initial conjecture
+that the cartel’s user cost is higher under w′′
+f . Thus, ψc must be strictly higher under w′′
+f .
+Part b-II-ii) Case I or II equilibrium under w′′
+f and ψc is strictly higher under w′′
+f .
+Denote by ˆψ the total rate of offers weakly below the wage ceiling w f . Employment below
+w f satisfies
+ˆψ
+δ + s(M −K)ψu
+δ
+δ + ˆψ + (M −K)ψu
+.
+(69)
+In a case I or II equilibrium this is equal to total cartel employment. In a case III equilibrium
+this is strictly larger than total cartel employment.
+In order to rank cartel employment between the two wage ceilings we will thus rank ˆψ
+and ψu.
+ˆψ is higher under w′′
+f compared with w′
+f . This follows directly from ψ′
+c < ψ′′
+c if we
+are in case I or II under w′
+f ; if we are in case III under w′
+f , it follows from the fact that
+ˆψ′ =
+M
+M−1
+w′
+f −w1
+sc
++
+K
+K−1
+w1−wr
+sc
+<
+K
+K−1
+w′′
+f −wr
+sc
+≤Kψ′′
+c = ˆψ′′ where the last inequality comes
+from the fact that we are in a case I or II equilibrium under w′′
+f .
+Turning to ψu (the rate of offers by a regular firm above the ceiling), we have that
+ψu =
+1
+M−K−1
+wu−w f
+sc
+. Since wu is higher and w′
+f is strictly lower this is strictly larger under
+w′
+f . Finally, note that the above expression is an upper bound for cartel employment under
+a case III equilibrium. Jointly, it follows that cartel employment is higher under w′′
+f , a
+contradiction. This completes the proof.
+E
+Derivations of harm
+We will calculate a simple expression for the average wage above w f under the case when
+w f is sufficiently low such that we are in case I. We first calculate the average wage above
+some w f assuming that wages are offered at a rate λ above and are uniformly distributed
+58
+
+over [w f , wu]. The average wage in the outside firms satisfies
+E[wo]
+=
+ˆ wu
+w f
+wgo(w)dw
+=
+w f +
+ˆ wu
+w f
+(1 −Go(w))dw
+=
+w f +
+ˆ wu
+w f
+
+1 −
+1 −wu−w
+wu−w f
+1 + sλ
+δ
+wu−w
+wu−w f
+
+dw
+=
+wu −
+ˆ wu
+w f
+
+δ
+sλ
+sλ
+δ + 1 −
+
+1 + sλ
+δ
+wu−w
+wu−w f
+
+1 + sλ
+δ
+wu−w
+wu−w f
+
+dw
+=
+wu −
+ˆ wu
+w f
+
+δ
+sλ
+sλ
+δ + 1
+1 + sλ
+δ
+wu−w
+wu−w f
+−δ
+sλ
+
+dw
+=
+wu −δ(wu −w f )
+sλ
+
+1 + δ
+sλ
+
+log
+
+1 + sλ
+δ
+
++ δ
+sλ(wu −w f )
+=
+w f +
+ wu −w f
+ 
+1 + δ
+sλ
+
+−δ(wu −w f )
+sλ
+
+1 + δ
+sλ
+
+log
+
+1 + sλ
+δ
+
+.
+To calculate the average wage without wage fixing, we use that λ = Mψ, w f = wr, wu −
+w f = s(M −1)ψc and Mψ =
+δ ¯N
+1−¯N, where ¯N is the total employment.
+E[w]K=0
+=
+wr + s M −1
+M
+δ ¯N
+1 −¯N c
+ 
+1 +
+δ
+s δ ¯N
+1−¯N
+!
+−δ(M −1)c
+M
+ 
+1 +
+δ
+s δ ¯N
+1−¯N
+!
+log
+ 
+1 +
+s δ ¯N
+1−¯N
+δ
+!
+=
+wr + M −1
+M
+δc
+1 −(1 −s) ¯N
+1 −¯N
+
+−
+1 −(1 −s) ¯N
+s ¯N
+
+log
+1 −(1 −s) ¯N
+1 −¯N
+
+.
+To calculate the average wage strictly above w f under wage fixing, we use that wu −w f =
+M−K−1
+M−K sλc where λ = (M −K)ψo,
+E[wo]
+=
+w f + M −K −1
+M −K
+δc
+sλ
+δ + 1
+
+−M −K −1
+M −K
+δc
+
+1 + δ
+sλ
+
+log
+
+1 + sλ
+δ
+
+,
+59
+
+next use that ψo =
+δno
+1−(M−K)no−(1−s)Knc and therefore sλ/δ = s(M −K)ψo/δ =
+s(M−K)no
+1−(M−K)no−(1−s)Knc
+to get that
+E[wo]
+=
+w f + M −K −1
+M −K
+δc
+ 
+1 −(1 −s)(M −K)no −(1 −s)Knc
+1 −(M −K)no −(1 −s)Knc
+−1 −(1 −s)(M −K)no −(1 −s)Knc
+s(M −K)no
+log
+1 −(1 −s)(M −K)no −(1 −s)Knc
+1 −(M −K)no −(1 −s)Knc
+ !
+.
+To get mean wages, we weight this expression by the relative employment at the outside
+firms
+E[w]
+=
+w f +
+¯N −Knc
+¯N
+M −K −1
+M −K
+ 1 −(1 −s) ¯N
+1 −¯N + sKnc
+−1 −(1 −s) ¯N
+s( ¯N −Knc) log
+ 1 −(1 −s) ¯N
+1 −¯N + sKnc
+
+δc
+=
+w f +
+¯N −¯Nc
+¯N
+M −K −1
+M −K
+1 −(1 −s) ¯N
+1 −¯N + s ¯Nc
+−1 −(1 −s) ¯N
+s( ¯N −¯Nc)
+log
+1 −(1 −s) ¯N
+1 −¯N + s ¯Nc
+
+δc.
+E.1
+Backing out s from observables
+In this section, we show how to back out s in an equilibrium with collusion (Case I and
+using that κ ≈0). Denote by βo the average offer acceptance rate of workers employed at
+outside employers. The rate at which workers switch employers ξ is given by the weighted
+average of the transition rates at the two different types of employers,
+ξ =
+Knc
+Knc + (M −K)no
+s(M −K)ψo +
+(M −K)no
+Knc + (M −K)no
+s(M −K −1)ψoβo.
+This uses that workers at outside firms receive job offers from other outside firms at rate
+s(M −K −1)ψo, while cartel workers receive offers from outside employers at rate s(M −
+K)ψo.
+We will next show how to express ψo and βo just in terms of observables. Denote by
+Go(x) the fraction of workers in an outside firm with a wage that is below rank x of the
+wage offer distribution of outside firms. This satisfies Go(x) =
+x
+1+s(M−K)ψo/δ(1−x). Next
+note that the acceptance rate of a job offer of rank x to a worker employed at an outside
+60
+
+firm is simply Go(x). To get the average acceptance rate βo we can just integrate,
+βo
+≡
+ˆ 1
+0
+Go(x)dx =
+ˆ 1
+0
+x
+1 + s(M−K)ψo
+δ
+(1 −x)
+dx
+=
+ˆ 1
+0
+δ
+s(M −K)ψo
+1 + s(M−K)ψo
+δ
+−1 −s(M−K)ψo
+δ
+(1 −x)
+1 + s(M−K)ψo
+δ
+(1 −x)
+dx
+=
+δ
+s(M −K)ψo
+δ
+s(M −K)ψo
+
+1 + s(M −K)ψo
+δ
+
+log
+
+1 + s(M −K)ψo
+δ
+
+−
+δ
+s(M −K)ψo
+=
+δ
+s(M −K)ψo
+
+δ
+s(M −K)ψo
++ 1
+
+log
+
+1 + s(M −K)ψo
+δ
+
+−1
+
+.
+Finally, use that
+ψo =
+δno
+(1 −(1 −s)Knc −(M −K)no),
+(70)
+to write ξ fully in terms of employment and the number of each type of firm as well as δ.
+This allows to construct s just from information on worker flows ξ and employment inside
+and outside the cartel.
+61
