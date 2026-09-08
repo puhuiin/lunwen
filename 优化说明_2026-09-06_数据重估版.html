@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>优化说明_2026-09-06_数据重估版</title>
+<style>
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;max-width:1080px;margin:0 auto;padding:24px;color:#1f2937;line-height:1.7;background:#fff}
+h1{font-size:24px;border-bottom:3px solid #b45309;padding-bottom:10px}
+h2{font-size:19px;color:#b45309;margin-top:32px;border-left:5px solid #b45309;padding-left:10px}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+th,td{border:1px solid #cbd5e1;padding:8px 10px;vertical-align:top;text-align:left}
+th{background:#b45309;color:#fff}
+tr:nth-child(even){background:#fffbeb}
+.old{color:#b91c1c;background:#fef2f2;padding:1px 4px;border-radius:3px}
+.new{color:#15803d;background:#f0fdf4;padding:1px 4px;border-radius:3px}
+.meta{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:14px 16px;margin:16px 0}
+.meta code{background:#fef3c7;padding:1px 6px;border-radius:4px}
+.ok{color:#15803d;font-weight:700}
+.frozen{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;padding:12px 16px}
+footer{margin-top:36px;font-size:12.5px;color:#64748b;border-top:1px solid #e2e8f0;padding-top:12px}
+</style>
+</head>
+<body>
+<h1>《你是什么样的投资者？》优化说明 —— 数据重估版（2026-09-06）</h1>
+<div class="meta">
+<div><b>基于版本（只读）：</b><code>论文初稿_2026-09-05_文字规范版.docx</code>（已含第一步全部文字修复）</div>
+<div><b>本次新生成：</b><code>论文初稿_2026-09-06_数据重估版.docx</code>（129段/12表/3图/12公式；+1段方法局限附注+1段版本说明）</div>
+<div><b>原始文件状态：</b><code>论文初稿_2026-09-04.docx</code> 与 09-05版全程未写入，仅作读取源。</div>
+<div><b>本次范围（三项一起做）：</b>①表12切4季度干净样本并同步正文 ②表3重算2025/2026/全样本行 ③Sortino/HM/L4b/AS只加方法附注、不重估系数。表4/表6/表7及主回归全部冻结。</div>
+</div>
+
+<h2>一、改了什么</h2>
+<h3>1. 表12：污染版 → 干净版（15行全换，源=output/样本外检验_2006_2024_2026.json）</h3>
+<table>
+<tr><th>行</th><th>旧（污染，6季度）</th><th>新（干净，4季度：2025Q1/Q2/Q4+2026Q1）</th></tr>
+<tr><td>Q1–Q5异常Alpha</td><td><span class="old">4.30%/7.47%/7.97%/8.83%/10.62%严格单调</span></td><td><span class="new">0.70%/1.84%/3.17%/2.19%/3.48%（Q4倒挂，非单调）</span></td></tr>
+<tr><td>Q1–Q5季度收益</td><td><span class="old">16.60%/20.18%/22.32%/24.55%/27.05%</span></td><td><span class="new">2.75%/3.34%/3.76%/2.68%/4.07%（Q4倒挂）</span></td></tr>
+<tr><td>Q5−Q1组间差</td><td><span class="old">+6.32pp t=+5.52*** / +10.45pp t=+8.57***</span></td><td><span class="new">+2.78pp t=+2.36**（p=0.020） / +1.32pp t=+1.85*（p=0.067）</span></td></tr>
+<tr><td>综合能力</td><td><span class="old">β=+0.0604 t=+5.75***，R²=9.43%</span></td><td><span class="new">β=+0.0258 t=+2.33**，R²=2.01%</span></td></tr>
+<tr><td>L1/L2/L3单维</td><td><span class="old">+6.35***/+4.44***/−1.38</span></td><td><span class="new">+2.16**/+4.98***/−1.93*</span></td></tr>
+<tr><td>L4a/L4b/L5单维</td><td><span class="old">+4.26***/−1.24/+5.62***</span></td><td><span class="new">+3.05***/+0.24(n.s.)/+0.58(n.s.)</span>（执行维度死亡）</td></tr>
+<tr><td>联立R²</td><td><span class="old">单变量最高11.46% / 联立19.84%</span></td><td><span class="new">最高5.74%（认知）/ 联立10.96%</span>（近乎腰斩）</td></tr>
+<tr><td>表注</td><td><span class="old">2025Q1–2026Q2（6季度）</span></td><td><span class="new">4干净季度，已剔除2025Q3/2026Q2</span></td></tr>
+</table>
+<h3>2. 表3：重算3行（源=output/分析面板_v3_2026-08-26.csv剔除800行污染季，同口径复算）</h3>
+<table>
+<tr><th>行</th><th>旧</th><th>新</th></tr>
+<tr><td>2025（400只）</td><td><span class="old">11.5亿/252%/+15.30%/+15.05%</span></td><td><span class="new">10.9亿/254%/+3.39%/+3.14%（3季度均值）</span></td></tr>
+<tr><td>2026（400只）</td><td><span class="old">22.2亿/—/+39.35%/+3.62%</span></td><td><span class="new">14.8亿/—/+3.87%/+3.62%（仅Q1；超额不变反证旧超额只平均了Q1）</span></td></tr>
+<tr><td>全样本</td><td><span class="old">14.4亿/236%/+8.41%/+4.42%（9974观测）</span></td><td><span class="new">13.3亿/236%/+1.96%/+1.71%（9174观测）</span></td></tr>
+</table>
+<h3>3. 正文7处同步（P76/P78/P79×3/P84/P85）</h3>
+<p>“共6个季度”→“共4个干净季度”；发现一改为倒挂+新差值；发现二综合+0.0604/t5.75→+0.0258/t2.33，执行“极度显著”→“t=0.58不再显著”；发现三L4b −0.0056/−1.24→+0.0011/+0.24（仍n.s.）；P84 L1 +6.35/+4.03→+2.16/+2.13；P85结论改为“总体向上但Q4倒挂，认知防守持续、执行不再显著”。</p>
+<h3>4. 方法局限附注（新增一段，系数零改动）</h3>
+<p>Sortino条件口径淘汰29只绩优、HM与Beta相关0.71且83.9%不显著、L4b同源致同期虚高样本外归零、AS系ICI遮蔽（+ICI后t≈−3.33）而TWFE组内正向属不同口径——只披露、不重估、不翻转淘汰结论。</p>
+
+<h2>二、为什么改</h2>
+<table>
+<tr><th>证据</th><th>冲击</th></tr>
+<tr><td>污染季2025Q3均值+50.6%、2026Q2均值+74.8%（中位数+47.7%/+82.0%），800行；面板9974→9174</td><td>2025年均值虚高约12pp，全样本季均值虚高6–7pp，主回归与表3/10/12全被拉抬</td></tr>
+<tr><td>旧表12 4–10%/季异常Alpha（年化17–42%）违背常理；清洗后0.7–3.5%回归正常量级</td><td>“近乎完美单调+t=5.52彻底排除过拟合”不成立，须下调为“总体向上+倒挂+5%显著”</td></tr>
+<tr><td>旧2026收益+39.35% vs 超额+3.62%差35.73pp，而超额清洗前后同为3.62%（只平均Q1）</td><td>坐实旧表内口径分裂：收益平均6季脏数据、超额只平均5季，须统一为干净口径</td></tr>
+</table>
+
+<h2>三、怎么改的</h2>
+<ol>
+<li>表12逐单元格替换32处，源JSON键名与星号规则（***p&lt;.01/**p&lt;.05/*p&lt;.10）逐项核对，命中日志全OK。</li>
+<li>表3用面板同脚本口径（基金—年聚合+1%/99%缩尾）复算，仅替换2025/2026/全样本10格，2006–2024原样冻结；表注追加剔除说明。</li>
+<li>正文7段字符串替换，表4/6/7逐格比对冻结；i图3幅、公式12个原样保留。</li>
+</ol>
+
+<h2>四、结果怎么样</h2>
+<table>
+<tr><th>指标</th><th>结果</th></tr>
+<tr><td>结构</td><td>125段→<span class="new">129段</span>/12表/3图/12公式；<span class="ok">✓</span></td></tr>
+<tr><td>污染数字残留（正文）</td><td>4.30%/10.62%/+6.32/+10.45/+0.0604/t5.75/t4.44/t5.62/t6.35/+15.30/+39.35/+8.41：<span class="ok">全部0残留</span></td></tr>
+<tr><td>冻结项</td><td>表4/表6/表7逐格一致：<span class="ok">✓</span>；表3除3行外、表12外其余表不动</td></tr>
+<tr><td>结论变化</td><td>单调性→<span class="new">Q4倒挂非完美</span>；执行维度→<span class="new">死亡（t=0.58）</span>；R²→<span class="new">腰斩至10.96%</span>；全样本季均→<span class="new">1.96%/1.71%回归常态</span>；认知（t=4.98）与防守（t=3.05）依然坚挺</td></tr>
+</table>
+<div class="frozen"><b>仍冻结（未动）：</b>表4/6/7全部系数与N；Sortino/HM/L4b/AS估计值；图1–3图片；09-04原文件与09-05文字版。下轮如需全管线重跑（主回归剔污染季），另立新版。</div>
+
+<footer>基于：论文初稿_2026-09-05_文字规范版.docx ｜ 新版：论文初稿_2026-09-06_数据重估版.docx ｜ 本页：优化说明_2026-09-06_数据重估版.html ｜ 源数：output/样本外检验_2006_2024_2026.json ＋ output/分析面板_v3_2026-08-26.csv</footer>
+</body>
+</html>

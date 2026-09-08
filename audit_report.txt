@@ -1,0 +1,19 @@
+[P016 vs P019 sample filter]
+P016 says: 存续期不少于 11 个季度（近三年）
+P019 says: 存续不少于12个季度的362只基金
+Actual data: funds with >= 11 quarters = 362, funds with >= 12 quarters = 358.
+
+[P028 anchor_high beta]
+P028 says +0.09***, Table 4 says +0.09***
+
+[P030 timing t-values]
+P030 says t=+1.65 -> +4.91, Appendix 1 has +1.6* -> +4.9***
+
+[P039 dimension corr]
+Max=0.629 (风险应对与认知能力), Min=0.183 (风险转化与交易执行). Matches S2!
+
+[P063 vs P046 timing t-value]
+P046 says: 最能拉开差距的是“下行保护系数”（t=+5.40）[群体画像Top vs Bottom差异]
+P063 says: 下行保护的单指标区分度最高（t=5.19***）
+Note: t=5.19 is the univariate cross-section regression t-value (Table 5), while t=5.40 is the Top 5% vs Bottom 5% t-test (Table 7).
+

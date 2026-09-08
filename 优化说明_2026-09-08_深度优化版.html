@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>优化说明_2026-09-08_深度优化版</title>
+<style>
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;max-width:1080px;margin:0 auto;padding:24px;color:#1f2937;line-height:1.7;background:#fff}
+h1{font-size:24px;border-bottom:3px solid #0f766e;padding-bottom:10px}
+h2{font-size:19px;color:#0f766e;margin-top:32px;border-left:5px solid #0f766e;padding-left:10px}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+th,td{border:1px solid #cbd5e1;padding:8px 10px;vertical-align:top;text-align:left}
+th{background:#0f766e;color:#fff}
+tr:nth-child(even){background:#f0fdfa}
+.old{color:#b91c1c;background:#fef2f2;padding:1px 4px;border-radius:3px}
+.new{color:#15803d;background:#f0fdf4;padding:1px 4px;border-radius:3px}
+.meta{background:#f0fdfa;border:1px solid #5eead4;border-radius:8px;padding:14px 16px;margin:16px 0}
+.meta code{background:#ccfbf1;padding:1px 6px;border-radius:4px}
+.ok{color:#15803d;font-weight:700}
+footer{margin-top:36px;font-size:12.5px;color:#64748b;border-top:1px solid #e2e8f0;padding-top:12px}
+</style>
+</head>
+<body>
+<h1>《你是什么样的投资者？》优化说明 —— 深度优化版（2026-09-08）</h1>
+<div class="meta">
+<div><b>基于版本（只读）：</b><code>论文初稿_2026-09-07_深度优化版.docx</code></div>
+<div><b>本次新生成：</b><code>论文初稿_2026-09-08_深度优化版.docx</code>（133段/12表/3图/12公式；+版本附记1段）</div>
+<div><b>原始文件：</b>09-04/09-05/09-06/09-07全程未写入。</div>
+<div><b>本次性质：</b>5组文字precision修复，<b>所有表格数字与冻结结论零改动</b>（表3/表12干净值、表4/6/7原值逐格一致）。</div>
+</div>
+<h2>一、改了什么</h2>
+<table>
+<tr><th style="width:24%">位置</th><th>旧 → 新</th></tr>
+<tr><td>引言P3/数据P16/结论P81</td><td><span class="old">80个季度＋超额驱动行为</span> → <span class="new">80个自然季度（有效78季，已剔除2个污染季）＋超额关联行为</span>（3处统一）</td></tr>
+<tr><td>标题P75</td><td><span class="old">（三）长周期样本外检验</span> → <span class="new">（三）样本外检验（4个干净季度）</span>（4季度≠长周期）</td></tr>
+<tr><td>正文P48（同期五分组）</td><td><span class="old">预测效果直观显著…对未来业绩极强的穿透识别</span> → <span class="new">区分度直观显著…对同期业绩极强的识别与区分度（未来预测力见表12）</span></td></tr>
+<tr><td>结论P85（实战工具）</td><td><span class="old">可靠的实战工具——…交易执行意图…</span> → <span class="new">潜在参考——…止损果断性与跌市防守纪律（执行维度t=0.58已不显著）…</span></td></tr>
+<tr><td>因果动词P3/P79</td><td><span class="old">超额驱动／真正驱动未来业绩</span> → <span class="new">超额关联／与未来业绩关联最稳</span></td></tr>
+</table>
+<h2>二、为什么改</h2>
+<table>
+<tr><th>问题</th><th>证据</th></tr>
+<tr><td>80季度 stale</td><td>面板9974→9174（−800污染行）；有效季度74＋4＝78。P3/P16/P81仍写80，与P22注9174矛盾</td></tr>
+<tr><td>长周期夸大</td><td>干净OOS仅2025Q1/Q2/Q4＋2026Q1（1年），JSON样本外季度数=4。“长周期”名不副实</td></tr>
+<tr><td>同期称预测</td><td>图2/表10为全样本同期分档（综合分由全样本均值构造），非跨期预测；真预测只有表12（R²=2.01% vs 同期40%）</td></tr>
+<tr><td>P85执行重点＋可靠工具</td><td>干净样本L5单维t=0.58（p=0.56）、联立−1.12，Q4倒挂，联立R²=10.96%。“执行意图重点＋可靠工具”与数据正面冲突</td></tr>
+</table>
+<h2>三、怎么改的</h2>
+<ol>
+<li>只读09-07，8段字符串替换（日志8/8命中，含P79补丁1处），另存09-08；图片3幅、公式12个原样保留。</li>
+<li>数字冻结：表3/4/6/12与09-07逐格比对零差异。</li>
+<li>表5 timing截断（1.65→1.6*）核对JSON原值1.65，星号正确，属显示截断，数字冻结合规， substring “15.30”命中系2008年−15.30误报，已排除。</li>
+</ol>
+<h2>四、结果怎么样</h2>
+<table>
+<tr><th>指标</th><th>结果</th></tr>
+<tr><td>结构</td><td>131段→<span class="new">133段</span>/12表/3图/12公式；<span class="ok">✓</span></td></tr>
+<tr><td>旧措辞</td><td>长周期样本外、预测效果直观显著、可靠实战工具、交易执行意图、真正驱动、超额驱动、80个季度（无备注版）：<span class="ok">全部清零</span>；“有效78季”4命中＝正文3＋版本注1，符合预期</td></tr>
+<tr><td>冻结</td><td>表3/4/6/12数字区零差异：<span class="ok">✓</span></td></tr>
+<tr><td>遗留（需全管线重跑才能闭环）</td><td>表4联立−3.8 vs 表8全模型−3.06（N350/359）；表7与09-02 JSON 0.1–0.4漂移；t=5.40已核源库有值非幽灵；CFA引[1]专项缺口；图名互换</td></tr>
+</table>
+<footer>基于：论文初稿_2026-09-07_深度优化版.docx ｜ 新版：论文初稿_2026-09-08_深度优化版.docx ｜ 本页：优化说明_2026-09-08_深度优化版.html</footer>
+</body>
+</html>

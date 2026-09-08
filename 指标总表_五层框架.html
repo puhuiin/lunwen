@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基金经理行为指标总表（五层框架）</title>
+<style>
+  :root {
+    --bg: #f6f8fb;
+    --card: #ffffff;
+    --ink: #1a1c22;
+    --muted: #5c6470;
+    --line: #e3e8ef;
+    --accent: #8b5cf6;
+    --high: #dc2626;
+    --low: #2563eb;
+    --zero: #16a34a;
+    --l1: #3b82f6;
+    --l2: #8b5cf6;
+    --l3: #10b981;
+    --l4: #f59e0b;
+    --l5: #ef4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    padding: 28px 16px 48px;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; }
+  header { margin-bottom: 18px; }
+  h1 { font-size: 24px; letter-spacing: 1px; }
+  .sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  .logic {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+    margin: 14px 0 20px;
+    color: #333a46;
+  }
+  .logic b { color: var(--accent); }
+  .legend {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #92400e;
+    margin-bottom: 16px;
+    display: flex; gap: 18px; flex-wrap: wrap;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 13.5px;
+    box-shadow: 0 6px 24px rgba(30, 42, 62, .06);
+  }
+  thead th {
+    background: #22304a;
+    color: #fff;
+    font-weight: 600;
+    padding: 11px 12px;
+    text-align: left;
+    font-size: 13.5px;
+    letter-spacing: .3px;
+    line-height: 1.4;
+  }
+  tbody td {
+    padding: 11px 12px;
+    border-top: 1px solid var(--line);
+    vertical-align: top;
+  }
+  tbody tr:hover { background: #f4f8ff; }
+  .layer-cell {
+    text-align: center;
+    width: 78px;
+    border-right: 1px solid var(--line);
+    vertical-align: middle !important;
+  }
+  .badge {
+    display: inline-block;
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 18px;
+    white-space: nowrap;
+    line-height: 1.3;
+  }
+  .l1 { background: var(--l1); }
+  .l2 { background: var(--l2); }
+  .l3 { background: var(--l3); }
+  .l4 { background: var(--l4); }
+  .l5 { background: var(--l5); }
+  .ind { font-weight: 600; color: var(--ink); white-space: nowrap; line-height: 1.3; }
+  .ind .en { font-weight: 400; color: var(--muted); font-size: 11.5px; display: block; margin-top: 2px; }
+  .calc {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 12px; color: #2d3748;
+    background: #f2f5fa; padding: 6px 9px; border-radius: 6px;
+    display: inline-block; line-height: 1.5;
+  }
+  .dir { font-size: 13px; line-height: 1.6; }
+  .dir .tag {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 1px 7px; border-radius: 4px; margin: 1px 3px 1px 0;
+    color: #fff;
+  }
+  .tag.up { background: var(--high); }
+  .tag.down { background: var(--low); }
+  .tag.zero { background: var(--zero); }
+  .meaning { color: #3d4653; line-height: 1.65; font-size: 13px; }
+  .meaning .evid {
+    display: block; margin-top: 4px;
+    font-size: 12px; color: var(--muted);
+    border-left: 2px solid var(--accent); padding-left: 8px;
+  }
+  .meaning .warn {
+    display: block; margin-top: 3px;
+    font-size: 12px; color: #b45309;
+  }
+  .foot { color: var(--muted); font-size: 12.5px; margin-top: 16px; line-height: 1.6; }
+  @media (max-width: 1000px) {
+    .calc { font-size: 11px; }
+    table { font-size: 12.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>基金经理行为指标总表 —— 五层框架</h1>
+    <p class="sub">17 项行为指标：计算方式、取值方向与代表含义</p>
+  </header>
+
+  <div class="logic">
+    行为逻辑链：<b>禀赋塑造认知 → 认知驱动选择 → 选择决定风险应对 → 应对经交易执行落实到组合</b>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:var(--high)"></i> 标签含义：值越大</span>
+    <span><i class="dot" style="background:var(--low)"></i> 标签含义：值越小/越负</span>
+    <span><i class="dot" style="background:var(--zero)"></i> 标签含义：值接近0</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:78px; text-align:center;">层</th>
+        <th style="width:170px;">指标</th>
+        <th style="width:28%;">指标计算</th>
+        <th style="width:24%;">值的大小意味着什么</th>
+        <th>代表含义（经济解释 + 实证发现）</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- ========== L1 基本面层 ========== -->
+      <tr>
+        <td class="layer-cell" rowspan="3"><span class="badge l1">L1<br>基本面层</span></td>
+        <td class="ind">从业年限<span class="en">Manager Tenure</span></td>
+        <td><span class="calc">观测日 − 首次任职日（天数，取对数后入模）</span></td>
+        <td class="dir">
+          <span class="tag up">越大</span>管理年限越长<br>
+          <span class="tag down">越小</span>任职越短，越新手上任
+        </td>
+        <td class="meaning">
+          衡量经理的管理经验积累。理论上长期任职者经历过完整牛熊，经验更丰富，但也可能形成思维定式和路径依赖；新经理更灵活但缺乏熊市考验。<span class="evid">实证：单变量回归 FF5 下 t=+4.45*** 看似显著，但一旦控制规模和基金年龄，t 骤降至 +0.14（彻底不显著）——经验的"效应"其实是规模与年龄的代理。</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="ind">基金年龄<span class="en">Fund Age, ln</span></td>
+        <td><span class="calc">ln(基金存续月数)</span></td>
+        <td class="dir">
+          <span class="tag up">越大</span>基金存续越久<br>
+          <span class="tag down">越小</span>成立时间越短
+        </td>
+        <td class="meaning">
+          基金经受市场检验的时间长度。存续久的基金通常穿越了多个牛熊周期（"幸存者"），有品牌效应和更稳定的申赎来源；但时间长也常伴随规模膨胀、风格僵化。<span class="evid">实证：FF5 下 t=+3.60***（稳健显著），方向为正——老基金 alpha 更高，体现幸存者溢价。</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="ind">学历 / 院校 / CFA<span class="en">Education &amp; Credential</span></td>
+        <td><span class="calc">akshare 直接下载的分类变量（如博士/硕士、985/211、是否持CFA）</span></td>
+        <td class="dir">分类变量，非连续数值，无大小方向</td>
+        <td class="meaning">
+          反映经理的专业训练背景：高学历/名校出身意味着更系统的金融教育，CFA 代表通过国际标准化资质认证。<span class="warn">注意：本研究未对这些变量做独立回归检验，仅作为控制变量纳入，不能据此下"高学历就一定业绩好"的结论。</span>
+        </td>
+      </tr>
+
+      <!-- ========== L2 认知层 ========== -->
+      <tr>
+        <td class="layer-cell" rowspan="4"><span class="badge l2">L2<br>认知层</span></td>
+        <td class="ind">风险承担不对称<span class="en">Risk Asymmetry, RA</span></td>
+        <td><span class="calc">σ(盈利季收益) − σ(亏损季收益)<br>滚动 8 季窗口，min 4 季</span></td>
+        <td class="dir">
+          <span class="tag up">正值越大</span>盈利后比亏损后更激进，"赌资效应"越强<br>
+          <span class="tag down">负值越大</span>亏损后反而加仓，"回本效应"越强<br>
+          <span class="tag zero">=0</span>盈亏后风险偏好对称，无偏差
+        </td>
+        <td class="meaning">
+          度量经理在盈亏两种状态下的风险偏好变化，直接对应行为金融学中 Thaler-Johnson (1990) 的"赌资效应"——赚钱后把利润当"庄家的钱"敢于冒更大风险。这是整个研究中证据最硬的认知变量：<span class="evid">三因子口径 t=+8.11***、五因子口径 t=+4.65***、当前面板主表 M4 t=+5.55***，全规格显著且方向稳定为正。画像 A 级核心变量——唯一同时通过主表、风险调整口径（④⑤）、TM分解（选股渠道 t=+5.18***）与前向预测（fut4q β=0.571, t=30.4）全部检验的指标。注意：朴素（未风险调整）口径下其显著性依赖样本——老基金子样本 +0.10**、全样本不显著（附录 D-2），可靠信号集中在风险调整后。</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="ind">处置效应<span class="en">Disposition Effect, DE</span></td>
+        <td><span class="calc">DE = PGR − PLR<br>PGR = 盈利股中已卖出的比例<br>PLR = 亏损股中已卖出的比例<br>（Odean 1998 持仓快照法）</span></td>
+        <td class="dir">
+          <span class="tag up">正值越大</span>越倾向"卖赢持亏"——经典处置效应越强<br>
+          <span class="tag down">负值越大</span>越果断止损，"止损型"反处置<br>
+          <span class="tag zero">=0</span>买卖决策不受盈亏状态影响，完全理性
+        </td>
+        <td class="meaning">
+          处置效应是行为金融最经典的发现之一（Shefrin &amp; Statman 1985，Odean 1998）：投资者出于"损失厌恶+心理账户"倾向过早卖出盈利股、死扛亏损股。<span class="evid">实证：全样本 DE = −0.127，方向为负——中国主动权益基金经理整体表现出与散户相反的"果断止损"特征。单变量双口径 t≈−2.1~−2.6 显著，当前面板主表 M4 t=−2.70***（1%显著），且朴素DV五口径全部负显著（−0.05~−0.06***）、TM分解显示其损伤选股α（t=−2.85***）——B 级（全口径稳健的负向信号）。</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="ind">羊群效应<span class="en">Herding, LSV</span></td>
+        <td><span class="calc">|p<sub>j</sub> − p̄<sub>t</sub>| − E[|p<sub>j</sub> − p̄<sub>t</sub>|]<br>p<sub>j</sub> = 第 j 只股票买方比例<br>p̄<sub>t</sub> = 全市场买方平均比例<br>第二项为小样本修正（Lakonishok-Shleifer-Vishny 1992）</span></td>
+        <td class="dir">
+          <span class="tag up">正值越大</span>越倾向于和其他基金经理同向买卖，从众程度越高<br>
+          <span class="tag zero">=0</span>独立决策，无羊群行为<br>（LSV 定义下不出现负值）
+        </td>
+        <td class="meaning">
+          衡量经理在交易中跟随"同行共识"的程度。高 LSV 意味着"别人买我也买、别人卖我也卖"，可能是信息瀑布（真不知道该怎么选所以跟随）或职业担忧（和别人一起错不会被解雇，独立判断错了反而丢饭碗）。<span class="evid">实证（多口径对照，详见附录 D/D-2/F）：多数口径正显著（+0.10~+0.16***），但稳健性差——含 HHI 时降至 1.7*、组内FE回归（基金自身为对照）显示 −0.191 (t=−3.08***) 显著负。符号与显著性随识别口径、规格、样本波动，是全项目最脆弱的信号，定级 C，仅作画像辅助维度。</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="ind">追涨杀跌<span class="en">Return Chasing, RC</span><span class="badge" style="background:#e8f4e8;color:#2a6d2a;font-size:11px;margin-left:4px;">新增</span></td>
+        <td><span class="calc">RC = Spearman(Δw<sub>i</sub>, MOM<sub>i</sub>)<br>Δw = 个股持仓权重变动<br>MOM = 个股 12 月动量（跳过最近 1 月）<br>每基金-季度需 ≥10 只持仓</span></td>
+        <td class="dir">
+          <span class="tag up">正值越大</span>越倾向"追涨杀跌"——加仓前期强势股、减仓弱势股（代表性启发式）<br>
+          <span class="tag down">负值越大</span>逆势调仓、左侧交易<br>
+          <span class="tag zero">=0</span>调仓决策与个股动量无关
+        </td>
+        <td class="meaning">
+          度量经理的调仓是否被"近期涨跌幅"牵着走（Grinblatt-Titman-Wermers 1995 动量交易行为的中国持仓版）。与 DE 互补：<b>DE 量卖出端的"卖盈持亏"，RC 量买入端的"追高买入"</b>。<span class="evid">实证（2026-08-25 新增，附录 F-2）：覆盖率 53.5%，与全部旧指标相关性 &lt;0.10（信息独立）；同期主表 M4 不显著（t=+0.38），但前向预测显著负（β=−0.016, t=−2.08**，三新指标同入 t=−2.19**）——追涨杀跌不在当季显形，但系统性伤害下一季收益。定级 B−（前向信号），画像中作为纪律性维度第二成分（取负向计分）。</span>
+        </td>
+      </tr>
+
+      <!-- ========== L3 选择层 ========== -->
+      <tr>
+        <td class="layer-cell" rowspan="4"><span class="badge l3">L3<br>选择层</span></td>
+        <td class="ind">改进主动份额<span class="en">Active Share, AS</span></td>
+        <td><span class="calc">AS = ½ × Σ<sub>i</sub> |w<sub>基金,i</sub> − w<sub>基准,i</sub>|<br>基准 = 沪深300 + 中证500 合并成分股<br>取值范围：0 ~ 1</span></td>
+        <td class="dir">
+          <span class="tag up">越大（→1）</span>持仓与基准差异越大，主动管理程度越高<br>
+          <span class="tag down">越小（→0）</span>越接近复制基准指数，"伪主动"
+        </td>
+        <td class="meaning">
+          主动份额（Cremers &amp; Petajisto 2009）衡量基金组合偏离基准的程度。<b>值越大偏离越严重</b>——0 代表完全复制指数（纯被动），1 代表与基准零重叠（极致主动）。它回答的是"这个经理到底有没有在做主动选股"。<span class="evid">实证（2026-08-25 全文口径统一，此前多处表述矛盾的根源是 DV 口径不同）：<b>① 同期 FF5 alpha（主表口径）：</b>FF5 单变量 t=−3.34***、基金层横截面 t=−4.13***、主表 M4 t=−2.96***，系数为负——偏离基准越多，风险调整后 alpha 越低；<b>② 前向 4 季原始收益：</b>t=+12.7*** 显著为正——高偏离基金未来毛收益更高；<b>③ 朴素同期 DV：</b>不显著（附录 D）。三者并存、互不矛盾：AS 高 = 承担更多异质性风险暴露 → 毛收益（含风险溢价）更高，但剥离风险后的 alpha 为负——<b>"赚风险的钱、亏能力的钱"</b>。这与 Cremers &amp; Petajisto (2009) 美股"高 AS = 选股能力强"的结论相反，构成本研究的中国语境核心发现：<b>主动的方向（ICI 为正）优于主动的量（AS 为负）</b>。画像与结论统一以风险调整口径为准。</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="ind">行业集中度<span class="en">Industry Concentration, ICI</span></td>
+        <td><span class="calc">ICI = Σ<sub>i</sub> (w<sub>行业,i</sub> − w<sub>市场,i</sub>)²<br>w<sub>市场</sub> = 全市场各行业市值权重</span></td>
+        <td class="dir">
+          <span class="tag up">越大</span>在某些行业上的超额配置越重，行业押注越集中<br>
+          <span class="tag zero">=0</span>行业权重与市场完全一致，无行业偏离
+        </td>
+        <td class="meaning">
+          ICI（Kacperczyk-Sialm-Zheng 2005）衡量基金<b>在行业维度上的方向性押注</b>——它和 AS 不同：AS 看个股层面的整体偏离，ICI 专门看行业层面的"偏离"。<b>ICI 越大意味着越敢集中重仓少数几个行业</b>。<span class="evid">实证：单变量 FF5 口径 t=+1.20 不显著（被同维度的 HHI/AS 稀释），但全指标控制下信号显形——当前面板主表 M4 t=+4.70***，朴素DV五口径全部正显著（+0.02~+0.04***）；TM 择时分解中对择时收益 t=+2.84***（控制变量不含 industry_hhi，避免同类过度控制）——行业押注的 alpha 主要来自择时渠道而非选股（选股α上 ICI 不显著，t=−1.62）。</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="ind">行业分散度<span class="en">Industry HHI</span></td>
+        <td><span class="calc">HHI = Σ<sub>i</sub> w<sub>i</sub>²（各行业权重平方和）<br>取值范围：1/N ~ 1（N 为行业数）</span></td>
+        <td class="dir">
+          <span class="tag up">→1</span>几乎把全部仓位押在单一行业，极致集中<br>
+          <span class="tag down">→1/N</span>各行业均匀配置，高度分散
+        </td>
+        <td class="meaning">
+          HHI（赫芬达尔-赫希曼指数）是产业组织学中经典的集中度度量，这里直接套用到基金行业配置上。<b>HHI 越大越集中（把鸡蛋放一个篮子），越小越分散</b>。与 ICI 的区别是：ICI 是"相对市场"的偏离，HHI 是"看自己"的绝对集中——即便一个基金偏离市场，只要它在多个行业上均衡下注，HHI 也可以很小。<span class="evid">实证：所有口径下均不显著，作为 ICI 的对照/稳健性指标使用。</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="ind">行业风格漂移<span class="en">Industry Style Drift, ISDI</span></td>
+        <td><span class="calc">ISDI = Σ<sub>g</sub> |w<sub>g,t</sub> − w<sub>g,t−1</sub>|<br>w<sub>g</sub> = 高/中/低beta行业组持仓权重<br>分组：31个申万一级行业按Beta<br>（与市场涨跌幅相关性）三分</span></td>
+        <td class="dir">
+          <span class="tag up">越大</span>高beta（进攻）与低beta（防御）行业间轮动越频繁<br>
+          <span class="tag zero">=0</span>行业风格配置完全稳定
+        </td>
+        <td class="meaning">
+          ISDI 与 SDI（风格漂移指数）同构但互补：<b>SDI 基于净值回归看"结果风格"，ISDI 基于实际持仓映射看"配置行为"</b>——把每期重仓股按行业弹性（行业与市场涨跌幅的Beta相关性，数据源：申万一级行业弹性评分）归入高弹性（电子/电力设备/通信等11个）、中弹性（食品饮料/非银等10个）、低弹性（银行/煤炭/公用事业等10个）三组，计算相邻报告期三组权重向量的曼哈顿距离。两者相关性仅 −0.05，信息独立。<span class="evid">实证：FF5 单变量 t=−4.15***，主表 M4 t=−2.78***（与 SDI 同入时 t=−2.60***，互不吞噬），朴素DV面板口径全部负显著——行业轮动越频繁，风险调整后收益越差，行业择时整体是负和博弈；但基金层横截面不显著（t=−1.02），提示其为时变行为信号而非基金间固定特质。</span>
+        </td>
+      </tr>
+
+      <!-- ========== L4 风险应对层 ========== -->
+      <tr>
+        <td class="layer-cell" rowspan="3"><span class="badge l4">L4<br>风险应对层</span></td>
+        <td class="ind">调仓收益<span class="en">Active Return Gap, ARG</span></td>
+        <td><span class="calc">ARG = Σ<sub>t</sub> |RG<sub>t</sub>|<br>RG<sub>t</sub> = 当期实际净值收益<br>　　　　− 上期披露持仓模拟的收益<br>加总绝对缺口（Kacperczyk et al. 2008）</span></td>
+        <td class="dir">
+          <span class="tag up">越大</span>披露持仓与实际净值差异越大，期间隐藏行动越密集<br>
+          <span class="tag zero">=0</span>持仓完全解释收益，期间没有调仓或隐性交易
+        </td>
+        <td class="meaning">
+          "收益缺口"方法是 Kacperczyk-Sialm-Zheng (2008) 提出的经典技巧：基金每季度披露一次持仓，但两次披露之间它可以随时买卖——<b>披露持仓模拟出来的收益和真实净值的差，就是两次披露之间"看不见的交易"留下的痕迹</b>。ARG 越大，经理在季度内调仓/短线操作/交易衍生品等未披露行动越密集。<span class="evid">实证（2026-08-25 复核，全口径方向一致为正，详见附录）：朴素DV口径 β=+0.23 (t=10.0)***，主表 M4 β=+0.018 (t=2.96)***，基金层横截面 β=+0.067 (t=3.0)***，组内FE β=+0.224 (t=13.8)***；TM分解中对选股α t=+6.12***、对择时贡献不显著（t=−1.05）——调仓的alpha来自选股渠道而非择时。注意：系数从朴素口径到FF5口径缩至约1/10，提示其中相当部分是风险承担成分，但风险调整后信号未消失。</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="ind">收益波动率<span class="en">Return Volatility, RV</span></td>
+        <td><span class="calc">RV = stdev(季度超额收益)<br>滚动 8 期窗口计算</span></td>
+        <td class="dir">
+          <span class="tag up">越大</span>季度收益起伏越大，组合整体风险越高<br>
+          <span class="tag down">越小</span>收益越平稳，风险越低
+        </td>
+        <td class="meaning">
+          最经典的综合风险度量，把选股、择时、仓位调整、行业暴露等所有风险来源一网打尽。<b>波动率大意味着净值上蹿下跳，投资者持有体验差、赎回风险高</b>；波动率小代表净值平稳。<span class="evid">实证（详见附录D）：朴素DV口径强正（β=+0.39, t=7.9***），但FF5季调口径归零（t=0.86）、主表M4不显著——朴素口径的"预测力"是风险承担伪装（风险暴露的回报），波动率本身不独立解释业绩差异；TM分解中高波动还损伤选股α（t=−2.11**）。</span><span class="warn">局限：RV 只回答"承担了多少风险"，回答不了"风险有没有换来收益"——无转化维度，故 2026-08-25 起其画像职能由 sharpe8_lag（风险转化效率）接替，RV 保留为风险水平参照指标。</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="ind">风险转化效率<span class="en">Lagged Sharpe, sharpe8_lag</span><span class="badge" style="background:#e8f4e8;color:#2a6d2a;font-size:11px;margin-left:4px;">新增</span></td>
+        <td><span class="calc">sharpe8_lag = mean(r−r<sub>f</sub>) / std(r−r<sub>f</sub>)<br>滚动 8 季窗口（min 4 季）<br>整体滞后 1 期（截至上季末）</span></td>
+        <td class="dir">
+          <span class="tag up">越大</span>单位风险换来的收益越高，"把风险转化为收益"的效率越高<br>
+          <span class="tag down">越小/为负</span>承担了风险却没换来收益，转化失效
+        </td>
+        <td class="meaning">
+          原 RV 只度量"承担了多少风险"（分母），sharpe8_lag 把分子（赚了多少超额收益）补上，直接度量<b>风险 → 收益的转化效率</b>。窗口整体滞后一季（shift(1)），与当季 DV 无机械重叠（与当季收益相关仅 0.087）。<span class="evid">实证（2026-08-25 新增，附录 F-2）：主表 M4 同一样本（N=2,842）β=+0.017, t=+9.11***，增量 R² +5.2pp（0.153→0.205），覆盖率 100%；三新指标同入 R²=0.224。前向口径 −7.90***（业绩反转）——故定位为<b>能力的事后度量</b>而非预测因子，替代 RV 承担画像中"风险转化力"维度的计分职能。备选 sortino8_lag（下行偏差口径）覆盖仅 44%、t=+1.61 不显著，仅作稳健性附注。</span><span class="warn">复核（2026-08-25）：主表 DV（FF5 季调 alpha）在 362/约400 只基金内为常数，使表观 t=+9.11 含基金层机械关联，不作证据强度依据；<b>分半样本外检验（前半段夏普 → 后半段 FF5 alpha，窗口不相交，N=355）t=+2.63***，R²=0.105</b>，确认多年期技能成分真实存在；同期当季收益口径呈 −5.75*** 反转（牛市 −10.04***，"冠军魔咒"），纯特质信息比率 ir8_lag 样本内外均负（−3.06***/−2.89***）。证据等级：<b>样本外验证的多年期技能信号</b>。</span>
+        </td>
+      </tr>
+
+      <!-- ========== L5 交易执行层 ========== -->
+      <tr>
+        <td class="layer-cell" rowspan="3"><span class="badge l5">L5<br>交易执行层</span></td>
+        <td class="ind">风格漂移指数<span class="en">Style Drift Index, SDI</span></td>
+        <td><span class="calc">用基金季度收益对<b>巨潮风格四宫格指数</b>做滚动 8 季 OLS 回归<br>→ 得到每期在四风格上的暴露权重（非负归一化）<br>→ 相邻两期权重向量的曼哈顿距离<br>四指数：399372 大盘成长 / 399373 大盘价值 / 399376 小盘成长 / 399377 小盘价值</span></td>
+        <td class="dir">
+          <span class="tag up">越大</span>投资风格跨期切换越剧烈（这季大盘价值，下季小盘成长）<br>
+          <span class="tag zero">=0</span>风格完全不变，始终如一
+        </td>
+        <td class="meaning">
+          SDI（Wermers 2012 风格分析）衡量经理的<b>策略一致性</b>。有些经理宣称"坚持价值投资"但净值风格大幅摇摆，SDI 就能捕捉这种"嘴上说一套、交易做另一套"。<b>SDI 大说明风格飘移严重</b>——可能是经理灵活调整适应市场，也可能是没有稳定投资框架。回归采用巨潮标准四宫格指数（399372/399373/399376/399377），非负权重归一化后计算相邻期曼哈顿距离。<span class="evid">实证（详见附录C）：FF5 单变量 t=+2.56**（正），但主表 M4（占据 ISDI 槽位时）转为 t=−1.66*（10%边际负），与 ISDI 同入 t=−1.86*——符号随规格翻转且始终过不了 5% 线，降级为 ISDI 的稳健性对照。</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="ind">换手率<span class="en">Turnover, TO</span></td>
+        <td><span class="calc">TO = (买入总额 + 卖出总额) / (2 × 平均净资产)<br>双边口径（非单边 min(B,S)）</span></td>
+        <td class="dir">
+          <span class="tag up">越大</span>交易越频繁，持有期越短<br>
+          <span class="tag down">越小</span>买入后长期持有，"买入并持有"型
+        </td>
+        <td class="meaning">
+          换手率是最基础的交易活跃度指标。<b>TO 越大意味着经理越爱交易</b>，每次买卖都要付佣金、印花税、冲击成本（大单买卖把价格推高/打压）——这些摩擦直接吃掉 alpha。理论上存在一个最优换手率（交易创造的信息价值刚好覆盖交易成本），过高就是过度交易。<span class="evid">实证：方向和显著性在 FF3/FF5 之间剧烈反转（+2.49** → −0.01），极不稳定——换手率本身受基金规模强烈影响，不能单独解释业绩。</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="ind">过度交易指数<span class="en">Over-trading Index, OCI</span></td>
+        <td><span class="calc">OCI = (TO<sub>t</sub> − TŌ<sub>经理自身</sub>) / σ(TO<sub>经理自身</sub>)<br>即当期换手率相对自身历史均值的 z-score</span></td>
+        <td class="dir">
+          <span class="tag up">正值越大</span>比自己平时交易频率明显更高——"这阵子特别爱操作"<br>
+          <span class="tag down">负值越大</span>比自己平时更冷静——"这阵子在观望"<br>
+          <span class="tag zero">=0</span>换手率等于自身平均水平，正常操作
+        </td>
+        <td class="meaning">
+          OCI 是在 TO 基础上的"经理内标准化"，解决了 TO 最致命的可比性问题：不同策略的经理本身基线换手率不同（高频量化 vs 深度价值），直接比 TO 不公平。<b>OCI 剥离了经理的"策略性基线换手"，只看他比自己平时多做了多少</b>——正值代表异常活跃、可能是情绪化交易，负值代表异常克制。<span class="evid">实证：在全指标模型中作为辅助变量，与 TO 高度共线。</span>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <p class="foot">
+    共 17 项指标（L1 基本面 3 项 · L2 认知 4 项 · L3 选择 4 项 · L4 风险应对 3 项 · L5 交易执行 3 项；2026-08-25 新增 RC 与 sharpe8_lag）。<br>
+    实证口径：主表 = M4-b 全指标面板（DV=FF5 季度风险调整收益，基金聚类 SE，N=2,884，见附录）；显著性标注 *** p&lt;0.01 / ** p&lt;0.05 / * p&lt;0.10；画像定级 A = RA / sharpe8_lag（后者经 2026-08-25 分半样本外检验 +2.63*** 复核定级），B = DE / ICI / ARG / AS / ISDI，B−（前向信号）= RC，C（口径依赖）= LSV，其余落榜。<br>
+    注：所有"值越大/越小"的方向解读均基于指标的标准定义方向，不代表"大就是好"——好坏需结合系数符号与经济解释判断（如 AS 越大越主动，但实证系数为负，说明"越主动越差"）。
+  </p>
+
+  <style>
+    .appx { margin-top: 46px; }
+    .appx h2 { font-size: 21px; letter-spacing: .5px; margin: 0 0 6px; padding-top: 26px; border-top: 3px solid var(--accent); }
+    .appx h3 { font-size: 16.5px; margin: 28px 0 6px; color: #1f2a37; }
+    .appx p.desc { font-size: 13.2px; color: var(--muted); margin: 6px 0 12px; line-height: 1.8; }
+    .appx table { font-size: 12.6px; margin: 10px 0 6px; }
+    .appx .cap { font-size: 12px; color: var(--muted); margin: 0 0 16px; }
+    .appx .fbx {
+      background: #f8fafc; border: 1px solid var(--line); border-left: 4px solid var(--accent);
+      border-radius: 8px; padding: 10px 14px; font-family: Consolas, "Courier New", monospace;
+      font-size: 12.3px; line-height: 1.95; color: #26324a; margin: 10px 0 14px; white-space: pre-wrap;
+    }
+    .sp  { color: #dc2626; font-weight: 700; }  /* 正显著（提升业绩） */
+    .sn  { color: #16a34a; font-weight: 700; }  /* 负显著（拖累业绩） */
+    .sns { color: #94a3b8; }                    /* 不显著 */
+    .appx .verdict {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #16a34a;
+      border-radius: 8px; padding: 12px 16px; font-size: 13.4px; line-height: 1.85; margin: 14px 0;
+    }
+    .appx .warnbox {
+      background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #d97706;
+      border-radius: 8px; padding: 10px 14px; font-size: 12.8px; line-height: 1.8; margin: 12px 0;
+    }
+    .appx .gloss {
+      background: #eef2ff; border: 1px solid #c7d2fe; border-left: 4px solid #6366f1;
+      border-radius: 8px; padding: 12px 16px; font-size: 12.8px; line-height: 1.9; margin: 12px 0 20px;
+    }
+    .appx .gloss > b { color: #4338ca; display: block; margin-bottom: 6px; }
+    .appx .g2 { columns: 2; column-gap: 26px; }
+    .appx .g2 p { break-inside: avoid; margin: 0 0 4px; color: #3d4653; }
+    .appx .g2 b { color: #4338ca; }
+    .appx .tip { color: #0f766e; font-size: .93em; }
+    @media (max-width: 900px) { .appx .g2 { columns: 1; } }
+  </style>
+
+  <section class="appx">
+    <h2>附录 · 实证回归全景：我们做过哪些回归、结果如何、最终以什么为准</h2>
+    <p class="desc">
+      更新：2026-08-25。除注明"旧面板"外，全部基于当前主分析面板（主分析面板_重建_含TOwind.csv，含 ISDI 与修正后 SDI，剔除坏季度 2025Q3 / 2026Q2-Q3）。
+      所有 RHS 连续变量经 1%/99% 缩尾；面板回归标准误按基金聚类（R5 年度面板为 CGM2011 基金×年双向聚类）。
+      显著性标注：*** p&lt;0.01 / ** p&lt;0.05 / * p&lt;0.10，数值格式 β (t)。
+      可复现脚本：scripts/_m1m4_isdi_20260825.py、scripts/_naive5cal_sdi_20260825.py；结果 JSON 见 output/ 目录。
+    </p>
+
+    <h3>A · 回归族总览：八类回归构成一条证据链</h3>
+    <table>
+      <thead><tr><th>#</th><th>回归</th><th>设定要点</th><th>回答的问题</th><th>在证据链中的角色</th></tr></thead>
+      <tbody>
+        <tr><td>R1</td><td>FF3 / FF5 单变量筛选</td><td>每指标单独 → α</td><td>谁有独立信号（海选）</td><td>入场券</td></tr>
+        <tr><td>R2</td><td><b>M1-M4 递进面板</b></td><td>控制变量逐层加至全指标</td><td>控制混淆后每个行为的净效应</td><td><b>主表（M4-b ISDI 版）</b></td></tr>
+        <tr><td>R3</td><td>SDI / ISDI 对照</td><td>M4-a 仅SDI / M4-b 仅ISDI / M4-c 同入</td><td>漂移的度量方式是否影响结论</td><td>主表定版依据</td></tr>
+        <tr><td>R4</td><td>朴素 DV 五口径</td><td>DV 换 5 种收益定义</td><td>真技能还是风险承担伪装</td><td>稳健性 + 机制</td></tr>
+        <tr><td>R5</td><td>TM 择时分解（batch3）</td><td>两步法拆"选股 α / 择时贡献"</td><td>alpha 从哪个渠道来</td><td>机制</td></tr>
+        <tr><td>R6</td><td>组内 FE 回归（R6）</td><td>基金自身为对照（within）</td><td>基金内时序渠道是否成立</td><td>稳健性（旧面板）</td></tr>
+        <tr><td>R7</td><td>前向预测回归</td><td>行为 → 未来 1 / 4 季收益</td><td>画像有无前瞻预测力</td><td>应用价值（旧面板）</td></tr>
+        <tr><td>R8</td><td>FF3 / FF4 / FF5 口径切换</td><td>DV 换因子模型</td><td>结论是否依赖因子模型选择</td><td>规格敏感性（淘汰 TO）</td></tr>
+      </tbody>
+    </table>
+    <p class="cap">附表1　逻辑链：R1 海选 → R2 定主结论 → R3/R4/R8 从度量、口径、因子模型三个方向围攻主结论 → R5/R6/R7 解释结论的机制、识别与应用。</p>
+
+    <h3>B · 主表：M1-M4 递进面板（DV = FF5 季度风险调整收益）</h3>
+    <div class="fbx">M1:  FF5α_it = β0 + β1·x_k,it + γ·lnAUM_it + ε_it                        // 单指标裸回归，无FE
+M2:  M1 + Σδu·Year_u                                                    // 加年度固定效应
+M3:  M2 + γ2·Tenure_it + γ3·lnFundAge_it                                // 加经理/产品特征
+M4:  FF5α_it = β0 + Σ(9个行为指标) + 3特征控制 + Σδu·Year_u + ε_it        // 全指标互为控制（主表）
+     下标 i=基金, t=季度；SE 按基金聚类</div>
+    <table>
+      <thead><tr><th>指标</th><th>M1 b (t)</th><th>M2 b (t)</th><th>M3 b (t)</th><th>M4 b (t)</th><th>跨规格解读</th></tr></thead>
+      <tbody>
+        <tr><td>RA 风险不对称</td><td class="sp">+0.038 (6.14)***</td><td class="sp">+0.069 (7.88)***</td><td class="sp">+0.063 (7.36)***</td><td class="sp">+0.078 (5.55)***</td><td>全规格最强，无衰减</td></tr>
+        <tr><td>ICI 行业集中</td><td class="sp">+0.021 (5.14)***</td><td class="sp">+0.022 (5.46)***</td><td class="sp">+0.020 (4.90)***</td><td class="sp">+0.021 (4.70)***</td><td>全规格稳定正</td></tr>
+        <tr><td>ARG 调仓收益</td><td class="sp">+0.033 (5.91)***</td><td class="sp">+0.033 (5.79)***</td><td class="sp">+0.024 (4.53)***</td><td class="sp">+0.018 (2.96)***</td><td>衰减但存活</td></tr>
+        <tr><td>LSV 羊群</td><td class="sp">+0.022 (3.35)***</td><td class="sp">+0.022 (3.56)***</td><td class="sp">+0.016 (2.76)***</td><td class="sp">+0.023 (1.97)**</td><td>边缘正（5%线）</td></tr>
+        <tr><td>ISDI 行业漂移</td><td class="sn">−0.008 (−3.53)***</td><td class="sn">−0.009 (−4.15)***</td><td class="sn">−0.007 (−3.40)***</td><td class="sn">−0.005 (−2.78)***</td><td>全规格负显著</td></tr>
+        <tr><td>DE 处置效应</td><td class="sn">−0.006 (−3.48)***</td><td class="sn">−0.007 (−3.60)***</td><td class="sn">−0.007 (−3.42)***</td><td class="sn">−0.006 (−2.70)***</td><td>全规格稳定负</td></tr>
+        <tr><td>RV 波动率</td><td class="sp">+0.022 (2.01)**</td><td class="sp">+0.036 (2.63)***</td><td class="sp">+0.038 (2.76)***</td><td class="sns">+0.016 (0.86)</td><td>单独显著、M4 消失（借光型）</td></tr>
+        <tr><td>AS 主动份额</td><td class="sns">−0.005 (−1.16)</td><td class="sns">−0.002 (−0.47)</td><td class="sns">−0.001 (−0.32)</td><td class="sn">−0.028 (−2.96)***</td><td>M1-M3 全零、M4 显形（压制效应）</td></tr>
+        <tr><td>TO 换手率</td><td class="sns">≈0 (0.95)</td><td class="sns">≈0 (0.89)</td><td class="sns">≈0 (1.01)</td><td class="sns">≈0 (1.38)</td><td>全规格死亡</td></tr>
+        <tr><td>log_fund_age（控制）</td><td>—</td><td>—</td><td>—</td><td class="sn">−0.003 (−2.54)**</td><td>老基金略差</td></tr>
+        <tr><td>mgr_tenure / log_aum（控制）</td><td>—</td><td>—</td><td>—</td><td class="sns">≈0 (1.24) / ≈0 (0.99)</td><td>经验与规模中性</td></tr>
+      </tbody>
+    </table>
+    <p class="cap">附表2　M1-M4 递进（M1-M3 每行一个独立回归；M4 为全指标同入，N=2884，R²=0.158）。两类典型形态：RV 是"借光型"（单独显著、全指标后消失——其信号实为 ARG/ICI 的风险承担通道）；AS 是"压制型"（与 ICI/换手正相关导致单独回归时信号被遮掩，控制后显形）。</p>
+
+    <h3>C · SDI vs ISDI：漂移槽位为什么换人</h3>
+    <table>
+      <thead><tr><th>规格</th><th>漂移指标系数</th><th>N</th><th>R²</th><th>结论</th></tr></thead>
+      <tbody>
+        <tr><td>M4-a（仅 SDI）</td><td class="sns">SDI −0.0026 (−1.66)*</td><td>2,264</td><td>0.129</td><td>仅 10% 边际显著，过不了 5% 线</td></tr>
+        <tr><td><b>M4-b（仅 ISDI，主表）</b></td><td class="sn"><b>ISDI −0.0050 (−2.78)***</b></td><td><b>2,884</b></td><td><b>0.158</b></td><td>1% 显著，样本多 28%，R² 更高</td></tr>
+        <tr><td>M4-c（两者同入）</td><td>SDI −0.0029 (−1.86)* / ISDI −0.0045 (−2.60)***</td><td>2,264</td><td>0.132</td><td>互不吞噬，各自系数稳定</td></tr>
+      </tbody>
+    </table>
+    <p class="cap">附表3　两者 Pearson 相关仅 −0.049（Spearman −0.032），VIF：SDI 1.70 / ISDI 2.53，无共线性。SDI（净值回归反推的"结果风格"）降级为稳健性对照，ISDI（实际持仓映射的"配置行为"）进入主表——与五层框架"可观察行为"的叙事一致。SDI 要求 8 季滚动窗口（烧掉前 2 年数据），ISDI 只需相邻两期持仓，故样本量更大。</p>
+
+    <h3>D · 朴素 DV 五口径压力测试：真技能 vs 风险承担伪装</h3>
+    <p class="desc">同一 M4-b 规格（9 行为指标 + 3 控制 + 年度 FE，基金聚类 SE），只换左边因变量——从"什么都不剥"到"剥到只剩行为 alpha"，逐层剥离风险成分：</p>
+    <table>
+      <thead><tr><th>口径</th><th>DV 定义</th><th>剥掉了什么</th><th>N / R²</th></tr></thead>
+      <tbody>
+        <tr><td>① 纯收益</td><td>quarter_return</td><td>无——基金赚多少算多少</td><td>2,899 / 0.371</td></tr>
+        <tr><td>② vs 市场</td><td>基金 − 市场季度收益（MKT_excess + rf）</td><td>市场整体涨跌</td><td>2,899 / 0.326</td></tr>
+        <tr><td>③ vs 同侪</td><td>基金 − 同期全样本均值</td><td>同行共同涨跌（市场 + 风格行业共同成分）</td><td>2,899 / 0.148</td></tr>
+        <tr><td><b>④ FF5 季调（主口径）</b></td><td>ff5_adj_return</td><td>市场 / 规模 / 价值 / 盈利 / 投资五因子暴露</td><td>2,884 / 0.158</td></tr>
+        <tr><td>⑤ 基金层横截面</td><td>各变量取基金内均值（between 维度）</td><td>基金内时序噪音</td><td>362 / 0.273</td></tr>
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th>指标</th><th>① 纯收益</th><th>② vs 市场</th><th>③ vs 同侪</th><th>④ FF5 季调</th><th>⑤ 基金层</th><th>定性（结合新旧两版规格）</th></tr></thead>
+      <tbody>
+        <tr><td>DE 处置效应</td><td class="sn">−0.052 (−5.66)***</td><td class="sn">−0.063 (−7.03)***</td><td class="sn">−0.052 (−6.37)***</td><td class="sn">−0.006 (−2.70)***</td><td class="sn">−0.051 (−3.23)***</td><td><b>全口径稳健真信号</b>（新旧规格、任意子样本均显著）</td></tr>
+        <tr><td>ARG 调仓收益</td><td class="sp">+0.229 (9.98)***</td><td class="sp">+0.188 (8.45)***</td><td class="sp">+0.159 (7.94)***</td><td class="sp">+0.018 (2.96)***</td><td class="sp">+0.067 (2.99)***</td><td><b>全口径稳健正</b>，系数缩至 1/10（含风险承担成分）</td></tr>
+        <tr><td>ISDI 行业漂移</td><td class="sn">−0.024 (−3.10)***</td><td class="sn">−0.024 (−3.18)***</td><td class="sn">−0.025 (−3.78)***</td><td class="sn">−0.005 (−2.78)***</td><td class="sns">−0.012 (−1.02)</td><td>面板全口径负；基金层横截面弱 → 时变行为信号</td></tr>
+        <tr><td>RA 风险不对称</td><td class="sns">+0.044 (1.11)</td><td class="sns">+0.001 (0.03)</td><td class="sns">+0.031 (0.87)</td><td class="sp">+0.078 (5.55)***</td><td class="sp">+0.119 (2.77)***</td><td><b>风险调整后稳健</b>（④⑤恒显著）；朴素口径样本依赖（老基金子样本 +0.10**，全样本 ns）</td></tr>
+        <tr><td>ICI 行业集中</td><td class="sp">+0.019 (1.97)**</td><td class="sp">+0.026 (2.82)***</td><td class="sp">+0.027 (3.12)***</td><td class="sp">+0.021 (4.70)***</td><td class="sp">+0.036 (3.48)***</td><td><b>风险调整后稳健</b>（④恒显著）；朴素口径规格依赖（HHI 在场时被吸收，见 D-2）</td></tr>
+        <tr><td>AS 主动份额</td><td class="sns">−0.018 (−0.84)</td><td class="sns">−0.021 (−1.03)</td><td class="sns">−0.000 (−0.01)</td><td class="sn">−0.028 (−2.96)***</td><td class="sn">−0.079 (−4.13)***</td><td><b>仅风险调整后显形</b>（"伪主动"负贡献，新旧规格一致）</td></tr>
+        <tr><td>LSV 羊群</td><td class="sp">+0.098 (2.70)***</td><td class="sp">+0.164 (4.65)***</td><td class="sp">+0.129 (3.72)***</td><td class="sp">+0.023 (1.97)**</td><td class="sp">+0.146 (2.77)***</td><td>口径依赖（本表多数正显著，但含 HHI 时降至 1.7*，组内FE 为负）→ 脆弱信号</td></tr>
+        <tr><td>RV 波动率</td><td class="sp">+0.385 (7.86)***</td><td class="sp">+0.331 (7.23)***</td><td class="sp">+0.265 (6.06)***</td><td class="sns">+0.016 (0.86)</td><td class="sp">+0.103 (2.03)**</td><td><b>风险承担伪装</b>：朴素口径强、FF5 后消失（新旧规格一致）</td></tr>
+        <tr><td>TO 换手率</td><td class="sp">≈0 (4.20)***</td><td class="sp">≈0 (4.21)***</td><td class="sp">≈0 (3.44)***</td><td class="sns">≈0 (1.38)</td><td class="sns">≈0 (−0.16)</td><td>系数恒为零量级，无经济含义（新旧规格一致）</td></tr>
+      </tbody>
+    </table>
+    <p class="cap">附表4　五口径对比（2026-08-25，新规格：9 指标含 ISDI、无 HHI，N=2,899/2,884/362）。注：面板自带 excess_return 列与 quarter_return 完全相同（未扣减），故②口径由 MKT_excess + rf 构造市场季度收益后相减；⑤口径为各变量取基金内均值的横截面回归（HC1 稳健 SE），与早期版本"逐基金时序回归 α"口径不同，不可直接对比。</p>
+
+    <h3>D-2 · 新旧两版结果为何不同（同样本对照实验）</h3>
+    <p class="desc">早期版本五口径表（RA+0.10**、ICI/LSV 不显著的"纯收益"列）用的是<b>旧规格：SDI+HHI 都在模型里、且受 SDI 的 8 季滚动窗限制，样本只有 N=2,264（老基金子样本）</b>；上表新规格用 ISDI、去掉 HHI、样本扩到 N=2,899。为分离三个因素的影响，在同一子样本（N=2,264）上做四格对照：</p>
+    <table>
+      <thead><tr><th>变量（DV=①纯收益）</th><th>A: ISDI版<br>无HHI（新规格）</th><th>B: SDI版<br>无HHI</th><th>C: SDI+HHI<br>（旧表规格）</th><th>D: ISDI+HHI</th></tr></thead>
+      <tbody>
+        <tr><td>RA 风险不对称</td><td class="sp">+0.104 (2.3)**</td><td class="sp">+0.101 (2.1)**</td><td class="sp">+0.094 (2.0)**</td><td class="sp">+0.099 (2.1)**</td></tr>
+        <tr><td>LSV 羊群</td><td class="sp">+0.105 (2.7)***</td><td class="sp">+0.094 (2.3)**</td><td class="sns">+0.070 (1.7)*</td><td class="sp">+0.083 (2.1)**</td></tr>
+        <tr><td>ICI 行业集中</td><td class="sns">+0.009 (0.9)</td><td class="sp">+0.019 (2.0)**</td><td class="sns">+0.002 (0.2)</td><td class="sns">−0.008 (−0.7)</td></tr>
+        <tr><td>HHI 行业集中(绝对)</td><td>—</td><td>—</td><td class="sp">+0.332 (3.9)***</td><td class="sp">+0.321 (3.7)***</td></tr>
+        <tr><td>ISDI / SDI</td><td class="sn">−0.030 (−3.9)***</td><td class="sp">+0.020 (3.5)***</td><td class="sp">+0.020 (3.4)***</td><td class="sn">−0.029 (−3.8)***</td></tr>
+      </tbody>
+    </table>
+    <p class="cap">附表4b　同样本（N=2,264，ISDI∩SDI∩HHI 全非缺失）四规格对照。三个结论：① <b>SDI↔ISDI 替换本身对 RA/LSV/ICI 影响很小</b>（A vs B）；② <b>HHI 是 ICI 的"抢功者"</b>——HHI(+0.33***)与 ICI 度量同一件事（行业集中），HHI 在场时 ICI 的朴素口径信号被完全吸收（B→C：2.0** 变 0.2），所以旧表 ICI 朴素口径不显著、新表显著；③ <b>朴素口径下 RA 的显著性是样本依赖的</b>——同样规格在老基金子样本（本表 N=2,264）+0.10**，在全样本（附表4 的 N=2,899）+0.04 ns，说明 RA 的朴素口径信号集中在有较长历史的基金上。</p>
+    <div class="warnbox">
+      <b>这张表（结合 D-2 对照）证明了两件事：</b>① <b>必须做因子调整</b>——只看朴素收益会误以为"高波动基金厉害"（RV ①口径 t=7.86，④口径归零，新旧规格一致），那只是风险暴露的回报；② <b>真正经得起全部规格与样本折腾的朴素口径信号只有 DE 和 ARG</b>（ARG 含风险承担成分、系数缩 10 倍）；RA / ICI / AS 的可靠信号集中在<b>风险调整后</b>的口径（④⑤），其朴素口径表现随样本构成（老基金 vs 全样本）与规格（HHI 是否在场）波动——这也是为什么主表必须以 FF5 季调为主 DV。
+    </div>
+
+    <h3>E · TM 择时分解（batch3）：alpha 从选股来还是从择时来</h3>
+    <div class="fbx">第一步（基金-年，日频 TM 回归，窗口=当年+前一年，需≥200个日观测）：
+  r_i,d − r_f,d = α_TM + β1·MKT_d + β2·MKT_d² + ε_d
+  选股α = α_TM（年化）          择时贡献 = β2 × mean(MKT²) × 252（β2&gt;0 = 凸性择时能力）
+
+第二步（基金-年面板，N=1,351，170只基金，2021-2025）：
+  DV ∈ {选股α, 择时贡献, FF5总α参照} ~ 11个行为/控制变量 + 年度FE
+  SE：CGM2011 基金×年双向聚类；RHS 不含 industry_hhi（与 ICI 同类，避免过度控制）</div>
+    <table>
+      <thead><tr><th>指标</th><th>DV1 选股 α</th><th>DV2 择时贡献</th><th>DV3 总 α（参照）</th><th>结论</th></tr></thead>
+      <tbody>
+        <tr><td>RA 风险不对称</td><td class="sp">+0.821 (5.18)***</td><td class="sns">−0.040 (−0.34)</td><td class="sp">+0.101 (3.34)***</td><td>alpha 全部来自<b>选股</b></td></tr>
+        <tr><td>ARG 调仓收益</td><td class="sp">+0.191 (6.12)***</td><td class="sns">−0.024 (−1.05)</td><td class="sp">+0.014 (2.59)***</td><td>alpha 来自<b>选股</b>（隐藏交易≈盘中选股）</td></tr>
+        <tr><td>ICI 行业集中</td><td class="sns">−0.133 (−1.62)</td><td class="sp">+0.158 (2.84)***</td><td class="sp">+0.021 (3.95)***</td><td>alpha 来自<b>择时</b>（行业押注=行业轮动判断）</td></tr>
+        <tr><td>DE 处置效应</td><td class="sn">−0.079 (−2.85)***</td><td class="sns">+0.026 (1.61)</td><td class="sns">−0.004 (−1.04)</td><td>损伤<b>选股</b>（死扛输家拖垮组合）</td></tr>
+        <tr><td>RV 波动率</td><td class="sn">−0.436 (−2.11)**</td><td class="sns">+0.391 (1.53)</td><td class="sns">−0.035 (−1.39)</td><td>高波动伤选股，无择时补偿</td></tr>
+        <tr><td>LSV / AS / TO</td><td class="sns">t&lt;0.5</td><td class="sns">t&lt;1.9</td><td class="sns">t&lt;1.6</td><td>两渠道均不显著</td></tr>
+      </tbody>
+    </table>
+    <p class="cap">附表5　TM 分解（控制变量含 log_aum / log_fund_age / tenure）。机制结论：RA 与 ARG 赚的是"选股的钱"，ICI 赚的是"择时的钱"，DE 亏的是"选股的钱"。该回归为基金-年频率（TM 第一步需要长日频窗口），样本与主表（基金-季度）不同，作机制解释而非主证据。</p>
+
+    <h3>F · 其他辅助回归</h3>
+    <table>
+      <thead><tr><th>回归</th><th>设定</th><th>关键结果</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td>R6 组内 FE（旧面板，N=2,668）</td><td>(y_it − ȳ_i) = Σβ(x_it − x̄_i) + 年度FE，DV=quarter_return</td><td>ARG +0.342 (10.70)***、RG +0.202 (11.68)***、RV +0.900 (8.52)***、DE −0.026 (−3.27)***、RA +0.064 (0.97) ns、<b>LSV −0.191 (−3.08)***</b></td><td>基金内时序渠道：ARG/RV/DE 双口径成立；RA 仅为基金间特质；LSV 与面板正号冲突 → 口径依赖</td></tr>
+        <tr><td>R7 前向预测（旧面板）</td><td>行为 → 未来 4 季收益</td><td>RA β=0.571 (t=30.4)***</td><td>画像有前瞻预测力，可直接用于选经理</td></tr>
+        <tr><td>R8 因子口径切换</td><td>DV 换 FF3 / FF4 / FF5</td><td>RA：FF3 +8.11*** / FF5 +4.65***（稳）；<b>TO：FF3 +2.49** → FF5 −0.01（翻车）</b>；AS FF5 −3.34***；ISDI FF5 单变量 −4.15***；SDI FF5 +2.56**</td><td>规格敏感性筛选：TO 被淘汰的直接证据</td></tr>
+        <tr><td>ARG-RV 内部结构诊断</td><td>纯相关 + 双向预测</td><td>Pearson +0.023（R²=0.05%）、Spearman −0.005；分年相关方向翻转（2020-22 负 / 2023-25 正）；RV_t+1 ~ ARG_t+RV_t：+0.041 (10.45)***</td><td>两指标无稳定线性关系，属不同维度（L4 内不构成传导链）</td></tr>
+      </tbody>
+    </table>
+    <p class="cap">附表6　"旧面板"指风格指数修正与 ISDI 构建之前的主分析面板_重建.csv（N=2,668），定性结论与当前面板一致，数值不作主口径。</p>
+
+    <h3>F-2 · 2026-08-25 新增指标：风险转化（sharpe8_lag）与认知层（RC）</h3>
+    <p class="desc">动机：① L2 认知层指标不足，需新增；② RV 只度量风险水平、无转化维度，"风险转化能力"需重新找指标。候选集：sharpe8 / sortino8（滚动 8 季夏普/索提诺，及滞后版）、rc_mom（追涨杀跌）、oc_conf（过度自信，Gervais-Odean 2001）、MAX（彩票偏好，因个股日行情 2018 年起覆盖受限未入列）。筛选标准：覆盖率、同期主表显著性、前向预测、与旧指标的信息独立性。</p>
+    <table>
+      <thead><tr><th>回归</th><th>设定</th><th>关键结果</th><th>结论</th></tr></thead>
+      <tbody>
+        <tr><td>M4 + sharpe8（含当季窗口）</td><td>主表 M4-b + sharpe8</td><td>+7.78***</td><td>初步信号强，但滚动窗口含当季收益、与 DV 存在部分机械重叠 → 改用滞后版重测</td></tr>
+        <tr><td><b>M4 + sharpe8_lag（最终口径）</b></td><td>窗口整体滞后 1 期（shift(1)，截至上季末），N=2,842</td><td class="sp"><b>β=+0.0170, t=+9.11***</b>；R² 0.153→0.205（<b>+5.2pp</b>）；覆盖 100%；与当季收益相关仅 0.087</td><td>季度级机械重叠已排除；但 2026-08-25 复核发现 DV 基金层常数化（362/约400 只基金 ff5_adj_return 基金内无逐季变异）在基金层面重新引入机械关联——表观 t=+9.11 不作证据强度依据，需样本外检验定级（见下行复核行）</td></tr>
+        <tr><td><b>sharpe8_lag 技能 vs 运气剥离（复核）</b></td><td>每只基金分半：前半段滚动夏普 → 后半段 FF5 alpha（窗口不相交，OLS+HC3，N=355）</td><td class="sp"><b>样本外 +0.0555, t=+2.63***，R²=0.105</b>；Pearson 0.267 / Spearman 0.140</td><td>多年期技能成分为真，证据等级定为<b>样本外验证的多年期技能信号</b>；同期当季收益口径 −5.75***（牛市 −10.04*** / 熊市 −1.71*）呈"冠军魔咒"式反转；纯特质信息比率 ir8_lag 样本内 −3.06***、样本外 −2.89*** 均负（呼应伪主动/closet indexing 主题）</td></tr>
+        <tr><td>M4 + sortino8_lag</td><td>下行偏差口径（仅惩罚负超额）</td><td class="sns">+1.61 ns（N=1,828，覆盖 44%）</td><td>覆盖与显著性全面落后，仅作稳健性附注</td></tr>
+        <tr><td>M4 + rc_mom（同期）</td><td>主表 M4-b + RC，覆盖 53.5%</td><td class="sns">+0.38 ns</td><td>当季不显形</td></tr>
+        <tr><td>rc_mom 前向预测</td><td>RC_t → 下季 FF5 收益</td><td class="sn"><b>β=−0.0162, t=−2.08**</b>（三新同入 t=−2.19**）</td><td>追涨杀跌系统性伤害下一季收益 → 纪律性维度第二成分（取负）</td></tr>
+        <tr><td>rc_mom 前向衰减（2026-08-25 复核）</td><td>RC_t → 前向 1Q / 2Q / 4Q 累计收益（M4 规格，基金聚类）</td><td class="sn">1Q −0.14 ns、2Q −0.06 ns、<b>4Q 累计 −0.0483 (−3.46)***</b></td><td>衰减呈"慢变量"形态：单季不显形、年度级显著负——慢性行为拖累，与 de 的即期负显著互补，支撑纪律性维度取 z(−rc_mom) 的方向设定</td></tr>
+        <tr><td>oc_conf 前向预测（备选）</td><td>Δ换手率 × I(上季盈利)，依赖 TO_wind</td><td class="sn">−3.97***（仅约 200 只基金）</td><td>方向符合过度自信假说，但覆盖受限，留作备选待数据扩展</td></tr>
+        <tr><td>三新同入</td><td>M4-b + sharpe8_lag + rc_mom + oc_conf</td><td>R²=0.224</td><td>三指标信息互补，无相互吞噬</td></tr>
+        <tr><td>sharpe8_lag 前向</td><td>sharpe8_lag_t → 下季收益</td><td class="sn">−7.90***</td><td>业绩反转：定位为<b>能力的事后度量</b>（画像计分用），不作预测因子</td></tr>
+      </tbody>
+    </table>
+    <p class="cap">附表7　新增指标筛选全景（2026-08-25）。最终入库：<b>sharpe8_lag</b>（L4 风险转化效率，替代 RV 的画像职能）与 <b>rc_mom</b>（L2 追涨杀跌，纪律性维度成分）。OCI_two_sided（基金内标准化换手）同期与前向均不显著，放弃。</p>
+
+    <h3>G · 最终以什么为准</h3>
+    <div class="verdict">
+      <b>主口径：M4-b 全指标面板</b>——DV = FF5 季度风险调整收益（1%/99% 缩尾），9 个行为指标 + 经验/基金年龄/规模 + 年度 FE，标准误按基金聚类，N = 2,884，R² = 0.158；加入 sharpe8_lag 后（N=2,842 同口径）R² = 0.205。<br><br>
+      <b>七个显著行为信号</b>（按 |t| 排序）：<span class="sp">sharpe8_lag +0.017（表观 t=9.11***，含 DV 基金层常数化机械成分；样本外 +2.63***）</span>、<span class="sp">RA +0.078 (5.55)***</span>、<span class="sp">ICI +0.021 (4.70)***</span>、<span class="sp">ARG +0.018 (2.96)***</span>、<span class="sn">AS −0.028 (−2.96)***</span>、<span class="sn">ISDI −0.005 (−2.78)***</span>、<span class="sn">DE −0.006 (−2.70)***</span>；LSV +0.023 (1.97)** 边缘；RC 同期不显著但前向 −2.08**（前向 4 季累计 −3.46***）。<br><br>
+      <b>口径一致性声明（2026-08-25）：</b>AS 的全部结论统一按 DV 口径表述——同期 FF5 alpha 显著为负（主表口径）、前向原始毛收益显著为正（风险暴露回报）、朴素同期不显著；三者是同一事实的三个侧面，互不矛盾，任何位置引用时必须注明口径。<br><br>
+      <b>定级（证据链综合）：</b><br>
+      · <b>A 级 = RA、sharpe8_lag</b>：RA 唯一通过全部检验——主表最强（+5.55***）、五口径 ④⑤ 显著、TM 分解定位选股渠道（+5.18***）、组内 FE 之外仍有前向预测力（β=0.571, t=30.4），涨时敢冲跌时缩手的经理系统性跑赢；sharpe8_lag 覆盖 100%，经 2026-08-25 分半样本外检验确认多年期技能成分（<b>t=+2.63***，R²=0.105</b>），为风险转化力的事后度量（前向反转属业绩均值回归，不构成画像障碍）；其主表表观 t=+9.11*** 含 DV 基金层常数化机械成分，仅作参考，证据等级以样本外检验为准。<br>
+      · <b>B 级 = DE、ICI、ARG、AS、ISDI</b>：主表 1% 显著且至少通过一条辅助验证——DE 新旧全规格全口径负显著+TM 伤选股（五口径检验中最稳的行为信号）；ICI 风险调整口径恒显著+朴素口径依赖 HHI 是否在场（D-2）+TM 定位择时渠道；ARG 新旧全规格正显著（含风险承担成分，系数随口径缩至 1/10）+TM 选股渠道+组内 FE 成立；AS 风险调整后显形的"伪主动"负贡献（④⑤ 双显著，新旧一致）；ISDI 面板全口径负显著（横截面弱提示其为时变轮动信号）。<br>
+      · <b>B− 级（前向信号）= RC</b>：同期不显形，前向 −2.08** 稳定负、前向 4 季累计 −3.46***（慢变量行为拖累）——追涨杀跌伤害未来业绩，作纪律性维度成分。<br>
+      · <b>C 级（口径依赖）= LSV</b>：多数口径正显著，但含 HHI 时降至 1.7*、组内 FE 为显著负（−0.191***）——符号与显著性随识别口径、规格、样本波动，全项目最脆弱的信号，只作画像辅助维度。<br>
+      · <b>落榜/降级 = TO、RV、SDI、HHI</b>：TO 全规格死亡（FF3→FF5 翻车）；RV 朴素口径的"预测力"是风险承担伪装（④口径归零），画像职能由 sharpe8_lag 接替；SDI 降为 ISDI 的稳健性对照（方向一致但仅 10% 显著）；HHI 与 ICI 同类不显著，作对照。<br><br>
+      <b>为什么 FF5 季调做主 DV：</b>朴素口径会把风险承担误读为技能（RV 在①口径 t=7.86***、④口径归零是最直接的证据）；且朴素口径下多数指标的显著性随样本构成与规格波动（RA/ICI/LSV，见附录 D-2 对照实验），只有 DE 与 ARG 在新旧所有规格下均稳健。因子调整不是锦上添花，而是把"谁在冒险"和"谁有本事"分开、并让结论不随规格翻转的必要手段。
+    </div>
+  </section>
+</div>
+</body>
+</html>

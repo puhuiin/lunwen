@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>优化说明_2026-09-07_深度优化版</title>
+<style>
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;max-width:1080px;margin:0 auto;padding:24px;color:#1f2937;line-height:1.7;background:#fff}
+h1{font-size:24px;border-bottom:3px solid #0f766e;padding-bottom:10px}
+h2{font-size:19px;color:#0f766e;margin-top:32px;border-left:5px solid #0f766e;padding-left:10px}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+th,td{border:1px solid #cbd5e1;padding:8px 10px;vertical-align:top;text-align:left}
+th{background:#0f766e;color:#fff}
+tr:nth-child(even){background:#f0fdfa}
+.old{color:#b91c1c;background:#fef2f2;padding:1px 4px;border-radius:3px}
+.new{color:#15803d;background:#f0fdf4;padding:1px 4px;border-radius:3px}
+.meta{background:#f0fdfa;border:1px solid #5eead4;border-radius:8px;padding:14px 16px;margin:16px 0}
+.meta code{background:#ccfbf1;padding:1px 6px;border-radius:4px}
+.ok{color:#15803d;font-weight:700}
+footer{margin-top:36px;font-size:12.5px;color:#64748b;border-top:1px solid #e2e8f0;padding-top:12px}
+</style>
+</head>
+<body>
+<h1>《你是什么样的投资者？》优化说明 —— 深度优化版（2026-09-07）</h1>
+<div class="meta">
+<div><b>基于版本（只读）：</b><code>论文初稿_2026-09-06_数据重估版.docx</code></div>
+<div><b>本次新生成：</b><code>论文初稿_2026-09-07_深度优化版.docx</code>（131段/12表/3图/12公式；+版本附记1段）</div>
+<div><b>原始文件：</b>09-04原稿、09-05文字版、09-06重估版全程未写入。</div>
+<div><b>本次性质：</b>标签与措辞 precision 修复，<b>表3/表12干净数字与表4/6/7冻结数字零改动</b>；Yi Xie保留源库拼音（背景缺失），不虚构中文名。</div>
+</div>
+
+<h2>一、改了什么（9组）</h2>
+<table>
+<tr><th style="width:22%">位置</th><th>旧 → 新</th></tr>
+<tr><td>表5首列头+表注</td><td><span class="old">超额收益（对沪深300）</span> → <span class="new">超额收益（减rf）</span>；注追加“第一列为减季度无风险利率的超额（非沪深300超额）”。数字区零动。</td></tr>
+<tr><td>P20样本代表性</td><td><span class="old">有效基金数稳步扩张…杜绝样本选择偏差</span> → <span class="new">2015年后稳步扩张（2006–2014不足10只、2006–2010每年仅1只，仅供参照）…降低了单一行情依赖</span></td></tr>
+<tr><td>P55-AS裁决</td><td><span class="old">横截面显著为负（t=-3.06）…受规模驱动…三证俱在予以剔除</span> → <span class="new">全模型中显著为负（单变量t=-0.26不显著）…加规模仍不显著（t=-0.65），遮蔽来自ICI；第六道+0.0233/t=+1.91*为正向显著，与淘汰方向相反，本版暂保留剔除</span>（数字全引自表8，未重估）</td></tr>
+<tr><td>P40主方程</td><td>追加 <span class="new">（联立口径不含三控制，见表6注，方程γ项仅用于单维对照）</span>，消解方程与表6“不叠加控制”矛盾</td></tr>
+<tr><td>表2锚定行</td><td><span class="old">预期“负”</span> → <span class="new">“预期负/实证正”</span>＋理由补“（实证β=+0.09***，见表4；机制待重塑）”，与LSV行“经典负/实证正”体例对齐</td></tr>
+<tr><td>表3注</td><td>删 stale<span class="old">“数字暂不动，第二步重算”</span>；<span class="old">“2026年仅含前两季；数据重估版”</span> → <span class="new">“2026年原仅含前两季；数据重估版”</span></td></tr>
+<tr><td>P31经济显著性</td><td><span class="old">吞噬年化超额2.2%（占季度均值约四分之一）</span> → <span class="new">吞噬季度超额约0.54pp（占季度均值约四分之一，年化约2.2%）</span>，ICI/Sharpe同步补季度口径</td></tr>
+<tr><td>Top空格</td><td><span class="old">Top5%/Bottom5%（P62/表8/表9）</span> → <span class="new">Top 5%/Bottom 5%</span>，与摘要P3统一</td></tr>
+<tr><td>参考文献[33]</td><td><span class="old">李志冰, 杨光艺, 冯永昌, 景亮.</span> → <span class="new">李志冰, 杨光艺, 冯永昌, 等.</span>（GB/T 7714四作者规范；[12]工作论文、[27]e0316932已合规不动）</td></tr>
+</table>
+
+<h2>二、为什么改</h2>
+<table>
+<tr><th>问题</th><th>证据</th></tr>
+<tr><td>表5首列虚假标签</td><td><code>06_因变量.py:181</code>实为<code>quarter−rf</code>；表3已澄清，表5遗漏，属同一口径事故的残留</td></tr>
+<tr><td>P20夸大代表性</td><td>表3前5年每年N=1，2014年前不足10只；“稳步扩张/杜绝偏差”与数据矛盾</td></tr>
+<tr><td>P55三处失实</td><td>表8单变量t=-0.26（n.s.）vs全模型-3.06；加控制-0.65仍n.s.（规模驱动无据）；R06 +1.91*正向显著反淘汰，“三证俱在”虚假</td></tr>
+<tr><td>方程与估计脱节</td><td>方程含6维+3控制，表6注“联立不叠加控制”（Dim1即三变量镜像，直接共线），须文字澄清而非改公式</td></tr>
+<tr><td>表2锚定单边预期</td><td>P31已认实证为正，表2仍单写“负”，与LSV“经典负/实证正”体例冲突</td></tr>
+<tr><td>P31年度/季度混用</td><td>0.54%/季÷均值2.03%/季≈1/4；“年化2.2%占季度均值1/4”分子分母错配</td></tr>
+</table>
+
+<h2>三、怎么改的</h2>
+<ol>
+<li>只读09-06，字符串/单元格替换15处（日志全命中），另存09-07；图片3幅、公式12个、样式原样保留。</li>
+<li>数字冻结：表3/表12干净值与表4/6/7原值逐格比对，零差异（表5仅改头注、数字格原样）。</li>
+<li>Yi Xie核对源库 <code>画像_典型经理_2026-08-26.csv / 画像_全样本能力表_2026-08-26.csv</code> 原生即拼音且背景NaN，忠实保留，特此说明不算错。</li>
+</ol>
+
+<h2>四、结果怎么样</h2>
+<table>
+<tr><th>指标</th><th>结果</th></tr>
+<tr><td>结构</td><td>129段→<span class="new">131段</span>/12表/3图/12公式；<span class="ok">✓</span></td></tr>
+<tr><td>旧措辞残留</td><td>对沪深300（表5头）、三证俱在、杜绝偏差、暂不动第二步重算、年化占季度、Top5%无空格、景亮全列：<span class="ok">全部清零</span>（“仅含前两季；数据重估版”1命中为新句“原仅含…”的子串，系校验子串过短的误报）</td></tr>
+<tr><td>冻结</td><td>表3/4/6/7/12数字区与09-06逐格一致：<span class="ok">✓</span></td></tr>
+<tr><td>遗留（需线下定夺，不在本文改）</td><td>表4联立−3.8*** vs 表8全模型−3.06***（N=350/359）口径差；表7与09-02 JSON的0.1–0.4系统漂移；CFA引[1]的专项文献缺口；图名与正文图号互换——已记入审稿备忘，不动数字无法闭环</td></tr>
+</table>
+
+<footer>基于：论文初稿_2026-09-06_数据重估版.docx ｜ 新版：论文初稿_2026-09-07_深度优化版.docx ｜ 本页：优化说明_2026-09-07_深度优化版.html</footer>
+</body>
+</html>

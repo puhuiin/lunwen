@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>优化说明_2026-09-10_因子补齐版</title>
+<style>
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;max-width:1080px;margin:0 auto;padding:24px;color:#1f2937;line-height:1.7;background:#fff}
+h1{font-size:24px;border-bottom:3px solid #0e7490;padding-bottom:10px}
+h2{font-size:19px;color:#0e7490;margin-top:32px;border-left:5px solid #0e7490;padding-left:10px}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+th,td{border:1px solid #cbd5e1;padding:8px 10px;vertical-align:top;text-align:left}
+th{background:#0e7490;color:#fff}
+tr:nth-child(even){background:#ecfeff}
+.old{color:#b91c1c;background:#fef2f2;padding:1px 4px;border-radius:3px}
+.new{color:#15803d;background:#f0fdf4;padding:1px 4px;border-radius:3px}
+.meta{background:#ecfeff;border:1px solid #67e8f9;border-radius:8px;padding:14px 16px;margin:16px 0}
+.meta code{background:#cffafe;padding:1px 6px;border-radius:4px}
+.ok{color:#15803d;font-weight:700}
+footer{margin-top:36px;font-size:12.5px;color:#64748b;border-top:1px solid #e2e8f0;padding-top:12px}
+</style>
+</head>
+<body>
+<h1>《你是什么样的投资者？》优化说明 —— 因子补齐版（2026-09-10）</h1>
+<div class="meta">
+<div><b>基于版本（只读）：</b><code>论文初稿_2026-09-09_双源验证版.docx</code></div>
+<div><b>本次新生成：</b><code>论文初稿_2026-09-10_因子补齐版.docx</code>（143段/12表/3图/12公式；+因子补齐说明+敏感性附注+版本说明）</div>
+<div><b>原始文件：</b>09-04至09-09全程未写入；另新增数据文件各1份（见三）。</div>
+<div><b>范围扩展声明：</b>接力提示词原定09-10仅含T3注1句＋敏感性附注；因全网搜索到同源因子，本版一并落入因子补齐＋6季度OOS（一次讲清，避免再版）。</div>
+</div>
+
+<h2>一、全网搜索与因子补齐（为什么能补、怎么补的）</h2>
+<table>
+<tr><th>环节</th><th>事实</th></tr>
+<tr><td>缺口</td><td>既有 <code>FF5月度因子.csv</code> 止于2026-03（375行），缺2026-04/05/06三月致2026Q2六因子全NaN、超额全NaN</td></tr>
+<tr><td>全网搜索（agent-reach/Exa）</td><td>BetaPlus <code>factorwar.com/data/factor-models</code> 提供FF五因子月度免费下载，截至2026-06-30，附2023/09算法文档（年度换仓、4月底主板断点、OP=营业利润/净资产、INV=总资产增长）</td></tr>
+<tr><td>同源验证</td><td>375个月重叠 <span class="new">六因子逐格完全一致（corr=1.0、最大差0）</span>——既有文件即BetaPlus经典算法旧 vintage，新 vintage 无缝拼接</td></tr>
+<tr><td>落盘（新文件，原文件未动）</td><td><code>指标计算流水线/data/FF因子/FF5月度因子_补2026Q2_2026-09-10.csv</code>（378行）＋英文名provenance侧记录；2026Q2季度加总（与06脚本同逻辑月求和）：MKT+0.069835、SMB−0.081153、HML−0.239980、RMW−0.073634、CMA−0.166671、RF+0.002350</td></tr>
+<tr><td>超额口径</td><td>2026Q2超额=季度收益−rf，rf沿管线惯例取FF3常数0.0025（与BetaPlus季度RF 0.00235同量级）；FF3文件本身止于2026Q1，rf常数故无缝</td></tr>
+<tr><td>面板补丁（新文件）</td><td><code>output/分析面板_v3_2026Q2补因子_2026-09-10.csv</code>（9974行；仅填2026Q2共400行的6因子＋超额，其余逐格不变；2026Q1 future_return早已齐全）→ 2026行超额 <span class="new">+39.10%</span>、全样本超额 <span class="new">+8.16%</span>（分母统一）</td></tr>
+<tr><td>未动事项</td><td>基金层alpha（因子缺失季本就排除在回归之外）、样本内贝塔（窗口止于2024Q4）、表4/6/7全部估计</td></tr>
+</table>
+
+<h2>二、改了什么（表12切6季度＋正文同步）</h2>
+<table>
+<tr><th>位置</th><th>09-09（5季度） → 09-10（6季度，源<code>output/样本外检验_2006_2024_2026Q2_6Q.json</code>，脚本<code>scripts/_oos_validation_20260910_6Q.py</code>）</th></tr>
+<tr><td>表12分组</td><td>异常 <span class="old">4.30→10.62</span>→<span class="new">7.76→19.94</span>；原始 <span class="old">9.73→14.43</span>→<span class="new">16.60→27.05</span>；组间差 <span class="old">+6.32 t5.52／+4.69 t5.31</span>→<span class="new">+12.17 t9.13***／+10.45 t8.57***</span>，双口径严格单调</td></tr>
+<tr><td>表12回归</td><td>综合 <span class="old">+0.0604 t5.75 R²9.43%</span>→<span class="new">+0.1228 t9.21*** R²17.64%</span>；L1 <span class="old">+6.35/+4.03</span>→<span class="new">+11.59***/+5.80***</span>；L2 <span class="old">+4.44/+4.17</span>→<span class="new">+1.75*/+2.16**</span>；L3 −1.38/−1.77*→+0.81/+0.02；L4a →<span class="new">+8.44***/+3.88***</span>；L4b <span class="old">−1.24/−0.46</span>→<span class="new">−5.85***/−3.18***</span>；L5 →<span class="new">+9.86***/+3.61***</span>；R² <span class="old">11.46%/19.84%</span>→<span class="new">26.41%/37.35%</span></td></tr>
+<tr><td>P75/P76/P78</td><td>5季度 → <span class="new">6季度（2026Q2因子已补，分母统一）</span></td></tr>
+<tr><td>P79/P84/P85</td><td>三发现、L1、结论同步6Q口径：逼空季中<span class="new">年轻小规模、积极交易与披露外调仓占优，认知纪律边际贡献被稀释；低波动绩优者系统性跑输；实战重点转小而新＋执行＋防守，夏普样本外为负不宜单用</span></td></tr>
+<tr><td>表3</td><td>2026超额 <span class="old">+3.62%（仅Q1）</span>→<span class="new">+39.10%</span>；全样本超额 <span class="old">+4.42%</span>→<span class="new">+8.16%</span>；注改分母统一说明（含T3行分母披露句一并落地）</td></tr>
+<tr><td>新增附注</td><td>因子补齐说明＋剔2026Q2敏感性附注（裸回归18项全不变；加控制17/18，SDI −2.12**→−1.81*；联立R² .7141→.7153，16/18不变，Sharpe失5%、波动率稳定性获5%，ARG/风险不对称增强；Y端本就排除该季、纯X端隔离）＋版本说明</td></tr>
+</table>
+
+<h2>三、结果怎么样</h2>
+<table>
+<tr><th>指标</th><th>结果</th></tr>
+<tr><td>结构</td><td>137段→<span class="new">143段</span>/12表/3图/12公式；<span class="ok">✓</span></td></tr>
+<tr><td>旧口径残留</td><td>5季度/OOS排除2026Q2/4Q数字（0.70%/+2.78/+3.39%/+1.96%）：正文表格 <span class="ok">清零</span>（仅版本日志引用历史）</td></tr>
+<tr><td>冻结</td><td>表4/6/7与09-09逐格一致；表3除2格超额外逐格一致：<span class="ok">✓</span></td></tr>
+<tr><td>如实记录的不适结论</td><td>6Q下认知单维仅10%、L4b显著为负——已写入正文，不回避</td></tr>
+<tr><td>遗留</td><td>tushare基金权限、iFinD新鲜token；表4/表8口径差等需全管线重跑项不变</td></tr>
+</table>
+
+<footer>基于：论文初稿_2026-09-09_双源验证版.docx ｜ 新版：论文初稿_2026-09-10_因子补齐版.docx ｜ 本页：优化说明_2026-09-10_因子补齐版.html</footer>
+</body>
+</html>

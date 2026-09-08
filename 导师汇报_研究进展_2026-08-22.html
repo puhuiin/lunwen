@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>研究进展汇报 · 基金经理行为分析研究 · 2026-08-22</title>
+<style>
+  body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;max-width:960px;margin:24px auto;padding:0 20px;color:#222;line-height:1.7;background:#fafafa;}
+  h1{font-size:26px;border-bottom:3px solid #1a5276;padding-bottom:8px;color:#1a5276;}
+  h2{font-size:20px;color:#1a5276;margin-top:32px;border-left:5px solid #1a5276;padding-left:10px;}
+  h3{font-size:16px;color:#2874a6;margin-top:20px;}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px;background:#fff;}
+  th{background:#1a5276;color:#fff;padding:7px 9px;text-align:left;}
+  td{border:1px solid #d5d8dc;padding:6px 9px;vertical-align:top;}
+  tr:nth-child(even){background:#f4f6f7;}
+  .tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:bold;}
+  .A{background:#d5f5e3;color:#186a3b;} .C{background:#fdebd0;color:#9c640c;} .Z{background:#eaecee;color:#566573;} .W{background:#fadbd8;color:#943126;}
+  .box{background:#fff;border:1px solid #d5d8dc;border-radius:8px;padding:12px 16px;margin:14px 0;}
+  .warn{border-left:5px solid #c0392b;background:#fdf2f0;}
+  .ok{border-left:5px solid #27ae60;background:#f0faf4;}
+  .info{border-left:5px solid #2471a3;background:#f0f6fb;}
+  code{background:#eee;padding:1px 5px;border-radius:3px;font-size:13px;}
+  .small{font-size:12.5px;color:#666;}
+  ul{margin:6px 0;}
+</style>
+</head>
+<body>
+
+<h1>基金经理行为分析研究 · 进展汇报</h1>
+<p class="small">汇报日期：2026-08-22 ｜ 主稿件：merged_manuscript.html（v4 权威口径）｜ 主面板：9,974 基金-季度 × 51 列，400 只主动偏股混合基金，2006Q2–2026Q2</p>
+
+<h2>一、我们在研究什么</h2>
+<div class="box info">
+<b>核心研究问题：</b>在控制"谁在管理、持有什么、怎么交易、怎么控风险"等全部可观测行为之后，<b>认知偏差类行为指标（处置效应 DE、交易趋同 LSV、风险不对称 RA）能否独立预测基金超额业绩（FF5 alpha）</b>？并在此基础上构建经理行为画像。
+</div>
+
+<h3>五层分析架构（L1→L5 嵌套，M0→M4 逐层检验增量解释力）</h3>
+<table>
+<tr><th>层</th><th>回答的问题</th><th>代表指标</th></tr>
+<tr><td><b>L1 经理背景</b></td><td>谁在管</td><td>任期、基金年龄、学历/CFA 等（控制变量）</td></tr>
+<tr><td><b>L2 持仓决策</b></td><td>持什么</td><td>主动份额 AS、行业集中度 ICI（相对市场平均的行业偏离）、行业分散度 HHI、Brinson 配置/选股分解（新增）</td></tr>
+<tr><td><b>L3 交易执行</b></td><td>怎么交易</td><td>风格漂移 SDI、换手率 TO_wind、Return Gap（已仲裁为零结果）</td></tr>
+<tr><td><b>L4 风险应对</b></td><td>怎么控风险</td><td>风险调整幅度 ARG、收益波动率（日频候选指标 idio_vol / TM β₂ 经检验无增量，未纳入正式指标，见 §4.4.11）</td></tr>
+<tr><td><b>L5 认知偏差</b></td><td>为何这样决策（理论核心）</td><td>DE（Odean 法）、LSV（LSV 1992 法）、RA（时变杠杆效应），三指标数据源正交（VIF&lt;1.10）</td></tr>
+</table>
+<p><b>推断口径：</b>基金×年份双向聚类（CGM 2011）为主，wild cluster bootstrap、置换检验交叉验证；截面 / 前向 / 组内 FE 三重识别。</p>
+
+<h2>二、研究到什么程度了：核心结果（v4 权威基准 M4，N=2,264 / 348 基金，R²=0.129）</h2>
+<table>
+<tr><th>层</th><th>指标</th><th>系数 / 双向聚类 t</th><th>结论</th><th>证据分级</th></tr>
+<tr><td>L1</td><td>基金年龄（对数）</td><td>−0.0042 / t=−2.53</td><td>老基金折价</td><td><span class="tag A">A</span></td></tr>
+<tr><td>L2</td><td>主动份额 AS</td><td>−0.0298 / t=−2.81</td><td>主动份额"折价"（与美股相反）</td><td><span class="tag A">A</span></td></tr>
+<tr><td>L2</td><td>行业偏离 ICI</td><td>+0.0180 / t=+3.74</td><td>偏离"溢价"</td><td><span class="tag A">A</span></td></tr>
+<tr><td>L4</td><td>ARG</td><td>+0.0163 / t=+2.98</td><td>主动风险管理有回报</td><td><span class="tag A">A</span></td></tr>
+<tr><td><b>L5</b></td><td><b>风险不对称 RA</b></td><td><b>+0.0731 / t=+3.57</b></td><td><b>最强单指标</b>（渐近/WCB/置换三口径全显著）</td><td><span class="tag A">A</span></td></tr>
+<tr><td><b>L5</b></td><td><b>处置效应 DE</b></td><td><b>−0.0061 / t=−2.99</b></td><td>组内 FE t=−3.64 最强；外推限 ~46.6% 全持仓子群</td><td><span class="tag A">A（有边界）</span></td></tr>
+<tr><td>L5</td><td>交易趋同 LSV</td><td>+0.0155 / t=0.77</td><td>不显著（机制已诊断：被同层 RA/DE 掩盖 + 时期依存）</td><td><span class="tag C">C</span></td></tr>
+<tr><td>L3</td><td>SDI / TO / HHI 等</td><td>|t|&lt;1.1</td><td>不显著（SDI 为设定依赖伪命题，专题诊断已收口）</td><td><span class="tag C">C</span></td></tr>
+<tr><td>L3</td><td>Return Gap RG</td><td>|t|&lt;0.1</td><td><b>诚实零结果</b>（8/21 仲裁：此前 t=−7.68 系数据污染伪信号，已撤回）</td><td><span class="tag Z">零结果</span></td></tr>
+</table>
+<div class="box ok">
+<b>一句话结论：</b>L5 认知偏差层在控制 L1–L4 全部可观测行为后仍有增量解释力（ΔR²=0.0224，约占 M4 总 R² 的 17%）；其中 <b>RA（风险不对称）是全文最稳健的发现，DE 在组内维度稳健</b>；LSV 不显著。研究定位为<b>预测关联而非因果</b>（Oster δ 为负、IV 路线不可复现，均已诚实披露）。
+</div>
+<div class="box warn">
+<b>两条重要边界（如实向导师报告）：</b><br>
+① <b>DV 口径依赖</b>（8/21 批次①新发现）：改用法定基准调整收益作因变量时，L5 三指标全部不显著且 RA 方向反转——现行结论限于 FF5-alpha 口径，稿件中尚待披露。<br>
+② <b>PS 综合分样本外验证失败</b>（Q5−Q1=+0.01%, t=0.03）：画像部分已降级为"描述性/方向性证据"，不主张可交易性。
+</div>
+
+<h2>三、数据与可复现性</h2>
+<ul>
+<li><b>样本</b>：400 只主动偏股混合基金（222 位经理），2006Q2–2026Q2 非平衡面板；M4 回归样本 2,264 基金-季度 / 348 只。</li>
+<li><b>来源</b>：Wind（换手、经理信息）、AKShare/新浪（2006–2017 全持仓、个股月收益）、东财全持仓 v2（358–400 只，仅 6/12 月全持仓）、iFinD（27 只清盘基金，生存偏差修正）、日频 NAV 28.4 万行 + FF5 日度因子。</li>
+<li><b>可复现性</b>：指标流水线确定性输出，run_all.py 两次复跑 md5 一致；8/19 完成"出稿终值验证"，全稿数字与 v4 基准逐字段差=0。</li>
+<li><b>覆盖率边界</b>：AS/ICI≈94%，LSV 92%，RA 72%，DE 46.6%（受全持仓披露约束），SDI 有效变异自 2022 起。</li>
+<li><b>文献</b>：302 篇（核心 252），已按 L1–L5 + 方法论分类；文献综述初稿完成。</li>
+</ul>
+
+<h2>四、时间线：已完成 → 进行中 → 待办</h2>
+<h3>已完成</h3>
+<ul>
+<li>指标计算流水线与全套 L1–L5 指标（确定性可复现）；生存偏差修正。</li>
+<li>v3/v4 诚实重分析：推翻 v20"三指标全显著"的虚高结论并逐条更正；v4 双向聚类口径锁定。</li>
+<li>M4 权威基准 + 11 项稳健性检验 + A/C 两级证据分级 + 证据声明表；LSV 脆弱性、DE 选择性两份专项诊断；中介分析 bug 修复；PS 样本外验证（失败并诚实降级）。</li>
+<li>六章 HTML 论文稿合并为 merged_manuscript.html（已刷新至 v4）；8/19 全流水线重跑与终值验证通过。</li>
+</ul>
+<h3>进行中 → 已完成（8/19–8/22 四个优化批次，结果已全部写入主稿 §4.4.11）</h3>
+<table>
+<tr><th>批次</th><th>内容</th><th>核心发现</th><th>状态</th></tr>
+<tr><td>RG 仲裁收口</td><td>Return Gap 两数据源、两因变量仲裁</td><td>均为零结果；8/20 的 t=−7.68 系 3/9 月前十大持仓污染 + 归一式错误，正式撤回</td><td><span class="tag Z">已定论</span></td></tr>
+<tr><td>批次① L2 Brinson</td><td>BHB 配置/选股分解 + 法定基准 DV 口径</td><td>配置贡献 t=3.52 强于选股 t=1.68；RA×选股能力显著负交互；法定基准口径下 L5 全不显著（口径边界已入稿）</td><td><span class="tag Z">已入稿</span></td></tr>
+<tr><td>批次② L4/L3 日频</td><td>idio_vol、TM β₂、factor_drift + SE 勘误</td><td>勘误后反转：RA/ICI/ARG 在日频独立子样本<b>完整复现</b>（+3.42***/+2.84***/+2.27**）；三个新变量无增量；corr(TMβ₂, RA)=0.28 → RA 独立于统计择时</td><td><span class="tag Z">已入稿</span></td></tr>
+<tr><td>批次③ 能力分解</td><td>TM+HM 双口径：选股α vs 择时贡献</td><td><b>RA/DE 预测力全部来自选股α（TM +5.12***/−3.03***；HM +3.45***/−3.42***），择时维度不显著</b></td><td><span class="tag Z">已入稿</span></td></tr>
+<tr><td>批次④ 运气与机制</td><td>基金层 Bootstrap + 交互检验</td><td>RA 97.6% 重抽样同向显著（免疫截面运气）；LSV 确认零；RA×灵活配置 +2.22**（探索性）</td><td><span class="tag Z">已入稿</span></td></tr>
+</table>
+<h3>待办（建议优先级排序）</h3>
+<ul>
+<li><b>① 数据补强</b>：CSMAR 付费源补 2006–2017 全持仓（提升 DE/LSV 覆盖率）；Wind 经理档案补 school 字段（现仅 45.9%）。</li>
+<li><b>② 写作收尾</b>：投稿版参考文献格式终排、Word 稿转换。（稿件一致性问题已于 8/22 全部修复：19 项问题清零，详见《稿件问题清单与改进建议_2026-08-22.md》修复进度。）</li>
+</ul>
+
+<h2>五、本周深化（8/21–8/22）：三个新发现与一次重要勘误</h2>
+<div class="box ok">
+<b>发现一（论文级）：认知偏差影响的是"选股能力"而非"择时能力"。</b>用日频 NAV 对每个基金-年做 TM/HM 择时模型，把业绩分解为选股α与择时贡献，分别作因变量：RA（+5.12***）与 DE（−3.03***）只预测选股α，择时维度完全不显著；行业偏离和换手率只在择时维度有信号。TM 与 HM 两种分解口径完全复现。<b>组内维度（基金+年份双固定效应）下同样成立：DE −2.68***/−2.66***、RA +6.88***/+5.16*** 仍集中于选股α</b>——由于 DE 的 A 级证据本就以组内效应为最强，这意味着"处置效应损害选股能力"已从截面关联升级为组内（准因果方向）证据。<b>前向复验进一步分层：RA 能预测下一年选股α（+3.30***/+2.01**），DE 则无前瞻性（n.s.）</b>——"RA=前瞻预测因子、DE=组内准因果"的分工在能力维度上再次得到印证。经济量级：RA 一个标准差 ≈ 年化选股α +5.9~8.1 个百分点，DE 一个标准差 ≈ −1.2~−2.2 个百分点。
+</div>
+<div class="box ok">
+<b>发现二：RA 的结论对"截面运气"免疫。</b>按基金层重抽样 1,000 次整体重估 M4：RA 的系数在 97.6% 的重抽样中同向显著（经验 CI [+0.041, +0.099] 排零）；LSV 的 CI 含零（第三次确认零结果）；DE 符号全程稳定但显著性对基金构成敏感（42%）——与其"A 级限组内维度"的既有边界一致。
+</div>
+<div class="box ok">
+<b>发现三：v4 核心结论在独立日频子样本复现。</b>194 只基金的 NAV 子样本（数据源与构造逻辑均不同于主面板）复现了 RA/ICI/ARG 的显著性与量级——这是可写入稳健性章节的正面证据，且比此前认为的更强。
+</div>
+<div class="box warn">
+<b>重要勘误（如实报告）：</b>8/21 版批次②报告的双向聚类标准误实现有公式性错误（meat 矩阵用了标量残差和外积），当日全部 t 值作废并于 8/22 修正重跑——上面的"发现三"正是勘误后的反转结论（旧版误以为子样本不复现）。同批还发现并修复了主稿 3 处引用编号错误、7 处数字口径不一致与摘要 Hansen J 表述矛盾，全部记录在《稿件问题清单》修复进度中。
+</div>
+
+<h2>六、研究诚信自查（本研究的特色）</h2>
+<div class="box info">
+本研究在多个环节主动发现并撤回了自己的虚假显著结果：v20→v3 推翻 LSV 显著结论；中介分析 bug 修复；RG 伪信号仲裁撤回；IV 路线作废；PS 样本外验证失败后降级。全部结果采用 A/C 两级证据分级并附证据声明表，逐项标注效度边界——这套"诚实重估"流程本身可作为方法论贡献向导师展示。
+</div>
+
+<p class="small">附：主要支撑文档——指标梳理_L1-L5问题详解与最新进度.md｜实证结论_证据声明表_2026-08-16.html｜RG数据仲裁与零结果报告_2026-08-21.html｜L2_Brinson分解与DV基准口径_优化报告_2026-08-21.html｜批次②_L4_idio_vol与L3_TMβ₂优化报告_2026-08-21.html｜出稿终值验证报告_2026-08-19.html</p>
+
+</body>
+</html>
