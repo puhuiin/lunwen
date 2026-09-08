@@ -1,0 +1,31 @@
+﻿pipeline_col,type,pipe_nonnull,same_name_orig,same_pearson,same_spearman,same_n,pipe_mean,orig_mean,top_match,agreement,pipe_levels,orig_levels
+year,num,9581,year,1.0,,9581.0,2022.4964,2022.4964,"year(r=1.0,n=9581); macro_M2(r=0.9875,n=9576); treasury_30y(r=-0.8738,n=9581); treasury_10y(r=-0.8717,n=9581); treasury_5y(r=-0.8587,n=9581)",,,
+quarter,num,9581,quarter,1.0,,9581.0,2.47323,2.47323,"quarter(r=1.0,n=9581); macro_social_financing(r=-0.6517,n=9512); ff5_RMW(r=-0.366,n=9181); macro_CPI_mom(r=-0.3118,n=9576); SMB(r=0.2999,n=8781)",,,
+mgr_total_tenure_v2,num,9490,mgr_total_tenure_v2,0.475,,9490.0,1115.84932,2628.58272,"log_fund_age(r=0.4916,n=9490); mgr_total_tenure_v2(r=0.475,n=9490); fund_age(r=0.4586,n=9490); manager_tenure(r=0.3934,n=9490); mgr_best_return(r=0.3768,n=9490)",,,
+log_fund_age,num,9581,log_fund_age,0.9611,,9581.0,1.56906,1.86753,"log_fund_age(r=0.9611,n=9581); fund_age(r=0.8403,n=9581); is_first200(r=0.5506,n=9581); ret_1y(r=-0.4047,n=9581); ff4_adj_return(r=-0.362,n=8433)",,,
+gender,cat,9406,gender,,,9406.0,,,,0.8873,"['女', '未知', '男']","['女', '未知', '男']"
+education,cat,9497,education,,,9497.0,,,,0.8966,"['MBA', '博士', '大学(推测)', '本科', '硕士']","['博士', '大学(推测)', '本科', '硕士']"
+CFA,cat,9406,CFA,,,9406.0,,,,0.9613,"['否', '是']","['否', '是']"
+school,cat,4397,school,,,3614.0,,,,0.6702,"['9月至2011年7月在中国人民大学学习', '上海交通大学', '上海复旦大学', '上海对外经贸大学', '上海财经大学', '东北财经大学']","['上海交通大学', '上海财经大学', '东北财经大学', '中国人民大学', '中国人民大学经济学博士', '中央财经大学']"
+AS_improved,num,4280,AS_improved,0.3254,,4280.0,0.83288,0.83022,"pgr(r=0.5488,n=2771); lsv(r=0.5132,n=904); is_first200(r=0.4889,n=4280); plr(r=0.4734,n=2771); log_fund_age(r=0.373,n=4280)",,,
+ICI,num,4279,ICI,0.5085,,4279.0,0.12368,0.07107,"ICI(r=0.5085,n=4279); ICI_std(r=0.5085,n=4279); ICI_original(r=0.5085,n=4279); ICI_z(r=0.5085,n=4279); lsv(r=0.2775,n=904)",,,
+industry_hhi,num,4279,industry_hhi,0.2105,,4267.0,0.24095,0.25945,"ICI(r=0.3845,n=4279); ICI_std(r=0.3845,n=4279); ICI_original(r=0.3845,n=4279); ICI_z(r=0.3845,n=4279); macro_M2(r=0.3418,n=4279)",,,
+ICI_raw,num,4279,(无同名列),,,,0.10839,,"ICI(r=0.419,n=4279); ICI_std(r=0.419,n=4279); ICI_original(r=0.419,n=4279); ICI_z(r=0.419,n=4279); lsv(r=0.3646,n=904)",,,
+industry_hhi_raw,num,4279,(无同名列),,,,0.16849,,"lsv(r=0.3334,n=904); ICI(r=0.3162,n=4279); ICI_std(r=0.3162,n=4279); ICI_original(r=0.3162,n=4279); ICI_z(r=0.3162,n=4279)",,,
+SDI,num,4571,SDI,0.2045,,4571.0,0.19439,0.33437,"is_first200(r=0.5341,n=4571); ret_1y(r=-0.3501,n=4571); fund_age(r=0.3323,n=4571); log_fund_age(r=0.331,n=4571); ret_3y(r=-0.3127,n=4571)",,,
+TO_calc,num,2133,TO_calc,0.0883,,2133.0,0.9119,1.07308,"TO_calc(r=0.0883,n=2133); subscription(r=0.0779,n=2119); redemption(r=0.0759,n=2123); 晨星评级(r=-0.0641,n=2076); fund_latest_scale_yi(r=-0.062,n=2133)",,,
+OCI,num,2115,OCI,-0.0816,,2115.0,0.0,0.05762,"quarter(r=-0.6447,n=2115); macro_social_financing(r=0.6132,n=2115); ff5_RMW(r=0.5347,n=2115); ff5_CMA(r=-0.4779,n=2115); treasury_term_spread(r=-0.4738,n=2115)",,,
+TO_two_sided,num,1799,(无同名列),,,,0.88191,,"family_size(r=0.1957,n=1766); log_aum(r=0.138,n=1794); ret_1w(r=0.1352,n=1799); SDI(r=0.1347,n=1799); SDI_std(r=0.1347,n=1799)",,,
+OCI_two_sided,num,1799,(无同名列),,,,0.00281,,"treasury_30y(r=0.1392,n=1799); treasury_2y(r=0.1366,n=1799); macro_M2(r=-0.1333,n=1799); macro_PMI_mfg(r=0.1317,n=1799); treasury_10y(r=0.131,n=1799)",,,
+total_buy,num,1800,(无同名列),,,,6722.22392,,"AS_lag(r=-0.6825,n=1799); delta_AS(r=0.6825,n=1799); delta_AS_std(r=0.6825,n=1799); ARG(r=-0.2275,n=1800); ARG_z(r=-0.2275,n=1800)",,,
+total_sell,num,1800,(无同名列),,,,6372.05206,,"AS_lag(r=-0.5153,n=1799); delta_AS(r=0.5153,n=1799); delta_AS_std(r=0.5153,n=1799); ICI(r=-0.2252,n=1800); ICI_std(r=-0.2252,n=1800)",,,
+avg_aum,num,1800,(无同名列),,,,7631.27966,,"AS_lag(r=-0.6503,n=1799); delta_AS(r=0.6503,n=1799); delta_AS_std(r=0.6503,n=1799); ARG(r=-0.2402,n=1800); ARG_z(r=-0.2402,n=1800)",,,
+ARG,num,7433,ARG,0.0856,,7433.0,0.19557,0.22997,"ff3_adj_return(r=0.163,n=6778); ret_3y(r=0.1597,n=7377); is_first200(r=-0.1531,n=7433); ret_1y(r=0.1519,n=7433); ff5_RF(r=-0.1505,n=7137)",,,
+return_volatility,num,8781,return_volatility,0.7867,,8381.0,0.11979,0.12903,"return_volatility(r=0.7867,n=8381); risk_asym(r=0.4113,n=6326); CR(r=0.4004,n=8781); ARG(r=0.3688,n=8781); ARG_z(r=0.3688,n=8781)",,,
+de,num,2444,de,-0.0136,,1700.0,-0.14761,-0.07176,"lsv(r=0.2395,n=170); macro_GDP_yoy(r=-0.129,n=2444); risk_asym(r=-0.1202,n=1728); ff5_SMB(r=0.0945,n=2444); family_size(r=-0.0907,n=2407)",,,
+pgr,num,2971,pgr,-0.0193,,1923.0,0.57549,0.75572,"log_aum(r=-0.1457,n=2962); SMB(r=0.1442,n=2721); TO_calc(r=0.1434,n=2970); net_asset(r=-0.1312,n=2969); family_size(r=-0.1183,n=2925)",,,
+plr,num,2790,plr,0.0125,,1879.0,0.72943,0.82748,"lsv(r=-0.1486,n=212); TO_calc(r=0.1436,n=2790); return_volatility(r=0.1186,n=2629); net_asset(r=-0.1134,n=2788); macro_PMI_nonmfg(r=-0.1072,n=2790)",,,
+lsv,num,4107,lsv,-0.1984,,798.0,0.4302,-0.22725,"treasury_term_spread(r=0.227,n=4107); lsv(r=-0.1984,n=798); return_volatility(r=-0.1874,n=3841); macro_CPI_mom(r=-0.1757,n=4107); quarter(r=0.1695,n=4107)",,,
+risk_asym,num,9569,risk_asym,0.1829,,6326.0,0.13884,0.03873,"ret_1y(r=0.7278,n=9569); ret_6m(r=0.7267,n=9569); ret_ytd(r=0.7038,n=9569); ret_3m(r=0.6026,n=9569); is_first200(r=-0.5709,n=9569)",,,
+n_gain,num,9581,(无同名列),,,,16.75368,,"year(r=-0.4767,n=9581); ret_3y(r=0.4515,n=9270); macro_M2(r=-0.4433,n=9576); ff5_RF(r=0.4337,n=9181); 5星评级家数(r=0.3939,n=9361)",,,
+n_loss,num,9581,(无同名列),,,,13.32867,,"year(r=-0.4499,n=9581); macro_M2(r=-0.4111,n=9576); ff5_RF(r=0.3884,n=9181); treasury_10y(r=0.331,n=9581); treasury_30y(r=0.3294,n=9581)",,,
