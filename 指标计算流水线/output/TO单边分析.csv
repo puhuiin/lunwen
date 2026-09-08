@@ -1,0 +1,14 @@
+﻿model,DV,N,var,coef,t,sig
+双边TO,ff5_adj_return,200,TO_two_sided,0.01715,1.275,
+双边TO,ff5_adj_return,200,log_aum,0.0016,1.491,
+双边TO,ff5_adj_return,200,log_fund_age,-0.00435,-2.057,**
+单边TO_buy,ff5_adj_return,200,TO_buy,-0.0,-1.348,
+单边TO_buy,ff5_adj_return,200,log_aum,0.0016,1.432,
+单边TO_buy,ff5_adj_return,200,log_fund_age,-0.00454,-2.122,**
+单边TO_sell,ff5_adj_return,200,TO_sell,-0.0,-1.524,
+单边TO_sell,ff5_adj_return,200,log_aum,0.00136,1.197,
+单边TO_sell,ff5_adj_return,200,log_fund_age,-0.00462,-2.16,**
+买卖分解,ff5_adj_return,200,TO_buy,0.0,2.006,**
+买卖分解,ff5_adj_return,200,TO_sell,-0.0,-2.15,**
+买卖分解,ff5_adj_return,200,log_aum,0.00081,0.705,
+买卖分解,ff5_adj_return,200,log_fund_age,-0.00493,-2.272,**

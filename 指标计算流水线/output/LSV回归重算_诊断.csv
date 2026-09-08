@@ -1,0 +1,17 @@
+metric,value
+lsv_nonnull_obs,9187.0
+de_nonnull_obs,4642.0
+risk_asym_nonnull_obs,7185.0
+future_return_nonnull_obs,9574.0
+ff5_adj_return_nonnull_obs,9698.0
+excess_return_nonnull_obs,9574.0
+total_obs,9974.0
+n_funds,400.0
+L5_complete_obs,3450.0
+L5_complete_funds,385.0
+lsv_cov_pct,92.1
+de_cov_pct,46.5
+ra_cov_pct,72.0
+cross_section_N,362.0
+cross_section_N_no_aum,362.0
+fwd_N_no_aum,3239.0
