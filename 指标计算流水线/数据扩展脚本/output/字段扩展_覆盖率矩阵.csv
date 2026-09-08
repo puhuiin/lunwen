@@ -1,0 +1,7 @@
+﻿field,target_cols,frequency,obs_coverage_pct,fund_coverage_pct,funds_with_value,total_funds,total_obs,structural_limit,missing_reason,extension_source
+TO/OCI,TO_two_sided,半年频(06-30/12-31),18.0,50.0,200,400,9974,否,需基金买卖成交额（定期报告披露），自由源不可得；原仅 200 只/9 点,CSMAR/Wind 双边换手率
+DE,de,半年频(仅 6/12 月),46.3,99.8,399,400,9974,半年度定义性,only_612=True 仅用 6/12 月半年快照，按定义约半数季度本无 de；且 302/400 只有持仓,CSMAR/Wind 全持仓(提升持仓覆盖)
+ICI/HHI,"ICI,industry_hhi",半年频,49.3,100.0,400,400,9974,半年度定义性,仅半年报/年报全持仓可算（定义性约束；Q1/Q3 仅前十大持仓已剔除，避免系统性低估）；当前全持仓已覆盖 400 只，缺失为半年频定义性缺口,CSMAR/Wind 全持仓
+SDI,SDI,季频,63.8,91.5,366,400,9974,是(暖机),滚动 8 期暖机，早期无值,更长净值历史(不改变结构性)
+school,school,截面(经理特征),45.9,63.2,253,400,9974,否(信息可得性),基金经理毕业院校公开信息缺失,外部院校补全(难 100%)
+ARG,ARG,季频,96.7,100.0,400,400,9974,否,2006–2017 早期用 AKShare 稀疏持仓+108 股子集（体制断点）,个股收益补全(改善老样本期)
